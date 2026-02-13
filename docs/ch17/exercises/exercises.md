@@ -1,218 +1,69 @@
-# 18.7 Exercises
+# Exercises: Central Limit Theorem
 
-## Correlation
+## Conceptual Questions
 
-### Exercise 1: Compute and Compare Correlation Coefficients
+**Exercise 17.1.** State the Central Limit Theorem precisely. What are the required conditions on the random variables $X_1, X_2, \ldots$?
 
-Using the height-weight dataset, compute the Pearson correlation coefficient for:
+**Exercise 17.2.** Explain why the CLT does not apply to iid Cauchy random variables. What condition of the CLT fails?
 
-1. Males only
-2. Females only
-3. Combined dataset
+**Exercise 17.3.** If $X_1, X_2, \ldots$ are iid $N(\mu, \sigma^2)$, is the CLT needed to conclude that $\frac{S_n - n\mu}{\sigma\sqrt{n}} \sim N(0,1)$? Explain.
 
-```python
-import pandas as pd
+**Exercise 17.4.** What is the purpose of the continuity correction? When should it be used, and when is it unnecessary?
 
-url = "https://raw.githubusercontent.com/beccadsouza/Machine-Learning-Python/master/Datasets/height-weight.csv"
-data = pd.read_csv(url)
+## Computation Problems
 
-# Your code here
-```
+**Exercise 17.5.** Let $X_1, \ldots, X_{100}$ be iid with $E[X_i] = 5$ and $\text{Var}(X_i) = 9$. Use the CLT to approximate:
 
-Discuss why the combined correlation might differ from the within-group correlations.
+(a) $P(S_{100} \leq 520)$
 
----
+(b) $P(480 \leq S_{100} \leq 520)$
 
-### Exercise 2: Visualize Correlation Across a Range of $\rho$
+(c) $P(S_{100} \geq 530)$
 
-Write a function that generates bivariate normal samples for $\rho \in \{-0.99, -0.8, -0.5, 0, 0.5, 0.8, 0.99\}$ and displays them in a single row of subplots. For each subplot, also print the sample Pearson $r$ in the title.
+**Exercise 17.6.** The number of customers arriving at a store each hour is Poisson with mean $20$. Use the CLT to approximate the probability that more than $220$ customers arrive in a $10$-hour day.
 
----
+**Exercise 17.7.** A fair die is rolled $360$ times. Let $S$ be the sum of all rolls. Use the CLT to approximate:
 
-### Exercise 3: Anscombe's Quartet
+(a) $P(S \geq 1300)$
 
-Reproduce Anscombe's quartet using `scipy` or manually. Compute the Pearson $r$ for each of the four datasets and verify that they are nearly identical despite very different scatter plot patterns.
+(b) $P(1200 \leq S \leq 1300)$
 
-```python
-# Hint: Anscombe's quartet is available in seaborn
-import seaborn as sns
-anscombe = sns.load_dataset("anscombe")
-```
+*Hint: For a single die roll, $\mu = 3.5$ and $\sigma^2 = 35/12$.*
 
----
+**Exercise 17.8.** An insurance company has $10{,}000$ policyholders. Each policyholder files a claim in a given year with probability $0.05$, independently. Use the CLT to approximate the probability that the company receives more than $550$ claims.
 
-## Ecological Correlation and Simpson's Paradox
+## Normal Approximation Problems
 
-### Exercise 4: Simpson's Paradox Simulation
+**Exercise 17.9.** Let $X \sim B(200, 0.4)$. Use the normal approximation (with continuity correction) to find:
 
-Create a synthetic dataset with two groups where a trend reverses when the groups are combined:
+(a) $P(X \leq 75)$
 
-1. Generate Group A: $x \sim U(0, 5)$, $y = -0.5x + 10 + \epsilon$
-2. Generate Group B: $x \sim U(5, 10)$, $y = -0.5x + 5 + \epsilon$
-3. Plot each group separately and combined
-4. Compute the Pearson $r$ within each group and for the combined data
+(b) $P(X = 80)$
 
-Explain why the combined correlation can be positive even though both within-group correlations are negative.
+(c) $P(70 \leq X \leq 90)$
 
----
+**Exercise 17.10.** A factory produces items with a defect rate of $2\%$. In a batch of $1{,}000$ items, use the CLT to approximate the probability that between $15$ and $30$ items are defective (inclusive).
 
-### Exercise 5: UC Berkeley Admissions
+## Confidence Interval Problems
 
-Using the UC Berkeley admissions data from Section 18.2, compute:
+**Exercise 17.11.** A researcher measures a quantity whose measurements are iid with unknown mean $\mu$ and known standard deviation $\sigma = 10$. How many measurements are needed for the sample mean to be within $\pm 2$ of $\mu$ with:
 
-1. The overall admission rate for men and women
-2. The admission rate for men and women in each department
-3. Identify which departments contribute most to the paradox
+(a) 90% confidence
 
----
+(b) 95% confidence
 
-## Survivorship Bias
+(c) 99% confidence
 
-### Exercise 6: Simulating Survivorship Bias
+**Exercise 17.12.** A polling organization wants to estimate the proportion $p$ of voters supporting a candidate. They model each response as Bernoulli($p$). Using $p \approx 0.5$ (worst case for variance), how many voters must be surveyed so the sample proportion is within $\pm 0.03$ of $p$ with 95% confidence?
 
-Simulate an investment scenario:
+## Proof and Theory
 
-1. Generate 1000 "companies" with random annual returns drawn from $N(0.05, 0.3)$ over 10 years
-2. A company "survives" if its cumulative return never drops below $-90\%$
-3. Compute the average annual return for survivors vs. all companies
-4. Discuss how focusing only on survivors inflates perceived returns
+**Exercise 17.13.** Fill in the details of the CLT proof via MGFs. In particular, rigorously justify the Taylor expansion step $M_{Y_1}(t) \approx 1 + t^2/2$ and the limit $\left(1 + \frac{t^2}{2n}\right)^n \to e^{t^2/2}$.
 
-```python
-import numpy as np
+**Exercise 17.14.** Let $X_i$ be the $i$-th flip of a fair coin, recorded as $+1$ (heads) or $-1$ (tails). Define $W_n = \frac{1}{\sqrt{n}} \sum_{i=1}^{\lfloor nt \rfloor} X_i$ for $t \in [0,1]$.
 
-np.random.seed(42)
-n_companies = 1000
-n_years = 10
+(a) Find $E[W_n]$ and $\text{Var}(W_n)$.
 
-# Your simulation here
-```
+(b) Use the CLT to find the approximate distribution of $W_n$.
 
----
-
-### Exercise 7: Identify Survivorship Bias
-
-For each scenario below, identify the survivorship bias and explain what data is missing:
-
-1. A study finds that people who take a particular supplement live longer on average.
-2. An analysis of successful restaurants finds they all have outdoor seating.
-3. A review of top-performing mutual funds over 20 years shows consistent market-beating returns.
-
----
-
-## Confounding
-
-### Exercise 8: Identifying Confounders
-
-For each of the following correlations, identify at least one plausible confounding variable:
-
-1. Countries with more chocolate consumption per capita win more Nobel Prizes.
-2. Students who eat breakfast perform better on exams.
-3. Cities with more police officers have higher crime rates.
-4. People who own more books tend to have higher incomes.
-
----
-
-### Exercise 9: Housing Data Analysis
-
-Using the California housing dataset:
-
-1. Compute the full correlation matrix
-2. Identify the variable most strongly correlated with `median_house_value`
-3. Discuss potential confounders in the relationship between `median_income` and `median_house_value`
-4. Create a scatter plot matrix for the four most correlated variables
-
-```python
-import os, tarfile, urllib.request
-import pandas as pd
-
-DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml2/master/"
-HOUSING_PATH = os.path.join("datasets", "housing")
-HOUSING_URL = DOWNLOAD_ROOT + "datasets/housing/housing.tgz"
-
-def fetch_housing_data():
-    if not os.path.isdir(HOUSING_PATH):
-        os.makedirs(HOUSING_PATH)
-    tgz_path = os.path.join(HOUSING_PATH, "housing.tgz")
-    urllib.request.urlretrieve(HOUSING_URL, tgz_path)
-    with tarfile.open(tgz_path) as f:
-        f.extractall(path=HOUSING_PATH)
-
-def load_housing_data():
-    return pd.read_csv(os.path.join(HOUSING_PATH, "housing.csv"))
-
-# Your analysis here
-```
-
----
-
-## Correlation Tests
-
-### Exercise 10: Pearson vs. Spearman vs. Kendall
-
-Generate data with a monotonic but nonlinear relationship:
-
-$$y = e^{0.1x} + \epsilon, \quad x \sim U(0, 30), \quad \epsilon \sim N(0, 1)$$
-
-1. Compute Pearson's $r$, Spearman's $\rho_s$, and Kendall's $\tau$
-2. Explain why Spearman and Kendall detect the relationship more effectively than Pearson
-
----
-
-### Exercise 11: Correlation Test with Real Data
-
-Using the age-income data from Section 18.6:
-
-```python
-age    = [18, 25, 57, 45, 26, 64, 37, 40, 24, 33]
-income = [15000, 29000, 68000, 52000, 32000, 80000, 41000, 45000, 26000, 33000]
-```
-
-1. Compute all three correlation coefficients and their p-values
-2. At $\alpha = 0.01$, can you reject $H_0: \rho = 0$?
-3. Add an outlier (age=20, income=200000) and recompute. Which test is most affected?
-
----
-
-### Exercise 12: Effect of Sample Size on p-values
-
-For a true $\rho = 0.3$:
-
-1. Generate bivariate normal samples with $n \in \{10, 30, 100, 500, 1000\}$
-2. For each $n$, compute Pearson's $r$ and its p-value
-3. Plot p-value vs. sample size and discuss the relationship between sample size and statistical significance
-
-```python
-import numpy as np
-from scipy import stats
-
-np.random.seed(0)
-rho = 0.3
-sample_sizes = [10, 30, 100, 500, 1000]
-
-# Your code here
-```
-
----
-
-## Causation
-
-### Exercise 13: Criteria for Causation
-
-For each of the following claims, evaluate which of the five criteria for causation (temporal precedence, covariation, elimination of confounders, plausibility, experimental evidence) are met:
-
-1. "Smoking causes lung cancer"
-2. "Wearing a seatbelt prevents death in car accidents"
-3. "Eating organic food causes better health"
-4. "Social media use causes depression in teenagers"
-
----
-
-### Exercise 14: Study Design
-
-Design a study to test the causal relationship between sleep duration and academic performance. Specify:
-
-1. The type of study (observational, RCT, longitudinal)
-2. How you would control for confounders
-3. What variables you would measure
-4. Potential ethical constraints
-5. How you would interpret the results
+(c) For $0 \leq s < t \leq 1$, find the approximate distribution of $W_n(t) - W_n(s)$ where $W_n(t) = \frac{1}{\sqrt{n}}\sum_{i=1}^{\lfloor nt \rfloor} X_i$.

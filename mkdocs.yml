@@ -1,4 +1,4 @@
-site_name: Financial Math Book
+site_name: Probability
 theme:
   name: material
 
@@ -18,397 +18,405 @@ extra_javascript:
 nav:
     - Home: index.md
 
-    - 0 Prerequisites:
-        - Chapter Overview: ch00/index.md
-        - 0.1 Mathematical Background (Review):
-            - Sets, Functions, and Logic: ch00/math/logic_sets.md
-            - Sequences, Limits, and Asymptotics: ch00/math/limits.md
-            - Linear Algebra Notation and Conventions: ch00/math/linear_algebra.md
-        - 0.2 Computational Tools:
-            - Python and Jupyter Basics: ch00/tools/python_basics.md
-            - NumPy Arrays: ch00/tools/numpy_basics.md
-            - Data Handling with pandas: ch00/tools/pandas_basics.md
-            - Basic Visualization with Matplotlib: ch00/tools/matplotlib_basics.md
+    - 1 Counting:
+        - 1.1 Basic Counting Principles:
+            - Multiplication Rule: ch01/basic/multiplication_rule.md
+            - Addition Rule: ch01/basic/addition_rule.md
+            - Inclusion-Exclusion Principle: ch01/basic/inclusion_exclusion.md
+        - 1.2 Permutations:
+            - Permutations of Distinct Objects: ch01/permutations/distinct.md
+            - Permutations with Repetition: ch01/permutations/repetition.md
+            - Circular Permutations: ch01/permutations/circular.md
+        - 1.3 Combinations:
+            - Combinations and Binomial Coefficients: ch01/combinations/binomial_coefficients.md
+            - Combinations with Repetition (Stars and Bars): ch01/combinations/stars_and_bars.md
+            - Multinomial Coefficients: ch01/combinations/multinomial.md
+        - 1.4 Combinatorial Identities:
+            - Pascal's Rule and Vandermonde's Identity: ch01/identities/pascal_vandermonde.md
+            - Binomial Theorem: ch01/identities/binomial_theorem.md
+        - 1.5 Classic Counting Problems:
+            - Matching Problem and Derangements: ch01/classic/derangements.md
+            - Pigeonhole Principle: ch01/classic/pigeonhole.md
+            - Lattice Paths and the Ballot Problem: ch01/classic/lattice_paths.md
+            - Partition Problems and the Twelvefold Way: ch01/classic/partitions.md
+        - 1.6 Exercises: ch01/exercises/exercises.md
 
-    - 1 Data Collection and Learning from Data:
-        - 1.1 Classical Approach—Design Your Data Collection:
-            - Populations and Samples: ch01/classical/population_sample.md
-            - Parameters vs Statistics: ch01/classical/parameters_statistics.md
-            - Observational Studies: ch01/classical/observational.md
-            - Confounding and Association vs Causation: ch01/classical/confounding_causation.md
-            - Controlled Experiments: ch01/classical/experiments.md
-            - Randomization and Blinding: ch01/classical/randomization_blinding.md
-            - Sample Surveys and Sampling Methods: ch01/classical/surveys.md
-            - Bias and Nonresponse: ch01/classical/bias_nonresponse.md
-            - Survivorship Bias: ch01/classical/survivorship_bias.md
-        - 1.2 Modern Approach—Analyze the Data You Have:
-            - Statistical Models vs Learning Algorithms: ch01/modern/models_vs_algorithms.md
-            - Prediction vs Inference: ch01/modern/prediction_vs_inference.md
-        - 1.3 Three Learning Paradigms:
-            - Unsupervised Learning (Pattern Discovery): ch01/paradigms/unsupervised.md
-            - Supervised Learning (Prediction with Labels): ch01/paradigms/supervised.md
-            - Reinforcement Learning (Sequential Decisions): ch01/paradigms/reinforcement.md
-        - 1.4 Two Approaches to Data Analysis:
-            - Design Your Data Collection (Classical): ch01/contrast/design_data.md
-            - Analyze the Data You Have (Modern): ch01/contrast/analyze_available.md
-            - Strengths and Limitations of Each: ch01/contrast/tradeoffs.md
+    - 2 Probability:
+        - 2.1 Sample Spaces and Events:
+            - Sample Spaces and Outcomes: ch02/sample_space/sample_spaces.md
+            - Events and Set Operations: ch02/sample_space/events_sets.md
+            - De Morgan's Laws: ch02/sample_space/de_morgan.md
+        - 2.2 Axioms of Probability:
+            - Kolmogorov Axioms: ch02/axioms/kolmogorov.md
+            - Properties Derived from Axioms: ch02/axioms/properties.md
+            - Inclusion-Exclusion for Probabilities: ch02/axioms/inclusion_exclusion.md
+        - 2.3 Equally Likely Outcomes:
+            - Classical Probability: ch02/classical/classical_probability.md
+            - Counting Methods in Probability: ch02/classical/counting_methods.md
+            - Birthday Problem: ch02/classical/birthday_problem.md
+        - 2.4 Exercises: ch02/exercises/exercises.md
 
-    - 2 Descriptive Statistics:
-        - 2.1 Exploratory Data Analysis:
-            - Histograms and Density Plots: ch02/exploration/histograms.md
-            - ECDF, Quantiles, and Q-Q Plots: ch02/exploration/ecdf.md
-        - 2.2 Shape of Distributions:
-            - Modality: ch02/shape/modality.md
-            - Skewness and Kurtosis: ch02/shape/skewness_kurtosis.md
-            - Outliers and Leverage: ch02/shape/outliers.md
-        - 2.3 Numerical Summaries:
-            - Mean, Median, Mode: ch02/center/mean_median_mode.md
-            - Variance and Standard Deviation: ch02/spread/variance_std.md
-            - IQR and Robust Measures: ch02/spread/robust.md
-        - 2.4 Visualization:
-            - Boxplots: ch02/visualization/boxplots.md
-            - Violin Plots: ch02/visualization/violin.md
-            - Group Comparisons: ch02/visualization/group_comparison.md
+    - 3 Conditional Probability:
+        - 3.1 Definition and Interpretation:
+            - Conditional Probability Definition: ch03/definition/conditional_definition.md
+            - Multiplication Rule for Probabilities: ch03/definition/multiplication_rule.md
+        - 3.2 Law of Total Probability:
+            - Partitions and Total Probability: ch03/total_probability/total_probability.md
+            - Tree Diagrams: ch03/total_probability/tree_diagrams.md
+        - 3.3 Bayes' Theorem:
+            - Bayes' Theorem and Prior–Posterior Updating: ch03/bayes/bayes_theorem.md
+            - Applications of Bayes' Theorem: ch03/bayes/applications.md
+        - 3.4 Independence:
+            - Independence of Two Events: ch03/independence/two_events.md
+            - Mutual Independence: ch03/independence/mutual_independence.md
+            - Conditional Independence: ch03/independence/conditional_independence.md
+        - 3.5 Gambler's Ruin:
+            - Gambler's Ruin Problem: ch03/gamblers_ruin/gamblers_ruin.md
+            - Simulation of Gambler's Ruin: ch03/gamblers_ruin/simulation.md
+            - First Step Analysis: ch03/gamblers_ruin/first_step_analysis.md
+            - Linear Recurrence Solution (q > 1/2): ch03/gamblers_ruin/q_greater_half.md
+            - Linear Recurrence Solution (q = 1/2): ch03/gamblers_ruin/q_equal_half.md
+        - 3.6 Simpson's Paradox:
+            - Simpson's Paradox: ch03/simpsons_paradox/simpsons_paradox.md
+        - 3.7 Computing Intersection and Union Probabilities:
+            - Computing P(∩Ai): ch03/intersection_union/intersection.md
+            - Computing P(∪Ai): ch03/intersection_union/union.md
+        - 3.8 Exercises: ch03/exercises/exercises.md
 
-    - 3 Probability, Random Variables, and Limit Theorems:
-        - 3.1 Probability Theory:
-            - Sample Spaces and Events: ch03/probability/sample_space.md
-            - Axioms of Probability: ch03/probability/axioms.md
-            - Conditional Probability: ch03/probability/conditional.md
-            - Bayes' Theorem: ch03/probability/bayes.md
-        - 3.2 Independence:
-            - Independence of Events: ch03/probability/independence.md
-            - Conditional Independence: ch03/probability/conditional_independence.md
-        - 3.3 Random Variables:
-            - Discrete Random Variables: ch03/rv/discrete.md
-            - Continuous Random Variables: ch03/rv/continuous.md
-            - PMF, PDF, and CDF: ch03/rv/pmf_pdf_cdf.md
-        - 3.4 Expectation and Moments:
-            - Expectation and Linearity: ch03/rv/expectation.md
-            - Variance and Covariance: ch03/rv/variance_covariance.md
-            - Moment Generating Functions: ch03/rv/mgf.md
-        - 3.5 Limit Theorems:
-            - Law of Large Numbers: ch03/limits/lln.md
-            - Central Limit Theorem: ch03/limits/clt.md
-            - Berry–Esseen Theorem: ch03/limits/berry_esseen.md
+    - 4 Random Variables and Their Distributions:
+        - 4.1 Random Variables:
+            - Definition and Examples: ch04/rv/definition.md
+            - Discrete vs Continuous Random Variables: ch04/rv/discrete_vs_continuous.md
+        - 4.2 Probability Mass Function (PMF):
+            - PMF Definition and Properties: ch04/pmf/definition.md
+            - Examples of PMFs: ch04/pmf/examples.md
+        - 4.3 Cumulative Distribution Function (CDF):
+            - CDF Definition and Properties: ch04/cdf/definition.md
+            - CDF for Discrete Random Variables: ch04/cdf/discrete_cdf.md
+            - CDF for Continuous Random Variables: ch04/cdf/continuous_cdf.md
+        - 4.4 Probability Density Function (PDF):
+            - PDF Definition and Properties: ch04/pdf/definition.md
+            - Relationship Between PDF and CDF: ch04/pdf/pdf_cdf_relationship.md
+        - 4.5 Functions of a Random Variable:
+            - Distribution of g(X): ch04/functions/function_of_rv.md
+            - Functions of Discrete Random Variables: ch04/functions/discrete_functions.md
+            - Functions of Continuous Random Variables: ch04/functions/continuous_functions.md
+        - 4.6 Exercises: ch04/exercises/exercises.md
 
-    - 4 Distributions and Dependence:
-        - 4.1 Discrete Distributions:
-            - Bernoulli and Binomial: ch04/discrete_distributions/binomial.md
-            - Geometric and Negative Binomial: ch04/discrete_distributions/geometric.md
-            - Poisson Distribution: ch04/discrete_distributions/poisson.md
-        - 4.2 Continuous Distributions:
-            - Uniform Distribution: ch04/continuous_distributions/uniform.md
-            - Exponential Distribution: ch04/continuous_distributions/exponential.md
-            - Normal Distribution: ch04/continuous_distributions/normal.md
-        - 4.3 Multivariate Structure:
-            - Joint Distributions: ch04/joint/joint.md
-            - Marginal and Conditional Distributions: ch04/joint/marginal_conditional.md
-            - Covariance and Correlation: ch04/joint/covariance_correlation.md
-            - Independence vs Zero Correlation: ch04/joint/independence_vs_zero_corr.md
+    - 5 Random Variables and Their Joint Distributions:
+        - 5.1 Joint Distributions for Discrete Random Variables:
+            - Joint PMF: ch05/joint_discrete/joint_pmf.md
+            - Joint PMF Tables and Visualization: ch05/joint_discrete/joint_pmf_tables.md
+            - Categorical and Multinomial Distributions: ch05/joint_discrete/categorical_multinomial.md
+        - 5.2 Joint Distributions for Continuous Random Variables:
+            - Joint PDF: ch05/joint_continuous/joint_pdf.md
+            - Joint CDF: ch05/joint_continuous/joint_cdf.md
+        - 5.3 Independent Random Variables:
+            - Definition of Independence for Random Variables: ch05/independence/definition.md
+            - Verifying Independence via Factorization: ch05/independence/factorization.md
+            - Sum of Independent Binomials: ch05/independence/sum_independent_binomials.md
+        - 5.4 Exercises: ch05/exercises/exercises.md
 
-    - 5 Sampling Distributions:
-        - 5.1 Foundations:
-            - Statistics as Random Variables: ch05/foundations/statistics_as_rv.md
-            - Repeated Sampling Concept: ch05/foundations/repeated_sampling.md
-        - 5.2 Maximum Likelihood Estimation:
-            - Introduction to MLE: ch05/mle/intro_mle.md
-            - Capture-Recapture Method: ch05/mle/capture_recapture.md
-            - MLE for Normal Distribution: ch05/mle/mle_normal.md
-            - MLE for Bernoulli Distribution: ch05/mle/mle_bernoulli.md
-        - 5.3 The Four Fundamental Sampling Distributions:
-            - Normal Distribution (Z): ch05/distributions/normal.md
-            - Student's t Distribution: ch05/distributions/student_t.md
-            - Chi-Square Distribution (χ²): ch05/distributions/chi_square.md
-            - F Distribution: ch05/distributions/f_distribution.md
-        - 5.4 Applications to Common Statistics:
-            - Sampling Distribution of the Mean: ch05/applications/sample_mean.md
-            - Standard Error: ch05/applications/standard_error.md
-            - Sampling Distribution of Proportions: ch05/applications/sample_proportion.md
-            - Sampling Distribution of the Variance: ch05/applications/sample_variance.md
-            - Difference of Two Sample Means: ch05/applications/diff_means.md
-            - Difference of Two Sample Proportions: ch05/applications/diff_proportions.md
-        - 5.5 Exercises: ch05/exercises/exercises.md
+    - 6 Joint, Marginal, and Conditional Distributions:
+        - 6.1 Marginal Distributions:
+            - Marginal PMF from Joint PMF: ch06/marginal/marginal_pmf.md
+            - Marginal PDF from Joint PDF: ch06/marginal/marginal_pdf.md
+        - 6.2 Conditional Distributions:
+            - Conditional PMF: ch06/conditional/conditional_pmf.md
+            - Conditional PDF: ch06/conditional/conditional_pdf.md
+        - 6.3 Joint, Marginal, and Conditional Relationships:
+            - From Joint to Marginal and Conditional: ch06/relationships/joint_to_marginal_conditional.md
+            - Recovering Joint from Conditional and Marginal: ch06/relationships/recovering_joint.md
+        - 6.4 Exercises: ch06/exercises/exercises.md
 
-    - 6 General Statistical Estimation:
-        - 6.1 Estimator Quality:
-            - Bias–Variance Tradeoff: ch06/estimator_quality/bias_variance.md
-            - Mean Squared Error: ch06/estimator_quality/mse.md
-        - 6.2 Estimation Methods:
-            - Likelihood Function: ch06/estimation_methods/likelihood.md
-            - Method of Moments: ch06/estimation_methods/moments.md
+    - 7 Expectation and Variance:
+        - 7.1 Expectation:
+            - Definition of Expectation (Discrete and Continuous): ch07/expectation/definition.md
+            - Law of the Unconscious Statistician (LOTUS): ch07/expectation/lotus.md
+            - Linearity of Expectation: ch07/expectation/linearity.md
+            - Tail Sum Formula for Expectation: ch07/expectation/tail_sum.md
+        - 7.2 Indicator Random Variables:
+            - Definition and Properties: ch07/indicators/definition.md
+            - Expectation via Indicators: ch07/indicators/expectation_via_indicators.md
+            - Classic Examples (Matching, Birthday, Empty Bins, Elevator): ch07/indicators/classic_examples.md
+        - 7.3 Variance:
+            - Definition and Computation: ch07/variance/definition.md
+            - Var(X) = E[X²] − (E[X])² Formula: ch07/variance/shortcut_formula.md
+            - Standard Deviation: ch07/variance/standard_deviation.md
+        - 7.4 Properties and Inequalities:
+            - Variance Under Linear Transformations: ch07/properties/linear_transformations.md
+            - Markov's Inequality: ch07/properties/markov.md
+            - Chebyshev's Inequality: ch07/properties/chebyshev.md
+            - Jensen's Inequality: ch07/properties/jensen.md
+        - 7.5 Mean and Variance of Sums:
+            - Mean and Variance of Sums of Random Variables: ch07/sums/mean_variance_sums.md
+        - 7.6 Decomposition of a Random Variable:
+            - Decomposition Examples (Binomial, Negative Binomial, Dice, Coupon Collector): ch07/decomposition/decomposition.md
+        - 7.7 Unbiased Estimation of Mean and Variance:
+            - Unbiased Estimators (Sample Mean and Sample Variance): ch07/unbiased_estimation/unbiased_estimation.md
+        - 7.8 Higher Moments:
+            - Skewness and Kurtosis: ch07/moments/skewness_kurtosis.md
+            - Heavy Tails and the Moment Problem: ch07/moments/heavy_tails.md
+        - 7.9 Standardization:
+            - Standardization and Reverse Standardization: ch07/standardization/standardization.md
+        - 7.10 Applications:
+            - Maximization of Expected Profit (Newsboy Problem): ch07/applications/newsboy_problem.md
+        - 7.11 Exercises: ch07/exercises/exercises.md
 
-    - 7 Estimation of Mean and Variance:
-        - 7.1 Estimation of the Mean:
-            - Sample Mean as Estimator: ch07/mean/sample_mean.md
-            - Bias and Consistency: ch07/mean/bias_consistency.md
-        - 7.2 Estimation of the Variance:
-            - Naive Variance Estimator: ch07/variance/naive.md
-            - Bessel's Correction: ch07/variance/bessels.md
-        - 7.3 Gaussian MLE:
-            - MLE of μ and σ²: ch07/mle/gaussian_mle.md
-        - 7.4 Code:
-            - Sample Mean Properties: ch07/code/sample_mean_properties.py
-            - Consistency and Convergence: ch07/code/consistency_convergence.py
-            - Variance Estimators: ch07/code/variance_estimators.py
-            - Bessel's Correction: ch07/code/bessels_correction.py
-            - Gaussian MLE: ch07/code/gaussian_mle.py
-            - Return Estimation: ch07/code/return_estimation.py
-        - 7.5 Exercises: ch07/exercises/exercises.md
+    - 8 Conditional Expectation and Conditional Variance:
+        - 8.1 Conditional Expectation:
+            - Conditional Expectation Given an Event: ch08/conditional_expectation/given_event.md
+            - Conditional Expectation Given a Random Variable: ch08/conditional_expectation/given_rv.md
+            - E[Y|X] as a Random Variable: ch08/conditional_expectation/as_rv.md
+        - 8.2 Law of Total Expectation:
+            - Law of Iterated Expectations (Tower Property): ch08/total_expectation/tower_property.md
+            - Applications: ch08/total_expectation/applications.md
+        - 8.3 Conditional Variance:
+            - Conditional Variance Definition: ch08/conditional_variance/definition.md
+            - Law of Total Variance (Eve's Law): ch08/conditional_variance/total_variance.md
+        - 8.4 Exercises: ch08/exercises/exercises.md
 
-    - 8 Confidence Intervals:
-        - 8.1 Foundations:
-            - Confidence Level and Coverage: ch08/foundations/coverage.md
-        - 8.2 One-Sample Intervals:
-            - CI for μ: ch08/one_sample_intervals/ci_mu.md
-            - CI for p: ch08/one_sample_intervals/ci_p.md
-            - CI for σ²: ch08/one_sample_intervals/ci_sigma2.md
-        - 8.3 Two-Sample Intervals:
-            - CI for μ₁−μ₂: ch08/two_sample_intervals/ci_mu_diff.md
-            - CI for p₁−p₂: ch08/two_sample_intervals/ci_p_diff.md
-            - CI for σ₁²/σ₂²: ch08/two_sample_intervals/ci_variance_ratio.md
-        - 8.4 Paired-Sample Intervals:
-            - CI for μ_D (Mean of Differences): ch08/paired_sample_intervals/ci_mu_paired.md
+    - 9 Expectation and Variance of Sums of Random Variables:
+        - 9.1 Covariance and Correlation:
+            - Covariance Definition and Properties: ch09/covariance/definition.md
+            - Correlation Coefficient: ch09/covariance/correlation.md
+            - Independence Implies Zero Covariance: ch09/covariance/independence_covariance.md
+            - Cauchy–Schwarz Inequality: ch09/covariance/cauchy_schwarz.md
+        - 9.2 Expectation of Sums:
+            - Linearity of Expectation for Sums: ch09/sums/linearity.md
+            - Expectation of Products (Independent Case): ch09/sums/products.md
+        - 9.3 Variance of Sums:
+            - Variance of a Sum (General Formula): ch09/sums/variance_sum_general.md
+            - Variance of a Sum (Independent Case): ch09/sums/variance_sum_independent.md
+            - Variance-Covariance Matrix: ch09/sums/variance_covariance_matrix.md
+        - 9.4 Exercises: ch09/exercises/exercises.md
 
-    - 9 Hypothesis Testing:
-        - 9.1 Foundations:
-            - Null and Alternative Hypotheses: ch09/foundations/hypotheses.md
-            - Test Statistics and p-values: ch09/foundations/pvalues.md
-        - 9.2 One-Sample Tests:
-            - Tests for μ, p, σ²: ch09/one_sample_tests/one_sample.md
-        - 9.3 Two-Sample Tests:
-            - Tests for μ₁−μ₂, p₁−p₂, σ₁²/σ₂²: ch09/two_sample_tests/two_sample.md
-        - 9.4 Paired-Sample Tests:
-            - Paired t-test for μ_D: ch09/paired_sample_tests/paired_t_test.md
-            - When to Use Paired vs Two-Sample: ch09/paired_sample_tests/paired_vs_two_sample.md
-        - 9.5 Errors and Power:
-            - Type I and II Errors: ch09/errors_and_power/errors.md
-            - Power Analysis: ch09/errors_and_power/power.md
-            - CI ↔ Test Duality: ch09/errors_and_power/duality.md
-        - 9.6 Exercises: ch09/exercises/exercises.md
+    - 10 Discrete Distributions:
+        - 10.1 Bernoulli and Binomial:
+            - Bernoulli Distribution: ch10/bernoulli_binomial/bernoulli.md
+            - Binomial Distribution: ch10/bernoulli_binomial/binomial.md
+        - 10.2 Geometric and Negative Binomial:
+            - Geometric Distribution: ch10/geometric/geometric.md
+            - Memoryless Property: ch10/geometric/memoryless.md
+            - Negative Binomial Distribution: ch10/geometric/negative_binomial.md
+            - Coupon Collector Problem: ch10/geometric/coupon_collector.md
+        - 10.3 Hypergeometric Distribution:
+            - Hypergeometric Distribution: ch10/hypergeometric/hypergeometric.md
+            - Comparison with Binomial: ch10/hypergeometric/comparison_binomial.md
+        - 10.4 Discrete Uniform Distribution:
+            - Discrete Uniform Distribution: ch10/uniform/discrete_uniform.md
+            - Properties and Sum of Discrete Uniforms: ch10/uniform/properties.md
+        - 10.5 Exercises: ch10/exercises/exercises.md
 
-    - 10 Chi-Square Tests:
-        - 10.1 Chi-Square Distribution and Asymptotics:
-            - Chi-Square Distribution: ch10/distribution/distribution.md
-            - Degrees of Freedom and Asymptotic Theory: ch10/distribution/degrees_of_freedom.md
-        - 10.2 Chi-Square Tests for Categorical Data:
-            - Goodness-of-Fit Test: ch10/test/gof.md
-            - Test of Independence: ch10/test/independence.md
-            - Test of Homogeneity: ch10/test/homogeneity.md
-        - 10.3 Practical Considerations:
-            - Expected Cell Counts and Validity Conditions: ch10/practice/validity_conditions.md
-            - Effect Size and Cramér's V: ch10/practice/effect_size.md
-        - 10.4 Exercises: ch10/exercises/exercises.md
+    - 11 Moment Generating Functions and Characteristic Functions:
+        - 11.1 Moment Generating Functions:
+            - MGF Definition and Properties: ch11/mgf/definition.md
+            - Finding Moments from the MGF: ch11/mgf/finding_moments.md
+            - Uniqueness Theorem: ch11/mgf/uniqueness.md
+        - 11.2 MGFs of Common Distributions:
+            - MGF of Bernoulli and Binomial: ch11/mgf_examples/bernoulli_binomial.md
+            - MGF of Geometric and Negative Binomial: ch11/mgf_examples/geometric_negative_binomial.md
+            - MGF of Poisson: ch11/mgf_examples/poisson.md
+            - MGF of Exponential and Gamma: ch11/mgf_examples/exponential_gamma.md
+            - MGF of Normal: ch11/mgf_examples/normal.md
+        - 11.3 MGF Techniques:
+            - MGF of Sums of Independent Random Variables: ch11/mgf_techniques/sums.md
+            - Identifying Distributions via MGFs: ch11/mgf_techniques/identification.md
+        - 11.4 Probability Generating Functions (Supplementary):
+            - PGF Definition and Properties: ch11/pgf/definition.md
+            - PGF of Common Discrete Distributions: ch11/pgf/common_distributions.md
+            - Random Sums and Compound Distributions: ch11/pgf/random_sums.md
+        - 11.5 Characteristic Functions (Supplementary):
+            - Definition, Existence, and Relationship to MGF: ch11/cf/definition.md
+            - Properties, Inversion, and Lévy Continuity: ch11/cf/properties.md
+        - 11.6 Exercises: ch11/exercises/exercises.md
 
-    - 11 ANOVA:
-        - 11.1 One-Way ANOVA:
-            - Model and Assumptions: ch11/anova_one_way/one_way_model.md
-            - F-Test Procedure: ch11/anova_one_way/f_test.md
-        - 11.2 Two-Way ANOVA:
-            - Main Effects and Blocking: ch11/anova_two_way/two_way.md
-            - Interaction Effects: ch11/anova_two_way/interaction.md
-        - 11.3 Post-Hoc Comparisons:
-            - Tukey HSD: ch11/post_hoc/tukey.md
-        - 11.4 Welch's ANOVA:
-            - Welch's One-Way ANOVA: ch11/anova_welch/welch_one_way.md
-            - Welch's Two-Way ANOVA: ch11/anova_welch/welch_two_way.md
-        - 11.5 Assumptions:
-            - Assumptions Overview: ch11/assumptions/assumptions_overview.md
-            - Checking Normality of Residuals: ch11/assumptions/normality.md
-            - Checking Independence of Observations: ch11/assumptions/independence.md
-            - Checking Homoscedasticity: ch11/assumptions/homoscedasticity.md
-            - Checking Linearity: ch11/assumptions/linearity.md
-        - 11.6 Diagnostics:
-            - Residual Analysis: ch11/diagnostics/residual_analysis.md
-            - Influential Data Points: ch11/diagnostics/influential_points.md
-            - Handling Assumption Violations: ch11/diagnostics/handling_violations.md
-        - 11.7 Practical Applications:
-            - Case Studies: ch11/practical_applications/case_studies.md
-        - 11.8 Code:
-            - Chi-Squared Test for Variance: ch11/code/chi2_test_for_variance.py
-            - F-Test of Equality of Variances: ch11/code/f_test_equality_of_variances.py
-            - Bartlett's Test: ch11/code/bartlett_test.py
-            - Levene's Test: ch11/code/levene_test.py
-            - Chi-Square Distribution: ch11/code/chi_square_distribution.py
-            - ANOVA Diagnostics: ch11/code/anova_diagnostics.py
-        - 11.9 Exercises: ch11/exercises/exercises.md
+    - 12 Poisson Approximation:
+        - 12.1 Poisson Distribution:
+            - Poisson Distribution Definition and Properties: ch12/poisson/definition.md
+            - Mean and Variance of the Poisson: ch12/poisson/mean_variance.md
+        - 12.2 Poisson as Limit of Binomial:
+            - Poisson Limit Theorem: ch12/approximation/poisson_limit.md
+            - When to Use the Poisson Approximation: ch12/approximation/when_to_use.md
+            - Numerical Comparison (Binomial vs Poisson): ch12/approximation/numerical_comparison.md
+        - 12.3 Sums of Independent Poissons:
+            - Additivity of Independent Poisson Random Variables: ch12/sums/additivity.md
+        - 12.4 Exercises: ch12/exercises/exercises.md
 
-    - 12 Linear Regression:
-        - Chapter Overview: ch12/index.md
-        - 12.1 Linear Regression:
-            - Simple Linear Regression: ch12/linear_regression/simple.md
-            - Multiple Linear Regression: ch12/linear_regression/multiple.md
-        - 12.2 Estimation and Inference:
-            - Least Squares Estimation: ch12/estimation_inference/least_squares.md
-            - Sampling Distributions (Simple OLS): ch12/estimation_inference/sampling_dist_simple.md
-            - Confidence Intervals for Coefficients: ch12/estimation_inference/ci_coeff.md
-            - Sampling Distributions and Tests (General OLS): ch12/estimation_inference/tests_coeff.md
-        - 12.3 Testing Coefficients:
-            - Hypothesis Tests (t-tests): ch12/testing_coefficients/hypothesis_tests.md
-            - p-values and Confidence Intervals: ch12/testing_coefficients/pvalues_ci.md
-            - Interpretation of Significance: ch12/testing_coefficients/significance.md
-        - 12.4 Interaction and Polynomial Extensions:
-            - Interaction Terms: ch12/interaction_polynomial/interaction_terms.md
-            - Polynomial Regression: ch12/interaction_polynomial/polynomial_regression.md
-        - 12.5 Assumptions and Diagnostics:
-            - Assumptions Overview (LINE): ch12/assumptions/index.md
-            - Linearity Assumption: ch12/assumptions/linearity_overview.md
-            - Independence Assumption: ch12/assumptions/independence_overview.md
-            - Homoscedasticity Assumption: ch12/assumptions/homoscedasticity_overview.md
-            - Normality Assumption: ch12/assumptions/normality_overview.md
-            - Checking Linearity: ch12/assumptions/checking_linearity.md
-            - Checking Independence: ch12/assumptions/checking_independence.md
-            - Checking Homoscedasticity: ch12/assumptions/checking_homoscedasticity.md
-            - Checking Normality: ch12/assumptions/checking_normality.md
-        - 12.6 Diagnostics:
-            - Residual Analysis: ch12/diagnostics/residuals.md
-            - Multicollinearity and Influence: ch12/diagnostics/influence.md
-        - 12.7 Performance Metrics:
-            - R², Adjusted R², MAE, MSE, RMSE: ch12/performance/metrics.md
-        - 12.8 Model Selection Criteria:
-            - AIC and BIC: ch12/model_selection/aic_bic.md
-        - 12.9 Package Usage:
-            - sklearn vs statsmodels Comparison: ch12/package_usage/comparison.md
-        - 12.10 Code:
-            - CI for Slope (Caffeine Example): ch12/code/ci_slope_example.py
-            - CI and Prediction Bands: ch12/code/ci_prediction_bands.py
-            - OLS Regression Output Reproduction: ch12/code/ols_regression_output.py
-            - Multiple Regression Diagnostics: ch12/code/multiple_regression_diagnostics.py
-            - Testing Coefficients Examples: ch12/code/testing_coefficients.py
-        - 12.11 Exercises: ch12/exercises/exercises.md
+    - 13 Poisson Point Process:
+        - 13.1 Definition and Construction:
+            - From Counting to the Poisson Process: ch13/definition/counting_to_process.md
+            - Definition and Axioms: ch13/definition/axioms.md
+            - Rate Parameter and Intensity: ch13/definition/rate_intensity.md
+        - 13.2 Properties:
+            - Number of Events in an Interval: ch13/properties/events_in_interval.md
+            - Independent Increments: ch13/properties/independent_increments.md
+            - Stationary Increments: ch13/properties/stationary_increments.md
+            - Merging and Splitting of Poisson Processes: ch13/properties/merging_splitting.md
+        - 13.3 Conditional Distribution of Arrival Times:
+            - Uniform Distribution of Arrivals (Given N(t) = n): ch13/conditional/uniform_arrivals.md
+        - 13.4 Exercises: ch13/exercises/exercises.md
 
-    - 13 Logistic Regression:
-        - 13.1 Logistic Regression:
-            - Logit Link and Odds: ch13/logistic_regression/logit.md
-            - Likelihood for Logistic Regression: ch13/logistic_regression/likelihood.md
-        - 13.2 Estimation and Inference:
-            - Maximum Likelihood Estimation: ch13/estimation_inference/mle.md
-            - Wald and Likelihood Ratio Tests: ch13/estimation_inference/tests.md
-        - 13.3 Model Evaluation:
-            - Confusion Matrix and ROC: ch13/evaluation/metrics.md
+    - 14 Distributions Related to the Poisson Process:
+        - 14.1 Exponential Distribution:
+            - Exponential Distribution from Interarrival Times: ch14/exponential/definition.md
+            - Memoryless Property: ch14/exponential/memoryless.md
+            - Mean and Variance: ch14/exponential/mean_variance.md
+        - 14.2 Gamma Distribution:
+            - Gamma Distribution as Sum of Exponentials: ch14/gamma/definition.md
+            - Gamma Function: ch14/gamma/gamma_function.md
+            - Mean and Variance: ch14/gamma/mean_variance.md
+            - Relationship to Chi-Squared Distribution: ch14/gamma/chi_squared.md
+        - 14.3 Erlang Distribution:
+            - Erlang as a Special Case of Gamma: ch14/erlang/erlang.md
+            - Waiting Time for the k-th Arrival: ch14/erlang/kth_arrival.md
+        - 14.4 Exercises: ch14/exercises/exercises.md
 
-    - 14 Multiclass Classification and Softmax Regression:
-        - 14.1 Softmax Regression:
-            - Multinomial Logistic Regression: ch14/softmax_regression/multinomial.md
-            - Softmax Function and Probability Simplex: ch14/softmax_regression/softmax.md
-        - 14.2 Estimation and Optimization:
-            - Cross-Entropy Loss: ch14/optimization/cross_entropy.md
-            - Gradient-Based Optimization: ch14/optimization/optimization.md
-        - 14.3 Model Evaluation and Case Studies:
-            - Multiclass Metrics (Accuracy, Confusion Matrix): ch14/case_studies/metrics.md
-            - MNIST Case Study: ch14/case_studies/mnist.md
+    - 15 Continuous Distributions:
+        - 15.1 Uniform Distribution:
+            - Continuous Uniform Distribution: ch15/uniform/definition.md
+            - Properties and Applications: ch15/uniform/properties.md
+        - 15.2 Normal Distribution:
+            - Normal Distribution Definition: ch15/normal/definition.md
+            - Standard Normal and Z-Scores: ch15/normal/standard_normal.md
+            - Normal Probability Calculations: ch15/normal/calculations.md
+            - Sum of Independent Normals: ch15/normal/sum_normals.md
+            - Linear Combinations of Normals: ch15/normal/linear_combinations.md
+        - 15.3 Beta Distribution:
+            - Beta Distribution Definition: ch15/beta/definition.md
+            - Properties and Shape Analysis: ch15/beta/properties.md
+            - Bayesian Applications: ch15/beta/bayesian_applications.md
+        - 15.4 Log-Normal Distribution:
+            - Log-Normal Distribution: ch15/lognormal/definition.md
+            - Properties and Moments: ch15/lognormal/properties.md
+            - Log-Normal in Finance: ch15/lognormal/finance.md
+        - 15.5 Order Statistics:
+            - Definition and Notation: ch15/order_statistics/definition.md
+            - Distribution of the Minimum and Maximum: ch15/order_statistics/min_max.md
+            - PDF of the k-th Order Statistic: ch15/order_statistics/kth_order_statistic.md
+            - Joint Distribution of Order Statistics: ch15/order_statistics/joint_distribution.md
+            - Order Statistics of the Uniform and the Beta Connection: ch15/order_statistics/uniform_beta.md
+        - 15.6 Transformations of Continuous Random Variables:
+            - Change of Variables (Single Variable): ch15/transformations/change_of_variables.md
+            - Jacobian Method for Joint Transformations: ch15/transformations/jacobian.md
+            - Probability Integral Transform: ch15/transformations/probability_integral_transform.md
+            - Box-Muller Transform: ch15/transformations/box_muller.md   # ← new
+        - 15.7 Exercises: ch15/exercises/exercises.md
 
-    - 15 Normality Tests:
-        - Chapter Overview: ch15/index.md
-        - 15.1 Introduction to Normality:
-            - What Is Normality and Why It Matters: ch15/introduction/normality.md
-        - 15.2 Graphical Methods:
-            - Histogram and Density Plots: ch15/graphical_methods/histogram_density.md
-            - Q-Q Plots: ch15/graphical_methods/qq_plots.md
-            - Boxplots and Their Interpretation: ch15/graphical_methods/boxplots.md
-        - 15.3 Descriptive Statistics as Normality Indicators:
-            - Skewness and Kurtosis: ch15/descriptive_statistics/skewness_kurtosis.md
-            - Skewtest and Kurtosistest: ch15/descriptive_statistics/skewtest_kurtosistest.md
-            - D'Agostino's K-Squared Test: ch15/descriptive_statistics/dagostino.md
-            - Jarque-Bera Test: ch15/descriptive_statistics/jarque_bera.md
-        - 15.4 Formal Tests for Normality:
-            - Kolmogorov-Smirnov and Lilliefors Tests: ch15/formal_tests/ks_lilliefors.md
-            - Anderson-Darling Test: ch15/formal_tests/anderson_darling.md
-            - Shapiro-Wilk Test: ch15/formal_tests/shapiro_wilk.md
-        - 15.5 Limitations and Pitfalls:
-            - Sensitivity, Power, and Practical Considerations: ch15/limitations/limitations.md
-        - 15.6 Dealing with Non-Normal Data:
-            - Transformations to Achieve Normality: ch15/non_normal_data/transformations.md
-            - Bootstrapping as an Alternative: ch15/non_normal_data/bootstrapping.md
-            - Non-Parametric Methods: ch15/non_normal_data/nonparametric.md
-        - 15.7 Applications:
-            - Normality in t-Tests, Regression, and ANOVA: ch15/applications/applications.md
-        - 15.8 Exercises: ch15/exercises/exercises.md
+    - 16 Convolutions and Distributions of Sums:
+        - 16.1 Convolution Formula:
+            - Convolution for Discrete Random Variables: ch16/convolution/discrete_convolution.md
+            - Convolution for Continuous Random Variables: ch16/convolution/continuous_convolution.md
+        - 16.2 Convolution Examples:
+            - Sum of Independent Uniforms: ch16/examples/sum_uniforms.md
+            - Sum of Independent Exponentials: ch16/examples/sum_exponentials.md
+            - Sum of Independent Normals (via Convolution): ch16/examples/sum_normals.md
+            - Sum of Independent Poissons (via Convolution): ch16/examples/sum_poissons.md
+        - 16.3 An Empirical Observation — Why Do Sums Always Look Normal?:
+            - Sums of Bernoulli/Binomial: ch16/observation/bernoulli_binomial.py
+            - Sums of Uniform: ch16/observation/uniform.py
+            - Sums of Exponential: ch16/observation/exponential.py
+            - Sums of Poisson: ch16/observation/poisson.py
+            - Sums of Geometric: ch16/observation/geometric.py
+            - Sums of Chi-Squared: ch16/observation/chi_squared.py
+            - Sums of Beta: ch16/observation/beta.py
+            - Sums of Log-Normal: ch16/observation/lognormal.py
+            - Sums of Discrete Uniform: ch16/observation/discrete_uniform.py
+            - Side-by-Side Dashboard (All Distributions): ch16/observation/clt_dashboard.py
+        - 16.4 Exercises: ch16/exercises/exercises.md
 
-    - 16 Variance Tests:
-        - Chapter Overview: ch16/index.md
-        - 16.1 Introduction to Variance Testing:
-            - Overview of Variance Tests: ch16/introduction/introduction.md
-        - 16.2 Chi-Square Test for Variance:
-            - One-Sample Chi-Square Variance Test: ch16/chi_square_test/chi_square_variance.md
-        - 16.3 F-Test for Comparing Two Variances:
-            - Two-Sample F-Test: ch16/f_test/f_test_two_variances.md
-        - 16.4 Bartlett's Test:
-            - Bartlett's Test for Equality of Variances: ch16/bartlett_test/bartlett_test.md
-        - 16.5 Robust Tests:
-            - Levene's, Brown-Forsythe, and Fligner-Killeen Tests: ch16/robust_tests/robust_tests.md
-        - 16.6 Advanced Methods:
-            - Bootstrapping and Bayesian Variance Testing: ch16/advanced_methods/advanced_methods.md
-        - 16.7 Applications:
-            - Variance Testing in Regression and ANOVA: ch16/applications/applications.md
-        - 16.8 Exercises: ch16/exercises/exercises.md
+    - 17 Central Limit Theorem:
+        - 17.1 Convergence in Distribution:
+            - Definition and Examples: ch17/convergence/definition.md
+            - Convergence in Distribution vs Other Modes (Preview): ch17/convergence/comparison_preview.md
+        - 17.2 Statement and Interpretation:
+            - Central Limit Theorem (Statement): ch17/statement/clt_statement.md
+            - Standardization: ch17/statement/standardization.md
+            - Continuity Correction: ch17/statement/continuity_correction.md
+        - 17.3 Proof:
+            - CLT Proof via Moment Generating Functions: ch17/proof/clt_proof_mgf.md
+        - 17.4 Applications:
+            - Normal Approximation to the Binomial: ch17/applications/normal_approx_binomial.md
+            - Approximating Poisson Probabilities: ch17/applications/poisson_approximation.md
+            - Approximating Sums of Random Variables: ch17/applications/sums_approximation.md
+            - Confidence Intervals Preview: ch17/applications/confidence_intervals_preview.md
+        - 17.5 Exercises: ch17/exercises/exercises.md
 
-    - 17 Correlation and Causation:
-        - Chapter Overview: ch17/index.md
-        - 17.1 Correlation:
-            - Understanding Correlation: ch17/correlation/understanding.md
-        - 17.2 Ecological Correlation:
-            - Ecological Correlation and Simpson's Paradox: ch17/ecological_correlation/ecological_correlation.md
-        - 17.3 Correlation, Causation, and Confounding:
-            - Confounding Variables and Spurious Correlations: ch17/confounding/confounding.md
-        - 17.4 Causation:
-            - Establishing Causal Relationships: ch17/causation/causation.md
-        - 17.5 Correlation Tests:
-            - Pearson, Spearman, and Kendall Tests: ch17/correlation_test/correlation_tests.md
-        - 17.6 Exercises: ch17/exercises/exercises.md
+    - 18 Multivariate Normal Distribution:
+        - 18.1 Bivariate Normal Distribution:
+            - Joint PDF of the Bivariate Normal: ch18/bivariate/joint_pdf.md
+            - Contours and Geometric Interpretation: ch18/bivariate/contours.md
+            - Marginal and Conditional Distributions: ch18/bivariate/marginal_conditional.md
+            - Uncorrelated Implies Independent (Normal Case): ch18/bivariate/uncorrelated_independent.md
+        - 18.2 Multivariate Normal Distribution:
+            - Definition via Mean Vector and Covariance Matrix: ch18/multivariate/definition.md
+            - Properties and Linear Transformations: ch18/multivariate/properties.md
+            - Generating Random Samples via Cholesky: ch18/multivariate/generating_samples.md
+            - Conditional Distributions in the Multivariate Case: ch18/multivariate/conditional.md
+        - 18.3 Exercises: ch18/exercises/exercises.md
 
-    - 18 Regularization Techniques:
-        - Chapter Overview: ch18/index.md
-        - 18.1 Ridge Regression:
-            - Ridge Regression (L2 Regularization): ch18/ridge/ridge.md
-        - 18.2 Lasso Regression:
-            - Lasso Regression (L1 Regularization): ch18/lasso/lasso.md
-        - 18.3 Elastic Net:
-            - Elastic Net Regularization: ch18/elastic_net/elastic_net.md
-        - 18.4 Overview and Comparison:
-            - Regularization Methods Comparison: ch18/overview/overview.md
-        - 18.5 Code:
-            - Ridge, Lasso, and Elastic Net Comparison: ch18/code/regularization_comparison.py
+    - 19 Distributions Related to the Normal:
+        - 19.1 From Random Samples to Sampling Distributions:
+            - Sample Mean and Sample Variance: ch19/motivation/sample_mean_variance.md
+            - Why Chi-Squared, t, and F Arise Naturally: ch19/motivation/why_these_distributions.md
+        - 19.2 Chi-Squared Distribution:
+            - Definition as Sum of Squared Standard Normals: ch19/chi_squared/definition.md
+            - Properties, Mean, and Variance: ch19/chi_squared/properties.md
+            - Additivity of Chi-Squared: ch19/chi_squared/additivity.md
+            - Distribution of Sample Variance: ch19/chi_squared/sample_variance.md
+        - 19.3 Student's t Distribution:
+            - Definition and Derivation: ch19/student_t/definition.md
+            - Properties and Comparison to Normal: ch19/student_t/properties.md
+            - Convergence to Normal as df → ∞: ch19/student_t/convergence.md
+            - Distribution of Studentized Sample Mean: ch19/student_t/studentized_mean.md
+        - 19.4 F Distribution:
+            - Definition as Ratio of Chi-Squareds: ch19/f_distribution/definition.md
+            - Properties: ch19/f_distribution/properties.md
+            - Relationship to t Distribution: ch19/f_distribution/relationship_to_t.md
+        - 19.5 Exercises: ch19/exercises/exercises.md
 
-    - 19 Non-Parametric Tests:
-        - Chapter Overview: ch19/index.md
-        - 19.1 One-Sample Non-Parametric Tests:
-            - Runs Test, Sign Test, and Wilcoxon Signed-Rank: ch19/one_sample_nonparametric/one_sample.md
-        - 19.2 Paired-Sample Non-Parametric Tests:
-            - Paired Sign Test and Wilcoxon Signed-Rank: ch19/paired_sample_nonparametric/paired.md
-        - 19.3 Two-Sample and Multi-Group Tests:
-            - Rank-Sum, Mann-Whitney U, Kruskal-Wallis, and Median Test: ch19/two_sample_nonparametric/two_sample.md
-        - 19.4 Code:
-            - Runs Test: ch19/code/runs_test.py
-            - Sign Test: ch19/code/sign_test.py
-            - Two-Sample and Multi-Group Tests: ch19/code/two_sample_tests.py
+    - 20 Law of Large Numbers:
+        - 20.1 Tail Bounds:
+            - Markov and Chebyshev Inequalities: ch20/tail_bounds/markov_chebyshev.md
+            - One-Sided Chebyshev's Inequality: ch20/tail_bounds/one_sided_chebyshev.md
+            - Chernoff's Bound: ch20/tail_bounds/chernoff.md
+        - 20.2 Modes of Convergence:
+            - Convergence in Distribution (Review from Ch 17): ch20/convergence/convergence_in_distribution.md
+            - Convergence in Probability: ch20/convergence/convergence_in_probability.md
+            - Almost Sure Convergence: ch20/convergence/almost_sure_convergence.md
+            - Relationships Between Modes of Convergence: ch20/convergence/relationships.md
+        - 20.3 Weak Law of Large Numbers:
+            - Statement and Proof via Chebyshev: ch20/weak_law/statement_proof.md
+            - Examples, Extensions, and Failure Cases: ch20/weak_law/examples.md
+        - 20.4 Strong Law of Large Numbers:
+            - Statement and Proof Sketch: ch20/strong_law/statement_proof.md
+            - Intuition, Borel-Cantelli, and the Law of the Iterated Logarithm: ch20/strong_law/intuition.md
+        - 20.5 Applications and Interpretation:
+            - Coupon Collector Problem: ch20/applications/coupon_collector.md
+            - Monte Carlo Simulation: ch20/applications/monte_carlo.md
+            - Buffon's Needle: ch20/applications/buffon_needle.md
+            - Frequentist Interpretation of Probability: ch20/applications/frequentist_interpretation.md
+            - Gambler's Fallacy: ch20/applications/gamblers_fallacy.md
+        - 20.6 Relationship Between CLT and LLN:
+            - CLT vs LLN — Complementary Perspectives: ch20/comparison/clt_vs_lln.md
+        - 20.7 Exercises: ch20/exercises/exercises.md
 
-    - 20 Resampling Methods:
-        - Chapter Overview: ch20/index.md
-        - 20.1 Bootstrap:
-            - Bootstrap Confidence Intervals and Hypothesis Testing: ch20/bootstrap/bootstrap.md
-        - 20.2 Permutation Tests:
-            - Permutation Tests for Means, Correlations, and Paired Data: ch20/permutation/permutation.md
-        - 20.3 Comparison:
-            - Bootstrap vs Permutation Tests: ch20/comparison/comparison.md
-
-    - 21 Mathematical Backup for Linear Regression:
-        - Chapter Overview: ch21/index.md
-        - 21.1 Square Matrices:
-            - Similar Matrices: ch21/square_matrices/similar_matrices.md
-            - Diagonal Form of Diagonalizable Matrices: ch21/square_matrices/diagonalizable.md
-            - Jordan Canonical Form: ch21/square_matrices/jordan_form.md
-            - Trace and Eigenvalues: ch21/square_matrices/trace_eigenvalues.md
-            - Idempotent Matrices: ch21/square_matrices/idempotent.md
-            - Symmetric Matrices: ch21/square_matrices/symmetric.md
-            - Positive Definite Matrices: ch21/square_matrices/positive_definite.md
-            - Gram Matrices: ch21/square_matrices/gram_matrices.md
-            - Projection Matrices: ch21/square_matrices/projection.md
-            - Orthogonal Projection Matrices: ch21/square_matrices/orthogonal_projection.md
-        - 21.2 Linear Algebra and Statistics:
-            - Chi-Squared Distribution and Quadratic Forms: ch21/linalg_statistics/chi_squared_quadratic.md
-            - Sampling Distributions (Simple OLS): ch21/linalg_statistics/sampling_dist_simple_ols.md
-            - Sampling Distributions (General OLS): ch21/linalg_statistics/sampling_dist_general_ols.md
+    - 21 Simulation:
+        - 21.1 Generating Random Samples:
+            - How to Generate Random Samples: ch21/random_samples/generating_random_samples.md
+        - 21.2 Basic Simulation Examples:
+            - Coin Flip Using Uniform Samples: ch21/examples/coin_flip.md
+            - Random Points and the Unit Circle: ch21/examples/random_points_unit_circle.md
+        - 21.3 Random Walks:
+            - 2D Simple Random Walk: ch21/random_walk/random_walk_2d.md
+        - 21.4 Sampling from Normal Distributions:
+            - Samples from Two Different Normals: ch21/normal_samples/mixture_normals.md
+        - 21.5 Longest Run:
+            - Longest Run in Coin Flips: ch21/longest_run/longest_run.md
+        - 21.6 Arcsine Laws:
+            - Last Visit Time: ch21/arcsine_law/last_visit_time.md
+            - Number of Positive Sticks: ch21/arcsine_law/positive_sticks.md
+        - 21.7 Exercises: ch21/exercises/exercises.md
 
 plugins:
     - search

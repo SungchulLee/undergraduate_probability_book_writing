@@ -1,149 +1,65 @@
-# Chapter 7 Exercises: Estimation of Mean and Variance
+# Chapter 7 Exercises
 
-## Section 7.1: Estimation of the Mean
+## Section 7.1: Expectation
 
-### Exercise 7.1.1 — Unbiasedness of the Sample Mean
-Let $X_1, \ldots, X_n$ be independent with $E[X_i] = \mu$ for all $i$. Show $\bar{X}$ is unbiased. Does this require independence?
+**Exercise 7.1.1** Let $X$ be the number showing on a fair die. Compute $E[X]$, $E[X^2]$, and $E[2X + 3]$.
 
-### Exercise 7.1.2 — Variance with Correlated Data
-Suppose $X_1, \ldots, X_n$ have common mean $\mu$, variance $\sigma^2$, and pairwise correlation $\rho$.
+**Exercise 7.1.2** Let $X$ have PMF $P(X = -1) = 0.3$, $P(X = 0) = 0.4$, $P(X = 2) = 0.3$. Compute $E[X]$ and $E[X^2]$.
 
-(a) Show $\text{Var}(\bar{X}) = \frac{\sigma^2}{n}[1 + (n-1)\rho]$.
+**Exercise 7.1.3** If $X \sim \text{Uniform}(a, b)$, use LOTUS to show $E[X^2] = \frac{a^2 + ab + b^2}{3}$.
 
-(b) What happens as $n \to \infty$? When is $\bar{X}$ still consistent?
-
-(c) A fund equally weights 20 hedge funds with 15% vol and 0.4 pairwise correlation. What is SE of estimated mean return from one year?
-
-### Exercise 7.1.3 — Relative Efficiency
-(a) Show the asymptotic relative efficiency of median to mean for Normal data is $2/\pi$.
-
-(b) Verify via simulation for $n = 50$. Repeat for $t_3$ data. Which estimator wins for heavy tails?
-
-### Exercise 7.1.4 — Shrinkage Estimator
-For $\hat{\mu}_\lambda = \lambda\bar{X}$:
-
-(a) Derive MSE as a function of $\lambda, \mu, \sigma^2, n$.
-
-(b) Find MSE-optimal $\lambda^*$. Show $\lambda^* < 1$ when $|\mu| < \sigma/\sqrt{n}$.
-
-(c) Why can't we use $\lambda^*$ directly in practice?
-
-### Exercise 7.1.5 — Estimation Horizon
-Strategy: 5% expected annual return, 18% volatility.
-
-(a) SE of estimated mean from 10 years of annual data?
-
-(b) How many years until 95% CI excludes zero?
-
-(c) Does switching to monthly data change the answer to (b)?
+**Exercise 7.1.4** Use the tail sum formula to compute the expectation of a geometric random variable with parameter $p$.
 
 ---
 
-## Section 7.2: Estimation of the Variance
+## Section 7.2: Indicator Random Variables
 
-### Exercise 7.2.1 — Deriving the Bias
-Prove $E[\frac{1}{n}\sum(X_i - \bar{X})^2] = \frac{n-1}{n}\sigma^2$ using the identity $\sum(X_i - \bar{X})^2 = \sum(X_i - \mu)^2 - n(\bar{X} - \mu)^2$.
+**Exercise 7.2.1** There are 100 people at a party. Each person independently has birthday uniform over 365 days. Use indicators to compute the expected number of pairs sharing a birthday.
 
-### Exercise 7.2.2 — MSE-Optimal Divisor
-For $\hat{\sigma}^2_c = \frac{1}{c}\sum(X_i - \bar{X})^2$, Normal data:
+**Exercise 7.2.2** Throw 200 balls into 100 bins uniformly at random. Use indicators to compute the expected number of empty bins and the variance.
 
-(a) Derive $\text{MSE}(\hat{\sigma}^2_c)$.
-
-(b) Find $c^*$ minimizing MSE. Verify $c^* = n+1$.
-
-(c) For $n=10$, compute MSE at $c=9,10,11$ and verify ordering.
-
-### Exercise 7.2.3 — Known Mean Advantage
-When $\mu$ is known, $\hat{\sigma}^2 = \frac{1}{n}\sum(X_i - \mu)^2$:
-
-(a) Show it is unbiased.
-
-(b) For Normal, show $\text{Var}(\hat{\sigma}^2) = 2\sigma^4/n$.
-
-(c) What is the relative efficiency gain from knowing $\mu$?
-
-### Exercise 7.2.4 — Chi-Squared Distribution
-For Normal data:
-
-(a) Show $(n-1)S^2/\sigma^2 \sim \chi^2_{n-1}$.
-
-(b) Construct 95% CI for $\sigma^2$ when $n=20, S^2=16$.
-
-(c) Explain why the CI is asymmetric about $S^2$.
-
-### Exercise 7.2.5 — Standard Deviation Bias
-(a) Use Jensen's inequality to explain why $E[S] < \sigma$.
-
-(b) For $n=5$, compute the correction factor $c_4$.
-
-(c) Is this correction typically applied in practice?
-
-### Exercise 7.2.6 — Realized Volatility
-Analyst estimates daily vol from 78 five-minute returns.
-
-(a) Bias of $1/n$ estimator as fraction of true variance?
-
-(b) Does Bessel's correction matter when $n=78$?
-
-(c) Impact of using a 21-day rolling window instead?
+**Exercise 7.2.3** 20 people enter an elevator at the ground floor. Each independently selects one of 10 floors. Find the expected number of floors at which the elevator stops and its variance.
 
 ---
 
-## Section 7.3: Gaussian MLE
+## Section 7.3: Variance
 
-### Exercise 7.3.1 — Deriving the MLE
-From $\ell(\mu, \sigma^2) = -\frac{n}{2}\log(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum(x_i - \mu)^2$:
+**Exercise 7.3.1** If $X$ has mean 3 and $E[X^2] = 13$, compute $\text{Var}(X)$.
 
-(a) Derive $\hat{\mu}_{\text{MLE}} = \bar{X}$.
+**Exercise 7.3.2** Compute the variance of the discrete random variable $X$ with $P(X = -2) = 1/4$, $P(X = 0) = 1/2$, $P(X = 3) = 1/4$.
 
-(b) Derive $\hat{\sigma}^2_{\text{MLE}} = \frac{1}{n}\sum(X_i - \bar{X})^2$.
-
-(c) Verify second-order conditions.
-
-### Exercise 7.3.2 — Fisher Information
-(a) Compute the Fisher information matrix $I(\mu, \sigma^2)$. Show off-diagonals are zero.
-
-(b) What does this imply about estimating $\mu$ and $\sigma^2$?
-
-(c) Verify $\hat{\mu}$ achieves the CRLB for all $n$.
-
-### Exercise 7.3.3 — Invariance Property
-Using MLE invariance, find the MLE of:
-
-(a) $\sigma$ (standard deviation)
-
-(b) $\text{CV} = \sigma/\mu$ (coefficient of variation)
-
-(c) The 99th percentile $\mu + 2.326\sigma$
-
-### Exercise 7.3.4 — Constrained MLE ($\mu = 0$)
-(a) Derive the constrained MLE of $\sigma^2$ and show it is unbiased.
-
-(b) Compare its variance with the unrestricted MLE.
-
-(c) For $n=30$ daily returns with $\sum r_i^2 = 0.0048$, compute $\hat{\sigma}_{\text{annual}}$.
-
-### Exercise 7.3.5 — Parametric VaR
-Given $\hat{\mu} = 0.0003, \hat{\sigma} = 0.012$ from 252 daily observations:
-
-(a) Compute 1-day 99% parametric VaR.
-
-(b) Compute 10-day 99% VaR (square-root-of-time rule).
-
-(c) If true excess kurtosis is 3, does normal VaR overestimate or underestimate risk?
-
-### Exercise 7.3.6 — Monte Carlo Verification
-Write Python code to generate 10,000 samples of $n=20$ from $N(5, 9)$, compute $\hat{\mu}$, $\hat{\sigma}^2_{\text{MLE}}$, $S^2$, and verify their expected values.
+**Exercise 7.3.3** Show that for any constant $c$, $E[(X - c)^2]$ is minimized when $c = E[X]$, and the minimum value is $\text{Var}(X)$.
 
 ---
 
-## Challenge Problems
+## Section 7.4: Properties and Inequalities
 
-### Challenge 7.1 — James-Stein Estimator
-For $X \sim N(\mu, I_p)$ with $p \geq 3$, implement and compare the James-Stein estimator $\hat{\mu}^{JS} = (1 - (p-2)/\|X\|^2)X$ with $X$ across simulations for $p = 10$.
+**Exercise 7.4.1** If $X \geq 0$ with $E[X] = 5$, find an upper bound for $P(X \geq 20)$ using Markov's inequality.
 
-### Challenge 7.2 — Ledoit-Wolf Shrinkage
-Simulate $p=30$ assets, $n=60$ observations. Compare sample covariance vs Ledoit-Wolf shrinkage estimator in Frobenius norm. Report MSE reduction and how optimal shrinkage intensity depends on $p/n$.
+**Exercise 7.4.2** If $E[X] = 10$ and $\text{Var}(X) = 4$, use Chebyshev's inequality to bound $P(|X - 10| \geq 6)$.
 
-### Challenge 7.3 — Bootstrap Standard Errors
-Generate $n=30$ from Gamma(3,2). Estimate mean and median, compute bootstrap SEs (B=5000), and compare with theoretical/asymptotic formulas.
+**Exercise 7.4.3** Use Jensen's inequality to show that $E[1/X] \geq 1/E[X]$ for $X > 0$.
+
+---
+
+## Section 7.5: Mean and Variance of Sums
+
+**Exercise 7.5.1** Let $X_1, \ldots, X_{100}$ be iid with $E[X_i] = 2$ and $\text{Var}(X_i) = 9$. Compute $E[\sum X_i]$ and $\text{Var}(\sum X_i)$.
+
+**Exercise 7.5.2** Let $S = 3X_1 - 2X_2 + X_3$ where $X_1, X_2, X_3$ are independent with means 1, 2, 3 and variances 4, 1, 9. Compute $E[S]$ and $\text{Var}(S)$.
+
+**Exercise 7.5.3** A portfolio has weights $a = (0.5, 0.3, 0.2)$ and the asset covariance matrix is
+$$\Sigma = \begin{pmatrix} 0.04 & 0.01 & 0.02 \\ 0.01 & 0.09 & 0.03 \\ 0.02 & 0.03 & 0.16 \end{pmatrix}$$
+Compute the portfolio variance $\mathbf{a}^T \Sigma \mathbf{a}$.
+
+---
+
+## Section 7.6: Decomposition and Unbiased Estimation
+
+**Exercise 7.6.1** The negative binomial $\text{NB}(5, 0.4)$ can be decomposed as a sum of 5 iid geometric random variables. Compute its mean and variance using this decomposition.
+
+**Exercise 7.6.2** A class of 10 students takes a test. Scores $X_1, \ldots, X_{10}$ are iid with unknown mean $\mu$ and variance $\sigma^2$. Show that $\bar{X}$ is unbiased for $\mu$ and compute $\text{Var}(\bar{X})$.
+
+**Exercise 7.6.3** There are 50 types of collectible cards. How many packs do you expect to buy to complete the collection? What is the standard deviation?
+
+**Exercise 7.6.4** Show that dividing by $n$ instead of $n-1$ in the sample variance formula gives a biased estimator, and compute the bias.
