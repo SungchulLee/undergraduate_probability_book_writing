@@ -37,6 +37,7 @@ nav:
             - Binomial Theorem: ch01/identities/binomial_theorem.md
         - 1.5 Classic Counting Problems:
             - Matching Problem and Derangements: ch01/classic/derangements.md
+            - Derangement Simulation: ch01/classic/derangements.py
             - Pigeonhole Principle: ch01/classic/pigeonhole.md
             - Lattice Paths and the Ballot Problem: ch01/classic/lattice_paths.md
             - Partition Problems and the Twelvefold Way: ch01/classic/partitions.md
@@ -56,6 +57,7 @@ nav:
             - Counting Methods in Probability: ch02/classical/counting_methods.md
             - Birthday Problem: ch02/classical/birthday_problem.md
             - Birthday Problem (Simulation): ch02/classical/birthday_problem.py
+            - Dice Roll Sum (Simulation): ch02/classical/dice_roll_sum.py
         - 2.4 Exercises: ch02/exercises/exercises.md
 
     - 3 Conditional Probability:
@@ -95,6 +97,7 @@ nav:
         - 4.2 Probability Mass Function (PMF):
             - PMF Definition and Properties: ch04/pmf/definition.md
             - Examples of PMFs: ch04/pmf/examples.md
+            - PMF Sampling (Simulation): ch04/pmf/pmf_sampling.py
         - 4.3 Cumulative Distribution Function (CDF):
             - CDF Definition and Properties: ch04/cdf/definition.md
             - CDF for Discrete Random Variables: ch04/cdf/discrete_cdf.md
@@ -159,6 +162,7 @@ nav:
             - Decomposition Examples (Binomial, Negative Binomial, Dice, Coupon Collector): ch07/decomposition/decomposition.md
         - 7.7 Unbiased Estimation of Mean and Variance:
             - Unbiased Estimators (Sample Mean and Sample Variance): ch07/unbiased_estimation/unbiased_estimation.md
+            - Estimation Simulation (Biased vs Unbiased): ch07/unbiased_estimation/estimation_simulation.py
         - 7.8 Higher Moments:
             - Skewness and Kurtosis: ch07/moments/skewness_kurtosis.md
             - Heavy Tails and the Moment Problem: ch07/moments/heavy_tails.md
@@ -185,6 +189,7 @@ nav:
         - 9.1 Covariance and Correlation:
             - Covariance Definition and Properties: ch09/covariance/definition.md
             - Correlation Coefficient: ch09/covariance/correlation.md
+            - Correlation Simulation: ch09/covariance/correlation_simulation.py
             - Independence Implies Zero Covariance: ch09/covariance/independence_covariance.md
             - Cauchy–Schwarz Inequality: ch09/covariance/cauchy_schwarz.md
         - 9.2 Expectation of Sums:
@@ -434,6 +439,7 @@ nav:
             - Random Points and the Unit Circle: ch21/examples/random_points_unit_circle.md
         - 21.3 Random Walks:
             - 2D Simple Random Walk: ch21/random_walk/random_walk_2d.md
+            - 2D Random Walk (Simulation): ch21/random_walk/random_walk_2d.py
         - 21.4 Sampling from Normal Distributions:
             - Samples from Two Different Normals: ch21/normal_samples/mixture_normals.md
         - 21.5 Longest Run:
