@@ -1,6 +1,7 @@
 site_name: Probability
 theme:
   name: material
+  favicon: null
 
 markdown_extensions:
     - admonition
