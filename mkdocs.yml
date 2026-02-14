@@ -54,6 +54,7 @@ nav:
             - Classical Probability: ch02/classical/classical_probability.md
             - Counting Methods in Probability: ch02/classical/counting_methods.md
             - Birthday Problem: ch02/classical/birthday_problem.md
+            - Birthday Problem (Simulation): ch02/classical/birthday_problem.py
         - 2.4 Exercises: ch02/exercises/exercises.md
 
     - 3 Conditional Probability:
@@ -66,6 +67,7 @@ nav:
         - 3.3 Bayes' Theorem:
             - Bayes' Theorem and Prior–Posterior Updating: ch03/bayes/bayes_theorem.md
             - Applications of Bayes' Theorem: ch03/bayes/applications.md
+            - Monty Hall Simulation: ch03/bayes/monty_hall.py
         - 3.4 Independence:
             - Independence of Two Events: ch03/independence/two_events.md
             - Mutual Independence: ch03/independence/mutual_independence.md
@@ -73,6 +75,8 @@ nav:
         - 3.5 Gambler's Ruin:
             - Gambler's Ruin Problem: ch03/gamblers_ruin/gamblers_ruin.md
             - Simulation of Gambler's Ruin: ch03/gamblers_ruin/simulation.md
+            - Gambler's Ruin Simulation (Code): ch03/gamblers_ruin/simulation.py
+            - Ruin Probability (Analytical): ch03/gamblers_ruin/ruin_probability.py
             - First Step Analysis: ch03/gamblers_ruin/first_step_analysis.md
             - Linear Recurrence Solution (q > 1/2): ch03/gamblers_ruin/q_greater_half.md
             - Linear Recurrence Solution (q = 1/2): ch03/gamblers_ruin/q_equal_half.md
@@ -195,6 +199,7 @@ nav:
         - 10.1 Bernoulli and Binomial:
             - Bernoulli Distribution: ch10/bernoulli_binomial/bernoulli.md
             - Binomial Distribution: ch10/bernoulli_binomial/binomial.md
+            - From Bernoulli to Binomial (Simulation): ch10/bernoulli_binomial/from_bernoulli_to_binomial.py
         - 10.2 Geometric and Negative Binomial:
             - Geometric Distribution: ch10/geometric/geometric.md
             - Memoryless Property: ch10/geometric/memoryless.md
@@ -239,6 +244,9 @@ nav:
             - Poisson Limit Theorem: ch12/approximation/poisson_limit.md
             - When to Use the Poisson Approximation: ch12/approximation/when_to_use.md
             - Numerical Comparison (Binomial vs Poisson): ch12/approximation/numerical_comparison.md
+            - Poisson Approximation of Binomial (Simulation): ch12/approximation/poisson_approx_binomial.py
+            - Birthday Couples (Simulation): ch12/approximation/birthday_couples.py
+            - Poisson Approximation of Indicators Sum (Simulation): ch12/approximation/poisson_approx_indicators.py
         - 12.3 Sums of Independent Poissons:
             - Additivity of Independent Poisson Random Variables: ch12/sums/additivity.md
         - 12.4 Exercises: ch12/exercises/exercises.md
@@ -248,6 +256,7 @@ nav:
             - From Counting to the Poisson Process: ch13/definition/counting_to_process.md
             - Definition and Axioms: ch13/definition/axioms.md
             - Rate Parameter and Intensity: ch13/definition/rate_intensity.md
+            - Poisson Process Simulation (Coin vs Exponential): ch13/definition/poisson_process_simulation.py
         - 13.2 Properties:
             - Number of Events in an Interval: ch13/properties/events_in_interval.md
             - Independent Increments: ch13/properties/independent_increments.md
@@ -262,6 +271,7 @@ nav:
             - Exponential Distribution from Interarrival Times: ch14/exponential/definition.md
             - Memoryless Property: ch14/exponential/memoryless.md
             - Mean and Variance: ch14/exponential/mean_variance.md
+            - Geometric to Exponential Convergence: ch14/exponential/geometric_to_exponential.py
         - 14.2 Gamma Distribution:
             - Gamma Distribution as Sum of Exponentials: ch14/gamma/definition.md
             - Gamma Function: ch14/gamma/gamma_function.md
@@ -290,6 +300,8 @@ nav:
             - Log-Normal Distribution: ch15/lognormal/definition.md
             - Properties and Moments: ch15/lognormal/properties.md
             - Log-Normal in Finance: ch15/lognormal/finance.md
+            - LogNormal from Normal (Simulation): ch15/lognormal/lognormal_from_normal.py
+            - Log of LogNormal is Normal (Simulation): ch15/lognormal/log_of_lognormal.py
         - 15.5 Order Statistics:
             - Definition and Notation: ch15/order_statistics/definition.md
             - Distribution of the Minimum and Maximum: ch15/order_statistics/min_max.md
@@ -339,6 +351,7 @@ nav:
             - Normal Approximation to the Binomial: ch17/applications/normal_approx_binomial.md
             - Approximating Poisson Probabilities: ch17/applications/poisson_approximation.md
             - Approximating Sums of Random Variables: ch17/applications/sums_approximation.md
+            - CLT for Coin Flips (Simulation): ch17/applications/clt_coin_flips.py
             - Confidence Intervals Preview: ch17/applications/confidence_intervals_preview.md
         - 17.5 Exercises: ch17/exercises/exercises.md
 
@@ -347,11 +360,13 @@ nav:
             - Joint PDF of the Bivariate Normal: ch18/bivariate/joint_pdf.md
             - Contours and Geometric Interpretation: ch18/bivariate/contours.md
             - Marginal and Conditional Distributions: ch18/bivariate/marginal_conditional.md
+            - Bivariate Normal PDF (3D Plot): ch18/bivariate/bivariate_normal_pdf.py
             - Uncorrelated Implies Independent (Normal Case): ch18/bivariate/uncorrelated_independent.md
         - 18.2 Multivariate Normal Distribution:
             - Definition via Mean Vector and Covariance Matrix: ch18/multivariate/definition.md
             - Properties and Linear Transformations: ch18/multivariate/properties.md
             - Generating Random Samples via Cholesky: ch18/multivariate/generating_samples.md
+            - Bivariate Normal Samples (Scatter Plot): ch18/multivariate/bivariate_normal_samples.py
             - Conditional Distributions in the Multivariate Case: ch18/multivariate/conditional.md
         - 18.3 Exercises: ch18/exercises/exercises.md
 
@@ -364,14 +379,18 @@ nav:
             - Properties, Mean, and Variance: ch19/chi_squared/properties.md
             - Additivity of Chi-Squared: ch19/chi_squared/additivity.md
             - Distribution of Sample Variance: ch19/chi_squared/sample_variance.md
+            - Chi-Squared from Sum of Squared Normals (Simulation): ch19/chi_squared/chi_squared_from_normal.py
         - 19.3 Student's t Distribution:
             - Definition and Derivation: ch19/student_t/definition.md
             - Properties and Comparison to Normal: ch19/student_t/properties.md
             - Convergence to Normal as df → ∞: ch19/student_t/convergence.md
             - Distribution of Studentized Sample Mean: ch19/student_t/studentized_mean.md
+            - Why the t-Distribution (Simulation): ch19/student_t/why_t_distribution.py
+            - t-Distribution vs Standard Normal: ch19/student_t/t_vs_normal.py
         - 19.4 F Distribution:
             - Definition as Ratio of Chi-Squareds: ch19/f_distribution/definition.md
             - Properties: ch19/f_distribution/properties.md
+            - F Distribution PDF and CDF: ch19/f_distribution/f_pdf_cdf.py
             - Relationship to t Distribution: ch19/f_distribution/relationship_to_t.md
         - 19.5 Exercises: ch19/exercises/exercises.md
 
@@ -388,13 +407,17 @@ nav:
         - 20.3 Weak Law of Large Numbers:
             - Statement and Proof via Chebyshev: ch20/weak_law/statement_proof.md
             - Examples, Extensions, and Failure Cases: ch20/weak_law/examples.md
+            - WLLN for Coin Flips (Simulation): ch20/weak_law/wlln_coin_flips.py
         - 20.4 Strong Law of Large Numbers:
             - Statement and Proof Sketch: ch20/strong_law/statement_proof.md
             - Intuition, Borel-Cantelli, and the Law of the Iterated Logarithm: ch20/strong_law/intuition.md
+            - SLLN for Coin Flips (Simulation): ch20/strong_law/slln_coin_flips.py
         - 20.5 Applications and Interpretation:
             - Coupon Collector Problem: ch20/applications/coupon_collector.md
             - Monte Carlo Simulation: ch20/applications/monte_carlo.md
+            - Monte Carlo Estimation of π (Simulation): ch20/applications/monte_carlo_pi.py
             - Buffon's Needle: ch20/applications/buffon_needle.md
+            - Buffon's Needle (Simulation): ch20/applications/buffon_needle.py
             - Frequentist Interpretation of Probability: ch20/applications/frequentist_interpretation.md
             - Gambler's Fallacy: ch20/applications/gamblers_fallacy.md
         - 20.6 Relationship Between CLT and LLN:
@@ -404,6 +427,7 @@ nav:
     - 21 Simulation:
         - 21.1 Generating Random Samples:
             - How to Generate Random Samples: ch21/random_samples/generating_random_samples.md
+            - Inverse Transform Sampling (Simulation): ch21/random_samples/inverse_transform_sampling.py
         - 21.2 Basic Simulation Examples:
             - Coin Flip Using Uniform Samples: ch21/examples/coin_flip.md
             - Random Points and the Unit Circle: ch21/examples/random_points_unit_circle.md
