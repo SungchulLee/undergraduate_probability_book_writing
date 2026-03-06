@@ -33,7 +33,7 @@ $$\left|\frac{\partial(x, y)}{\partial(u, v)}\right| = \frac{1}{\left|\dfrac{\pa
 
 It is often easier to compute $\frac{\partial(u,v)}{\partial(x,y)}$ (the "forward" Jacobian) and take the reciprocal.
 
-## General $n$-Dimensional Case
+## General n-Dimensional Case
 
 !!! info "Jacobian Method (n-Dimensional)"
     For a bijective transformation $(Y_1, \ldots, Y_n) = g(X_1, \ldots, X_n)$:

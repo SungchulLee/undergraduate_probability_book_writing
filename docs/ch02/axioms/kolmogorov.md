@@ -5,7 +5,9 @@
 A **probability measure** $P$ is a real-valued function defined on events $A$:
 
 $$
+
 A \xrightarrow{P} P(A)
+
 $$
 
 More precisely, $P$ is a function from the collection of events to the real numbers that satisfies the following three axioms.
@@ -15,7 +17,9 @@ More precisely, $P$ is a function from the collection of events to the real numb
 ### Axiom 1: Normalization
 
 $$
+
 P(\Omega) = 1, \qquad P(\emptyset) = 0
+
 $$
 
 The certain event has probability 1, and the impossible event has probability 0.
@@ -23,17 +27,21 @@ The certain event has probability 1, and the impossible event has probability 0.
 ### Axiom 2: Non-negativity
 
 $$
+
 0 \leq P(A) \leq 1 \quad \text{for every event } A
+
 $$
 
 Every event has a probability between 0 and 1.
 
-### Axiom 3: Countable Additivity ($\sigma$-additivity)
+### Axiom 3: Countable Additivity (sigma-additivity)
 
 For any sequence of **pairwise disjoint** events $A_1, A_2, \ldots$:
 
 $$
+
 P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)
+
 $$
 
 If events cannot occur simultaneously, the probability of their union equals the sum of their individual probabilities.
@@ -41,7 +49,7 @@ If events cannot occur simultaneously, the probability of their union equals the
 !!! note "Historical Note"
     These axioms were formalized by Andrey Kolmogorov in his 1933 monograph *Grundbegriffe der Wahrscheinlichkeitsrechnung* (Foundations of the Theory of Probability). This axiomatic framework put probability theory on rigorous mathematical footing by grounding it in measure theory.
 
-## The Probability Triple $(\Omega, \mathcal{F}, P)$
+## The Probability Triple (Omega, F, P)
 
 Formally, a probability model consists of three components:
 
@@ -63,7 +71,9 @@ The axioms capture the minimal requirements for a coherent notion of probability
     Axiom 3 immediately implies **finite additivity**: for pairwise disjoint events $A_1, \ldots, A_n$,
 
     $$
+
     P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i)
+
     $$
 
     Simply set $A_{n+1} = A_{n+2} = \cdots = \emptyset$ in Axiom 3.

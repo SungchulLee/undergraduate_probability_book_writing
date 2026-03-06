@@ -11,7 +11,9 @@ The **multivariate normal distribution** generalizes the univariate and bivariat
 For a $d$-dimensional random vector $\mathbf{x} = (x_1, x_2, \ldots, x_d)^T$ following $\mathbf{x} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})$:
 
 $$
+
 f(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^d |\boldsymbol{\Sigma}|}} \exp\left(-\frac{1}{2}(\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu})\right)
+
 $$
 
 where:
@@ -27,7 +29,9 @@ where:
 A multivariate normal $\mathbf{x} \in \mathbb{R}^d$ can always be written as:
 
 $$
+
 \mathbf{x} = A\mathbf{z} + \boldsymbol{\mu}
+
 $$
 
 where:
@@ -47,13 +51,17 @@ From $\mathbf{x} = A\mathbf{z} + \boldsymbol{\mu}$:
 **Mean:**
 
 $$
+
 E[\mathbf{x}] = E[A\mathbf{z} + \boldsymbol{\mu}] = A \cdot E[\mathbf{z}] + \boldsymbol{\mu} = A \cdot \mathbf{0} + \boldsymbol{\mu} = \boldsymbol{\mu}
+
 $$
 
 **Covariance matrix:**
 
 $$
+
 \boldsymbol{\Sigma} = E[(\mathbf{x} - \boldsymbol{\mu})(\mathbf{x} - \boldsymbol{\mu})^T] = E[(A\mathbf{z})(A\mathbf{z})^T] = A \cdot E[\mathbf{z}\mathbf{z}^T] \cdot A^T = A I A^T = AA^T
+
 $$
 
 So $\boldsymbol{\Sigma} = AA^T$, which is automatically symmetric and positive semi-definite for any matrix $A$.
@@ -65,13 +73,17 @@ So $\boldsymbol{\Sigma} = AA^T$, which is automatically symmetric and positive s
 The moment generating function of the multivariate normal extends the univariate formula. Recall that for $X \sim N(\mu, \sigma^2)$:
 
 $$
+
 \varphi(t) = E[e^{tX}] = e^{\mu t + \frac{1}{2}\sigma^2 t^2}
+
 $$
 
 For $\mathbf{x} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})$, the joint MGF is:
 
 $$
+
 \varphi(\mathbf{t}) = E[e^{\mathbf{t}^T \mathbf{x}}] = e^{\mathbf{t}^T \boldsymbol{\mu} + \frac{1}{2}\mathbf{t}^T \boldsymbol{\Sigma} \mathbf{t}}
+
 $$
 
 ### Derivation
@@ -79,29 +91,39 @@ $$
 Since $\mathbf{x} = A\mathbf{z} + \boldsymbol{\mu}$:
 
 $$
+
 \mathbf{t}^T \mathbf{x} = \mathbf{t}^T(A\mathbf{z} + \boldsymbol{\mu}) = \sum_k a_k z_k + b
+
 $$
 
 where $a_k$ are the components of $A^T\mathbf{t}$ and $b = \mathbf{t}^T\boldsymbol{\mu}$. This is a linear combination of independent standard normals, hence:
 
 $$
+
 \mathbf{t}^T \mathbf{x} \sim N(\mu_1, \sigma_1^2)
+
 $$
 
 with:
 
 $$
+
 \mu_1 = E[\mathbf{t}^T\mathbf{x}] = \mathbf{t}^T\boldsymbol{\mu}
+
 $$
 
 $$
+
 \sigma_1^2 = \text{Var}(\mathbf{t}^T\mathbf{x}) = \mathbf{t}^T A E[\mathbf{z}\mathbf{z}^T] A^T \mathbf{t} = \mathbf{t}^T AA^T \mathbf{t} = \mathbf{t}^T \boldsymbol{\Sigma} \mathbf{t}
+
 $$
 
 Therefore:
 
 $$
+
 \varphi_{\mathbf{x}}(\mathbf{t}) = E[e^{\mathbf{t}^T\mathbf{x}}] = \varphi_{N(\mu_1, \sigma_1^2)}(1) = e^{\mu_1 + \frac{1}{2}\sigma_1^2} = e^{\mathbf{t}^T\boldsymbol{\mu} + \frac{1}{2}\mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t}}
+
 $$
 
 ---
@@ -119,13 +141,17 @@ Since the MGF is entirely determined by $\boldsymbol{\mu}$ and $\boldsymbol{\Sig
 Any linear combination $\mathbf{a}^T\mathbf{x}$ is univariate normal:
 
 $$
+
 \mathbf{a}^T\mathbf{x} \sim N(\mathbf{a}^T\boldsymbol{\mu},\; \mathbf{a}^T\boldsymbol{\Sigma}\mathbf{a})
+
 $$
 
 More generally, any affine transformation $B\mathbf{x} + \mathbf{c}$ is multivariate normal:
 
 $$
+
 B\mathbf{x} + \mathbf{c} \sim N(B\boldsymbol{\mu} + \mathbf{c},\; B\boldsymbol{\Sigma}B^T)
+
 $$
 
 ---

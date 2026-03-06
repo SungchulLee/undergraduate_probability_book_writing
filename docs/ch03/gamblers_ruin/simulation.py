@@ -3,6 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+# ========================================================================
+
+
 class GamblerRuin:
     def __init__(self, p=0.49, initial=10, goal=20):
         self.p = p
@@ -29,6 +32,9 @@ class GamblerRuin:
         return path, results
 
 
+# ========================================================================
+
+
 def main():
     p = 0.49
     gambler = GamblerRuin(p=p, initial=10, goal=20)
@@ -51,6 +57,9 @@ def main():
     num_ruin = np.sum(results == -1)
     num_win = np.sum(results == 1)
     print(f"Ruin probability (simulation): {num_ruin / (num_ruin + num_win):.4f}")
+
+
+# ========================================================================
 
 
 if __name__ == "__main__":

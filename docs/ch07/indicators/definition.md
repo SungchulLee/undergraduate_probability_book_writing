@@ -5,7 +5,9 @@
 For an event $A$, the **indicator random variable** $\mathbf{1}_A$ (also written $I_A$) is defined as
 
 $$
+
 \mathbf{1}_A = \begin{cases} 1 & \text{if } A \text{ occurs} \\ 0 & \text{if } A \text{ does not occur} \end{cases}
+
 $$
 
 An indicator random variable is a $\text{Bernoulli}(p)$ random variable where $p = P(A)$.
@@ -17,7 +19,9 @@ An indicator random variable is a $\text{Bernoulli}(p)$ random variable where $p
 ### Expectation
 
 $$
+
 E[\mathbf{1}_A] = 1 \cdot P(A) + 0 \cdot P(A^c) = P(A)
+
 $$
 
 !!! note "Fundamental Bridge"
@@ -26,7 +30,9 @@ $$
 ### Variance
 
 $$
+
 \text{Var}(\mathbf{1}_A) = P(A)(1 - P(A)) = pq
+
 $$
 
 where $q = 1 - p$.
@@ -36,7 +42,9 @@ where $q = 1 - p$.
 Since $\mathbf{1}_A$ takes values 0 and 1 only:
 
 $$
+
 (\mathbf{1}_A)^k = \mathbf{1}_A \quad \text{for all } k \geq 1
+
 $$
 
 Therefore $E[(\mathbf{1}_A)^k] = P(A)$ for all $k \geq 1$.
@@ -60,7 +68,9 @@ Indicators inherit set operations from events:
 $A$ and $B$ are independent if and only if $\mathbf{1}_A$ and $\mathbf{1}_B$ are independent, which means:
 
 $$
+
 E[\mathbf{1}_A \cdot \mathbf{1}_B] = E[\mathbf{1}_A] \cdot E[\mathbf{1}_B]
+
 $$
 
 equivalently $P(A \cap B) = P(A) P(B)$.
@@ -72,7 +82,9 @@ equivalently $P(A \cap B) = P(A) P(B)$.
 For any two events $A$ and $B$:
 
 $$
+
 \text{Cov}(\mathbf{1}_A, \mathbf{1}_B) = P(A \cap B) - P(A)P(B)
+
 $$
 
 If $A$ and $B$ are independent, then $\text{Cov}(\mathbf{1}_A, \mathbf{1}_B) = 0$.

@@ -1,6 +1,6 @@
 # Random Points and the Unit Circle
 
-## 100 Random Points in $[0,1]^2$
+## 100 Random Points in [0,1]^2
 
 Generating random points uniformly in the unit square is straightforward: generate two independent $U(0,1)$ samples for the $x$- and $y$-coordinates.
 
@@ -86,18 +86,22 @@ plt.legend()
 plt.show()
 ```
 
-## Connection to Monte Carlo Estimation of $\pi$
+## Connection to Monte Carlo Estimation of pi
 
 The fraction of points falling inside the circle approximates the ratio of areas:
 
 $$
+
 \frac{\text{Area of circle}}{\text{Area of square}} = \frac{\pi \cdot 1^2}{(2)^2} = \frac{\pi}{4}
+
 $$
 
 Therefore, if $k$ out of $n$ points land inside the circle,
 
 $$
+
 \hat{\pi} = \frac{4k}{n}
+
 $$
 
 is a Monte Carlo estimate of $\pi$. By the Law of Large Numbers, $\hat{\pi} \to \pi$ as $n \to \infty$.

@@ -9,15 +9,21 @@ In general, zero correlation does **not** imply independence. However, for the b
 ## The General Picture
 
 $$
+
 \text{Independence} \implies \text{Cov}(X, Y) = 0 \qquad \text{(always true)}
+
 $$
 
 $$
+
 \text{Cov}(X, Y) = 0 \;\not\!\!\!\implies \text{Independence} \qquad \text{(in general)}
+
 $$
 
 $$
+
 (X, Y)^T \text{ bivariate normal},\; \text{Cov}(X, Y) = 0 \implies \text{Independence} \qquad \text{(special case!)}
+
 $$
 
 ---
@@ -27,7 +33,9 @@ $$
 When $\rho = 0$, the bivariate normal PDF factors:
 
 $$
+
 f(x, y) = \frac{1}{2\pi\sigma_X\sigma_Y} \exp\left(-\frac{\tilde{x}^2 + \tilde{y}^2}{2}\right) = f_X(x) \cdot f_Y(y)
+
 $$
 
 Factorization of the joint PDF into marginals is the **definition** of independence. The key is that the exponent contains no cross term $\tilde{x}\tilde{y}$ when $\rho = 0$.
@@ -51,23 +59,31 @@ This classic counterexample demonstrates that two marginally normal, uncorrelate
 **Construction.** Let $X \sim N(0, 1)$. Independently of $X$, flip a fair coin and record the outcome $S$ as $+1$ (heads) or $-1$ (tails). Define:
 
 $$
+
 Y = S \cdot X
+
 $$
 
 **Claim 1: $Y$ is standard normal.**
 
 $$
+
 P(Y \leq y) = P(S = 1)P(X \leq y) + P(S = -1)P(X \geq -y)
+
 $$
 
 $$
+
 = \frac{1}{2}\int_{-\infty}^y \frac{1}{\sqrt{2\pi}} e^{-s^2/2}\,ds + \frac{1}{2}\int_{-y}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-s^2/2}\,ds
+
 $$
 
 By symmetry of the standard normal, $P(X \geq -y) = P(X \leq y)$, so:
 
 $$
+
 P(Y \leq y) = P(X \leq y)
+
 $$
 
 Therefore $Y \sim N(0, 1)$.
@@ -75,17 +91,23 @@ Therefore $Y \sim N(0, 1)$.
 **Claim 2: $\text{Cov}(X, Y) = 0$.**
 
 $$
+
 E[XY] = P(S = 1) \cdot E[XY \mid S = 1] + P(S = -1) \cdot E[XY \mid S = -1]
+
 $$
 
 $$
+
 = \frac{1}{2}E[X^2] + \frac{1}{2}E[-X^2] = \frac{1}{2}(1) - \frac{1}{2}(1) = 0
+
 $$
 
 Since $E[X] = E[Y] = 0$:
 
 $$
+
 \text{Cov}(X, Y) = E[XY] - E[X]E[Y] = 0 - 0 = 0
+
 $$
 
 **Claim 3: $X$ and $Y$ are NOT independent.**
@@ -93,12 +115,14 @@ $$
 By construction, if $X = 2$, then $Y$ is either $2$ or $-2$. In particular:
 
 $$
+
 P(|Y| = |X|) = 1
+
 $$
 
 If $X$ and $Y$ were independent, $P(|Y| = |X|) = 0$ (since both are continuous). Therefore $X$ and $Y$ are dependent.
 
-**Why this doesn't contradict the theorem.** Although $X$ and $Y$ are each marginally $N(0, 1)$, the vector $(X, Y)^T$ is **not** bivariate normal. The joint distribution places all mass on the two lines $y = x$ and $y = -x$ (each with probability $1/2$), which is not a bivariate normal distribution.
+**Why this doesn't contradict the theorem.** Although $X$ and $Y$ are each marginally $N(0, 1)$, the vector $(X, Y)^T$ is **not** bivariate normal. The joint distribution places all mass on the two lines $y = x$ and $y = -x$ (each with probability \$1/2$), which is not a bivariate normal distribution.
 
 ---
 

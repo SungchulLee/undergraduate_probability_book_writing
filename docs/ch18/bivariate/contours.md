@@ -11,7 +11,9 @@ The contour plots of the bivariate normal distribution reveal how the **mean vec
 The contours of the bivariate normal PDF are curves of constant density. Setting $f(x, y) = c$ for some constant $c > 0$ is equivalent to:
 
 $$
+
 (\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu}) = k
+
 $$
 
 for some constant $k > 0$. This is the equation of an **ellipse** centered at $\boldsymbol{\mu}$.
@@ -20,15 +22,15 @@ for some constant $k > 0$. This is the equation of an **ellipse** centered at $\
 
 ## Geometric Role of Parameters
 
-### Mean Vector $\boldsymbol{\mu}$
+### Mean Vector mu
 
 The mean vector $\boldsymbol{\mu} = (\mu_X, \mu_Y)^T$ determines the **center** of the elliptical contours. Changing $\boldsymbol{\mu}$ translates the entire distribution without affecting its shape.
 
-### Variances $\sigma_X^2$ and $\sigma_Y^2$
+### Variances sigma_X^2 and sigma_Y^2
 
 The marginal variances control the **spread** along each axis. Larger $\sigma_X^2$ stretches the ellipses horizontally; larger $\sigma_Y^2$ stretches them vertically.
 
-### Correlation $\rho$
+### Correlation rho
 
 The correlation coefficient $\rho$ controls the **orientation** (tilt) and **eccentricity** of the ellipses:
 
@@ -46,10 +48,12 @@ The correlation coefficient $\rho$ controls the **orientation** (tilt) and **ecc
 The axes of the contour ellipses correspond to the **eigenvectors** of $\boldsymbol{\Sigma}$, and their lengths are proportional to the square roots of the **eigenvalues**. Specifically, for the standard bivariate normal ($\sigma_X = \sigma_Y = 1$):
 
 $$
+
 \boldsymbol{\Sigma} = \begin{pmatrix} 1 & \rho \\ \rho & 1 \end{pmatrix}
+
 $$
 
-The eigenvalues are $\lambda_1 = 1 + \rho$ and $\lambda_2 = 1 - \rho$, with eigenvectors along the $45°$ and $135°$ directions. As $|\rho| \to 1$, one eigenvalue approaches zero and the ellipse degenerates.
+The eigenvalues are $\lambda_1 = 1 + \rho$ and $\lambda_2 = 1 - \rho$, with eigenvectors along the \$45°$ and \$135°$ directions. As $|\rho| \to 1$, one eigenvalue approaches zero and the ellipse degenerates.
 
 ---
 
@@ -112,7 +116,9 @@ The quadratic form $(\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (
 For the bivariate case, this squared distance follows a $\chi^2(2)$ distribution:
 
 $$
+
 (\mathbf{X} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{X} - \boldsymbol{\mu}) \sim \chi^2(2)
+
 $$
 
 This means the probability contained within the ellipse at Mahalanobis distance $\sqrt{k}$ is $P(\chi^2(2) \leq k) = 1 - e^{-k/2}$.

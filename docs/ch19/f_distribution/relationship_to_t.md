@@ -1,6 +1,6 @@
-# Relationship Between $F$ and $t$ Distributions
+# Relationship Between F and t Distributions
 
-## $T^2 \sim F_{1,d}$
+## T^2 ~ F(1,d)
 
 The most important connection between the $F$ and $t$ distributions:
 

@@ -11,7 +11,9 @@ The **gambler's fallacy** is the mistaken belief that if a random event has occu
 The Law of Large Numbers says:
 
 $$
+
 \frac{S_n}{n} \to \mu
+
 $$
 
 This convergence happens because **new observations dilute the effect of past deviations**, not because future outcomes compensate for past ones.
@@ -19,7 +21,9 @@ This convergence happens because **new observations dilute the effect of past de
 After 10 heads in a row ($S_{10} = 10$, so $\bar{X}_{10} = 1.0$), the LLN predicts convergence to 0.5 through dilution:
 
 $$
+
 \frac{S_{10} + S_{11:n}}{n} = \frac{10 + S_{11:n}}{n} \to 0.5
+
 $$
 
 The fixed "excess" of 10 becomes negligible as $n \to \infty$, but the **future** coins are still fair and independent.

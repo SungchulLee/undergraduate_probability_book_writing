@@ -20,6 +20,7 @@ If a Poisson process $\text{NPP}(\lambda)$ has exactly one arrival in the interv
 ## Mean and Variance
 
 !!! info "Moments of U(a, b)"
+
     $$E[X] = \frac{a + b}{2}, \qquad \text{Var}(X) = \frac{(b - a)^2}{12}$$
 
 ### Derivation of the Mean
@@ -56,7 +57,7 @@ $$a^3 - b^3 = (a - b)(a^2 + ab + b^2)$$
 
 Also useful: $a^3 + b^3 = (a + b)(a^2 - ab + b^2)$.
 
-## The Standard Uniform $U(0, 1)$
+## The Standard Uniform U(0, 1)
 
 The most important special case is $U(0, 1)$:
 

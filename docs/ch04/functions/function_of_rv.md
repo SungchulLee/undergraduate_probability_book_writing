@@ -12,7 +12,7 @@ $$P(Y = y) = \sum_{x : g(x) = y} P(X = x)$$
 
 That is, collect all values of $X$ that map to the same $y$ and sum their probabilities.
 
-## Example: Generating $\pm 1$ from Bernoulli
+## Example: Generating +/-1 from Bernoulli
 
 If $X \sim \text{B}(p)$, then $Y = 2X - 1$ has distribution:
 

@@ -8,7 +8,7 @@ For $X_1, \ldots, X_n$ iid from $N(\mu, \sigma^2)$, with $\bar{X} = \frac{\sum X
 2. $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0, 1)$ and $\frac{(n-1)S^2}{\sigma^2} = \sum_{i=1}^n \left(\frac{X_i - \bar{X}}{\sigma}\right)^2 \sim \chi^2_{n-1}$
 3. $\frac{\bar{X} - \mu}{S/\sqrt{n}} = \frac{N(0,1)}{\sqrt{\chi^2_{n-1}/(n-1)}} \sim t_{n-1}$
 
-## Key Fact: $\text{Cov}(\bar{X}, X_i - \bar{X}) = 0$
+## Key Fact: Cov(X-bar, Xi - X-bar) = 0
 
 $$\text{Cov}(\bar{X}, X_i - \bar{X}) = \text{Cov}(\bar{X}, X_i) - \text{Cov}(\bar{X}, \bar{X})$$
 
@@ -16,7 +16,7 @@ $$= \text{Cov}\!\left(\frac{\sum_{j=1}^n X_j}{n}, X_i\right) - \text{Cov}\!\left
 
 $$= \frac{1}{n} \cdot \sigma^2 - \frac{1}{n^2} \cdot n\sigma^2 = 0$$
 
-## Consequence: Independence of $\bar{X}$ and $S^2$
+## Consequence: Independence of X-bar and S^2
 
 ### Step 1: Multivariate Normality
 
@@ -32,7 +32,7 @@ $$\bar{X} \text{ is independent of } (X_1 - \bar{X}, \ldots, X_n - \bar{X})$$
 
 Since $S^2$ is a function of $(X_1 - \bar{X}, \ldots, X_n - \bar{X})$, it follows that **$\bar{X}$ and $S^2$ are independent**.
 
-## Proof: $\sum\left(\frac{X_i - \bar{X}}{\sigma}\right)^2 \sim \chi^2_{n-1}$
+## Proof: Sum((Xi - X-bar)/sigma)^2 ~ Chi-squared(n-1)
 
 ### Step 1: Decomposition Identity
 
@@ -46,7 +46,7 @@ Therefore:
 
 $$\sum_{i=1}^n (X_i - \mu)^2 = \sum_{i=1}^n (X_i - \bar{X})^2 + n(\bar{X} - \mu)^2$$
 
-### Step 2: Divide by $\sigma^2$
+### Step 2: Divide by sigma^2
 
 $$\underbrace{\sum_{i=1}^n \left(\frac{X_i - \mu}{\sigma}\right)^2}_{\chi^2_n} = \sum_{i=1}^n \left(\frac{X_i - \bar{X}}{\sigma}\right)^2 + \underbrace{\left(\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}\right)^2}_{\chi^2_1}$$
 

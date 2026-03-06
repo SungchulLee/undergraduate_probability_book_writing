@@ -37,7 +37,7 @@ $$P\!\left(\left|\bar{X}_n - \frac{1}{\lambda}\right| \geq \varepsilon\right) \l
 
 For example, with $\lambda = 1$ and $\varepsilon = 0.1$: the bound is $\frac{100}{n}$, so $n \geq 10000$ guarantees this probability is at most 1%.
 
-## Example: Estimating $\pi$
+## Example: Estimating pi
 
 Consider the **Monte Carlo estimation** of $\pi$. Generate $(U_i, V_i) \sim \text{Uniform}([0,1]^2)$ iid and let $X_i = \mathbf{1}(U_i^2 + V_i^2 \leq 1)$. Then $\mu = E[X_i] = \pi/4$ and:
 

@@ -49,7 +49,9 @@
 **Exercise 7.5.2** Let $S = 3X_1 - 2X_2 + X_3$ where $X_1, X_2, X_3$ are independent with means 1, 2, 3 and variances 4, 1, 9. Compute $E[S]$ and $\text{Var}(S)$.
 
 **Exercise 7.5.3** A portfolio has weights $a = (0.5, 0.3, 0.2)$ and the asset covariance matrix is
+
 $$\Sigma = \begin{pmatrix} 0.04 & 0.01 & 0.02 \\ 0.01 & 0.09 & 0.03 \\ 0.02 & 0.03 & 0.16 \end{pmatrix}$$
+
 Compute the portfolio variance $\mathbf{a}^T \Sigma \mathbf{a}$.
 
 ---

@@ -25,12 +25,12 @@ From the joint PMF:
 
 | | $x=0$ | $x=1$ | $x=2$ |
 |---|---|---|---|
-| $y=3$ | $1/10$ | $1/10$ | $1/10$ |
-| $y=2$ | $1/10$ | $0$ | $1/10$ |
-| $y=1$ | $0$ | $2/10$ | $1/10$ |
-| $y=0$ | $1/10$ | $0$ | $1/10$ |
+| $y=3$ | \$1/10$ | \$1/10$ | \$1/10$ |
+| $y=2$ | \$1/10$ | $0$ | \$1/10$ |
+| $y=1$ | $0$ | \$2/10$ | \$1/10$ |
+| $y=0$ | \$1/10$ | $0$ | \$1/10$ |
 
-### Conditional PMF of $X$ given $Y = 1$
+### Conditional PMF of X given Y = 1
 
 The $y=1$ row has entries: $0, \, 2/10, \, 1/10$. The row sum is $P(Y=1) = 3/10$.
 
@@ -40,9 +40,9 @@ $$P(X = 1 \mid Y = 1) = \frac{2/10}{3/10} = \frac{2}{3}$$
 
 $$P(X = 2 \mid Y = 1) = \frac{1/10}{3/10} = \frac{1}{3}$$
 
-**Verification:** $0 + 2/3 + 1/3 = 1$ ✓
+**Verification:** \$0 + 2/3 + 1/3 = 1$ ✓
 
-### Conditional PMF of $Y$ given $X = 2$
+### Conditional PMF of Y given X = 2
 
 The $x=2$ column has entries: $1/10, \, 1/10, \, 1/10, \, 1/10$. The column sum is $P(X=2) = 4/10$.
 

@@ -104,7 +104,9 @@ With $p = 0.49$, $IC = 100$, $Goal = 200$, and 100 simulations:
 | Undecided | 7 |
 
 $$
+
 \hat{Q}(100) = \frac{89}{89 + 4} = 0.957
+
 $$
 
 This matches the theoretical value closely. The high ruin probability despite $p$ being close to $0.5$ illustrates why the problem is called "gambler's ruin."

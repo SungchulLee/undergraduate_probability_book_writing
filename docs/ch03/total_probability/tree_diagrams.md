@@ -18,7 +18,9 @@ A tree diagram has the following components:
 For a two-stage experiment with first outcome $A_i$ and second outcome $B_j$:
 
 $$
+
 P(A_i \cap B_j) = P(A_i) \cdot P(B_j \mid A_i)
+
 $$
 
 The first-level branches carry $P(A_i)$, and the second-level branches carry $P(B_j \mid A_i)$.
@@ -28,7 +30,9 @@ The first-level branches carry $P(A_i)$, and the second-level branches carry $P(
 The total probability of an event $B_j$ is obtained by **summing over all paths** that lead to $B_j$:
 
 $$
+
 P(B_j) = \sum_{i} P(A_i)\,P(B_j \mid A_i)
+
 $$
 
 This is precisely the law of total probability, visualized as collecting all leaf nodes corresponding to $B_j$.
@@ -106,17 +110,23 @@ A blood test is 95% effective in detecting a certain disease when present. The t
 **Paths leading to positive test result $d$:**
 
 $$
+
 P(D \cap d) = P(D)\,P(d \mid D) = (0.0001)(0.95) = 0.000095
+
 $$
 
 $$
+
 P(H \cap d) = P(H)\,P(d \mid H) = (0.9999)(0.01) = 0.009999
+
 $$
 
 ### Applying Bayes' Rule with Total Probability
 
 $$
+
 P(D \mid d) = \frac{P(D)\,P(d \mid D)}{P(D)\,P(d \mid D) + P(H)\,P(d \mid H)} = \frac{(0.0001)(0.95)}{(0.0001)(0.95) + (0.9999)(0.01)} = 0.0094
+
 $$
 
 !!! warning "Surprising Result"

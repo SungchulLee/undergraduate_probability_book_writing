@@ -28,6 +28,7 @@ $$E[X^k] = e^{k\mu + k^2\sigma^2/2}$$
 ## Median and Mode
 
 !!! info "Median and Mode"
+
     $$\text{Median}(X) = e^{\mu}$$
 
     $$\text{Mode}(X) = e^{\mu - \sigma^2}$$

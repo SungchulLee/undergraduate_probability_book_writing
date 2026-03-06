@@ -22,4 +22,4 @@
 
 **Exercise 4.7.** If $X \sim \text{B}(0.3)$ (Bernoulli with $p = 0.3$), find the PMF of $Y = 5X + 2$.
 
-**Exercise 4.8.** Let $X$ be a random variable taking values $\{-2, -1, 0, 1, 2\}$ each with probability $1/5$. Find the PMF of $Y = X^2$.
+**Exercise 4.8.** Let $X$ be a random variable taking values $\{-2, -1, 0, 1, 2\}$ each with probability \$1/5$. Find the PMF of $Y = X^2$.

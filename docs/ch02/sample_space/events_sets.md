@@ -5,7 +5,9 @@
 An **event** is any subset $A$ of the sample space $\Omega$. An event collects all samples (outcomes) of interest.
 
 $$
+
 A \subseteq \Omega
+
 $$
 
 !!! example "Events for Rolling a Die"
@@ -32,7 +34,9 @@ Since events are sets, we can combine them using standard set operations. Each s
 The event "$A$ or $B$ (or both) occurs":
 
 $$
+
 A \cup B = \{\omega \in \Omega : \omega \in A \text{ or } \omega \in B\}
+
 $$
 
 ### Intersection (AND)
@@ -40,7 +44,9 @@ $$
 The event "both $A$ and $B$ occur":
 
 $$
+
 A \cap B = \{\omega \in \Omega : \omega \in A \text{ and } \omega \in B\}
+
 $$
 
 We often write $A \cap B$ as $AB$ for brevity.
@@ -50,7 +56,9 @@ We often write $A \cap B$ as $AB$ for brevity.
 The event "$A$ does not occur":
 
 $$
+
 A^c = \{\omega \in \Omega : \omega \notin A\}
+
 $$
 
 ### Difference
@@ -58,7 +66,9 @@ $$
 The event "$A$ occurs but $B$ does not":
 
 $$
+
 A \setminus B = A \cap B^c = \{\omega \in \Omega : \omega \in A \text{ and } \omega \notin B\}
+
 $$
 
 ## Disjoint (Mutually Exclusive) Events
@@ -66,7 +76,9 @@ $$
 Events $A$ and $B$ are **disjoint** (or mutually exclusive) if they cannot both occur:
 
 $$
+
 A \cap B = \emptyset
+
 $$
 
 More generally, events $A_1, A_2, \ldots$ are **pairwise disjoint** if $A_i \cap A_j = \emptyset$ for all $i \neq j$.
@@ -88,23 +100,31 @@ The following identities hold for events and are used frequently in probability:
 **Commutativity:**
 
 $$
+
 A \cup B = B \cup A, \qquad A \cap B = B \cap A
+
 $$
 
 **Associativity:**
 
 $$
+
 (A \cup B) \cup C = A \cup (B \cup C), \qquad (A \cap B) \cap C = A \cap (B \cap C)
+
 $$
 
 **Distributivity:**
 
 $$
+
 A \cap (B \cup C) = (A \cap B) \cup (A \cap C)
+
 $$
 
 $$
+
 A \cup (B \cap C) = (A \cup B) \cap (A \cup C)
+
 $$
 
 ## Python Example

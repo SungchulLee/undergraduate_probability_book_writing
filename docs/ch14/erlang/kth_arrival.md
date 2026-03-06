@@ -1,12 +1,12 @@
-# Waiting Time for the $k$-th Arrival
+# Waiting Time for the k-th Arrival
 
-## The $k$-th Arrival Time
+## The k-th Arrival Time
 
 In a Poisson process with rate $\lambda$, let $S_k$ denote the time of the $k$-th arrival. Since interarrival times $T_1, T_2, \ldots, T_k$ are iid $\text{Exp}(\lambda)$:
 
 $$S_k = T_1 + T_2 + \cdots + T_k \sim \Gamma(k, \lambda) = \text{Erlang}(k, \lambda)$$
 
-### Mean and Variance of $S_k$
+### Mean and Variance of S_k
 
 $$E[S_k] = \frac{k}{\lambda}, \qquad \text{Var}(S_k) = \frac{k}{\lambda^2}$$
 

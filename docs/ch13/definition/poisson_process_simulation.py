@@ -2,6 +2,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# ========================================================================
+
 np.random.seed(42)
 
 LA = 1       # rate (lambda)
@@ -11,12 +13,16 @@ P = LA / N   # success probability per micro-interval
 T = 8        # observation window [0, T]
 
 
+# ========================================================================
+
 def ppp_coin(ax):
     """Approximate PPP by flipping a biased coin in each micro-interval."""
     x = np.random.binomial(1, P, size=int(N * T))
     arrivals = [i / N for i, v in enumerate(x) if v]
     ax.plot(arrivals, np.zeros(len(arrivals)), "o", color="red", label="PPP via coin")
 
+
+# ========================================================================
 
 def ppp_expon(ax):
     """Exact PPP using exponential interarrival times."""
@@ -25,6 +31,8 @@ def ppp_expon(ax):
     arrivals = arrivals[arrivals < T]
     ax.plot(arrivals, np.ones(len(arrivals)), "o", color="blue", label="PPP via exponential")
 
+
+# ========================================================================
 
 def main():
     fig, ax = plt.subplots(figsize=(14, 2))
@@ -41,6 +49,8 @@ def main():
     plt.savefig("poisson_process_simulation.png", dpi=150, bbox_inches="tight")
     plt.show()
 
+
+# ========================================================================
 
 if __name__ == "__main__":
     main()

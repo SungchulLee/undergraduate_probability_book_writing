@@ -21,7 +21,7 @@ This is the PDF of $\Gamma(2, \lambda)$:
 
 $$\frac{\lambda(\lambda a)^{2-1} e^{-\lambda a}}{\Gamma(2)} = \lambda^2 a \, e^{-\lambda a} \quad \checkmark$$
 
-## Proof: General $n$ by Induction
+## Proof: General n by Induction
 
 If $S_{n-1} = X_1 + \cdots + X_{n-1} \sim \Gamma(n-1, \lambda)$ and $X_n \sim \text{Exp}(\lambda)$ are independent, then by the **Gamma additivity property**:
 

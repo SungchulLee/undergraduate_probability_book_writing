@@ -18,7 +18,9 @@ A **sample** (or **outcome**) is a possible result of an experiment. We denote a
 The **sample space** $\Omega$ is the set of all possible outcomes of an experiment.
 
 $$
+
 \Omega = \{\text{all possible outcomes } \omega\}
+
 $$
 
 !!! example "Examples of Sample Spaces"
@@ -27,7 +29,9 @@ $$
     - **Flipping a fair coin three times:**
 
     $$
+
     \Omega = \{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}
+
     $$
 
     Here $|\Omega| = 8$.
@@ -49,13 +53,17 @@ The mathematical treatment of probability differs depending on whether $\Omega$ 
 For each outcome $\omega$ in $\Omega$, we attach a "weight" — think of it as a brick placed on that outcome. Each brick may have a different weight, but the total weight of all bricks is 1. This weight distribution over the sample space $\Omega$ is a **probability measure**.
 
 $$
+
 P(\omega) = \text{Weight of the brick attached to } \omega
+
 $$
 
 For any event $A \subseteq \Omega$:
 
 $$
+
 P(A) = \sum_{\omega \in A} P(\omega) = \text{Total weight of the bricks attached to } A
+
 $$
 
 !!! note "The Brick Analogy"

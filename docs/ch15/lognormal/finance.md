@@ -13,6 +13,7 @@ $$S_T = S_0 \exp\!\left[\left(\mu - \frac{\sigma^2}{2}\right)T + \sigma W_T\righ
 Since $W_T \sim N(0, T)$, we have $\ln S_T \sim N\!\left(\ln S_0 + (\mu - \frac{\sigma^2}{2})T,\; \sigma^2 T\right)$, so $S_T$ is **log-normally distributed**.
 
 !!! info "GBM Distribution"
+
     $$S_T \sim \text{LogNormal}\!\left(\ln S_0 + \left(\mu - \frac{\sigma^2}{2}\right)T,\;\; \sigma^2 T\right)$$
 
     $$E[S_T] = S_0 e^{\mu T}, \qquad \text{Var}(S_T) = S_0^2 e^{2\mu T}\left(e^{\sigma^2 T} - 1\right)$$

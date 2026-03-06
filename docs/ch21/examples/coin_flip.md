@@ -5,7 +5,9 @@
 One of the most fundamental simulation techniques is generating Bernoulli random variables from uniform random variables. Given $U \sim U(0,1)$ and a success probability $p \in [0,1]$, we define
 
 $$
+
 B = \begin{cases} 1 & \text{if } U > 1 - p \\ 0 & \text{if } U \leq 1 - p \end{cases}
+
 $$
 
 Then $B \sim \text{Bernoulli}(p)$, since $P(B = 1) = P(U > 1-p) = p$.
@@ -64,7 +66,9 @@ print("B =", B)
 This technique is an instance of the **inverse transform method**. The CDF of a Bernoulli($p$) random variable is
 
 $$
+
 F(x) = \begin{cases} 0 & x < 0 \\ 1 - p & 0 \leq x < 1 \\ 1 & x \geq 1 \end{cases}
+
 $$
 
 Setting $B = \mathbf{1}(U > 1 - p)$ is equivalent to applying the generalized inverse of $F$ to $U$. This principle generalizes: any distribution can be sampled from a uniform random variable via its inverse CDF (see the Probability Integral Transform).

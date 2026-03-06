@@ -10,7 +10,7 @@ The number of ways to arrange $k$ objects chosen from $n$ distinct objects, wher
 
 $$P(n, k) = n \times (n-1) \times (n-2) \times \cdots \times (n - k + 1) = \frac{n!}{(n-k)!}$$
 
-### Special Case: Arranging All $n$ Objects
+### Special Case: Arranging All n Objects
 
 When $k = n$, we arrange all objects:
 

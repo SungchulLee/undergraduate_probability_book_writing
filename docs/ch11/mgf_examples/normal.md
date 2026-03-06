@@ -1,6 +1,6 @@
 # MGF of Normal
 
-## MGF of $N(\mu, \sigma^2)$
+## MGF of N(mu, sigma^2)
 
 $$M_{N(\mu, \sigma^2)}(t) = e^{\mu t + \frac{1}{2}\sigma^2 t^2}$$
 

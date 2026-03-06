@@ -9,7 +9,7 @@
 
     where $(x)^+ = \max(x, 0)$.
 
-### Derivation (for $0 \leq a \leq 1$)
+### Derivation (for 0 <= a <= 1)
 
 By symmetry, it suffices to compute the convolution for $0 \leq a \leq 1$:
 
@@ -27,7 +27,7 @@ $$f_{X+Y}(a) = \int_{a - 1/2}^{1/2} 1 \, db = \frac{1}{2} - \left(a - \frac{1}{2
 
 By symmetry, $f_{X+Y}(a) = 1 + a$ for $-1 \leq a \leq 0$. Combining: $f_{X+Y}(a) = 1 - |a|$.
 
-## General Case: Sum of Two iid $U(0, 1)$
+## General Case: Sum of Two iid U(0, 1)
 
 If $X, Y$ are iid $U(0, 1)$, then $X + Y$ has the **triangular distribution** on $(0, 2)$:
 
@@ -35,7 +35,7 @@ $$f_{X+Y}(a) = \begin{cases} a & 0 \leq a \leq 1 \\ 2 - a & 1 < a \leq 2 \end{ca
 
 This is a shift of the $U(-1/2, 1/2)$ result: if $X' = X - 1/2 \sim U(-1/2, 1/2)$, then $X + Y = (X' + Y') + 1$.
 
-## Sum of $n$ iid Uniforms
+## Sum of n iid Uniforms
 
 As $n$ increases, the distribution of $S_n = X_1 + \cdots + X_n$ approaches a Normal distribution by the Central Limit Theorem. The convolution $U * U$ gives a triangle, $U * U * U$ gives a piecewise quadratic, and so on. In general, the $n$-fold convolution of $U(0,1)$ is called the **Irwin-Hall distribution** and consists of piecewise polynomials of degree $n-1$.
 

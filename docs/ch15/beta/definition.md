@@ -27,6 +27,7 @@
 ## Mean and Variance
 
 !!! info "Moments of Beta(α, β)"
+
     $$E[X] = \frac{\alpha}{\alpha + \beta}, \qquad \text{Var}(X) = \frac{\alpha\beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}$$
 
 The mean $\frac{\alpha}{\alpha + \beta}$ is the ratio of $\alpha$ to the total $\alpha + \beta$, which has a natural interpretation as a "fraction" or "proportion."
@@ -78,7 +79,7 @@ As a byproduct, comparing the normalizing constants gives $B(\alpha, \beta) = \f
 | Parameters | Distribution | Shape |
 |:---:|:---:|:---|
 | $\text{Beta}(1, 1)$ | $U(0, 1)$ | Flat (uniform) |
-| $\text{Beta}(\alpha, \alpha)$ | Symmetric | Symmetric about $1/2$ |
+| $\text{Beta}(\alpha, \alpha)$ | Symmetric | Symmetric about \$1/2$ |
 | $\text{Beta}(1, \beta)$ | — | Decreasing, concentrated near $0$ |
 | $\text{Beta}(\alpha, 1)$ | — | Increasing, concentrated near $1$ |
 | $\alpha, \beta > 1$ | — | Unimodal, bell-shaped |

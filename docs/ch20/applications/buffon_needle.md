@@ -16,39 +16,51 @@ The needle **crosses a line** (at $y = 1$) if and only if $Y + \sin\Theta \geq 1
 Define the indicator:
 
 $$
+
 R_i = \begin{cases} 1 & \text{if the needle crosses a line on the } i\text{-th drop} \\ 0 & \text{otherwise} \end{cases}
+
 $$
 
 Then $R_i \overset{iid}{\sim} \text{Bernoulli}(p)$ where:
 
 $$
+
 p = P(Y + \sin\Theta \geq 1)
+
 $$
 
 To compute $p$:
 
 $$
+
 p = \int_0^{\pi} \int_0^1 \mathbf{1}(y + \sin\theta \geq 1)\, dy\, \frac{d\theta}{\pi}
+
 $$
 
 For a fixed $\theta$, the integral over $y$ gives $\min(\sin\theta, 1)$. For a unit-length needle on unit-spaced lines, this simplifies to:
 
 $$
+
 p = \frac{1}{\pi}\int_0^{\pi} \sin\theta\, d\theta = \frac{2}{\pi}
+
 $$
 
-## Estimating $\pi$
+## Estimating pi
 
 By the Law of Large Numbers, after $n$ drops:
 
 $$
+
 \frac{1}{n}\sum_{i=1}^n R_i \xrightarrow{a.s.} \frac{2}{\pi}
+
 $$
 
 Therefore:
 
 $$
+
 \pi \approx \frac{2n}{\sum_{i=1}^n R_i} = \frac{2}{\text{proportion of crossings}}
+
 $$
 
 ## Python Implementation

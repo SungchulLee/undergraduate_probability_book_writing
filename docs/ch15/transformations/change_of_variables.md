@@ -46,7 +46,7 @@ $$\left|\frac{dx}{dy}\right| = \frac{1}{\left|\dfrac{dy}{dx}\right|}$$
 
 This is often easier when $dy/dx$ is simpler to compute than $dx/dy$ directly.
 
-## Worked Example: $Y = X^3$ where $X \sim U(0, 1)$
+## Worked Example: Y = X^3 where X ~ U(0, 1)
 
 ??? example "Example: Cube of a Uniform"
     Let $X \sim U(0,1)$ and $Y = X^3$. Find $f_Y(y)$ for $0 < y < 1$.

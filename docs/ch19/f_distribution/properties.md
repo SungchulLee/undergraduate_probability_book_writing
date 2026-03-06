@@ -1,4 +1,4 @@
-# $F$ Distribution: Properties
+# F Distribution: Properties
 
 ## Mean and Variance
 
@@ -25,7 +25,7 @@ $$\frac{1}{F} \sim F_{d_2, d_1}$$
 
 This follows directly from the definition: swapping numerator and denominator swaps the degrees of freedom.
 
-## Relationship to the $t$ Distribution
+## Relationship to the t Distribution
 
 If $T \sim t_d$, then:
 

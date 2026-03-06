@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+# ========================================================================
+
 def main():
     np.random.seed(42)
     n_samples = 500
@@ -41,6 +43,8 @@ def main():
     plt.savefig("correlation_simulation.png", dpi=150, bbox_inches="tight")
     plt.show()
 
+
+# ========================================================================
 
 if __name__ == "__main__":
     main()

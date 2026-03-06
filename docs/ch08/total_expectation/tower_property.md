@@ -5,7 +5,9 @@
 For any random variables $X$ and $Y$:
 
 $$
+
 E(X) = E\bigl[E(X \mid Y)\bigr]
+
 $$
 
 This is also called the **tower property** or the **law of total expectation**. The outer expectation is taken over the randomness in $Y$.
@@ -31,6 +33,7 @@ Properties (3) and (4) capture the idea that when conditioning on $Y$, any funct
 ## Proof of the Tower Property (Discrete Case)
 
 $$
+
 \begin{aligned}
 E\bigl[E(X \mid Y)\bigr] &= \sum_{y_j} E(X \mid Y = y_j) \, P(Y = y_j) \\[6pt]
 &= \sum_{y_j} \left( \sum_{x_i} x_i \, P(X = x_i \mid Y = y_j) \right) P(Y = y_j) \\[6pt]
@@ -38,6 +41,7 @@ E\bigl[E(X \mid Y)\bigr] &= \sum_{y_j} E(X \mid Y = y_j) \, P(Y = y_j) \\[6pt]
 &= \sum_{x_i} x_i \, P(X = x_i) \\[6pt]
 &= E(X)
 \end{aligned}
+
 $$
 
 The key step uses the law of total probability: $\sum_{y_j} P(X = x_i \mid Y = y_j) \, P(Y = y_j) = P(X = x_i)$.
@@ -59,7 +63,9 @@ Let $X$ and $Y$ be iid $\text{Binomial}(n, p)$. Compute $E(X \mid X + Y = m)$.
 **Combining:** $2 \, E(X \mid X + Y = m) = m$, so:
 
 $$
+
 E(X \mid X + Y = m) = \frac{m}{2}
+
 $$
 
 ## Python Simulation

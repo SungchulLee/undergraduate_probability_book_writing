@@ -1,4 +1,4 @@
-# $F$ Distribution: Definition as Ratio of Chi-Squareds
+# F Distribution: Definition as Ratio of Chi-Squareds
 
 ## Definition
 
@@ -30,7 +30,7 @@ Substituting $x = f \cdot d_1 z / d_2$ and $y = z$, and setting $\lambda = \frac
 
 $$f_{F,Z}(f, z) = \frac{1}{B(d_1/2, \, d_2/2) \cdot f} \sqrt{\frac{(d_1 f)^{d_1} \cdot d_2^{d_2}}{(d_1 f + d_2)^{d_1+d_2}}} \cdot \underbrace{\frac{\lambda\,(\lambda z)^{(d_1+d_2)/2 - 1} e^{-\lambda z}}{\Gamma\!\left(\frac{d_1+d_2}{2}\right)}}_{\text{Gamma}\!\left(\frac{d_1+d_2}{2}, \, \lambda\right) \text{ density in } z}$$
 
-### Marginal PDF of $F$
+### Marginal PDF of F
 
 Integrating out $z$ (the Gamma density integrates to 1):
 

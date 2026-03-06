@@ -1,4 +1,4 @@
-# Convergence of $t_d$ to $N(0,1)$ as $d \to \infty$
+# Convergence of t(d) to N(0,1) as d approaches infinity
 
 ## Statement
 

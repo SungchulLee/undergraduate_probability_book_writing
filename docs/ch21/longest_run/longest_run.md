@@ -11,13 +11,17 @@ This is a classic problem in probability that is difficult to solve analytically
 For a fair coin flipped $n$ times, the expected length of the longest run is approximately
 
 $$
+
 E[\text{Longest Run}] \approx \log_2 n
+
 $$
 
 More precisely, the longest run $R_n$ satisfies
 
 $$
+
 \frac{R_n}{\log_2 n} \to 1 \quad \text{in probability as } n \to \infty
+
 $$
 
 For $n = 10{,}000$, we expect $\log_2(10{,}000) \approx 13.3$, consistent with the simulation histogram centered around 13–15.

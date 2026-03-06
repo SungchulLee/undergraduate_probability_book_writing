@@ -23,7 +23,7 @@ $$n_1 \times n_2 \times \cdots \times n_k$$
 
 The multiplication rule is most naturally understood through **tree diagrams**. Each stage of the experiment corresponds to a level of branching in the tree. The total number of paths from the root to the leaves gives the total count.
 
-### Example — Number of Paths from $A$ to $C$
+### Example — Number of Paths from A to C
 
 Consider counting the number of paths from $A$ to $C$, where travel passes through an intermediate point $B$.
 

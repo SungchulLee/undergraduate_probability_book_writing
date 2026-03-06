@@ -60,7 +60,7 @@ $E = 15$, $\text{Var} = 30$.
 
 ---
 
-## Exercise 6: Independence of $\bar{X}$ and $S^2$
+## Exercise 6: Independence of X-bar and S^2
 
 Let $X_1, \ldots, X_n$ be iid $N(\mu, \sigma^2)$. Show that $\text{Cov}(\bar{X}, X_i - \bar{X}) = 0$ for all $i$.
 
@@ -72,7 +72,7 @@ $$= \text{Cov}\!\left(\frac{1}{n}\sum_j X_j, X_i\right) - \frac{\sigma^2}{n} = \
 
 ---
 
-## Exercise 7: Student's $t$ from Definition
+## Exercise 7: Student's t from Definition
 
 Let $Z \sim N(0,1)$ and $V \sim \chi^2_4$ be independent. Find the mean and variance of $T = Z/\sqrt{V/4}$.
 
@@ -113,7 +113,7 @@ Since $E[|T|] = \infty$, the mean does not exist.
 
 ---
 
-## Exercise 10: $F$ Distribution from $t^2$
+## Exercise 10: F Distribution from t^2
 
 If $T \sim t_{15}$, find $P(T^2 > 4.54)$.
 
@@ -130,7 +130,7 @@ This equals $P(|T| > \sqrt{4.54}) = P(|T| > 2.131) \approx 0.05$, the two-sided 
 
 ---
 
-## Exercise 11: $F$ Distribution Properties
+## Exercise 11: F Distribution Properties
 
 If $F \sim F_{5, 10}$, find $E[F]$ and verify the reciprocal property via simulation.
 

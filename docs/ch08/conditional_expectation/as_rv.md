@@ -1,4 +1,4 @@
-# $E(X \mid Y)$ as a Random Variable
+# E(X | Y) as a Random Variable
 
 ## The Local Average Interpretation
 
@@ -8,7 +8,7 @@ $E(X \mid Y)$ can be understood as a **local average** of $X$. For each value $y
 
 Consider three fair coin flips. Let $X$ be the total number of heads and $Y$ be the indicator of getting a head on the first flip ($Y = 1$ if the first flip is H, $Y = 0$ otherwise).
 
-The sample space is $\{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}$, each with probability $1/8$.
+The sample space is $\{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}$, each with probability \$1/8$.
 
 **Values of $X$** (number of heads) for each outcome:
 
@@ -25,7 +25,9 @@ When $Y = 0$ (first flip is T): the outcomes are $\{THH, THT, TTH, TTT\}$, so $E
 Therefore:
 
 $$
+
 E(X \mid Y) = \begin{cases} 2 & \text{with probability } 1/2 \\ 1 & \text{with probability } 1/2 \end{cases}
+
 $$
 
 The red bars in the figure show $E(X \mid Y)$ for each outcome — outcomes with the same $Y$ value get the same conditional expectation. This is the "local average" at work: $E(X \mid Y)$ smooths out $X$ within each group defined by $Y$.
@@ -35,11 +37,15 @@ The red bars in the figure show $E(X \mid Y)$ for each outcome — outcomes with
 Since $E(X \mid Y)$ is a random variable, it has its own expectation and variance:
 
 $$
+
 E\bigl[E(X \mid Y)\bigr] = E(X) \qquad \text{(Law of Total Expectation)}
+
 $$
 
 $$
+
 \text{Var}\bigl(E(X \mid Y)\bigr) \leq \text{Var}(X) \qquad \text{(Conditioning reduces variance)}
+
 $$
 
 These are explored in detail in the next sections.

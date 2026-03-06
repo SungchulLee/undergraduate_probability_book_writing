@@ -1,4 +1,4 @@
-# Student's $t$ Distribution: Definition and Derivation
+# Student's t Distribution: Definition and Derivation
 
 ## Definition
 
@@ -38,7 +38,7 @@ With $\lambda = \frac{1 + t^2/d}{2}$, the joint density factors as:
 
 $$f_{T,U}(t, u) = \underbrace{\frac{1}{\sqrt{d}\, B(1/2, \, d/2)} \left(1 + \frac{t^2}{d}\right)^{-(d+1)/2}}_{f_T(t)} \cdot \underbrace{\frac{\lambda\, (\lambda u)^{(d+1)/2 - 1} e^{-\lambda u}}{\Gamma\!\left(\frac{d+1}{2}\right)}}_{f_{U|T=t}(u) \;=\; \Gamma\!\left(\frac{d+1}{2}, \, \lambda\right)}$$
 
-### Marginal PDF of $T$
+### Marginal PDF of T
 
 Integrating out $u$ (the Gamma density integrates to 1):
 

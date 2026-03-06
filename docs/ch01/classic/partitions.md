@@ -63,7 +63,7 @@ $\{a\}\{b,c\}$, $\{b\}\{a,c\}$, $\{c\}\{a,b\}$ — so $S(3, 2) = 3$.
 
 The number of ways to write $n$ as an ordered sum of at most $k$ positive integers (where order doesn't matter) is the **partition function** $p_k(n)$.
 
-**Example.** Partitions of 5 into at most 3 parts: $5 = 5 = 4+1 = 3+2 = 3+1+1 = 2+2+1$, so $p_3(5) = 5$.
+**Example.** Partitions of 5 into at most 3 parts: \$5 = 5 = 4+1 = 3+2 = 3+1+1 = 2+2+1$, so $p_3(5) = 5$.
 
 ## The Bell Numbers
 

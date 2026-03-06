@@ -47,6 +47,7 @@ The reflection principle is a powerful technique used in:
 **Problem:** In an election, candidate A receives $a$ votes and B receives $b$ votes, with $a > b$. Assuming all orderings equally likely, what is the probability that A is **strictly ahead of B throughout the entire count**?
 
 !!! info "Ballot Problem Solution"
+
     $$P(\text{A strictly ahead throughout}) = \frac{a - b}{a + b}$$
 
 **Proof via reflection.** The total number of sequences is $\binom{a+b}{a}$. A sequence where A is strictly ahead throughout corresponds to a lattice path from $(0,0)$ to $(a,b)$ that **never touches** the diagonal $y = x$. By the reflection principle, the number of paths that **do touch** the diagonal is $\binom{a+b}{a-1}$. Therefore:
@@ -58,6 +59,7 @@ $$P = \frac{\binom{a+b}{a} - \binom{a+b}{a-1}}{\binom{a+b}{a}} = 1 - \frac{a}{a+
 The number of lattice paths from $(0,0)$ to $(n,n)$ that **never go above** the diagonal $y = x$ is the $n$-th **Catalan number**:
 
 !!! info "Catalan Number"
+
     $$C_n = \frac{1}{n+1}\binom{2n}{n}$$
 
 The first few values are: $C_0 = 1, C_1 = 1, C_2 = 2, C_3 = 5, C_4 = 14, C_5 = 42$.

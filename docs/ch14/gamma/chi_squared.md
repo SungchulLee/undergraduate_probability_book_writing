@@ -11,7 +11,7 @@
 
     $$\chi^2_1 \stackrel{d}{=} \Gamma\!\left(\frac{1}{2}, \frac{1}{2}\right)$$
 
-## Derivation: $Z^2 \sim \chi^2_1$
+## Derivation: Z^2 ~ Chi-squared(1)
 
 If $Z \sim N(0, 1)$, then $X = Z^2 \sim \chi^2_1 = \Gamma(1/2, 1/2)$.
 
@@ -57,8 +57,8 @@ when the two Chi-squared random variables are independent.
 |:---:|:---:|:---:|:---:|
 | $\text{Exp}(\lambda)$ | $\Gamma(1, \lambda)$ | $1$ | $\lambda$ |
 | Erlang$(k, \lambda)$ | $\Gamma(k, \lambda)$ | $k$ (integer) | $\lambda$ |
-| $\chi^2_1$ | $\Gamma(1/2, 1/2)$ | $1/2$ | $1/2$ |
-| $\chi^2_d$ | $\Gamma(d/2, 1/2)$ | $d/2$ | $1/2$ |
+| $\chi^2_1$ | $\Gamma(1/2, 1/2)$ | \$1/2$ | \$1/2$ |
+| $\chi^2_d$ | $\Gamma(d/2, 1/2)$ | $d/2$ | \$1/2$ |
 
 ## Inverse Gamma Distribution
 

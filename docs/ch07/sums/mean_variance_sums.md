@@ -7,7 +7,9 @@
 For **any** random variables $X_1, X_2, \ldots, X_n$ (not necessarily independent):
 
 $$
+
 E\left[\sum_{i=1}^n X_i\right] = \sum_{i=1}^n E[X_i]
+
 $$
 
 This follows directly from **linearity of expectation**.
@@ -17,7 +19,9 @@ This follows directly from **linearity of expectation**.
 If $X_1, \ldots, X_n$ are iid (independent and identically distributed):
 
 $$
+
 E\left[\sum_{i=1}^n X_i\right] = n \, E[X_1]
+
 $$
 
 ---
@@ -27,8 +31,10 @@ $$
 ### General Case
 
 $$
+
 \text{Var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i) + \sum_{i \neq j} \text{Cov}(X_i, X_j)
 = \sum_{i=1}^n \text{Var}(X_i) + 2\sum_{1 \leq i < j \leq n} \text{Cov}(X_i, X_j)
+
 $$
 
 ### Independent Case
@@ -36,7 +42,9 @@ $$
 If $X_1, \ldots, X_n$ are **independent**:
 
 $$
+
 \text{Var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i)
+
 $$
 
 ### iid Case
@@ -44,7 +52,9 @@ $$
 If $X_1, \ldots, X_n$ are **iid**:
 
 $$
+
 \text{Var}\left(\sum_{i=1}^n X_i\right) = n \, \text{Var}(X_1)
+
 $$
 
 ---
@@ -56,27 +66,37 @@ $$
 For constants $a_1, a_2, \ldots, a_n$:
 
 $$
+
 E\left[\sum_{i=1}^n a_i X_i\right] = \sum_{i=1}^n a_i E[X_i]
+
 $$
 
 $$
+
 \text{Var}\left(\sum_{i=1}^n a_i X_i\right) = \sum_{i=1}^n a_i^2 \, \text{Var}(X_i) + 2\sum_{1 \leq i < j \leq n} a_i a_j \, \text{Cov}(X_i, X_j)
+
 $$
 
 ### Independent Case
 
 $$
+
 \text{Var}\left(\sum_{i=1}^n a_i X_i\right) = \sum_{i=1}^n a_i^2 \, \text{Var}(X_i)
+
 $$
 
 ### iid Case
 
 $$
+
 E\left[\sum_{i=1}^n a_i X_i\right] = \left(\sum_{i=1}^n a_i\right) E[X_1]
+
 $$
 
 $$
+
 \text{Var}\left(\sum_{i=1}^n a_i X_i\right) = \left(\sum_{i=1}^n a_i^2\right) \text{Var}(X_1)
+
 $$
 
 ---
@@ -95,31 +115,39 @@ Define:
 **Mean**:
 
 $$
+
 E[S] = \sum_{i=1}^n a_i \mu_i = \mathbf{a}^T \boldsymbol{\mu}
+
 $$
 
 **Variance**:
 
 $$
+
 \text{Var}(S) = \sum_{i=1}^n a_i^2 \sigma_i^2 + 2\sum_{1 \leq i < j \leq n} a_i a_j \sigma_{ij}
 = \sum_{i=1}^n a_i^2 \sigma_i^2 + 2\sum_{1 \leq i < j \leq n} a_i a_j \rho_{ij} \sigma_i \sigma_j
+
 $$
 
 In matrix form:
 
 $$
+
 \text{Var}(S) = \mathbf{a}^T \boldsymbol{\Sigma} \, \mathbf{a}
+
 $$
 
 where the **covariance matrix** is
 
 $$
+
 \boldsymbol{\Sigma} = \begin{pmatrix}
 \sigma_1^2 & \sigma_{12} & \cdots & \sigma_{1n} \\
 \sigma_{21} & \sigma_2^2 & \cdots & \sigma_{2n} \\
 \vdots & \vdots & \ddots & \vdots \\
 \sigma_{n1} & \sigma_{n2} & \cdots & \sigma_n^2
 \end{pmatrix}
+
 $$
 
 ---
@@ -131,15 +159,21 @@ $$
 Flip a $p$-coin $n$ times independently. Let $\mathbf{1}_{A_i} \stackrel{iid}{\sim} \text{Bernoulli}(p)$.
 
 $$
+
 S = \sum_{i=1}^n \mathbf{1}_{A_i} \sim \text{Binomial}(n, p)
+
 $$
 
 $$
+
 E[S] = \sum_{i=1}^n E[\mathbf{1}_{A_i}] = np
+
 $$
 
 $$
+
 \text{Var}(S) = \sum_{i=1}^n \text{Var}(\mathbf{1}_{A_i}) = npq
+
 $$
 
 ### Example 2: Negative Binomial via Geometric
@@ -147,15 +181,21 @@ $$
 Flip a $p$-coin until the $r$-th head. Let $X_i \stackrel{iid}{\sim} \text{Geo}(p)$ be the number of flips from the $(i-1)$-th to the $i$-th head.
 
 $$
+
 S = \sum_{i=1}^r X_i \sim \text{NB}(r, p)
+
 $$
 
 $$
+
 E[S] = \sum_{i=1}^r E[X_i] = \frac{r}{p}
+
 $$
 
 $$
+
 \text{Var}(S) = \sum_{i=1}^r \text{Var}(X_i) = \frac{rq}{p^2}
+
 $$
 
 ### Example 3: Roll the Dice 1000 Times
@@ -163,22 +203,30 @@ $$
 Roll a die 1000 times. Gain the face value on odd rolls, lose the face value on even rolls. With a $+0.5$ bonus per game:
 
 $$
+
 D_i = \begin{cases} +1 & \text{w.p. } 1/6 \\ -2 & \text{w.p. } 1/6 \\ +3 & \text{w.p. } 1/6 \\ -4 & \text{w.p. } 1/6 \\ +5 & \text{w.p. } 1/6 \\ -6 & \text{w.p. } 1/6 \end{cases}
 \qquad X_i = D_i + 0.5 \stackrel{iid}{\sim}
+
 $$
 
 Computing moments of $D_i$:
 
 $$
+
 E[D_i] = \frac{1 - 2 + 3 - 4 + 5 - 6}{6} = \frac{-3}{6} = -0.5
+
 $$
 
 $$
+
 E[D_i^2] = \frac{1 + 4 + 9 + 16 + 25 + 36}{6} = \frac{91}{6} \approx 15.1667
+
 $$
 
 $$
+
 \text{Var}(D_i) = E[D_i^2] - (E[D_i])^2 = 15.1667 - 0.25 = 14.9167
+
 $$
 
 Since $X_i = D_i + 0.5$: $E[X_i] = 0$ and $\text{Var}(X_i) = 14.9167$.
@@ -186,11 +234,15 @@ Since $X_i = D_i + 0.5$: $E[X_i] = 0$ and $\text{Var}(X_i) = 14.9167$.
 The total P\&L $S = \sum_{i=1}^{1000} X_i$:
 
 $$
+
 E[S] = 1000 \times 0 = 0
+
 $$
 
 $$
+
 \text{Var}(S) = 1000 \times 14.9167 = 14916.7, \quad \text{SD}(S) \approx 122.1
+
 $$
 
 ### Example 4: Coupon Collector Problem
@@ -198,11 +250,15 @@ $$
 To collect all $n$ types of toys, let $\tau_i \sim \text{Geo}\left(\frac{n-(i-1)}{n}\right)$ independently. Then $T_n = \sum_{i=1}^n \tau_i$:
 
 $$
+
 E[T_n] = \sum_{i=1}^n \frac{n}{n - (i-1)} = n\left(1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}\right) = nH_n \sim n\log n
+
 $$
 
 $$
+
 \text{Var}(T_n) = \sum_{k=1}^n \frac{1 - k/n}{(k/n)^2} = n^2 \sum_{k=1}^n \frac{1}{k^2} - n\sum_{k=1}^n \frac{1}{k} \approx \frac{\pi^2}{6} n^2 - n\log n
+
 $$
 
 ---

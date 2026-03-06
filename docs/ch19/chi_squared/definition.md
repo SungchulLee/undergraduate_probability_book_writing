@@ -21,7 +21,7 @@ The parameter $d$ is the **degrees of freedom**.
 
 ## Connection to Gamma
 
-### Step 1: $\chi^2_1 = Z^2 \sim \Gamma(1/2, 1/2)$
+### Step 1: Chi-squared(1) = Z^2 ~ Gamma(1/2, 1/2)
 
 For $x > 0$:
 
@@ -35,7 +35,7 @@ Therefore:
 
 $$\chi^2_1 \stackrel{d}{=} Z^2 \stackrel{d}{=} \Gamma\!\left(\frac{1}{2}, \frac{1}{2}\right)$$
 
-### Step 2: $\chi^2_d \sim \Gamma(d/2, 1/2)$
+### Step 2: Chi-squared(d) ~ Gamma(d/2, 1/2)
 
 By the additivity property of the Gamma distribution:
 

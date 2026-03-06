@@ -27,11 +27,15 @@ A laboratory blood test is 95% effective in detecting a certain disease when it 
 ### Solution via Bayes' Rule + Total Probability
 
 $$
+
 P(D \mid d) = \frac{P(D)\,P(d \mid D)}{P(D)\,P(d \mid D) + P(H)\,P(d \mid H)}
+
 $$
 
 $$
+
 = \frac{(0.0001)(0.95)}{(0.0001)(0.95) + (0.9999)(0.01)} = \frac{0.000095}{0.000095 + 0.009999} = 0.0094
+
 $$
 
 ### Interpretation
@@ -133,13 +137,17 @@ The explanation: women tended to apply to more competitive departments (C, D, E,
 Simpson's paradox illustrates the importance of proper conditioning. Let $S$ = success, $G$ = group (doctor or gender), and $C$ = category (operation type or department):
 
 $$
+
 P(S \mid G = A, C = c) > P(S \mid G = B, C = c) \quad \text{for all } c
+
 $$
 
 does **not** imply
 
 $$
+
 P(S \mid G = A) > P(S \mid G = B)
+
 $$
 
 The marginal relationship can reverse the conditional relationships when the groups have different distributions over categories.

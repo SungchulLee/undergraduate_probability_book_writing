@@ -14,27 +14,37 @@ Let $(X, Y)^T \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ with $\mu_X = 1$, $
     **(a)**
 
     $$
+
     \boldsymbol{\Sigma} = \begin{pmatrix} 4 & 3 \\ 3 & 9 \end{pmatrix}, \quad |\boldsymbol{\Sigma}| = 36 - 9 = 27
+
     $$
 
     $$
+
     \boldsymbol{\Sigma}^{-1} = \frac{1}{27}\begin{pmatrix} 9 & -3 \\ -3 & 4 \end{pmatrix}
+
     $$
 
     **(b)** At $\mathbf{x} = \boldsymbol{\mu}$, the exponent is zero:
 
     $$
+
     f(1, -1) = \frac{1}{2\pi\sqrt{27}} = \frac{1}{2\pi \cdot 3\sqrt{3}} \approx 0.0307
+
     $$
 
     **(c)**
 
     $$
+
     \mu_{X|Y} = 1 + 0.5 \cdot \frac{2}{3}(2 - (-1)) = 1 + 1 = 2
+
     $$
 
     $$
+
     \sigma_{X|Y}^2 = 4(1 - 0.25) = 3
+
     $$
 
     So $X \mid Y = 2 \sim N(2, 3)$.
@@ -98,13 +108,13 @@ Let $\mathbf{x} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ with $\boldsymbol
 
     **(b)** $X_1 + X_2 = \mathbf{a}^T\mathbf{x}$ with $\mathbf{a} = (1, 1)^T$.
 
-    Mean: $1 + 2 = 3$. Variance: $\mathbf{a}^T\boldsymbol{\Sigma}\mathbf{a} = 2 + 2(1) + 3 = 7$.
+    Mean: \$1 + 2 = 3$. Variance: $\mathbf{a}^T\boldsymbol{\Sigma}\mathbf{a} = 2 + 2(1) + 3 = 7$.
 
     So $X_1 + X_2 \sim N(3, 7)$.
 
     **(c)** $2X_1 - X_2 = \mathbf{a}^T\mathbf{x}$ with $\mathbf{a} = (2, -1)^T$.
 
-    Mean: $2(1) - 2 = 0$. Variance: $4(2) + (-1)^2(3) + 2(2)(-1)(1) = 8 + 3 - 4 = 7$.
+    Mean: \$2(1) - 2 = 0$. Variance: $4(2) + (-1)^2(3) + 2(2)(-1)(1) = 8 + 3 - 4 = 7$.
 
     So $2X_1 - X_2 \sim N(0, 7)$.
 
@@ -136,7 +146,9 @@ Let $\boldsymbol{\Sigma} = \begin{pmatrix} 4 & 2 \\ 2 & 3 \end{pmatrix}$.
 Let $\mathbf{x} = (X_1, X_2, X_3)^T \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ with:
 
 $$
+
 \boldsymbol{\mu} = \begin{pmatrix} 0 \\ 1 \\ 2 \end{pmatrix}, \qquad \boldsymbol{\Sigma} = \begin{pmatrix} 4 & 1 & 0 \\ 1 & 2 & 1 \\ 0 & 1 & 3 \end{pmatrix}
+
 $$
 
 **(a)** Find the marginal distribution of $(X_1, X_2)^T$.

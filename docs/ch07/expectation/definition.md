@@ -11,13 +11,17 @@ The **expectation** (or **expected value**, **mean**) of a random variable is th
 If $X$ is a discrete random variable with PMF $p(x) = P(X = x)$, the **expected value** of $X$ is
 
 $$
+
 E[X] = \sum_{x} x \, p(x)
+
 $$
 
 where the sum is over all possible values of $X$, provided the sum converges absolutely:
 
 $$
+
 \sum_{x} |x| \, p(x) < \infty
+
 $$
 
 If the sum does not converge absolutely, we say $E[X]$ **does not exist**.
@@ -29,13 +33,17 @@ If the sum does not converge absolutely, we say $E[X]$ **does not exist**.
 If $X$ is a continuous random variable with PDF $f(x)$, the **expected value** of $X$ is
 
 $$
+
 E[X] = \int_{-\infty}^{\infty} x \, f(x) \, dx
+
 $$
 
 provided the integral converges absolutely:
 
 $$
+
 \int_{-\infty}^{\infty} |x| \, f(x) \, dx < \infty
+
 $$
 
 ---
@@ -47,7 +55,9 @@ $$
 Let $X$ be the face value of a fair die. Then
 
 $$
+
 E[X] = \sum_{k=1}^{6} k \cdot \frac{1}{6} = \frac{1+2+3+4+5+6}{6} = \frac{21}{6} = 3.5
+
 $$
 
 Note that $E[X] = 3.5$ is not even a possible outcome — the expectation need not be a value the random variable can take.
@@ -57,7 +67,9 @@ Note that $E[X] = 3.5$ is not even a possible outcome — the expectation need n
 If $X \sim \text{Bernoulli}(p)$, then
 
 $$
+
 E[X] = 0 \cdot (1-p) + 1 \cdot p = p
+
 $$
 
 ### Example 3: Continuous Uniform
@@ -65,7 +77,9 @@ $$
 If $X \sim \text{Uniform}(a, b)$ with PDF $f(x) = \frac{1}{b-a}$ for $a \leq x \leq b$, then
 
 $$
+
 E[X] = \int_a^b x \cdot \frac{1}{b-a} \, dx = \frac{a+b}{2}
+
 $$
 
 ### Example 4: Standard Normal
@@ -73,7 +87,9 @@ $$
 If $Z \sim N(0,1)$, then by symmetry of the PDF about zero,
 
 $$
+
 E[Z] = \int_{-\infty}^{\infty} z \cdot \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \, dz = 0
+
 $$
 
 ---
@@ -99,7 +115,9 @@ $$
 The Cauchy distribution with PDF
 
 $$
+
 f(x) = \frac{1}{\pi(1 + x^2)}, \quad -\infty < x < \infty
+
 $$
 
 has no expectation because $\int_{-\infty}^{\infty} |x| \cdot \frac{1}{\pi(1+x^2)} dx = \infty$.

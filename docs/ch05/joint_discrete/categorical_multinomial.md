@@ -12,7 +12,7 @@ $$p_j \ge 0, \qquad \sum_{j=1}^K p_j = 1$$
 
 This represents a $K$-sided die where face $j$ appears with probability $p_j$.
 
-## Categorical Distribution $\text{Cat}(\mathbf{p})$
+## Categorical Distribution Cat(p)
 
 Roll a $\mathbf{p}$-die once and record the result. The outcome is represented by a vector $(X_1, \ldots, X_K)$ where exactly one component equals 1 and the rest equal 0:
 
@@ -20,7 +20,7 @@ $$P(X_1 = 0, \ldots, X_j = 1, \ldots, X_K = 0) = p_j$$
 
 The Categorical distribution generalizes the Bernoulli distribution from 2 outcomes to $K$ outcomes.
 
-## Multinomial Distribution $\text{Mul}(n, \mathbf{p})$
+## Multinomial Distribution Mul(n, p)
 
 Roll a $\mathbf{p}$-die $n$ times independently and count the number of each outcome. If $X_j$ denotes the number of times face $j$ appears:
 

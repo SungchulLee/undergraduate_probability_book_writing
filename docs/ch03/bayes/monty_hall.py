@@ -4,16 +4,24 @@ import matplotlib.pyplot as plt
 import random
 
 
+# ========================================================================
+
+
 class MontyStick:
     """Player always sticks with the first choice."""
+
     def run(self):
         car = random.choice([0, 1, 2])
         choice = random.choice([0, 1, 2])
         return 1 if choice == car else 0
 
 
+# ========================================================================
+
+
 class MontySwitch:
     """Player always switches after the host reveals a goat."""
+
     def run(self):
         car = random.choice([0, 1, 2])
         first = random.choice([0, 1, 2])
@@ -23,6 +31,9 @@ class MontySwitch:
         # Player switches to the remaining door
         final = [d for d in [0, 1, 2] if d != first and d != host][0]
         return 1 if final == car else 0
+
+
+# ========================================================================
 
 
 def main():
@@ -57,6 +68,9 @@ def main():
     plt.tight_layout()
     plt.savefig("monty_hall.png", dpi=150, bbox_inches="tight")
     plt.show()
+
+
+# ========================================================================
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 # Normal Distribution Definition
 
-## PDF of $N(\mu, \sigma^2)$
+## PDF of N(mu, sigma^2)
 
 The **normal distribution** (or Gaussian distribution) with mean $\mu$ and variance $\sigma^2$ has PDF:
 
@@ -24,7 +24,7 @@ The normal distribution arises naturally from the **Central Limit Theorem**: if 
 - Increasing $\sigma$ makes the curve **wider and shorter** (more spread out).
 - Decreasing $\sigma$ makes the curve **narrower and taller** (more concentrated).
 
-## Standard Normal Distribution $N(0, 1)$
+## Standard Normal Distribution N(0, 1)
 
 The **standard normal** has $\mu = 0$ and $\sigma = 1$:
 

@@ -7,7 +7,9 @@ A **2D simple random walk** starts at the origin $(0, 0)$ and at each step moves
 At step $k$, the increment $(X_k, Y_k)$ is chosen uniformly from $\{(1,0), (-1,0), (0,1), (0,-1)\}$, and the position after $m$ steps is
 
 $$
+
 (S_m^x, S_m^y) = \sum_{k=1}^{m} (X_k, Y_k)
+
 $$
 
 ## Simulation

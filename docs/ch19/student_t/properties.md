@@ -1,4 +1,4 @@
-# Student's $t$ Distribution: Properties and Comparison to Normal
+# Student's t Distribution: Properties and Comparison to Normal
 
 ## Summary of Properties
 
@@ -35,7 +35,7 @@ The $t$ density decays **polynomially** (like $|t|^{-(d+1)}$), while the normal 
 - More probability near the center for $N(0,1)$ (to compensate, since both integrate to 1)
 - Extreme values are more likely under $t_d$ than under $N(0,1)$
 
-## Special Case: Cauchy Distribution ($d = 1$)
+## Special Case: Cauchy Distribution (d = 1)
 
 When $d = 1$:
 

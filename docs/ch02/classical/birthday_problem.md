@@ -18,10 +18,12 @@ It is much easier to compute the probability of the complement — that **all $n
 Each of the $n$ people can have any of 365 birthdays:
 
 $$
+
 |\Omega| = 365^n
+
 $$
 
-### Counting $A^c$ (All Different Birthdays)
+### Counting A^c (All Different Birthdays)
 
 - Person 1: 365 choices
 - Person 2: 364 choices (must differ from person 1)
@@ -30,17 +32,23 @@ $$
 - Person $n$: $365 - (n-1)$ choices
 
 $$
+
 |A^c| = 365 \times 364 \times 363 \times \cdots \times (365 - n + 1) = \frac{365!}{(365-n)!}
+
 $$
 
 ### Probability of a Match
 
 $$
+
 P(\text{at least one match}) = 1 - P(\text{all different}) = 1 - \frac{365 \times 364 \times \cdots \times (365 - n + 1)}{365^n}
+
 $$
 
 $$
+
 = 1 - \prod_{k=0}^{n-1}\left(1 - \frac{k}{365}\right)
+
 $$
 
 ## Key Results
@@ -63,23 +71,29 @@ $$
 The key insight is that we are not asking whether a **specific** person shares a birthday with someone else. We are asking whether **any pair** among all $n$ people shares a birthday. The number of pairs grows quadratically:
 
 $$
+
 \binom{n}{2} = \frac{n(n-1)}{2}
+
 $$
 
 With 23 people, there are $\binom{23}{2} = 253$ pairs — each a potential match.
 
-## Approximation via $e^{-x} \approx 1 - x$
+## Approximation via exp(-x) approx 1 - x
 
 For small $x$, $1 - x \approx e^{-x}$. Therefore:
 
 $$
+
 P(\text{all different}) = \prod_{k=0}^{n-1}\left(1 - \frac{k}{365}\right) \approx \prod_{k=0}^{n-1} e^{-k/365} = e^{-n(n-1)/(2 \cdot 365)}
+
 $$
 
 Setting $P(\text{match}) = 0.5$:
 
 $$
+
 e^{-n(n-1)/730} = 0.5 \implies n(n-1) \approx 730 \ln 2 \approx 506 \implies n \approx 23
+
 $$
 
 ## Python Example
@@ -178,7 +192,9 @@ Simulation verification (100,000 trials):
 The birthday problem generalizes naturally. With $d$ possible birthdays (instead of 365), the probability of a match among $n$ people is:
 
 $$
+
 P(\text{match}) \approx 1 - e^{-n(n-1)/(2d)}
+
 $$
 
 The 50% threshold occurs at approximately $n \approx 1.2\sqrt{d}$.

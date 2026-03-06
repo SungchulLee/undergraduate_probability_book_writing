@@ -19,7 +19,9 @@ An **estimator** of $\theta$ is a statistic $f(X_1, X_2, \ldots, X_n)$ used to e
 An estimator $f(X_1, X_2, \ldots, X_n)$ of $\theta$ is **unbiased** if
 
 $$
+
 E[f(X_1, X_2, \ldots, X_n)] = \theta
+
 $$
 
 That is, on average, the estimator gives the correct value.
@@ -33,19 +35,25 @@ Let $X_1, X_2, \ldots, X_n$ be iid samples from a distribution with unknown mean
 The **sample mean** is
 
 $$
+
 \bar{X} = \frac{\sum_{i=1}^n X_i}{n}
+
 $$
 
 **Unbiasedness**: By linearity of expectation,
 
 $$
+
 E[\bar{X}] = \frac{\sum_{i=1}^n E[X_i]}{n} = \frac{n\mu}{n} = \mu \quad \checkmark
+
 $$
 
 **Variance of the sample mean**:
 
 $$
+
 \text{Var}(\bar{X}) = \frac{1}{n^2} \text{Var}\left(\sum_{i=1}^n X_i\right) = \frac{1}{n^2} \sum_{i=1}^n \text{Var}(X_i) = \frac{\sigma^2}{n}
+
 $$
 
 !!! note "Standard Error"
@@ -58,7 +66,9 @@ $$
 The **sample variance** is
 
 $$
+
 S^2 = \frac{\sum_{i=1}^n (X_i - \bar{X})^2}{n - 1}
+
 $$
 
 **Unbiasedness**: We need to show $E[S^2] = \sigma^2$.
@@ -68,51 +78,67 @@ $$
 **Step 1**: Expand $(X_i - \bar{X})^2$:
 
 $$
+
 (X_i - \bar{X})^2 = \left[(X_i - \mu) - (\bar{X} - \mu)\right]^2 = (X_i - \mu)^2 + (\bar{X} - \mu)^2 - 2(X_i - \mu)(\bar{X} - \mu)
+
 $$
 
 **Step 2**: Take expectations:
 
 $$
+
 E[(X_i - \bar{X})^2] = \sigma^2 + \frac{\sigma^2}{n} - 2E[(X_i - \mu)(\bar{X} - \mu)]
+
 $$
 
 **Step 3**: Compute $E[(X_i - \mu)(\bar{X} - \mu)]$:
 
 $$
+
 E[(X_i - \mu)(\bar{X} - \mu)] = E\left[(X_i - \mu) \cdot \frac{\sum_{j=1}^n (X_j - \mu)}{n}\right]
+
 $$
 
 $$
+
 = E\left[(X_i - \mu) \cdot \frac{\sum_{j \neq i}(X_j - \mu)}{n} + \frac{(X_i - \mu)}{n}\right]
+
 $$
 
 Since $X_i$ and $X_j$ are independent for $j \neq i$, $E[(X_i - \mu)(X_j - \mu)] = 0$. Therefore:
 
 $$
+
 E[(X_i - \mu)(\bar{X} - \mu)] = \frac{1}{n}E[(X_i - \mu)^2] = \frac{\sigma^2}{n}
+
 $$
 
 **Step 4**: Combine:
 
 $$
+
 E[(X_i - \bar{X})^2] = \sigma^2 + \frac{\sigma^2}{n} - \frac{2\sigma^2}{n} = \sigma^2 \cdot \frac{n-1}{n}
+
 $$
 
 **Step 5**: Sum and divide:
 
 $$
+
 E[S^2] = \frac{\sum_{i=1}^n E[(X_i - \bar{X})^2]}{n-1} = \frac{n \cdot \frac{n-1}{n}\sigma^2}{n-1} = \sigma^2 \quad \checkmark
+
 $$
 
 ---
 
-## Why Divide by $n-1$?
+## Why Divide by n - 1?
 
 If we divided by $n$ instead, we would get
 
 $$
+
 E\left[\frac{\sum(X_i - \bar{X})^2}{n}\right] = \frac{n-1}{n}\sigma^2 < \sigma^2
+
 $$
 
 This is a **biased** estimator that systematically underestimates $\sigma^2$. Dividing by $n-1$ corrects for this bias.

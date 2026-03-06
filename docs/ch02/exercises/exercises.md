@@ -45,7 +45,9 @@
 **Exercise 2.5.** Prove that for any events $A$ and $B$:
 
 $$
+
 P(A \cup B) = P(A) + P(B) - P(A \cap B)
+
 $$
 
 using only the Kolmogorov axioms and the fact that $P(A) = P(A \cap B) + P(A \cap B^c)$.
@@ -59,7 +61,9 @@ using only the Kolmogorov axioms and the fact that $P(A) = P(A \cap B) + P(A \ca
 **Exercise 2.7 (Boole's Inequality).** Let $A_1, A_2, \ldots, A_n$ be arbitrary events. Prove by induction that:
 
 $$
+
 P\left(\bigcup_{i=1}^{n} A_i\right) \leq \sum_{i=1}^{n} P(A_i)
+
 $$
 
 ---

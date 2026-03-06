@@ -6,7 +6,9 @@
     Let $X_n \sim B(n, p_n)$ where $p_n = \lambda/n$ for a fixed $\lambda > 0$. Then for every non-negative integer $k$:
 
     $$
+
     \lim_{n \to \infty} P(X_n = k) = \frac{e^{-\lambda} \lambda^k}{k!}
+
     $$
 
     That is, $B(n, \lambda/n) \to \text{Po}(\lambda)$ in distribution as $n \to \infty$.
@@ -18,25 +20,33 @@
 Starting from the Binomial PMF with $p = \lambda/n$:
 
 $$
+
 P(X_n = k) = \binom{n}{k} p^k (1-p)^{n-k}
+
 $$
 
 Substituting $p = \lambda/n$:
 
 $$
+
 P(X_n = k) = \frac{n(n-1)(n-2)\cdots(n-k+1)}{k!} \left(\frac{\lambda}{n}\right)^k \left(1 - \frac{\lambda}{n}\right)^{n-k}
+
 $$
 
 Rearranging:
 
 $$
+
 P(X_n = k) = \frac{1}{k!} \cdot \underbrace{\frac{n(n-1)(n-2)\cdots(n-k+1)}{n^k}}_{\to 1} \cdot \lambda^k \cdot \underbrace{\left(1 - \frac{\lambda}{n}\right)^n}_{\to e^{-\lambda}} \cdot \underbrace{\left(1 - \frac{\lambda}{n}\right)^{-k}}_{\to 1}
+
 $$
 
 Taking the limit as $n \to \infty$ with $k$ fixed:
 
 $$
+
 P(X_n = k) \to \frac{1}{k!} \cdot 1 \cdot \lambda^k \cdot e^{-\lambda} \cdot 1 = \frac{e^{-\lambda} \lambda^k}{k!}
+
 $$
 
 **Details of each factor:**
@@ -62,18 +72,22 @@ The mean matches exactly for all $n$. The variance converges: $\text{Var}(X_n) =
 
 ---
 
-## Generalization: Sum of Independent Bernoullis with Different $p_i$
+## Generalization: Sum of Independent Bernoullis with Different p_i
 
 The Poisson Limit Theorem extends beyond the case where all Bernoulli trials have the same probability. Let $A_1, A_2, \ldots, A_n$ be independent events with $p_i = P(A_i)$, and let
 
 $$
+
 X = \sum_{i=1}^{n} \mathbf{1}_{A_i}
+
 $$
 
 Note that $X$ is **not** $B(n, p)$ in general (since the $p_i$ may differ). Nevertheless, if $Y \sim \text{Po}(\lambda)$ with $\lambda = \sum_{i=1}^{n} p_i$, then for any set $A$:
 
 $$
+
 \left| P(X \in A) - P(Y \in A) \right| \leq \sum_{i=1}^{n} p_i^2 \leq \left(\max_{1 \leq i \leq n} p_i\right) \cdot \sum_{i=1}^{n} p_i = \left(\max_{1 \leq i \leq n} p_i\right) \cdot \lambda
+
 $$
 
 !!! note "Le Cam's Inequality"

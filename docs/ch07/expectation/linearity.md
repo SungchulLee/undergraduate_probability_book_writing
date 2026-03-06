@@ -5,13 +5,17 @@
 For any random variables $X_1, X_2, \ldots, X_n$ (not necessarily independent) and constants $a_1, a_2, \ldots, a_n, b$:
 
 $$
+
 E\left[\sum_{i=1}^n a_i X_i + b\right] = \sum_{i=1}^n a_i E[X_i] + b
+
 $$
 
 In its simplest form, for two random variables:
 
 $$
+
 E[aX + bY + c] = aE[X] + bE[Y] + c
+
 $$
 
 !!! note "Key Insight"
@@ -24,7 +28,9 @@ $$
 For two random variables $X$ and $Y$:
 
 $$
+
 E[X + Y] = \sum_x \sum_y (x + y) \, p(x, y) = \sum_x \sum_y x \, p(x, y) + \sum_x \sum_y y \, p(x, y)
+
 $$
 
 The first sum equals $\sum_x x \, p_X(x) = E[X]$ and the second equals $\sum_y y \, p_Y(y) = E[Y]$.
@@ -38,7 +44,9 @@ The first sum equals $\sum_x x \, p_X(x) = E[X]$ and the second equals $\sum_y y
 Roll $n$ fair dice. Let $S = X_1 + X_2 + \cdots + X_n$ where each $X_i$ is the face value of the $i$-th die.
 
 $$
+
 E[S] = \sum_{i=1}^n E[X_i] = n \cdot 3.5
+
 $$
 
 For $n = 2$: $E[S] = 7$.
@@ -48,7 +56,9 @@ For $n = 2$: $E[S] = 7$.
 If $S \sim \text{Binomial}(n, p)$, write $S = \sum_{i=1}^n X_i$ where $X_i \sim \text{Bernoulli}(p)$ are independent. Then:
 
 $$
+
 E[S] = \sum_{i=1}^n E[X_i] = np
+
 $$
 
 This is much simpler than computing $E[S] = \sum_{k=0}^n k \binom{n}{k} p^k (1-p)^{n-k}$ directly.
@@ -58,7 +68,9 @@ This is much simpler than computing $E[S] = \sum_{k=0}^n k \binom{n}{k} p^k (1-p
 If $S \sim \text{NB}(r, p)$, write $S = \sum_{i=1}^r X_i$ where $X_i \sim \text{Geo}(p)$ are independent. Then:
 
 $$
+
 E[S] = \sum_{i=1}^r E[X_i] = \frac{r}{p}
+
 $$
 
 ### Example 4: Coupon Collector Mean
@@ -66,7 +78,9 @@ $$
 To collect all $n$ types of coupons, let $T_n = \sum_{i=1}^n \tau_i$ where $\tau_i \sim \text{Geo}\left(\frac{n-(i-1)}{n}\right)$. Then:
 
 $$
+
 E[T_n] = \sum_{i=1}^n E[\tau_i] = \sum_{i=1}^n \frac{n}{n-(i-1)} = n\sum_{k=1}^n \frac{1}{k} = nH_n \sim n \log n
+
 $$
 
 where $H_n = 1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}$ is the $n$-th harmonic number.
@@ -82,13 +96,17 @@ There are $n$ people in a class, each choosing a birthday uniformly at random fr
 Let $\mathbf{1}_{A_{ij}}$ be the indicator that persons $i$ and $j$ share a birthday. Then:
 
 $$
+
 S_n = \sum_{1 \leq i < j \leq n} \mathbf{1}_{A_{ij}}
+
 $$
 
 The indicators are **not independent** (if $i$ shares a birthday with $j$ and $k$, then $j$ and $k$ are more likely to share a birthday). But by linearity:
 
 $$
+
 E[S_n] = \sum_{1 \leq i < j \leq n} E[\mathbf{1}_{A_{ij}}] = \binom{n}{2} \cdot \frac{1}{365}
+
 $$
 
 ---

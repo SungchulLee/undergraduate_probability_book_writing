@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+# ========================================================================
+
 def main():
     n = 100                    # permutation size
     n_simulations = 50000      # number of Monte Carlo trials
@@ -62,6 +64,8 @@ def main():
     print(f"Simulated P(derangement) = {estimates[-1]:.4f}")
     print(f"Theoretical e^{{-1}}      = {theoretical:.4f}")
 
+
+# ========================================================================
 
 if __name__ == "__main__":
     main()

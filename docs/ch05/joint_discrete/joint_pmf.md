@@ -53,13 +53,13 @@ The sample space and the mapping to $(X, Y)$:
 | TTH | 0 | 1 |
 | TTT | 0 | 0 |
 
-The joint PMF table (each outcome has probability $1/8$):
+The joint PMF table (each outcome has probability \$1/8$):
 
 | | $X=0$ | $X=1$ | $X=2$ |
 |---|---|---|---|
-| $Y=3$ | 0 | 0 | $1/8$ |
-| $Y=2$ | 0 | $2/8$ | $1/8$ |
-| $Y=1$ | $1/8$ | $2/8$ | 0 |
-| $Y=0$ | $1/8$ | 0 | 0 |
+| $Y=3$ | 0 | 0 | \$1/8$ |
+| $Y=2$ | 0 | \$2/8$ | \$1/8$ |
+| $Y=1$ | \$1/8$ | \$2/8$ | 0 |
+| $Y=0$ | \$1/8$ | 0 | 0 |
 
 Note that $Y \ge X$ always holds (the total heads cannot be less than heads in the first two flips), so some entries are necessarily 0.

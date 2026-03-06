@@ -18,7 +18,7 @@ Marginalization integrates out the unwanted variable. Geometrically, the margina
 
 Let $(X, Y)$ be uniform on the triangle $\{(x,y) : 0 \le x \le 1, \, 0 \le y \le x\}$.
 
-The area of this triangle is $1/2$, so the joint PDF is:
+The area of this triangle is \$1/2$, so the joint PDF is:
 
 $$f(x, y) = 2, \quad 0 \le y \le x \le 1$$
 

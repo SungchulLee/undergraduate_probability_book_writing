@@ -1,6 +1,6 @@
 # MGF of Bernoulli and Binomial
 
-## MGF of Bernoulli$(p)$
+## MGF of Bernoulli(p)
 
 If $X \sim \text{Bernoulli}(p)$, then:
 
@@ -8,7 +8,7 @@ $$M_X(t) = E[e^{tX}] = e^{t \cdot 1} \cdot p + e^{t \cdot 0} \cdot (1 - p) = 1 +
 
 $$\boxed{M_{\text{Bernoulli}(p)}(t) = 1 + p(e^t - 1)}$$
 
-## MGF of Binomial$(n, p)$
+## MGF of Binomial(n, p)
 
 If $X \sim B(n, p)$, then $X = \sum_{k=1}^n X_k$ where $X_k \sim \text{Bernoulli}(p)$ are iid. By independence:
 

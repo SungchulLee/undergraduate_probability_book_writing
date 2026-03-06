@@ -32,7 +32,7 @@ $$\frac{(n-1)S^2}{\sigma^2} = \sum_{i=1}^n \left(\frac{X_i - \bar{X}}{\sigma}\ri
 
 The proof of this result is the central topic of Section 19.2.
 
-## Independence of $\bar{X}$ and $S^2$
+## Independence of X-bar and S^2
 
 A remarkable and non-obvious fact: **$\bar{X}$ and $S^2$ are independent**. This is specific to normal populations and is crucial for deriving the Student's $t$ distribution.
 

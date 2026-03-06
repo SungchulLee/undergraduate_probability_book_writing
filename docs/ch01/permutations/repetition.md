@@ -20,7 +20,7 @@ $$|A| : |B| = k : 1 \quad \Rightarrow \quad |B| = \frac{|A|}{k}$$
 
 **Step 1: Attach indices.** Treat the two B's as distinct: $B_1 O B_2$.
 
-The number of arrangements of $B_1 O B_2$ (all distinct) is $3! = 6$.
+The number of arrangements of $B_1 O B_2$ (all distinct) is \$3! = 6$.
 
 **Step 2: Remove indices.** List all arrangements and observe what happens:
 
@@ -33,7 +33,7 @@ The number of arrangements of $B_1 O B_2$ (all distinct) is $3! = 6$.
 | $O B_1 B_2$ | $OBB$ |
 | $O B_2 B_1$ | $OBB$ |
 
-**Step 3: Apply many-to-one.** Each distinct word (without indices) corresponds to exactly $2! = 2$ indexed arrangements (since the two B's can be swapped). This is a **2-to-1** mapping.
+**Step 3: Apply many-to-one.** Each distinct word (without indices) corresponds to exactly \$2! = 2$ indexed arrangements (since the two B's can be swapped). This is a **2-to-1** mapping.
 
 $$\text{Number of words from BOB} = \frac{3!}{2!} = \frac{6}{2} = 3$$
 
@@ -43,9 +43,9 @@ The three distinct words are: $BBO$, $BOB$, $OBB$.
 
 **Step 1: Attach indices.** Treat letters as distinct: $B_1 B_2 O_1 O_2 O_3$.
 
-Number of arrangements: $5! = 120$.
+Number of arrangements: \$5! = 120$.
 
-**Step 2: Remove indices.** For each distinct word, the two B's can be permuted among themselves in $2!$ ways, and the three O's can be permuted among themselves in $3!$ ways.
+**Step 2: Remove indices.** For each distinct word, the two B's can be permuted among themselves in \$2!$ ways, and the three O's can be permuted among themselves in \$3!$ ways.
 
 For example, the word $BBOOO$ corresponds to $2! \times 3! = 12$ indexed arrangements:
 

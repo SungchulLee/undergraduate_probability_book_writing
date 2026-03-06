@@ -11,14 +11,18 @@ One of the most powerful features of the bivariate normal distribution is that b
 If $(X, Y)^T \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ with:
 
 $$
+
 \boldsymbol{\mu} = \begin{pmatrix} \mu_X \\ \mu_Y \end{pmatrix}, \qquad
 \boldsymbol{\Sigma} = \begin{pmatrix} \sigma_X^2 & \rho\sigma_X\sigma_Y \\ \rho\sigma_X\sigma_Y & \sigma_Y^2 \end{pmatrix}
+
 $$
 
 then the marginal distributions are:
 
 $$
+
 X \sim N(\mu_X, \sigma_X^2), \qquad Y \sim N(\mu_Y, \sigma_Y^2)
+
 $$
 
 The marginals simply "read off" the diagonal of the covariance matrix. The correlation $\rho$ does not appear in the marginals — it only affects the joint behavior.
@@ -28,22 +32,28 @@ The marginals simply "read off" the diagonal of the covariance matrix. The corre
 
 ---
 
-## Conditional Distribution: $X \mid Y = y$
+## Conditional Distribution: X | Y = y
 
 The conditional distribution of $X$ given $Y = y$ is:
 
 $$
+
 X \mid Y = y \;\sim\; N\!\left(\mu_{X|Y},\; \sigma_{X|Y}^2\right)
+
 $$
 
 where:
 
 $$
+
 \mu_{X|Y} = \mu_X + \rho\frac{\sigma_X}{\sigma_Y}(y - \mu_Y)
+
 $$
 
 $$
+
 \sigma_{X|Y}^2 = \sigma_X^2(1 - \rho^2)
+
 $$
 
 ### Interpretation
@@ -54,7 +64,9 @@ $$
 By symmetry, the conditional distribution of $Y$ given $X = x$ is:
 
 $$
+
 Y \mid X = x \;\sim\; N\!\left(\mu_Y + \rho\frac{\sigma_Y}{\sigma_X}(x - \mu_X),\; \sigma_Y^2(1 - \rho^2)\right)
+
 $$
 
 ---
@@ -64,25 +76,33 @@ $$
 Starting from the joint PDF in standardized coordinates $\tilde{x} = (x - \mu_X)/\sigma_X$ and $\tilde{y} = (y - \mu_Y)/\sigma_Y$:
 
 $$
+
 f(x, y) \propto \exp\left(-\frac{\tilde{x}^2 + \tilde{y}^2 - 2\rho\tilde{x}\tilde{y}}{2(1 - \rho^2)}\right)
+
 $$
 
 To find $f(x \mid y)$, treat $\tilde{y}$ as fixed and collect terms in $\tilde{x}$:
 
 $$
+
 \tilde{x}^2 - 2\rho\tilde{y}\tilde{x} = (\tilde{x} - \rho\tilde{y})^2 - \rho^2\tilde{y}^2
+
 $$
 
 The $\rho^2\tilde{y}^2$ term is absorbed into the normalizing constant (it depends only on $y$), giving:
 
 $$
+
 f(x \mid y) \propto \exp\left(-\frac{(\tilde{x} - \rho\tilde{y})^2}{2(1 - \rho^2)}\right)
+
 $$
 
 Reverting to the original scale:
 
 $$
+
 x - \mu_X - \rho\frac{\sigma_X}{\sigma_Y}(y - \mu_Y) \sim N\!\left(0,\; \sigma_X^2(1 - \rho^2)\right)
+
 $$
 
 which gives the conditional distribution formulas above.
@@ -96,7 +116,9 @@ The conditional expectation $E[X \mid Y = y] = \mu_X + \rho(\sigma_X/\sigma_Y)(y
 The regression coefficient is:
 
 $$
+
 \beta = \rho \cdot \frac{\sigma_X}{\sigma_Y} = \frac{\text{Cov}(X, Y)}{\text{Var}(Y)}
+
 $$
 
 This connects directly to the ordinary least squares (OLS) slope coefficient.

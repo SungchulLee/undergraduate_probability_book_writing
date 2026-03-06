@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+# ========================================================================
+
 def exact_probability(n, k):
     """Exact P(sum = k) when rolling n fair dice, via enumeration."""
     total = 6 ** n
@@ -12,12 +14,16 @@ def exact_probability(n, k):
     return count / total
 
 
+# ========================================================================
+
 def simulated_probability(n, k, n_simulations=100000):
     """Estimate P(sum = k) via Monte Carlo simulation."""
     rolls = np.random.randint(1, 7, size=(n_simulations, n))
     sums = rolls.sum(axis=1)
     return np.mean(sums == k)
 
+
+# ========================================================================
 
 def main():
     n_dice = 3  # number of dice
@@ -61,6 +67,8 @@ def main():
     print(f"  Exact:     {exact_probability(n_dice, k_example):.4f}")
     print(f"  Simulated: {simulated_probability(n_dice, k_example):.4f}")
 
+
+# ========================================================================
 
 if __name__ == "__main__":
     main()

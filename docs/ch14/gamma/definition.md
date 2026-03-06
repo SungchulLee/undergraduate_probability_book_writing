@@ -7,7 +7,7 @@
 
     $$f(x) = \frac{\lambda(\lambda x)^{\alpha - 1} e^{-\lambda x}}{\Gamma(\alpha)}, \quad x > 0$$
 
-### Intuition: Waiting for the $\alpha$-th Arrival
+### Intuition: Waiting for the alpha-th Arrival
 
 In a Poisson process with rate $\lambda$, the time until the **$\alpha$-th arrival** follows $\Gamma(\alpha, \lambda)$. When $\alpha$ is a positive integer $n$, this waiting time is the sum of $n$ iid interarrival times, each $\text{Exp}(\lambda)$.
 

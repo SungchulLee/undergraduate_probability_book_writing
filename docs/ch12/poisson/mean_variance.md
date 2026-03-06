@@ -1,19 +1,23 @@
 # Mean and Variance of the Poisson Distribution
 
-## Mean of $\text{Po}(\lambda)$
+## Mean of Po(lambda)
 
 ### Direct Computation
 
 For $X \sim \text{Po}(\lambda)$:
 
 $$
+
 E[X] = \sum_{k=0}^{\infty} k \cdot \frac{e^{-\lambda} \lambda^k}{k!} = \sum_{k=1}^{\infty} k \cdot \frac{e^{-\lambda} \lambda^k}{k!}
+
 $$
 
 Since $k/k! = 1/(k-1)!$, substituting $j = k - 1$:
 
 $$
+
 E[X] = e^{-\lambda} \sum_{k=1}^{\infty} \frac{\lambda^k}{(k-1)!} = e^{-\lambda} \lambda \sum_{j=0}^{\infty} \frac{\lambda^j}{j!} = e^{-\lambda} \lambda \cdot e^{\lambda} = \lambda
+
 $$
 
 ### Via Indicator Decomposition
@@ -21,37 +25,47 @@ $$
 An elegant alternative uses the Binomial approximation. If $X \sim B(n, p) \approx \text{Po}(\lambda)$ with $\lambda = np$, then $X = \sum_{i=1}^{n} \mathbf{1}_{A_i}$ where $\mathbf{1}_{A_i} \sim B(p)$ are independent indicators. By linearity of expectation:
 
 $$
+
 E[X] = \sum_{i=1}^{n} E[\mathbf{1}_{A_i}] = np = \lambda
+
 $$
 
 ---
 
 ## Second Moment and Variance
 
-### Computing $E[X^2]$
+### Computing E[X^2]
 
 We use the identity $E[X^2] = E[X(X-1)] + E[X]$:
 
 $$
+
 E[X(X-1)] = \sum_{k=0}^{\infty} k(k-1) \cdot \frac{e^{-\lambda} \lambda^k}{k!} = \sum_{k=2}^{\infty} \frac{e^{-\lambda} \lambda^k}{(k-2)!}
+
 $$
 
 Substituting $j = k - 2$:
 
 $$
+
 E[X(X-1)] = e^{-\lambda} \lambda^2 \sum_{j=0}^{\infty} \frac{\lambda^j}{j!} = e^{-\lambda} \lambda^2 e^{\lambda} = \lambda^2
+
 $$
 
 Therefore:
 
 $$
+
 E[X^2] = E[X(X-1)] + E[X] = \lambda^2 + \lambda
+
 $$
 
 ### Variance
 
 $$
+
 \text{Var}(X) = E[X^2] - (E[X])^2 = (\lambda^2 + \lambda) - \lambda^2 = \lambda
+
 $$
 
 !!! note "Mean Equals Variance"
@@ -127,7 +141,9 @@ print(f"Sample variance:  {samples.var(ddof=1):.4f}")
 The **dispersion index** (or index of dispersion) is defined as:
 
 $$
+
 D = \frac{\text{Var}(X)}{E[X]}
+
 $$
 
 For a Poisson distribution, $D = 1$ (equidispersion). This motivates a simple diagnostic:

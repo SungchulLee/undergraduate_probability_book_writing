@@ -1,7 +1,6 @@
 site_name: Probability
 theme:
-  name: material
-  favicon: null
+    name: material
 
 markdown_extensions:
     - admonition
@@ -10,11 +9,10 @@ markdown_extensions:
     - pymdownx.superfences
     - pymdownx.arithmatex:
         generic: true
-    - pymdownx.details
 
 extra_javascript:
+    - javascripts/mathjax.js
     - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-
 
 nav:
     - Home: index.md
@@ -81,7 +79,7 @@ nav:
             - Gambler's Ruin Simulation (Code): ch03/gamblers_ruin/simulation.py
             - Ruin Probability (Analytical): ch03/gamblers_ruin/ruin_probability.py
             - First Step Analysis: ch03/gamblers_ruin/first_step_analysis.md
-            - Linear Recurrence Solution (q > 1/2): ch03/gamblers_ruin/q_greater_half.md
+            - 'Linear Recurrence Solution (q > 1/2)': ch03/gamblers_ruin/q_greater_half.md
             - Linear Recurrence Solution (q = 1/2): ch03/gamblers_ruin/q_equal_half.md
         - 3.6 Simpson's Paradox:
             - Simpson's Paradox: ch03/simpsons_paradox/simpsons_paradox.md
@@ -95,16 +93,16 @@ nav:
             - Definition and Examples: ch04/rv/definition.md
             - Discrete vs Continuous Random Variables: ch04/rv/discrete_vs_continuous.md
         - 4.2 Probability Mass Function (PMF):
-            - PMF Definition and Properties: ch04/pmf/definition.md
-            - Examples of PMFs: ch04/pmf/examples.md
-            - PMF Sampling (Simulation): ch04/pmf/pmf_sampling.py
+            - Probability Mass Function Definition and Properties: ch04/pmf/definition.md
+            - Examples of Probability Mass Functions: ch04/pmf/examples.md
+            - Probability Mass Function Sampling (Simulation): ch04/pmf/pmf_sampling.py
         - 4.3 Cumulative Distribution Function (CDF):
-            - CDF Definition and Properties: ch04/cdf/definition.md
-            - CDF for Discrete Random Variables: ch04/cdf/discrete_cdf.md
-            - CDF for Continuous Random Variables: ch04/cdf/continuous_cdf.md
+            - Cumulative Distribution Function Definition and Properties: ch04/cdf/definition.md
+            - Cumulative Distribution Function for Discrete Random Variables: ch04/cdf/discrete_cdf.md
+            - Cumulative Distribution Function for Continuous Random Variables: ch04/cdf/continuous_cdf.md
         - 4.4 Probability Density Function (PDF):
-            - PDF Definition and Properties: ch04/pdf/definition.md
-            - Relationship Between PDF and CDF: ch04/pdf/pdf_cdf_relationship.md
+            - Probability Density Function Definition and Properties: ch04/pdf/definition.md
+            - Relationship Between Density and Distribution Functions: ch04/pdf/pdf_cdf_relationship.md
         - 4.5 Functions of a Random Variable:
             - Distribution of g(X): ch04/functions/function_of_rv.md
             - Functions of Discrete Random Variables: ch04/functions/discrete_functions.md
@@ -113,12 +111,12 @@ nav:
 
     - 5 Random Variables and Their Joint Distributions:
         - 5.1 Joint Distributions for Discrete Random Variables:
-            - Joint PMF: ch05/joint_discrete/joint_pmf.md
-            - Joint PMF Tables and Visualization: ch05/joint_discrete/joint_pmf_tables.md
+            - Joint Probability Mass Function: ch05/joint_discrete/joint_pmf.md
+            - Joint Mass Function Tables and Visualization: ch05/joint_discrete/joint_pmf_tables.md
             - Categorical and Multinomial Distributions: ch05/joint_discrete/categorical_multinomial.md
         - 5.2 Joint Distributions for Continuous Random Variables:
-            - Joint PDF: ch05/joint_continuous/joint_pdf.md
-            - Joint CDF: ch05/joint_continuous/joint_cdf.md
+            - Joint Probability Density Function: ch05/joint_continuous/joint_pdf.md
+            - Joint Cumulative Distribution Function: ch05/joint_continuous/joint_cdf.md
         - 5.3 Independent Random Variables:
             - Definition of Independence for Random Variables: ch05/independence/definition.md
             - Verifying Independence via Factorization: ch05/independence/factorization.md
@@ -127,11 +125,11 @@ nav:
 
     - 6 Joint, Marginal, and Conditional Distributions:
         - 6.1 Marginal Distributions:
-            - Marginal PMF from Joint PMF: ch06/marginal/marginal_pmf.md
-            - Marginal PDF from Joint PDF: ch06/marginal/marginal_pdf.md
+            - Marginal Mass Function from Joint Mass Function: ch06/marginal/marginal_pmf.md
+            - Marginal Density Function from Joint Density Function: ch06/marginal/marginal_pdf.md
         - 6.2 Conditional Distributions:
-            - Conditional PMF: ch06/conditional/conditional_pmf.md
-            - Conditional PDF: ch06/conditional/conditional_pdf.md
+            - Conditional Probability Mass Function: ch06/conditional/conditional_pmf.md
+            - Conditional Probability Density Function: ch06/conditional/conditional_pdf.md
         - 6.3 Joint, Marginal, and Conditional Relationships:
             - From Joint to Marginal and Conditional: ch06/relationships/joint_to_marginal_conditional.md
             - Recovering Joint from Conditional and Marginal: ch06/relationships/recovering_joint.md
@@ -149,7 +147,7 @@ nav:
             - Classic Examples (Matching, Birthday, Empty Bins, Elevator): ch07/indicators/classic_examples.md
         - 7.3 Variance:
             - Definition and Computation: ch07/variance/definition.md
-            - Var(X) = E[X²] − (E[X])² Formula: ch07/variance/shortcut_formula.md
+            - 'Var(X) = E[X²] − (E[X])² Formula': ch07/variance/shortcut_formula.md
             - Standard Deviation: ch07/variance/standard_deviation.md
         - 7.4 Properties and Inequalities:
             - Variance Under Linear Transformations: ch07/properties/linear_transformations.md
@@ -176,7 +174,7 @@ nav:
         - 8.1 Conditional Expectation:
             - Conditional Expectation Given an Event: ch08/conditional_expectation/given_event.md
             - Conditional Expectation Given a Random Variable: ch08/conditional_expectation/given_rv.md
-            - E[Y|X] as a Random Variable: ch08/conditional_expectation/as_rv.md
+            - 'E[Y|X] as a Random Variable': ch08/conditional_expectation/as_rv.md
         - 8.2 Law of Total Expectation:
             - Law of Iterated Expectations (Tower Property): ch08/total_expectation/tower_property.md
             - Applications: ch08/total_expectation/applications.md
@@ -221,24 +219,24 @@ nav:
 
     - 11 Moment Generating Functions and Characteristic Functions:
         - 11.1 Moment Generating Functions:
-            - MGF Definition and Properties: ch11/mgf/definition.md
-            - Finding Moments from the MGF: ch11/mgf/finding_moments.md
+            - Moment-Generating Function Definition and Properties: ch11/mgf/definition.md
+            - Finding Moments from the Moment-Generating Function: ch11/mgf/finding_moments.md
             - Uniqueness Theorem: ch11/mgf/uniqueness.md
-        - 11.2 MGFs of Common Distributions:
-            - MGF of Bernoulli and Binomial: ch11/mgf_examples/bernoulli_binomial.md
-            - MGF of Geometric and Negative Binomial: ch11/mgf_examples/geometric_negative_binomial.md
-            - MGF of Poisson: ch11/mgf_examples/poisson.md
-            - MGF of Exponential and Gamma: ch11/mgf_examples/exponential_gamma.md
-            - MGF of Normal: ch11/mgf_examples/normal.md
-        - 11.3 MGF Techniques:
-            - MGF of Sums of Independent Random Variables: ch11/mgf_techniques/sums.md
-            - Identifying Distributions via MGFs: ch11/mgf_techniques/identification.md
+        - 11.2 Moment-Generating Functions of Common Distributions:
+            - Moment-Generating Function of Bernoulli and Binomial: ch11/mgf_examples/bernoulli_binomial.md
+            - Moment-Generating Function of Geometric and Negative Binomial: ch11/mgf_examples/geometric_negative_binomial.md
+            - Moment-Generating Function of Poisson: ch11/mgf_examples/poisson.md
+            - Moment-Generating Function of Exponential and Gamma: ch11/mgf_examples/exponential_gamma.md
+            - Moment-Generating Function of Normal: ch11/mgf_examples/normal.md
+        - 11.3 Moment-Generating Function Techniques:
+            - Moment-Generating Function of Sums of Independent Random Variables: ch11/mgf_techniques/sums.md
+            - Identifying Distributions via Moment-Generating Functions: ch11/mgf_techniques/identification.md
         - 11.4 Probability Generating Functions (Supplementary):
-            - PGF Definition and Properties: ch11/pgf/definition.md
-            - PGF of Common Discrete Distributions: ch11/pgf/common_distributions.md
+            - Probability Generating Function Definition and Properties: ch11/pgf/definition.md
+            - Probability Generating Function of Common Discrete Distributions: ch11/pgf/common_distributions.md
             - Random Sums and Compound Distributions: ch11/pgf/random_sums.md
         - 11.5 Characteristic Functions (Supplementary):
-            - Definition, Existence, and Relationship to MGF: ch11/cf/definition.md
+            - Definition, Existence, and Relationship to Moment-Generating Function: ch11/cf/definition.md
             - Properties, Inversion, and Lévy Continuity: ch11/cf/properties.md
         - 11.6 Exercises: ch11/exercises/exercises.md
 
@@ -311,14 +309,14 @@ nav:
         - 15.5 Order Statistics:
             - Definition and Notation: ch15/order_statistics/definition.md
             - Distribution of the Minimum and Maximum: ch15/order_statistics/min_max.md
-            - PDF of the k-th Order Statistic: ch15/order_statistics/kth_order_statistic.md
+            - Density of the k-th Order Statistic: ch15/order_statistics/kth_order_statistic.md
             - Joint Distribution of Order Statistics: ch15/order_statistics/joint_distribution.md
             - Order Statistics of the Uniform and the Beta Connection: ch15/order_statistics/uniform_beta.md
         - 15.6 Transformations of Continuous Random Variables:
             - Change of Variables (Single Variable): ch15/transformations/change_of_variables.md
             - Jacobian Method for Joint Transformations: ch15/transformations/jacobian.md
             - Probability Integral Transform: ch15/transformations/probability_integral_transform.md
-            - Box-Muller Transform: ch15/transformations/box_muller.md   # ← new
+            - Box-Muller Transform: ch15/transformations/box_muller.md
         - 15.7 Exercises: ch15/exercises/exercises.md
 
     - 16 Convolutions and Distributions of Sums:
@@ -352,21 +350,21 @@ nav:
             - Standardization: ch17/statement/standardization.md
             - Continuity Correction: ch17/statement/continuity_correction.md
         - 17.3 Proof:
-            - CLT Proof via Moment Generating Functions: ch17/proof/clt_proof_mgf.md
+            - Central Limit Theorem Proof via Moment-Generating Functions: ch17/proof/clt_proof_mgf.md
         - 17.4 Applications:
             - Normal Approximation to the Binomial: ch17/applications/normal_approx_binomial.md
             - Approximating Poisson Probabilities: ch17/applications/poisson_approximation.md
             - Approximating Sums of Random Variables: ch17/applications/sums_approximation.md
-            - CLT for Coin Flips (Simulation): ch17/applications/clt_coin_flips.py
+            - Central Limit Theorem for Coin Flips (Simulation): ch17/applications/clt_coin_flips.py
             - Confidence Intervals Preview: ch17/applications/confidence_intervals_preview.md
         - 17.5 Exercises: ch17/exercises/exercises.md
 
     - 18 Multivariate Normal Distribution:
         - 18.1 Bivariate Normal Distribution:
-            - Joint PDF of the Bivariate Normal: ch18/bivariate/joint_pdf.md
+            - Joint Density of the Bivariate Normal: ch18/bivariate/joint_pdf.md
             - Contours and Geometric Interpretation: ch18/bivariate/contours.md
             - Marginal and Conditional Distributions: ch18/bivariate/marginal_conditional.md
-            - Bivariate Normal PDF (3D Plot): ch18/bivariate/bivariate_normal_pdf.py
+            - Bivariate Normal Density (3D Plot): ch18/bivariate/bivariate_normal_pdf.py
             - Uncorrelated Implies Independent (Normal Case): ch18/bivariate/uncorrelated_independent.md
         - 18.2 Multivariate Normal Distribution:
             - Definition via Mean Vector and Covariance Matrix: ch18/multivariate/definition.md
@@ -389,14 +387,14 @@ nav:
         - 19.3 Student's t Distribution:
             - Definition and Derivation: ch19/student_t/definition.md
             - Properties and Comparison to Normal: ch19/student_t/properties.md
-            - Convergence to Normal as df → ∞: ch19/student_t/convergence.md
+            - Convergence to Normal as Degrees of Freedom → ∞: ch19/student_t/convergence.md
             - Distribution of Studentized Sample Mean: ch19/student_t/studentized_mean.md
             - Why the t-Distribution (Simulation): ch19/student_t/why_t_distribution.py
             - t-Distribution vs Standard Normal: ch19/student_t/t_vs_normal.py
         - 19.4 F Distribution:
             - Definition as Ratio of Chi-Squareds: ch19/f_distribution/definition.md
             - Properties: ch19/f_distribution/properties.md
-            - F Distribution PDF and CDF: ch19/f_distribution/f_pdf_cdf.py
+            - F Distribution Density and Distribution Function: ch19/f_distribution/f_pdf_cdf.py
             - Relationship to t Distribution: ch19/f_distribution/relationship_to_t.md
         - 19.5 Exercises: ch19/exercises/exercises.md
 
@@ -406,18 +404,18 @@ nav:
             - One-Sided Chebyshev's Inequality: ch20/tail_bounds/one_sided_chebyshev.md
             - Chernoff's Bound: ch20/tail_bounds/chernoff.md
         - 20.2 Modes of Convergence:
-            - Convergence in Distribution (Review from Ch 17): ch20/convergence/convergence_in_distribution.md
+            - Convergence in Distribution (Review from Chapter 17): ch20/convergence/convergence_in_distribution.md
             - Convergence in Probability: ch20/convergence/convergence_in_probability.md
             - Almost Sure Convergence: ch20/convergence/almost_sure_convergence.md
             - Relationships Between Modes of Convergence: ch20/convergence/relationships.md
         - 20.3 Weak Law of Large Numbers:
             - Statement and Proof via Chebyshev: ch20/weak_law/statement_proof.md
             - Examples, Extensions, and Failure Cases: ch20/weak_law/examples.md
-            - WLLN for Coin Flips (Simulation): ch20/weak_law/wlln_coin_flips.py
+            - Weak Law for Coin Flips (Simulation): ch20/weak_law/wlln_coin_flips.py
         - 20.4 Strong Law of Large Numbers:
             - Statement and Proof Sketch: ch20/strong_law/statement_proof.md
             - Intuition, Borel-Cantelli, and the Law of the Iterated Logarithm: ch20/strong_law/intuition.md
-            - SLLN for Coin Flips (Simulation): ch20/strong_law/slln_coin_flips.py
+            - Strong Law for Coin Flips (Simulation): ch20/strong_law/slln_coin_flips.py
         - 20.5 Applications and Interpretation:
             - Coupon Collector Problem: ch20/applications/coupon_collector.md
             - Monte Carlo Simulation: ch20/applications/monte_carlo.md
@@ -426,8 +424,8 @@ nav:
             - Buffon's Needle (Simulation): ch20/applications/buffon_needle.py
             - Frequentist Interpretation of Probability: ch20/applications/frequentist_interpretation.md
             - Gambler's Fallacy: ch20/applications/gamblers_fallacy.md
-        - 20.6 Relationship Between CLT and LLN:
-            - CLT vs LLN — Complementary Perspectives: ch20/comparison/clt_vs_lln.md
+        - 20.6 Relationship Between Central Limit Theorem and Law of Large Numbers:
+            - Central Limit Theorem vs Law of Large Numbers: ch20/comparison/clt_vs_lln.md
         - 20.7 Exercises: ch20/exercises/exercises.md
 
     - 21 Simulation:

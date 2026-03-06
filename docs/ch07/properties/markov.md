@@ -5,7 +5,9 @@
 If $X$ is a non-negative random variable and $a > 0$, then
 
 $$
+
 P(X \geq a) \leq \frac{E[X]}{a}
+
 $$
 
 ---
@@ -13,7 +15,9 @@ $$
 ## Proof
 
 $$
+
 E[X] = \int_0^{\infty} x f(x) \, dx \geq \int_a^{\infty} x f(x) \, dx \geq a \int_a^{\infty} f(x) \, dx = a \, P(X \geq a)
+
 $$
 
 ---

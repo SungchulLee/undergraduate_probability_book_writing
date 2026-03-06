@@ -1,6 +1,6 @@
 # MGF of Poisson
 
-## MGF of $\text{Po}(\lambda)$
+## MGF of Po(lambda)
 
 If $X \sim \text{Po}(\lambda)$, then:
 

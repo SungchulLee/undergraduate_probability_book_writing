@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+# ========================================================================
+
 def main():
     np.random.seed(337)
 
@@ -61,6 +63,8 @@ def main():
     print(f"Mean final distance:   {np.mean(final_distances):.2f}")
     print(f"Expected (sqrt(n)):    {np.sqrt(n_steps):.2f}")
 
+
+# ========================================================================
 
 if __name__ == "__main__":
     main()

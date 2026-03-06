@@ -28,20 +28,26 @@ Samuel Pepys posed this question to Isaac Newton: which of the following has the
 
 Pepys thought **C** was most likely. Newton showed that **A** has the highest probability.
 
-### Computing $P(A)$
+### Computing P(A)
 
 $$
+
 |\Omega_A| = 6^6, \qquad |A^c| = 5^6
+
 $$
 
 $$
+
 P(A) = 1 - P(A^c) = 1 - \left(\frac{5}{6}\right)^6 = 0.6651
-$$
-
-### Computing $P(B)$
 
 $$
+
+### Computing P(B)
+
+$$
+
 |\Omega_B| = 6^{12}
+
 $$
 
 The complement $B^c$ includes zero or one "6":
@@ -50,13 +56,17 @@ The complement $B^c$ includes zero or one "6":
 - Exactly one "6": $|B_1| = \binom{12}{1} \times 1 \times 5^{11}$
 
 $$
+
 P(B) = 1 - \frac{5^{12}}{6^{12}} - \frac{\binom{12}{1} \cdot 5^{11}}{6^{12}} = 0.6187
-$$
-
-### Computing $P(C)$
 
 $$
+
+### Computing P(C)
+
+$$
+
 |\Omega_C| = 6^{18}
+
 $$
 
 The complement $C^c$ includes zero, one, or two "6"s:
@@ -66,13 +76,17 @@ The complement $C^c$ includes zero, one, or two "6"s:
 - Exactly two "6"s: $|C_2| = \binom{18}{2} \cdot 5^{16}$
 
 $$
+
 P(C) = 1 - \frac{5^{18}}{6^{18}} - \frac{\binom{18}{1} \cdot 5^{17}}{6^{18}} - \frac{\binom{18}{2} \cdot 5^{16}}{6^{18}} = 0.5973
+
 $$
 
 ### Conclusion
 
 $$
+
 P(A) = 0.6651 > P(B) = 0.6187 > P(C) = 0.5973
+
 $$
 
 !!! note "Intuition"
@@ -83,7 +97,9 @@ $$
 **Problem:** Candidate A receives $a$ votes and candidate B receives $b$ votes, with $a > b$. If votes are counted in random order, the probability that A is **strictly ahead** of B throughout the entire count is:
 
 $$
+
 P(\text{A strictly ahead throughout}) = \frac{a - b}{a + b}
+
 $$
 
 ### Count Pattern as a Lattice Path
@@ -96,7 +112,9 @@ Represent the counting process as a path from $(0, 0)$ to $(b, a)$ on a grid:
 For example, with votes AABABBABAAABAAA:
 
 $$
+
 AABABBABAAABAAA \iff UURURRURUUURUUU
+
 $$
 
 ### Proof via the Reflection Principle
@@ -104,29 +122,39 @@ $$
 The total number of paths:
 
 $$
+
 |\Omega| = \binom{a+b}{b}
+
 $$
 
 **Paths starting with B** (first vote goes to B): these immediately fail the "strictly ahead" condition.
 
 $$
+
 |B_1| = \binom{a+b-1}{b-1}
+
 $$
 
 **Paths starting with A but touching the diagonal** at some point: by the **reflection principle**, these are in one-to-one correspondence with paths starting with B.
 
 $$
+
 |B_2| = |B_1| = \binom{a+b-1}{b-1}
+
 $$
 
 The number of "good" paths (A strictly ahead throughout):
 
 $$
+
 |A| = |\Omega| - |B_1| - |B_2|
+
 $$
 
 $$
+
 P(A) = 1 - \frac{\binom{a+b-1}{b-1}}{\binom{a+b}{b}} - \frac{\binom{a+b-1}{b-1}}{\binom{a+b}{b}} = \frac{a-b}{a+b}
+
 $$
 
 ## Python Example

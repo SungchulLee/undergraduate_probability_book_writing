@@ -28,7 +28,7 @@ $$P(a \le X \le b) = P(a < X < b) = F(b) - F(a) = \int_a^b f(x) \, dx$$
 
 For continuous random variables, strict and non-strict inequalities give the same probability since $P(X = a) = 0$.
 
-## Example: Uniform on $[0, 1]$
+## Example: Uniform on [0, 1]
 
 For $X \sim \text{Uniform}(0,1)$, $f(x) = 1$ on $[0,1]$, so:
 

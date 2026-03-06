@@ -13,7 +13,9 @@ Suppose we know the distribution of $X$ and want to compute $E[g(X)]$ for some f
 If $X$ is discrete with PMF $p(x)$, then
 
 $$
+
 E[g(X)] = \sum_{x} g(x) \, p(x)
+
 $$
 
 ### Continuous Case
@@ -21,7 +23,9 @@ $$
 If $X$ is continuous with PDF $f(x)$, then
 
 $$
+
 E[g(X)] = \int_{-\infty}^{\infty} g(x) \, f(x) \, dx
+
 $$
 
 ---
@@ -34,32 +38,38 @@ The name is humorous: the formula looks like one is "unconsciously" treating $g(
 
 ## Examples
 
-### Example 1: $E[X^2]$ for a Fair Die
+### Example 1: E[X^2] for a Fair Die
 
 Let $X$ be the face value of a fair die. By LOTUS:
 
 $$
+
 E[X^2] = \sum_{k=1}^{6} k^2 \cdot \frac{1}{6} = \frac{1 + 4 + 9 + 16 + 25 + 36}{6} = \frac{91}{6} \approx 15.17
+
 $$
 
 Note: $(E[X])^2 = 3.5^2 = 12.25 \neq E[X^2]$ in general.
 
-### Example 2: $E[e^X]$ for Exponential
+### Example 2: E[e^X] for Exponential
 
 If $X \sim \text{Exp}(\lambda)$ with $f(x) = \lambda e^{-\lambda x}$ for $x \geq 0$, then
 
 $$
+
 E[e^{tX}] = \int_0^{\infty} e^{tx} \cdot \lambda e^{-\lambda x} \, dx = \frac{\lambda}{\lambda - t}, \quad t < \lambda
+
 $$
 
 This is the **moment generating function** of the exponential distribution.
 
-### Example 3: $E[X^2]$ for Continuous Uniform
+### Example 3: E[X^2] for Continuous Uniform
 
 If $X \sim \text{Uniform}(0, 1)$, then
 
 $$
+
 E[X^2] = \int_0^1 x^2 \cdot 1 \, dx = \frac{1}{3}
+
 $$
 
 ---
@@ -71,13 +81,17 @@ LOTUS extends to functions of multiple random variables.
 ### Discrete Case
 
 $$
+
 E[g(X, Y)] = \sum_x \sum_y g(x, y) \, p(x, y)
+
 $$
 
 ### Continuous Case
 
 $$
+
 E[g(X, Y)] = \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} g(x, y) \, f(x, y) \, dx \, dy
+
 $$
 
 ---
@@ -87,7 +101,9 @@ $$
 LOTUS is essential for computing variance via the shortcut formula:
 
 $$
+
 \text{Var}(X) = E[X^2] - (E[X])^2
+
 $$
 
 where $E[X^2]$ is computed using LOTUS with $g(x) = x^2$.

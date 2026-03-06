@@ -59,7 +59,7 @@ $$|B| = |\Omega| - \left|\bigcup_{i=1}^{n} A_i\right| = n! - n!\left(\frac{1}{1!
 
 $$\boxed{D_n = n!\left(1 - \frac{1}{1!} + \frac{1}{2!} - \frac{1}{3!} + \cdots + (-1)^n \frac{1}{n!}\right) = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!}}$$
 
-## Connection to $e^{-1}$
+## Connection to e^(-1)
 
 As $n \to \infty$, the sum $\sum_{k=0}^{n} \frac{(-1)^k}{k!}$ converges to $e^{-1}$. Therefore:
 

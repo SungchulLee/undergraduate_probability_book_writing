@@ -9,7 +9,9 @@ Starting from the three Kolmogorov axioms, we can derive a rich collection of pr
 For any **pairwise disjoint** events $A_1, A_2, \ldots, A_n$:
 
 $$
+
 P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i)
+
 $$
 
 This follows from Axiom 3 by setting $A_{n+1} = A_{n+2} = \cdots = \emptyset$.
@@ -19,13 +21,17 @@ This follows from Axiom 3 by setting $A_{n+1} = A_{n+2} = \cdots = \emptyset$.
 If $A \subseteq B$, then:
 
 $$
+
 P(A) \leq P(B)
+
 $$
 
 **Proof:** Write $B = A \cup (B \setminus A)$ where $A$ and $B \setminus A$ are disjoint. By finite additivity:
 
 $$
+
 P(B) = P(A) + P(B \setminus A) \geq P(A)
+
 $$
 
 since $P(B \setminus A) \geq 0$.
@@ -33,13 +39,17 @@ since $P(B \setminus A) \geq 0$.
 ## Property 6: Complement Rule
 
 $$
+
 P(A) = 1 - P(A^c)
+
 $$
 
 **Proof:** Since $A$ and $A^c$ are disjoint and $A \cup A^c = \Omega$:
 
 $$
+
 1 = P(\Omega) = P(A \cup A^c) = P(A) + P(A^c)
+
 $$
 
 !!! tip "Practical Importance"
@@ -54,7 +64,9 @@ $$
 For any events $A$ and $B$:
 
 $$
+
 P(A \setminus B) = P(A) - P(A \cap B)
+
 $$
 
 **Proof:** $A = (A \setminus B) \cup (A \cap B)$ is a disjoint union, so $P(A) = P(A \setminus B) + P(A \cap B)$.
@@ -64,7 +76,9 @@ $$
 For any two events (not necessarily disjoint):
 
 $$
+
 P(A \cup B) = P(A) + P(B) - P(A \cap B)
+
 $$
 
 This is the simplest case of the inclusion-exclusion principle (covered in the next section).
@@ -74,7 +88,9 @@ This is the simplest case of the inclusion-exclusion principle (covered in the n
 For any events $A_1, A_2, \ldots, A_n$ (not necessarily disjoint):
 
 $$
+
 P\left(\bigcup_{i=1}^{n} A_i\right) \leq \sum_{i=1}^{n} P(A_i)
+
 $$
 
 This is **Boole's inequality**, and it provides a useful upper bound.
