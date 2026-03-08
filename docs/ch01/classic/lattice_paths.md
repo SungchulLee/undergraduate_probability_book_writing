@@ -50,9 +50,11 @@ The reflection principle is a powerful technique used in:
 
     $$P(\text{A strictly ahead throughout}) = \frac{a - b}{a + b}$$
 
-**Proof via reflection.** The total number of sequences is $\binom{a+b}{a}$. A sequence where A is strictly ahead throughout corresponds to a lattice path from $(0,0)$ to $(a,b)$ that **never touches** the diagonal $y = x$. By the reflection principle, the number of paths that **do touch** the diagonal is $\binom{a+b}{a-1}$. Therefore:
+**Proof via the Cycle Lemma.** Consider the vote sequence $v_1, v_2, \ldots, v_{a+b}$ where each $v_i = +1$ (vote for A) or $v_i = -1$ (vote for B), with $a$ values of $+1$ and $b$ values of $-1$. Let $S_k = v_1 + \cdots + v_k$ be the running tally, so $S_{a+b} = a - b > 0$. A is strictly ahead throughout if and only if $S_k > 0$ for all $k = 1, \ldots, a+b$.
 
-$$P = \frac{\binom{a+b}{a} - \binom{a+b}{a-1}}{\binom{a+b}{a}} = 1 - \frac{a}{a+b-a+1} \cdot \frac{(a+b-a)!}{a!} \cdots = \frac{a-b}{a+b}$$
+By the **Cycle Lemma**, for any sequence of integers summing to a positive value $s$, exactly $s$ of the $a+b$ cyclic shifts have all positive partial sums. Since $s = a - b$, and all $\binom{a+b}{a}$ orderings are equally likely, the probability is:
+
+$$P = \frac{a - b}{a + b}$$
 
 ## Catalan Numbers
 
