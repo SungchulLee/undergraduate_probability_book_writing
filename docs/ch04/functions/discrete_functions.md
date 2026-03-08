@@ -27,13 +27,13 @@ Let $X$ take values $-2, -1, 0, 1, 2$ with equal probability $\frac{1}{5}$ each.
 | $x$ | $-2$ | $-1$ | $0$ | $1$ | $2$ |
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | $g(x) = x^2$ | $4$ | $1$ | $0$ | $1$ | $4$ |
-| $p_X(x)$ | \$1/5$ | \$1/5$ | \$1/5$ | \$1/5$ | \$1/5$ |
+| $p_X(x)$ | $1/5$ | $1/5$ | $1/5$ | $1/5$ | $1/5$ |
 
 Grouping by $y$ values:
 
 | $y$ | $0$ | $1$ | $4$ |
 |:---:|:---:|:---:|:---:|
-| $p_Y(y)$ | \$1/5$ | \$2/5$ | \$2/5$ |
+| $p_Y(y)$ | $1/5$ | $2/5$ | $2/5$ |
 
 Note that $Y$ takes only 3 values even though $X$ takes 5 — the function $g(x) = x^2$ is **not one-to-one**, so multiple $x$ values collapse to the same $y$.
 
