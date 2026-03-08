@@ -49,7 +49,7 @@ $$
 \boldsymbol{\Sigma} = \begin{pmatrix} 1 & \rho \\ \rho & 1 \end{pmatrix}
 $$
 
-The eigenvalues are $\lambda_1 = 1 + \rho$ and $\lambda_2 = 1 - \rho$, with eigenvectors along the \$45°$ and \$135°$ directions. As $|\rho| \to 1$, one eigenvalue approaches zero and the ellipse degenerates.
+The eigenvalues are $\lambda_1 = 1 + \rho$ and $\lambda_2 = 1 - \rho$, with eigenvectors along the $45°$ and $135°$ directions. As $|\rho| \to 1$, one eigenvalue approaches zero and the ellipse degenerates.
 
 ---
 

@@ -98,7 +98,7 @@ $$
 
 If $X$ and $Y$ were independent, $P(|Y| = |X|) = 0$ (since both are continuous). Therefore $X$ and $Y$ are dependent.
 
-**Why this doesn't contradict the theorem.** Although $X$ and $Y$ are each marginally $N(0, 1)$, the vector $(X, Y)^T$ is **not** bivariate normal. The joint distribution places all mass on the two lines $y = x$ and $y = -x$ (each with probability \$1/2$), which is not a bivariate normal distribution.
+**Why this doesn't contradict the theorem.** Although $X$ and $Y$ are each marginally $N(0, 1)$, the vector $(X, Y)^T$ is **not** bivariate normal. The joint distribution places all mass on the two lines $y = x$ and $y = -x$ (each with probability $1/2$), which is not a bivariate normal distribution.
 
 ---
 

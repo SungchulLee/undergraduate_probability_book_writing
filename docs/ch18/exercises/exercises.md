@@ -98,13 +98,13 @@ Let $\mathbf{x} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ with $\boldsymbol
 
     **(b)** $X_1 + X_2 = \mathbf{a}^T\mathbf{x}$ with $\mathbf{a} = (1, 1)^T$.
 
-    Mean: \$1 + 2 = 3$. Variance: $\mathbf{a}^T\boldsymbol{\Sigma}\mathbf{a} = 2 + 2(1) + 3 = 7$.
+    Mean: $1 + 2 = 3$. Variance: $\mathbf{a}^T\boldsymbol{\Sigma}\mathbf{a} = 2 + 2(1) + 3 = 7$.
 
     So $X_1 + X_2 \sim N(3, 7)$.
 
     **(c)** $2X_1 - X_2 = \mathbf{a}^T\mathbf{x}$ with $\mathbf{a} = (2, -1)^T$.
 
-    Mean: \$2(1) - 2 = 0$. Variance: $4(2) + (-1)^2(3) + 2(2)(-1)(1) = 8 + 3 - 4 = 7$.
+    Mean: $2(1) - 2 = 0$. Variance: $4(2) + (-1)^2(3) + 2(2)(-1)(1) = 8 + 3 - 4 = 7$.
 
     So $2X_1 - X_2 \sim N(0, 7)$.
 
