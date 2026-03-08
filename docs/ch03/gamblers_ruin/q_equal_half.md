@@ -52,14 +52,14 @@ $$
 
 ## Interpretation
 
-In a fair game, the ruin probability decreases **linearly** with initial capital. Starting halfway to the goal ($i = N/2$) gives a ruin probability of exactly \$1/2$.
+In a fair game, the ruin probability decreases **linearly** with initial capital. Starting halfway to the goal ($i = N/2$) gives a ruin probability of exactly $1/2$.
 
 | Initial Capital $i$ | $Q(i)$ |
 |---------------------|---------|
 | $0$ | $1$ |
-| $N/4$ | \$3/4$ |
-| $N/2$ | \$1/2$ |
-| $3N/4$ | \$1/4$ |
+| $N/4$ | $3/4$ |
+| $N/2$ | $1/2$ |
+| $3N/4$ | $1/4$ |
 | $N$ | $0$ |
 
 ## Comparison of the Two Cases
