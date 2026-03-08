@@ -46,7 +46,7 @@ $$
 P(A_{13} \mid A_{12}) = \frac{P(A_{12} \cap A_{13})}{P(A_{12})}
 $$
 
-The event $A_{12} \cap A_{13}$ means all three of persons 1, 2, 3 share the same birthday. Person 1 picks any day (\$365/365$), person 2 matches (\$1/365$), person 3 matches (\$1/365$):
+The event $A_{12} \cap A_{13}$ means all three of persons 1, 2, 3 share the same birthday. Person 1 picks any day ($365/365$), person 2 matches ($1/365$), person 3 matches ($1/365$):
 
 $$
 P(A_{12} \cap A_{13}) = \frac{1}{365^2}
