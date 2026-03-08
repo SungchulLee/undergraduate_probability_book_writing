@@ -98,7 +98,7 @@ print(f"     SE = {np.std(Ns)/np.sqrt(len(Ns)):.5f}")
 
 # ===== Exercise 2 =====
 def rejection_sampling(n_samples=10000):
-    M = 1.5  # max of f(x)/g(x)
+    M = 3  # max of f(x)/g(x): max of (3/2)(1-x^2)/(1/2) = 3 at x=0
     samples = []
     n_proposed = 0
     while len(samples) < n_samples:
@@ -113,7 +113,7 @@ def rejection_sampling(n_samples=10000):
     return np.array(samples), acceptance_rate
 
 samples_rej, acc_rate = rejection_sampling()
-print(f"\nEx2: Acceptance rate = {acc_rate:.4f} (theory 1/M = {1/1.5:.4f})")
+print(f"\nEx2: Acceptance rate = {acc_rate:.4f} (theory 1/M = {1/3:.4f})")
 
 # ===== Exercise 4 =====
 def gamblers_ruin_duration(i, N, p, n_trials=10000):
