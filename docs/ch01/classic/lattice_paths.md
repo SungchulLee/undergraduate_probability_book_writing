@@ -34,7 +34,7 @@ This follows from the **multiplication rule**: count paths from $(0,0)$ to $(a,b
 ## Paths Avoiding a Region: The Reflection Principle
 
 !!! info "Reflection Principle (André)"
-    The number of lattice paths from $(0,0)$ to $(m,n)$ that **touch or cross** the line $y = x + c$ equals the total number of lattice paths from the reflected starting point $(−c, c)$ to $(m, n)$, which is $\binom{m+n}{m+c}$ (when $n > m + c$).
+    The number of lattice paths from $(0,0)$ to $(m,n)$ that **touch or cross** the line $y = x + c$ (where $c > 0$) equals the total number of lattice paths from the reflected starting point $(-c, c)$ to $(m, n)$, which is $\binom{m+n}{m+c}$ (valid when $n \geq c$).
 
 The reflection principle is a powerful technique used in:
 
