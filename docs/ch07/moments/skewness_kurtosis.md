@@ -54,7 +54,7 @@ The subtraction of $3$ is because the normal distribution has kurtosis exactly $
 
 ### Key Properties
 
-- Kurtosis is always $\geq 1$ (since it is the expectation of a non-negative quantity raised to the 4th power of a standardized variable).
+- Kurtosis is always $\geq 1$ (by Jensen's inequality: $E[Z^4] \geq (E[Z^2])^2 = 1$ for any standardized variable $Z$).
 - The **Normal distribution** has kurtosis $= 3$ (excess kurtosis $= 0$), serving as the reference.
 - The **$t$-distribution** with $\nu > 4$ has excess kurtosis $= 6/(\nu - 4)$, which is always positive (fat-tailed).
 - The **Uniform distribution** has kurtosis $= 9/5 = 1.8$ (light-tailed, platykurtic).
