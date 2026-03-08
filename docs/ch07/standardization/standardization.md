@@ -45,7 +45,6 @@ This follows directly from reverse standardization applied to the quantile.
 ## Python Implementation
 
 ```python
-import numpy as np
 from scipy import stats
 
 # Standardization example
@@ -71,7 +70,7 @@ X = 85 with μ=70, σ=10
 Standardized: Z = 1.5
 P(X ≤ 85) = P(Z ≤ 1.5) = 0.9332
 
-95th percentile of N(70,100):
+95th percentile of N(70,10²):
 z_0.95 = 1.6449
 q_0.95 = 70 + 10 × 1.6449 = 86.4485
 ```
