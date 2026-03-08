@@ -30,6 +30,6 @@
 
 **Exercise 10.** Explain why the Gambler's Fallacy is inconsistent with the Law of Large Numbers. Specifically, after observing 20 heads in a row from a fair coin, what does the LLN predict about the next 1000 flips?
 
-**Exercise 11.** In the coin-flipping illustration of WLLN vs SLLN (see notes), explain which plot corresponds to which law and why.
+**Exercise 11.** In the coin-flipping illustration of WLLN vs SLLN (see the SLLN intuition section), explain which plot corresponds to which law and why.
 
 **Exercise 12.** Give an example of a sequence that converges in probability but not almost surely.
