@@ -15,7 +15,7 @@ $$E[X] = \int_0^\infty x \lambda e^{-\lambda x} \, dx = \left[-x e^{-\lambda x}\
 
 ### Interpretation
 
-The mean $1/\lambda$ is the **average waiting time** between events in a Poisson process with rate $\lambda$. If events occur at rate $\lambda = 5$ per hour, the average time between events is \$1/5$ hour $= 12$ minutes.
+The mean $1/\lambda$ is the **average waiting time** between events in a Poisson process with rate $\lambda$. If events occur at rate $\lambda = 5$ per hour, the average time between events is $1/5$ hour $= 12$ minutes.
 
 ## Variance
 
