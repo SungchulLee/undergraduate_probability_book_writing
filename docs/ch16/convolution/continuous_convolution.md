@@ -60,7 +60,6 @@ This is analogous to the convolution theorem in signal processing, where convolu
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
-from scipy.signal import fftconvolve
 
 np.random.seed(42)
 n_sim = 100000
