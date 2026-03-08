@@ -8,7 +8,7 @@ $E(X \mid Y)$ can be understood as a **local average** of $X$. For each value $y
 
 Consider three fair coin flips. Let $X$ be the total number of heads and $Y$ be the indicator of getting a head on the first flip ($Y = 1$ if the first flip is H, $Y = 0$ otherwise).
 
-The sample space is $\{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}$, each with probability \$1/8$.
+The sample space is $\{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}$, each with probability $1/8$.
 
 **Values of $X$** (number of heads) for each outcome:
 

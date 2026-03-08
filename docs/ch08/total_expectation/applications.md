@@ -64,7 +64,7 @@ $$
 
 ## Application 2: Trapped Miner
 
-**Problem.** A miner is trapped in a mine with 3 doors. Door 1 leads to safety after 3 hours. Door 2 returns him to the mine after 5 hours. Door 3 returns him to the mine after 7 hours. The miner chooses each door with equal probability \$1/3$. Find $E(T)$, the expected time to reach safety.
+**Problem.** A miner is trapped in a mine with 3 doors. Door 1 leads to safety after 3 hours. Door 2 returns him to the mine after 5 hours. Door 3 returns him to the mine after 7 hours. The miner chooses each door with equal probability $1/3$. Find $E(T)$, the expected time to reach safety.
 
 **Setup.** Let $T$ be the total exit time and $X$ be the first door chosen. This is a **first-step analysis**: we condition on what happens at the first step.
 
