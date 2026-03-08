@@ -6,7 +6,7 @@ The **inclusion-exclusion principle** generalizes the addition rule to handle **
 
 ## Motivation — Minesweeper
 
-Consider the game of **Minesweeper**, where determining the location of mines requires reasoning about overlapping regions. When cells labeled A, B, and C share neighboring mine zones, the total count of mines in their union requires careful subtraction of overlaps — a natural application of the inclusion-exclusion principle.
+Consider the game of **Minesweeper**. Each numbered cell tells you how many mines are among its neighbors, but neighboring cells share overlapping regions. If cell A has 3 mines nearby and cell B has 2 mines nearby, you cannot simply say there are 5 mines total — some mines may be neighbors of both A and B. To find the true count, you must subtract the overlap, which is exactly what inclusion-exclusion does.
 
 ## Two Sets
 
