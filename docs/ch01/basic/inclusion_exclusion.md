@@ -6,7 +6,7 @@ The **inclusion-exclusion principle** generalizes the addition rule to handle **
 
 ## Motivation — Minesweeper
 
-The PDF introduces inclusion-exclusion through the game of **Minesweeper**, where determining the location of mines requires reasoning about overlapping regions. When cells labeled A, B, and C share neighboring mine zones, the total count of mines in their union requires careful subtraction of overlaps — a natural application of the inclusion-exclusion principle.
+Consider the game of **Minesweeper**, where determining the location of mines requires reasoning about overlapping regions. When cells labeled A, B, and C share neighboring mine zones, the total count of mines in their union requires careful subtraction of overlaps — a natural application of the inclusion-exclusion principle.
 
 ## Two Sets
 
@@ -32,7 +32,7 @@ $$|A \cup B \cup C| \leq |A| + |B| + |C|$$
 
 **Second approximation (undercounting):**
 
-$$|A \cup B \cup C| \leq |A| + |B| + |C| - |AB| - |BC| - |CA|$$
+$$|A \cup B \cup C| \geq |A| + |B| + |C| - |AB| - |BC| - |CA|$$
 
 **Exact formula:**
 
@@ -72,7 +72,6 @@ This is exactly the approach used in the matching problem (derangements), covere
 
 ```python
 from itertools import combinations
-from math import comb
 
 def inclusion_exclusion(sets):
     """
