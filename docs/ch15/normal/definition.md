@@ -79,13 +79,9 @@ To evaluate integrals of the form $\int_{-\infty}^{\infty} e^{-x^2 + bx + c}\,dx
 
 Complete the square: $-x^2 - 2x = -(x^2 + 2x + 1) + 1 = -(x+1)^2 + 1$
 
-$$\int_{-\infty}^{\infty} e^{-x^2 - 2x}\,dx = e^1 \int_{-\infty}^{\infty} e^{-(x+1)^2}\,dx = e \cdot \sqrt{2\pi \cdot \tfrac{1}{2}} \underbrace{\int_{-\infty}^{\infty} \frac{1}{\sqrt{2\pi \cdot \frac{1}{2}}} e^{-\frac{(x+1)^2}{2 \cdot \frac{1}{2}}}\,dx}_{= 1 \text{ (PDF of } N(-1, 1/2))} = e\sqrt{\frac{\pi}{1}} = e\sqrt{\pi}$$
+$$\int_{-\infty}^{\infty} e^{-x^2 - 2x}\,dx = e \int_{-\infty}^{\infty} e^{-(x+1)^2}\,dx = e \cdot \sqrt{\pi}$$
 
-Wait — let's redo carefully. We have $-(x+1)^2$, so set $\sigma^2 = 1/2$:
-
-$$e \int_{-\infty}^{\infty} e^{-(x+1)^2}\,dx = e \cdot \sqrt{\pi}$$
-
-since $\int_{-\infty}^{\infty} e^{-u^2}\,du = \sqrt{\pi}$.
+since $\int_{-\infty}^{\infty} e^{-u^2}\,du = \sqrt{\pi}$ (substituting $u = x + 1$).
 
 ## Python Implementation
 
