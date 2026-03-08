@@ -130,7 +130,7 @@ Let $F$ be the fraction of total waiting time spent at the bank. Find $E[F]$ and
 ??? solution
     (a) By the inspection paradox, $\tau \sim \Gamma(2, 4)$, so $E[\tau] = 2/4 = 0.5$ hours = 30 minutes. This is twice the mean interarrival time of 15 minutes.
 
-    (b) By the memoryless property, the forward recurrence time is $\text{Exp}(4)$, so the expected wait is \$1/4$ hour = 15 minutes.
+    (b) By the memoryless property, the forward recurrence time is $\text{Exp}(4)$, so the expected wait is $1/4$ hour = 15 minutes.
 
     (c) The naive argument "you arrive in the middle on average, so wait half" assumes uniform arrival within the interval. But you're more likely to land in longer intervals, which exactly cancels the "middle" effect. The memoryless property gives the correct answer directly: regardless of when the last bus came, the time to the next bus is always $\text{Exp}(\lambda)$.
 
