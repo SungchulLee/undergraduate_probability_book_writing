@@ -43,8 +43,7 @@ since $k_2 = n - k_1$.
 ## Python Implementation
 
 ```python
-from math import factorial, comb
-from itertools import product
+from math import factorial
 
 def multinomial(n, groups):
     """
