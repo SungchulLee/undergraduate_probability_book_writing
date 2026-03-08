@@ -61,7 +61,7 @@ With $T = \sum_{i=1}^{N} X_i$, $E(T \mid N) = 8N$, and $\text{Var}(T \mid N) = 1
 |:----------|:-----------|------:|
 | $\text{Var}\bigl(E(T \mid N)\bigr)$ | $\text{Var}(8N) = 64 \cdot 100$ | 6400 |
 | $E\bigl[\text{Var}(T \mid N)\bigr]$ | $E(16N) = 16 \cdot 50$ | 800 |
-| $\text{Var}(T)$ | \$6400 + 800$ | 7200 |
+| $\text{Var}(T)$ | $6400 + 800$ | 7200 |
 
 The between-group variance (6400) dominates: most of the variability in daily spending comes from variability in the *number* of customers, not from variability in *individual* spending.
 

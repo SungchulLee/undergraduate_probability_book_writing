@@ -94,7 +94,7 @@ $$
 
 ### Variance of the Trapped Miner
 
-**$\text{Var}\bigl(E(T \mid X)\bigr)$:** The conditional expectation takes values $3$, $5 + E(T) = 20$, and $7 + E(T) = 22$, each with probability \$1/3$:
+**$\text{Var}\bigl(E(T \mid X)\bigr)$:** The conditional expectation takes values $3$, $5 + E(T) = 20$, and $7 + E(T) = 22$, each with probability $1/3$:
 
 $$
 \text{Var}\bigl(E(T \mid X)\bigr) = \frac{3^2 + 20^2 + 22^2}{3} - 15^2 = \frac{9 + 400 + 484}{3} - 225 = 297.67 - 225 = 72.67
