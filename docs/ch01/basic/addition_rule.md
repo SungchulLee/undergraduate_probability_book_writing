@@ -44,7 +44,7 @@ The most basic counting method is **enumeration**: list all the cases in $\Omega
 
 ## Summary of Counting Methods
 
-The PDF introduces the following hierarchy of counting methods:
+The following hierarchy of counting methods will be developed throughout this chapter:
 
 | Method | Description |
 |:---|:---|
@@ -92,12 +92,18 @@ def count_by_complement(total, complement_count):
     """
     return total - complement_count
 
-# Example: Count even numbers from 1 to 100
-# Divide into categories: multiples of 2
-total = 100
-even_count = count_by_complement(total, 50)  # 50 odd numbers
-print(f"Even numbers from 1 to 100: {even_count}")
-# Output: Even numbers from 1 to 100: 50
+# Example: Count integers from 1 to 100 divisible by 2 or 3
+# Category A: divisible by 2 but not 3 → 50 - 16 = 34
+# Category B: divisible by 3 but not 2 → 33 - 16 = 17
+# Category C: divisible by both 2 and 3 (i.e., by 6) → 16
+total_div_2_or_3 = count_by_addition_rule([34, 17, 16])
+print(f"Integers from 1 to 100 divisible by 2 or 3: {total_div_2_or_3}")
+# Output: Integers from 1 to 100 divisible by 2 or 3: 67
+
+# Example: Count integers from 1 to 100 NOT divisible by 5
+not_div_5 = count_by_complement(100, 20)  # 20 multiples of 5
+print(f"Integers from 1 to 100 not divisible by 5: {not_div_5}")
+# Output: Integers from 1 to 100 not divisible by 5: 80
 ```
 
 ## Key Takeaway
