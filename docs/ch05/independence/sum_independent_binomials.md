@@ -35,7 +35,7 @@ There are $n$ people in a class. Each chooses a birthday independently and unifo
 
 $$X = \sum_{1 \le i < j \le n} \mathbf{1}_{A_{ij}}$$
 
-Each indicator $\mathbf{1}_{A_{ij}} \sim \text{B}(1/365)$, but **$X$ is not binomial** because the indicators are **not independent**. For example:
+Each indicator $\mathbf{1}_{A_{ij}} \sim \text{Bern}(1/365)$, but **$X$ is not binomial** because the indicators are **not independent**. For example:
 
 $$P(A_{23} \mid A_{12}, A_{13}) = 1 \ne \frac{1}{365} = P(A_{23})$$
 
