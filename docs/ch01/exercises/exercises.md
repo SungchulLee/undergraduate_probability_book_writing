@@ -75,7 +75,7 @@ Among 100 students: 60 study mathematics, 45 study physics, 30 study chemistry, 
     **(a)** By inclusion-exclusion:
     $|M \cup P \cup C| = 60 + 45 + 30 - 20 - 15 - 10 + 5 = 95$
 
-    **(b)** \$100 - 95 = 5$ students study none.
+    **(b)** $100 - 95 = 5$ students study none.
 
 ---
 
@@ -114,7 +114,7 @@ A standard soccer ball (truncated icosahedron) has 12 pentagons and 20 hexagons.
 How many ways can you distribute 10 identical cookies among 4 children if each child must receive at least one cookie?
 
 ??? note "Solution"
-    Give each child 1 cookie first. Remaining: \$10 - 4 = 6$ cookies to distribute among 4 children (0 or more each).
+    Give each child 1 cookie first. Remaining: $10 - 4 = 6$ cookies to distribute among 4 children (0 or more each).
 
     $$\binom{6 + 4 - 1}{4 - 1} = \binom{9}{3} = 84$$
 
