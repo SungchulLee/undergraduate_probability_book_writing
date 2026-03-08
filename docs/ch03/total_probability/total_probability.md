@@ -86,7 +86,7 @@ $$
 
 | Strategy | Winning Probability |
 |----------|-------------------|
-| No change (stay) | \$1/3$ |
-| Change (switch) | \$2/3$ |
+| No change (stay) | $1/3$ |
+| Change (switch) | $2/3$ |
 
 **Switching doubles your chance of winning.**
