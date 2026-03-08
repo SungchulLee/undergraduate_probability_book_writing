@@ -16,9 +16,7 @@ The Central Limit Theorem and the Law of Large Numbers both describe the behavio
 The CLT tells us that $\bar{X}_n$ fluctuates around $\mu$ on the scale $\sigma/\sqrt{n}$:
 
 $$
-
 \bar{X}_n \approx \mu + \frac{\sigma}{\sqrt{n}} Z, \quad Z \sim N(0,1)
-
 $$
 
 The LLN tells us that $\sigma/\sqrt{n} \to 0$, so $\bar{X}_n \to \mu$.
@@ -28,17 +26,13 @@ The LLN tells us that $\sigma/\sqrt{n} \to 0$, so $\bar{X}_n \to \mu$.
 **If we know $\sigma$:**
 
 $$
-
 \frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} \begin{cases} \overset{d}{=} N(0,1) & \text{if } X_i \text{ are iid } N(\mu, \sigma^2) \text{ (exact)} \\ \approx N(0,1) & \text{if } X_i \text{ are iid with } \mathbb{E}X_i^2 < \infty \text{ (by CLT)} \end{cases}
-
 $$
 
 **If we don't know $\sigma$**, replace it with the sample standard deviation $S$:
 
 $$
-
 \frac{\bar{X}_n - \mu}{S/\sqrt{n}} \begin{cases} \overset{d}{=} t_{n-1} & \text{if } X_i \text{ are iid } N(\mu, \sigma^2) \text{ (exact)} \\ \approx N(0,1) & \text{if } X_i \text{ are iid with } \mathbb{E}X_i^2 < \infty \text{ (by CLT and LLN)} \end{cases}
-
 $$
 
 The LLN justifies replacing $\sigma$ with $S$, since $S^2 \xrightarrow{a.s.} \sigma^2$ by the Strong Law applied to $g(X) = (X - \mu)^2$.

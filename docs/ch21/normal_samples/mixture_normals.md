@@ -5,9 +5,7 @@
 To generate samples from $N(\mu, \sigma^2)$, we use the standard transformation: if $Z \sim N(0,1)$, then
 
 $$
-
 X = \mu + \sigma Z \sim N(\mu, \sigma^2)
-
 $$
 
 In MATLAB, `randn(1, n)` generates $n$ standard normal samples, so `mu + sigma * randn(1, n)` generates samples from $N(\mu, \sigma^2)$.
@@ -80,9 +78,7 @@ plt.show()
 The combined histogram is an example of a **mixture distribution**. The density of the mixture is
 
 $$
-
 f(x) = w_1 \, f_1(x) + w_2 \, f_2(x)
-
 $$
 
 where $w_1 = \frac{n_1}{n_1 + n_2} = 0.6$, $w_2 = 0.4$, and $f_i$ is the density of $N(\mu_i, \sigma_i^2)$.

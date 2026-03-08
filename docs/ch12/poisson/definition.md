@@ -5,9 +5,7 @@
 A random variable $X$ has a **Poisson distribution** with parameter $\lambda > 0$, written $X \sim \text{Po}(\lambda)$, if its probability mass function (PMF) is
 
 $$
-
 P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \ldots
-
 $$
 
 The parameter $\lambda$ represents both the **mean** and the **variance** of the distribution.
@@ -19,9 +17,7 @@ The parameter $\lambda$ represents both the **mean** and the **variance** of the
 To confirm this is a valid probability distribution, we check that the PMF sums to 1:
 
 $$
-
 \sum_{k=0}^{\infty} \frac{e^{-\lambda} \lambda^k}{k!} = e^{-\lambda} \sum_{k=0}^{\infty} \frac{\lambda^k}{k!} = e^{-\lambda} \cdot e^{\lambda} = 1
-
 $$
 
 This uses the Taylor series expansion $e^{\lambda} = \sum_{k=0}^{\infty} \frac{\lambda^k}{k!}$.
@@ -108,9 +104,7 @@ plt.show()
 3. **Ratio of successive probabilities**: For $k \geq 1$,
 
    $$
-
    \frac{P(X = k)}{P(X = k-1)} = \frac{\lambda}{k}
-
    $$
 
    This means probabilities increase when $k < \lambda$ and decrease when $k > \lambda$.

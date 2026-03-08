@@ -5,29 +5,21 @@
 When $A_1, A_2, \ldots, A_n$ are independent, the intersection probability factors into a product:
 
 $$
-
 P(A_1 A_2 \cdots A_n) = P(A_1)\,P(A_2)\,P(A_3) \cdots P(A_n)
-
 $$
 
 Written out for small cases:
 
 $$
-
 P(AB) = P(A)\,P(B)
-
 $$
 
 $$
-
 P(ABC) = P(A)\,P(B)\,P(C)
-
 $$
 
 $$
-
 P(ABCD) = P(A)\,P(B)\,P(C)\,P(D)
-
 $$
 
 ## Dependent Events — Chain Rule
@@ -35,29 +27,21 @@ $$
 When the events are **not** independent, we use the **chain rule** (multiplication rule):
 
 $$
-
 P(AB) = P(A)\,P(B \mid A)
-
 $$
 
 $$
-
 P(ABC) = P(A)\,P(B \mid A)\,P(C \mid AB)
-
 $$
 
 $$
-
 P(ABCD) = P(A)\,P(B \mid A)\,P(C \mid AB)\,P(D \mid ABC)
-
 $$
 
 In general:
 
 $$
-
 P(A_1 A_2 \cdots A_n) = P(A_1)\,P(A_2 \mid A_1)\,P(A_3 \mid A_1 A_2) \cdots P(A_n \mid A_1 A_2 \cdots A_{n-1})
-
 $$
 
 Each factor conditions on **all** preceding events.

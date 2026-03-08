@@ -5,17 +5,13 @@
 The Law of Large Numbers provides the mathematical foundation for the **frequentist interpretation** of probability. If we repeat an experiment independently many times, the relative frequency of an event $A$ converges to its probability:
 
 $$
-
 \frac{\text{number of times } A \text{ occurs in } n \text{ trials}}{n} \xrightarrow{a.s.} P(A) \quad \text{as } n \to \infty
-
 $$
 
 This follows directly from the Strong Law of Large Numbers applied to the indicator variables $\mathbf{1}_A$:
 
 $$
-
 \frac{1}{n}\sum_{i=1}^n \mathbf{1}_{A_i} \xrightarrow{a.s.} \mathbb{E}[\mathbf{1}_A] = P(A)
-
 $$
 
 ## Interpretation

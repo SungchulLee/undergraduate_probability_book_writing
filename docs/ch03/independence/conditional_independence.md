@@ -5,9 +5,7 @@
 Events $A_1, A_2, \ldots, A_n$ are **conditionally independent given $B$** if for every subcollection $A_{i_1}, A_{i_2}, \ldots, A_{i_m}$ (with $2 \le m \le n$):
 
 $$
-
 P(A_{i_1} A_{i_2} \cdots A_{i_m} \mid B) = P(A_{i_1} \mid B)\,P(A_{i_2} \mid B) \cdots P(A_{i_m} \mid B)
-
 $$
 
 In other words, once we condition on $B$, the events behave as if they are independent within the reduced probability space defined by $B$.
@@ -17,17 +15,13 @@ In other words, once we condition on $B$, the events behave as if they are indep
 $A$ and $C$ are conditionally independent given $B$ if:
 
 $$
-
 P(AC \mid B) = P(A \mid B)\,P(C \mid B)
-
 $$
 
 Equivalently (when $P(C \cap B) > 0$):
 
 $$
-
 P(A \mid B, C) = P(A \mid B)
-
 $$
 
 Once $B$ is known, additional knowledge of $C$ provides no further information about $A$.
@@ -58,9 +52,7 @@ Conditional independence is a foundational concept in:
 When the sample space $\Omega$ is decomposed two different ways:
 
 $$
-
 \Omega = \bigcup_{i=1}^{m} A_i \quad \text{(disjointly)} \qquad \text{and} \qquad \Omega = \bigcup_{j=1}^{n} B_j \quad \text{(disjointly)}
-
 $$
 
 we can organize probabilities into a table:
@@ -80,23 +72,17 @@ Given any two of {joint, marginal, conditional}, you can recover the third:
 **Chain rule (joint from marginal + conditional):**
 
 $$
-
 P(A_i B_j) = P(A_i)\,P(B_j \mid A_i)
-
 $$
 
 **Marginalization (marginal from joint):**
 
 $$
-
 P(A_i) = \sum_{j} P(A_i B_j)
-
 $$
 
 **Conditioning (conditional from joint + marginal):**
 
 $$
-
 P(B_j \mid A_i) = \frac{P(A_i B_j)}{P(A_i)}
-
 $$

@@ -7,9 +7,7 @@ Starting from the origin, run a simple random walk $S_0 = 0, S_1, S_2, \ldots, S
 Then, for $0 \leq a < b \leq 1$,
 
 $$
-
 P\!\left(a \leq \frac{L_{2n}}{2n} \leq b\right) \to \int_a^b \frac{1}{\pi} \cdot \frac{1}{\sqrt{x(1-x)}} \, dx = \frac{2}{\pi}\left[\arcsin(\sqrt{b}) - \arcsin(\sqrt{a})\right]
-
 $$
 
 as $n \to \infty$.
@@ -19,17 +17,13 @@ as $n \to \infty$.
 The limiting density
 
 $$
-
 f(x) = \frac{1}{\pi \sqrt{x(1-x)}}, \quad 0 < x < 1
-
 $$
 
 is called the **arcsine distribution**. Its CDF is
 
 $$
-
 F(x) = \frac{2}{\pi} \arcsin(\sqrt{x})
-
 $$
 
 This distribution is $U$-shaped: it assigns the most probability mass near $x = 0$ and $x = 1$. This means the random walk's last visit to zero is most likely to occur either very early or very late — not in the middle.

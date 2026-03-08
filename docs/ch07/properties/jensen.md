@@ -5,17 +5,13 @@
 If $g$ is a **convex** function and $X$ is a random variable with $E[X]$ and $E[g(X)]$ both finite, then
 
 $$
-
 E[g(X)] \geq g(E[X])
-
 $$
 
 If $g$ is **concave**, the inequality reverses:
 
 $$
-
 E[g(X)] \leq g(E[X])
-
 $$
 
 ---
@@ -45,9 +41,7 @@ The first row implies $\text{Var}(X) = E[X^2] - (E[X])^2 \geq 0$.
 For positive returns $R_1, \ldots, R_n$, since $\log$ is concave:
 
 $$
-
 \frac{1}{n}\sum \log R_i \leq \log\left(\frac{1}{n}\sum R_i\right)
-
 $$
 
 This means the **geometric mean** is always $\leq$ the **arithmetic mean**.

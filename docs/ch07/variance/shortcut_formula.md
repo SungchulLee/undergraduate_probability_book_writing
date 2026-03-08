@@ -3,9 +3,7 @@
 ## The Shortcut Formula
 
 $$
-
 \text{Var}(X) = E[X^2] - (E[X])^2
-
 $$
 
 This is often easier to compute than the definition $E[(X - \mu)^2]$ because it avoids subtracting the mean inside the squared term.
@@ -15,9 +13,7 @@ This is often easier to compute than the definition $E[(X - \mu)^2]$ because it 
 ## Proof
 
 $$
-
 \text{Var}(X) = E[(X - \mu)^2] = E[X^2 - 2\mu X + \mu^2] = E[X^2] - 2\mu E[X] + \mu^2 = E[X^2] - \mu^2
-
 $$
 
 ---
@@ -29,9 +25,7 @@ $$
 $E[X] = p$, $E[X^2] = 0^2(1-p) + 1^2 p = p$
 
 $$
-
 \text{Var}(X) = p - p^2 = p(1-p) = pq
-
 $$
 
 ### Geometric
@@ -39,9 +33,7 @@ $$
 If $X \sim \text{Geo}(p)$, we can show $E[X] = 1/p$ and $E[X^2] = (2-p)/p^2$, giving
 
 $$
-
 \text{Var}(X) = \frac{2-p}{p^2} - \frac{1}{p^2} = \frac{1-p}{p^2} = \frac{q}{p^2}
-
 $$
 
 ### Poisson
@@ -49,9 +41,7 @@ $$
 If $X \sim \text{Poisson}(\lambda)$, then $E[X] = \lambda$ and $E[X(X-1)] = \lambda^2$, so $E[X^2] = \lambda^2 + \lambda$, giving
 
 $$
-
 \text{Var}(X) = \lambda^2 + \lambda - \lambda^2 = \lambda
-
 $$
 
 ---

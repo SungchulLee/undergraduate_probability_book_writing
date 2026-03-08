@@ -7,15 +7,11 @@
 ### For Two Events
 
 $$
-
 (A \cup B)^c = A^c \cap B^c
-
 $$
 
 $$
-
 (A \cap B)^c = A^c \cup B^c
-
 $$
 
 In words:
@@ -26,29 +22,21 @@ In words:
 ### For Finitely Many Events
 
 $$
-
 \left(\bigcup_{i=1}^{n} A_i\right)^c = \bigcap_{i=1}^{n} A_i^c
-
 $$
 
 $$
-
 \left(\bigcap_{i=1}^{n} A_i\right)^c = \bigcup_{i=1}^{n} A_i^c
-
 $$
 
 ### For Countably Many Events
 
 $$
-
 \left(\bigcup_{i=1}^{\infty} A_i\right)^c = \bigcap_{i=1}^{\infty} A_i^c
-
 $$
 
 $$
-
 \left(\bigcap_{i=1}^{\infty} A_i\right)^c = \bigcup_{i=1}^{\infty} A_i^c
-
 $$
 
 ## Proof (Two-Event Case)
@@ -66,9 +54,7 @@ The proof of $(A \cap B)^c = A^c \cup B^c$ is analogous.
 De Morgan's Laws are frequently used to convert between "at least one" and "none" type problems:
 
 $$
-
 P\left(\bigcup_{i=1}^{n} A_i\right) = 1 - P\left(\bigcap_{i=1}^{n} A_i^c\right)
-
 $$
 
 This is especially powerful when the $A_i^c$ events are easier to work with — for instance, when the events are independent.
@@ -79,9 +65,7 @@ This is especially powerful when the $A_i^c$ events are easier to work with — 
     Let $A_i$ be the $i$-th event with $P(A_i) = p_i$. Then:
 
     $$
-
     P\left(\bigcup_{i=1}^{n} A_i\right) = 1 - P\left(\bigcap_{i=1}^{n} A_i^c\right) = 1 - \prod_{i=1}^{n}(1 - p_i)
-
     $$
 
     The last equality uses independence.

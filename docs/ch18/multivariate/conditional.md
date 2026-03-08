@@ -11,9 +11,7 @@ The conditional distribution of a subset of a multivariate normal vector, given 
 Partition the vector $\mathbf{x}$ and its parameters as:
 
 $$
-
 \mathbf{x} = \begin{pmatrix} \mathbf{x}_1 \\ \mathbf{x}_2 \end{pmatrix} \sim N\!\left(\begin{pmatrix} \boldsymbol{\mu}_1 \\ \boldsymbol{\mu}_2 \end{pmatrix},\; \begin{pmatrix} \boldsymbol{\Sigma}_{11} & \boldsymbol{\Sigma}_{12} \\ \boldsymbol{\Sigma}_{21} & \boldsymbol{\Sigma}_{22} \end{pmatrix}\right)
-
 $$
 
 where $\mathbf{x}_1 \in \mathbb{R}^{d_1}$ and $\mathbf{x}_2 \in \mathbb{R}^{d_2}$ with $d_1 + d_2 = d$.
@@ -25,9 +23,7 @@ where $\mathbf{x}_1 \in \mathbb{R}^{d_1}$ and $\mathbf{x}_2 \in \mathbb{R}^{d_2}
 The marginal of $\mathbf{x}_1$ is simply:
 
 $$
-
 \mathbf{x}_1 \sim N(\boldsymbol{\mu}_1, \boldsymbol{\Sigma}_{11})
-
 $$
 
 ---
@@ -37,23 +33,17 @@ $$
 The conditional distribution of $\mathbf{x}_1$ given $\mathbf{x}_2$ is:
 
 $$
-
 \mathbf{x}_1 \mid \mathbf{x}_2 \;\sim\; N\!\left(\boldsymbol{\mu}_{1|2},\; \boldsymbol{\Sigma}_{1|2}\right)
-
 $$
 
 where:
 
 $$
-
 \boldsymbol{\mu}_{1|2} = \boldsymbol{\mu}_1 + \boldsymbol{\Sigma}_{12}\boldsymbol{\Sigma}_{22}^{-1}(\mathbf{x}_2 - \boldsymbol{\mu}_2)
-
 $$
 
 $$
-
 \boldsymbol{\Sigma}_{1|2} = \boldsymbol{\Sigma}_{11} - \boldsymbol{\Sigma}_{12}\boldsymbol{\Sigma}_{22}^{-1}\boldsymbol{\Sigma}_{21}
-
 $$
 
 The matrix $\boldsymbol{\Sigma}_{1|2}$ is the **Schur complement** of $\boldsymbol{\Sigma}_{22}$ in $\boldsymbol{\Sigma}$.
@@ -65,23 +55,17 @@ The matrix $\boldsymbol{\Sigma}_{1|2}$ is the **Schur complement** of $\boldsymb
 Define the **precision matrix** (information matrix) $\boldsymbol{\Lambda} = \boldsymbol{\Sigma}^{-1}$ with the partition:
 
 $$
-
 \boldsymbol{\Lambda} = \begin{pmatrix} \boldsymbol{\Lambda}_{11} & \boldsymbol{\Lambda}_{12} \\ \boldsymbol{\Lambda}_{21} & \boldsymbol{\Lambda}_{22} \end{pmatrix}
-
 $$
 
 The conditional parameters can be expressed directly in terms of $\boldsymbol{\Lambda}$:
 
 $$
-
 \boldsymbol{\Sigma}_{1|2} = \boldsymbol{\Lambda}_{11}^{-1}
-
 $$
 
 $$
-
 \boldsymbol{\mu}_{1|2} = \boldsymbol{\mu}_1 - \boldsymbol{\Lambda}_{11}^{-1}\boldsymbol{\Lambda}_{12}(\mathbf{x}_2 - \boldsymbol{\mu}_2)
-
 $$
 
 !!! info "Why the Precision Matrix?"
@@ -94,9 +78,7 @@ $$
 From the identity $\boldsymbol{\Sigma}\boldsymbol{\Lambda} = I$:
 
 $$
-
 \begin{pmatrix} \boldsymbol{\Sigma}_{11} & \boldsymbol{\Sigma}_{12} \\ \boldsymbol{\Sigma}_{21} & \boldsymbol{\Sigma}_{22} \end{pmatrix} \begin{pmatrix} \boldsymbol{\Lambda}_{11} & \boldsymbol{\Lambda}_{12} \\ \boldsymbol{\Lambda}_{21} & \boldsymbol{\Lambda}_{22} \end{pmatrix} = \begin{pmatrix} I_{11} & 0_{12} \\ 0_{21} & I_{22} \end{pmatrix}
-
 $$
 
 From the $(1,2)$ block: $\boldsymbol{\Sigma}_{11}\boldsymbol{\Lambda}_{12} + \boldsymbol{\Sigma}_{12}\boldsymbol{\Lambda}_{22} = \mathbf{0}$.
@@ -108,17 +90,13 @@ From the $(2,1)$ block: $\boldsymbol{\Sigma}_{21}\boldsymbol{\Lambda}_{11} + \bo
 Substituting into the $(1,1)$ equation:
 
 $$
-
 \boldsymbol{\Lambda}_{11}^{-1} = \boldsymbol{\Sigma}_{11} - \boldsymbol{\Sigma}_{12}\boldsymbol{\Sigma}_{22}^{-1}\boldsymbol{\Sigma}_{21}
-
 $$
 
 Similarly, from the $(1,2)$ block:
 
 $$
-
 \boldsymbol{\Lambda}_{11}^{-1}\boldsymbol{\Lambda}_{12} = -\boldsymbol{\Sigma}_{12}\boldsymbol{\Sigma}_{22}^{-1}
-
 $$
 
 These are the key identities connecting the covariance and precision parameterizations.
@@ -130,25 +108,19 @@ These are the key identities connecting the covariance and precision parameteriz
 Starting from the quadratic form in the exponent with $\mathbf{y}_i = \mathbf{x}_i - \boldsymbol{\mu}_i$:
 
 $$
-
 (\mathbf{x} - \boldsymbol{\mu})^T\boldsymbol{\Sigma}^{-1}(\mathbf{x} - \boldsymbol{\mu}) = \mathbf{y}_1^T\boldsymbol{\Lambda}_{11}\mathbf{y}_1 + \mathbf{y}_1^T\boldsymbol{\Lambda}_{12}\mathbf{y}_2 + \mathbf{y}_2^T\boldsymbol{\Lambda}_{21}\mathbf{y}_1 + \mathbf{y}_2^T\boldsymbol{\Lambda}_{22}\mathbf{y}_2
-
 $$
 
 Treating $\mathbf{y}_2$ as fixed and completing the square in $\mathbf{y}_1$:
 
 $$
-
 = (\mathbf{y}_1 - \boldsymbol{\alpha})^T\boldsymbol{\Lambda}_{11}(\mathbf{y}_1 - \boldsymbol{\alpha}) + \text{terms in } \mathbf{y}_2 \text{ only}
-
 $$
 
 where $\boldsymbol{\alpha} = -\boldsymbol{\Lambda}_{11}^{-1}\boldsymbol{\Lambda}_{12}\mathbf{y}_2$. Reverting to the original coordinates:
 
 $$
-
 \mathbf{x}_1 - \boldsymbol{\mu}_{1|2} = \mathbf{y}_1 - \boldsymbol{\alpha} = \mathbf{x}_1 - \left(\boldsymbol{\mu}_1 - \boldsymbol{\Lambda}_{11}^{-1}\boldsymbol{\Lambda}_{12}(\mathbf{x}_2 - \boldsymbol{\mu}_2)\right)
-
 $$
 
 This confirms $\boldsymbol{\mu}_{1|2} = \boldsymbol{\mu}_1 - \boldsymbol{\Lambda}_{11}^{-1}\boldsymbol{\Lambda}_{12}(\mathbf{x}_2 - \boldsymbol{\mu}_2)$ and $\boldsymbol{\Sigma}_{1|2} = \boldsymbol{\Lambda}_{11}^{-1}$.
@@ -160,25 +132,19 @@ This confirms $\boldsymbol{\mu}_{1|2} = \boldsymbol{\mu}_1 - \boldsymbol{\Lambda
 A particularly important application arises when $\mathbf{x}$ and $\mathbf{y}$ are related by a linear model with Gaussian noise:
 
 $$
-
 \mathbf{x} \sim N(\boldsymbol{\mu}_x, \boldsymbol{\Sigma}_x), \qquad \mathbf{y} = A\mathbf{x} + \mathbf{b} + \boldsymbol{\varepsilon}, \quad \boldsymbol{\varepsilon} \sim N(\mathbf{0}, \boldsymbol{\Sigma}_\varepsilon)
-
 $$
 
 where $\boldsymbol{\varepsilon}$ is independent of $\mathbf{x}$. Then the joint distribution is:
 
 $$
-
 \begin{pmatrix} \mathbf{x} \\ \mathbf{y} \end{pmatrix} \sim N\!\left(\begin{pmatrix} \boldsymbol{\mu}_x \\ A\boldsymbol{\mu}_x + \mathbf{b} \end{pmatrix},\; \begin{pmatrix} \boldsymbol{\Sigma}_x & \boldsymbol{\Sigma}_x A^T \\ A\boldsymbol{\Sigma}_x & A\boldsymbol{\Sigma}_x A^T + \boldsymbol{\Sigma}_\varepsilon \end{pmatrix}\right)
-
 $$
 
 ### Marginal of y
 
 $$
-
 \mathbf{y} \sim N(A\boldsymbol{\mu}_x + \mathbf{b},\; A\boldsymbol{\Sigma}_x A^T + \boldsymbol{\Sigma}_\varepsilon)
-
 $$
 
 ### Posterior: x | y
@@ -186,15 +152,11 @@ $$
 Applying the conditional formulas:
 
 $$
-
 \boldsymbol{\mu}_{x|y} = \boldsymbol{\mu}_x + \boldsymbol{\Sigma}_x A^T (A\boldsymbol{\Sigma}_x A^T + \boldsymbol{\Sigma}_\varepsilon)^{-1}(\mathbf{y} - A\boldsymbol{\mu}_x - \mathbf{b})
-
 $$
 
 $$
-
 \boldsymbol{\Sigma}_{x|y} = \boldsymbol{\Sigma}_x - \boldsymbol{\Sigma}_x A^T (A\boldsymbol{\Sigma}_x A^T + \boldsymbol{\Sigma}_\varepsilon)^{-1} A\boldsymbol{\Sigma}_x
-
 $$
 
 ### Precision Form (via Woodbury Identity)
@@ -202,15 +164,11 @@ $$
 Using the Woodbury identity $(A + UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1} + VA^{-1}U)^{-1}VA^{-1}$:
 
 $$
-
 \boldsymbol{\Sigma}_{x|y}^{-1} = \boldsymbol{\Sigma}_x^{-1} + A^T\boldsymbol{\Sigma}_\varepsilon^{-1} A
-
 $$
 
 $$
-
 \boldsymbol{\mu}_{x|y} = \boldsymbol{\Sigma}_{x|y}\left(\boldsymbol{\Sigma}_x^{-1}\boldsymbol{\mu}_x + A^T\boldsymbol{\Sigma}_\varepsilon^{-1}(\mathbf{y} - \mathbf{b})\right)
-
 $$
 
 !!! note "Connection to Bayesian Inference"
@@ -221,39 +179,29 @@ $$
 From $\log p(\mathbf{x}, \mathbf{y}) = \log p(\mathbf{x}) + \log p(\mathbf{y} \mid \mathbf{x})$:
 
 $$
-
 \log p(\mathbf{x}, \mathbf{y}) \propto -\frac{1}{2}\tilde{\mathbf{x}}^T\boldsymbol{\Sigma}_x^{-1}\tilde{\mathbf{x}} - \frac{1}{2}(\tilde{\mathbf{y}} - A\tilde{\mathbf{x}})^T\boldsymbol{\Sigma}_\varepsilon^{-1}(\tilde{\mathbf{y}} - A\tilde{\mathbf{x}})
-
 $$
 
 where $\tilde{\mathbf{x}} = \mathbf{x} - \boldsymbol{\mu}_x$ and $\tilde{\mathbf{y}} = \mathbf{y} - A\boldsymbol{\mu}_x - \mathbf{b}$. Expanding:
 
 $$
-
 = -\frac{1}{2}\begin{pmatrix} \tilde{\mathbf{x}} \\ \tilde{\mathbf{y}} \end{pmatrix}^T \underbrace{\begin{pmatrix} \boldsymbol{\Sigma}_x^{-1} + A^T\boldsymbol{\Sigma}_\varepsilon^{-1}A & -A^T\boldsymbol{\Sigma}_\varepsilon^{-1} \\ -\boldsymbol{\Sigma}_\varepsilon^{-1}A & \boldsymbol{\Sigma}_\varepsilon^{-1} \end{pmatrix}}_{\boldsymbol{\Lambda}} \begin{pmatrix} \tilde{\mathbf{x}} \\ \tilde{\mathbf{y}} \end{pmatrix}
-
 $$
 
 Reading off the blocks:
 
 $$
-
 \boldsymbol{\Lambda}_{11} = \boldsymbol{\Sigma}_x^{-1} + A^T\boldsymbol{\Sigma}_\varepsilon^{-1}A, \qquad \boldsymbol{\Lambda}_{12} = -A^T\boldsymbol{\Sigma}_\varepsilon^{-1}
-
 $$
 
 Therefore:
 
 $$
-
 \boldsymbol{\Sigma}_{x|y} = \boldsymbol{\Lambda}_{11}^{-1} = (\boldsymbol{\Sigma}_x^{-1} + A^T\boldsymbol{\Sigma}_\varepsilon^{-1}A)^{-1}
-
 $$
 
 $$
-
 \boldsymbol{\mu}_{x|y} = \boldsymbol{\mu}_x - \boldsymbol{\Lambda}_{11}^{-1}\boldsymbol{\Lambda}_{12}\tilde{\mathbf{y}} = \boldsymbol{\Sigma}_{x|y}(\boldsymbol{\Sigma}_x^{-1}\boldsymbol{\mu}_x + A^T\boldsymbol{\Sigma}_\varepsilon^{-1}(\mathbf{y} - \mathbf{b}))
-
 $$
 
 ---

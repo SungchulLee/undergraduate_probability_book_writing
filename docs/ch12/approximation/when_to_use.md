@@ -33,9 +33,7 @@ A widely used guideline:
 For the general case where $A_1, A_2, \ldots, A_n$ are independent events with possibly different probabilities $p_i = P(A_i)$, and $X = \sum_{i=1}^{n} \mathbf{1}_{A_i}$, the **Le Cam bound** gives:
 
 $$
-
 \left| P(X \in A) - P(Y \in A) \right| \leq \sum_{i=1}^{n} p_i^2 \leq \left(\max_{1 \leq i \leq n} p_i\right) \cdot \lambda
-
 $$
 
 where $Y \sim \text{Po}(\lambda)$ and $\lambda = \sum_{i=1}^{n} p_i$.
@@ -43,9 +41,7 @@ where $Y \sim \text{Po}(\lambda)$ and $\lambda = \sum_{i=1}^{n} p_i$.
 When all $p_i = p$, this simplifies to:
 
 $$
-
 \text{Error} \leq np^2 = p\lambda
-
 $$
 
 So the error is controlled by $p \cdot \lambda$ — small $p$ and moderate $\lambda$ guarantee a good approximation.

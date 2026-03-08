@@ -5,9 +5,7 @@
 A hat-check person returns $n$ hats to $n$ people at random. Let $X$ be the number of people who get their own hat.
 
 $$
-
 X = \sum_{i=1}^n \mathbf{1}_{A_i}
-
 $$
 
 where $A_i$ is the event that person $i$ gets their own hat.
@@ -15,9 +13,7 @@ where $A_i$ is the event that person $i$ gets their own hat.
 **Mean**: By symmetry, $P(A_i) = \frac{1}{n}$ for each $i$, so
 
 $$
-
 E[X] = \sum_{i=1}^n \frac{1}{n} = 1
-
 $$
 
 Remarkably, the expected number of matches is exactly 1, regardless of $n$.
@@ -25,21 +21,15 @@ Remarkably, the expected number of matches is exactly 1, regardless of $n$.
 **Variance**: We need $P(A_i \cap A_j)$ for $i \neq j$:
 
 $$
-
 P(A_i \cap A_j) = \frac{(n-2)!}{n!} = \frac{1}{n(n-1)}
-
 $$
 
 $$
-
 \text{Cov}(\mathbf{1}_{A_i}, \mathbf{1}_{A_j}) = \frac{1}{n(n-1)} - \frac{1}{n^2} = \frac{1}{n^2(n-1)}
-
 $$
 
 $$
-
 \text{Var}(X) = n \cdot \frac{1}{n}\left(1 - \frac{1}{n}\right) + 2\binom{n}{2} \cdot \frac{1}{n^2(n-1)} = \frac{n-1}{n} + \frac{1}{n} = 1
-
 $$
 
 So $\text{Var}(X) = 1$ for all $n$, and $\text{SD}(X) = 1$.
@@ -51,9 +41,7 @@ So $\text{Var}(X) = 1$ for all $n$, and $\text{SD}(X) = 1$.
 There are $n$ people in a class, each choosing a birthday independently and uniformly from 365 days. Let $S_n$ count the number of pairs sharing a birthday.
 
 $$
-
 S_n = \sum_{1 \leq i < j \leq n} \mathbf{1}_{A_{ij}}
-
 $$
 
 where $A_{ij}$ is the event that persons $i$ and $j$ share a birthday.
@@ -64,25 +52,19 @@ where $A_{ij}$ is the event that persons $i$ and $j$ share a birthday.
 **Mean**:
 
 $$
-
 E[S_n] = \binom{n}{2} \cdot \frac{1}{365}
-
 $$
 
 **Variance**: The indicators are pairwise independent (knowing whether $i,j$ share a birthday doesn't change the probability for a disjoint pair $k,l$). More precisely, for pairs $(i,j)$ and $(k,l)$ with no common person:
 
 $$
-
 P(A_{ij} \cap A_{kl}) = P(A_{ij})P(A_{kl}) = \frac{1}{365^2}
-
 $$
 
 So the covariance terms vanish and:
 
 $$
-
 \text{Var}(S_n) = \binom{n}{2} \cdot \frac{1}{365} \cdot \frac{364}{365}
-
 $$
 
 ---
@@ -92,9 +74,7 @@ $$
 There are $n$ balls and $M = 365$ bins. Each ball independently and uniformly chooses a bin. Let $S_n$ count the empty bins.
 
 $$
-
 S_n = \sum_{i=1}^{M} \mathbf{1}_{A_i}
-
 $$
 
 where $A_i$ = {bin $i$ is empty}. Then $P(A_i) = \left(\frac{M-1}{M}\right)^n$.
@@ -102,29 +82,21 @@ where $A_i$ = {bin $i$ is empty}. Then $P(A_i) = \left(\frac{M-1}{M}\right)^n$.
 **Mean**:
 
 $$
-
 E[S_n] = M \left(\frac{M-1}{M}\right)^n
-
 $$
 
 **Variance**: Here the indicators are **not** independent and the covariance is nonzero:
 
 $$
-
 P(A_i \cap A_j) = \left(\frac{M-2}{M}\right)^n
-
 $$
 
 $$
-
 \text{Cov}(\mathbf{1}_{A_i}, \mathbf{1}_{A_j}) = \left(\frac{M-2}{M}\right)^n - \left(\frac{M-1}{M}\right)^{2n}
-
 $$
 
 $$
-
 \text{Var}(S_n) = M \cdot p(1-p) + 2\binom{M}{2}\left[\left(\frac{M-2}{M}\right)^n - p^2\right]
-
 $$
 
 where $p = \left(\frac{M-1}{M}\right)^n$.
@@ -138,9 +110,7 @@ There are $n$ people in an elevator at the basement. Each independently chooses 
 The number of stops equals the number of non-empty bins:
 
 $$
-
 X_n = M - S_n
-
 $$
 
 where $S_n$ is the number of empty bins (floors no one chose).
@@ -148,17 +118,13 @@ where $S_n$ is the number of empty bins (floors no one chose).
 **Mean**:
 
 $$
-
 E[X_n] = M - E[S_n] = M - M\left(\frac{M-1}{M}\right)^n = M\left[1 - \left(\frac{M-1}{M}\right)^n\right]
-
 $$
 
 **Variance**:
 
 $$
-
 \text{Var}(X_n) = \text{Var}(M - S_n) = \text{Var}(S_n)
-
 $$
 
 ---

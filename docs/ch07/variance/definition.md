@@ -5,9 +5,7 @@
 The **variance** of a random variable $X$ is
 
 $$
-
 \text{Var}(X) = E\left[(X - E[X])^2\right] = E\left[(X - \mu)^2\right]
-
 $$
 
 where $\mu = E[X]$.
@@ -21,17 +19,13 @@ Variance measures the **spread** or **dispersion** of the distribution around it
 ### Discrete Case
 
 $$
-
 \text{Var}(X) = \sum_x (x - \mu)^2 \, p(x)
-
 $$
 
 ### Continuous Case
 
 $$
-
 \text{Var}(X) = \int_{-\infty}^{\infty} (x - \mu)^2 \, f(x) \, dx
-
 $$
 
 ---
@@ -43,9 +37,7 @@ $$
 If $X \sim \text{Bernoulli}(p)$, then $\mu = p$ and
 
 $$
-
 \text{Var}(X) = (0-p)^2(1-p) + (1-p)^2 p = p^2(1-p) + (1-p)^2 p = p(1-p) = pq
-
 $$
 
 ### Fair Die
@@ -53,9 +45,7 @@ $$
 If $X$ is a fair die roll, $\mu = 3.5$ and
 
 $$
-
 \text{Var}(X) = \frac{1}{6}\sum_{k=1}^6 (k - 3.5)^2 = \frac{(2.5)^2 + (1.5)^2 + (0.5)^2 + (0.5)^2 + (1.5)^2 + (2.5)^2}{6} = \frac{17.5}{6} \approx 2.917
-
 $$
 
 ### Continuous Uniform
@@ -63,9 +53,7 @@ $$
 If $X \sim \text{Uniform}(a,b)$, then
 
 $$
-
 \text{Var}(X) = \frac{(b-a)^2}{12}
-
 $$
 
 ---

@@ -7,9 +7,7 @@
 If $X$ is a non-negative integer-valued random variable, then
 
 $$
-
 E[X] = \sum_{k=1}^{\infty} P(X \geq k) = \sum_{k=0}^{\infty} P(X > k)
-
 $$
 
 ### Non-negative Continuous Random Variables
@@ -17,9 +15,7 @@ $$
 If $X$ is a non-negative continuous random variable, then
 
 $$
-
 E[X] = \int_0^{\infty} P(X > t) \, dt = \int_0^{\infty} [1 - F_X(t)] \, dt
-
 $$
 
 ---
@@ -27,9 +23,7 @@ $$
 ## Proof (Discrete Case)
 
 $$
-
 \sum_{k=1}^{\infty} P(X \geq k) = \sum_{k=1}^{\infty} \sum_{j=k}^{\infty} P(X = j) = \sum_{j=1}^{\infty} \sum_{k=1}^{j} P(X = j) = \sum_{j=1}^{\infty} j \cdot P(X = j) = E[X]
-
 $$
 
 The key step is swapping the order of summation: each term $P(X = j)$ appears exactly $j$ times.
@@ -39,9 +33,7 @@ The key step is swapping the order of summation: each term $P(X = j)$ appears ex
 ## Proof (Continuous Case)
 
 $$
-
 \int_0^{\infty} P(X > t) \, dt = \int_0^{\infty} \int_t^{\infty} f(x) \, dx \, dt = \int_0^{\infty} \int_0^{x} dt \, f(x) \, dx = \int_0^{\infty} x \, f(x) \, dx = E[X]
-
 $$
 
 ---
@@ -53,17 +45,13 @@ $$
 If $X \sim \text{Geo}(p)$ (number of trials until first success), then
 
 $$
-
 P(X \geq k) = (1-p)^{k-1}
-
 $$
 
 By the tail sum formula:
 
 $$
-
 E[X] = \sum_{k=1}^{\infty} (1-p)^{k-1} = \frac{1}{1-(1-p)} = \frac{1}{p}
-
 $$
 
 ### Example 2: Exponential Distribution
@@ -71,9 +59,7 @@ $$
 If $X \sim \text{Exp}(\lambda)$, then $P(X > t) = e^{-\lambda t}$. By the tail sum formula:
 
 $$
-
 E[X] = \int_0^{\infty} e^{-\lambda t} \, dt = \frac{1}{\lambda}
-
 $$
 
 ---
@@ -83,9 +69,7 @@ $$
 For any random variable $X$ (not necessarily non-negative):
 
 $$
-
 E[X] = \int_0^{\infty} P(X > t) \, dt - \int_0^{\infty} P(X < -t) \, dt
-
 $$
 
 This decomposes $X$ into its positive and negative parts: $X = X^+ - X^-$ where $X^+ = \max(X, 0)$ and $X^- = \max(-X, 0)$.

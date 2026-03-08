@@ -78,17 +78,13 @@ Approximately 80,000 marriages took place in New York in a given year. We wish t
 **Setup**: Let $n = 80{,}000$ be the number of couples. For each couple $i$, let $A_i$ be the event that couple $i$ shares a birthday. Assuming birthdays are uniform over 365 days:
 
 $$
-
 p = P(A_i) = \frac{1}{365}
-
 $$
 
 Let $S_n = \sum_{i=1}^{n} \mathbf{1}_{A_i}$ count the number of couples with the same birthday. Then:
 
 $$
-
 S_n \sim B(n, p) \approx \text{Po}(\lambda), \quad \lambda = np = \frac{80{,}000}{365} \approx 219.18
-
 $$
 
 **Target**: $P(S_n > 250)$.
@@ -142,17 +138,13 @@ When $n$ is very large, computing $\binom{n}{k}$ directly can cause overflow. Bo
 **Binomial recurrence**: Starting from $P(X = 0) = q^n$:
 
 $$
-
 P(X = k) = P(X = k-1) \cdot \frac{n - k + 1}{k} \cdot \frac{p}{q}
-
 $$
 
 **Poisson recurrence**: Starting from $P(X = 0) = e^{-\lambda}$:
 
 $$
-
 P(X = k) = P(X = k-1) \cdot \frac{\lambda}{k}
-
 $$
 
 ```python

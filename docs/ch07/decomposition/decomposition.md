@@ -5,9 +5,7 @@
 Many important random variables can be **decomposed** as sums of simpler, often iid, random variables. This decomposition allows us to compute means and variances easily using the formulas for sums.
 
 $$
-
 S = \sum_{i=1}^n X_i \quad \Longrightarrow \quad E[S] = \sum_{i=1}^n E[X_i], \quad \text{Var}(S) = \sum_{i=1}^n \text{Var}(X_i) \text{ (if independent)}
-
 $$
 
 ---
@@ -17,21 +15,15 @@ $$
 Flip a $p$-coin $n$ times independently and count the number $S$ of heads. Let $A_i$ be the event that the $i$-th coin lands heads and $\mathbf{1}_{A_i}$ its indicator.
 
 $$
-
 \mathbf{1}_{A_i} \stackrel{iid}{\sim} \text{Bernoulli}(p) \quad \Longrightarrow \quad S = \sum_{i=1}^n \mathbf{1}_{A_i} \sim \text{Binomial}(n, p)
-
 $$
 
 $$
-
 E[S] = \sum_{i=1}^n E[\mathbf{1}_{A_i}] = np
-
 $$
 
 $$
-
 \text{Var}(S) = \sum_{i=1}^n \text{Var}(\mathbf{1}_{A_i}) = npq
-
 $$
 
 ---
@@ -41,21 +33,15 @@ $$
 Flip a $p$-coin until the $r$-th head. Let $X_i$ be the number of flips to get the $i$-th head after the $(i-1)$-th head.
 
 $$
-
 X_i \stackrel{iid}{\sim} \text{Geo}(p) \quad \Longrightarrow \quad S = \sum_{i=1}^r X_i \sim \text{NB}(r, p)
-
 $$
 
 $$
-
 E[S] = \sum_{i=1}^r E[X_i] = \frac{r}{p}
-
 $$
 
 $$
-
 \text{Var}(S) = \sum_{i=1}^r \text{Var}(X_i) = \frac{rq}{p^2}
-
 $$
 
 ---
@@ -65,9 +51,7 @@ $$
 Roll a die 1000 times. Gain the face value for odd outcomes and lose the face value for even outcomes. Add a $+0.5$ bonus per game for fairness.
 
 $$
-
 D_i = \begin{cases} +1 & \text{w.p. } 1/6 \\ -2 & \text{w.p. } 1/6 \\ +3 & \text{w.p. } 1/6 \\ -4 & \text{w.p. } 1/6 \\ +5 & \text{w.p. } 1/6 \\ -6 & \text{w.p. } 1/6 \end{cases}
-
 $$
 
 Let $X_i = D_i + 0.5$ (iid). The total P\&L is $S = \sum_{i=1}^{1000} X_i$.
@@ -75,21 +59,15 @@ Let $X_i = D_i + 0.5$ (iid). The total P\&L is $S = \sum_{i=1}^{1000} X_i$.
 **Moments of $D_i$**:
 
 $$
-
 E[D_i] = \frac{1 - 2 + 3 - 4 + 5 - 6}{6} = -0.5
-
 $$
 
 $$
-
 E[D_i^2] = \frac{1 + 4 + 9 + 16 + 25 + 36}{6} = \frac{91}{6} \approx 15.1667
-
 $$
 
 $$
-
 \text{Var}(D_i) = 15.1667 - 0.25 = 14.9167
-
 $$
 
 **Moments of $X_i = D_i + 0.5$**: $E[X_i] = 0$, $\text{Var}(X_i) = 14.9167$.
@@ -97,15 +75,11 @@ $$
 **Moments of $S$**:
 
 $$
-
 E[S] = 1000 \times 0 = 0
-
 $$
 
 $$
-
 \text{Var}(S) = 1000 \times 14.9167 = 14916.7, \quad \text{SD}(S) \approx 122.1
-
 $$
 
 ---
@@ -115,31 +89,23 @@ $$
 To collect all $n$ types of toys from McDonald's Happy Meals, let $\tau_i$ be the number of meals needed to find the $i$-th new toy after having collected $i-1$ distinct toys. Then:
 
 $$
-
 \tau_i \sim \text{Geo}\left(\frac{n - (i-1)}{n}\right), \quad \tau_i \text{ independent}
-
 $$
 
 $$
-
 T_n = \sum_{i=1}^n \tau_i
-
 $$
 
 **Mean**:
 
 $$
-
 E[T_n] = \sum_{i=1}^n E[\tau_i] = \sum_{i=1}^n \frac{n}{n - (i-1)} = n\left(1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}\right) = nH_n \sim n\log n
-
 $$
 
 **Variance**:
 
 $$
-
 \text{Var}(T_n) = \sum_{k=1}^n \frac{1 - k/n}{(k/n)^2} = n^2 \sum_{k=1}^n \frac{1}{k^2} - n\sum_{k=1}^n \frac{1}{k} \approx \frac{\pi^2}{6}n^2 - n\log n
-
 $$
 
 So $\text{Var}(T_n) = O(n^2)$.

@@ -5,17 +5,13 @@
 Many random variables can be expressed as sums of indicator random variables:
 
 $$
-
 X = \sum_{i} \mathbf{1}_{A_i}
-
 $$
 
 By linearity of expectation:
 
 $$
-
 E[X] = \sum_{i} E[\mathbf{1}_{A_i}] = \sum_{i} P(A_i)
-
 $$
 
 This works **regardless of whether the indicators are independent**, making it one of the most versatile tools in probability.
@@ -27,23 +23,17 @@ This works **regardless of whether the indicators are independent**, making it o
 When $X = \sum_{i=1}^m \mathbf{1}_{A_i}$, the variance requires more care:
 
 $$
-
 \text{Var}(X) = \sum_{i=1}^m \text{Var}(\mathbf{1}_{A_i}) + 2\sum_{1 \leq i < j \leq m} \text{Cov}(\mathbf{1}_{A_i}, \mathbf{1}_{A_j})
-
 $$
 
 where
 
 $$
-
 \text{Var}(\mathbf{1}_{A_i}) = P(A_i)(1 - P(A_i))
-
 $$
 
 $$
-
 \text{Cov}(\mathbf{1}_{A_i}, \mathbf{1}_{A_j}) = P(A_i \cap A_j) - P(A_i)P(A_j)
-
 $$
 
 **If the indicators are independent**, the covariance terms vanish and $\text{Var}(X) = \sum_i \text{Var}(\mathbf{1}_{A_i})$.
@@ -66,17 +56,13 @@ If either condition fails, $X$ is **not** binomial. We can still compute $E[X]$ 
 Flip a $p$-coin $n$ times independently. Let $S$ count the number of heads:
 
 $$
-
 S = \sum_{i=1}^n \mathbf{1}_{A_i}, \quad \mathbf{1}_{A_i} \stackrel{iid}{\sim} \text{Bernoulli}(p)
-
 $$
 
 Since the indicators are iid:
 
 $$
-
 E[S] = np, \quad \text{Var}(S) = npq
-
 $$
 
 ---
@@ -86,9 +72,7 @@ $$
 There are $n$ people, each with a birthday chosen uniformly from 365 days. Let $S_n$ count the number of pairs sharing a birthday:
 
 $$
-
 S_n = \sum_{1 \leq i < j \leq n} \mathbf{1}_{A_{ij}}
-
 $$
 
 where $A_{ij}$ is the event that persons $i$ and $j$ share a birthday.
@@ -98,15 +82,11 @@ where $A_{ij}$ is the event that persons $i$ and $j$ share a birthday.
 However, the indicators are **pairwise independent**, so the covariance terms vanish:
 
 $$
-
 E[S_n] = \binom{n}{2} \cdot \frac{1}{365}
-
 $$
 
 $$
-
 \text{Var}(S_n) = \binom{n}{2} \cdot \frac{1}{365} \cdot \frac{364}{365}
-
 $$
 
 ---
@@ -116,23 +96,17 @@ $$
 There are $n$ balls and $M = 365$ bins. Each ball independently chooses a bin uniformly at random. Let $S_n$ count the number of empty bins:
 
 $$
-
 S_n = \sum_{i=1}^{365} \mathbf{1}_{A_i}
-
 $$
 
 where $A_i$ is the event that bin $i$ is empty. Each $\mathbf{1}_{A_i} \sim \text{Bernoulli}(p)$ with $p = \left(\frac{364}{365}\right)^n$, but the indicators are **not independent** (if one bin is empty, the remaining bins are slightly more likely to contain balls).
 
 $$
-
 E[S_n] = 365 \cdot p
-
 $$
 
 $$
-
 \text{Var}(S_n) = 365 \cdot pq + 2\binom{365}{2} \left[\left(\frac{363}{365}\right)^n - p^2\right]
-
 $$
 
 ---

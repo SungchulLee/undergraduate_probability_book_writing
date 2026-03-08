@@ -3,9 +3,7 @@
 ## Two Events
 
 $$
-
 P(A \cup B) = P(A) + P(B) - P(A \cap B)
-
 $$
 
 !!! note "Why Subtract?"
@@ -14,9 +12,7 @@ $$
 **Upper bound (Boole's inequality):**
 
 $$
-
 P(A \cup B) \leq P(A) + P(B)
-
 $$
 
 ## Three Events
@@ -24,9 +20,7 @@ $$
 **Exact formula:**
 
 $$
-
 P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(AB) - P(BC) - P(CA) + P(ABC)
-
 $$
 
 where we use the shorthand $P(AB) = P(A \cap B)$, etc.
@@ -34,15 +28,11 @@ where we use the shorthand $P(AB) = P(A \cap B)$, etc.
 **Bonferroni inequalities for three events:**
 
 $$
-
 P(A \cup B \cup C) \leq P(A) + P(B) + P(C)
-
 $$
 
 $$
-
 P(A \cup B \cup C) \geq P(A) + P(B) + P(C) - P(AB) - P(BC) - P(CA)
-
 $$
 
 ## General Case: n Events
@@ -50,17 +40,13 @@ $$
 ### Inclusion-Exclusion Principle
 
 $$
-
 P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i) - \sum_{1 \leq i < j \leq n} P(A_i A_j) + \sum_{1 \leq i < j < k \leq n} P(A_i A_j A_k) - \cdots + (-1)^{n+1} P(A_1 A_2 \cdots A_n)
-
 $$
 
 Written compactly:
 
 $$
-
 P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{k=1}^{n} (-1)^{k+1} \sum_{1 \leq i_1 < \cdots < i_k \leq n} P(A_{i_1} \cap \cdots \cap A_{i_k})
-
 $$
 
 ### Bonferroni Inequalities
@@ -68,21 +54,15 @@ $$
 The partial sums of the inclusion-exclusion formula alternate between upper and lower bounds:
 
 $$
-
 P\left(\bigcup_{i=1}^{n} A_i\right) \leq \sum_{i=1}^{n} P(A_i)
-
 $$
 
 $$
-
 P\left(\bigcup_{i=1}^{n} A_i\right) \geq \sum_{i=1}^{n} P(A_i) - \sum_{1 \leq i < j \leq n} P(A_i A_j)
-
 $$
 
 $$
-
 P\left(\bigcup_{i=1}^{n} A_i\right) \leq \sum_{i=1}^{n} P(A_i) - \sum_{1 \leq i < j \leq n} P(A_i A_j) + \sum_{1 \leq i < j < k \leq n} P(A_i A_j A_k)
-
 $$
 
 The pattern continues: truncating at an **odd** number of terms gives an **upper bound**, and truncating at an **even** number of terms gives a **lower bound**.
@@ -103,17 +83,13 @@ The pattern continues: truncating at an **odd** number of terms gives an **upper
     By inclusion-exclusion:
 
     $$
-
     P(A_1 \cup A_2 \cup A_3 \cup A_4) = \binom{4}{1}\frac{\binom{51}{4}}{\binom{52}{5}} - \binom{4}{2}\frac{\binom{50}{3}}{\binom{52}{5}} + \binom{4}{3}\frac{\binom{49}{2}}{\binom{52}{5}} - \binom{4}{4}\frac{\binom{48}{1}}{\binom{52}{5}}
-
     $$
 
     Or more simply, using the complement:
 
     $$
-
     P(\text{at least one ace}) = 1 - P(\text{no aces}) = 1 - \frac{\binom{48}{5}}{\binom{52}{5}}
-
     $$
 
 ## Python Example

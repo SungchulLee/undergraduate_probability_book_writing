@@ -7,9 +7,7 @@ The **chain rule** (also called the **multiplication rule**) allows us to comput
 ### Two Events
 
 $$
-
 P(AB) = P(A)\,P(B \mid A)
-
 $$
 
 This follows directly from rearranging the definition of conditional probability.
@@ -17,17 +15,13 @@ This follows directly from rearranging the definition of conditional probability
 ### Three Events
 
 $$
-
 P(ABC) = P(A)\,P(B \mid A)\,P(C \mid AB)
-
 $$
 
 ### Four Events
 
 $$
-
 P(ABCD) = P(A)\,P(B \mid A)\,P(C \mid AB)\,P(D \mid ABC)
-
 $$
 
 ### General Form
@@ -35,9 +29,7 @@ $$
 For events $A_1, A_2, \ldots, A_n$:
 
 $$
-
 P(A_1 A_2 \cdots A_n) = P(A_1)\,P(A_2 \mid A_1)\,P(A_3 \mid A_1 A_2) \cdots P(A_n \mid A_1 A_2 \cdots A_{n-1})
-
 $$
 
 Each successive factor conditions on all preceding events.
@@ -51,23 +43,17 @@ Let $p(n)$ be the probability that there is at least one birthday match among $n
 Define:
 
 $$
-
 B_k = \{\text{the first } k \text{ people all have different birthdays}\}
-
 $$
 
 The complementary probability (no match) can be computed via the chain rule:
 
 $$
-
 1 - p(n) = P(B_1 B_2 B_3 \cdots B_n)
-
 $$
 
 $$
-
 = P(B_1)\,P(B_2 \mid B_1)\,P(B_3 \mid B_1 B_2) \cdots P(B_n \mid B_1 B_2 \cdots B_{n-1})
-
 $$
 
 ### Evaluating Each Factor
@@ -75,17 +61,13 @@ $$
 Given that the first $k-1$ people have distinct birthdays, the $k$-th person must avoid $k-1$ days out of 365:
 
 $$
-
 P(B_k \mid B_1 B_2 \cdots B_{k-1}) = \frac{365 - (k-1)}{365}
-
 $$
 
 Therefore:
 
 $$
-
 1 - p(n) = 1 \cdot \frac{364}{365} \cdot \frac{363}{365} \cdots \frac{365 - (n-1)}{365}
-
 $$
 
 ### Approximate Computation
@@ -93,17 +75,13 @@ $$
 Using the approximation $1 - x \approx e^{-x}$ for small $x$:
 
 $$
-
 1 - p(n) \approx e^{-1/365} \cdot e^{-2/365} \cdots e^{-(n-1)/365} = e^{-n(n-1)/(2 \times 365)}
-
 $$
 
 Setting $e^{-n(n-1)/(2 \times 365)} = 0.5$ and solving:
 
 $$
-
 n(n-1) = 2 \times 365 \times \ln 2 \approx 506 \implies n \approx 23
-
 $$
 
 ### Exact Computation

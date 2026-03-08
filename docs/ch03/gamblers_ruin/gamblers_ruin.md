@@ -20,15 +20,11 @@ Suppose you have \$$i$ in initial capital. Each round you bet \$$1$ on a game wh
 ### Boundary Conditions
 
 $$
-
 Q(0) = 1 \quad \text{(starting with nothing means certain ruin)}
-
 $$
 
 $$
-
 Q(N) = 0 \quad \text{(reaching the goal means no ruin)}
-
 $$
 
 ## Summary of Solutions
@@ -36,17 +32,13 @@ $$
 ### Case 1: q > 1/2 (unfair game, equivalently q/p > 1)
 
 $$
-
 Q(i) = \frac{(q/p)^N - (q/p)^i}{(q/p)^N - 1}
-
 $$
 
 Since $q/p > 1$, we have $(q/p)^N \gg 1$ for large $N$, and hence
 
 $$
-
 Q(i) \approx 1 - \left(\frac{q}{p}\right)^{-(N-i)} = 1 - e^{-(N-i)\ln(q/p)}
-
 $$
 
 The ruin probability approaches 1 **exponentially fast** as the initial capital $i$ decreases from $N$.
@@ -54,9 +46,7 @@ The ruin probability approaches 1 **exponentially fast** as the initial capital 
 ### Case 2: q = 1/2 (fair game)
 
 $$
-
 Q(i) = \frac{N - i}{N}
-
 $$
 
 The ruin probability approaches 1 **linearly** as the initial capital decreases.

@@ -19,9 +19,7 @@ Let $X \sim \text{Po}(6)$.
     **(a)**
 
     $$
-
     P(X = k) = \frac{e^{-6} \cdot 6^k}{k!}
-
     $$
 
     ```python

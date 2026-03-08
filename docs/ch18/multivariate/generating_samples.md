@@ -11,9 +11,7 @@ In practice, we often need to generate random samples from a multivariate normal
 Any symmetric positive definite matrix $\boldsymbol{\Sigma}$ can be decomposed as:
 
 $$
-
 \boldsymbol{\Sigma} = LL^T
-
 $$
 
 where $L$ is a **lower triangular** matrix with positive diagonal entries. This is called the **Cholesky decomposition** (equivalently written $\boldsymbol{\Sigma} = U^T U$ where $U = L^T$ is upper triangular).
@@ -35,9 +33,7 @@ The Cholesky decomposition is:
 **Step 3.** Set:
 
 $$
-
 \mathbf{x} = \boldsymbol{\mu} + L\mathbf{z}
-
 $$
 
 ### Verification
@@ -45,17 +41,13 @@ $$
 **Mean:**
 
 $$
-
 E[\mathbf{x}] = E[\boldsymbol{\mu} + L\mathbf{z}] = \boldsymbol{\mu} + L \cdot E[\mathbf{z}] = \boldsymbol{\mu} + L\mathbf{0} = \boldsymbol{\mu}
-
 $$
 
 **Covariance:**
 
 $$
-
 E[(\mathbf{x} - \boldsymbol{\mu})(\mathbf{x} - \boldsymbol{\mu})^T] = E[(L\mathbf{z})(L\mathbf{z})^T] = L \cdot E[\mathbf{z}\mathbf{z}^T] \cdot L^T = LIL^T = LL^T = \boldsymbol{\Sigma}
-
 $$
 
 ---

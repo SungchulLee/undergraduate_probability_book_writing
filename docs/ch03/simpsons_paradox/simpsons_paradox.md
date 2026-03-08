@@ -59,25 +59,19 @@ Women tended to apply to more competitive departments (C, D, E, F) with lower ov
 Simpson's paradox is fundamentally about the difference between conditional and marginal probabilities. Let $S$ = success, $G$ = group (e.g., gender), and $C$ = category (e.g., department). It is possible that:
 
 $$
-
 P(S \mid G = A,\; C = c) > P(S \mid G = B,\; C = c) \quad \text{for all } c
-
 $$
 
 yet
 
 $$
-
 P(S \mid G = A) < P(S \mid G = B)
-
 $$
 
 The marginal relationship reverses the conditional relationships because the **lurking variable** $C$ has different distributions across groups. Formally, the marginal success rate is:
 
 $$
-
 P(S \mid G = g) = \sum_{c} P(S \mid G = g, C = c)\,P(C = c \mid G = g)
-
 $$
 
 Even if every term $P(S \mid G = A, C = c) > P(S \mid G = B, C = c)$, the weighted average can reverse if the weights $P(C = c \mid G = g)$ are sufficiently different.

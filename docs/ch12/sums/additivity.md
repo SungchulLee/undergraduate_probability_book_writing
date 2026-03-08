@@ -6,17 +6,13 @@
     If $X \sim \text{Po}(\lambda_1)$ and $Y \sim \text{Po}(\lambda_2)$ are **independent**, then
 
     $$
-
     X + Y \sim \text{Po}(\lambda_1 + \lambda_2)
-
     $$
 
     More generally, if $X_1, X_2, \ldots, X_n$ are independent with $X_i \sim \text{Po}(\lambda_i)$, then
 
     $$
-
     \sum_{i=1}^{n} X_i \sim \text{Po}\!\left(\sum_{i=1}^{n} \lambda_i\right)
-
     $$
 
 This is a fundamental property that makes the Poisson distribution particularly convenient for modeling and computation.
@@ -28,37 +24,27 @@ This is a fundamental property that makes the Poisson distribution particularly 
 For independent $X \sim \text{Po}(\lambda_1)$ and $Y \sim \text{Po}(\lambda_2)$, we compute the PMF of $Z = X + Y$ using the convolution formula:
 
 $$
-
 P(Z = k) = \sum_{j=0}^{k} P(X = j) \, P(Y = k - j)
-
 $$
 
 Substituting the Poisson PMFs:
 
 $$
-
 P(Z = k) = \sum_{j=0}^{k} \frac{e^{-\lambda_1} \lambda_1^j}{j!} \cdot \frac{e^{-\lambda_2} \lambda_2^{k-j}}{(k-j)!}
-
 $$
 
 $$
-
 = e^{-(\lambda_1 + \lambda_2)} \sum_{j=0}^{k} \frac{\lambda_1^j \lambda_2^{k-j}}{j!(k-j)!}
-
 $$
 
 $$
-
 = \frac{e^{-(\lambda_1 + \lambda_2)}}{k!} \sum_{j=0}^{k} \binom{k}{j} \lambda_1^j \lambda_2^{k-j}
-
 $$
 
 By the Binomial Theorem, $\sum_{j=0}^{k} \binom{k}{j} \lambda_1^j \lambda_2^{k-j} = (\lambda_1 + \lambda_2)^k$, so:
 
 $$
-
 P(Z = k) = \frac{e^{-(\lambda_1 + \lambda_2)} (\lambda_1 + \lambda_2)^k}{k!}
-
 $$
 
 which is the PMF of $\text{Po}(\lambda_1 + \lambda_2)$.
@@ -70,17 +56,13 @@ which is the PMF of $\text{Po}(\lambda_1 + \lambda_2)$.
 The moment generating function of $X \sim \text{Po}(\lambda)$ is:
 
 $$
-
 M_X(t) = E[e^{tX}] = e^{\lambda(e^t - 1)}
-
 $$
 
 For independent $X \sim \text{Po}(\lambda_1)$ and $Y \sim \text{Po}(\lambda_2)$:
 
 $$
-
 M_{X+Y}(t) = M_X(t) \cdot M_Y(t) = e^{\lambda_1(e^t - 1)} \cdot e^{\lambda_2(e^t - 1)} = e^{(\lambda_1 + \lambda_2)(e^t - 1)}
-
 $$
 
 By the uniqueness theorem for MGFs, $X + Y \sim \text{Po}(\lambda_1 + \lambda_2)$.

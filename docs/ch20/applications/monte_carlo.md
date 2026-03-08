@@ -17,17 +17,13 @@ If we want to compute $\theta = \mathbb{E}[g(X)]$ for some random variable $X$ w
 Draw $n$ random points $X_i$ uniformly from the square $[-1, 1]^2$. Define:
 
 $$
-
 R_i = \begin{cases} 1 & \text{if } X_i \text{ is inside the unit circle} \\ 0 & \text{otherwise} \end{cases}
-
 $$
 
 Then $R_i \overset{iid}{\sim} \text{Bernoulli}(p)$ where:
 
 $$
-
 p = \frac{\text{Area of unit circle}}{\text{Area of square}} = \frac{\pi}{4}
-
 $$
 
 ### Estimation
@@ -35,17 +31,13 @@ $$
 By the Law of Large Numbers:
 
 $$
-
 \frac{1}{n}\sum_{i=1}^n R_i \xrightarrow{a.s.} \frac{\pi}{4}
-
 $$
 
 Therefore:
 
 $$
-
 \pi \approx \frac{4}{n}\sum_{i=1}^n R_i = 4 \times \frac{\text{number of points inside circle}}{n}
-
 $$
 
 ### Python Implementation

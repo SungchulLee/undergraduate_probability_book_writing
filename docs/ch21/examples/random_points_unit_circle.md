@@ -91,17 +91,13 @@ plt.show()
 The fraction of points falling inside the circle approximates the ratio of areas:
 
 $$
-
 \frac{\text{Area of circle}}{\text{Area of square}} = \frac{\pi \cdot 1^2}{(2)^2} = \frac{\pi}{4}
-
 $$
 
 Therefore, if $k$ out of $n$ points land inside the circle,
 
 $$
-
 \hat{\pi} = \frac{4k}{n}
-
 $$
 
 is a Monte Carlo estimate of $\pi$. By the Law of Large Numbers, $\hat{\pi} \to \pi$ as $n \to \infty$.

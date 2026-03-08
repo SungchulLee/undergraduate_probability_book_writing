@@ -5,9 +5,7 @@
 The three modes of convergence studied so far satisfy the following implications:
 
 $$
-
 X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{p} X \implies X_n \xrightarrow{d} X
-
 $$
 
 None of the reverse implications hold in general.
@@ -17,9 +15,7 @@ None of the reverse implications hold in general.
 When the limit is a **constant** $c$, convergence in distribution and convergence in probability are equivalent:
 
 $$
-
 X_n \xrightarrow{d} c \iff X_n \xrightarrow{p} c
-
 $$
 
 This is particularly useful because the Law of Large Numbers states convergence to the constant $\mu$.

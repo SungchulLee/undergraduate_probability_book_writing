@@ -11,9 +11,7 @@ The multivariate normal has remarkable closure properties: it is closed under li
 If two multivariate normal random vectors $\mathbf{x}$ and $\mathbf{y}$ share the same mean $\boldsymbol{\mu}$ and covariance matrix $\boldsymbol{\Sigma}$, then their joint MGFs are identical:
 
 $$
-
 \varphi_{\mathbf{x}}(\mathbf{t}) = e^{\mathbf{t}^T\boldsymbol{\mu} + \frac{1}{2}\mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t}} = \varphi_{\mathbf{y}}(\mathbf{t})
-
 $$
 
 By the uniqueness theorem for MGFs, $\mathbf{x}$ and $\mathbf{y}$ have the same distribution.
@@ -29,17 +27,13 @@ If a multivariate normal $\mathbf{x} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma
 When $\boldsymbol{\Sigma} = \text{diag}(\sigma_1^2, \sigma_2^2, \ldots, \sigma_d^2)$:
 
 $$
-
 \mathbf{t}^T\boldsymbol{\Sigma}\mathbf{t} = \sum_{i=1}^d \sigma_i^2 t_i^2
-
 $$
 
 So the joint MGF factors:
 
 $$
-
 \varphi_{\mathbf{x}}(\mathbf{t}) = e^{\sum_i \mu_i t_i + \frac{1}{2}\sum_i \sigma_i^2 t_i^2} = \prod_{i=1}^d \underbrace{e^{\mu_i t_i + \frac{1}{2}\sigma_i^2 t_i^2}}_{\varphi_{N(\mu_i, \sigma_i^2)}(t_i)}
-
 $$
 
 Since the joint MGF equals the product of the marginal MGFs, the components are independent.
@@ -66,9 +60,7 @@ Construct a vector $\mathbf{y}$ with the same mean and covariance as $\mathbf{x}
 If $\mathbf{x} \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ and $\mathbf{y} = B\mathbf{x} + \mathbf{c}$ where $B \in \mathbb{R}^{m \times d}$ and $\mathbf{c} \in \mathbb{R}^m$, then:
 
 $$
-
 \mathbf{y} \sim N(B\boldsymbol{\mu} + \mathbf{c},\; B\boldsymbol{\Sigma}B^T)
-
 $$
 
 ### Special Cases

@@ -10,9 +10,7 @@ A newsvendor must decide how many newspapers $q$ to order before observing deman
 The profit is:
 
 $$
-
 \Pi(q) = s \min(D, q) + v \max(q - D, 0) - cq
-
 $$
 
 ---
@@ -20,9 +18,7 @@ $$
 ## Expected Profit
 
 $$
-
 E[\Pi(q)] = s \, E[\min(D, q)] + v \, E[\max(q - D, 0)] - cq
-
 $$
 
 ### Optimal Order Quantity
@@ -30,9 +26,7 @@ $$
 The optimal $q^*$ satisfies the **critical ratio** condition:
 
 $$
-
 P(D \leq q^*) = \frac{s - c}{s - v}
-
 $$
 
 The ratio $\frac{s-c}{s-v}$ is called the **critical ratio** or **service level**. It balances the cost of ordering too much (overage cost $c - v$) against the cost of ordering too little (underage cost $s - c$).
@@ -44,17 +38,13 @@ The ratio $\frac{s-c}{s-v}$ is called the **critical ratio** or **service level*
 The expected profit can be written as:
 
 $$
-
 E[\Pi(q)] = (s - c)E[D] - (s - c)E[\max(D - q, 0)] - (c - v)E[\max(q - D, 0)]
-
 $$
 
 Taking the derivative with respect to $q$ and setting it to zero:
 
 $$
-
 \frac{d}{dq}E[\Pi(q)] = (s - c)P(D > q) - (c - v)P(D \leq q) = 0
-
 $$
 
 Solving: $P(D \leq q^*) = \frac{s - c}{s - v}$.

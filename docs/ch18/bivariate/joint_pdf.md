@@ -11,9 +11,7 @@ The **bivariate normal distribution** is the simplest multivariate normal — a 
 If $\mathbf{x} = (x, y)^T$ follows a bivariate normal $N(\boldsymbol{\mu}, \boldsymbol{\Sigma})$, the joint PDF is:
 
 $$
-
 f(\mathbf{x}) = \frac{1}{\sqrt{(2\pi)^2 |\boldsymbol{\Sigma}|}} \exp\left(-\frac{1}{2}(\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu})\right)
-
 $$
 
 where:
@@ -29,25 +27,19 @@ where:
 The covariance matrix for the bivariate case is:
 
 $$
-
 \boldsymbol{\Sigma} = \begin{pmatrix} \sigma_X^2 & \rho\sigma_X\sigma_Y \\ \rho\sigma_X\sigma_Y & \sigma_Y^2 \end{pmatrix}
-
 $$
 
 Its determinant is:
 
 $$
-
 |\boldsymbol{\Sigma}| = \sigma_X^2 \sigma_Y^2 (1 - \rho^2)
-
 $$
 
 and the inverse is:
 
 $$
-
 \boldsymbol{\Sigma}^{-1} = \frac{1}{(1 - \rho^2)\sigma_X^2 \sigma_Y^2} \begin{pmatrix} \sigma_Y^2 & -\rho\sigma_X\sigma_Y \\ -\rho\sigma_X\sigma_Y & \sigma_X^2 \end{pmatrix}
-
 $$
 
 Note that $|\boldsymbol{\Sigma}| > 0$ requires $|\rho| < 1$. When $\rho = \pm 1$, the distribution degenerates to a line in the plane.
@@ -59,17 +51,13 @@ Note that $|\boldsymbol{\Sigma}| > 0$ requires $|\rho| < 1$. When $\rho = \pm 1$
 Introducing the standardized variables $\tilde{x} = \frac{x - \mu_X}{\sigma_X}$ and $\tilde{y} = \frac{y - \mu_Y}{\sigma_Y}$, the quadratic form in the exponent becomes:
 
 $$
-
 (\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu}) = \frac{\tilde{x}^2 + \tilde{y}^2 - 2\rho\tilde{x}\tilde{y}}{1 - \rho^2}
-
 $$
 
 This gives the explicit scalar PDF:
 
 $$
-
 f(x, y) = \frac{1}{2\pi\sigma_X\sigma_Y\sqrt{1 - \rho^2}} \exp\left(-\frac{\tilde{x}^2 + \tilde{y}^2 - 2\rho\tilde{x}\tilde{y}}{2(1 - \rho^2)}\right)
-
 $$
 
 ---
@@ -79,9 +67,7 @@ $$
 When $X$ and $Y$ are independent (i.e., $\rho = 0$), the cross term vanishes and the PDF factors:
 
 $$
-
 f(x, y) = \frac{1}{2\pi\sigma_X\sigma_Y} \exp\left(-\frac{\tilde{x}^2 + \tilde{y}^2}{2}\right) = \underbrace{\frac{1}{\sqrt{2\pi}\sigma_X} e^{-\tilde{x}^2/2}}_{f_X(x)} \cdot \underbrace{\frac{1}{\sqrt{2\pi}\sigma_Y} e^{-\tilde{y}^2/2}}_{f_Y(y)}
-
 $$
 
 This factorization confirms that $\rho = 0$ implies independence for the bivariate normal.
@@ -93,9 +79,7 @@ This factorization confirms that $\rho = 0$ implies independence for the bivaria
 When $\mu_X = \mu_Y = 0$ and $\sigma_X = \sigma_Y = 1$:
 
 $$
-
 f(x, y) = \frac{1}{2\pi\sqrt{1 - \rho^2}} \exp\left(-\frac{x^2 + y^2 - 2\rho xy}{2(1 - \rho^2)}\right)
-
 $$
 
 ---

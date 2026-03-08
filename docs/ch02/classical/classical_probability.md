@@ -5,17 +5,13 @@
 When all outcomes in a finite sample space are **equally likely**, the probability measure takes a particularly simple form:
 
 $$
-
 P(\omega) = \frac{1}{|\Omega|}
-
 $$
 
 For any event $A \subseteq \Omega$:
 
 $$
-
 P(A) = \frac{|A|}{|\Omega|}
-
 $$
 
 This is the **classical** or **equally likely** probability model. Computing probabilities reduces to counting: count the favorable outcomes $|A|$ and divide by the total number of outcomes $|\Omega|$.
@@ -33,17 +29,13 @@ This is the **classical** or **equally likely** probability model. Computing pro
 The sample space has $|\Omega| = 2^3 = 8$ equally likely outcomes:
 
 $$
-
 \Omega = \{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}
-
 $$
 
 Each outcome has probability:
 
 $$
-
 P(\omega) = \frac{1}{8}
-
 $$
 
 !!! example "Computing Event Probabilities"
@@ -58,9 +50,7 @@ A **full house** in poker is a hand with three cards of one rank and two cards o
 **Sample space:** The number of ways to choose 5 cards from a standard 52-card deck:
 
 $$
-
 |\Omega| = \binom{52}{5}
-
 $$
 
 **Counting favorable outcomes:**
@@ -75,17 +65,13 @@ $$
 Therefore:
 
 $$
-
 |A| = 13 \cdot \binom{4}{3} \cdot 12 \cdot \binom{4}{2}
-
 $$
 
 The probability of a full house:
 
 $$
-
 P(\text{full house}) = \frac{|A|}{|\Omega|} = \frac{13 \cdot \binom{4}{3} \cdot 12 \cdot \binom{4}{2}}{\binom{52}{5}}
-
 $$
 
 ## Python Example

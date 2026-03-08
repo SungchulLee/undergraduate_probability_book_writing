@@ -5,17 +5,13 @@
 A sequence of random variables $X_1, X_2, \ldots$ **converges almost surely** (a.s.) to a random variable $X$ if
 
 $$
-
 P\left(\lim_{n \to \infty} X_n = X\right) = 1
-
 $$
 
 We write
 
 $$
-
 X_n \xrightarrow{a.s.} X
-
 $$
 
 This is also called **convergence with probability 1**.
@@ -33,9 +29,7 @@ Almost sure convergence means that the set of outcomes $\omega$ for which $X_n(\
 Almost sure convergence is **stronger** than convergence in probability:
 
 $$
-
 X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{p} X
-
 $$
 
 The converse is not true in general.

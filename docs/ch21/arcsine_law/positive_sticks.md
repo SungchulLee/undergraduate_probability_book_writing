@@ -5,17 +5,13 @@
 Starting from the origin, run a simple random walk $S_0 = 0, S_1, S_2, \ldots, S_{2n}$ up to time $2n$ on $\mathbb{Z}$. A **stick** is a segment $(k-1, S_{k-1}) \to (k, S_k)$. A stick is **positive** if its center lies above the $x$-axis, i.e., if
 
 $$
-
 \frac{S_{k-1} + S_k}{2} > 0
-
 $$
 
 Let $N_{2n}$ be the number of positive sticks. Then, for $0 \leq a < b \leq 1$,
 
 $$
-
 P\!\left(a \leq \frac{N_{2n}}{2n} \leq b\right) \to \int_a^b \frac{1}{\pi} \cdot \frac{1}{\sqrt{x(1-x)}} \, dx = \frac{2}{\pi}\left[\arcsin(\sqrt{b}) - \arcsin(\sqrt{a})\right]
-
 $$
 
 ## Interpretation

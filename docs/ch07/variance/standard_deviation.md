@@ -5,9 +5,7 @@
 The **standard deviation** of a random variable $X$ is
 
 $$
-
 \text{SD}(X) = \sigma_X = \sqrt{\text{Var}(X)}
-
 $$
 
 Standard deviation has the same units as $X$, making it more interpretable than variance (which has squared units).
@@ -19,9 +17,7 @@ Standard deviation has the same units as $X$, making it more interpretable than 
 The standard deviation measures the "typical" distance of $X$ from its mean. By Chebyshev's inequality, at least $1 - 1/k^2$ of the probability lies within $k$ standard deviations of the mean:
 
 $$
-
 P(|X - \mu| \geq k\sigma) \leq \frac{1}{k^2}
-
 $$
 
 For the normal distribution, the probabilities are much tighter:
