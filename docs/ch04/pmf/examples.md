@@ -2,7 +2,7 @@
 
 ## Bernoulli PMF
 
-For $X \sim \text{B}(p)$:
+For $X \sim \text{Bern}(p)$:
 
 $$P(X = k) = \begin{cases} 1 - p & k = 0 \\ p & k = 1 \end{cases}$$
 
@@ -10,7 +10,7 @@ This is the simplest non-trivial PMF: flip a $p$-coin and record 1 for heads, 0 
 
 ## Binomial PMF
 
-For $X \sim \text{B}(n, p)$:
+For $X \sim \text{Bin}(n, p)$:
 
 $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n$$
 
@@ -36,8 +36,8 @@ This counts the number of flips until the $r$-th head.
 
 | Distribution | Expectation | Variance |
 |-------------|-------------|----------|
-| $\text{B}(p)$ | $p$ | $pq$ |
-| $\text{B}(n,p)$ | $np$ | $npq$ |
+| $\text{Bern}(p)$ | $p$ | $pq$ |
+| $\text{Bin}(n,p)$ | $np$ | $npq$ |
 | $\text{Geo}(p)$ | $1/p$ | $q/p^2$ |
 | $\text{NB}(r,p)$ | $r/p$ | $rq/p^2$ |
 
@@ -49,7 +49,7 @@ The Bernoulli, Binomial, Geometric, and Negative Binomial distributions are all 
 
 | Distribution | Random Variable |
 |---|---|
-| $\text{B}(p)$ | Flip a $p$-coin and check whether we have a head |
-| $\text{B}(n,p)$ | Flip a $p$-coin $n$ times and count the number of heads |
+| $\text{Bern}(p)$ | Flip a $p$-coin and check whether we have a head |
+| $\text{Bin}(n,p)$ | Flip a $p$-coin $n$ times and count the number of heads |
 | $\text{Geo}(p)$ | Flip a $p$-coin until first head and count the number of flips |
 | $\text{NB}(r,p)$ | Flip a $p$-coin until $r$-th head and count the number of flips |
