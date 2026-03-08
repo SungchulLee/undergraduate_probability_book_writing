@@ -28,7 +28,7 @@ $$\binom{n}{k} = \frac{P(n,k)}{k!} = \frac{n \times (n-1) \times \cdots \times (
 
 ## Two Different Ways of Counting
 
-The PDF presents several elegant identities that arise from counting the same quantity in two different ways.
+Several elegant identities arise from counting the same quantity in two different ways.
 
 ### Symmetry Identity
 
