@@ -51,7 +51,7 @@ When $\alpha = \beta$, the skewness is zero (the distribution is symmetric).
 
 **Kurtosis (excess):**
 
-$$\gamma_2 = \frac{6(\alpha^3 - \alpha^2(2\beta - 1) + \beta^2(\beta + 1) - 2\alpha\beta(\beta + 2))}{{\alpha\beta(\alpha + \beta + 2)(\alpha + \beta + 3)}}$$
+$$\gamma_2 = \frac{6(\alpha^3 - \alpha^2(2\beta - 1) + \beta^2(\beta + 1) - 2\alpha\beta(\beta + 2))}{\alpha\beta(\alpha + \beta + 2)(\alpha + \beta + 3)}$$
 
 ## Bayesian Conjugacy
 
