@@ -166,5 +166,5 @@ Bonferroni bounds:
   Exact:            1.0000
 
 --- At Least One Ace in 5-Card Hand ---
-P(at least one ace) = 1 - C(48,5)/C(52,5) = 0.341392
+P(at least one ace) = 1 - C(48,5)/C(52,5) = 0.341158
 ```
