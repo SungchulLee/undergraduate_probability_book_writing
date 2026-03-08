@@ -108,4 +108,4 @@ print(f"Integers from 1 to 100 not divisible by 5: {not_div_5}")
 
 ## Key Takeaway
 
-The addition rule is the complement to the multiplication rule. Where the multiplication rule handles sequential stages, the addition rule handles disjoint alternatives. Together, they form the foundation of all counting arguments.
+The addition rule is the counterpart of the multiplication rule. Where the multiplication rule handles sequential stages, the addition rule handles disjoint alternatives. Together, they form the foundation of all counting arguments.
