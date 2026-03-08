@@ -19,7 +19,7 @@
 
 Determine whether $X$ and $Y$ are independent.
 
-**Exercise 5.5.** Suppose $X$ and $Y$ are independent with $X \sim \text{B}(3, 0.5)$ and $Y \sim \text{Geo}(0.5)$. Compute $P(X = 2, Y = 1)$.
+**Exercise 5.5.** Suppose $X$ and $Y$ are independent with $X \sim \text{Bin}(3, 0.5)$ and $Y \sim \text{Geo}(0.5)$. Compute $P(X = 2, Y = 1)$.
 
 **Exercise 5.6.** A bin contains 3 red balls and 1 blue ball. Two balls are drawn without replacement. Let $X_1$ and $X_2$ be indicator variables for the first and second ball being blue. Are $X_1$ and $X_2$ independent? Justify.
 
