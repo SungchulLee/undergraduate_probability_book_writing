@@ -14,7 +14,7 @@ The key distinction from the WLLN:
 | | WLLN | SLLN |
 |:---|:---:|:---:|
 | **Mode** | Convergence in probability | Almost sure convergence |
-| **Meaning** | $P(\|\bar{X}_n - \mu\| > \varepsilon) \to 0$ for each $\varepsilon$ | $P(\bar{X}_n \to \mu) = 1$ |
+| **Meaning** | $P(\lvert\bar{X}_n - \mu\rvert > \varepsilon) \to 0$ for each $\varepsilon$ | $P(\bar{X}_n \to \mu) = 1$ |
 | **Requirement** | Finite mean (or finite variance for easy proof) | Finite mean |
 | **Allows** | Occasional large deviations | Only finitely many large deviations |
 
