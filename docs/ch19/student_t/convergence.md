@@ -26,11 +26,11 @@ At each point $t$, the $t_d$ PDF converges to the standard normal PDF:
 
 $$\left(1 + \frac{t^2}{d}\right)^{-(d+1)/2} \to e^{-t^2/2} \quad \text{as } d \to \infty$$
 
-This follows from $\lim_{d\to\infty}\left(1 + \frac{a}{d}\right)^d = e^a$ with $a = -t^2/2$.
+This follows from $\lim_{d\to\infty}\left(1 + \frac{a}{d}\right)^d = e^a$ with $a = t^2$, noting that $(1 + t^2/d)^{-(d+1)/2} = [(1 + t^2/d)^d]^{-(d+1)/(2d)} \to (e^{t^2})^{-1/2} = e^{-t^2/2}$.
 
 ## Practical Implications
 
-| $d$ | $\text{Var}(t_d) = d/(d-2)$ | $P(\|T\| > 1.96)$ |
+| $d$ | $\text{Var}(t_d) = d/(d-2)$ | $P(|T| > 1.96)$ |
 |-----|-----|-----|
 | $1$ (Cauchy) | $\infty$ | $0.3183$ |
 | $5$ | $1.667$ | $0.1076$ |
@@ -64,4 +64,4 @@ plt.tight_layout()
 plt.show()
 ```
 
-This reproduces the convergence shown in the lecture figure: the blue $t_d$ curves approach the red $N(0,1)$ curve as $d$ increases, with the fat tails shrinking toward the normal tails.
+The blue $t_d$ curves approach the red $N(0,1)$ curve as $d$ increases, with the fat tails shrinking toward the normal tails.
