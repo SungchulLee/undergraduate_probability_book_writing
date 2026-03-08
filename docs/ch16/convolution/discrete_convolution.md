@@ -48,7 +48,6 @@ Associativity means we can compute the distribution of $X_1 + X_2 + \cdots + X_n
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import fftconvolve
 
 # Discrete convolution example: sum of two dice
 # X, Y ~ DiscreteUniform{1,2,3,4,5,6}
