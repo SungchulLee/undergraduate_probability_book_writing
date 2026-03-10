@@ -1,96 +1,104 @@
 # Lattice Path Counting
 
+Lattice paths connect combinatorics to geometry: counting paths on an integer grid reduces to choosing subsets, and restrictions on paths lead to deep results including the ballot problem and Catalan numbers.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Problem Setup
+A **lattice path** from $(0,0)$ to $(m,n)$ is a sequence of $m + n$ steps on $\mathbb{Z}^2$, each either right (R) or up (U). The number of such paths is
 
-A **lattice path** is a path on the integer grid $\mathbb{Z}^2$ that moves only **right (R)** or **up (U)** at each step. We count the number of such paths from $(0, 0)$ to $(m, n)$.
+$$
+\binom{m+n}{m} = \binom{m+n}{n}
+$$
 
-## Basic Counting
+since each path is determined by choosing which $m$ of the $m+n$ positions are R steps.
 
-!!! info "Lattice Path Count"
-    The number of lattice paths from $(0, 0)$ to $(m, n)$ using exactly $m$ right steps and $n$ up steps is:
+## Explanation
 
-    $$\binom{m + n}{m} = \binom{m + n}{n}$$
+### Bijections
 
-**Proof.** Each path consists of $m + n$ total steps, of which $m$ must be R and $n$ must be U. The path is completely determined by choosing which $m$ of the $m + n$ positions are R steps. $\square$
+Each lattice path from $(0,0)$ to $(m,n)$ corresponds to:
 
-**Example.** Paths from $(0,0)$ to $(3,2)$: total steps $= 5$, choose $3$ right steps: $\binom{5}{3} = 10$.
+- A binary string of length $m+n$ with exactly $m$ ones (R) and $n$ zeros (U)
+- An $m$-element subset of $\{1, 2, \ldots, m+n\}$
 
-## Connection to the Binomial Coefficients
+These bijections let us translate between path-counting and subset-counting problems freely.
 
-Each lattice path corresponds to a binary string of length $m + n$ with exactly $m$ ones (R steps) and $n$ zeros (U steps). This establishes a bijection between:
+### Paths Through a Given Point
 
-- Lattice paths from $(0,0)$ to $(m,n)$
-- Binary strings of length $m+n$ with $m$ ones
-- $m$-element subsets of $\{1, 2, \ldots, m+n\}$
+The number of lattice paths from $(0,0)$ to $(m,n)$ that pass through $(a,b)$ (with $0 \le a \le m$, $0 \le b \le n$) is
 
-## Paths Through a Given Point
+$$
+\binom{a+b}{a} \cdot \binom{(m-a)+(n-b)}{m-a}
+$$
 
-The number of lattice paths from $(0,0)$ to $(m,n)$ that pass through intermediate point $(a,b)$ (where $0 \leq a \leq m$ and $0 \leq b \leq n$) is:
+by the multiplication rule: independently count paths from $(0,0)$ to $(a,b)$ and from $(a,b)$ to $(m,n)$.
 
-$$\binom{a+b}{a} \cdot \binom{(m-a)+(n-b)}{m-a}$$
+### The Reflection Principle
 
-This follows from the **multiplication rule**: count paths from $(0,0)$ to $(a,b)$ and from $(a,b)$ to $(m,n)$ independently.
+To count paths that *avoid* a boundary, we use André's reflection principle. The idea: establish a bijection between "bad" paths (those that touch a forbidden line) and unrestricted paths from a reflected starting point.
 
-## Paths Avoiding a Region: The Reflection Principle
+**Setup.** Consider lattice paths from $(0,0)$ to $(m,n)$. A path is "bad" if it touches or crosses the line $y = x + c$ (where $c \ge 1$). At the first point where a bad path touches $y = x + c$, reflect the initial segment of the path about that line. This maps the starting point $(0,0)$ to its reflection $(-c, c)$, and the mapping is a bijection between bad paths and all paths from $(-c, c)$ to $(m,n)$.
 
-!!! info "Reflection Principle (André)"
-    The number of lattice paths from $(0,0)$ to $(m,n)$ that **touch or cross** the line $y = x + c$ (where $c > 0$) equals the total number of lattice paths from the reflected starting point $(-c, c)$ to $(m, n)$, which is $\binom{m+n}{m+c}$ (valid when $n \geq c$).
+A path from $(-c, c)$ to $(m,n)$ uses $m + c$ right steps and $n - c$ up steps, so the number of bad paths is $\binom{m+n}{m+c}$ (provided $n \ge c$).
 
-The reflection principle is a powerful technique used in:
+### The Ballot Problem
 
-- The **ballot problem**: Candidate A gets $a$ votes, B gets $b$ votes ($a > b$). The probability A is **strictly ahead** throughout the count is $\frac{a - b}{a + b}$.
-- Deriving the distribution of the **maximum** of a random walk
-- Proving the **arcsine laws** for random walks
+**Problem.** Candidate A receives $a$ votes and B receives $b$ votes ($a > b$). If all orderings are equally likely, the probability that A is strictly ahead throughout the entire count is
 
-## The Ballot Problem
+$$
+P(\text{A strictly ahead throughout}) = \frac{a - b}{a + b}
+$$
 
-**Problem:** In an election, candidate A receives $a$ votes and B receives $b$ votes, with $a > b$. Assuming all orderings equally likely, what is the probability that A is **strictly ahead of B throughout the entire count**?
+**Proof.** Represent the vote sequence as a lattice path from $(0,0)$ to $(b, a)$, where a vote for A is an up step and a vote for B is a right step. A is strictly ahead throughout iff the path stays strictly above the diagonal $y = x$, i.e., never touches $y = x$. By the reflection principle (reflecting about $y = x$), the number of bad paths (touching $y = x$) equals the number of unrestricted paths from $(1, -1)$ to $(b, a)$, which is $\binom{a+b}{b-1}$.
 
-!!! info "Ballot Problem Solution"
+Good paths: $\binom{a+b}{b} - \binom{a+b}{b-1}$. The probability is
 
-    $$P(\text{A strictly ahead throughout}) = \frac{a - b}{a + b}$$
+$$
+\frac{\binom{a+b}{b} - \binom{a+b}{b-1}}{\binom{a+b}{b}} = 1 - \frac{b}{a+1} \cdot \frac{(a+1)}{a+b} \cdot \ldots
+$$
 
-**Proof via the Cycle Lemma.** Consider the vote sequence $v_1, v_2, \ldots, v_{a+b}$ where each $v_i = +1$ (vote for A) or $v_i = -1$ (vote for B), with $a$ values of $+1$ and $b$ values of $-1$. Let $S_k = v_1 + \cdots + v_k$ be the running tally, so $S_{a+b} = a - b > 0$. A is strictly ahead throughout if and only if $S_k > 0$ for all $k = 1, \ldots, a+b$.
+A slicker calculation uses the identity $\binom{a+b}{b} - \binom{a+b}{b-1} = \frac{a-b+1}{a+1}\binom{a+b}{b}$.
 
-By the **Cycle Lemma**, for any sequence of integers summing to a positive value $s$, exactly $s$ of the $a+b$ cyclic shifts have all positive partial sums. Since $s = a - b$, and all $\binom{a+b}{a}$ orderings are equally likely, the probability is:
+Actually, the cleanest approach: among the $a+b$ cyclic shifts of any vote sequence with sum $a - b > 0$, exactly $a - b$ shifts have all partial sums positive (Cycle Lemma). Since all $\binom{a+b}{a}$ orderings are equally likely, and each sequence contributes $(a-b)$ good cyclic shifts out of $(a+b)$ total, the fraction of good orderings is $(a-b)/(a+b)$.
 
-$$P = \frac{a - b}{a + b}$$
+### Catalan Numbers
 
-## Catalan Numbers
+The number of lattice paths from $(0,0)$ to $(n,n)$ that never go above the diagonal $y = x$ is the $n$-th Catalan number:
 
-The number of lattice paths from $(0,0)$ to $(n,n)$ that **never go above** the diagonal $y = x$ is the $n$-th **Catalan number**:
+$$
+C_n = \frac{1}{n+1}\binom{2n}{n}
+$$
 
-!!! info "Catalan Number"
+**Derivation.** Total paths: $\binom{2n}{n}$. Bad paths cross $y = x$, which means they touch $y = x + 1$. By reflection about $y = x + 1$, bad paths biject with paths from $(-1, 1)$ to $(n, n)$, which use $n + 1$ right steps and $n - 1$ up steps: $\binom{2n}{n+1}$.
 
-    $$C_n = \frac{1}{n+1}\binom{2n}{n}$$
+$$
+C_n = \binom{2n}{n} - \binom{2n}{n+1} = \frac{1}{n+1}\binom{2n}{n}
+$$
 
-The first few values are: $C_0 = 1, C_1 = 1, C_2 = 2, C_3 = 5, C_4 = 14, C_5 = 42$.
+The first values are $C_0 = 1,\; C_1 = 1,\; C_2 = 2,\; C_3 = 5,\; C_4 = 14,\; C_5 = 42$.
 
-**Derivation.** Total paths from $(0,0)$ to $(n,n)$: $\binom{2n}{n}$. Bad paths (those that cross the diagonal) are, by reflection about $y = x + 1$, in bijection with paths from $(−1, 1)$ to $(n, n)$, of which there are $\binom{2n}{n+1}$. So:
+## Examples
 
-$$C_n = \binom{2n}{n} - \binom{2n}{n+1} = \frac{1}{n+1}\binom{2n}{n}$$
+**Example (All paths from $(0,0)$ to $(3,2)$).** There are $\binom{5}{3} = 10$ lattice paths. Listing them as binary strings (R=1, U=0):
 
-Catalan numbers count many combinatorial objects: valid parenthesizations, binary trees with $n$ nodes, triangulations of a polygon, non-crossing partitions, and more.
+$$
+\text{RRRUU},\; \text{RRUРУ},\; \text{RRUUR},\; \text{RURRU},\; \text{RURUR},\; \text{RUУРР},\; \text{URRRU},\; \text{URRUR},\; \text{URURR},\; \text{UURRR}
+$$
 
-## Python Implementation
+The figure below plots all 10 paths, simulates the ballot problem, and displays Catalan numbers.
 
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
-from math import comb, factorial
+from math import comb
+from itertools import combinations
 
 fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-# --- Panel 1: All lattice paths from (0,0) to (3,2) ---
-from itertools import combinations
-
+# Panel 1: All lattice paths (0,0) -> (3,2)
 m, n = 3, 2
 total_steps = m + n
-paths = list(combinations(range(total_steps), m))  # positions of R steps
+paths = list(combinations(range(total_steps), m))
 
 for path_r in paths:
     x, y = [0], [0]
@@ -111,16 +119,15 @@ axes[0].set_yticks(range(n + 1))
 axes[0].grid(True, alpha=0.3)
 axes[0].set_aspect('equal')
 
-# --- Panel 2: Ballot problem simulation ---
+# Panel 2: Ballot problem simulation
 np.random.seed(42)
 a_votes, b_votes = 7, 3
-n_sim = 100000
+n_sim = 100_000
 ahead_count = 0
 
 for _ in range(n_sim):
-    ballot = np.random.permutation([1]*a_votes + [-1]*b_votes)
-    cumsum = np.cumsum(ballot)
-    if np.all(cumsum > 0):
+    ballot = np.random.permutation([1] * a_votes + [-1] * b_votes)
+    if np.all(np.cumsum(ballot) > 0):
         ahead_count += 1
 
 p_sim = ahead_count / n_sim
@@ -134,9 +141,9 @@ for i, v in enumerate([p_sim, p_theory]):
     axes[1].text(i, v + 0.01, f'{v:.4f}', ha='center', fontsize=11)
 axes[1].grid(True, alpha=0.3)
 
-# --- Panel 3: Catalan numbers ---
+# Panel 3: Catalan numbers
 ns = np.arange(0, 15)
-catalans = [comb(2*nn, nn) // (nn + 1) for nn in ns]
+catalans = [comb(2 * nn, nn) // (nn + 1) for nn in ns]
 
 axes[2].bar(ns, catalans, color='steelblue', alpha=0.7)
 axes[2].set_title('Catalan Numbers $C_n$')
