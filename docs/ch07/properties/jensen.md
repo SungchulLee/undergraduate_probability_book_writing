@@ -1,75 +1,50 @@
 # Jensen's Inequality
 
+Jensen's inequality relates the expectation of a function to the function of the expectation — the direction depends on convexity.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Statement
-
-If $g$ is a **convex** function and $X$ is a random variable with $E[X]$ and $E[g(X)]$ both finite, then
+If $g$ is **convex** and $E[X]$, $E[g(X)]$ are finite:
 
 $$
-E[g(X)] \geq g(E[X])
+E[g(X)] \ge g(E[X])
 $$
 
-If $g$ is **concave**, the inequality reverses:
+If $g$ is **concave**, the inequality reverses: $E[g(X)] \le g(E[X])$.
 
-$$
-E[g(X)] \leq g(E[X])
-$$
+## Explanation
 
----
+### Intuition
 
-## Intuition
+A convex function curves upward, so the average of function values exceeds the function value at the average. The chord connecting two points on a convex curve lies above the curve.
 
-A convex function curves upward, so the average of the function values is at least the function value at the average. Geometrically, the chord of a convex function lies above the function.
+### Common Applications
 
----
+| $g(x)$ | Convexity | Jensen |
+|:--------|:----------|:-------|
+| $x^2$ | Convex | $E[X^2] \ge (E[X])^2$ |
+| $e^x$ | Convex | $E[e^X] \ge e^{E[X]}$ |
+| $\|x\|$ | Convex | $E[\|X\|] \ge \|E[X]\|$ |
+| $\ln x$ | Concave | $E[\ln X] \le \ln E[X]$ |
 
-## Common Applications
+The first row implies $\text{Var}(X) \ge 0$. The last row gives: geometric mean $\le$ arithmetic mean.
 
-| Function $g$ | Convexity | Jensen's Statement |
-|:---:|:---:|:---:|
-| $g(x) = x^2$ | Convex | $E[X^2] \geq (E[X])^2$ |
-| $g(x) = e^x$ | Convex | $E[e^X] \geq e^{E[X]}$ |
-| $g(x) = \lvert x \rvert$ | Convex | $E[\lvert X\rvert] \geq \lvert E[X]\rvert$ |
-| $g(x) = \log x$ | Concave | $E[\log X] \leq \log E[X]$ |
-| $g(x) = \sqrt{x}$ | Concave | $E[\sqrt{X}] \leq \sqrt{E[X]}$ |
+## Examples
 
-The first row implies $\text{Var}(X) = E[X^2] - (E[X])^2 \geq 0$.
+**Example.** $X \sim \text{Exp}(1)$. Jensen with $g(x) = x^2$ (convex):
 
----
+$E[X^2] = 2 \ge 1 = (E[X])^2$.
 
-## Application in Finance: Arithmetic vs Geometric Mean
+Jensen with $g(x) = \ln x$ (concave):
 
-For positive returns $R_1, \ldots, R_n$, since $\log$ is concave:
-
-$$
-\frac{1}{n}\sum \log R_i \leq \log\left(\frac{1}{n}\sum R_i\right)
-$$
-
-This means the **geometric mean** is always $\leq$ the **arithmetic mean**.
-
----
-
-## Python Implementation
+$E[\ln X] = -\gamma \approx -0.577 \le 0 = \ln E[X]$ (where $\gamma$ is the Euler-Mascheroni constant).
 
 ```python
 import numpy as np
 
 np.random.seed(42)
-N = 1_000_000
+X = np.random.exponential(1, 1_000_000)
 
-X = np.random.exponential(1, N)
-
-# E[X^2] >= (E[X])^2
-print(f"E[X^2] = {np.mean(X**2):.4f}")
-print(f"(E[X])^2 = {np.mean(X)**2:.4f}")
-print(f"Jensen holds: {np.mean(X**2) >= np.mean(X)**2}")
-
-# E[log(X)] <= log(E[X])
-pos_X = X[X > 0]
-print(f"\nE[log(X)] = {np.mean(np.log(pos_X)):.4f}")
-print(f"log(E[X]) = {np.log(np.mean(pos_X)):.4f}")
-print(f"Jensen holds: {np.mean(np.log(pos_X)) <= np.log(np.mean(pos_X))}")
+print(f"E[X^2] = {np.mean(X**2):.4f} >= (E[X])^2 = {np.mean(X)**2:.4f}")
+print(f"E[ln X] = {np.mean(np.log(X)):.4f} <= ln(E[X]) = {np.log(np.mean(X)):.4f}")
 ```
