@@ -1,52 +1,38 @@
-# Distribution of the Studentized Sample Mean
+# Studentized Sample Mean
 
+The studentized sample mean replaces the unknown $\sigma$ with $S$ in the standardized mean. Its $t_{n-1}$ distribution is the basis for $t$-confidence intervals and $t$-tests.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Motivation
+For $X_1, \ldots, X_n$ iid from $N(\mu, \sigma^2)$:
 
-When $\sigma$ is known, $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$ provides an exact pivot for inference about $\mu$.
+$$
+T = \frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t_{n-1}
+$$
 
-When $\sigma$ is **unknown**, we replace it with $S$ and obtain the **studentized sample mean**:
+## Explanation
 
-$$T = \frac{\bar{X} - \mu}{S / \sqrt{n}}$$
+### Derivation
 
-## Derivation
+Rewrite the statistic as a ratio of known quantities:
 
-### Step 1: Rewrite as a Ratio
+$$
+T = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \bigg/ \sqrt{\frac{(n-1)S^2/\sigma^2}{n-1}}
+$$
 
-$$T = \frac{\bar{X} - \mu}{S/\sqrt{n}} = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \cdot \frac{\sigma}{S} = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \bigg/ \frac{S}{\sigma}$$
+The numerator is $N(0,1)$. The denominator contains $\chi^2_{n-1}/(n-1)$. Since $\bar{X}$ and $S^2$ are independent (by the zero-covariance argument for multivariate normals), the ratio has the form $Z/\sqrt{V/d}$ with $d = n-1$, which is $t_{n-1}$ by definition.
 
-### Step 2: Identify the Components
+### Applications
 
-The numerator:
+This result provides:
 
-$$\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0, 1)$$
+- **$t$-confidence intervals**: $\bar{X} \pm t_{\alpha/2,\, n-1} \cdot S/\sqrt{n}$
+- **One-sample $t$-tests**: reject $H_0\colon \mu = \mu_0$ when $|T|$ exceeds the critical value
+- **Two-sample $t$-tests**: by extending the same logic to differences of means
 
-The denominator involves the sample variance. Since $\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$:
+## Examples
 
-$$\frac{S}{\sigma} = \sqrt{\frac{S^2}{\sigma^2}} = \sqrt{\frac{(n-1)S^2/\sigma^2}{n-1}} = \sqrt{\frac{\chi^2_{n-1}}{n-1}}$$
-
-### Step 3: Apply Independence
-
-By the key fact (Section 19.2), $\bar{X}$ and $S^2$ are independent. Therefore the numerator $N(0,1)$ and the denominator $\sqrt{\chi^2_{n-1}/(n-1)}$ are independent.
-
-### Step 4: Conclude
-
-$$T = \frac{\bar{X} - \mu}{S/\sqrt{n}} = \frac{N(0,1)}{\sqrt{\chi^2_{n-1}/(n-1)}} \sim t_{n-1}$$
-
-## Summary
-
-$$\boxed{\frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t_{n-1}}$$
-
-This is the foundational result for:
-
-- **$t$-confidence intervals** for $\mu$: $\bar{X} \pm t_{\alpha/2, \, n-1} \cdot \frac{S}{\sqrt{n}}$
-- **One-sample $t$-tests** for $H_0: \mu = \mu_0$
-- **Two-sample $t$-tests** for comparing means
-
-## Python Verification
+**Example 1.** Simulate the studentized mean and verify it follows $t_{n-1}$.
 
 ```python
 import numpy as np
@@ -56,26 +42,14 @@ np.random.seed(42)
 mu, sigma, n = 10, 3, 8
 n_sim = 100_000
 
-t_samples = []
-for _ in range(n_sim):
-    x = np.random.normal(mu, sigma, n)
-    x_bar = x.mean()
-    s = x.std(ddof=1)
-    t_samples.append((x_bar - mu) / (s / np.sqrt(n)))
+t_vals = np.array([
+    (x.mean() - mu) / (x.std(ddof=1) / np.sqrt(n))
+    for x in (np.random.normal(mu, sigma, n) for _ in range(n_sim))
+])
 
-t_samples = np.array(t_samples)
+print(f"Mean: {t_vals.mean():.4f}  (theory: 0)")
+print(f"Var:  {t_vals.var():.4f}  (theory: {(n-1)/(n-3):.4f})")
 
-print(f"Simulated mean: {t_samples.mean():.4f}  (theory: 0)")
-print(f"Simulated var:  {t_samples.var():.4f}  (theory: {(n-1)/(n-3):.4f})")
-
-# KS test against t(n-1)
-stat, pval = stats.kstest(t_samples, 't', args=(n-1,))
+stat, pval = stats.kstest(t_vals, 't', args=(n-1,))
 print(f"KS test p-value: {pval:.4f}")
-```
-
-**Output:**
-```
-Simulated mean: 0.0011  (theory: 0)
-Simulated var:  1.3991  (theory: 1.4000)
-KS test p-value: 0.5123
 ```

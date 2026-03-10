@@ -1,74 +1,72 @@
-# Chi-Squared Distribution: Definition as Sum of Squared Standard Normals
+# Chi-Squared Distribution
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
-
-## Recall: Gamma Distribution
-
-The chi-squared distribution is a special case of the Gamma distribution. Recall the key properties of $\Gamma(\alpha, \lambda)$:
-
-1. $\text{Exp}(\lambda) \stackrel{d}{=} \Gamma(1, \lambda)$
-2. $\text{Exp}(\lambda) * \text{Exp}(\lambda) \stackrel{d}{=} \Gamma(2, \lambda)$
-3. $\underbrace{\text{Exp}(\lambda) * \cdots * \text{Exp}(\lambda)}_{n} \stackrel{d}{=} \Gamma(n, \lambda)$
-4. $\Gamma(\alpha, \lambda) * \Gamma(\beta, \lambda) \stackrel{d}{=} \Gamma(\alpha + \beta, \lambda)$ (additivity)
-
-where $*$ denotes convolution (distribution of a sum of independent random variables).
+The chi-squared distribution with $d$ degrees of freedom is the distribution of a sum of $d$ independent squared standard normals. It is the fundamental building block for inference about variance in normal populations.
 
 ## Definition
 
-If $Z_1, Z_2, \ldots, Z_d$ are **iid** $N(0, 1)$, then:
+If $Z_1, Z_2, \ldots, Z_d$ are iid $N(0,1)$, then:
 
-$$\sum_{i=1}^d Z_i^2 \sim \chi^2_d$$
+$$
+\chi^2_d = \sum_{i=1}^d Z_i^2
+$$
 
-The parameter $d$ is the **degrees of freedom**.
+Equivalently, since $Z^2 \sim \operatorname{Gamma}(1/2, 1/2)$ and the Gamma family is closed under convolution with a common rate:
 
-## Connection to Gamma
+$$
+\chi^2_d \sim \operatorname{Gamma}\!\left(\frac{d}{2},\; \frac{1}{2}\right)
+$$
 
-### Step 1: Chi-squared(1) = Z^2 ~ Gamma(1/2, 1/2)
+## Explanation
 
-For $x > 0$:
+### Why a squared normal is Gamma(1/2, 1/2)
 
-$$P(Z^2 \leq x) = P(-\sqrt{x} \leq Z \leq \sqrt{x}) = \int_{-\sqrt{x}}^{\sqrt{x}} \frac{1}{\sqrt{2\pi}} e^{-s^2/2}\, ds = 2\int_0^{\sqrt{x}} \frac{1}{\sqrt{2\pi}} e^{-s^2/2}\, ds$$
+For $x > 0$, the CDF of $Z^2$ is:
 
-Differentiating with respect to $x$:
+$$
+P(Z^2 \le x) = P(-\sqrt{x} \le Z \le \sqrt{x}) = 2\int_0^{\sqrt{x}} \frac{1}{\sqrt{2\pi}} e^{-s^2/2}\, ds
+$$
 
-$$f_{Z^2}(x) = 2 \cdot \frac{1}{\sqrt{2\pi}} e^{-x/2} \cdot \frac{1}{2} x^{-1/2} = \frac{\frac{1}{2} \left(\frac{1}{2} x\right)^{1/2 - 1} e^{-x/2}}{\Gamma(1/2)} = f_{\Gamma(1/2, \, 1/2)}(x)$$
+Differentiating with respect to $x$ gives the Gamma$(1/2, 1/2)$ density:
 
-Therefore:
+$$
+f_{Z^2}(x) = \frac{(1/2)^{1/2}}{\Gamma(1/2)}\, x^{-1/2}\, e^{-x/2}
+$$
 
-$$\chi^2_1 \stackrel{d}{=} Z^2 \stackrel{d}{=} \Gamma\!\left(\frac{1}{2}, \frac{1}{2}\right)$$
+### From one to d degrees of freedom
 
-### Step 2: Chi-squared(d) ~ Gamma(d/2, 1/2)
+By additivity of the Gamma distribution with common rate parameter:
 
-By the additivity property of the Gamma distribution:
+$$
+\chi^2_d = \underbrace{\operatorname{Gamma}(1/2,\,1/2) * \cdots * \operatorname{Gamma}(1/2,\,1/2)}_{d} = \operatorname{Gamma}(d/2,\,1/2)
+$$
 
-$$\chi^2_d \stackrel{d}{=} Z_1^2 + \cdots + Z_d^2 \stackrel{d}{=} \underbrace{\Gamma\!\left(\frac{1}{2}, \frac{1}{2}\right) * \cdots * \Gamma\!\left(\frac{1}{2}, \frac{1}{2}\right)}_{d} \stackrel{d}{=} \Gamma\!\left(\frac{d}{2}, \frac{1}{2}\right)$$
+### PDF
 
-## PDF
+From the Gamma PDF with shape $d/2$ and rate $1/2$:
 
-From the Gamma PDF with $\alpha = d/2$ and $\lambda = 1/2$:
+$$
+f_{\chi^2_d}(x) = \frac{(1/2)^{d/2}}{\Gamma(d/2)}\, x^{d/2-1}\, e^{-x/2}, \quad x > 0
+$$
 
-$$f_{\chi^2_d}(x) = \frac{(1/2)^{d/2}}{\Gamma(d/2)} x^{d/2 - 1} e^{-x/2}, \quad x > 0$$
+## Examples
 
-## Python Verification
+**Example 1.** Verify that simulated sums of squared normals match the $\chi^2_d$ distribution.
 
 ```python
 import numpy as np
 from scipy import stats
-import matplotlib.pyplot as plt
 
-x = np.linspace(0.01, 30, 500)
+np.random.seed(42)
+d = 7
+n_sim = 200_000
 
-fig, ax = plt.subplots(figsize=(8, 5))
-for d in [1, 2, 3, 5, 10, 15]:
-    ax.plot(x, stats.chi2.pdf(x, d), label=f'$d = {d}$')
+# Sum of d squared standard normals
+z = np.random.standard_normal((n_sim, d))
+chi2_sim = np.sum(z**2, axis=1)
 
-ax.set_xlabel('$x$')
-ax.set_ylabel('$f(x)$')
-ax.set_title('Chi-Squared PDF for Various Degrees of Freedom')
-ax.legend()
-ax.set_ylim(0, 0.5)
-plt.tight_layout()
-plt.show()
+print(f"Simulated mean: {chi2_sim.mean():.3f}  (theory: {d})")
+print(f"Simulated var:  {chi2_sim.var():.3f}  (theory: {2*d})")
+
+stat, pval = stats.kstest(chi2_sim, 'chi2', args=(d,))
+print(f"KS test p-value: {pval:.4f}")
 ```

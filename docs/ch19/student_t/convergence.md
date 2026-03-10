@@ -1,71 +1,51 @@
-# Convergence of t(d) to N(0,1) as d approaches infinity
+# Convergence of t to Normal
 
+As the degrees of freedom increase, the $t$ distribution converges to the standard normal. This explains why $z$-tests and $t$-tests give nearly identical results for large samples.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Statement
+As $d \to \infty$:
 
-As the degrees of freedom $d \to \infty$:
+$$
+t_d \xrightarrow{d} N(0,1)
+$$
 
-$$t_d \xrightarrow{d} N(0, 1)$$
+## Explanation
 
-The $t$ distribution converges to the standard normal distribution.
+### Proof via Slutsky's theorem
 
-## Intuitive Explanation
+Write $T = Z/\sqrt{V/d}$ where $V = \sum_{i=1}^d W_i^2$ with $W_i$ iid $N(0,1)$. By the law of large numbers:
 
-Recall the definition: $T = Z / \sqrt{V/d}$ where $Z \sim N(0,1)$ and $V \sim \chi^2_d$.
+$$
+\frac{V}{d} = \frac{1}{d}\sum_{i=1}^d W_i^2 \xrightarrow{p} E[W^2] = 1
+$$
 
-By the Law of Large Numbers, since $V = \sum_{i=1}^d W_i^2$ where $W_i$ iid $N(0,1)$:
+So $\sqrt{V/d} \xrightarrow{p} 1$, and by Slutsky's theorem $T \xrightarrow{d} Z \sim N(0,1)$.
 
-$$\frac{V}{d} = \frac{1}{d}\sum_{i=1}^d W_i^2 \xrightarrow{p} E[W_1^2] = 1$$
+### Pointwise PDF convergence
 
-Therefore $\sqrt{V/d} \xrightarrow{p} 1$, and by Slutsky's theorem:
+At each point $t$, using $(1 + a/d)^d \to e^a$:
 
-$$T = \frac{Z}{\sqrt{V/d}} \xrightarrow{d} \frac{Z}{1} = Z \sim N(0,1)$$
+$$
+\left(1 + \frac{t^2}{d}\right)^{-(d+1)/2} \to e^{-t^2/2} \quad \text{as } d \to \infty
+$$
 
-## Pointwise PDF Convergence
+### Practical rule of thumb
 
-At each point $t$, the $t_d$ PDF converges to the standard normal PDF:
+For $d \ge 30$, the $t$ and normal critical values differ by less than a few percent. Using $z$-values in place of $t$-values introduces only minor error for large degrees of freedom.
 
-$$\left(1 + \frac{t^2}{d}\right)^{-(d+1)/2} \to e^{-t^2/2} \quad \text{as } d \to \infty$$
+## Examples
 
-This follows from $\lim_{d\to\infty}\left(1 + \frac{a}{d}\right)^d = e^a$ with $a = t^2$, noting that $(1 + t^2/d)^{-(d+1)/2} = [(1 + t^2/d)^d]^{-(d+1)/(2d)} \to (e^{t^2})^{-1/2} = e^{-t^2/2}$.
-
-## Practical Implications
-
-| $d$ | $\text{Var}(t_d) = d/(d-2)$ | $P(|T| > 1.96)$ |
-|-----|-----|-----|
-| $1$ (Cauchy) | $\infty$ | $0.3183$ |
-| $5$ | $1.667$ | $0.1076$ |
-| $10$ | $1.250$ | $0.0785$ |
-| $30$ | $1.071$ | $0.0593$ |
-| $100$ | $1.020$ | $0.0536$ |
-| $\infty$ (Normal) | $1.000$ | $0.0500$ |
-
-For $d \geq 30$, the $t$ distribution is very close to the standard normal. In practice, using $z$-critical values instead of $t$-critical values introduces only minor error for large degrees of freedom.
-
-## Python Visualization
+**Example 1.** Show how the tail probability $P(|T| > 1.96)$ approaches 0.05 as $d$ grows.
 
 ```python
-import numpy as np
 from scipy import stats
-import matplotlib.pyplot as plt
 
-x = np.linspace(-4, 4, 500)
+print(f"{'d':>5}  {'P(|T|>1.96)':>14}  {'Var(t_d)':>10}")
+for d in [1, 3, 5, 10, 30, 100, 1000]:
+    tail = 2 * stats.t(d).sf(1.96)
+    var_str = "inf" if d <= 2 else f"{d/(d-2):.4f}"
+    print(f"{d:5d}  {tail:14.4f}  {var_str:>10}")
 
-fig, ax = plt.subplots(figsize=(8, 5))
-ax.plot(x, stats.norm.pdf(x), 'r-', lw=2.5, label='$N(0,1)$')
-for d in range(1, 11):
-    alpha = 0.3 + 0.07 * d
-    ax.plot(x, stats.t.pdf(x, d), 'b-', alpha=alpha)
-
-ax.set_xlabel('$x$')
-ax.set_ylabel('Density')
-ax.set_title('$t_d$ converges to $N(0,1)$ as $d \\to \\infty$')
-ax.legend()
-plt.tight_layout()
-plt.show()
+print(f"{'inf':>5}  {2*stats.norm.sf(1.96):14.4f}  {'1.0000':>10}")
 ```
-
-The blue $t_d$ curves approach the red $N(0,1)$ curve as $d$ increases, with the fat tails shrinking toward the normal tails.
