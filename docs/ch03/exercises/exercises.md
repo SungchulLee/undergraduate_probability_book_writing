@@ -1,5 +1,9 @@
 # Chapter 3 Exercises
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Section 3.1 — Conditional Probability and Chain Rule
 
 **Exercise 3.1.** A box contains 5 red and 3 blue balls. Two balls are drawn without replacement. What is the probability that the second ball is red given that the first ball is red?

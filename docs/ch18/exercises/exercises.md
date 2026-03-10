@@ -1,5 +1,9 @@
 # Exercises
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Exercise 1: Bivariate Normal PDF
 
 Let $(X, Y)^T \sim N(\boldsymbol{\mu}, \boldsymbol{\Sigma})$ with $\mu_X = 1$, $\mu_Y = -1$, $\sigma_X = 2$, $\sigma_Y = 3$, and $\rho = 0.5$.

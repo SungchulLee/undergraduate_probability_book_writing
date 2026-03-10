@@ -1,5 +1,9 @@
 # Gambler's Ruin Problem
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Problem Statement
 
 Suppose you have \$$i$ in initial capital. Each round you bet \$$1$ on a game where you win \$$1$ with probability $p \le 1/2$ and lose \$$1$ with probability $q := 1 - p$. If you lose all your money, you are **ruined**. If you reach \$$N$, you happily quit.

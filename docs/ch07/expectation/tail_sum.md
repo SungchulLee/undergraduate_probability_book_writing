@@ -1,5 +1,9 @@
 # Tail Sum Formula for Expectation
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Statement
 
 ### Non-negative Integer-Valued Random Variables

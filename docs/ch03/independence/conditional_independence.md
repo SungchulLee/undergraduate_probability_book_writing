@@ -1,5 +1,9 @@
 # Conditional Independence
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Definition
 
 Events $A_1, A_2, \ldots, A_n$ are **conditionally independent given $B$** if for every subcollection $A_{i_1}, A_{i_2}, \ldots, A_{i_m}$ (with $2 \le m \le n$):

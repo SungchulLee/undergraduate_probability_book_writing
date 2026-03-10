@@ -1,5 +1,9 @@
 # Decomposition of a Random Variable
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Concept
 
 Many important random variables can be **decomposed** as sums of simpler, often iid, random variables. This decomposition allows us to compute means and variances easily using the formulas for sums.

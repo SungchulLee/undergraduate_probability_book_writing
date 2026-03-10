@@ -1,5 +1,9 @@
 # Longest Run
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Problem Statement
 
 If one flips a fair coin $n$ times, what is the probability distribution of the **longest run** — the length of the longest sequence of consecutive heads (or tails)?

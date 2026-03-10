@@ -1,5 +1,9 @@
 # Verifying Independence via Factorization
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Factorization Test
 
 To verify whether $X$ and $Y$ are independent, check whether the joint PMF (or PDF) factors into the product of the marginals for **every** pair of values:

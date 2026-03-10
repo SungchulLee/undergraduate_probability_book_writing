@@ -1,5 +1,9 @@
 # Weak Law of Large Numbers: Statement and Proof
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Statement
 
 Let $X_1, X_2, \ldots$ be **iid** random variables with PDF/PMF $f(x)$.

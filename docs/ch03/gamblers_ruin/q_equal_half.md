@@ -1,5 +1,9 @@
 # Linear Recurrence Solution (q = 1/2)
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Double Root Case
 
 When $p = q = 1/2$, the characteristic equation becomes:

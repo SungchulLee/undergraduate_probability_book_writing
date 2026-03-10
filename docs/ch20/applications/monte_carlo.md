@@ -1,5 +1,9 @@
 # Monte Carlo Simulation
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Idea
 
 Monte Carlo methods use **random sampling** to estimate quantities that may be difficult to compute analytically. The Law of Large Numbers provides the theoretical justification: sample averages converge to expected values.

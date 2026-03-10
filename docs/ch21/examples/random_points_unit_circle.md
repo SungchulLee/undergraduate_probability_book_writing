@@ -1,5 +1,9 @@
 # Random Points and the Unit Circle
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## 100 Random Points in [0,1]^2
 
 Generating random points uniformly in the unit square is straightforward: generate two independent $U(0,1)$ samples for the $x$- and $y$-coordinates.

@@ -1,5 +1,9 @@
 # Chapter 7 Exercises
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Section 7.1: Expectation
 
 **Exercise 7.1.1** Let $X$ be the number showing on a fair die. Compute $E[X]$, $E[X^2]$, and $E[2X + 3]$.

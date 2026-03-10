@@ -1,5 +1,9 @@
 # Conditional Distributions in the Multivariate Case
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 The conditional distribution of a subset of a multivariate normal vector, given the remaining components, is again multivariate normal. The formulas involve the **partitioned covariance matrix** and, equivalently, the **precision matrix** (inverse covariance). This section derives the conditional mean and variance using both approaches and extends to the important **linear-Gaussian model**.

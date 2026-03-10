@@ -1,5 +1,9 @@
 # Expectation via Indicators
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Indicator Method
 
 Many random variables can be expressed as sums of indicator random variables:

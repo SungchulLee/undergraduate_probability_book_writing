@@ -1,5 +1,9 @@
 # Conditional Expectation Given a Random Variable
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## From Numbers to Random Variables
 
 While $E(X \mid Y = y)$ is a number for each fixed $y$, we can define $E(X \mid Y)$ as a **random variable** by letting $y$ vary over all possible values of $Y$.

@@ -1,5 +1,9 @@
 # Poisson Distribution: Definition and Properties
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Definition
 
 A random variable $X$ has a **Poisson distribution** with parameter $\lambda > 0$, written $X \sim \text{Po}(\lambda)$, if its probability mass function (PMF) is

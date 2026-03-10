@@ -1,5 +1,9 @@
 # Properties and Applications of the Uniform Distribution
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Symmetry
 
 If $X \sim U(a, b)$, then $X$ is symmetric about its mean $(a+b)/2$:

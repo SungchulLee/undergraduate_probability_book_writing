@@ -1,5 +1,9 @@
 # Discrete vs Continuous Random Variables
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Discrete Random Variables
 
 A random variable $X$ is **discrete** if it takes values in a countable set $\{x_1, x_2, x_3, \ldots\}$. Its distribution is fully described by the probability mass function (PMF):

@@ -1,5 +1,9 @@
 # Addition Rule
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 The **addition rule** (also called the **rule of sum** or **divide and conquer**) states that if we can partition the outcomes of an experiment into disjoint (mutually exclusive) categories, then the total count is the sum of the counts in each category.

@@ -1,5 +1,9 @@
 # Inclusion-Exclusion Principle
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 The **inclusion-exclusion principle** generalizes the addition rule to handle **overlapping** (non-disjoint) sets. When categories overlap, simply summing their sizes overcounts elements that belong to multiple categories. The inclusion-exclusion principle corrects for this overcounting systematically.

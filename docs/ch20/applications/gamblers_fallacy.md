@@ -1,5 +1,9 @@
 # Gambler's Fallacy
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Fallacy
 
 The **gambler's fallacy** is the mistaken belief that if a random event has occurred more frequently than expected in the past, it is less likely to occur in the future (or vice versa), as if the process has a "memory" and needs to "balance out."

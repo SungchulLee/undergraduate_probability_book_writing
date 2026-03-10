@@ -1,5 +1,9 @@
 # Properties Derived from Axioms
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 Starting from the three Kolmogorov axioms, we can derive a rich collection of properties. These properties are the everyday tools of probability computation.

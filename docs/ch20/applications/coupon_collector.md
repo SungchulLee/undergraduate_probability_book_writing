@@ -1,5 +1,9 @@
 # Coupon Collector Problem
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Problem Setup
 
 Suppose there are $n$ different types of coupons (e.g., toys in happy meals). Each time you buy a happy meal, you receive one coupon uniformly at random. Let $T_n$ be the total number of purchases needed to collect **all** $n$ types.

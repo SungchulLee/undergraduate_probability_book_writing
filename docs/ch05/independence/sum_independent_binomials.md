@@ -1,5 +1,9 @@
 # Sum of Independent Binomials
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Statement
 
 If $X \sim \text{B}(n, p)$ and $Y \sim \text{B}(m, p)$ are **independent**, then:

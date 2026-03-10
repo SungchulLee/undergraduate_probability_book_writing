@@ -1,5 +1,9 @@
 # Box-Muller Transform
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 The **Box-Muller transform** generates standard normal random samples from uniform random samples. This is a fundamental technique in simulation and Monte Carlo methods.
 
 ## Method 1: Basic Box-Muller

@@ -1,5 +1,9 @@
 # Recovering Joint from Conditional and Marginal
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Chain Rule for Distributions
 
 The **chain rule** (also called the **multiplication rule**) allows us to construct the joint distribution from a marginal and a conditional:

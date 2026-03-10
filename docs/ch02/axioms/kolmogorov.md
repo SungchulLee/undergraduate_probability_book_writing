@@ -1,5 +1,9 @@
 # Kolmogorov Axioms
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Definition
 
 A **probability measure** $P$ is a real-valued function defined on events $A$:

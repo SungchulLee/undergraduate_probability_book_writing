@@ -1,5 +1,9 @@
 # One-Sided Chebyshev's Inequality
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Statement
 
 For any random variable $X$ with mean $\mu = \mathbb{E}X$ and variance $\sigma^2 = Var(X)$, and for $\varepsilon > 0$,

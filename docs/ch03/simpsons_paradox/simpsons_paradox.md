@@ -1,5 +1,9 @@
 # Simpson's Paradox
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Definition
 
 **Simpson's paradox** occurs when a trend that appears in each of several groups of data **reverses** when the groups are combined. The aggregate data shows the opposite conclusion from the stratified data.

@@ -1,5 +1,9 @@
 # Distribution of Sample Variance
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Three Key Results
 
 For $X_1, \ldots, X_n$ iid from $N(\mu, \sigma^2)$, with $\bar{X} = \frac{\sum X_i}{n}$ and $S^2 = \frac{\sum(X_i - \bar{X})^2}{n-1}$:

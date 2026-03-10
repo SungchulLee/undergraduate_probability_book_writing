@@ -1,5 +1,9 @@
 # Conditional Expectation Given an Event
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Definition
 
 The **conditional expectation of $X$ given the event $Y = y$** is a number obtained by computing the expectation of $X$ using the conditional distribution of $X$ given $Y = y$.

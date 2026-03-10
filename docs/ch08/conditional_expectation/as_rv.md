@@ -1,5 +1,9 @@
 # E(X | Y) as a Random Variable
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Local Average Interpretation
 
 $E(X \mid Y)$ can be understood as a **local average** of $X$. For each value $y$ that $Y$ takes, $E(X \mid Y = y)$ averages $X$ over only those outcomes where $Y = y$. As $Y$ varies across its range, these local averages trace out a random variable.

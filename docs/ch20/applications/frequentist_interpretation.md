@@ -1,5 +1,9 @@
 # Frequentist Interpretation of Probability
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Connection
 
 The Law of Large Numbers provides the mathematical foundation for the **frequentist interpretation** of probability. If we repeat an experiment independently many times, the relative frequency of an event $A$ converges to its probability:

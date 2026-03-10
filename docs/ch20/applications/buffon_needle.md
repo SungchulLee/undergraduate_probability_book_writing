@@ -1,5 +1,9 @@
 # Buffon's Needle
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Setup
 
 On a sheet of paper, draw parallel horizontal lines **1 unit apart**. Drop a needle of **length 1** onto the paper at random. The needle's position is determined by:

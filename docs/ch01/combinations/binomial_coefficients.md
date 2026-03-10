@@ -1,5 +1,9 @@
 # Combinations and Binomial Coefficients
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 A **combination** is an unordered selection of objects. The number of ways to choose $k$ objects from $n$ distinct objects (without regard to order) is given by the **binomial coefficient**.

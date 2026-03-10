@@ -1,5 +1,9 @@
 # Numerical Comparison: Binomial vs Poisson
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Side-by-Side PMF Comparison
 
 When the Poisson approximation conditions are met ($n$ large, $p$ small, $\lambda = np$ moderate), the PMFs of $B(n, p)$ and $\text{Po}(\lambda)$ are nearly indistinguishable.

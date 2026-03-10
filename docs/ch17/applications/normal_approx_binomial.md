@@ -1,5 +1,9 @@
 # Normal Approximation to the Binomial
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Setup
 
 Let $X \sim B(n, p)$. Since $X = \sum_{i=1}^n X_i$ where $X_i \sim \text{Bernoulli}(p)$ are iid, the CLT gives:

@@ -1,5 +1,9 @@
 # Chapter 12 Exercises: Poisson Approximation
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ---
 
 ## Exercise 1: Poisson PMF Basics

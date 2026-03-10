@@ -1,5 +1,9 @@
 # Waiting Time for the k-th Arrival
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The k-th Arrival Time
 
 In a Poisson process with rate $\lambda$, let $S_k$ denote the time of the $k$-th arrival. Since interarrival times $T_1, T_2, \ldots, T_k$ are iid $\text{Exp}(\lambda)$:

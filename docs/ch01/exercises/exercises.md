@@ -1,5 +1,9 @@
 # Chapter 1 Exercises — Counting
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Exercise 1: Multiplication Rule
 
 A license plate consists of 3 letters followed by 4 digits. How many different license plates are possible if:

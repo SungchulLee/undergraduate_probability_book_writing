@@ -1,5 +1,9 @@
 # Definition and Examples of Random Variables
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Random Variable as a Function
 
 A **random variable** is a function that maps outcomes from a sample space to the real numbers:

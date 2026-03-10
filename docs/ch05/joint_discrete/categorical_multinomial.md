@@ -1,5 +1,9 @@
 # Categorical and Multinomial Distributions
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Distributions Related to Dice Rolling
 
 Just as the Bernoulli and Binomial distributions arise from coin flipping, the **Categorical** and **Multinomial** distributions arise from dice rolling — experiments with more than two outcomes.

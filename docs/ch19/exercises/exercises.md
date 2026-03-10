@@ -1,5 +1,9 @@
 # Exercises: Distributions Related to the Normal
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Exercise 1: Basic Chi-Squared Calculation
 
 Let $Z_1, Z_2, Z_3$ be iid $N(0,1)$. Find $E[Z_1^2 + Z_2^2 + Z_3^2]$ and $\text{Var}(Z_1^2 + Z_2^2 + Z_3^2)$.

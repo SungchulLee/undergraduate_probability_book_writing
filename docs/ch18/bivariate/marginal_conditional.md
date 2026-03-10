@@ -1,5 +1,9 @@
 # Marginal and Conditional Distributions
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 One of the most powerful features of the bivariate normal distribution is that both **marginal** and **conditional** distributions are themselves normal. Moreover, the conditional distribution has a simple closed-form expression with a beautiful geometric interpretation: conditioning on $Y = y$ "slices" the bell surface, yielding a normal distribution whose mean shifts linearly in $y$.

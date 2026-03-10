@@ -1,5 +1,9 @@
 # Memoryless Property
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Memoryless Property
 
 The Exponential distribution has a remarkable property: **the future is independent of the past**. If you've already been waiting for time $s$ without an event occurring, the distribution of the remaining waiting time is exactly the same as if you had just started waiting.

@@ -1,5 +1,9 @@
 # Approximating Poisson Probabilities
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Why the CLT Applies to the Poisson
 
 If $X \sim \text{Po}(\lambda)$, then $X$ can be decomposed as a sum of iid Poisson random variables:

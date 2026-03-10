@@ -1,5 +1,9 @@
 # How to Generate Random Samples
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 Simulation is a powerful tool in probability and statistics. By generating random samples from known distributions, we can explore probabilistic phenomena, verify theoretical results, and solve problems that may be analytically intractable.

@@ -1,5 +1,9 @@
 # Continuity Correction
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Problem
 
 When using the CLT to approximate probabilities for **discrete** random variables with a **continuous** normal distribution, a systematic error occurs at the boundaries. The continuity correction adjusts for this.

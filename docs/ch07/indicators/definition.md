@@ -1,5 +1,9 @@
 # Indicator Random Variables: Definition and Properties
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Definition
 
 For an event $A$, the **indicator random variable** $\mathbf{1}_A$ (also written $I_A$) is defined as

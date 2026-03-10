@@ -1,5 +1,9 @@
 # Maximization of Expected Profit (Newsboy Problem)
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Problem Setup
 
 A newsvendor must decide how many newspapers $q$ to order before observing demand $D$. Each newspaper costs $c$ and sells for $s > c$. Unsold newspapers have salvage value $v < c$.

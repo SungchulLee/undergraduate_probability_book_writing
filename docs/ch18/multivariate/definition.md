@@ -1,5 +1,9 @@
 # Definition via Mean Vector and Covariance Matrix
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 The **multivariate normal distribution** generalizes the univariate and bivariate normal to arbitrary dimension $d$. It is defined constructively as an affine transformation of independent standard normals, and is completely characterized by its mean vector $\boldsymbol{\mu}$ and covariance matrix $\boldsymbol{\Sigma}$.

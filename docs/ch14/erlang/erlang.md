@@ -1,5 +1,9 @@
 # Erlang as a Special Case of Gamma
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Definition
 
 !!! info "Erlang Distribution"

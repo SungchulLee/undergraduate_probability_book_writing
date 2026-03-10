@@ -1,5 +1,9 @@
 # Bayes' Theorem and Prior–Posterior Updating
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Bayes' Rule
 
 **Bayes' theorem** provides a way to "reverse" a conditional probability — computing $P(B \mid A)$ from $P(A \mid B)$:

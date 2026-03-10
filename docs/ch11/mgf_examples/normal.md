@@ -1,5 +1,9 @@
 # MGF of Normal
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## MGF of N(mu, sigma^2)
 
 $$M_{N(\mu, \sigma^2)}(t) = e^{\mu t + \frac{1}{2}\sigma^2 t^2}$$

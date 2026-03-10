@@ -1,5 +1,9 @@
 # MGF of Bernoulli and Binomial
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## MGF of Bernoulli(p)
 
 If $X \sim \text{Bernoulli}(p)$, then:

@@ -1,5 +1,9 @@
 # Circular Permutations
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 A **circular permutation** arranges objects around a circle, where rotations of the same arrangement are considered identical. This is another application of the many-to-one principle.

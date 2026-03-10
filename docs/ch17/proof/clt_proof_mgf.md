@@ -1,5 +1,9 @@
 # CLT Proof via Moment Generating Functions
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Strategy
 
 We prove the CLT by showing that the MGF of the standardized sum converges to the MGF of $N(0,1)$, then invoke the continuity theorem.

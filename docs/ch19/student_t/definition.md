@@ -1,5 +1,9 @@
 # Student's t Distribution: Definition and Derivation
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Definition
 
 If $Z \sim N(0, 1)$ and $V \sim \chi^2_d$ are **independent**, then:

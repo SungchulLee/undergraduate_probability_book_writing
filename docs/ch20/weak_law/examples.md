@@ -1,5 +1,9 @@
 # Weak Law of Large Numbers — Examples and Extensions
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Review of the Statement
 
 !!! info "Weak Law of Large Numbers (WLLN)"

@@ -1,5 +1,9 @@
 # Joint CDF
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Definition
 
 The **joint cumulative distribution function (joint CDF)** of a random vector $\mathbf{X} = (X_1, \ldots, X_d)$ is:

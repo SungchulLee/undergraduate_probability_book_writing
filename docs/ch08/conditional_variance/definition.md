@@ -1,5 +1,9 @@
 # Conditional Variance Definition
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Var(X | Y = y) as a Number
 
 The **conditional variance of $X$ given $Y = y$** measures the spread of $X$ around its conditional mean $E(X \mid Y = y)$, computed using the conditional distribution of $X$ given $Y = y$.

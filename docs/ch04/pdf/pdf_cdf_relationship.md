@@ -1,5 +1,9 @@
 # Relationship Between PDF and CDF
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## From PDF to CDF
 
 Given the PDF $f(x)$, the CDF is obtained by integration:

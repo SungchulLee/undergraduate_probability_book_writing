@@ -1,5 +1,9 @@
 # CDF for Discrete Random Variables
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Formula
 
 For a discrete random variable $X$ with PMF $p_{x_i} = P(X = x_i)$, the CDF is:

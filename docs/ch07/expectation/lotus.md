@@ -1,5 +1,9 @@
 # Law of the Unconscious Statistician (LOTUS)
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Motivation
 
 Suppose we know the distribution of $X$ and want to compute $E[g(X)]$ for some function $g$. One approach is to first find the distribution of $Y = g(X)$ and then compute $E[Y]$. LOTUS provides a shortcut: we can compute $E[g(X)]$ directly from the distribution of $X$, without finding the distribution of $g(X)$.

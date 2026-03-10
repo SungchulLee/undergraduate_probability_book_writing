@@ -1,5 +1,9 @@
 # Contours and Geometric Interpretation
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 The contour plots of the bivariate normal distribution reveal how the **mean vector** controls the center and the **covariance matrix** controls the shape, orientation, and spread of the distribution. Understanding contours provides geometric intuition for correlation and dependence.

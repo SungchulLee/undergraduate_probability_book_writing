@@ -1,5 +1,9 @@
 # Combinations with Repetition (Stars and Bars)
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 **Combinations with repetition** count the number of ways to choose $k$ items from $n$ types when repetition is allowed and order does not matter. The classic technique for solving these problems is the **stars and bars** method.

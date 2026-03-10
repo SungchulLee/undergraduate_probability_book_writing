@@ -1,5 +1,9 @@
 # Uncorrelated Implies Independent (Normal Case)
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 In general, zero correlation does **not** imply independence. However, for the bivariate normal distribution, zero correlation **does** imply independence. This is a special and important property. Understanding when this implication holds — and when it fails — is essential for applied statistics.

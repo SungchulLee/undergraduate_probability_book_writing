@@ -1,5 +1,9 @@
 # Linearity of Expectation
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Statement
 
 For any random variables $X_1, X_2, \ldots, X_n$ (not necessarily independent) and constants $a_1, a_2, \ldots, a_n, b$:

@@ -1,5 +1,9 @@
 # Exercises: Law of Large Numbers
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Tail Bounds
 
 **Exercise 1.** Let $X \sim \text{Poi}(50)$. Use Markov's, Chebyshev's, one-sided Chebyshev's, and Chernoff's bounds to estimate $P(X \geq 75)$. Compare with the CLT approximation.

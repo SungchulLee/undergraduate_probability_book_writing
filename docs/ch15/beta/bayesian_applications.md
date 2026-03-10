@@ -1,5 +1,9 @@
 # Bayesian Applications of the Beta Distribution
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Beta as a Distribution on Probabilities
 
 The Beta distribution is defined on $(0, 1)$, making it a natural model for **probabilities**, **proportions**, and **rates**. In Bayesian inference, we treat an unknown probability $p$ as a random variable and assign it a Beta prior.

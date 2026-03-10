@@ -1,5 +1,9 @@
 # Heavy Tails and the Moment Problem
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Excess Kurtosis
 
 The **excess kurtosis** is defined as $\gamma_2 = \kappa_4 - 3$, where $\kappa_4 = E[(X - \mu)^4] / \sigma^4$ is the (raw) kurtosis. The subtraction of 3 normalizes against the Normal distribution, which has $\kappa_4 = 3$.

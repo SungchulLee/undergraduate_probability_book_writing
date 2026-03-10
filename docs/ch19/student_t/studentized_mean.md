@@ -1,5 +1,9 @@
 # Distribution of the Studentized Sample Mean
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Motivation
 
 When $\sigma$ is known, $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$ provides an exact pivot for inference about $\mu$.

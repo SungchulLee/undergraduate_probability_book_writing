@@ -1,5 +1,9 @@
 # Marginal PDF from Joint PDF
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Definition
 
 Given the joint PDF $f(x, y)$ of continuous random variables $(X, Y)$, the **marginal PDF** of $X$ is:

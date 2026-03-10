@@ -1,5 +1,9 @@
 # CLT vs LLN — Complementary Perspectives
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Two Fundamental Theorems
 
 The Central Limit Theorem and the Law of Large Numbers both describe the behavior of the sample mean $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i$ as $n \to \infty$, but they answer **different questions**.

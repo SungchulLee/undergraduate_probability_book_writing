@@ -1,5 +1,9 @@
 # From Joint to Marginal and Conditional
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Three Fundamental Relationships
 
 Given the joint distribution $p(x, y)$, we can derive both the marginal and conditional distributions. Conversely, given a marginal and a conditional, we can recover the joint.

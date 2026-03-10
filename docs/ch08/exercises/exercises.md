@@ -1,5 +1,9 @@
 # Exercises
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Conceptual Questions
 
 **Exercise 8.1.** Explain the difference between $E(X \mid Y = y)$ (a number) and $E(X \mid Y)$ (a random variable). Give an example of each.

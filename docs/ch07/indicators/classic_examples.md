@@ -1,5 +1,9 @@
 # Classic Examples Using Indicators
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Example 1: Matching Problem (Derangements)
 
 A hat-check person returns $n$ hats to $n$ people at random. Let $X$ be the number of people who get their own hat.

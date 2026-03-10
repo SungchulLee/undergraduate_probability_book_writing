@@ -1,5 +1,9 @@
 # Chi-Squared Distribution: Definition as Sum of Squared Standard Normals
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Recall: Gamma Distribution
 
 The chi-squared distribution is a special case of the Gamma distribution. Recall the key properties of $\Gamma(\alpha, \lambda)$:

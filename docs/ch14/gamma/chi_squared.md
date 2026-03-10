@@ -1,5 +1,9 @@
 # Relationship to the Chi-Squared Distribution
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Chi-Squared as a Special Case of Gamma
 
 !!! info "Chi-Squared–Gamma Connection"

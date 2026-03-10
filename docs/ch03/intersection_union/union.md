@@ -1,5 +1,9 @@
 # Computing P(A1 ∪ A2 ∪ ... ∪ An)
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Disjoint Events
 
 When $A_1, A_2, \ldots$ are **mutually disjoint** ($A_i \cap A_j = \emptyset$ for $i \ne j$), the union probability is simply the sum:

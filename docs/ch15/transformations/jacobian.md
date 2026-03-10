@@ -1,5 +1,9 @@
 # Jacobian Method for Joint Transformations
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Jacobian Transformation Formula
 
 When transforming a pair of continuous random variables $(X, Y)$ to a new pair $(U, V)$ through a bijective mapping, the joint PDF transforms according to the **Jacobian formula**.

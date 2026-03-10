@@ -1,5 +1,9 @@
 # Generating Random Samples from N(mu, Sigma)
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 In practice, we often need to generate random samples from a multivariate normal distribution with a specified mean and covariance. The standard approach uses the **Cholesky decomposition** of the covariance matrix to transform independent standard normals into correlated multivariate normals.

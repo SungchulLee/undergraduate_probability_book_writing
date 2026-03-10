@@ -1,5 +1,9 @@
 # Chi-Squared Distribution: Properties, Mean, and Variance
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## MGF of the Chi-Squared Distribution
 
 Since $\chi^2_d \sim \Gamma(d/2, 1/2)$, we can compute the MGF directly. With the substitution $\lambda = 1/2 - t$:

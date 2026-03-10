@@ -1,5 +1,9 @@
 # Sum of Independent Uniforms
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Convolution of Two Uniforms
 
 !!! info "Sum of Two iid U(-1/2, 1/2)"

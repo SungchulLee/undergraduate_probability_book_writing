@@ -1,5 +1,9 @@
 # Matching Problem and Derangements
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 The **matching problem** (also called the **hat-check problem** or **problème des rencontres**) asks: how many bijective functions on $\{1, 2, \ldots, n\}$ have **no fixed points**? Such a permutation is called a **derangement**.

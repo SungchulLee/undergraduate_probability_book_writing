@@ -1,5 +1,9 @@
 # Linear Recurrence Solution (q > 1/2)
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Two Distinct Characteristic Roots
 
 When $p \ne q$ (i.e., $p \ne 1/2$), the characteristic equation $p\lambda^2 - \lambda + q = 0$ has two distinct roots:

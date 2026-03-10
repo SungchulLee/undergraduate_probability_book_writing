@@ -1,5 +1,9 @@
 # Applications of the Tower Property
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Application 1: Expected Amount of Money Spent in a Store
 
 **Problem.** The number of people entering a department store on a given day is a random variable $N$ with mean 50 and variance 100. The amount of money spent by each customer $X_i$ is iid with mean \$8 and standard deviation \$4. The amount spent by a customer is independent of the total number of customers. Find the expected total amount of money $T$ spent in the store on a given day.

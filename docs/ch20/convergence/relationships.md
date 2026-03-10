@@ -1,5 +1,9 @@
 # Relationships Between Modes of Convergence
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Hierarchy of Convergence
 
 The three modes of convergence studied so far satisfy the following implications:

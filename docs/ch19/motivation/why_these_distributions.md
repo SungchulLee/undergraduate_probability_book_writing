@@ -1,5 +1,9 @@
 # Why Chi-Squared, t, and F Arise Naturally
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Central Question
 
 When working with a normal population $N(\mu, \sigma^2)$, inference requires knowing the **sampling distributions** of $\bar{X}$ and $S^2$. Three distributions emerge naturally from this setup.

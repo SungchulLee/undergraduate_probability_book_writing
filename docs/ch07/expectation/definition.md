@@ -1,5 +1,9 @@
 # Definition of Expectation (Discrete and Continuous)
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Motivation
 
 The **expectation** (or **expected value**, **mean**) of a random variable is the long-run average value it takes over many independent repetitions. It is the single most important summary of a probability distribution.

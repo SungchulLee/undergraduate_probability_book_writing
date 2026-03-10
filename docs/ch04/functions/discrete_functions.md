@@ -1,5 +1,9 @@
 # Functions of a Discrete Random Variable
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Motivation
 
 Given a random variable $X$ with known distribution, we often need the distribution of $Y = g(X)$ for some function $g$. For example:

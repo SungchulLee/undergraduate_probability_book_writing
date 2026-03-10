@@ -1,5 +1,9 @@
 # Pascal's Rule and Vandermonde's Identity
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 Combinatorial identities often arise from counting the same quantity in two different ways. This section presents **Pascal's rule** and **Vandermonde's identity**, two fundamental identities involving binomial coefficients.

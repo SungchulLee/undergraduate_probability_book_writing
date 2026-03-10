@@ -1,5 +1,9 @@
 # Tail Bounds: Markov and Chebyshev Inequalities
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 Tail bounds provide **upper bounds** on the probability that a random variable deviates from its mean by a large amount. These are essential tools for proving the Law of Large Numbers.
 
 ## Markov's Inequality

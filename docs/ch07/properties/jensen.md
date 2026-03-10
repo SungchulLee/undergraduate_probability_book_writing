@@ -1,5 +1,9 @@
 # Jensen's Inequality
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Statement
 
 If $g$ is a **convex** function and $X$ is a random variable with $E[X]$ and $E[g(X)]$ both finite, then

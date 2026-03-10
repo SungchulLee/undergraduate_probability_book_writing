@@ -1,5 +1,9 @@
 # Chapter 4 Exercises
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Conceptual Questions
 
 **Exercise 4.1.** Explain in your own words why $P(X = a) = 0$ for every value $a$ when $X$ is a continuous random variable, even though $X$ must take some value.

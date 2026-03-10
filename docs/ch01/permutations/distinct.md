@@ -1,5 +1,9 @@
 # Permutations of Distinct Objects
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 A **permutation** is an ordered arrangement of objects. When all objects are distinct, counting permutations reduces to a direct application of the multiplication rule.

@@ -1,5 +1,9 @@
 # Exercises: Simulation
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Exercise 1: Estimating e via Simulation
 
 Let $U_1, U_2, \ldots$ be iid $\text{Uniform}(0, 1)$. Define $N = \min\{n : U_1 + U_2 + \cdots + U_n > 1\}$. It is known that $E[N] = e$.

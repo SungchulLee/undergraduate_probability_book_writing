@@ -1,5 +1,9 @@
 # Events and Set Operations
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Events
 
 An **event** is any subset $A$ of the sample space $\Omega$. An event collects all samples (outcomes) of interest.

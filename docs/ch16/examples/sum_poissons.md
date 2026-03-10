@@ -1,5 +1,9 @@
 # Sum of Independent Poissons (via Convolution)
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Result
 
 !!! info "Convolution of Poisson Distributions"

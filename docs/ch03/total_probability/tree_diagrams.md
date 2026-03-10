@@ -1,5 +1,9 @@
 # Tree Diagrams
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 A **tree diagram** is a visual tool for organizing and computing probabilities involving sequential events. Each branch represents a possible outcome at a stage, and the probability of a complete path is the product of the probabilities along its branches (by the chain rule).

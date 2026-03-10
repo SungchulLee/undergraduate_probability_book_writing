@@ -1,5 +1,9 @@
 # Multiplication Rule
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 The **multiplication rule** (also called the **counting principle** or **rule of product**) is the most fundamental tool in combinatorics. It states that if a procedure can be broken into sequential stages, and the number of choices at each stage is independent of the choices made at previous stages, then the total number of outcomes is the product of the choices at each stage.

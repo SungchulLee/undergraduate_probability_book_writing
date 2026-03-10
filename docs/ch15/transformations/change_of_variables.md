@@ -1,5 +1,9 @@
 # Change of Variables (Single Variable)
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Two Methods for Finding PDFs
 
 Given a random variable $X$ with known PDF $f_X(x)$ and a transformation $Y = g(X)$, there are two systematic methods to find the PDF of $Y$.

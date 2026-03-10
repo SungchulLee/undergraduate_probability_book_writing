@@ -1,5 +1,9 @@
 # Lattice Path Counting
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Problem Setup
 
 A **lattice path** is a path on the integer grid $\mathbb{Z}^2$ that moves only **right (R)** or **up (U)** at each step. We count the number of such paths from $(0, 0)$ to $(m, n)$.

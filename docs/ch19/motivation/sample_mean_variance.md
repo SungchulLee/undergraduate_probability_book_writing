@@ -1,5 +1,9 @@
 # Sample Mean and Sample Variance
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Setup
 
 Let $X_1, X_2, \ldots, X_n$ be **iid** random variables from $N(\mu, \sigma^2)$. The two fundamental summary statistics are:

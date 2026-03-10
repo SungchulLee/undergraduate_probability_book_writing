@@ -1,5 +1,9 @@
 # Discrete Uniform Distribution Properties
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Mean and Variance
 
 !!! info "Moments of Discrete Uniform"

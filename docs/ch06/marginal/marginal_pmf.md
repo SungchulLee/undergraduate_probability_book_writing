@@ -1,5 +1,9 @@
 # Marginal PMF from Joint PMF
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Definition
 
 Given the joint PMF $p(x, y) = P(X = x, Y = y)$, the **marginal PMF** of $X$ is obtained by summing over all values of $Y$:

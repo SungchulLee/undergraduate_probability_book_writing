@@ -1,5 +1,9 @@
 # Normal Distribution Definition
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## PDF of N(mu, sigma^2)
 
 The **normal distribution** (or Gaussian distribution) with mean $\mu$ and variance $\sigma^2$ has PDF:

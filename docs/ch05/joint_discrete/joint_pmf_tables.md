@@ -1,5 +1,9 @@
 # Joint PMF Tables and Visualization
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Joint PMF Table Format
 
 A joint PMF for discrete random variables $(X, Y)$ is conveniently displayed as a table where:

@@ -1,5 +1,9 @@
 # Properties and Linear Transformations
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 The multivariate normal has remarkable closure properties: it is closed under linear transformations, marginalization, and conditioning. This section focuses on the properties that follow from the joint MGF, particularly the relationship between zero covariance and independence.

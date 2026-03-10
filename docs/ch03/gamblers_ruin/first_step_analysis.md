@@ -1,5 +1,9 @@
 # First Step Analysis
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Idea
 
 **First step analysis** is a technique for solving problems about random processes by conditioning on the outcome of the first step. For the gambler's ruin, we decompose the ruin event $R$ according to whether the gambler wins or loses the first bet.

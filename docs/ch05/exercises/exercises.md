@@ -1,5 +1,9 @@
 # Chapter 5 Exercises
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Joint PMF Problems
 
 **Exercise 5.1.** Two fair dice are rolled. Let $X$ be the value on the first die and $Y$ the sum of the two dice. Write down the joint PMF of $(X, Y)$ in table form.

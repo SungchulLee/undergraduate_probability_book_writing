@@ -1,5 +1,9 @@
 # Chapter 6 Exercises
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Marginal Distribution Problems
 
 **Exercise 6.1.** The joint PMF of $X$ and $Y$ is given by:

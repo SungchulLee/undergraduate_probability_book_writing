@@ -1,5 +1,9 @@
 # Binomial Theorem
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 The **binomial theorem** provides the expansion of $(x + y)^n$ as a sum of terms involving binomial coefficients. It connects algebra to combinatorics: each coefficient counts the number of ways to choose terms in the expansion.

@@ -1,5 +1,9 @@
 # De Morgan's Laws
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Statement
 
 **De Morgan's Laws** provide a fundamental connection between unions, intersections, and complements. They are essential tools for manipulating events in probability.

@@ -1,5 +1,9 @@
 # Properties of Characteristic Functions
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Why Characteristic Functions?
 
 The moment generating function $M_X(t) = E[e^{tX}]$ may not exist for all distributions (e.g., the Cauchy distribution has no MGF, and the log-normal has $M_X(t) = \infty$ for $t > 0$). The **characteristic function** always exists.

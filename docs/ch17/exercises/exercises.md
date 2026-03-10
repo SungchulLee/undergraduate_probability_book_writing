@@ -1,5 +1,9 @@
 # Exercises: Central Limit Theorem
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Conceptual Questions
 
 **Exercise 17.1.** State the Central Limit Theorem precisely. What are the required conditions on the random variables $X_1, X_2, \ldots$?

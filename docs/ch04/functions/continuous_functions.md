@@ -1,5 +1,9 @@
 # Functions of a Continuous Random Variable
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The CDF Method (General)
 
 For any function $g$ and continuous random variable $X$, the CDF method always works:

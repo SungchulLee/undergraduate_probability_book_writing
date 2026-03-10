@@ -1,5 +1,9 @@
 # Chapter 14 Exercises
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Exponential Distribution
 
 **Exercise 14.1.** Let $X \sim \text{Exp}(3)$.

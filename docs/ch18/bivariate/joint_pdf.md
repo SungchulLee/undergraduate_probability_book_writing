@@ -1,5 +1,9 @@
 # Joint PDF of the Bivariate Normal
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Overview
 
 The **bivariate normal distribution** is the simplest multivariate normal — a joint distribution of two random variables $X$ and $Y$ whose dependence structure is completely determined by five parameters: the two means, two standard deviations, and the correlation coefficient.

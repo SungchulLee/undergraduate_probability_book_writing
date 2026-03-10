@@ -1,5 +1,9 @@
 # Relationship Between F and t Distributions
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## T^2 ~ F(1,d)
 
 The most important connection between the $F$ and $t$ distributions:

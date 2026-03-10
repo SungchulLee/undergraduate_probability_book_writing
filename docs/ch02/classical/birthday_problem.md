@@ -1,5 +1,9 @@
 # Birthday Problem
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## The Problem
 
 In a room of $n$ people, what is the probability that at least two people share the same birthday?

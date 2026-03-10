@@ -1,5 +1,9 @@
 # Arcsine Law — Number of Positive Sticks
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Statement
 
 Starting from the origin, run a simple random walk $S_0 = 0, S_1, S_2, \ldots, S_{2n}$ up to time $2n$ on $\mathbb{Z}$. A **stick** is a segment $(k-1, S_{k-1}) \to (k, S_k)$. A stick is **positive** if its center lies above the $x$-axis, i.e., if

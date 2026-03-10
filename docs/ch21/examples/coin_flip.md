@@ -1,5 +1,9 @@
 # Coin Flip Using Uniform Samples
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## From Uniform to Bernoulli
 
 One of the most fundamental simulation techniques is generating Bernoulli random variables from uniform random variables. Given $U \sim U(0,1)$ and a success probability $p \in [0,1]$, we define

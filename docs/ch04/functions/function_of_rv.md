@@ -1,5 +1,9 @@
 # Distribution of g(X)
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Functions of a Random Variable
 
 If $X$ is a random variable and $g : \mathbb{R} \to \mathbb{R}$ is a function, then $Y = g(X)$ is also a random variable. The distribution of $Y$ is determined by the distribution of $X$ and the function $g$.

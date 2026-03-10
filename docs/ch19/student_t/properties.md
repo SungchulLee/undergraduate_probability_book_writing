@@ -1,5 +1,9 @@
 # Student's t Distribution: Properties and Comparison to Normal
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Summary of Properties
 
 | Property | Value |

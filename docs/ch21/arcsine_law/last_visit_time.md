@@ -1,5 +1,9 @@
 # Arcsine Law — Last Visit Time
 
+
+!!! warning "Incomplete page"
+    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+
 ## Statement
 
 Starting from the origin, run a simple random walk $S_0 = 0, S_1, S_2, \ldots, S_{2n}$ up to time $2n$ on $\mathbb{Z}$. Let $L_{2n}$ be the **last visit time to the origin**, i.e., the last time the walk returns to zero.
