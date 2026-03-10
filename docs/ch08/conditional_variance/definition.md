@@ -1,47 +1,73 @@
-# Conditional Variance Definition
+# Conditional Variance
 
+Conditional variance measures the residual spread of $X$ after learning $Y$ — the uncertainty that remains even when $Y$ is known.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Var(X | Y = y) as a Number
-
-The **conditional variance of $X$ given $Y = y$** measures the spread of $X$ around its conditional mean $E(X \mid Y = y)$, computed using the conditional distribution of $X$ given $Y = y$.
+**As a number.** For fixed $y$:
 
 $$
-\text{Var}(X \mid Y = y) = E\bigl[(X - E(X \mid Y = y))^2 \mid Y = y\bigr]
+\text{Var}(X \mid Y = y) = E\bigl[(X - E[X \mid Y = y])^2 \mid Y = y\bigr]
 $$
 
-As with unconditional variance, there is a **shortcut formula**:
+**Shortcut formula:**
 
 $$
-\text{Var}(X \mid Y = y) = E(X^2 \mid Y = y) - \bigl(E(X \mid Y = y)\bigr)^2
+\text{Var}(X \mid Y = y) = E[X^2 \mid Y = y] - \bigl(E[X \mid Y = y]\bigr)^2
 $$
 
-This follows by expanding the square in the definition and using linearity of conditional expectation.
-
-## Var(X | Y) as a Random Variable
-
-Just as $E(X \mid Y)$ is a random variable obtained by letting $y$ vary, $\text{Var}(X \mid Y)$ is also a random variable:
+**As a random variable.** Letting $y$ vary:
 
 $$
-\omega \;\longrightarrow\; y = Y(\omega) \;\longrightarrow\; P(X = x \mid Y = y) \;\longrightarrow\; \text{Var}(X \mid Y = y)
+\text{Var}(X \mid Y) = E[X^2 \mid Y] - (E[X \mid Y])^2
 $$
 
-Formally:
+## Explanation
+
+### Interpretation
+
+$\text{Var}(X \mid Y = y)$ quantifies how spread out $X$ remains after observing $Y = y$. Two extreme cases:
+
+- **$\text{Var}(X \mid Y) = 0$:** Knowing $Y$ determines $X$ exactly ($X$ is a function of $Y$)
+- **$\text{Var}(X \mid Y) = \text{Var}(X)$:** Knowing $Y$ provides no information ($X \perp Y$)
+
+In general, $\text{Var}(X \mid Y)$ itself varies with $Y$ — some values of $Y$ may reduce uncertainty more than others.
+
+### Relationship to $E[X \mid Y]$
+
+The conditional variance captures what the conditional expectation misses. $E[X \mid Y]$ gives the best prediction of $X$ from $Y$; $\text{Var}(X \mid Y)$ gives the expected squared prediction error:
 
 $$
-\text{Var}(X \mid Y)(\omega) = \text{Var}(X \mid Y = Y(\omega))
+\text{Var}(X \mid Y) = E\bigl[(X - E[X \mid Y])^2 \mid Y\bigr]
 $$
 
-## Example: Joint PDF
+## Examples
 
-For the joint PDF $f(x, y) = \frac{e^{-x/y} e^{-y}}{y}$, we found $X \mid Y = y \sim \text{Exp}(1/y)$. The variance of an exponential with rate $\lambda = 1/y$ is $1/\lambda^2 = y^2$, so:
+**Example.** Joint PDF $f(x,y) = e^{-x/y}\,e^{-y}/y$ for $x, y > 0$. Since $X \mid Y = y \sim \text{Exp}(1/y)$:
 
 $$
-\text{Var}(X \mid Y = y) = y^2 \implies \text{Var}(X \mid Y) = Y^2
+E[X \mid Y = y] = y, \qquad \text{Var}(X \mid Y = y) = y^2
 $$
 
-## Interpretation
+As random variables: $E[X \mid Y] = Y$ and $\text{Var}(X \mid Y) = Y^2$. The residual uncertainty grows quadratically with $Y$ — large values of $Y$ produce more spread in $X$.
 
-$\text{Var}(X \mid Y = y)$ measures the **residual uncertainty** in $X$ after learning that $Y = y$. If knowing $Y$ determines $X$ exactly, then $\text{Var}(X \mid Y) = 0$. If knowing $Y$ provides no information about $X$ (independence), then $\text{Var}(X \mid Y) = \text{Var}(X)$.
+```python
+import numpy as np
+
+np.random.seed(42)
+n_sim = 200_000
+
+Y = np.random.exponential(1, n_sim)
+X = np.array([np.random.exponential(y) for y in Y])
+
+# Verify conditional variance for Y near specific values
+for y_val in [0.5, 1.0, 2.0]:
+    mask = (Y > y_val - 0.05) & (Y < y_val + 0.05)
+    if mask.sum() > 100:
+        cond_var = X[mask].var()
+        print(f"Var(X | Y≈{y_val}) = {cond_var:.3f}  (theory: {y_val**2:.2f})")
+
+# Compare: unconditional variance should be larger
+print(f"\nVar(X) = {X.var():.3f}")
+print(f"E[Var(X|Y)] = {np.mean(Y**2):.3f}")
+```
