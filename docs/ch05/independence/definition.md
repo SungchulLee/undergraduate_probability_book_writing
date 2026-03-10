@@ -1,43 +1,78 @@
-# Definition of Independence for Random Variables
+# Independence of Random Variables
 
+Two random variables are independent if knowing the value of one provides no information about the other — their joint distribution factors into the product of the marginals.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Independence of Two Random Variables
+Random variables $X$ and $Y$ are **independent** if for all $x, y$:
 
-Random variables $X$ and $Y$ are **independent** if for all $x$ and $y$:
+$$
+p_{X,Y}(x, y) = p_X(x) \cdot p_Y(y) \qquad \text{(discrete)}
+$$
 
-$$p(x, y) = p(x) \cdot p(y)$$
+$$
+f_{X,Y}(x, y) = f_X(x) \cdot f_Y(y) \qquad \text{(continuous)}
+$$
 
-Equivalently, the joint distribution factors into the product of the marginal distributions. This must hold for **every** pair of values, not just some.
+$X_1, \ldots, X_n$ are **mutually independent** if for all $x_1, \ldots, x_n$:
 
-## Independence of Multiple Random Variables
+$$
+p(x_1, \ldots, x_n) = p_{X_1}(x_1) \cdots p_{X_n}(x_n)
+$$
 
-Random variables $X_1, X_2, \ldots, X_n$ are **(mutually) independent** if for all $x_1, x_2, \ldots, x_n$:
+## Explanation
 
-$$p(x_1, x_2, \ldots, x_n) = p(x_1) \cdot p(x_2) \cdots p(x_n)$$
+### Equivalent Characterizations
 
-## Pairwise Independence
+$X$ and $Y$ are independent if and only if any of the following hold:
 
-$X_1, X_2, \ldots, X_n$ are **pairwise independent** if for every pair $X_i, X_j$ (with $i \ne j$):
+1. Joint = product of marginals (definition above)
+2. $p_{X|Y}(x \mid y) = p_X(x)$ for all $x, y$ (conditional equals marginal)
+3. $F_{X,Y}(x, y) = F_X(x) \cdot F_Y(y)$ for all $x, y$ (joint CDF factors)
+4. $E[g(X)h(Y)] = E[g(X)]\,E[h(Y)]$ for all bounded $g, h$
 
-$$X_i \text{ and } X_j \text{ are independent}$$
+### Pairwise vs Mutual Independence
 
-!!! warning "Important"
-    Pairwise independence does **not** imply mutual independence in general. Mutual independence is a strictly stronger condition.
+**Pairwise independence:** every pair $X_i, X_j$ is independent. **Mutual independence:** the full joint factors into a product of all marginals.
 
-## Conditional Independence
+!!! warning "Pairwise does not imply mutual"
+    Mutual independence requires the joint to factor for *all* subsets, not just pairs. Pairwise independence is strictly weaker.
 
-$X_1, \ldots, X_n$ are **conditionally independent given $Y$** if for all $x_1, \ldots, x_n$ and $y$:
+### Conditional Independence
 
-$$p(x_1, x_2, \ldots, x_n \mid y) = p(x_1 \mid y) \cdot p(x_2 \mid y) \cdots p(x_n \mid y)$$
+$X$ and $Y$ are **conditionally independent given $Z$** if $p(x, y \mid z) = p(x \mid z) \cdot p(y \mid z)$ for all $x, y, z$.
 
-!!! note
-    Conditional independence given $Y$ does **not** imply (unconditional) independence, and vice versa.
+Neither conditional independence nor unconditional independence implies the other.
 
-## Checking Independence via Conditional Distributions
+## Examples
 
-An equivalent way to check independence: $X$ and $Y$ are independent if and only if the conditional distribution of $X$ given $Y = y$ does not depend on $y$. That is:
+**Example.** Roll two fair dice independently. Let $X$ = first die, $Y$ = second die, $S = X + Y$.
 
-$$p(x \mid y) = p(x) \quad \text{for all } x, y$$
+$X$ and $Y$ are independent: $P(X = i, Y = j) = 1/36 = (1/6)(1/6)$ for all $i, j$.
+
+$X$ and $S$ are **not** independent: $P(X = 6, S = 2) = 0$ but $P(X = 6) \cdot P(S = 2) = (1/6)(1/36) > 0$.
+
+```python
+# Verify X and Y independent, X and S dependent
+from itertools import product
+
+outcomes = [(i, j) for i in range(1,7) for j in range(1,7)]
+
+# Check X, Y independence
+for i in range(1, 7):
+    for j in range(1, 7):
+        joint = sum(1 for x, y in outcomes if x == i and y == j) / 36
+        marginal = (1/6) * (1/6)
+        assert abs(joint - marginal) < 1e-10
+
+print("X, Y: independent (all 36 cells match product of marginals)")
+
+# Check X, S dependence: find a counterexample
+x_val, s_val = 6, 2
+joint = sum(1 for x, y in outcomes if x == x_val and x + y == s_val) / 36
+px = 1/6
+ps = sum(1 for x, y in outcomes if x + y == s_val) / 36
+print(f"\nP(X=6, S=2) = {joint:.4f}")
+print(f"P(X=6) * P(S=2) = {px * ps:.6f}")
+print("X, S: dependent")
+```
