@@ -1,8 +1,9 @@
 # Chapter 1 Exercises — Counting
 
+These exercises cover the multiplication rule, combinations, permutations, inclusion-exclusion, derangements, stars and bars, and double counting.
 
 !!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+    Exercise page — does not follow the five-section content structure (no Concept Definition, Explanation, or Diagram sections).
 
 ## Exercise 1: Multiplication Rule
 
