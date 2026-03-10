@@ -1,124 +1,55 @@
 # When to Use the Poisson Approximation
 
+The Poisson approximation replaces the binomial when $n$ is large and $p$ is small — simpler formulas, no large factorials, and it works even when $n$ is unknown.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## The Three Conditions
+Use $\text{Bin}(n, p) \approx \text{Pois}(\lambda)$ with $\lambda = np$ when:
 
-The Poisson approximation to the Binomial is appropriate when:
+| Condition | Guideline |
+|:----------|:----------|
+| $n$ large | $n \ge 20$ (conservative: $n \ge 100$) |
+| $p$ small | $p \le 0.05$ |
+| $\lambda$ moderate | $np \le 10$ (conservative) |
 
-| Condition | Meaning |
-|:---|:---|
-| $n$ is **large** | Many trials (typically $n \geq 20$) |
-| $p$ is **small** | Each trial has a low probability of success (typically $p \leq 0.05$) |
-| $\lambda = np$ is **moderate** | The expected count is neither too small nor too large |
+The error is bounded by $p\lambda = np^2$.
 
-In summary: **many trials, each with a small probability of success, producing a moderate expected number of successes**.
+## Explanation
 
----
+### Why Not Just Use the Binomial?
 
-## Rule of Thumb
+1. **Computational:** $e^{-\lambda}\lambda^k/k!$ avoids $\binom{n}{k}$ with large factorials
+2. **Unknown $n$:** For rare events in continuous time/space, $n$ is ill-defined; $\lambda$ is the natural parameter
+3. **Heterogeneous trials:** When $p_i$ vary, the sum is not binomial but is still well-approximated by $\text{Pois}(\sum p_i)$
+4. **Nicer properties:** Poisson has additivity and connects to Poisson processes
 
-A widely used guideline:
+### When the Approximation Fails
 
-!!! tip "Rule of Thumb"
-    Use the Poisson approximation $B(n, p) \approx \text{Po}(\lambda)$ when:
+- $p$ is not small (e.g., $p = 0.3$): binomial skewness differs from Poisson
+- $n$ is small: insufficient for the limit to apply
+- $\lambda$ is very large: both are well-approximated by the normal; Poisson adds nothing
 
-    - $n \geq 20$ and $p \leq 0.05$, or more conservatively
-    - $n \geq 100$ and $np \leq 10$
+### Typical Applications
 
-    The approximation improves as $n$ increases and $p$ decreases, with $\lambda = np$ held fixed.
+Insurance claims, manufacturing defects, network failures, disease counts, particle emissions, typos per page — any count of independently occurring rare events.
 
----
+## Examples
 
-## Error Bound
-
-For the general case where $A_1, A_2, \ldots, A_n$ are independent events with possibly different probabilities $p_i = P(A_i)$, and $X = \sum_{i=1}^{n} \mathbf{1}_{A_i}$, the **Le Cam bound** gives:
-
-$$
-\left| P(X \in A) - P(Y \in A) \right| \leq \sum_{i=1}^{n} p_i^2 \leq \left(\max_{1 \leq i \leq n} p_i\right) \cdot \lambda
-$$
-
-where $Y \sim \text{Po}(\lambda)$ and $\lambda = \sum_{i=1}^{n} p_i$.
-
-When all $p_i = p$, this simplifies to:
-
-$$
-\text{Error} \leq np^2 = p\lambda
-$$
-
-So the error is controlled by $p \cdot \lambda$ — small $p$ and moderate $\lambda$ guarantee a good approximation.
-
----
-
-## Why Not Just Use the Binomial?
-
-For moderate $n$, computing Binomial probabilities directly is feasible. However, the Poisson approximation is useful in several situations:
-
-1. **Computational simplicity**: $\frac{e^{-\lambda}\lambda^k}{k!}$ avoids computing $\binom{n}{k}$ which involves large factorials when $n$ is large.
-
-2. **Unknown $n$**: In many applications (e.g., modeling rare events in a time period), $n$ is not well-defined. The Poisson model with rate $\lambda$ is the natural starting point.
-
-3. **Heterogeneous probabilities**: When $p_i$ differ across trials, the sum is not exactly Binomial but is still well-approximated by Poisson.
-
-4. **Theoretical elegance**: The Poisson has nicer mathematical properties (e.g., additivity of independent Poissons, connection to Poisson process).
-
----
-
-## Typical Applications
-
-The Poisson distribution is a natural model whenever we count the number of "rare events" in some fixed domain:
-
-- **Insurance**: Number of claims filed per month
-- **Finance**: Number of defaults in a loan portfolio
-- **Telecommunications**: Number of calls arriving at a call center per minute
-- **Biology**: Number of mutations in a DNA strand
-- **Manufacturing**: Number of defects per unit of product
-- **Traffic**: Number of accidents at an intersection per year
-- **Epidemiology**: Number of disease cases in a region
-
----
-
-## Diagnostic: When Is the Approximation Poor?
-
-The approximation breaks down when:
-
-- $p$ is not small (e.g., $p = 0.3$): The Binomial is noticeably skewed differently from Poisson
-- $n$ is small: Not enough trials for the limit to kick in
-- $\lambda = np$ is very large: Both Binomial and Poisson are well-approximated by the Normal (by CLT), so the Poisson adds little value
+**Example.** A chip has 1000 components, each failing with probability 0.002.
 
 ```python
-import numpy as np
 from scipy.stats import binom, poisson
 
-def approximation_quality(n, p):
-    """Assess the quality of Poisson approximation to B(n,p)."""
-    la = n * p
-    k_max = min(n, int(la + 5 * np.sqrt(la)) + 1)
-    k = np.arange(0, k_max + 1)
+n, p = 1000, 0.002
+la = n * p
 
-    binom_pmf = binom.pmf(k, n, p)
-    poisson_pmf = poisson.pmf(k, la)
-
-    max_diff = np.max(np.abs(binom_pmf - poisson_pmf))
-    total_variation = 0.5 * np.sum(np.abs(binom_pmf - poisson_pmf))
-
-    print(f"B({n}, {p}) vs Po({la})")
-    print(f"  Max PMF difference:   {max_diff:.6e}")
-    print(f"  Total variation dist: {total_variation:.6e}")
-    print(f"  Le Cam bound (p·λ):   {p * la:.6e}")
-    print()
-
-# Good approximation
-approximation_quality(1000, 0.01)   # n large, p small
-approximation_quality(2000, 0.005)  # n very large, p very small
-
-# Moderate approximation
-approximation_quality(100, 0.05)    # n moderate, p moderate
-approximation_quality(50, 0.1)      # n moderate, p not so small
-
-# Poor approximation
-approximation_quality(20, 0.3)      # p too large
-approximation_quality(10, 0.5)      # p way too large
+print(f"lambda = {la}")
+print(f"Le Cam bound = {n*p**2:.6f}")
+print(f"\n{'Quantity':>15} {'Binomial':>12} {'Poisson':>12} {'Diff':>12}")
+for label, bf, pf in [
+    ("P(X=0)", binom.pmf(0,n,p), poisson.pmf(0,la)),
+    ("P(X<=3)", binom.cdf(3,n,p), poisson.cdf(3,la)),
+    ("P(X>5)", 1-binom.cdf(5,n,p), 1-poisson.cdf(5,la)),
+]:
+    print(f"{label:>15} {bf:>12.6f} {pf:>12.6f} {abs(bf-pf):>12.2e}")
 ```
