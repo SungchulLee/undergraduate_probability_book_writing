@@ -1,50 +1,50 @@
 # Pigeonhole Principle
 
+The pigeonhole principle is the simplest existence argument in combinatorics: it guarantees that some container is "crowded" without specifying which one. Despite its simplicity, it yields surprisingly deep results.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Statement
+**Pigeonhole Principle.** If $n$ items are placed into $k$ containers and $n > k$, then at least one container holds more than one item.
 
-!!! info "Pigeonhole Principle"
-    If $n$ items are placed into $k$ containers and $n > k$, then **at least one container** holds more than one item.
+Equivalently: if $f\colon A \to B$ with $|A| > |B|$, then $f$ is not injective.
 
-**Formally:** If $f: A \to B$ is a function with $|A| > |B|$, then $f$ is not injective — there exist $a_1 \neq a_2$ in $A$ with $f(a_1) = f(a_2)$.
+**Generalized Pigeonhole Principle.** If $n$ items are placed into $k$ containers, then at least one container holds at least $\lceil n/k \rceil$ items.
 
-## Generalized Pigeonhole Principle
+*Proof.* If every container held at most $\lceil n/k \rceil - 1$ items, the total would be at most $k(\lceil n/k \rceil - 1) < n$, a contradiction. $\square$
 
-!!! info "Generalized Form"
-    If $n$ items are placed into $k$ containers, then at least one container holds at least $\lceil n/k \rceil$ items.
+## Explanation
 
-**Proof.** If every container held at most $\lceil n/k \rceil - 1$ items, the total would be at most $k(\lceil n/k \rceil - 1) < k \cdot n/k = n$, a contradiction. $\square$
+The pigeonhole principle is purely existential — it tells you *that* a collision exists, not *where*. This makes it a powerful tool for impossibility proofs and non-constructive existence arguments. The typical proof strategy is:
 
-## Classic Applications
+1. **Identify the items** (pigeons) and **containers** (holes).
+2. Show that there are **more items than containers**.
+3. Conclude that some container must hold at least two items (or $\lceil n/k \rceil$ in the generalized version).
 
-### Handshake Lemma
+The creative part is always step 1: choosing the right items and containers. The examples below illustrate this.
 
-**Claim:** At any party with $n \geq 2$ people, at least two people have shaken the same number of hands.
+## Examples
 
-**Proof.** Each person can shake between 0 and $n - 1$ hands, giving $n$ possible values. But 0 and $n - 1$ cannot both occur (if someone shook everyone's hand, no one shook zero hands). So there are at most $n - 1$ possible values for $n$ people. By the pigeonhole principle, at least two people share the same count. $\square$
+**Example 1 (Handshake lemma).** At any party with $n \ge 2$ people, at least two people have shaken the same number of hands.
 
-### Subset Sum
+*Proof.* Each person shakes between 0 and $n-1$ hands — that is $n$ possible values. But 0 and $n-1$ cannot both occur (if someone shook everyone's hand, no one shook zero hands). So there are at most $n-1$ possible values for $n$ people. By pigeonhole, two share the same count. $\square$
 
-**Claim:** Among any $n + 1$ integers from $\{1, 2, \ldots, 2n\}$, there exist two that are consecutive.
+---
 
-**Proof.** Partition $\{1, \ldots, 2n\}$ into $n$ pairs: $\{1,2\}, \{3,4\}, \ldots, \{2n-1, 2n\}$. By the pigeonhole principle, two of the $n+1$ chosen integers must lie in the same pair. $\square$
+**Example 2 (Consecutive integers).** Among any $n+1$ integers from $\{1, 2, \ldots, 2n\}$, two are consecutive.
 
-### Divisibility
+*Proof.* Partition $\{1, \ldots, 2n\}$ into $n$ pairs: $\{1,2\},\{3,4\},\ldots,\{2n-1,2n\}$. By pigeonhole, two of the $n+1$ chosen integers share a pair. $\square$
 
-**Claim:** Among any $n+1$ integers, there exist two whose difference is divisible by $n$.
+---
 
-**Proof.** There are $n$ possible remainders modulo $n$: $0, 1, \ldots, n-1$. With $n+1$ integers and $n$ containers (remainder classes), two must share the same remainder. Their difference is divisible by $n$. $\square$
+**Example 3 (Divisibility).** Among any $n+1$ integers, two have the same remainder mod $n$.
 
-### Monotone Subsequences (Erdős–Szekeres)
+*Proof.* There are $n$ remainder classes $\{0, 1, \ldots, n-1\}$. By pigeonhole, two of the $n+1$ integers share a class, so their difference is divisible by $n$. $\square$
 
-**Claim:** Every sequence of $n^2 + 1$ distinct real numbers contains a monotone subsequence of length $n + 1$.
+---
 
-**Proof sketch.** Assign to each element $a_i$ a pair $(d_i, e_i)$ where $d_i$ is the length of the longest increasing subsequence ending at $a_i$ and $e_i$ is the longest decreasing. If all $d_i \leq n$ and all $e_i \leq n$, there are at most $n^2$ distinct pairs for $n^2 + 1$ elements, contradicting pigeonhole. $\square$
+**Example 4 (Erdos-Szekeres).** Every sequence of $n^2 + 1$ distinct reals contains a monotone subsequence of length $n + 1$.
 
-## Python Implementation
+*Proof.* Assign to each element $a_i$ a pair $(d_i, e_i)$ where $d_i$ is the length of the longest increasing subsequence ending at $a_i$ and $e_i$ the longest decreasing. If both $d_i \le n$ and $e_i \le n$ for all $i$, there are at most $n^2$ distinct pairs — but we have $n^2 + 1$ elements, contradicting pigeonhole. $\square$
 
 ```python
 import numpy as np
@@ -52,24 +52,19 @@ import matplotlib.pyplot as plt
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-# --- Panel 1: Birthday-like pigeonhole ---
+# Panel 1: Probability of shared birth month
 np.random.seed(42)
-n_people_range = range(2, 50)
-n_trials = 10000
-
+n_trials = 10_000
 prob_shared = []
-for n in n_people_range:
-    count = 0
-    for _ in range(n_trials):
-        # Assign n people to 12 birth months (pigeonhole with k=12)
-        months = np.random.randint(0, 12, n)
-        if len(np.unique(months)) < n:
-            count += 1
+for n in range(2, 50):
+    count = sum(
+        1 for _ in range(n_trials)
+        if len(np.unique(np.random.randint(0, 12, n))) < n
+    )
     prob_shared.append(count / n_trials)
 
-axes[0].plot(list(n_people_range), prob_shared, 'bo-', markersize=3)
-axes[0].axhline(1.0, color='red', ls='--', alpha=0.5,
-                label='Guaranteed at n=13')
+axes[0].plot(range(2, 50), prob_shared, 'bo-', markersize=3)
+axes[0].axhline(1.0, color='red', ls='--', alpha=0.5, label='Guaranteed at n=13')
 axes[0].axvline(13, color='red', ls='--', alpha=0.5)
 axes[0].set_title('P(shared birth month) vs n people (12 months)')
 axes[0].set_xlabel('Number of people')
@@ -77,19 +72,15 @@ axes[0].set_ylabel('Probability')
 axes[0].legend()
 axes[0].grid(True, alpha=0.3)
 
-# --- Panel 2: Max items per bin ---
-n_items_list = [10, 20, 50, 100]
+# Panel 2: Max items per bin (generalized pigeonhole)
 k_bins = 10
-n_trials = 5000
-
-for n_items in n_items_list:
-    max_counts = []
-    for _ in range(n_trials):
-        bins = np.random.randint(0, k_bins, n_items)
-        _, counts = np.unique(bins, return_counts=True)
-        max_counts.append(counts.max())
+for n_items in [10, 20, 50, 100]:
+    max_counts = [
+        np.unique(np.random.randint(0, k_bins, n_items), return_counts=True)[1].max()
+        for _ in range(5000)
+    ]
     lower_bound = int(np.ceil(n_items / k_bins))
-    axes[1].hist(max_counts, bins=range(0, max(max_counts)+2),
+    axes[1].hist(max_counts, bins=range(0, max(max_counts) + 2),
                  density=True, alpha=0.4,
                  label=f'n={n_items}, ⌈n/k⌉={lower_bound}')
 
