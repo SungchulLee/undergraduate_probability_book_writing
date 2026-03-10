@@ -1,68 +1,57 @@
 # Mutual Independence
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+Mutual independence requires the product rule to hold for every subcollection of events, not just pairs. This is strictly stronger than pairwise independence.
 
 ## Definition
 
-Events $A_1, A_2, \ldots, A_n$ are **(mutually) independent** if for **every** subcollection $A_{i_1}, A_{i_2}, \ldots, A_{i_m}$ (with $2 \le m \le n$):
+Events $A_1, \ldots, A_n$ are **mutually independent** if for every subcollection of size $2 \le m \le n$:
 
 $$
-P(A_{i_1} A_{i_2} \cdots A_{i_m}) = P(A_{i_1})\,P(A_{i_2}) \cdots P(A_{i_m})
+P(A_{i_1} \cap \cdots \cap A_{i_m}) = P(A_{i_1}) \cdots P(A_{i_m})
 $$
 
-This requires the product rule to hold for **all** subsets of size 2, 3, ..., up to $n$. For $n$ events, there are $\binom{n}{2} + \binom{n}{3} + \cdots + \binom{n}{n} = 2^n - n - 1$ conditions to verify.
+This requires $2^n - n - 1$ conditions. Events are **pairwise independent** if only the $\binom{n}{2}$ pairwise conditions hold.
 
-## Pairwise Independence
+Mutual independence $\implies$ pairwise independence, but the converse is **false**.
 
-Events $A_1, A_2, \ldots, A_n$ are **pairwise independent** if for **every pair** $A_i, A_j$ (with $i \ne j$):
+## Explanation
 
-$$
-P(A_i A_j) = P(A_i)\,P(A_j)
-$$
+### Why Pairwise Is Not Enough
 
-This only requires $\binom{n}{2}$ conditions — the product rule for every pair.
+Consider $n$ people with independent uniform birthdays. Let $A_{ij}$ = "persons $i$ and $j$ share a birthday."
 
-## Mutual Independence Implies Pairwise Independence
+**Pairwise independent:** $P(A_{13} \mid A_{12}) = P(A_{13}) = 1/365$, because knowing persons 1 and 2 match tells you nothing about whether persons 1 and 3 match (they picked independently).
 
-Mutual independence implies pairwise independence (take $m = 2$ in the definition). However, the converse is **false**: pairwise independence does **not** imply mutual independence.
+**Not mutually independent:** $P(A_{23} \mid A_{12} \cap A_{13}) = 1$. If persons 1,2 match and persons 1,3 match, then persons 2,3 must match. The three-way condition fails.
 
-## Example — Pairwise Independent but Not Independent
+### Consequences
 
-Consider $n$ people in a class, each choosing a birthday independently and uniformly over 365 days. For each pair $i$ and $j$, let $A_{ij}$ be the event that persons $i$ and $j$ share the same birthday.
+- Variance of a sum: $\text{Var}(\sum X_i) = \sum \text{Var}(X_i)$ requires only pairwise independence (uncorrelatedness suffices).
+- MGF of a sum factoring: $M_{\sum X_i}(t) = \prod M_{X_i}(t)$ requires mutual independence.
+- Most limit theorems (CLT, LLN) require mutual independence.
 
-### A_ij Are Not Independent
+## Examples
 
-Consider persons 1, 2, and 3. If we know $A_{12}$ (persons 1 and 2 share a birthday) and $A_{13}$ (persons 1 and 3 share a birthday), then persons 2 and 3 must also share that same birthday:
+**Example (Three coins).** Flip a fair coin twice. Let $A$ = "first is H", $B$ = "second is H", $C$ = "both same."
 
-$$
-P(A_{23} \mid A_{12}, A_{13}) = 1 \ne P(A_{23}) = \frac{1}{365}
-$$
+- $P(A) = P(B) = P(C) = 1/2$
+- $P(AB) = 1/4 = P(A)P(B)$ ✓
+- $P(AC) = P(\text{HH}) = 1/4 = P(A)P(C)$ ✓
+- $P(BC) = P(\text{HH}) = 1/4 = P(B)P(C)$ ✓
+- $P(ABC) = P(\text{HH}) = 1/4 \ne 1/8 = P(A)P(B)P(C)$ ✗
 
-Knowing $A_{12}$ and $A_{13}$ gives complete information about $A_{23}$, so these events are not mutually independent.
+Pairwise independent but not mutually independent.
 
-### A_ij Are Pairwise Independent
+```python
+# Verify the three-coin example
+omega = ['HH', 'HT', 'TH', 'TT']
+A = {'HH', 'HT'}  # first H
+B = {'HH', 'TH'}  # second H
+C = {'HH', 'TT'}  # both same
 
-For any two events $A_{12}$ and $A_{13}$:
-
-$$
-P(A_{13} \mid A_{12}) = \frac{P(A_{12} \cap A_{13})}{P(A_{12})}
-$$
-
-The event $A_{12} \cap A_{13}$ means all three of persons 1, 2, 3 share the same birthday. Person 1 picks any day ($365/365$), person 2 matches ($1/365$), person 3 matches ($1/365$):
-
-$$
-P(A_{12} \cap A_{13}) = \frac{1}{365^2}
-$$
-
-Therefore:
-
-$$
-P(A_{13} \mid A_{12}) = \frac{1/365^2}{1/365} = \frac{1}{365} = P(A_{13})
-$$
-
-So $A_{12}$ and $A_{13}$ are independent. The same argument applies to any pair $A_{ij}$ and $A_{kl}$ that share exactly one index, and to pairs that share no index at all. Hence the events are pairwise independent.
-
-!!! note "Why the Distinction Matters"
-    The gap between pairwise and mutual independence has important consequences. For example, the variance of a sum $\text{Var}(X_1 + \cdots + X_n)$ equals $\sum \text{Var}(X_i)$ under pairwise independence (pairwise uncorrelatedness suffices), but the MGF of a sum factors only under mutual independence. Many probabilistic arguments require the stronger condition.
+P = lambda E: len(E) / 4
+print(f"P(AB) = {P(A & B)} vs P(A)P(B) = {P(A)*P(B)}")
+print(f"P(AC) = {P(A & C)} vs P(A)P(C) = {P(A)*P(C)}")
+print(f"P(BC) = {P(B & C)} vs P(B)P(C) = {P(B)*P(C)}")
+print(f"P(ABC) = {P(A & B & C)} vs P(A)P(B)P(C) = {P(A)*P(B)*P(C)}")
+```
