@@ -1,121 +1,65 @@
 # Classical Probability
 
+When all outcomes in a finite sample space are equally likely, computing probabilities reduces to counting. This is the classical model that motivated the entire field.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Equally Likely Probability Measure
-
-When all outcomes in a finite sample space are **equally likely**, the probability measure takes a particularly simple form:
-
-$$
-P(\omega) = \frac{1}{|\Omega|}
-$$
-
-For any event $A \subseteq \Omega$:
+If $\Omega$ is finite and all outcomes are equally likely, then for any event $A \subseteq \Omega$:
 
 $$
 P(A) = \frac{|A|}{|\Omega|}
 $$
 
-This is the **classical** or **equally likely** probability model. Computing probabilities reduces to counting: count the favorable outcomes $|A|$ and divide by the total number of outcomes $|\Omega|$.
+This assigns $P(\{\omega\}) = 1/|\Omega|$ to each outcome $\omega$.
 
-!!! note "When Does This Apply?"
-    The equally likely model is appropriate when:
+!!! note "When does this apply?"
+    The equally likely model requires a symmetry argument: fair coins, fair dice, well-shuffled decks, random selections. It does **not** apply when outcomes have different likelihoods (loaded dice, biased coins).
 
-    - The sample space is finite
-    - There is a symmetry argument justifying equal weights (e.g., fair coins, fair dice, well-shuffled decks)
+## Explanation
 
-    It is **not** appropriate when outcomes have different likelihoods (e.g., loaded dice, biased coins).
+Under the classical model, every probability question becomes a counting question:
 
-## Example: Flip a Fair Coin Three Times
+1. Define the sample space $\Omega$ and compute $|\Omega|$
+2. Define the event $A$ and count $|A|$
+3. Compute $P(A) = |A|/|\Omega|$
 
-The sample space has $|\Omega| = 2^3 = 8$ equally likely outcomes:
+The entire toolkit of Chapter 1 (multiplication rule, combinations, permutations, inclusion-exclusion, complement counting) now becomes directly applicable to probability.
 
-$$
-\Omega = \{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}
-$$
+## Examples
 
-Each outcome has probability:
+**Example 1 (Three coin flips).** $\Omega = \{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}$, $|\Omega| = 8$.
 
-$$
-P(\omega) = \frac{1}{8}
-$$
+- $P(\text{all heads}) = 1/8$
+- $P(\text{exactly 2 heads}) = |\{HHT, HTH, THH\}|/8 = 3/8$
+- $P(\text{at least 1 head}) = 1 - P(\{TTT\}) = 7/8$
 
-!!! example "Computing Event Probabilities"
-    - $P(\text{all heads}) = P(\{HHH\}) = \frac{1}{8}$
-    - $P(\text{exactly 2 heads}) = P(\{HHT, HTH, THH\}) = \frac{3}{8}$
-    - $P(\text{at least 1 head}) = 1 - P(\{TTT\}) = 1 - \frac{1}{8} = \frac{7}{8}$
+---
 
-## Example: Probability of a Full House
-
-A **full house** in poker is a hand with three cards of one rank and two cards of another rank.
-
-**Sample space:** The number of ways to choose 5 cards from a standard 52-card deck:
-
-$$
-|\Omega| = \binom{52}{5}
-$$
-
-**Counting favorable outcomes:**
+**Example 2 (Full house in poker).** A full house has three of one rank and two of another. Sample space: $|\Omega| = \binom{52}{5}$.
 
 | Step | Count |
-|------|-------|
-| Choose the rank for the three-of-a-kind | 13 choices |
-| Choose 3 suits from 4 for that rank | $\binom{4}{3}$ choices |
-| Choose the rank for the pair | 12 remaining choices |
-| Choose 2 suits from 4 for the pair | $\binom{4}{2}$ choices |
-
-Therefore:
+|:---|:---|
+| Choose rank for triple | 13 |
+| Choose 3 suits from 4 | $\binom{4}{3} = 4$ |
+| Choose rank for pair | 12 |
+| Choose 2 suits from 4 | $\binom{4}{2} = 6$ |
 
 $$
-|A| = 13 \cdot \binom{4}{3} \cdot 12 \cdot \binom{4}{2}
+P(\text{full house}) = \frac{13 \cdot 4 \cdot 12 \cdot 6}{\binom{52}{5}} = \frac{3744}{2{,}598{,}960} \approx 0.00144
 $$
 
-The probability of a full house:
-
-$$
-P(\text{full house}) = \frac{|A|}{|\Omega|} = \frac{13 \cdot \binom{4}{3} \cdot 12 \cdot \binom{4}{2}}{\binom{52}{5}}
-$$
-
-## Python Example
+About 1 in 694 hands.
 
 ```python
 from math import comb
 
-# Coin flipping example
-omega_coins = ['HHH', 'HHT', 'HTH', 'HTT', 'THH', 'THT', 'TTH', 'TTT']
+# Example 1: three coins
+omega = ['HHH','HHT','HTH','HTT','THH','THT','TTH','TTT']
+print(f"P(exactly 2 heads) = {sum(w.count('H')==2 for w in omega)}/{len(omega)}")
 
-# Count events
-exactly_2H = [w for w in omega_coins if w.count('H') == 2]
-at_least_1H = [w for w in omega_coins if w.count('H') >= 1]
-
-print("=== Fair Coin (3 flips) ===")
-print(f"P(all heads) = 1/{len(omega_coins)} = {1/len(omega_coins):.4f}")
-print(f"P(exactly 2 heads) = {len(exactly_2H)}/{len(omega_coins)} = {len(exactly_2H)/len(omega_coins):.4f}")
-print(f"P(at least 1 head) = {len(at_least_1H)}/{len(omega_coins)} = {len(at_least_1H)/len(omega_coins):.4f}")
-
-# Full house probability
-print("\n=== Full House ===")
-omega_size = comb(52, 5)
+# Example 2: full house
 full_house = 13 * comb(4, 3) * 12 * comb(4, 2)
-
-print(f"|Ω| = C(52,5) = {omega_size}")
-print(f"|A| = 13 × C(4,3) × 12 × C(4,2) = 13 × {comb(4,3)} × 12 × {comb(4,2)} = {full_house}")
-print(f"P(full house) = {full_house}/{omega_size} = {full_house/omega_size:.6f}")
-print(f"P(full house) ≈ 1 in {omega_size/full_house:.0f}")
-```
-
-**Output:**
-```
-=== Fair Coin (3 flips) ===
-P(all heads) = 1/8 = 0.1250
-P(exactly 2 heads) = 3/8 = 0.3750
-P(at least 1 head) = 7/8 = 0.8750
-
-=== Full House ===
-|Ω| = C(52,5) = 2598960
-|A| = 13 × C(4,3) × 12 × C(4,2) = 13 × 4 × 12 × 6 = 3744
-P(full house) = 3744/2598960 = 0.001441
-P(full house) ≈ 1 in 694
+total = comb(52, 5)
+print(f"P(full house) = {full_house}/{total} = {full_house/total:.6f}")
+print(f"About 1 in {total/full_house:.0f}")
 ```
