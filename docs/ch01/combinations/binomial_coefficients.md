@@ -1,105 +1,84 @@
 # Combinations and Binomial Coefficients
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
-
-## Overview
-
-A **combination** is an unordered selection of objects. The number of ways to choose $k$ objects from $n$ distinct objects (without regard to order) is given by the **binomial coefficient**.
+A combination is an unordered selection. The binomial coefficient counts how many ways to choose $k$ objects from $n$ distinct objects when order does not matter.
 
 ## Definition
 
-The binomial coefficient "$n$ choose $k$" is:
+The **binomial coefficient** "$n$ choose $k$" is
 
-$$\binom{n}{k} = \frac{n!}{k!(n-k)!}$$
+$$
+\binom{n}{k} = \frac{n!}{k!\,(n-k)!}
+$$
 
-## Derivation via Many-to-One
+for integers $0 \le k \le n$, and $\binom{n}{k} = 0$ when $k < 0$ or $k > n$.
 
-The derivation proceeds in two steps, connecting permutations to combinations:
+## Explanation
 
-**Step 1: Count ordered selections (permutations).**
+### Derivation via the Many-to-One Principle
 
-Choose $k$ people from $n$ to fill $k$ distinct positions. By the multiplication rule:
+**Step 1: Count ordered selections.** Choose $k$ people from $n$ for $k$ distinct positions. By the multiplication rule:
 
-$$P(n,k) = n \times (n-1) \times (n-2) \times \cdots \times (n-k+1)$$
+$$
+P(n,k) = n(n-1)(n-2)\cdots(n-k+1) = \frac{n!}{(n-k)!}
+$$
 
-**Step 2: Remove the ordering (many-to-one).**
+**Step 2: Remove the ordering.** Each unordered set of $k$ people appears as $k!$ different ordered selections. This is a $k!$-to-1 mapping, so
 
-Each unordered committee of $k$ people can be arranged in $k!$ different orders. This is a $k!$-to-1 mapping from ordered selections to unordered selections.
+$$
+\binom{n}{k} = \frac{P(n,k)}{k!} = \frac{n!}{k!\,(n-k)!}
+$$
 
-$$\binom{n}{k} = \frac{P(n,k)}{k!} = \frac{n \times (n-1) \times \cdots \times (n-k+1)}{k!} = \frac{n!}{k!(n-k)!}$$
+### Identities via Double Counting
 
-## Two Different Ways of Counting
+Counting the same quantity two ways yields identities:
 
-Several elegant identities arise from counting the same quantity in two different ways.
+**Symmetry.** Choosing $k$ members for a committee is the same as choosing $n-k$ people to exclude:
 
-### Symmetry Identity
+$$
+\binom{n}{k} = \binom{n}{n-k}
+$$
 
-**Method 1:** Choose $k$ people to form a committee: $\binom{n}{k}$
+**Absorption.** Choose a committee of $k$, then elect 1 president: $k\binom{n}{k}$. Or, elect 1 president from $n$, then choose $k-1$ remaining members: $n\binom{n-1}{k-1}$.
 
-**Method 2:** Choose $n - k$ people to exclude (the rest form the committee): $\binom{n}{n-k}$
+$$
+k\binom{n}{k} = n\binom{n-1}{k-1}
+$$
 
-Since both count the same thing:
+## Examples
 
-$$\binom{n}{k} = \binom{n}{n-k}$$
+**Example 1.** Choose a 3-person committee from 10 people: $\binom{10}{3} = \frac{10!}{3!\,7!} = 120$.
 
-### Committee with President
+---
 
-**Method 1:** Choose $k$ members, then elect 1 as president: $k \binom{n}{k}$
+**Example 2 (Poker hands).** A 5-card hand from a standard 52-card deck: $\binom{52}{5} = 2{,}598{,}960$.
 
-**Method 2:** Elect 1 president from $n$ people, then choose remaining $k-1$ members: $n \binom{n-1}{k-1}$
+How many hands contain exactly 2 aces? Choose 2 aces from 4: $\binom{4}{2} = 6$. Choose 3 non-aces from 48: $\binom{48}{3} = 17{,}296$. By the multiplication rule: $6 \times 17{,}296 = 103{,}776$.
 
-$$k\binom{n}{k} = n\binom{n-1}{k-1}$$
+---
 
-This identity is sometimes called the **absorption identity**.
-
-## Python Implementation
+**Example 3 (Verification).** Enumerate all 3-element subsets of $\{1,\ldots,10\}$ and verify.
 
 ```python
-from math import comb, factorial
+from math import comb
+from itertools import combinations
 
-def binomial_coefficient(n, k):
-    """
-    Compute C(n, k) = n! / (k! * (n-k)!)
-    
-    Parameters
-    ----------
-    n : int
-        Total number of objects.
-    k : int
-        Number of objects to choose.
-    
-    Returns
-    -------
-    int
-        Number of combinations.
-    """
-    if k < 0 or k > n:
-        return 0
-    return factorial(n) // (factorial(k) * factorial(n - k))
-
-# Example: Choose 3 committee members from 10 people
-n, k = 10, 3
-print(f"C({n}, {k}) = {binomial_coefficient(n, k)}")
-print(f"Verification (math.comb): {comb(n, k)}")
+# Example 1
+print(f"C(10, 3) = {comb(10, 3)}")
 # Output: C(10, 3) = 120
 
-# Verify symmetry identity
-print(f"\nSymmetry: C({n}, {k}) = {comb(n, k)}, C({n}, {n-k}) = {comb(n, n-k)}")
+# Verify by enumeration
+committees = list(combinations(range(1, 11), 3))
+print(f"Enumeration: {len(committees)}")
+# Output: Enumeration: 120
 
-# Verify absorption identity: k * C(n,k) = n * C(n-1, k-1)
-lhs = k * comb(n, k)
-rhs = n * comb(n - 1, k - 1)
-print(f"Absorption: {k}*C({n},{k}) = {lhs}, {n}*C({n-1},{k-1}) = {rhs}")
+# Example 2: Poker hands with exactly 2 aces
+hands_2_aces = comb(4, 2) * comb(48, 3)
+print(f"Hands with exactly 2 aces: {hands_2_aces}")
+# Output: Hands with exactly 2 aces: 103776
 
-# Enumeration verification
-from itertools import combinations
-people = list(range(1, n + 1))
-committees = list(combinations(people, k))
-print(f"\nVerification by enumeration: {len(committees)}")
+# Verify identities
+n, k = 10, 3
+assert comb(n, k) == comb(n, n - k), "Symmetry failed"
+assert k * comb(n, k) == n * comb(n - 1, k - 1), "Absorption failed"
+print("Symmetry and absorption identities verified.")
 ```
-
-## Key Takeaway
-
-The binomial coefficient $\binom{n}{k}$ counts unordered selections. It arises naturally from dividing the permutation count by $k!$ via the many-to-one principle. The "two ways of counting" technique — counting the same quantity via different decompositions — yields powerful combinatorial identities.
