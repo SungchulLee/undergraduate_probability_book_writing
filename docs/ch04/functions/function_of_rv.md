@@ -1,33 +1,76 @@
-# Distribution of g(X)
+# Functions of a Random Variable
 
+If $X$ is a random variable and $g$ is a function, then $Y = g(X)$ is also a random variable whose distribution is determined by $g$ and the distribution of $X$.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Functions of a Random Variable
+Let $X$ be a random variable and $g : \mathbb{R} \to \mathbb{R}$. The **function of a random variable** $Y = g(X)$ is itself a random variable, defined by $Y(\omega) = g(X(\omega))$ for each $\omega \in \Omega$.
 
-If $X$ is a random variable and $g : \mathbb{R} \to \mathbb{R}$ is a function, then $Y = g(X)$ is also a random variable. The distribution of $Y$ is determined by the distribution of $X$ and the function $g$.
+**Discrete case:** If $X$ is discrete with PMF $p_X(x)$, then
 
-## Discrete Case
+$$
+p_Y(y) = P(Y = y) = \sum_{x:\, g(x) = y} p_X(x)
+$$
 
-If $X$ is discrete with PMF $p_X(x)$, then $Y = g(X)$ is discrete with:
+**Continuous case:** Use the CDF method or the change-of-variables formula (covered in the continuous functions page).
 
-$$P(Y = y) = \sum_{x : g(x) = y} P(X = x)$$
+## Explanation
 
-That is, collect all values of $X$ that map to the same $y$ and sum their probabilities.
+### Why Functions of Random Variables
 
-## Example: Generating +/-1 from Bernoulli
+Many quantities of interest are functions of simpler random variables:
 
-If $X \sim \text{B}(p)$, then $Y = 2X - 1$ has distribution:
+- Squared deviations: $Y = (X - \mu)^2$
+- Financial payoffs: $Y = \max(X - K, 0)$
+- Indicators: $Y = \mathbf{1}(X > c)$
+- Symmetric random walks: $Y = 2X - 1$ converts $\text{Bern}(1/2)$ to $\pm 1$
 
-$$Y = \begin{cases} 1 & \text{with probability } p \\ -1 & \text{with probability } 1 - p \end{cases}$$
+### The Grouping Principle (Discrete)
 
-**Application to fair coin flips.** Suppose we flip a fair coin $n$ times independently and record each flip as $X_i \in \{0, 1\}$. Let $Y_i = 2X_i - 1$. Then:
+When $g$ is not one-to-one, multiple values of $X$ map to the same value of $Y$. The PMF of $Y$ collects (groups) these probabilities. The number of distinct values of $Y$ can be smaller than that of $X$.
 
-$$X_i \stackrel{\text{iid}}{\sim} \begin{cases} 1 & \text{prob } 0.5 \\ 0 & \text{prob } 0.5 \end{cases} \implies Y_i \stackrel{\text{iid}}{\sim} \begin{cases} +1 & \text{prob } 0.5 \\ -1 & \text{prob } 0.5 \end{cases}$$
+### Bernoulli to Symmetric Walk
 
-This transformation is widely used to convert Bernoulli random variables into symmetric $\pm 1$ random variables, which are fundamental in random walk models and financial applications.
+If $X \sim \text{Bern}(p)$, then $Y = 2X - 1$ gives
 
-## Continuous Case (Preview)
+$$
+P(Y = +1) = p, \qquad P(Y = -1) = 1 - p
+$$
 
-For continuous random variables, finding the distribution of $g(X)$ requires the **change of variables** technique (covered in Chapter 15), which uses the Jacobian of the transformation.
+For $p = 1/2$, this converts a coin flip into the symmetric $\pm 1$ step used in random walks.
+
+## Examples
+
+**Example.** Let $X$ take values $-2, -1, 0, 1, 2$ each with probability $1/5$. Let $Y = X^2$.
+
+| $x$ | $-2$ | $-1$ | $0$ | $1$ | $2$ |
+|:---:|:---:|:---:|:---:|:---:|:---:|
+| $g(x) = x^2$ | $4$ | $1$ | $0$ | $1$ | $4$ |
+| $p_X(x)$ | $1/5$ | $1/5$ | $1/5$ | $1/5$ | $1/5$ |
+
+Grouping by $y$:
+
+| $y$ | $0$ | $1$ | $4$ |
+|:---:|:---:|:---:|:---:|
+| $p_Y(y)$ | $1/5$ | $2/5$ | $2/5$ |
+
+Five values of $X$ collapse to three values of $Y$ because $g(x) = x^2$ is not one-to-one.
+
+```python
+import numpy as np
+from collections import Counter
+
+# X takes values -2, -1, 0, 1, 2 with equal probability
+x_vals = [-2, -1, 0, 1, 2]
+px = {x: 1/5 for x in x_vals}
+
+# Y = X^2
+g = lambda x: x**2
+py = Counter()
+for x, prob in px.items():
+    py[g(x)] += prob
+
+for y in sorted(py):
+    print(f"P(Y = {y}) = {py[y]:.4f}")
+print(f"Sum = {sum(py.values()):.4f}")
+```

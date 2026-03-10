@@ -1,120 +1,79 @@
-# Functions of a Discrete Random Variable
+# Functions of Discrete Random Variables
 
+For discrete random variables, finding the distribution of $g(X)$ reduces to grouping values of $X$ that map to the same output and summing their probabilities.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Motivation
+If $X$ is discrete with PMF $p_X(x)$ and $Y = g(X)$, then $Y$ is discrete with PMF
 
-Given a random variable $X$ with known distribution, we often need the distribution of $Y = g(X)$ for some function $g$. For example:
+$$
+p_Y(y) = \sum_{x:\, g(x) = y} p_X(x)
+$$
 
-- $Y = X^2$ (squared deviations)
-- $Y = |X|$ (absolute value)
-- $Y = \mathbf{1}(X > 0)$ (indicator)
-- $Y = \max(X, 0)$ (payoff of a call option)
+The support of $Y$ is $\{g(x) : x \in \text{support of } X\}$.
 
-## The Discrete Case
+## Explanation
 
-When $X$ is discrete, finding the distribution of $Y = g(X)$ is straightforward: group the values of $X$ that map to the same value of $Y$.
+### Algorithm
 
-!!! info "PMF of g(X) — Discrete Case"
-    If $X$ is discrete with PMF $p_X(x)$ and $Y = g(X)$, then $Y$ is discrete with PMF:
+1. List all values $x$ in the support of $X$ and their probabilities
+2. Compute $g(x)$ for each
+3. Group by the resulting $y$ values
+4. Sum probabilities within each group
 
-    $$p_Y(y) = P(Y = y) = \sum_{x:\, g(x) = y} p_X(x)$$
+### Many-to-One Functions
 
-    That is, sum the probabilities of all $x$ values that map to $y$.
+When $g$ is not injective, distinct $x$ values can produce the same $y$. This concentrates probability: the PMF of $Y$ can have fewer support points but larger individual probabilities than $X$.
 
-## Example: Squaring a Symmetric Distribution
+### Common Transformations
 
-Let $X$ take values $-2, -1, 0, 1, 2$ with equal probability $\frac{1}{5}$ each. Let $Y = X^2$.
+| Function $g$ | Effect |
+|:-------------|:-------|
+| $g(x) = x^2$ | Folds negative and positive values together |
+| $g(x) = \|x\|$ | Same as $x^2$ for sign, preserves magnitude |
+| $g(x) = \mathbf{1}(x > c)$ | Reduces to Bernoulli |
+| $g(x) = \max(x, 0)$ | Truncates negatives to 0 (point mass) |
 
-| $x$ | $-2$ | $-1$ | $0$ | $1$ | $2$ |
-|:---:|:---:|:---:|:---:|:---:|:---:|
-| $g(x) = x^2$ | $4$ | $1$ | $0$ | $1$ | $4$ |
-| $p_X(x)$ | $1/5$ | $1/5$ | $1/5$ | $1/5$ | $1/5$ |
+## Examples
 
-Grouping by $y$ values:
+**Example 1.** $X \sim \text{Bin}(10, 0.3)$ and $Y = \mathbf{1}(X \ge 5)$.
 
-| $y$ | $0$ | $1$ | $4$ |
-|:---:|:---:|:---:|:---:|
-| $p_Y(y)$ | $1/5$ | $2/5$ | $2/5$ |
+All 11 values of $X$ collapse into two values of $Y$:
 
-Note that $Y$ takes only 3 values even though $X$ takes 5 — the function $g(x) = x^2$ is **not one-to-one**, so multiple $x$ values collapse to the same $y$.
+$$
+P(Y = 1) = P(X \ge 5) = \sum_{k=5}^{10}\binom{10}{k}(0.3)^k(0.7)^{10-k} \approx 0.1503
+$$
 
-## Example: Indicator Function
+$$
+P(Y = 0) = 1 - P(Y = 1) \approx 0.8497
+$$
 
-Let $X \sim \text{Binomial}(10, 0.3)$ and $Y = \mathbf{1}(X \geq 5)$. Then $Y$ is Bernoulli:
+**Example 2.** $X \sim \text{Uniform}\{-3, -2, -1, 0, 1, 2, 3\}$ and $Y = \max(X, 0)$.
 
-$$p_Y(1) = P(X \geq 5), \qquad p_Y(0) = P(X < 5)$$
+| $y$ | 0 | 1 | 2 | 3 |
+|:---:|:---:|:---:|:---:|:---:|
+| $p_Y(y)$ | $4/7$ | $1/7$ | $1/7$ | $1/7$ |
 
-This demonstrates that applying a function can drastically simplify the distribution.
-
-## Example: Maximum with Zero
-
-Let $X \sim \text{Uniform}\{-3, -2, -1, 0, 1, 2, 3\}$ and $Y = \max(X, 0)$. Then:
-
-$$p_Y(0) = P(X \leq 0) = \frac{4}{7}, \quad p_Y(1) = p_Y(2) = p_Y(3) = \frac{1}{7}$$
-
-This is a **mixed** case: $Y$ has a point mass at $0$ even though $X$ has no special concentration there.
-
-## Python Implementation
+The four values $\{-3, -2, -1, 0\}$ all map to $y = 0$, creating a large point mass.
 
 ```python
-import numpy as np
-import matplotlib.pyplot as plt
+from math import comb
 
-fig, axes = plt.subplots(1, 3, figsize=(16, 4.5))
-
-# --- Example 1: X^2 ---
-x_vals = np.array([-2, -1, 0, 1, 2])
-px = np.ones(5) / 5
-y_vals = x_vals**2
-
-axes[0].bar(x_vals - 0.15, px, width=0.3, color='steelblue', alpha=0.7, label='X')
-# Compute Y PMF
-unique_y = np.unique(y_vals)
-py = np.array([px[y_vals == y].sum() for y in unique_y])
-axes[0].bar(unique_y + 0.15, py, width=0.3, color='coral', alpha=0.7, label='Y = X²')
-axes[0].set_title('Y = X² (many-to-one)')
-axes[0].set_xlabel('Value')
-axes[0].set_ylabel('Probability')
-axes[0].legend()
-axes[0].grid(True, alpha=0.3)
-
-# --- Example 2: Indicator ---
-from scipy.stats import binom
+# Example 1: Indicator of Binomial
 n, p = 10, 0.3
-x_binom = np.arange(0, 11)
-px_binom = binom.pmf(x_binom, n, p)
+p_ge_5 = sum(comb(n, k) * p**k * (1-p)**(n-k) for k in range(5, 11))
+print(f"P(Y=1) = P(X >= 5) = {p_ge_5:.4f}")
+print(f"P(Y=0) = P(X <  5) = {1 - p_ge_5:.4f}")
 
-p_y1 = px_binom[5:].sum()
-p_y0 = px_binom[:5].sum()
+# Example 2: max(X, 0)
+x_vals = list(range(-3, 4))
+px = 1 / len(x_vals)
+from collections import Counter
+py = Counter()
+for x in x_vals:
+    py[max(x, 0)] += px
 
-axes[1].bar(x_binom, px_binom, color='steelblue', alpha=0.5, label='X ~ Bin(10, 0.3)')
-axes[1].bar([0, 1], [p_y0, p_y1], color='coral', alpha=0.7, width=0.4,
-            label=f'Y = 1(X≥5): P(0)={p_y0:.3f}, P(1)={p_y1:.3f}')
-axes[1].set_title('Indicator: Y = 1(X ≥ 5)')
-axes[1].set_xlabel('Value')
-axes[1].legend(fontsize=8)
-axes[1].grid(True, alpha=0.3)
-
-# --- Example 3: max(X, 0) ---
-x_unif = np.arange(-3, 4)
-px_unif = np.ones(7) / 7
-y_max = np.maximum(x_unif, 0)
-
-unique_ym = np.unique(y_max)
-py_max = np.array([px_unif[y_max == y].sum() for y in unique_ym])
-
-axes[2].bar(unique_ym, py_max, color='coral', alpha=0.7)
-axes[2].set_title('Y = max(X, 0) — point mass at 0')
-axes[2].set_xlabel('y')
-axes[2].set_ylabel('P(Y = y)')
-for y, p in zip(unique_ym, py_max):
-    axes[2].text(y, p + 0.02, f'{p:.2f}', ha='center', fontsize=9)
-axes[2].grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('functions_discrete.png', dpi=150, bbox_inches='tight')
-plt.show()
+print("\nY = max(X, 0):")
+for y in sorted(py):
+    print(f"  P(Y = {y}) = {py[y]:.4f}")
 ```
