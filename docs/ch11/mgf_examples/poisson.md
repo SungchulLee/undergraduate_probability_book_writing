@@ -1,61 +1,62 @@
 # MGF of Poisson
 
+The Poisson MGF confirms that mean equals variance and provides an elegant proof of the Poisson limit theorem.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## MGF of Po(lambda)
+If $X \sim \text{Pois}(\lambda)$:
 
-If $X \sim \text{Po}(\lambda)$, then:
+$$
+M_X(t) = e^{\lambda(e^t - 1)}
+$$
 
-$$M_X(t) = E[e^{tX}] = \sum_{k=0}^{\infty} e^{tk} \frac{\lambda^k}{k!} e^{-\lambda}$$
+This exists for all $t \in \mathbb{R}$.
 
-$$= e^{-\lambda} \sum_{k=0}^{\infty} \frac{(\lambda e^t)^k}{k!} = e^{-\lambda} \cdot e^{\lambda e^t} = e^{\lambda(e^t - 1)}$$
+## Explanation
 
-$$\boxed{M_{\text{Po}(\lambda)}(t) = e^{\lambda(e^t - 1)}}$$
+### Derivation
 
-## Deriving Moments
+$$
+M_X(t) = \sum_{k=0}^{\infty}e^{tk}\frac{\lambda^k}{k!}e^{-\lambda} = e^{-\lambda}\sum_{k=0}^{\infty}\frac{(\lambda e^t)^k}{k!} = e^{-\lambda}\,e^{\lambda e^t} = e^{\lambda(e^t - 1)}
+$$
 
-$$M'(t) = \lambda e^t \cdot e^{\lambda(e^t - 1)}$$
+### Moments
 
-$$E[X] = M'(0) = \lambda \cdot 1 = \lambda$$
+$M_X'(t) = \lambda e^t\,e^{\lambda(e^t-1)}$, so $E[X] = \lambda$.
 
-$$M''(t) = (\lambda e^t)^2 e^{\lambda(e^t - 1)} + \lambda e^t \cdot e^{\lambda(e^t - 1)}$$
+$M_X''(0) = \lambda^2 + \lambda$, so $\text{Var}(X) = \lambda^2 + \lambda - \lambda^2 = \lambda$.
 
-$$E[X^2] = M''(0) = \lambda^2 + \lambda$$
+This confirms the Poisson's defining property: $E[X] = \text{Var}(X) = \lambda$.
 
-$$\text{Var}(X) = \lambda^2 + \lambda - \lambda^2 = \lambda$$
+### Poisson Limit Theorem via MGF
 
-This confirms $E[X] = \text{Var}(X) = \lambda$ for the Poisson distribution.
+For $X_n \sim \text{Bin}(n, \lambda/n)$:
 
-## Connection to Poisson Approximation
+$$
+M_{X_n}(t) = \left(1 + \frac{\lambda}{n}(e^t - 1)\right)^n \to e^{\lambda(e^t - 1)} = M_{\text{Pois}(\lambda)}(t)
+$$
 
-The MGF provides an elegant proof of the Poisson limit theorem. For $X \sim B(n, p)$ with $np = \lambda$:
+By the convergence theorem, $\text{Bin}(n, \lambda/n) \xrightarrow{d} \text{Pois}(\lambda)$.
 
-$$M_{B(n,p)}(t) = \left[1 + p(e^t - 1)\right]^n = \left[1 + \frac{\lambda}{n}(e^t - 1)\right]^n$$
+### Sum Property
 
-As $n \to \infty$:
+$\text{Pois}(\lambda_1) + \text{Pois}(\lambda_2) \sim \text{Pois}(\lambda_1 + \lambda_2)$ for independent summands.
 
-$$\left[1 + \frac{\lambda(e^t - 1)}{n}\right]^n \to e^{\lambda(e^t - 1)} = M_{\text{Po}(\lambda)}(t)$$
+## Examples
 
-Since the MGFs converge, $B(n, p) \xrightarrow{d} \text{Po}(\lambda)$ when $n \to \infty$, $p \to 0$, $np = \lambda$.
-
-## Python Verification
+**Example.** $X \sim \text{Pois}(5)$: $E[X] = \text{Var}(X) = 5$.
 
 ```python
 import numpy as np
 
-def mgf_poisson(t, lam):
-    return np.exp(lam * (np.exp(t) - 1))
+np.random.seed(42)
+n_sim = 200_000
 
-lam = 5.0
-dt = 1e-6
+X = np.random.poisson(5, n_sim)
+print(f"E[X] = {X.mean():.4f}  (theory: 5)")
+print(f"Var(X) = {X.var():.4f}  (theory: 5)")
 
-M0 = mgf_poisson(0, lam)
-M1 = (mgf_poisson(dt, lam) - mgf_poisson(-dt, lam)) / (2 * dt)
-M2 = (mgf_poisson(dt, lam) - 2*M0 + mgf_poisson(-dt, lam)) / dt**2
-
-print(f"Po({lam}):")
-print(f"  E[X]   = {M1:.4f}  (exact: {lam})")
-print(f"  Var(X) = {M2 - M1**2:.4f}  (exact: {lam})")
+# Poisson limit: Bin(1000, 0.005) ≈ Pois(5)
+Y = np.random.binomial(1000, 0.005, n_sim)
+print(f"\nBin(1000, 0.005): E={Y.mean():.4f}, Var={Y.var():.4f}")
 ```
