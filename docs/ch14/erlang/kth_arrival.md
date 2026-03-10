@@ -1,169 +1,137 @@
 # Waiting Time for the k-th Arrival
 
+The time of the $k$-th arrival in a Poisson process follows the Erlang (equivalently, Gamma) distribution, establishing a deep duality between Poisson counts and Gamma waiting times.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## The k-th Arrival Time
+In a Poisson process with rate $\lambda$, let $S_k$ denote the time of the $k$-th arrival. Since the interarrival times $T_1, T_2, \ldots, T_k$ are iid $\text{Exp}(\lambda)$:
 
-In a Poisson process with rate $\lambda$, let $S_k$ denote the time of the $k$-th arrival. Since interarrival times $T_1, T_2, \ldots, T_k$ are iid $\text{Exp}(\lambda)$:
+$$
+S_k = T_1 + T_2 + \cdots + T_k \sim \Gamma(k, \lambda) = \text{Erlang}(k, \lambda)
+$$
 
-$$S_k = T_1 + T_2 + \cdots + T_k \sim \Gamma(k, \lambda) = \text{Erlang}(k, \lambda)$$
+**Moments:**
 
-### Mean and Variance of S_k
+$$
+E[S_k] = \frac{k}{\lambda}, \qquad \text{Var}(S_k) = \frac{k}{\lambda^2}
+$$
 
-$$E[S_k] = \frac{k}{\lambda}, \qquad \text{Var}(S_k) = \frac{k}{\lambda^2}$$
+**Poisson-Gamma duality:**
 
-The expected time to the $k$-th arrival is simply $k$ times the expected interarrival time, which is intuitive.
+$$
+P(S_k \leq t) = P(N(t) \geq k) = 1 - \sum_{j=0}^{k-1} \frac{(\lambda t)^j}{j!} e^{-\lambda t}
+$$
 
-## Connection to the Poisson Distribution
+where $N(t) \sim \text{Po}(\lambda t)$ is the Poisson count in $[0, t]$.
 
-The event $\{S_k \leq t\}$ (the $k$-th arrival occurs by time $t$) is equivalent to $\{N(t) \geq k\}$ (at least $k$ arrivals by time $t$), where $N(t) \sim \text{Po}(\lambda t)$. Therefore:
+## Explanation
 
-$$P(S_k \leq t) = P(N(t) \geq k) = 1 - \sum_{j=0}^{k-1} \frac{(\lambda t)^j}{j!} e^{-\lambda t}$$
+### The Poisson-Gamma Duality
 
-This provides a closed-form CDF for the Erlang distribution and establishes a deep duality: the **Gamma/Erlang CDF** equals the **Poisson tail probability**.
+The event "the $k$-th arrival occurs by time $t$" is logically equivalent to "at least $k$ events occur in $[0, t]$":
 
-## The Inspection Paradox
+$$
+\{S_k \leq t\} = \{N(t) \geq k\}
+$$
 
-!!! warning "Paradox of Interarrival Times"
-    Consider a Poisson process with rate $\lambda$ running from $t = -\infty$ to $t = \infty$. Pick a **fixed time point** (say, today's date). Let $\tau$ be the length of the interarrival interval **containing** that fixed point.
+This means the Erlang CDF can be expressed in terms of the Poisson PMF. The duality converts between a continuous waiting-time question and a discrete counting question, and whichever form is more convenient can be used.
 
-    **Surprising result:**
+### Intuition for the Mean
 
-    - Each individual interarrival time $T_i$ is $\text{Exp}(\lambda)$ with mean $1/\lambda$
-    - But $\tau \sim \Gamma(2, \lambda)$ with mean $2/\lambda$
+The expected time to the $k$-th arrival is $E[S_k] = k/\lambda$, which is simply $k$ times the expected interarrival time $1/\lambda$. This is intuitive: on average, each event adds $1/\lambda$ to the total waiting time.
 
-    The interval you land in is, on average, **twice as long** as a typical interarrival time!
+### The Inspection Paradox
 
-### Why Does This Happen?
+Consider a Poisson process with rate $\lambda$ that has been running indefinitely. Pick any **fixed** time point and let $\tau$ be the length of the interarrival interval containing that point.
 
-This is an instance of the **inspection paradox** (also called **length-biased sampling** or the **bus waiting paradox**). When you arrive at a random time:
+**Surprising result:** Each individual interarrival time $T_i \sim \text{Exp}(\lambda)$ has mean $1/\lambda$, but the interval you land in satisfies $\tau \sim \Gamma(2, \lambda)$ with mean $2/\lambda$. The selected interval is, on average, **twice** as long as a typical interarrival time.
 
-- You are more likely to land in a **longer** interarrival interval than a shorter one
-- The probability of landing in an interval is proportional to its length
-- This biases the observed interval length upward
+**Why this happens.** The fixed point splits $\tau$ into two parts:
 
-### Formal Explanation
+- **Backward recurrence time** $B$: time since the last arrival before the fixed point
+- **Forward recurrence time** $F$: time from the fixed point to the next arrival
 
-The fixed time point splits $\tau$ into two parts:
+By the memoryless property and time-reversibility of the Poisson process, $B \sim \text{Exp}(\lambda)$ and $F \sim \text{Exp}(\lambda)$ independently. Therefore
 
-- The **backward recurrence time** $B$: time from the last arrival before the fixed point
-- The **forward recurrence time** $F$: time from the fixed point to the next arrival
+$$
+\tau = B + F \sim \Gamma(2, \lambda)
+$$
 
-By the memoryless property of the Poisson process:
+$$
+E[\tau] = \frac{2}{\lambda}
+$$
 
-- $F \sim \text{Exp}(\lambda)$ (memoryless: time to next event is always $\text{Exp}(\lambda)$)
-- $B \sim \text{Exp}(\lambda)$ (by time-reversibility of the Poisson process)
-- $B$ and $F$ are independent
-
-Therefore:
-
-$$\tau = B + F \sim \text{Exp}(\lambda) * \text{Exp}(\lambda) = \Gamma(2, \lambda)$$
-
-$$E[\tau] = \frac{2}{\lambda}, \qquad \text{Var}(\tau) = \frac{2}{\lambda^2}$$
+This is an instance of **length-biased sampling**: you are more likely to land in a longer interval than a shorter one, because longer intervals occupy more of the time axis. The probability of landing in a particular interval is proportional to its length, which biases the observed interval upward.
 
 ### Everyday Examples of the Inspection Paradox
 
-- **Bus waiting**: If buses arrive as a Poisson process, and you arrive at a random time, your expected wait is $1/\lambda$ — the full mean interarrival time, not half of it
-- **Class size**: If you randomly pick a student and ask their class size, the average answer is larger than the overall average class size (larger classes contain more students)
-- **Family size**: If you randomly pick a child and ask their family size, the answer is biased upward
+- **Bus waiting.** If buses arrive as a Poisson process with rate $\lambda$, your expected wait is $1/\lambda$ (the full mean interarrival time), not $1/(2\lambda)$
+- **Class sizes.** If you randomly pick a student and ask their class size, the average answer exceeds the overall average class size, because larger classes contain more students to sample
+- **Family sizes.** Randomly picking a child and asking about their number of siblings gives a biased-upward answer
 
-## Python Implementation
+## Examples
+
+**Example 1.** Calls arrive at a call center at rate $\lambda = 10$ per hour. Find the probability that the 5th call arrives within the first 30 minutes.
+
+$S_5 \sim \Gamma(5, 10)$. We need $P(S_5 \leq 0.5)$. Using the Poisson-Gamma duality with $\lambda t = 10 \times 0.5 = 5$:
+
+$$
+P(S_5 \leq 0.5) = P(N(0.5) \geq 5) = 1 - \sum_{j=0}^{4} \frac{5^j}{j!} e^{-5}
+$$
+
+**Example 2.** Simulate the inspection paradox and verify the $k$-th arrival distribution.
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy import stats
 
 np.random.seed(42)
-lam = 1.0
-n_sim = 100000
+lam = 10.0
+n_sim = 200_000
 
-# Simulate Poisson process and find interval containing a fixed point
-def simulate_inspection_paradox(lam, fixed_point, n_arrivals=1000):
-    """Simulate the interarrival interval containing a fixed point."""
-    # Generate many interarrival times
-    interarrivals = np.random.exponential(1/lam, n_arrivals)
+# --- k-th arrival time ---
+# P(S_5 <= 0.5) from Example 1
+k, t = 5, 0.5
+lam_t = lam * t  # = 5.0
+
+# Method 1: Poisson tail
+poisson_prob = 1 - sum(
+    lam_t**j / np.math.factorial(j) * np.exp(-lam_t)
+    for j in range(k)
+)
+
+# Method 2: Gamma CDF via scipy
+gamma_prob = stats.gamma.cdf(t, a=k, scale=1/lam)
+
+# Method 3: Simulation
+arrivals = np.random.exponential(1/lam, size=(n_sim, k)).sum(axis=1)
+sim_prob = np.mean(arrivals <= t)
+
+print("=== k-th Arrival: P(S_5 <= 0.5) ===")
+print(f"  Poisson formula: {poisson_prob:.6f}")
+print(f"  Gamma CDF:       {gamma_prob:.6f}")
+print(f"  Simulation:      {sim_prob:.6f}")
+
+# --- Inspection paradox ---
+lam_insp = 2.0
+
+# Simulate a Poisson process and find interval containing fixed point
+fixed_point = 50.0
+tau_samples = []
+for _ in range(n_sim):
+    interarrivals = np.random.exponential(1/lam_insp, 200)
     arrival_times = np.cumsum(interarrivals)
-
-    # Find the interval containing the fixed point
     idx = np.searchsorted(arrival_times, fixed_point)
-    if idx == 0:
-        return interarrivals[0]  # fixed point is before first arrival
-    return interarrivals[idx]  # length of interval containing fixed point
+    if idx > 0 and idx < len(arrival_times):
+        tau_samples.append(interarrivals[idx])
 
-# Run simulation
-fixed_point = 50.0  # arbitrary fixed time
-tau_samples = np.array([
-    simulate_inspection_paradox(lam, fixed_point, 200)
-    for _ in range(n_sim)
-])
+tau_samples = np.array(tau_samples)
+regular = np.random.exponential(1/lam_insp, n_sim)
 
-# Regular interarrival times
-regular_interarrivals = np.random.exponential(1/lam, n_sim)
-
-# Plot comparison
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-x = np.linspace(0, 8, 200)
-
-# Histograms
-axes[0].hist(regular_interarrivals, bins=80, density=True, alpha=0.5,
-             range=(0, 8), label=f'Regular T_i ~ Exp({lam})', color='blue')
-axes[0].hist(tau_samples, bins=80, density=True, alpha=0.5,
-             range=(0, 8), label=f'τ (containing fixed point)', color='red')
-axes[0].plot(x, stats.expon.pdf(x, scale=1/lam), 'b-', lw=2,
-             label='Exp(1) PDF')
-axes[0].plot(x, stats.gamma.pdf(x, a=2, scale=1/lam), 'r-', lw=2,
-             label='Γ(2,1) PDF')
-axes[0].set_title('Inspection Paradox')
-axes[0].set_xlabel('Interarrival time')
-axes[0].legend()
-axes[0].grid(True, alpha=0.3)
-
-# Visualize a Poisson process with the inspection paradox
-np.random.seed(7)
-interarrivals = np.random.exponential(1/lam, 20)
-arrivals = np.cumsum(interarrivals)
-arrivals = arrivals[arrivals < 8]
-
-fixed_t = 5.0
-axes[1].plot(arrivals, np.zeros(len(arrivals)), 'or', markersize=8)
-axes[1].axvline(fixed_t, color='black', lw=2, label=f'Fixed point t={fixed_t}')
-
-# Find containing interval
-idx = np.searchsorted(arrivals, fixed_t)
-if idx > 0 and idx < len(arrivals):
-    left = arrivals[idx-1]
-    right = arrivals[idx]
-    axes[1].axvline(left, color='red', lw=2, alpha=0.7)
-    axes[1].axvline(right, color='red', lw=2, alpha=0.7)
-    axes[1].annotate('', xy=(right, -0.3), xytext=(left, -0.3),
-                     arrowprops=dict(arrowstyle='<->', color='red', lw=2))
-    axes[1].text((left+right)/2, -0.4, f'τ = {right-left:.2f}',
-                 ha='center', color='red', fontsize=12)
-
-for a in arrivals:
-    axes[1].plot([a, a], [-0.1, 0.1], 'r-', lw=1)
-
-axes[1].set_xlim(0, 8)
-axes[1].set_ylim(-0.6, 0.6)
-axes[1].set_title('Interarrival Interval Containing Fixed Point')
-axes[1].set_xlabel('Time')
-axes[1].legend(loc='upper right')
-axes[1].grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('kth_arrival_paradox.png', dpi=150, bbox_inches='tight')
-plt.show()
-
-# Print statistics
-print("=== Inspection Paradox Statistics ===")
-print(f"Regular interarrival: E[T] = {np.mean(regular_interarrivals):.4f} "
-      f"(theory {1/lam:.4f})")
-print(f"Containing interval:  E[τ] = {np.mean(tau_samples):.4f} "
-      f"(theory {2/lam:.4f})")
-print(f"Ratio E[τ]/E[T] = {np.mean(tau_samples)/np.mean(regular_interarrivals):.4f} "
+print(f"\n=== Inspection Paradox (lam={lam_insp}) ===")
+print(f"  Regular E[T_i]: {np.mean(regular):.4f}  (theory {1/lam_insp:.4f})")
+print(f"  Containing E[tau]: {np.mean(tau_samples):.4f}  "
+      f"(theory {2/lam_insp:.4f})")
+print(f"  Ratio E[tau]/E[T]: {np.mean(tau_samples)/np.mean(regular):.4f}  "
       f"(theory 2.0)")
 ```

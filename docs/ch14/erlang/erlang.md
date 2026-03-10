@@ -1,99 +1,122 @@
-# Erlang as a Special Case of Gamma
+# Erlang Distribution
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+The Erlang distribution is the Gamma distribution with an integer shape parameter -- it models the sum of independent identical exponential waiting times.
 
 ## Definition
 
-!!! info "Erlang Distribution"
-    The **Erlang distribution** with shape parameter $k$ (a positive integer) and rate $\lambda > 0$ is the Gamma distribution restricted to integer shape:
+The **Erlang distribution** with shape parameter $k$ (a positive integer) and rate $\lambda > 0$ is
 
-    $$\text{Erlang}(k, \lambda) = \Gamma(k, \lambda)$$
+$$
+\text{Erlang}(k, \lambda) = \Gamma(k, \lambda)
+$$
 
-    Its PDF is:
+Its PDF is
 
-    $$f(x) = \frac{\lambda(\lambda x)^{k-1} e^{-\lambda x}}{(k-1)!}, \quad x > 0$$
+$$
+f(x) = \frac{\lambda(\lambda x)^{k-1} e^{-\lambda x}}{(k-1)!}, \quad x > 0
+$$
 
-    where we use $\Gamma(k) = (k-1)!$ for positive integers $k$.
+where we use $\Gamma(k) = (k-1)!$ for positive integers $k$.
 
-## Why a Separate Name?
+**CDF (closed form):**
+
+$$
+F(x) = 1 - \sum_{j=0}^{k-1} \frac{(\lambda x)^j}{j!} e^{-\lambda x}, \quad x \geq 0
+$$
+
+**Moments:**
+
+$$
+E[X] = \frac{k}{\lambda}, \qquad \text{Var}(X) = \frac{k}{\lambda^2}
+$$
+
+## Explanation
+
+### Construction as a Sum of Exponentials
+
+If $T_1, T_2, \ldots, T_k$ are iid $\text{Exp}(\lambda)$, then their sum follows the Erlang distribution:
+
+$$
+S_k = T_1 + T_2 + \cdots + T_k \sim \text{Erlang}(k, \lambda) = \Gamma(k, \lambda)
+$$
+
+This is the defining interpretation: the Erlang distribution arises when you wait for $k$ events in a Poisson process.
+
+| Sum | Distribution |
+|:---:|:---:|
+| $T_1$ | $\text{Exp}(\lambda) = \text{Erlang}(1, \lambda)$ |
+| $T_1 + T_2$ | $\text{Erlang}(2, \lambda)$ |
+| $T_1 + T_2 + T_3$ | $\text{Erlang}(3, \lambda)$ |
+| $T_1 + \cdots + T_k$ | $\text{Erlang}(k, \lambda)$ |
+
+### Why a Separate Name
 
 The Erlang distribution is named after A.K. Erlang, who introduced it in the early 20th century to model telephone call waiting times. While it is mathematically just a special case of the Gamma distribution, it has its own identity because:
 
 - It predates the general Gamma distribution in applications
-- Its integer shape parameter gives it a concrete interpretation as a **sum of iid Exponentials**
-- Its CDF has a closed-form expression involving a finite sum (unlike the general Gamma)
+- Its integer shape parameter gives it a concrete interpretation as a sum of iid Exponentials
+- Its CDF has a **closed-form** expression involving a finite sum, unlike the general Gamma which requires the incomplete gamma function
 
-## Special Cases
+### Closed-Form CDF via the Poisson Connection
 
-| Distribution | Parameters | Description |
-|:---:|:---:|:---|
-| $\text{Exp}(\lambda)$ | $\text{Erlang}(1, \lambda)$ | Single interarrival time |
-| $\text{Erlang}(2, \lambda)$ | $\Gamma(2, \lambda)$ | Sum of 2 iid $\text{Exp}(\lambda)$ |
-| $\text{Erlang}(k, \lambda)$ | $\Gamma(k, \lambda)$ | Sum of $k$ iid $\text{Exp}(\lambda)$ |
+The CDF formula comes from a beautiful duality. The event "the $k$-th arrival occurs by time $x$" is the same as "at least $k$ arrivals occur by time $x$":
 
-## CDF (Closed Form)
+$$
+P(S_k \leq x) = P(N(x) \geq k) = 1 - P(N(x) \leq k - 1) = 1 - \sum_{j=0}^{k-1} \frac{(\lambda x)^j}{j!} e^{-\lambda x}
+$$
 
-For integer $k$, the CDF of $\text{Erlang}(k, \lambda)$ has a closed form:
+where $N(x) \sim \text{Po}(\lambda x)$. This links the **Erlang CDF** to the **Poisson tail probability**.
 
-$$F(x) = 1 - \sum_{j=0}^{k-1} \frac{(\lambda x)^j}{j!} e^{-\lambda x}, \quad x \geq 0$$
+### Shape of the PDF
 
-This can be derived from the Poisson connection: $P(S_k \leq t) = P(N(t) \geq k)$ where $N(t) \sim \text{Po}(\lambda t)$.
+As $k$ increases, the Erlang PDF becomes more bell-shaped and concentrated around the mean $k/\lambda$:
 
-## Moments
+- $k = 1$: purely decreasing (Exponential)
+- $k = 2$: rises from zero, peaks at $1/\lambda$, then decays
+- $k \geq 3$: increasingly symmetric and normal-looking
 
-From the Gamma distribution:
+The mode is at $x = (k - 1)/\lambda$ for $k \geq 1$, and the distribution approaches a Normal distribution as $k \to \infty$ (by the Central Limit Theorem, since it is a sum of iid random variables).
 
-$$E[X] = \frac{k}{\lambda}, \qquad \text{Var}(X) = \frac{k}{\lambda^2}$$
+## Examples
 
-## Python Implementation
+**Example 1.** Customers arrive at a bank at rate $\lambda = 6$ per hour (Poisson process). You are third in line. Find the distribution, mean, and standard deviation of the time until you reach the counter.
+
+You must wait for 3 services, so your wait is $S_3 \sim \text{Erlang}(3, 6)$. Then $E[S_3] = 3/6 = 0.5$ hours (30 minutes) and $\text{SD}(S_3) = \sqrt{3}/6 \approx 0.289$ hours (17.3 minutes).
+
+**Example 2.** Verify that the sum of $k$ iid Exponentials matches the Erlang distribution.
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy import stats
 
-lam = 2.0
-x = np.linspace(0, 8, 300)
-
-fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-# Erlang PDFs for different k
-for k in [1, 2, 3, 5, 10]:
-    pdf = stats.gamma.pdf(x, a=k, scale=1/lam)
-    axes[0].plot(x, pdf, lw=2, label=f'Erlang({k}, {lam})')
-
-axes[0].set_title(f'Erlang(k, λ={lam}) PDFs')
-axes[0].set_xlabel('x')
-axes[0].set_ylabel('f(x)')
-axes[0].legend()
-axes[0].grid(True, alpha=0.3)
-
-# Verify: sum of k iid Exp(λ) = Erlang(k, λ)
 np.random.seed(42)
-n_sim = 50000
-k = 5
+lam = 2.0
+n_sim = 200_000
 
-# Method 1: sum of exponentials
-exp_samples = np.random.exponential(1/lam, size=(n_sim, k))
-sums = exp_samples.sum(axis=1)
+print("=== Sum of k iid Exp(lam) vs Erlang(k, lam) ===")
+print(f"{'k':>3} | {'Mean sim':>9} {'Mean thy':>9} | "
+      f"{'Var sim':>9} {'Var thy':>9}")
+print("-" * 50)
 
-# Method 2: direct Gamma sampling
-gamma_samples = np.random.gamma(shape=k, scale=1/lam, size=n_sim)
+for k in [1, 2, 3, 5, 10]:
+    # Sum of k exponentials
+    exp_samples = np.random.exponential(1/lam, size=(n_sim, k))
+    sums = exp_samples.sum(axis=1)
 
-axes[1].hist(sums, bins=60, density=True, alpha=0.4,
-             label=f'Sum of {k} Exp({lam})', color='blue')
-axes[1].hist(gamma_samples, bins=60, density=True, alpha=0.4,
-             label=f'Γ({k}, {lam})', color='red')
-pdf_theory = stats.gamma.pdf(x, a=k, scale=1/lam)
-axes[1].plot(x, pdf_theory, 'k-', lw=2, label='Theory')
-axes[1].set_title(f'Sum of {k} iid Exp({lam}) = Erlang({k}, {lam})')
-axes[1].set_xlabel('x')
-axes[1].legend()
-axes[1].grid(True, alpha=0.3)
+    mean_thy = k / lam
+    var_thy = k / lam**2
 
-plt.tight_layout()
-plt.savefig('erlang_distribution.png', dpi=150, bbox_inches='tight')
-plt.show()
+    print(f"{k:3d} | {np.mean(sums):9.4f} {mean_thy:9.4f} | "
+          f"{np.var(sums):9.4f} {var_thy:9.4f}")
+
+# Verify closed-form CDF: P(S_k <= x) = 1 - sum Poisson terms
+k, x_val = 3, 1.5
+erlang_cdf = stats.gamma.cdf(x_val, a=k, scale=1/lam)
+poisson_tail = 1 - sum(
+    (lam * x_val)**j / np.math.factorial(j) * np.exp(-lam * x_val)
+    for j in range(k)
+)
+print(f"\nCDF check: Erlang({k},{lam}) at x={x_val}")
+print(f"  scipy CDF:       {erlang_cdf:.6f}")
+print(f"  Poisson formula:  {poisson_tail:.6f}")
 ```

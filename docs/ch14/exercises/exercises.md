@@ -1,8 +1,6 @@
 # Chapter 14 Exercises
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+!!! warning "Exercise page"
 
 ## Exponential Distribution
 

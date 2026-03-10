@@ -1,118 +1,128 @@
 # Memoryless Property
 
+The Exponential distribution is the unique continuous distribution with the memoryless property: given that you have already waited for time $s$, the remaining wait has the same distribution as if you had just started.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## The Memoryless Property
+If $X \sim \text{Exp}(\lambda)$, then for all $s, t \geq 0$:
 
-The Exponential distribution has a remarkable property: **the future is independent of the past**. If you've already been waiting for time $s$ without an event occurring, the distribution of the remaining waiting time is exactly the same as if you had just started waiting.
+$$
+P(X > s + t \mid X > s) = P(X > t)
+$$
 
-!!! info "Memoryless Property"
-    If $X \sim \text{Exp}(\lambda)$, then for all $s, t \geq 0$:
+Equivalently, if no event has occurred by time $s$, the remaining time until the first event has the same $\text{Exp}(\lambda)$ distribution -- the process "restarts" from scratch.
 
-    $$P(X > s + t \mid X > s) = P(X > t)$$
+**Uniqueness.** The Exponential distribution is the **only** continuous distribution with this property. Similarly, the Geometric distribution is the only discrete distribution with the memoryless property.
 
-    Equivalently: given that no event has occurred by time $s$, the remaining time until the first event has the same $\text{Exp}(\lambda)$ distribution.
+## Explanation
 
-### Proof
+### Proof of the Memoryless Property
 
-$$P(X > s + t \mid X > s) = \frac{P(X > s + t)}{P(X > s)} = \frac{e^{-\lambda(s+t)}}{e^{-\lambda s}} = e^{-\lambda t} = P(X > t)$$
+The proof is a direct computation using the survival function $\bar{F}(t) = e^{-\lambda t}$:
+
+$$
+P(X > s + t \mid X > s) = \frac{P(X > s + t)}{P(X > s)} = \frac{e^{-\lambda(s+t)}}{e^{-\lambda s}} = e^{-\lambda t} = P(X > t)
+$$
 
 The key is the multiplicative property of the exponential function: $e^{-\lambda(s+t)} = e^{-\lambda s} \cdot e^{-\lambda t}$.
 
-## Uniqueness
+### Proof of Uniqueness
 
-The Exponential distribution is the **only continuous distribution** with the memoryless property. Similarly, the Geometric distribution is the only discrete distribution with this property.
+Suppose $X$ is a continuous, positive random variable satisfying $P(X > s + t \mid X > s) = P(X > t)$ for all $s, t \geq 0$. Writing $\bar{F}(t) = P(X > t)$, the memoryless property implies the **functional equation**
 
-!!! note "Characterization Theorem"
-    If $X$ is a continuous, positive random variable satisfying $P(X > s + t \mid X > s) = P(X > t)$ for all $s, t \geq 0$, then $X \sim \text{Exp}(\lambda)$ for some $\lambda > 0$.
+$$
+\bar{F}(s + t) = \bar{F}(s) \cdot \bar{F}(t)
+$$
 
-### Proof Sketch
+for all $s, t \geq 0$. The only continuous solutions with $\bar{F}(0) = 1$ and $\bar{F}(t) \to 0$ as $t \to \infty$ are $\bar{F}(t) = e^{-\lambda t}$ for some $\lambda > 0$. This is Cauchy's exponential equation. Therefore $X \sim \text{Exp}(\lambda)$.
 
-The memoryless property implies that the survival function satisfies:
+### Constant Hazard Rate
 
-$$\bar{F}(s + t) = \bar{F}(s) \cdot \bar{F}(t)$$
+The **hazard rate** (or failure rate) of a continuous distribution is
 
-The only continuous solutions to this functional equation (Cauchy's exponential equation) with $\bar{F}(0) = 1$ and $\bar{F}(t) \to 0$ are $\bar{F}(t) = e^{-\lambda t}$ for $\lambda > 0$.
+$$
+h(t) = \frac{f(t)}{\bar{F}(t)}
+$$
 
-## Interpretation and Consequences
+For the Exponential distribution:
 
-### "Fresh Start" Property
+$$
+h(t) = \frac{\lambda e^{-\lambda t}}{e^{-\lambda t}} = \lambda
+$$
 
-At any point in time during a Poisson process, the time until the next event has distribution $\text{Exp}(\lambda)$, regardless of when the last event occurred. This is why Poisson processes are sometimes called "memoryless" or "without aftereffects."
+The hazard rate is **constant** -- the probability of failure in the next instant is always $\lambda \, dt$, regardless of how long the system has been running. A constant hazard rate is equivalent to the memoryless property.
+
+Distributions with *increasing* hazard rates model wear-out (e.g., Weibull with shape $> 1$), while *decreasing* hazard rates model infant mortality.
+
+### Fresh Start Property in Poisson Processes
+
+At any point in time during a Poisson process, the time until the next event has distribution $\text{Exp}(\lambda)$, regardless of when the last event occurred. This is why Poisson processes are sometimes called processes "without aftereffects."
 
 ### Minimum of Independent Exponentials
 
-If $X_1 \sim \text{Exp}(\lambda_1)$ and $X_2 \sim \text{Exp}(\lambda_2)$ are independent, then:
+If $X_1 \sim \text{Exp}(\lambda_1)$ and $X_2 \sim \text{Exp}(\lambda_2)$ are independent, then
 
-$$\min(X_1, X_2) \sim \text{Exp}(\lambda_1 + \lambda_2)$$
+$$
+\min(X_1, X_2) \sim \text{Exp}(\lambda_1 + \lambda_2)
+$$
 
-This follows because:
+**Proof.** By independence:
 
-$$P(\min(X_1, X_2) > t) = P(X_1 > t) P(X_2 > t) = e^{-\lambda_1 t} e^{-\lambda_2 t} = e^{-(\lambda_1 + \lambda_2)t}$$
+$$
+P(\min(X_1, X_2) > t) = P(X_1 > t) P(X_2 > t) = e^{-\lambda_1 t} e^{-\lambda_2 t} = e^{-(\lambda_1 + \lambda_2)t}
+$$
 
-### Hazard Rate
+which is the survival function of $\text{Exp}(\lambda_1 + \lambda_2)$.
 
-The **hazard rate** (or failure rate) of the Exponential distribution is constant:
+This generalizes: the minimum of $n$ independent exponentials with rates $\lambda_1, \ldots, \lambda_n$ is $\text{Exp}(\lambda_1 + \cdots + \lambda_n)$. The rates add because competing Poisson processes merge into a single process with the combined rate.
 
-$$h(t) = \frac{f(t)}{\bar{F}(t)} = \frac{\lambda e^{-\lambda t}}{e^{-\lambda t}} = \lambda$$
+## Examples
 
-A constant hazard rate is equivalent to the memoryless property. This means the Exponential distribution models situations where the probability of failure in the next instant is always the same, regardless of how long the system has been running.
+**Example 1.** A light bulb has lifetime $X \sim \text{Exp}(1/1000)$ (mean 1000 hours). Given that it has already lasted 800 hours, find the expected remaining lifetime.
 
-## Python Implementation
+By the memoryless property, the remaining lifetime is still $\text{Exp}(1/1000)$ with mean 1000 hours. The 800 hours already elapsed provide no information about the future.
+
+**Example 2.** Machines A and B have independent lifetimes $T_A \sim \text{Exp}(0.1)$ and $T_B \sim \text{Exp}(0.2)$ (rates in failures per year). Find the expected time until the first failure.
+
+$\min(T_A, T_B) \sim \text{Exp}(0.1 + 0.2) = \text{Exp}(0.3)$, so $E[\min(T_A, T_B)] = 1/0.3 \approx 3.33$ years.
+
+**Example 3.** Demonstrate the memoryless property and the minimum-of-exponentials result by simulation.
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
 
 np.random.seed(42)
+n_sim = 500_000
 lam = 1.0
-n_sim = 100000
 
-# Generate Exp(lambda) samples
+# --- Memoryless property ---
 X = np.random.exponential(1/lam, n_sim)
+s = 2.0
 
-# Demonstrate memoryless property
-s = 2.0  # condition on X > s
-X_conditional = X[X > s] - s  # remaining time given X > s
-X_unconditional = X  # unconditional distribution
+# Remaining time given X > s
+X_remaining = X[X > s] - s
 
-# Plot comparison
-fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+print("=== Memoryless Property ===")
+print(f"Unconditional mean:  {np.mean(X):.4f}  (theory {1/lam:.4f})")
+print(f"Remaining | X > {s}:  {np.mean(X_remaining):.4f}  (theory {1/lam:.4f})")
+print(f"Unconditional var:   {np.var(X):.4f}  (theory {1/lam**2:.4f})")
+print(f"Remaining var:       {np.var(X_remaining):.4f}  (theory {1/lam**2:.4f})")
 
-# Histogram comparison
-t_vals = np.linspace(0, 6, 200)
-axes[0].hist(X_unconditional, bins=80, density=True, alpha=0.5,
-             range=(0, 6), label='Unconditional X', color='blue')
-axes[0].hist(X_conditional, bins=80, density=True, alpha=0.5,
-             range=(0, 6), label=f'X - {s} | X > {s}', color='red')
-axes[0].plot(t_vals, lam * np.exp(-lam * t_vals), 'k-', lw=2,
-             label='Exp(1) PDF')
-axes[0].set_title('Memoryless Property Demonstration')
-axes[0].set_xlabel('t')
-axes[0].legend()
-axes[0].grid(True, alpha=0.3)
+# --- Minimum of exponentials ---
+lam1, lam2 = 0.1, 0.2
+T_A = np.random.exponential(1/lam1, n_sim)
+T_B = np.random.exponential(1/lam2, n_sim)
+T_min = np.minimum(T_A, T_B)
 
-# Survival function comparison
-t_grid = np.linspace(0, 5, 100)
-surv_uncond = np.array([np.mean(X > t) for t in t_grid])
-surv_cond = np.array([np.mean(X_conditional > t) for t in t_grid])
-surv_theory = np.exp(-lam * t_grid)
+print("\n=== Minimum of Exponentials ===")
+print(f"E[min(T_A, T_B)]: sim={np.mean(T_min):.4f}, "
+      f"theory={1/(lam1+lam2):.4f}")
+print(f"Var[min(T_A,T_B)]: sim={np.var(T_min):.4f}, "
+      f"theory={1/(lam1+lam2)**2:.4f}")
 
-axes[1].plot(t_grid, surv_uncond, 'b-', lw=2, alpha=0.7,
-             label='P(X > t)')
-axes[1].plot(t_grid, surv_cond, 'r--', lw=2, alpha=0.7,
-             label=f'P(X > {s}+t | X > {s})')
-axes[1].plot(t_grid, surv_theory, 'k:', lw=2,
-             label='e^{-λt} (theory)')
-axes[1].set_title('Survival Function Comparison')
-axes[1].set_xlabel('t')
-axes[1].set_ylabel('Probability')
-axes[1].legend()
-axes[1].grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('memoryless_property.png', dpi=150, bbox_inches='tight')
-plt.show()
+# Verify the distribution is Exp(0.3) by checking survival function
+t_test = 5.0
+surv_sim = np.mean(T_min > t_test)
+surv_theory = np.exp(-(lam1 + lam2) * t_test)
+print(f"P(min > {t_test}): sim={surv_sim:.4f}, theory={surv_theory:.4f}")
 ```
