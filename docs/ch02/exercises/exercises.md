@@ -1,8 +1,9 @@
-# Exercises
+# Chapter 2 Exercises — Probability
 
+Exercises covering sample spaces, events, set operations, the Kolmogorov axioms, classical probability, counting, and the birthday/ballot problems.
 
 !!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+    Exercise page — does not follow the five-section content structure (no Concept Definition, Explanation, or Diagram sections).
 
 ## Section 2.1: Sample Spaces and Events
 
