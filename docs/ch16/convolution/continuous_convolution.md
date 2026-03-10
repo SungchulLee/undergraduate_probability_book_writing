@@ -1,108 +1,84 @@
-# Convolution for Continuous Random Variables
+# Continuous Convolution
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+The PDF of a sum of independent continuous random variables is obtained by convolving their densities — integrating over all ways the parts can add up.
 
 ## Definition
 
-!!! info "Convolution (Continuous)"
-    If $X$ and $Y$ are **independent** continuous random variables, the **convolution** of their PDFs gives the PDF of $X + Y$:
+If $X$ and $Y$ are **independent** continuous random variables, the **convolution** of their PDFs gives the PDF of $X + Y$:
 
-    $$(f_X * f_Y)(a) = f_{X+Y}(a) = \int_{-\infty}^{\infty} f_X(b) \cdot f_Y(a - b) \, db$$
+$$
+f_{X+Y}(a) = (f_X * f_Y)(a) = \int_{-\infty}^{\infty} f_X(b) \cdot f_Y(a - b) \, db
+$$
 
-    The integral runs over all $b$ where both $f_X(b) > 0$ and $f_Y(a - b) > 0$.
+The integrand is nonzero only where both $f_X(b) > 0$ and $f_Y(a-b) > 0$.
 
-### CDF Version
-
-$$(F_X * F_Y)(a) = F_{X+Y}(a) = \int_{-\infty}^{\infty} F_Y(a - b) \, dF_X(b)$$
-
-where $dF_X(b) = f_X(b) \, db$ represents "the probability that $X$ falls in $[b, b+db]$."
+## Explanation
 
 ### Derivation
 
 Conditioning on $X = b$:
 
-$$f_{X+Y}(a) = \int_{-\infty}^{\infty} f_{Y}(a - b) \cdot \underbrace{f_X(b) \, db}_{P(b \leq X \leq b + db)}$$
+$$
+f_{X+Y}(a) = \int_{-\infty}^{\infty} f_Y(a - b) \cdot f_X(b) \, db
+$$
 
-This is the continuous analog of summing over all possible values of $X$ and computing the density of $Y = a - X$ at each.
+This sums the density of $Y = a - b$ weighted by the density of $X = b$ over all possible values of $b$.
 
-## Practical Computation
+### Finding Integration Limits
 
-The key challenge in computing convolutions is determining the **limits of integration**. The integrand is nonzero only where both:
+The main challenge is determining where the integrand is nonzero.
 
-- $f_X(b) > 0$: $b$ is in the support of $X$
-- $f_Y(a - b) > 0$: $a - b$ is in the support of $Y$
+**Strategy:**
 
-These two constraints together determine the effective limits.
+1. Write the supports: $b \in [x_{\min}, x_{\max}]$ and $a - b \in [y_{\min}, y_{\max}]$
+2. Solve for $b$: combine $x_{\min} \le b \le x_{\max}$ with $a - y_{\max} \le b \le a - y_{\min}$
+3. Take the intersection to get effective limits
 
-### Strategy
+The limits often depend on $a$, creating a piecewise formula.
 
-1. Write down the supports: $b \in [x_{\min}, x_{\max}]$ and $a - b \in [y_{\min}, y_{\max}]$
-2. Solve for $b$: combine $x_{\min} \leq b \leq x_{\max}$ with $a - y_{\max} \leq b \leq a - y_{\min}$
-3. Take the intersection to get the integration limits
+### Properties
 
-## Properties
+| Property | Statement |
+|:---|:---|
+| Commutativity | $f_X * f_Y = f_Y * f_X$ |
+| Associativity | $(f_X * f_Y) * f_Z = f_X * (f_Y * f_Z)$ |
+| MGF domain | $f_X * f_Y \leftrightarrow M_X(t) \cdot M_Y(t)$ |
+| Variance | $\operatorname{Var}(X+Y) = \operatorname{Var}(X) + \operatorname{Var}(Y)$ (independence) |
 
-1. **Commutativity:** $f_X * f_Y = f_Y * f_X$
-2. **Associativity:** $(f_X * f_Y) * f_Z = f_X * (f_Y * f_Z)$
-3. **Linearity of Expectation:** $E[X + Y] = E[X] + E[Y]$ (always, even without independence)
-4. **Variance Addition:** $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y)$ (requires independence)
-5. **MGF Multiplication:** $M_{X+Y}(t) = M_X(t) \cdot M_Y(t)$ (requires independence)
+Convolution in the density domain is multiplication in the MGF domain — analogous to the convolution theorem in signal processing.
 
-## Connection to MGFs
+## Examples
 
-Convolution in the "density domain" corresponds to **multiplication** in the "MGF domain":
+**Example.** $X, Y$ iid $\operatorname{Exp}(1)$. For $a \ge 0$:
 
-$$f_{X+Y} = f_X * f_Y \quad \longleftrightarrow \quad M_{X+Y}(t) = M_X(t) \cdot M_Y(t)$$
+$$
+f_{X+Y}(a) = \int_0^a e^{-b} \cdot e^{-(a-b)} \, db = e^{-a} \int_0^a db = a \, e^{-a}
+$$
 
-This is analogous to the convolution theorem in signal processing, where convolution in the time domain becomes multiplication in the frequency domain. When MGFs are available, multiplying them is often easier than computing the convolution integral.
-
-## Python Implementation
+This is the $\operatorname{Gamma}(2, 1)$ PDF.
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy import stats
 
 np.random.seed(42)
-n_sim = 100000
+n_sim = 100_000
 
-# Continuous convolution via simulation and numerical computation
-# Example: Sum of two independent Exp(1)
-lam = 1.0
-X = np.random.exponential(1/lam, n_sim)
-Y = np.random.exponential(1/lam, n_sim)
+X = np.random.exponential(1.0, n_sim)
+Y = np.random.exponential(1.0, n_sim)
 S = X + Y
 
-fig, ax = plt.subplots(1, 1, figsize=(8, 5))
+# Compare simulation with Gamma(2,1) theory
+a_vals = np.linspace(0, 8, 200)
+pdf_theory = stats.gamma.pdf(a_vals, a=2, scale=1.0)
 
-# Simulation histogram
-ax.hist(S, bins=80, density=True, alpha=0.5, color='steelblue',
-        label='Simulation of X+Y')
-
-# Theoretical: Exp(1) * Exp(1) = Gamma(2,1)
-a_vals = np.linspace(0, 10, 200)
-pdf_gamma = stats.gamma.pdf(a_vals, a=2, scale=1/lam)
-ax.plot(a_vals, pdf_gamma, 'r-', lw=2, label='Γ(2,1) PDF (theory)')
-
-# Numerical convolution
+# Numerical convolution on a grid
 dx = 0.01
-x_grid = np.arange(0, 10, dx)
-f_exp = lam * np.exp(-lam * x_grid)
+grid = np.arange(0, 10, dx)
+f_exp = np.exp(-grid)
 f_conv = np.convolve(f_exp, f_exp) * dx
-a_conv = np.arange(0, len(f_conv)) * dx
-ax.plot(a_conv[:len(a_vals)], f_conv[:len(a_vals)], 'g--', lw=2,
-        label='Numerical convolution')
 
-ax.set_title('Convolution: Exp(1) * Exp(1) = Γ(2,1)')
-ax.set_xlabel('a')
-ax.set_ylabel('f_{X+Y}(a)')
-ax.set_xlim(0, 10)
-ax.legend()
-ax.grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('continuous_convolution.png', dpi=150, bbox_inches='tight')
-plt.show()
+print(f"Simulated: mean={S.mean():.4f}, var={S.var():.4f}")
+print(f"Theory:    mean=2.0000, var=2.0000")
+print(f"Numerical convolution peak at a=1: {f_conv[100]:.4f}  (theory: {1*np.exp(-1):.4f})")
 ```

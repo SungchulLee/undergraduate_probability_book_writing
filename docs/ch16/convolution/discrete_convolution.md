@@ -1,102 +1,89 @@
-# Convolution for Discrete Random Variables
+# Discrete Convolution
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+The PMF of a sum of independent discrete random variables is obtained by convolving their individual PMFs — summing over all ways the parts can add up.
 
 ## Definition
 
-!!! info "Convolution (Discrete)"
-    If $X$ and $Y$ are **independent** discrete random variables, the **convolution** of their PMFs gives the PMF of $X + Y$:
+If $X$ and $Y$ are **independent** discrete random variables, the **convolution** of their PMFs gives the PMF of $X + Y$:
 
-    $$(p_X * p_Y)(a) = p_{X+Y}(a) = \sum_b p_X(b) \cdot p_Y(a - b)$$
+$$
+p_{X+Y}(a) = (p_X * p_Y)(a) = \sum_{b} p_X(b) \cdot p_Y(a - b)
+$$
 
-    The sum ranges over all values $b$ where both $p_X(b) > 0$ and $p_Y(a - b) > 0$.
-
-### Notation
+The sum ranges over all $b$ where both $p_X(b) > 0$ and $p_Y(a - b) > 0$.
 
 | Notation | Meaning |
 |:---:|:---|
-| $F_X * F_Y$ | CDF of $X + Y$ when $X, Y$ independent |
-| $p_X * p_Y$ | PMF of $X + Y$ when $X, Y$ independent |
-| $f_X * f_Y$ | PDF of $X + Y$ when $X, Y$ independent |
+| $p_X * p_Y$ | PMF of $X + Y$ (discrete) |
+| $f_X * f_Y$ | PDF of $X + Y$ (continuous) |
+| $F_X * F_Y$ | CDF of $X + Y$ |
+
+## Explanation
 
 ### Derivation
 
 By the law of total probability, conditioning on $X = b$:
 
-$$P(X + Y = a) = \sum_b P(X + Y = a \mid X = b) \cdot P(X = b)$$
-
-$$= \sum_b P(Y = a - b \mid X = b) \cdot P(X = b) = \sum_b p_Y(a - b) \cdot p_X(b)$$
+$$
+P(X + Y = a) = \sum_b P(Y = a - b \mid X = b) \cdot P(X = b) = \sum_b p_Y(a - b) \cdot p_X(b)
+$$
 
 The last step uses independence: $P(Y = a - b \mid X = b) = P(Y = a - b)$.
 
-## CDF Convolution
+### CDF Version
 
-The CDF version of convolution is:
+$$
+F_{X+Y}(a) = \sum_b F_Y(a - b) \cdot p_X(b)
+$$
 
-$$(F_X * F_Y)(a) = F_{X+Y}(a) = \sum_b F_Y(a - b) \cdot p_X(b)$$
+where the sum runs over all values $b$ in the support of $X$.
 
-where we sum over all values $b$ in the support of $X$, weighing $F_Y(a - b)$ by $P(X = b)$.
+### Properties
 
-## Properties of Convolution
+| Property | Statement |
+|:---|:---|
+| Commutativity | $p_X * p_Y = p_Y * p_X$ |
+| Associativity | $(p_X * p_Y) * p_Z = p_X * (p_Y * p_Z)$ |
+| Requires independence | Convolution gives $P(X+Y=a)$ only when $X \perp Y$ |
+| MGF domain | $p_X * p_Y \leftrightarrow M_X(t) \cdot M_Y(t)$ |
 
-1. **Commutativity:** $p_X * p_Y = p_Y * p_X$
-2. **Associativity:** $(p_X * p_Y) * p_Z = p_X * (p_Y * p_Z)$
-3. **Requires independence:** Convolution only gives the distribution of $X + Y$ when $X$ and $Y$ are independent
+Associativity means we can find the distribution of $X_1 + \cdots + X_n$ by convolving one pair at a time.
 
-Associativity means we can compute the distribution of $X_1 + X_2 + \cdots + X_n$ by convolving one distribution at a time.
+### Connection to MGFs
 
-## Python Implementation
+Convolution in the PMF domain corresponds to multiplication in the MGF domain:
+
+$$
+M_{X+Y}(t) = M_X(t) \cdot M_Y(t)
+$$
+
+When the MGF is available, multiplying is often simpler than computing the convolution sum directly.
+
+## Examples
+
+**Example.** Sum of two fair dice. Each die has PMF $p(k) = 1/6$ for $k = 1, \ldots, 6$.
+
+For the sum $S = X + Y$, the convolution gives $P(S = 7) = 6/36 = 1/6$ (the most likely outcome), since there are 6 pairs $(b, 7-b)$ with both values in $\{1,\ldots,6\}$.
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
 
-# Discrete convolution example: sum of two dice
-# X, Y ~ DiscreteUniform{1,2,3,4,5,6}
+np.random.seed(42)
 
-# PMFs (indexed 0-5 for values 1-6)
+# PMF of a single fair die (values 1-6)
 p = np.ones(6) / 6
 
-# Convolve to get PMF of X + Y (values 2 through 12)
+# Convolve to get PMF of X + Y (values 2-12)
 p_sum = np.convolve(p, p)
 values = np.arange(2, 13)
 
-fig, axes = plt.subplots(1, 2, figsize=(12, 5))
-
-# PMF of sum of two dice
-axes[0].bar(values, p_sum, color='steelblue', alpha=0.7, edgecolor='black')
-axes[0].set_title('PMF of Sum of Two Fair Dice')
-axes[0].set_xlabel('Sum')
-axes[0].set_ylabel('P(X+Y = k)')
-axes[0].set_xticks(values)
-axes[0].grid(True, alpha=0.3)
-
 # Verify via simulation
-np.random.seed(42)
-n_sim = 100000
+n_sim = 100_000
 X = np.random.randint(1, 7, n_sim)
 Y = np.random.randint(1, 7, n_sim)
 S = X + Y
-
 counts = np.bincount(S, minlength=13)[2:13]
 probs_sim = counts / n_sim
-
-axes[1].bar(values - 0.15, p_sum, 0.3, color='steelblue', alpha=0.7,
-            label='Convolution', edgecolor='black')
-axes[1].bar(values + 0.15, probs_sim, 0.3, color='orange', alpha=0.7,
-            label='Simulation', edgecolor='black')
-axes[1].set_title('Convolution vs Simulation')
-axes[1].set_xlabel('Sum')
-axes[1].set_ylabel('Probability')
-axes[1].set_xticks(values)
-axes[1].legend()
-axes[1].grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('discrete_convolution.png', dpi=150, bbox_inches='tight')
-plt.show()
 
 print("Sum | Convolution | Simulation")
 print("-" * 35)
