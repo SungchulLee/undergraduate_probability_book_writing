@@ -1,47 +1,62 @@
-# Marginal PDF from Joint PDF
+# Marginal PDF
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+The marginal PDF of a continuous random variable is obtained by integrating the joint PDF over all values of the other variable.
 
 ## Definition
 
-Given the joint PDF $f(x, y)$ of continuous random variables $(X, Y)$, the **marginal PDF** of $X$ is:
+Given the joint PDF $f_{X,Y}(x, y)$, the **marginal PDFs** are
 
-$$f_X(x) = \int_{-\infty}^{\infty} f(x, y) \, dy$$
+$$
+f_X(x) = \int_{-\infty}^{\infty} f_{X,Y}(x, y)\,dy, \qquad f_Y(y) = \int_{-\infty}^{\infty} f_{X,Y}(x, y)\,dx
+$$
 
-Similarly, the marginal PDF of $Y$ is:
+## Explanation
 
-$$f_Y(y) = \int_{-\infty}^{\infty} f(x, y) \, dx$$
+### Geometric Interpretation
 
-## Interpretation
+The marginal density $f_X(x)$ at a point $x$ is the total density along the vertical line at $x$ — the integral of the joint density surface along that line. This "projects" the two-dimensional density onto the $x$-axis.
 
-Marginalization integrates out the unwanted variable. Geometrically, the marginal density $f_X(x)$ at a point $x$ is the total "mass" along the vertical line at $x$, obtained by integrating the joint density along that line.
+### Integration Limits
 
-## Example: Uniform on the Triangle
+!!! warning "Limits depend on the support"
+    When the support of $(X, Y)$ is not a rectangle, the integration limits for $y$ depend on $x$ (and vice versa). Getting these limits correct is the main difficulty in marginal PDF computations.
 
-Let $(X, Y)$ be uniform on the triangle $\{(x,y) : 0 \le x \le 1, \, 0 \le y \le x\}$.
+## Examples
 
-The area of this triangle is $1/2$, so the joint PDF is:
+**Example.** $(X, Y)$ uniform on the triangle $\{0 \le y \le x \le 1\}$.
 
-$$f(x, y) = 2, \quad 0 \le y \le x \le 1$$
+Area $= 1/2$, so $f(x, y) = 2$ on the triangle.
 
-The marginal PDF of $X$ is:
+Marginal of $X$: for $0 \le x \le 1$,
 
-$$f_X(x) = \int_0^x 2 \, dy = 2x, \quad 0 \le x \le 1$$
+$$
+f_X(x) = \int_0^x 2\,dy = 2x
+$$
 
-The marginal PDF of $Y$ is:
+Marginal of $Y$: for $0 \le y \le 1$,
 
-$$f_Y(y) = \int_y^1 2 \, dx = 2(1 - y), \quad 0 \le y \le 1$$
+$$
+f_Y(y) = \int_y^1 2\,dx = 2(1 - y)
+$$
 
-## Continuous Analogue of the Table
+Verification: $\int_0^1 2x\,dx = 1$ and $\int_0^1 2(1-y)\,dy = 1$.
 
-The discrete "sum rows / sum columns" procedure corresponds to integration in the continuous case:
+```python
+from scipy import integrate
 
-| Operation | Discrete | Continuous |
-|---|---|---|
-| Marginal of $X$ | $p_X(x) = \sum_y p(x,y)$ | $f_X(x) = \int f(x,y) \, dy$ |
-| Marginal of $Y$ | $p_Y(y) = \sum_x p(x,y)$ | $f_Y(y) = \int f(x,y) \, dx$ |
+# f(x, y) = 2 on triangle 0 <= y <= x <= 1
+# Marginal of X: f_X(x) = 2x
+# Marginal of Y: f_Y(y) = 2(1-y)
 
-!!! tip "Key Point"
-    When computing marginal PDFs, the limits of integration must respect the support of the joint PDF. These limits often depend on the variable being kept.
+# Verify normalization
+norm_x, _ = integrate.quad(lambda x: 2*x, 0, 1)
+norm_y, _ = integrate.quad(lambda y: 2*(1-y), 0, 1)
+print(f"int f_X(x) dx = {norm_x:.4f}")
+print(f"int f_Y(y) dy = {norm_y:.4f}")
+
+# Verify joint normalization
+norm_joint, _ = integrate.dblquad(
+    lambda y, x: 2, 0, 1, lambda x: 0, lambda x: x
+)
+print(f"int int f(x,y) dy dx = {norm_joint:.4f}")
+```

@@ -1,65 +1,76 @@
 # Conditional PMF
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+The conditional PMF describes the distribution of one discrete random variable given the observed value of another — it is obtained by slicing and normalizing the joint PMF.
 
 ## Definition
 
-The **conditional PMF** of $X$ given $Y = y$ is:
+The **conditional PMF** of $X$ given $Y = y$ is
 
-$$p(x \mid y) = P(X = x \mid Y = y) = \frac{p(x, y)}{p_Y(y)}$$
+$$
+p_{X|Y}(x \mid y) = \frac{p_{X,Y}(x, y)}{p_Y(y)}, \qquad p_Y(y) > 0
+$$
 
-provided $P(Y = y) > 0$. Similarly:
+Similarly, $p_{Y|X}(y \mid x) = p_{X,Y}(x, y) / p_X(x)$.
 
-$$p(y \mid x) = P(Y = y \mid X = x) = \frac{p(x, y)}{p_X(x)}$$
+## Explanation
 
-## Interpretation: Slice and Normalize
+### Slice and Normalize
 
-The conditional PMF is obtained by a two-step procedure:
+1. **Slice:** Extract the row (or column) of the joint PMF table corresponding to the given value
+2. **Normalize:** Divide each entry by the row (or column) sum so the result sums to 1
 
-1. **Slice:** Restrict attention to the row (or column) of the joint PMF table corresponding to the given value.
-2. **Normalize:** Divide all entries in that slice by their sum so that the conditional probabilities add to 1.
+### Verification
 
-This is equivalent to "removing all masses except those on the line $Y = y$, then rescaling so the remaining masses sum to 1."
+$$
+\sum_x p_{X|Y}(x \mid y) = \sum_x \frac{p_{X,Y}(x, y)}{p_Y(y)} = \frac{p_Y(y)}{p_Y(y)} = 1
+$$
 
-## Worked Example
+### Connection to Independence
 
-From the joint PMF:
+If $X \perp Y$, then $p_{X|Y}(x \mid y) = p_X(x)$ — the conditional equals the marginal. Knowing $Y$ tells you nothing about $X$.
+
+## Examples
+
+**Example.** From the joint PMF:
 
 | | $x=0$ | $x=1$ | $x=2$ |
-|---|---|---|---|
+|:---|:---:|:---:|:---:|
 | $y=3$ | $1/10$ | $1/10$ | $1/10$ |
 | $y=2$ | $1/10$ | $0$ | $1/10$ |
 | $y=1$ | $0$ | $2/10$ | $1/10$ |
 | $y=0$ | $1/10$ | $0$ | $1/10$ |
 
-### Conditional PMF of X given Y = 1
+**Conditional of $X$ given $Y = 1$:** Row $y=1$ is $(0, 2/10, 1/10)$, row sum $= 3/10$.
 
-The $y=1$ row has entries: $0, \, 2/10, \, 1/10$. The row sum is $P(Y=1) = 3/10$.
+$$
+P(X=0 \mid Y=1) = 0, \quad P(X=1 \mid Y=1) = \frac{2}{3}, \quad P(X=2 \mid Y=1) = \frac{1}{3}
+$$
 
-$$P(X = 0 \mid Y = 1) = \frac{0}{3/10} = 0$$
+**Conditional of $Y$ given $X = 2$:** Column $x=2$ is $(1/10, 1/10, 1/10, 1/10)$, sum $= 4/10$.
 
-$$P(X = 1 \mid Y = 1) = \frac{2/10}{3/10} = \frac{2}{3}$$
+$$
+P(Y=k \mid X=2) = \frac{1}{4} \text{ for } k = 0, 1, 2, 3
+$$
 
-$$P(X = 2 \mid Y = 1) = \frac{1/10}{3/10} = \frac{1}{3}$$
+Given $X = 2$, the variable $Y$ is uniform on $\{0, 1, 2, 3\}$.
 
-**Verification:** $0 + 2/3 + 1/3 = 1$ ✓
+```python
+import numpy as np
 
-### Conditional PMF of Y given X = 2
+joint = np.array([
+    [1/10, 1/10, 1/10],  # y=3
+    [1/10, 0,    1/10],  # y=2
+    [0,    2/10, 1/10],  # y=1
+    [1/10, 0,    1/10],  # y=0
+])
 
-The $x=2$ column has entries: $1/10, \, 1/10, \, 1/10, \, 1/10$. The column sum is $P(X=2) = 4/10$.
+# Conditional of X given Y=1 (row index 2)
+row = joint[2, :]
+cond = row / row.sum()
+print("P(X | Y=1):", [f"{p:.4f}" for p in cond])
 
-$$P(Y = 0 \mid X = 2) = \frac{1/10}{4/10} = \frac{1}{4}$$
-
-$$P(Y = 1 \mid X = 2) = \frac{1/10}{4/10} = \frac{1}{4}$$
-
-$$P(Y = 2 \mid X = 2) = \frac{1/10}{4/10} = \frac{1}{4}$$
-
-$$P(Y = 3 \mid X = 2) = \frac{1/10}{4/10} = \frac{1}{4}$$
-
-Given $X = 2$, the variable $Y$ is uniformly distributed over $\{0, 1, 2, 3\}$.
-
-## Connection to Independence
-
-If $X$ and $Y$ are independent, then $p(x \mid y) = p_X(x)$ — the conditional PMF equals the marginal PMF, meaning knowing $Y$ provides no information about $X$.
+# Conditional of Y given X=2 (column index 2)
+col = joint[:, 2]
+cond_y = col / col.sum()
+print("P(Y | X=2):", [f"{p:.4f}" for p in cond_y])
+```
