@@ -1,102 +1,60 @@
-# Variance: Definition and Computation
+# Variance
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+Variance measures the spread of a distribution around its mean — the expected squared deviation from the center.
 
 ## Definition
 
-The **variance** of a random variable $X$ is
+The **variance** of a random variable $X$ with mean $\mu = E[X]$ is
 
 $$
-\text{Var}(X) = E\left[(X - E[X])^2\right] = E\left[(X - \mu)^2\right]
+\text{Var}(X) = E[(X - \mu)^2]
 $$
 
-where $\mu = E[X]$.
+**Discrete:** $\text{Var}(X) = \sum_x (x - \mu)^2\,p(x)$
 
-Variance measures the **spread** or **dispersion** of the distribution around its mean. It is always non-negative: $\text{Var}(X) \geq 0$.
+**Continuous:** $\text{Var}(X) = \int_{-\infty}^{\infty}(x - \mu)^2\,f(x)\,dx$
 
----
+## Explanation
 
-## Computing Variance
+### Properties
 
-### Discrete Case
+1. $\text{Var}(X) \ge 0$, with equality iff $X$ is constant a.s.
+2. $\text{Var}(c) = 0$
+3. $\text{Var}(aX + b) = a^2\,\text{Var}(X)$ (constants shift the mean but only scaling affects spread)
+4. $\text{Var}(X)$ exists iff $E[X^2] < \infty$
+
+### Shortcut Formula
 
 $$
-\text{Var}(X) = \sum_x (x - \mu)^2 \, p(x)
+\text{Var}(X) = E[X^2] - (E[X])^2
 $$
 
-### Continuous Case
+Often easier to compute since it avoids centering inside the square.
 
-$$
-\text{Var}(X) = \int_{-\infty}^{\infty} (x - \mu)^2 \, f(x) \, dx
-$$
-
----
+!!! warning "Numerical caution"
+    The shortcut formula can suffer from catastrophic cancellation when $E[X^2]$ and $(E[X])^2$ are large and close. For numerical work, use stable one-pass algorithms.
 
 ## Examples
 
-### Bernoulli Distribution
+**Example 1.** $X \sim \text{Bern}(p)$: $E[X] = p$, $E[X^2] = p$, so $\text{Var}(X) = p - p^2 = p(1-p)$.
 
-If $X \sim \text{Bernoulli}(p)$, then $\mu = p$ and
+**Example 2.** Fair die: $E[X] = 3.5$, $E[X^2] = 91/6$, so $\text{Var}(X) = 91/6 - 12.25 = 35/12 \approx 2.917$.
 
-$$
-\text{Var}(X) = (0-p)^2(1-p) + (1-p)^2 p = p^2(1-p) + (1-p)^2 p = p(1-p) = pq
-$$
-
-### Fair Die
-
-If $X$ is a fair die roll, $\mu = 3.5$ and
-
-$$
-\text{Var}(X) = \frac{1}{6}\sum_{k=1}^6 (k - 3.5)^2 = \frac{(2.5)^2 + (1.5)^2 + (0.5)^2 + (0.5)^2 + (1.5)^2 + (2.5)^2}{6} = \frac{17.5}{6} \approx 2.917
-$$
-
-### Continuous Uniform
-
-If $X \sim \text{Uniform}(a,b)$, then
-
-$$
-\text{Var}(X) = \frac{(b-a)^2}{12}
-$$
-
----
-
-## Properties
-
-1. $\text{Var}(X) \geq 0$, with equality iff $X$ is constant with probability 1
-
-2. $\text{Var}(c) = 0$ for any constant $c$
-
-3. $\text{Var}(X)$ exists iff $E[X^2] < \infty$
-
----
-
-## Python Implementation
+**Example 3.** $X \sim \text{Uniform}(a,b)$: $\text{Var}(X) = (b-a)^2/12$.
 
 ```python
 import numpy as np
 
-# Bernoulli variance
-p = 0.3
-var_bernoulli = p * (1 - p)
-print(f"Var(Bernoulli({p})) = {var_bernoulli}")
-
-# Fair die variance
+# Fair die
 values = np.arange(1, 7)
-probs = np.ones(6) / 6
-mu = np.sum(values * probs)
-var_die = np.sum((values - mu)**2 * probs)
-print(f"Var(fair die) = {var_die:.4f}")  # 2.9167
+E_X = values.mean()
+E_X2 = (values**2).mean()
+print(f"Var(die) = {E_X2 - E_X**2:.4f}")
 
-# Uniform variance
-a, b = 0, 1
-var_uniform = (b - a)**2 / 12
-print(f"Var(Uniform({a},{b})) = {var_uniform:.4f}")
+# Bernoulli
+p = 0.3
+print(f"Var(Bern({p})) = {p*(1-p):.4f}")
 
-# Monte Carlo
-np.random.seed(42)
-N = 1_000_000
-samples = np.random.randint(1, 7, N)
-print(f"MC Var(die) = {np.var(samples):.4f}")
+# Uniform(0,1)
+print(f"Var(U(0,1)) = {1/12:.4f}")
 ```

@@ -1,88 +1,59 @@
-# Var(X) = E[X²] − (E[X])² Formula
+# Variance Shortcut Formula
 
+The identity $\text{Var}(X) = E[X^2] - (E[X])^2$ converts a variance computation into two expectation computations, avoiding the need to center first.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
-
-## The Shortcut Formula
+## Definition
 
 $$
 \text{Var}(X) = E[X^2] - (E[X])^2
 $$
 
-This is often easier to compute than the definition $E[(X - \mu)^2]$ because it avoids subtracting the mean inside the squared term.
+Equivalently, $E[X^2] = \text{Var}(X) + (E[X])^2$, which shows that the second moment always exceeds the squared mean (unless $X$ is constant).
 
----
+## Explanation
 
-## Proof
+### Proof
 
 $$
-\text{Var}(X) = E[(X - \mu)^2] = E[X^2 - 2\mu X + \mu^2] = E[X^2] - 2\mu E[X] + \mu^2 = E[X^2] - \mu^2
+E[(X-\mu)^2] = E[X^2 - 2\mu X + \mu^2] = E[X^2] - 2\mu\,E[X] + \mu^2 = E[X^2] - \mu^2
 $$
 
----
+### Factorial Moment Trick
+
+For integer-valued variables, the **factorial moment** $E[X(X-1)] = E[X^2] - E[X]$ is often easier to compute. Then:
+
+$$
+E[X^2] = E[X(X-1)] + E[X], \qquad \text{Var}(X) = E[X(X-1)] + E[X] - (E[X])^2
+$$
 
 ## Examples
 
-### Bernoulli
-
-$E[X] = p$, $E[X^2] = 0^2(1-p) + 1^2 p = p$
+**Example 1 (Geometric).** $X \sim \text{Geo}(p)$: $E[X] = 1/p$, $E[X^2] = (2-p)/p^2$.
 
 $$
-\text{Var}(X) = p - p^2 = p(1-p) = pq
+\text{Var}(X) = \frac{2-p}{p^2} - \frac{1}{p^2} = \frac{1-p}{p^2}
 $$
 
-### Geometric
-
-If $X \sim \text{Geo}(p)$, we can show $E[X] = 1/p$ and $E[X^2] = (2-p)/p^2$, giving
+**Example 2 (Poisson).** $X \sim \text{Poi}(\lambda)$: $E[X] = \lambda$, $E[X(X-1)] = \lambda^2$.
 
 $$
-\text{Var}(X) = \frac{2-p}{p^2} - \frac{1}{p^2} = \frac{1-p}{p^2} = \frac{q}{p^2}
+E[X^2] = \lambda^2 + \lambda, \qquad \text{Var}(X) = \lambda^2 + \lambda - \lambda^2 = \lambda
 $$
 
-### Poisson
-
-If $X \sim \text{Poisson}(\lambda)$, then $E[X] = \lambda$ and $E[X(X-1)] = \lambda^2$, so $E[X^2] = \lambda^2 + \lambda$, giving
-
-$$
-\text{Var}(X) = \lambda^2 + \lambda - \lambda^2 = \lambda
-$$
-
----
-
-## Important Warning
-
-!!! warning "Numerical Instability"
-    While $E[X^2] - (E[X])^2$ is algebraically convenient, it can suffer from **catastrophic cancellation** in numerical computations when $E[X^2]$ and $(E[X])^2$ are both large and close in value. For numerical computation, use the definition form or a numerically stable algorithm.
-
----
-
-## Python Implementation
+For Poisson, mean equals variance.
 
 ```python
 import numpy as np
 
-# Shortcut formula for fair die
-values = np.arange(1, 7)
-probs = np.ones(6) / 6
-
-E_X = np.sum(values * probs)
-E_X2 = np.sum(values**2 * probs)
-var_shortcut = E_X2 - E_X**2
-
-print(f"E[X] = {E_X}")
-print(f"E[X²] = {E_X2:.4f}")
-print(f"Var(X) = E[X²] - (E[X])² = {E_X2:.4f} - {E_X**2:.4f} = {var_shortcut:.4f}")
-
-# Verify with definition
-var_def = np.sum((values - E_X)**2 * probs)
-print(f"Var(X) via definition = {var_def:.4f}")
-
-# Poisson example
+# Poisson: Var = lambda
 lam = 5.0
 np.random.seed(42)
 samples = np.random.poisson(lam, 1_000_000)
-print(f"\nPoisson(λ={lam}):")
-print(f"Theoretical Var = {lam}")
-print(f"MC Var = {np.var(samples):.4f}")
+print(f"Poisson({lam}): theory Var={lam}, MC Var={samples.var():.4f}")
+
+# Geometric: Var = (1-p)/p^2
+p = 0.3
+theory_var = (1 - p) / p**2
+samples = np.random.geometric(p, 1_000_000)
+print(f"Geo({p}): theory Var={theory_var:.4f}, MC Var={samples.var():.4f}")
 ```

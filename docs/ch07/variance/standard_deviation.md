@@ -1,67 +1,69 @@
 # Standard Deviation
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+The standard deviation is the square root of the variance — it measures spread in the same units as the random variable itself.
 
 ## Definition
-
-The **standard deviation** of a random variable $X$ is
 
 $$
 \text{SD}(X) = \sigma_X = \sqrt{\text{Var}(X)}
 $$
 
-Standard deviation has the same units as $X$, making it more interpretable than variance (which has squared units).
+## Explanation
 
----
+### Why Take the Square Root
 
-## Interpretation
+Variance has squared units (if $X$ is in dollars, $\text{Var}(X)$ is in dollars$^2$). The standard deviation restores the original units, making it directly comparable to the mean and to observed values.
 
-The standard deviation measures the "typical" distance of $X$ from its mean. By Chebyshev's inequality, at least $1 - 1/k^2$ of the probability lies within $k$ standard deviations of the mean:
+### Chebyshev's Bound
+
+For any distribution, at least $1 - 1/k^2$ of the probability lies within $k$ standard deviations of the mean:
 
 $$
-P(|X - \mu| \geq k\sigma) \leq \frac{1}{k^2}
+P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2}
 $$
 
-For the normal distribution, the probabilities are much tighter:
+### Normal Distribution Rule of Thumb
 
-| Range | Probability |
+| Range | Normal probability |
 |:---:|:---:|
-| $\mu \pm 1\sigma$ | $\approx 68.3\%$ |
-| $\mu \pm 2\sigma$ | $\approx 95.4\%$ |
-| $\mu \pm 3\sigma$ | $\approx 99.7\%$ |
+| $\mu \pm 1\sigma$ | $68.3\%$ |
+| $\mu \pm 2\sigma$ | $95.4\%$ |
+| $\mu \pm 3\sigma$ | $99.7\%$ |
 
----
-
-## Common Standard Deviations
+### Common Standard Deviations
 
 | Distribution | $\text{SD}(X)$ |
-|:---:|:---:|
-| $\text{Bernoulli}(p)$ | $\sqrt{pq}$ |
-| $\text{Binomial}(n,p)$ | $\sqrt{npq}$ |
-| $\text{Poisson}(\lambda)$ | $\sqrt{\lambda}$ |
-| $\text{Geometric}(p)$ | $\sqrt{q}/p$ |
+|:-------------|:----------------|
+| $\text{Bern}(p)$ | $\sqrt{p(1-p)}$ |
+| $\text{Bin}(n,p)$ | $\sqrt{np(1-p)}$ |
+| $\text{Poi}(\lambda)$ | $\sqrt{\lambda}$ |
+| $\text{Geo}(p)$ | $\sqrt{1-p}/p$ |
 | $\text{Uniform}(a,b)$ | $(b-a)/\sqrt{12}$ |
-| $\text{Exponential}(\lambda)$ | $1/\lambda$ |
-| $N(\mu, \sigma^2)$ | $\sigma$ |
+| $\text{Exp}(\lambda)$ | $1/\lambda$ |
+| $N(\mu,\sigma^2)$ | $\sigma$ |
 
----
+## Examples
 
-## Python Implementation
+**Example.** $X \sim \text{Bin}(100, 0.3)$: $E[X] = 30$, $\text{SD}(X) = \sqrt{21} \approx 4.58$.
+
+By Chebyshev: $P(|X - 30| \ge 14) \le 21/196 \approx 0.107$.
+
+By normal approximation: $P(|X - 30| \ge 14) \approx P(|Z| \ge 3.06) \approx 0.002$.
 
 ```python
 import numpy as np
 
-# Standard deviations of common distributions
-p = 0.3
-n = 100
-lam = 5.0
+n, p = 100, 0.3
+sd = np.sqrt(n * p * (1-p))
+print(f"Bin({n},{p}): SD = {sd:.4f}")
 
-print(f"SD(Bernoulli({p})) = {np.sqrt(p*(1-p)):.4f}")
-print(f"SD(Binomial({n},{p})) = {np.sqrt(n*p*(1-p)):.4f}")
-print(f"SD(Poisson({lam})) = {np.sqrt(lam):.4f}")
-print(f"SD(Geo({p})) = {np.sqrt(1-p)/p:.4f}")
-print(f"SD(Uniform(0,1)) = {1/np.sqrt(12):.4f}")
-print(f"SD(Exp({lam})) = {1/lam:.4f}")
+# Chebyshev bound for k=3
+k = 3
+print(f"Chebyshev P(|X-mu| >= {k}*SD): <= {1/k**2:.4f}")
+
+# MC verification
+np.random.seed(42)
+samples = np.random.binomial(n, p, 1_000_000)
+print(f"MC SD = {samples.std():.4f}")
+print(f"MC P(|X-30| >= 3*SD) = {np.mean(np.abs(samples - 30) >= 3*sd):.4f}")
 ```
