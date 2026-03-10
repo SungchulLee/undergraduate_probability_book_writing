@@ -1,69 +1,75 @@
 # Joint PMF
 
+The joint PMF describes the simultaneous behavior of two or more discrete random variables — it is the multivariate generalization of the PMF.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Random Vectors
+For discrete random variables $X$ and $Y$, the **joint PMF** is
 
-A **random vector** is a function that maps outcomes from a sample space to $\mathbb{R}^d$:
+$$
+p_{X,Y}(x, y) = P(X = x, Y = y)
+$$
 
-$$\mathbf{X} : \Omega \longrightarrow \mathbb{R}^d$$
+A valid joint PMF satisfies:
 
-For a pair of discrete random variables $(X, Y)$, the random vector maps each outcome $\omega$ to the point $(X(\omega), Y(\omega))$ in $\mathbb{R}^2$.
-
-## Joint Distribution via the Brick Analogy
-
-The **joint distribution** of $(X, Y)$ is defined by moving bricks from $\Omega$ to $\mathbb{R}^2$:
-
-- Each outcome $\omega$ has a brick with weight $P(\{\omega\})$.
-- The function $\mathbf{X}$ moves each brick from $\omega$ to $\mathbf{X}(\omega)$ in $\mathbb{R}^d$.
-- The total weight of all bricks in $\mathbb{R}^d$ is 1.
-- This weight distribution over $\mathbb{R}^d$ is the **joint distribution** of $\mathbf{X}$.
-
-## Definition of Joint PMF
-
-For discrete random variables $X$ and $Y$, the **joint PMF** is:
-
-$$p(x, y) = P(X = x, Y = y)$$
-
-This gives the weight of the brick at each point $(x, y)$ in $\mathbb{R}^2$.
-
-## Properties
-
-1. **Non-negativity:** $p(x, y) \ge 0$ for all $(x, y)$.
-2. **Normalization:** $\displaystyle\sum_x \sum_y p(x, y) = 1$.
-
-## Computing Probabilities
+1. **Non-negativity:** $p_{X,Y}(x, y) \ge 0$ for all $(x, y)$
+2. **Normalization:** $\displaystyle\sum_x \sum_y p_{X,Y}(x, y) = 1$
 
 For any set $A \subseteq \mathbb{R}^2$:
 
-$$P((X, Y) \in A) = \sum_{(x,y) \in A} p(x, y)$$
+$$
+P((X, Y) \in A) = \sum_{(x,y) \in A} p_{X,Y}(x, y)
+$$
 
-## Example: Coin Flips
+## Explanation
 
-Consider flipping a fair coin 3 times. Let $X$ = number of heads in the first two flips, and $Y$ = total number of heads.
+### Random Vectors
 
-The sample space and the mapping to $(X, Y)$:
+A **random vector** $(X, Y) : \Omega \to \mathbb{R}^2$ maps each outcome $\omega$ to the point $(X(\omega), Y(\omega))$. The joint distribution describes how probability mass is spread across $\mathbb{R}^2$.
 
-| Outcome | $X$ | $Y$ |
-|---------|-----|-----|
-| HHH | 2 | 3 |
-| HHT | 2 | 2 |
-| HTH | 1 | 2 |
-| HTT | 1 | 1 |
-| THH | 1 | 2 |
-| THT | 1 | 1 |
-| TTH | 0 | 1 |
-| TTT | 0 | 0 |
+In the brick analogy: each outcome $\omega$ carries a brick to the point $(X(\omega), Y(\omega))$ in the plane. The weight at each point $(x, y)$ is the joint PMF value $p_{X,Y}(x, y)$.
 
-The joint PMF table (each outcome has probability $1/8$):
+### Structural Zeros
+
+Some joint PMF entries may be zero not by coincidence but by necessity. If $Y \ge X$ always holds (as when $X$ counts a subset of what $Y$ counts), then $p_{X,Y}(x, y) = 0$ for all $y < x$. Recognizing structural zeros helps catch errors in table construction.
+
+### Joint PMF Determines Everything
+
+The joint PMF contains all probabilistic information about $(X, Y)$. From it you can derive:
+
+- Marginal PMFs (by summing rows or columns)
+- Conditional PMFs (by normalizing a row or column)
+- Independence (by checking if joint = product of marginals)
+
+## Examples
+
+**Example.** Flip a fair coin 3 times. Let $X$ = heads in first two flips, $Y$ = total heads.
 
 | | $X=0$ | $X=1$ | $X=2$ |
-|---|---|---|---|
+|:---|:---:|:---:|:---:|
 | $Y=3$ | 0 | 0 | $1/8$ |
 | $Y=2$ | 0 | $2/8$ | $1/8$ |
 | $Y=1$ | $1/8$ | $2/8$ | 0 |
 | $Y=0$ | $1/8$ | 0 | 0 |
 
-Note that $Y \ge X$ always holds (the total heads cannot be less than heads in the first two flips), so some entries are necessarily 0.
+Structural zeros: $Y < X$ is impossible, and $Y > X + 1$ is impossible (only one remaining flip). So $Y \in \{X, X+1\}$.
+
+$P(X = 1, Y = 2) = 2/8$ because two outcomes (HTH, THH) give $X=1, Y=2$.
+
+```python
+from itertools import product
+
+outcomes = list(product('HT', repeat=3))
+table = {}
+for w in outcomes:
+    x = w[:2].count('H')
+    y = w.count('H')
+    table[(x, y)] = table.get((x, y), 0) + 1/8
+
+print("Joint PMF table:")
+for y in range(3, -1, -1):
+    row = [f"{table.get((x, y), 0):.3f}" for x in range(3)]
+    print(f"  Y={y}: {row}")
+
+print(f"Sum = {sum(table.values()):.4f}")
+```
