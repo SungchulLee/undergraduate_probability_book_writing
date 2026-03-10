@@ -1,128 +1,149 @@
 # Continuous Uniform Distribution
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+The continuous uniform distribution models "pure randomness" on an interval, where every subinterval of a given length is equally likely.
 
 ## Definition
 
-!!! info "Continuous Uniform Distribution"
-    A continuous random variable $X$ has the **Uniform distribution** on the interval $(a, b)$, written $X \sim U(a, b)$, if its PDF is:
+A continuous random variable $X$ has the **Uniform distribution** on the interval $(a, b)$, written $X \sim U(a, b)$, if its PDF is:
 
-    $$f(x) = \frac{1}{b - a}, \quad a < x < b$$
+$$
+f(x) = \frac{1}{b - a}, \quad a < x < b
+$$
 
-    Every value in the interval $(a, b)$ is equally likely in the sense that the probability of falling in any subinterval depends only on the subinterval's length.
+The CDF is:
 
-### CDF
+$$
+F(x) = \begin{cases} 0 & x \leq a \\ \dfrac{x - a}{b - a} & a < x < b \\ 1 & x \geq b \end{cases}
+$$
 
-$$F(x) = \begin{cases} 0 & x \leq a \\ \dfrac{x - a}{b - a} & a < x < b \\ 1 & x \geq b \end{cases}$$
+The mean and variance are:
 
-### Intuition from the Poisson Process
+$$
+E[X] = \frac{a + b}{2}, \qquad \text{Var}(X) = \frac{(b - a)^2}{12}
+$$
 
-If a Poisson process $\text{NPP}(\lambda)$ has exactly one arrival in the interval $[a, b]$, then the position of that arrival is uniformly distributed on $[a, b]$. More generally, given $N([a,b]) = n$, the $n$ arrival positions are distributed as $n$ iid $U(a, b)$ random variables (after ordering, they become order statistics).
+The **standard uniform** $U(0, 1)$ has $f(x) = 1$ for $0 < x < 1$, $F(x) = x$ for $0 \leq x \leq 1$, mean $1/2$, and variance $1/12$.
 
-## Mean and Variance
+## Explanation
 
-!!! info "Moments of U(a, b)"
+### Derivation of the mean
 
-    $$E[X] = \frac{a + b}{2}, \qquad \text{Var}(X) = \frac{(b - a)^2}{12}$$
+$$
+E[X] = \int_a^b x \cdot \frac{1}{b - a} \, dx = \frac{1}{b - a} \left[\frac{x^2}{2}\right]_a^b = \frac{b^2 - a^2}{2(b-a)} = \frac{(b+a)(b-a)}{2(b-a)} = \frac{a + b}{2}
+$$
 
-### Derivation of the Mean
+The mean is simply the midpoint of the interval, which makes geometric sense: the density is symmetric about the center.
 
-$$E[X] = \int_a^b x f(x) \, dx = \frac{1}{b - a} \int_a^b x \, dx = \frac{1}{b - a} \left[\frac{x^2}{2}\right]_a^b = \frac{b^2 - a^2}{2(b-a)}$$
-
-Using the factorization $a^2 - b^2 = (a+b)(a-b)$:
-
-$$E[X] = \frac{(b+a)(b-a)}{2(b-a)} = \frac{a + b}{2}$$
-
-### Derivation of the Variance
+### Derivation of the variance
 
 First compute $E[X^2]$:
 
-$$E[X^2] = \int_a^b x^2 f(x) \, dx = \frac{1}{b - a} \int_a^b x^2 \, dx = \frac{1}{b - a} \left[\frac{x^3}{3}\right]_a^b = \frac{b^3 - a^3}{3(b-a)}$$
+$$
+E[X^2] = \frac{1}{b - a} \int_a^b x^2 \, dx = \frac{b^3 - a^3}{3(b-a)} = \frac{a^2 + ab + b^2}{3}
+$$
 
-Using the factorization $a^3 - b^3 = (a - b)(a^2 + ab + b^2)$:
+using the identity $b^3 - a^3 = (b - a)(b^2 + ab + a^2)$. Then:
 
-$$E[X^2] = \frac{(b - a)(b^2 + ab + a^2)}{3(b - a)} = \frac{a^2 + ab + b^2}{3}$$
+$$
+\text{Var}(X) = E[X^2] - (E[X])^2 = \frac{a^2 + ab + b^2}{3} - \frac{(a+b)^2}{4} = \frac{4(a^2 + ab + b^2) - 3(a^2 + 2ab + b^2)}{12} = \frac{(b - a)^2}{12}
+$$
 
-Therefore:
+### Connection to the Poisson process
 
-$$\text{Var}(X) = E[X^2] - (E[X])^2 = \frac{a^2 + ab + b^2}{3} - \frac{(a+b)^2}{4}$$
+If a Poisson process has exactly one arrival in the interval $[a, b]$, then the position of that arrival is uniformly distributed on $[a, b]$. More generally, given $N([a,b]) = n$ arrivals, the $n$ arrival positions (unordered) are iid $U(a, b)$.
 
-$$= \frac{4(a^2 + ab + b^2) - 3(a^2 + 2ab + b^2)}{12} = \frac{a^2 - 2ab + b^2}{12} = \frac{(b - a)^2}{12}$$
+### Linear transformation
 
-### Useful Algebraic Identities
+If $U \sim U(0, 1)$, then $X = a + (b - a)U \sim U(a, b)$. Conversely, if $X \sim U(a, b)$, then $(X - a)/(b - a) \sim U(0, 1)$. More generally, if $X \sim U(a, b)$ and $Y = cX + d$ with $c > 0$, then:
 
-The derivations above use two factoring identities that appear frequently:
+$$
+Y \sim U(ca + d, \; cb + d)
+$$
 
-$$a^2 - b^2 = (a + b)(a - b)$$
+### Symmetry
 
-$$a^3 - b^3 = (a - b)(a^2 + ab + b^2)$$
+If $X \sim U(a, b)$, then $a + b - X \sim U(a, b)$. In particular, if $U \sim U(0, 1)$, then $1 - U \sim U(0, 1)$. This reflection symmetry about the midpoint is useful in simulation: replacing $U$ by $1 - U$ does not change the distribution.
 
-Also useful: $a^3 + b^3 = (a + b)(a^2 - ab + b^2)$.
+## Examples
 
-## The Standard Uniform U(0, 1)
+**Example 1: Basic probability calculations.**
 
-The most important special case is $U(0, 1)$:
+Let $X \sim U(2, 8)$. Find $P(3 < X < 6)$ and $P(X > 5)$.
 
-$$f(x) = 1, \quad 0 < x < 1, \qquad F(x) = x, \quad 0 \leq x \leq 1$$
+$$
+P(3 < X < 6) = \frac{6 - 3}{8 - 2} = \frac{3}{6} = 0.5
+$$
 
-$$E[X] = \frac{1}{2}, \qquad \text{Var}(X) = \frac{1}{12}$$
+$$
+P(X > 5) = \frac{8 - 5}{8 - 2} = \frac{3}{6} = 0.5
+$$
 
-The standard uniform is the foundation for random number generation and simulation.
+```python
+from scipy import stats
 
-## Python Implementation
+a, b = 2, 8
+X = stats.uniform(loc=a, scale=b - a)
+
+p1 = X.cdf(6) - X.cdf(3)
+p2 = 1 - X.cdf(5)
+print(f"U({a}, {b}):")
+print(f"P(3 < X < 6) = (6 - 3) / (8 - 2) = {p1:.4f}")
+print(f"P(X > 5) = (8 - 5) / (8 - 2) = {p2:.4f}")
+print(f"E[X] = {X.mean():.4f}  (theory: {(a+b)/2})")
+print(f"Var(X) = {X.var():.4f}  (theory: {(b-a)**2/12:.4f})")
+```
+
+**Output:**
+```
+U(2, 8):
+P(3 < X < 6) = (6 - 3) / (8 - 2) = 0.5000
+P(X > 5) = (8 - 5) / (8 - 2) = 0.5000
+E[X] = 5.0000  (theory: 5.0)
+Var(X) = 3.0000  (theory: 3.0000)
+```
+
+**Example 2: Bus arrival.**
+
+A bus arrives every 15 minutes. You arrive at a random time. Let $W \sim U(0, 15)$ be your waiting time (in minutes). Find the probability you wait more than 10 minutes, and the expected waiting time.
+
+```python
+from scipy import stats
+
+W = stats.uniform(loc=0, scale=15)
+
+p = 1 - W.cdf(10)
+print(f"P(wait > 10 min) = {p:.4f}")
+print(f"E[W] = {W.mean():.2f} minutes")
+print(f"SD(W) = {W.std():.2f} minutes")
+```
+
+**Output:**
+```
+P(wait > 10 min) = 0.3333
+E[W] = 7.50 minutes
+SD(W) = 4.33 minutes
+```
+
+**Example 3: Simulation verification.**
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
-from scipy import stats
 
-fig, axes = plt.subplots(1, 3, figsize=(15, 4))
-
-# PDF and CDF for different intervals
-intervals = [(0, 1), (-2, 3), (1, 4)]
-colors = ['blue', 'red', 'green']
-
-for (a, b), color in zip(intervals, colors):
-    x = np.linspace(a - 1, b + 1, 300)
-    pdf = stats.uniform.pdf(x, loc=a, scale=b-a)
-    cdf = stats.uniform.cdf(x, loc=a, scale=b-a)
-
-    axes[0].plot(x, pdf, color=color, lw=2, label=f'U({a},{b})')
-    axes[1].plot(x, cdf, color=color, lw=2, label=f'U({a},{b})')
-
-axes[0].set_title('PDF of Uniform Distribution')
-axes[0].set_xlabel('x')
-axes[0].set_ylabel('f(x)')
-axes[0].legend()
-axes[0].grid(True, alpha=0.3)
-
-axes[1].set_title('CDF of Uniform Distribution')
-axes[1].set_xlabel('x')
-axes[1].set_ylabel('F(x)')
-axes[1].legend()
-axes[1].grid(True, alpha=0.3)
-
-# Verify mean and variance via simulation
 np.random.seed(42)
 n_sim = 100000
 a, b = 2, 8
 X = np.random.uniform(a, b, n_sim)
 
-axes[2].hist(X, bins=50, density=True, alpha=0.7, color='steelblue')
-axes[2].axvline(np.mean(X), color='red', lw=2, linestyle='--',
-                label=f'Sample mean = {np.mean(X):.3f}')
-axes[2].axvline((a+b)/2, color='black', lw=2, linestyle=':',
-                label=f'Theory mean = {(a+b)/2:.3f}')
-axes[2].set_title(f'U({a},{b}) Simulation')
-axes[2].legend()
-axes[2].grid(True, alpha=0.3)
+print(f"U({a}, {b}) simulation (n = {n_sim}):")
+print(f"  Mean:  {X.mean():.4f}  (theory: {(a+b)/2:.4f})")
+print(f"  Var:   {X.var():.4f}  (theory: {(b-a)**2/12:.4f})")
+print(f"  P(3<X<6): {np.mean((X > 3) & (X < 6)):.4f}  (theory: 0.5000)")
+```
 
-plt.tight_layout()
-plt.savefig('uniform_definition.png', dpi=150, bbox_inches='tight')
-plt.show()
-
-print(f"U({a},{b}): E[X] = {np.mean(X):.4f} (theory {(a+b)/2:.4f})")
-print(f"U({a},{b}): Var(X) = {np.var(X):.4f} (theory {(b-a)**2/12:.4f})")
+**Output:**
+```
+U(2, 8) simulation (n = 100000):
+  Mean:  4.9978  (theory: 5.0000)
+  Var:   2.9964  (theory: 3.0000)
+  P(3<X<6): 0.4997  (theory: 0.5000)
 ```

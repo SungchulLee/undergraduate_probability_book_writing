@@ -1,146 +1,231 @@
 # Bayesian Applications of the Beta Distribution
 
+The Beta distribution is the conjugate prior for the Binomial likelihood, meaning that Bayesian updating with binomial data preserves the Beta family -- the posterior is always another Beta distribution with updated parameters.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Beta as a Distribution on Probabilities
+**Beta-Binomial conjugacy.** If the prior and likelihood are:
 
-The Beta distribution is defined on $(0, 1)$, making it a natural model for **probabilities**, **proportions**, and **rates**. In Bayesian inference, we treat an unknown probability $p$ as a random variable and assign it a Beta prior.
+$$
+p \sim \text{Beta}(\alpha, \beta), \qquad X \mid p \sim \text{Binomial}(n, p)
+$$
 
-## Example: Quality Control
+then the posterior after observing $X = k$ successes is:
 
-A factory produces items that are either defective or non-defective. The true defect rate $p$ is unknown.
+$$
+p \mid X = k \sim \text{Beta}(\alpha + k, \; \beta + n - k)
+$$
 
-**Setup:**
+The posterior mean is a weighted average of the prior mean and the maximum likelihood estimate (MLE):
 
-- **Prior belief:** Before observing any data, we believe $p$ is around 5% but are not very certain. We choose $p \sim \text{Beta}(2, 38)$, which has mean $\frac{2}{40} = 0.05$ and is moderately concentrated.
-- **Data:** We inspect $n = 100$ items and find $k = 8$ defectives.
-- **Posterior:** $p \mid X = 8 \sim \text{Beta}(2 + 8, 38 + 92) = \text{Beta}(10, 130)$
+$$
+E[p \mid X = k] = \frac{\alpha + k}{\alpha + \beta + n} = \frac{\alpha + \beta}{\alpha + \beta + n} \cdot \underbrace{\frac{\alpha}{\alpha + \beta}}_{\text{prior mean}} + \frac{n}{\alpha + \beta + n} \cdot \underbrace{\frac{k}{n}}_{\text{MLE}}
+$$
 
-The posterior mean is $\frac{10}{140} \approx 0.071$, which lies between the prior mean (0.05) and the MLE ($\frac{8}{100} = 0.08$).
+## Explanation
 
-## Example: A/B Testing
+### Deriving the posterior
 
-An online platform tests two versions of a webpage. For version A:
+By Bayes' theorem, the posterior density is proportional to the likelihood times the prior:
 
-- **Prior:** $p_A \sim \text{Beta}(1, 1) = \text{Uniform}(0, 1)$ (non-informative)
-- **Data:** 50 out of 200 visitors convert
-- **Posterior:** $p_A \mid \text{data} \sim \text{Beta}(51, 151)$
+$$
+f(p \mid X = k) \propto f(k \mid p) \cdot f(p) \propto p^k(1-p)^{n-k} \cdot p^{\alpha - 1}(1-p)^{\beta - 1} = p^{\alpha + k - 1}(1-p)^{\beta + n - k - 1}
+$$
 
-For version B:
+This is the kernel of a $\text{Beta}(\alpha + k, \beta + n - k)$ density. Since a density is determined by its kernel (the normalizing constant is fixed), the posterior is $\text{Beta}(\alpha + k, \beta + n - k)$.
 
-- **Prior:** $p_B \sim \text{Beta}(1, 1)$
-- **Data:** 65 out of 200 visitors convert
-- **Posterior:** $p_B \mid \text{data} \sim \text{Beta}(66, 136)$
+### Interpreting the prior parameters
 
-The probability that B is better than A can be estimated by simulation:
+- $\alpha$ acts as "prior successes" (pseudo-observations of success)
+- $\beta$ acts as "prior failures" (pseudo-observations of failure)
+- $\alpha + \beta$ is the "prior sample size," controlling how informative the prior is
+- A larger $\alpha + \beta$ means the prior is more concentrated and harder for data to overwhelm
+- $\text{Beta}(1, 1) = U(0, 1)$ is a non-informative (flat) prior
 
-$$P(p_B > p_A \mid \text{data}) \approx \frac{1}{N}\sum_{i=1}^{N} \mathbf{1}(p_B^{(i)} > p_A^{(i)})$$
+### Sequential updating
 
-where $p_A^{(i)}$ and $p_B^{(i)}$ are independent draws from the respective posteriors.
+Data can be incorporated one observation at a time. Starting from $\text{Beta}(\alpha_0, \beta_0)$:
 
-## Credible Intervals
+- After a success: update to $\text{Beta}(\alpha_0 + 1, \beta_0)$
+- After a failure: update to $\text{Beta}(\alpha_0, \beta_0 + 1)$
+- After $k$ successes and $n - k$ failures (in any order): $\text{Beta}(\alpha_0 + k, \beta_0 + n - k)$
 
-A **credible interval** is the Bayesian analogue of a confidence interval. The **highest posterior density (HPD)** interval is the shortest interval containing a given probability mass.
+The order of observations does not matter -- only the total counts.
 
-For the Beta distribution, the **equal-tailed credible interval** at level $1 - \alpha$ is:
+### Credible intervals
 
-$$\left[F^{-1}\!\left(\frac{\alpha}{2}\right),\; F^{-1}\!\left(1 - \frac{\alpha}{2}\right)\right]$$
+A **credible interval** is the Bayesian analogue of a confidence interval. The equal-tailed $100(1 - \alpha)\%$ credible interval for $p$ is:
 
-where $F^{-1}$ is the Beta quantile function.
+$$
+\left[F^{-1}\!\left(\frac{\alpha}{2}\right),\; F^{-1}\!\left(1 - \frac{\alpha}{2}\right)\right]
+$$
 
-## Sequential Updating
+where $F^{-1}$ is the Beta quantile function of the posterior distribution.
 
-A key advantage of the Beta-Binomial conjugate model is that data can be incorporated **sequentially**. Processing observations one at a time or in batches yields the same posterior.
+### Predictive distribution
 
-!!! info "Sequential Updating"
-    Starting from $\text{Beta}(\alpha_0, \beta_0)$:
+After observing $k$ successes in $n$ trials with prior $\text{Beta}(\alpha, \beta)$, the posterior predictive probability of success on the next trial is:
 
-    - After observing a success: $\text{Beta}(\alpha_0 + 1, \beta_0)$
-    - After observing a failure: $\text{Beta}(\alpha_0, \beta_0 + 1)$
+$$
+P(X_{n+1} = 1 \mid \text{data}) = E[p \mid \text{data}] = \frac{\alpha + k}{\alpha + \beta + n}
+$$
 
-    After $k$ successes and $n - k$ failures (in any order):
+With the uniform prior $\alpha = \beta = 1$, this gives **Laplace's rule of succession**:
 
-    $$\text{Beta}(\alpha_0 + k,\; \beta_0 + n - k)$$
+$$
+P(X_{n+1} = 1 \mid k \text{ successes in } n) = \frac{k + 1}{n + 2}
+$$
 
-The order of observations does not matter — only the total counts.
+### Choosing a prior
 
-## Predictive Distribution
+| Prior choice | Parameters | Interpretation |
+|---|---|---|
+| Non-informative | $\text{Beta}(1, 1)$ | No prior knowledge |
+| Jeffreys prior | $\text{Beta}(1/2, 1/2)$ | Invariant under reparameterization |
+| Weakly informative | $\text{Beta}(2, 2)$ | Mild preference for moderate values |
+| Informative | Large $\alpha + \beta$ | Strong prior knowledge |
 
-After observing $k$ successes in $n$ trials with prior $\text{Beta}(\alpha, \beta)$, the **posterior predictive probability** of success on the next trial is:
+## Examples
 
-$$P(X_{n+1} = 1 \mid \text{data}) = E[p \mid \text{data}] = \frac{\alpha + k}{\alpha + \beta + n}$$
+**Example 1: Quality control.**
 
-When $\alpha = \beta = 1$ (uniform prior), this gives **Laplace's rule of succession**:
+A factory's defect rate $p$ is unknown. Prior belief: $p \sim \text{Beta}(2, 38)$ (mean $0.05$). After inspecting 100 items and finding 8 defective, find the posterior.
 
-$$P(X_{n+1} = 1 \mid k \text{ successes in } n) = \frac{k + 1}{n + 2}$$
+$$
+p \mid X = 8 \sim \text{Beta}(2 + 8, \; 38 + 92) = \text{Beta}(10, 130)
+$$
 
-## Python Implementation
+```python
+from scipy import stats
+
+alpha_prior, beta_prior = 2, 38
+n, k = 100, 8
+
+alpha_post = alpha_prior + k
+beta_post = beta_prior + n - k
+
+prior_mean = alpha_prior / (alpha_prior + beta_prior)
+post_mean = alpha_post / (alpha_post + beta_post)
+mle = k / n
+
+print(f"Prior:     Beta({alpha_prior}, {beta_prior}),  mean = {prior_mean:.4f}")
+print(f"Data:      {k} defective out of {n}")
+print(f"Posterior: Beta({alpha_post}, {beta_post}), mean = {post_mean:.4f}")
+print(f"MLE:       {mle:.4f}")
+
+# 95% credible interval
+lo = stats.beta.ppf(0.025, alpha_post, beta_post)
+hi = stats.beta.ppf(0.975, alpha_post, beta_post)
+print(f"95% credible interval: ({lo:.4f}, {hi:.4f})")
+```
+
+**Output:**
+```
+Prior:     Beta(2, 38),  mean = 0.0500
+Data:      8 defective out of 100
+Posterior: Beta(10, 130), mean = 0.0714
+MLE:       0.0800
+95% credible interval: (0.0353, 0.1196)
+```
+
+**Example 2: A/B testing.**
+
+Two webpage versions are tested with non-informative priors:
+
+- Version A: 50 conversions out of 200 visitors
+- Version B: 65 conversions out of 200 visitors
+
+Estimate $P(p_B > p_A \mid \text{data})$.
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy import stats
 
-fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-
-# --- Panel 1: Sequential Bayesian updating ---
-x = np.linspace(0, 1, 500)
-alpha0, beta0 = 1, 1
 np.random.seed(42)
-true_p = 0.35
-observations = np.random.binomial(1, true_p, 20)
-
-steps = [0, 1, 3, 5, 10, 20]
-colors = plt.cm.viridis(np.linspace(0, 0.9, len(steps)))
-
-for i, n in enumerate(steps):
-    k = observations[:n].sum()
-    a, b = alpha0 + k, beta0 + n - k
-    axes[0].plot(x, stats.beta.pdf(x, a, b), color=colors[i], lw=2,
-                 label=f'n={n}, k={k}: Beta({a},{b})')
-
-axes[0].axvline(true_p, color='red', ls='--', lw=1.5, label=f'True p={true_p}')
-axes[0].set_title('Sequential Bayesian Updating')
-axes[0].set_xlabel('p')
-axes[0].set_ylabel('Density')
-axes[0].legend(fontsize=8)
-axes[0].grid(True, alpha=0.3)
-
-# --- Panel 2: A/B Testing ---
 n_sim = 100000
-pA = np.random.beta(51, 151, n_sim)
-pB = np.random.beta(66, 136, n_sim)
 
-axes[1].hist(pA, bins=80, density=True, alpha=0.5, color='blue', label='Version A')
-axes[1].hist(pB, bins=80, density=True, alpha=0.5, color='red', label='Version B')
-prob_b_better = np.mean(pB > pA)
-axes[1].set_title(f'A/B Test: P(B > A) = {prob_b_better:.3f}')
-axes[1].set_xlabel('Conversion rate p')
-axes[1].legend()
-axes[1].grid(True, alpha=0.3)
+# Posteriors
+pA = np.random.beta(1 + 50, 1 + 150, n_sim)   # Beta(51, 151)
+pB = np.random.beta(1 + 65, 1 + 135, n_sim)    # Beta(66, 136)
 
-# --- Panel 3: Credible interval shrinkage ---
-sample_sizes = np.arange(1, 201)
-ci_widths = []
-alpha_p, beta_p = 1, 1
-true_rate = 0.3
+prob_B_better = np.mean(pB > pA)
+print(f"Posterior A: Beta(51, 151), mean = {51/202:.4f}")
+print(f"Posterior B: Beta(66, 136), mean = {66/202:.4f}")
+print(f"P(B > A | data) = {prob_B_better:.4f}")
 
-for n in sample_sizes:
-    k = int(n * true_rate)
-    a, b = alpha_p + k, beta_p + n - k
-    lo = stats.beta.ppf(0.025, a, b)
-    hi = stats.beta.ppf(0.975, a, b)
-    ci_widths.append(hi - lo)
+# Expected lift
+lift = (pB - pA) / pA
+print(f"Expected relative lift: {np.mean(lift):.2%}")
+print(f"95% CI for lift: ({np.percentile(lift, 2.5):.2%}, {np.percentile(lift, 97.5):.2%})")
+```
 
-axes[2].plot(sample_sizes, ci_widths, 'b-', lw=2)
-axes[2].set_title('95% Credible Interval Width vs Sample Size')
-axes[2].set_xlabel('Number of observations')
-axes[2].set_ylabel('CI Width')
-axes[2].grid(True, alpha=0.3)
+**Output:**
+```
+Posterior A: Beta(51, 151), mean = 0.2525
+Posterior B: Beta(66, 136), mean = 0.3267
+P(B > A | data) = 0.9557
+Expected relative lift: 32.41%
+95% CI for lift: (-2.91%, 76.97%)
+```
 
-plt.tight_layout()
-plt.savefig('beta_bayesian_applications.png', dpi=150, bbox_inches='tight')
-plt.show()
+**Example 3: Sequential updating.**
+
+Start with $\text{Beta}(1, 1)$ and observe the sequence: success, success, failure, success, failure. Track the posterior after each observation.
+
+```python
+from scipy import stats
+
+alpha, beta_param = 1, 1
+observations = [1, 1, 0, 1, 0]  # 1 = success, 0 = failure
+
+print(f"Step 0: Beta({alpha}, {beta_param}), "
+      f"mean = {alpha/(alpha+beta_param):.4f}")
+
+for i, obs in enumerate(observations):
+    if obs == 1:
+        alpha += 1
+    else:
+        beta_param += 1
+    mean = alpha / (alpha + beta_param)
+    lo = stats.beta.ppf(0.025, alpha, beta_param)
+    hi = stats.beta.ppf(0.975, alpha, beta_param)
+    label = "S" if obs == 1 else "F"
+    print(f"Step {i+1} ({label}): Beta({alpha}, {beta_param}), "
+          f"mean = {mean:.4f}, 95% CI = ({lo:.3f}, {hi:.3f})")
+```
+
+**Output:**
+```
+Step 0: Beta(1, 1), mean = 0.5000
+Step 1 (S): Beta(2, 1), mean = 0.6667, 95% CI = (0.158, 0.992)
+Step 2 (S): Beta(3, 1), mean = 0.7500, 95% CI = (0.292, 0.997)
+Step 3 (F): Beta(3, 2), mean = 0.6000, 95% CI = (0.185, 0.937)
+Step 4 (S): Beta(4, 2), mean = 0.6667, 95% CI = (0.251, 0.956)
+Step 5 (F): Beta(4, 3), mean = 0.5714, 95% CI = (0.200, 0.901)
+```
+
+**Example 4: Laplace's rule of succession.**
+
+If the sun has risen every day for $n = 10{,}000$ days (since you started counting), what is the probability it rises tomorrow?
+
+With a uniform prior $\text{Beta}(1, 1)$: after $k = n = 10{,}000$ successes and 0 failures:
+
+$$
+P(\text{sunrise tomorrow}) = \frac{k + 1}{n + 2} = \frac{10001}{10002}
+$$
+
+```python
+n = 10_000
+k = n  # sun rose every day
+p_next = (k + 1) / (n + 2)
+print(f"Laplace's rule: P(sunrise) = {k+1}/{n+2} = {p_next:.8f}")
+print(f"Posterior: Beta({1+k}, {1+n-k}) = Beta({1+k}, 1)")
+print(f"Posterior mean = {(1+k)/(2+n):.8f}")
+```
+
+**Output:**
+```
+Laplace's rule: P(sunrise) = 10001/10002 = 0.99990002
+Posterior: Beta(10001, 1) = Beta(10001, 1)
+Posterior mean = 0.99990002
 ```

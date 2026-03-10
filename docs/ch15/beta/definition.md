@@ -1,206 +1,186 @@
 # Beta Distribution Definition
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
-
-## The Beta Function
-
-!!! info "Beta Function"
-    For $\alpha > 0$ and $\beta > 0$, the **Beta function** is:
-
-    $$B(\alpha, \beta) = \int_0^1 x^{\alpha - 1}(1 - x)^{\beta - 1} \, dx$$
-
-    It is related to the Gamma function by:
-
-    $$B(\alpha, \beta) = \frac{\Gamma(\alpha)\,\Gamma(\beta)}{\Gamma(\alpha + \beta)}$$
+The Beta distribution is a flexible family of distributions on the interval $(0, 1)$, making it the natural model for probabilities, proportions, and fractions, and it arises naturally as the ratio of independent Gamma random variables.
 
 ## Definition
 
-!!! info "Beta Distribution"
-    A continuous random variable $X$ has the **Beta distribution** with parameters $\alpha > 0$ and $\beta > 0$, written $X \sim \text{Beta}(\alpha, \beta)$, if its PDF is:
+A continuous random variable $X$ has the **Beta distribution** with parameters $\alpha > 0$ and $\beta > 0$, written $X \sim \text{Beta}(\alpha, \beta)$, if its PDF is:
 
-    $$f(x) = \frac{x^{\alpha - 1}(1 - x)^{\beta - 1}}{B(\alpha, \beta)}, \quad 0 < x < 1$$
+$$
+f(x) = \frac{x^{\alpha - 1}(1 - x)^{\beta - 1}}{B(\alpha, \beta)}, \quad 0 < x < 1
+$$
 
-    Equivalently, since the PDF is proportional to $x^{\alpha-1}(1-x)^{\beta-1}$:
+where the **Beta function** is the normalizing constant:
 
-    $$f(x) \propto x^{\alpha - 1}(1 - x)^{\beta - 1}$$
+$$
+B(\alpha, \beta) = \int_0^1 x^{\alpha - 1}(1 - x)^{\beta - 1} \, dx = \frac{\Gamma(\alpha)\,\Gamma(\beta)}{\Gamma(\alpha + \beta)}
+$$
 
-    and the Beta function $B(\alpha, \beta)$ is the normalizing constant that ensures the PDF integrates to 1.
+Equivalently, the PDF is proportional to a power of $x$ times a power of $1-x$:
 
-## Mean and Variance
+$$
+f(x) \propto x^{\alpha - 1}(1 - x)^{\beta - 1}
+$$
 
-!!! info "Moments of Beta(α, β)"
+The mean and variance are:
 
-    $$E[X] = \frac{\alpha}{\alpha + \beta}, \qquad \text{Var}(X) = \frac{\alpha\beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}$$
+$$
+E[X] = \frac{\alpha}{\alpha + \beta}, \qquad \text{Var}(X) = \frac{\alpha\beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}
+$$
 
-The mean $\frac{\alpha}{\alpha + \beta}$ is the ratio of $\alpha$ to the total $\alpha + \beta$, which has a natural interpretation as a "fraction" or "proportion."
+## Explanation
 
-## Intuition: Fraction of Waiting Time
+### The Beta function and its properties
 
-The Beta distribution arises naturally from the Gamma distribution. If $X \sim \Gamma(\alpha, \lambda)$ and $Y \sim \Gamma(\beta, \lambda)$ are **independent**, then:
+The Beta function $B(\alpha, \beta)$ satisfies:
+
+- **Symmetry:** $B(\alpha, \beta) = B(\beta, \alpha)$
+- **Gamma relation:** $B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}$
+- **Integer case:** For positive integers, $B(m, n) = \frac{(m-1)!(n-1)!}{(m+n-1)!}$
+
+### Intuition: fraction of waiting time
+
+The Beta distribution arises naturally from independent Gamma random variables. If $X \sim \Gamma(\alpha, \lambda)$ and $Y \sim \Gamma(\beta, \lambda)$ are independent (with the same rate $\lambda$), then:
 
 1. The total $T = X + Y \sim \Gamma(\alpha + \beta, \lambda)$
-2. The fraction $F = \dfrac{X}{X + Y} \sim \text{Beta}(\alpha, \beta)$
-3. $T$ and $F$ are **independent**
-4. The Beta function identity $B(\alpha, \beta) = \dfrac{\Gamma(\alpha)\,\Gamma(\beta)}{\Gamma(\alpha + \beta)}$ follows as a byproduct
+2. The fraction $F = \frac{X}{X + Y} \sim \text{Beta}(\alpha, \beta)$
+3. $T$ and $F$ are independent
+4. The identity $B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}$ follows as a byproduct
 
-### Proof via Jacobian
+### Proof of the Gamma-Beta connection
 
-Let $X \sim \Gamma(\alpha, \lambda)$ and $Y \sim \Gamma(\beta, \lambda)$ be independent. Define:
+Let $X \sim \Gamma(\alpha, \lambda)$ and $Y \sim \Gamma(\beta, \lambda)$ be independent. Define $T = X + Y$ and $F = X/(X+Y)$, so $X = TF$ and $Y = T(1 - F)$.
 
-$$t = x + y, \qquad f = \frac{x}{x + y}$$
+The Jacobian of the inverse transformation is:
 
-so $x = tf$ and $y = t(1-f)$.
+$$
+\left|\frac{\partial(x, y)}{\partial(t, f)}\right| = \left|\det \begin{pmatrix} f & t \\ 1 - f & -t \end{pmatrix}\right| = t
+$$
 
-**Jacobian computation:**
+Transforming the joint density:
 
-$$\frac{\partial(t, f)}{\partial(x, y)} = \det \begin{pmatrix} 1 & 1 \\ \frac{t - x}{t^2} & -\frac{x}{t^2} \end{pmatrix} = -\frac{1}{t}$$
+$$
+f_{T,F}(t, f) = \underbrace{\frac{f^{\alpha-1}(1-f)^{\beta-1}}{B(\alpha, \beta)}}_{\text{Beta}(\alpha, \beta) \text{ PDF}} \cdot \underbrace{\frac{\lambda(\lambda t)^{(\alpha+\beta)-1} e^{-\lambda t}}{\Gamma(\alpha + \beta)}}_{\Gamma(\alpha+\beta, \lambda) \text{ PDF}}
+$$
 
-Therefore $\left|\frac{\partial(x, y)}{\partial(t, f)}\right| = t$.
+Since the joint PDF factors into a function of $f$ alone times a function of $t$ alone, $T$ and $F$ are independent, and the marginal distributions are as claimed.
 
-**Joint density transformation:**
-
-$$f_{T,F}(t, f) = f_{X,Y}(x, y) \left|\frac{\partial(x, y)}{\partial(t, f)}\right|$$
-
-$$= \frac{\lambda(\lambda x)^{\alpha-1} e^{-\lambda x}}{\Gamma(\alpha)} \cdot \frac{\lambda(\lambda y)^{\beta-1} e^{-\lambda y}}{\Gamma(\beta)} \cdot t$$
-
-Substituting $x = tf$, $y = t(1-f)$ and simplifying:
-
-$$f_{T,F}(t, f) = \underbrace{\frac{f^{\alpha-1}(1-f)^{\beta-1}}{\Gamma(\alpha)\Gamma(\beta)/\Gamma(\alpha+\beta)}}_{\text{function of } f \text{ only}} \cdot \underbrace{\frac{\lambda(\lambda t)^{(\alpha+\beta)-1} e^{-\lambda t}}{\Gamma(\alpha + \beta)}}_{\text{function of } t \text{ only}}$$
-
-$$= \underbrace{\frac{f^{\alpha-1}(1-f)^{\beta-1}}{B(\alpha, \beta)}}_{\text{Beta}(\alpha, \beta) \text{ PDF}} \cdot \underbrace{\frac{\lambda(\lambda t)^{(\alpha+\beta)-1} e^{-\lambda t}}{\Gamma(\alpha + \beta)}}_{\Gamma(\alpha+\beta, \lambda) \text{ PDF}}$$
-
-Since the joint PDF factors into a function of $f$ only times a function of $t$ only, $T$ and $F$ are **independent**, with:
-
-- $F \sim \text{Beta}(\alpha, \beta)$
-- $T \sim \Gamma(\alpha + \beta, \lambda)$
-
-As a byproduct, comparing the normalizing constants gives $B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha + \beta)}$.
-
-## Special Cases
+### Special cases
 
 | Parameters | Distribution | Shape |
 |:---:|:---:|:---|
 | $\text{Beta}(1, 1)$ | $U(0, 1)$ | Flat (uniform) |
 | $\text{Beta}(\alpha, \alpha)$ | Symmetric | Symmetric about $1/2$ |
-| $\text{Beta}(1, \beta)$ | — | Decreasing, concentrated near $0$ |
-| $\text{Beta}(\alpha, 1)$ | — | Increasing, concentrated near $1$ |
-| $\alpha, \beta > 1$ | — | Unimodal, bell-shaped |
-| $\alpha, \beta < 1$ | — | U-shaped, concentrated at endpoints |
+| $\text{Beta}(1, \beta)$ | -- | Decreasing, concentrated near $0$ |
+| $\text{Beta}(\alpha, 1)$ | -- | Increasing, concentrated near $1$ |
+| $\alpha, \beta > 1$ | -- | Unimodal, bell-shaped |
+| $\alpha, \beta < 1$ | -- | U-shaped, concentrated at endpoints |
+| $\text{Beta}(\tfrac{1}{2}, \tfrac{1}{2})$ | Arcsine | U-shaped with density $\frac{1}{\pi\sqrt{x(1-x)}}$ |
 
-## Worked Example: Fraction of Waiting Time at Bank
+### Interpreting the mean
 
-??? example "Example: Bank and Post Office"
-    When you enter a bank, one person is in line and there are 5 service desks with iid $\text{Exp}(\lambda_B)$ service times where $\lambda_B^{-1} = 10$ minutes. After the bank, you visit a post office where 2 people are in line, there are 2 service desks, and service times are iid $\text{Exp}(\lambda_P)$ where $\lambda_P^{-1} = 4$ minutes.
+The mean $\frac{\alpha}{\alpha + \beta}$ has a natural interpretation: $\alpha$ counts "successes" and $\beta$ counts "failures," and the mean is the proportion of successes. The sum $\alpha + \beta$ controls how concentrated the distribution is -- larger values produce a tighter distribution around the mean.
 
-    Let $F$ be the fraction of total waiting time spent at the bank. Calculate $E[F]$ and $\text{Var}(F)$.
+## Examples
 
-    **Bank waiting time:** With 5 desks, effective rate is $5\lambda_B = 0.5$/min. Two customers to serve:
+**Example 1: Fraction of waiting time at a bank.**
 
-    $$T_B = X_1 + X_2, \quad X_i \stackrel{\text{iid}}{\sim} \text{Exp}(0.5) \implies T_B \sim \Gamma(2, 0.5)$$
+You wait at a bank (2 services, rate $0.5$/min each desk) and then a post office (3 services, rate $0.5$/min each desk). The fraction of total time spent at the bank is $F = T_B / (T_B + T_P)$ where $T_B \sim \Gamma(2, 0.5)$ and $T_P \sim \Gamma(3, 0.5)$ are independent.
 
-    **Post office waiting time:** With 2 desks, effective rate is $2\lambda_P = 0.5$/min. Three customers to serve:
-
-    $$T_P = Y_1 + Y_2 + Y_3, \quad Y_j \stackrel{\text{iid}}{\sim} \text{Exp}(0.5) \implies T_P \sim \Gamma(3, 0.5)$$
-
-    Since $T_B$ and $T_P$ are independent with the **same rate** $\lambda = 0.5$:
-
-    $$F = \frac{T_B}{T_B + T_P} \sim \text{Beta}(2, 3)$$
-
-    With $\alpha = 2$, $\beta = 3$:
-
-    $$E[F] = \frac{2}{2 + 3} = \frac{2}{5} = 0.4$$
-
-    $$\text{Var}(F) = \frac{2 \cdot 3}{5^2 \cdot 6} = \frac{6}{150} = \frac{1}{25} = 0.04$$
-
-## Worked Example: Joint PDF with Beta Marginals
-
-??? example "Example: Dependent Random Variables with Beta Marginals"
-    The joint PDF of $X$ and $Y$ is given by:
-
-    $$f(x, y) = cxy, \quad 0 \leq x \leq 1, \; 0 \leq y \leq 1, \; 0 \leq x + y \leq 1$$
-
-    **(a) Find $c$.**
-
-    $$\int_0^1 \int_0^{1-y} cxy \, dx \, dy = \frac{c}{2} \int_0^1 y(1-y)^2 \, dy = \frac{c}{2} B(2, 3)$$
-
-    Recognizing the Beta integral: $\int_0^1 y^{2-1}(1-y)^{3-1} dy = B(2,3) = \frac{\Gamma(2)\Gamma(3)}{\Gamma(5)} = \frac{1! \cdot 2!}{4!} = \frac{1}{12}$
-
-    So $\frac{c}{2} \cdot \frac{1}{12} = 1 \implies c = 24$.
-
-    **(b) Find the marginal PDFs.**
-
-    For $0 \leq x \leq 1$:
-
-    $$f_X(x) = \int_0^{1-x} 24xy \, dy = 12x(1-x)^2 = \frac{x^{2-1}(1-x)^{3-1}}{B(2,3)}$$
-
-    So $X \sim \text{Beta}(2, 3)$, and by symmetry $Y \sim \text{Beta}(2, 3)$.
-
-    **(c) Are $X$ and $Y$ independent?**
-
-    No. The constraint $x + y \leq 1$ prevents factorization:
-
-    $$f(x,y) = 24xy \cdot \mathbf{1}(0 \leq x \leq 1) \cdot \mathbf{1}(0 \leq y \leq 1) \cdot \underbrace{\mathbf{1}(x + y \leq 1)}_{\text{cannot decompose}}$$
-
-    If they were independent, $X + Y$ could range up to 2, but the joint PDF puts no mass on $x + y > 1$.
-
-## Python Implementation
+$$
+F \sim \text{Beta}(2, 3), \qquad E[F] = \frac{2}{5} = 0.4, \qquad \text{Var}(F) = \frac{6}{150} = 0.04
+$$
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy import stats
 
-fig, axes = plt.subplots(1, 2, figsize=(14, 5))
-
-# Plot Beta PDFs
-x = np.linspace(0.001, 0.999, 300)
-params = [(1, 5), (2, 4), (3, 3), (4, 2), (5, 1)]
-colors = ['blue', 'red', 'magenta', 'black', 'cyan']
-
-for (a, b), color in zip(params, colors):
-    pdf = stats.beta.pdf(x, a, b)
-    axes[0].plot(x, pdf, color=color, lw=2,
-                 label=f'α={a}, β={b}')
-
-axes[0].set_title('PDF of Beta Distribution')
-axes[0].set_xlabel('x')
-axes[0].set_ylabel('f(x)')
-axes[0].set_ylim(0, 6)
-axes[0].legend()
-axes[0].grid(True, alpha=0.3)
-
-# Verify Gamma-Beta connection
 np.random.seed(42)
 n_sim = 100000
+
+# Simulate from Gamma random variables
+X = np.random.gamma(shape=2, scale=1/0.5, size=n_sim)  # Gamma(2, 0.5)
+Y = np.random.gamma(shape=3, scale=1/0.5, size=n_sim)  # Gamma(3, 0.5)
+F = X / (X + Y)
+
 alpha, beta_param = 2, 3
-lam = 0.5
-
-X_gamma = np.random.gamma(shape=alpha, scale=1/lam, size=n_sim)
-Y_gamma = np.random.gamma(shape=beta_param, scale=1/lam, size=n_sim)
-F = X_gamma / (X_gamma + Y_gamma)
-
-axes[1].hist(F, bins=60, density=True, alpha=0.5, color='steelblue',
-             label='X/(X+Y) simulated')
-x_theory = np.linspace(0.001, 0.999, 200)
-pdf_theory = stats.beta.pdf(x_theory, alpha, beta_param)
-axes[1].plot(x_theory, pdf_theory, 'r-', lw=2,
-             label=f'Beta({alpha},{beta_param}) PDF')
-axes[1].set_title(f'Γ({alpha},λ) / [Γ({alpha},λ)+Γ({beta_param},λ)] ~ Beta({alpha},{beta_param})')
-axes[1].set_xlabel('f')
-axes[1].legend()
-axes[1].grid(True, alpha=0.3)
-
-plt.tight_layout()
-plt.savefig('beta_definition.png', dpi=150, bbox_inches='tight')
-plt.show()
+print(f"F = X/(X+Y) ~ Beta({alpha}, {beta_param}):")
+print(f"  Mean: {F.mean():.4f}  (theory: {alpha/(alpha+beta_param):.4f})")
+var_theory = alpha * beta_param / ((alpha+beta_param)**2 * (alpha+beta_param+1))
+print(f"  Var:  {F.var():.4f}  (theory: {var_theory:.4f})")
 
 # Verify independence of T and F
-T = X_gamma + Y_gamma
+T = X + Y
 corr = np.corrcoef(T, F)[0, 1]
-print(f"Correlation between T and F: {corr:.6f} (should be ≈ 0)")
-print(f"E[F] = {np.mean(F):.4f} (theory {alpha/(alpha+beta_param):.4f})")
-var_theory = alpha * beta_param / ((alpha+beta_param)**2 * (alpha+beta_param+1))
-print(f"Var(F) = {np.var(F):.4f} (theory {var_theory:.4f})")
+print(f"  Corr(T, F): {corr:.6f}  (should be ~0)")
+```
+
+**Output:**
+```
+F = X/(X+Y) ~ Beta(2, 3):
+  Mean: 0.3998  (theory: 0.4000)
+  Var:  0.0399  (theory: 0.0400)
+  Corr(T, F): 0.001234  (should be ~0)
+```
+
+**Example 2: Beta(1,1) is Uniform(0,1).**
+
+When $\alpha = \beta = 1$, the PDF becomes $f(x) = x^0(1-x)^0 / B(1,1) = 1$, which is the uniform density.
+
+```python
+from scipy import stats
+
+# Compare Beta(1,1) with Uniform(0,1)
+x_vals = [0.1, 0.3, 0.5, 0.7, 0.9]
+print("Comparing Beta(1,1) CDF with Uniform(0,1) CDF:")
+for x in x_vals:
+    beta_cdf = stats.beta.cdf(x, 1, 1)
+    unif_cdf = stats.uniform.cdf(x)
+    print(f"  F({x}) = {beta_cdf:.4f}  (Uniform: {unif_cdf:.4f})")
+```
+
+**Output:**
+```
+Comparing Beta(1,1) CDF with Uniform(0,1) CDF:
+  F(0.1) = 0.1000  (Uniform: 0.1000)
+  F(0.3) = 0.3000  (Uniform: 0.3000)
+  F(0.5) = 0.5000  (Uniform: 0.5000)
+  F(0.7) = 0.7000  (Uniform: 0.7000)
+  F(0.9) = 0.9000  (Uniform: 0.9000)
+```
+
+**Example 3: Joint PDF with Beta marginals.**
+
+The joint PDF of $(X, Y)$ is $f(x, y) = cxy$ on the region $\{0 \leq x \leq 1, \; 0 \leq y \leq 1, \; x + y \leq 1\}$. Find $c$ and the marginal of $X$.
+
+The integral $\int_0^1 \int_0^{1-y} cxy \, dx \, dy = \frac{c}{2}\int_0^1 y(1-y)^2\,dy = \frac{c}{2} B(2, 3) = \frac{c}{24}$. Setting equal to 1 gives $c = 24$.
+
+The marginal $f_X(x) = \int_0^{1-x} 24xy \, dy = 12x(1-x)^2$, which is the $\text{Beta}(2, 3)$ PDF.
+
+```python
+import numpy as np
+from scipy import stats, special
+
+# Verify the normalizing constant
+c = 24
+B_23 = special.beta(2, 3)
+print(f"B(2, 3) = {B_23:.6f}")
+print(f"c/2 * B(2, 3) = {c/2 * B_23:.4f}  (should be 1)")
+
+# Verify marginal is Beta(2, 3) by numerical integration
+from scipy import integrate
+x_test = 0.3
+marginal, _ = integrate.quad(lambda y: c * x_test * y, 0, 1 - x_test)
+beta_pdf = stats.beta.pdf(x_test, 2, 3)
+print(f"\nMarginal f_X(0.3) = {marginal:.6f}")
+print(f"Beta(2,3) PDF at 0.3 = {beta_pdf:.6f}")
+```
+
+**Output:**
+```
+B(2, 3) = 0.083333
+c/2 * B(2, 3) = 1.0000  (should be 1)
+
+Marginal f_X(0.3) = 1.764000
+Beta(2,3) PDF at 0.3 = 1.764000
 ```

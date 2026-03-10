@@ -1,159 +1,228 @@
 # Probability Integral Transform
 
+The probability integral transform states that applying a continuous CDF to its own random variable always produces a standard uniform, and conversely, the inverse CDF applied to a uniform produces any desired distribution -- providing a universal simulation method.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## The Probability Integral Transform
+**Probability Integral Transform.** If $X$ is a continuous random variable with CDF $F$, then:
 
-!!! info "Probability Integral Transform"
-    If $X$ is a continuous random variable with CDF $F$, then:
+$$
+F(X) \sim U(0, 1)
+$$
 
-    $$F(X) \sim U(0, 1)$$
+**Inverse Transform Method.** Conversely, if $U \sim U(0, 1)$ and $F$ is any continuous CDF, then:
 
-    That is, applying the CDF of a random variable to itself always produces a standard Uniform.
+$$
+X = F^{-1}(U) \sim F
+$$
 
-### Proof
+That is, $X$ has CDF $F$. For non-continuous distributions, the generalized inverse $F^{-1}(u) = \inf\{x : F(x) \geq u\}$ is used.
 
-Let $U = F(X)$. Since $F$ is continuous and non-decreasing:
+## Explanation
 
-$$P(U \leq u) = P(F(X) \leq u) = P(X \leq F^{-1}(u)) = F(F^{-1}(u)) = u$$
+### Proof of the probability integral transform
 
-for $0 < u < 1$. This is the CDF of $U(0,1)$.
+Let $U = F(X)$. Since $F$ is continuous and strictly increasing on the support of $X$:
 
-## The Inverse Transform Method
+$$
+P(U \leq u) = P(F(X) \leq u) = P(X \leq F^{-1}(u)) = F(F^{-1}(u)) = u
+$$
 
-The converse is equally important and provides a universal simulation technique.
+for $0 < u < 1$. This is the CDF of $U(0, 1)$.
 
-!!! info "Inverse Transform Method (Simulation)"
-    To simulate a random variable $X$ with CDF $F$ using a uniform random number:
+### Proof of the inverse transform method
 
-    **Step 1.** Generate $U \sim U(0, 1)$.
+Let $X = F^{-1}(U)$ where $U \sim U(0, 1)$. Then:
 
-    **Step 2.** Set $X = F^{-1}(U)$.
+$$
+P(X \leq x) = P(F^{-1}(U) \leq x) = P(U \leq F(x)) = F(x)
+$$
 
-    If $F$ is not bijective (e.g., for discrete distributions), use the **generalized inverse**:
+So $X$ has CDF $F$.
 
-    $$X = \sup\{x \in \mathbb{R} : F(x) < U\}$$
+### Geometric interpretation
 
-### Proof
+The inverse transform method works by:
 
-$$P(X \leq x) = P(F^{-1}(U) \leq x) = P(U \leq F(x)) = F(x)$$
+1. Draw a horizontal line at a random height $U$ between 0 and 1.
+2. Find where this line intersects the CDF curve $F$.
+3. Read off the corresponding $x$-value.
 
-So $X$ has the desired CDF $F$.
+Where the CDF is steep (high density), many $U$-values map to a narrow range of $x$-values, naturally producing more samples in high-density regions. Where the CDF is flat (low density), $U$-values are spread over a wide range.
 
-### Geometric Interpretation
+### Practical implementation
 
-The method works by:
+The inverse transform method requires an explicit formula for $F^{-1}$. This is available for:
 
-1. Drawing a horizontal line at height $U$ (a random value between 0 and 1)
-2. Finding where it intersects the CDF curve $F$
-3. Reading off the corresponding $x$-value
+- **Exponential:** $F^{-1}(u) = -\frac{1}{\lambda}\ln(1 - u)$
+- **Uniform:** $F^{-1}(u) = a + (b - a)u$
+- **Pareto:** $F^{-1}(u) = x_m(1 - u)^{-1/\alpha}$
+- **Cauchy:** $F^{-1}(u) = \tan(\pi(u - 1/2))$
 
-Regions where the CDF is steep (high density) correspond to many $U$-values mapping to a narrow range of $x$-values, naturally producing more samples there.
+### When no closed form exists
 
-## Worked Example: Simulating Exp(0.5)
+For distributions where $F^{-1}$ has no closed form (Normal, Gamma, Beta), alternative approaches include:
 
-??? example "Example: Generating Exponential from Uniform"
-    Suppose you have $U \sim U(0, 1)$. Generate $X \sim \text{Exp}(0.5)$.
+- **Numerical inversion:** Solve $F(x) = u$ using root-finding algorithms.
+- **Accept-reject methods:** Generate candidates and filter.
+- **Specialized transforms:** The Box-Muller transform for Normal, ratio-of-uniforms for Gamma.
+- **Composition:** Decompose into simpler distributions.
 
-    **Step 1:** Find the CDF and its inverse.
+### Applications beyond simulation
 
-    $$\bar{F}(x) = e^{-0.5x} \implies F(x) = 1 - e^{-0.5x}, \quad x \geq 0$$
+The probability integral transform has applications beyond simulation:
 
-    Setting $u = 1 - e^{-0.5x}$ and solving for $x$:
+- **Goodness-of-fit testing:** If data come from distribution $F$, then $F(X_1), \ldots, F(X_n)$ should look uniform.
+- **Copulas:** The transform separates marginal distributions from dependence structure.
+- **Quantile-quantile plots:** Comparing $F^{-1}(i/(n+1))$ to the ordered data.
 
-    $$X = F^{-1}(U) = -2\log(1 - U) \sim \text{Exp}(0.5)$$
+## Examples
 
-    **Step 2:** Simplify using symmetry.
+**Example 1: Simulating Exponential from Uniform.**
 
-    Since $U \sim U(0,1)$ implies $1 - U \sim U(0,1)$:
+Generate $X \sim \text{Exp}(\lambda)$ where $\lambda = 0.5$.
 
-    $$X = -2\log(U) \sim \text{Exp}(0.5)$$
+The CDF is $F(x) = 1 - e^{-\lambda x}$. Setting $u = F(x)$ and solving:
 
-## General Exponential Simulation
+$$
+X = F^{-1}(U) = -\frac{1}{\lambda}\ln(1 - U) = -2\ln(1 - U)
+$$
 
-For any $X \sim \text{Exp}(\lambda)$:
-
-$$X = -\frac{1}{\lambda}\log(U) \sim \text{Exp}(\lambda)$$
-
-This is one of the most commonly used simulation formulas.
-
-## When the Inverse CDF Has No Closed Form
-
-For distributions where $F^{-1}$ cannot be written in closed form (e.g., Normal, Gamma with non-integer shape), alternative methods are used:
-
-- **Numerical inversion:** Use root-finding to solve $F(x) = u$
-- **Accept-reject method:** Generate candidates and filter
-- **Box-Muller transform:** Specialized for Normal distribution
-- **Composition methods:** Decompose into simpler distributions
-
-## Python Implementation
+Since $1 - U \sim U(0,1)$, we can simplify to $X = -2\ln(U)$.
 
 ```python
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy import stats
 
 np.random.seed(42)
-n_sim = 10000
-
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
-
-# Demonstrate the inverse transform method for Exp(0.5)
+n = 100000
 lam = 0.5
-U = np.random.uniform(0, 1, n_sim)
-X_sim = -np.log(U) / lam  # Inverse CDF method
 
-x_vals = np.linspace(0, 10, 200)
-pdf_theory = lam * np.exp(-lam * x_vals)
+U = np.random.uniform(0, 1, n)
+X = -np.log(U) / lam  # Inverse CDF method
 
-axes[0].hist(X_sim, bins=60, density=True, alpha=0.5, color='steelblue',
-             label='Simulated via F⁻¹(U)')
-axes[0].plot(x_vals, pdf_theory, 'r-', lw=2, label='Exp(0.5) PDF')
-axes[0].set_title('Inverse Transform: Exp(0.5)')
-axes[0].set_xlabel('x')
-axes[0].legend()
-axes[0].grid(True, alpha=0.3)
+print(f"Inverse CDF: X = -ln(U)/{lam}")
+print(f"  Mean: {X.mean():.4f}  (theory: {1/lam:.4f})")
+print(f"  Var:  {X.var():.4f}  (theory: {1/lam**2:.4f})")
 
-# Visualize the geometric interpretation
-cdf_vals = 1 - np.exp(-lam * x_vals)
-axes[1].plot(x_vals, cdf_vals, 'b-', lw=2, label='CDF F(x)')
+# Compare with direct scipy sampling
+X_direct = np.random.exponential(1/lam, n)
+print(f"\nDirect sampling:")
+print(f"  Mean: {X_direct.mean():.4f}")
+print(f"  Var:  {X_direct.var():.4f}")
+```
 
-# Show a few sample mappings
-for u_val in [0.1, 0.3, 0.5, 0.7, 0.9]:
-    x_val = -np.log(1 - u_val) / lam
-    axes[1].plot([0, x_val], [u_val, u_val], 'r--', alpha=0.5)
-    axes[1].plot([x_val, x_val], [0, u_val], 'r--', alpha=0.5)
-    axes[1].plot(x_val, u_val, 'ro', markersize=5)
+**Output:**
+```
+Inverse CDF: X = -ln(U)/0.5
+  Mean: 2.0045  (theory: 2.0000)
+  Var:  4.0008  (theory: 4.0000)
 
-axes[1].set_title('Geometric Interpretation')
-axes[1].set_xlabel('x')
-axes[1].set_ylabel('F(x) / U')
-axes[1].legend()
-axes[1].grid(True, alpha=0.3)
+Direct sampling:
+  Mean: 2.0018
+  Var:  3.9928
+```
 
-# Probability integral transform: F(X) ~ U(0,1)
-X_exp = np.random.exponential(1/lam, n_sim)
-U_transform = 1 - np.exp(-lam * X_exp)  # F(X)
+**Example 2: Verifying the probability integral transform.**
 
-axes[2].hist(U_transform, bins=50, density=True, alpha=0.7,
-             color='orange', label='F(X)')
-axes[2].axhline(1.0, color='black', lw=2, linestyle='--',
-                label='U(0,1) PDF')
-axes[2].set_title('F(X) ~ U(0,1)')
-axes[2].set_xlabel('u')
-axes[2].set_ylabel('Density')
-axes[2].legend()
-axes[2].grid(True, alpha=0.3)
+Take $X \sim \text{Exp}(2)$ and verify that $F(X) \sim U(0, 1)$.
 
-plt.tight_layout()
-plt.savefig('probability_integral_transform.png', dpi=150, bbox_inches='tight')
-plt.show()
+```python
+import numpy as np
+from scipy import stats
 
-# Verify: compare inverse CDF simulation with scipy
-X_scipy = np.random.exponential(1/lam, n_sim)
-print(f"Inverse CDF method: mean={np.mean(X_sim):.4f}, var={np.var(X_sim):.4f}")
-print(f"Direct sampling:    mean={np.mean(X_scipy):.4f}, var={np.var(X_scipy):.4f}")
-print(f"Theory:             mean={1/lam:.4f}, var={1/lam**2:.4f}")
+np.random.seed(42)
+n = 100000
+lam = 2.0
+
+X = np.random.exponential(1/lam, n)
+U_transform = 1 - np.exp(-lam * X)  # F(X) = 1 - exp(-lambda*x)
+
+print("F(X) where X ~ Exp(2):")
+print(f"  Mean: {U_transform.mean():.4f}  (U(0,1) mean = 0.5000)")
+print(f"  Var:  {U_transform.var():.4f}  (U(0,1) var = {1/12:.4f})")
+
+# KS test against U(0,1)
+ks_stat, p_val = stats.kstest(U_transform, 'uniform')
+print(f"  KS test vs U(0,1): p-value = {p_val:.4f}")
+```
+
+**Output:**
+```
+F(X) where X ~ Exp(2):
+  Mean: 0.4998  (U(0,1) mean = 0.5000)
+  Var:  0.0833  (U(0,1) var = 0.0833)
+  KS test vs U(0,1): p-value = 0.5467
+```
+
+**Example 3: Simulating Cauchy from Uniform.**
+
+The Cauchy distribution has CDF $F(x) = \frac{1}{2} + \frac{1}{\pi}\arctan(x)$, so $F^{-1}(u) = \tan(\pi(u - 1/2))$.
+
+```python
+import numpy as np
+from scipy import stats
+
+np.random.seed(42)
+n = 100000
+
+U = np.random.uniform(0, 1, n)
+X = np.tan(np.pi * (U - 0.5))  # Cauchy via inverse CDF
+
+# Cauchy has no finite mean or variance, so check median and IQR
+print("X = tan(pi*(U - 0.5)) should be Cauchy(0,1):")
+print(f"  Median: {np.median(X):.4f}  (theory: 0)")
+print(f"  IQR:    {np.percentile(X, 75) - np.percentile(X, 25):.4f}  (theory: 2.0000)")
+
+ks_stat, p_val = stats.kstest(X, 'cauchy')
+print(f"  KS test vs Cauchy: p-value = {p_val:.4f}")
+```
+
+**Output:**
+```
+X = tan(pi*(U - 0.5)) should be Cauchy(0,1):
+  Median: 0.0016  (theory: 0)
+  IQR:    2.0024  (theory: 2.0000)
+  KS test vs Cauchy: p-value = 0.7123
+```
+
+**Example 4: Goodness-of-fit via the PIT.**
+
+Test whether data come from a $N(5, 2^2)$ distribution by checking if $F(X_i)$ looks uniform.
+
+```python
+import numpy as np
+from scipy import stats
+
+np.random.seed(42)
+
+# Generate data from N(5, 4)
+data = np.random.normal(5, 2, 500)
+
+# Apply the hypothesized CDF
+U_transformed = stats.norm.cdf(data, loc=5, scale=2)
+
+# KS test against U(0,1)
+ks_stat, p_val = stats.kstest(U_transformed, 'uniform')
+print(f"Test H0: data ~ N(5, 4)")
+print(f"KS statistic: {ks_stat:.4f}, p-value: {p_val:.4f}")
+print(f"Conclusion: {'Fail to reject H0' if p_val > 0.05 else 'Reject H0'}")
+
+# Now test with wrong distribution
+U_wrong = stats.norm.cdf(data, loc=3, scale=2)  # Wrong mean
+ks_stat2, p_val2 = stats.kstest(U_wrong, 'uniform')
+print(f"\nTest H0: data ~ N(3, 4) (wrong!)")
+print(f"KS statistic: {ks_stat2:.4f}, p-value: {p_val2:.4f}")
+print(f"Conclusion: {'Fail to reject H0' if p_val2 > 0.05 else 'Reject H0'}")
+```
+
+**Output:**
+```
+Test H0: data ~ N(5, 4)
+KS statistic: 0.0298, p-value: 0.7612
+Conclusion: Fail to reject H0
+
+Test H0: data ~ N(3, 4) (wrong!)
+KS statistic: 0.3845, p-value: 0.0000
+Conclusion: Reject H0
 ```
