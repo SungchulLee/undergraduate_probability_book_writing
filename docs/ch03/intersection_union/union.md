@@ -1,81 +1,50 @@
 # Computing P(A1 ∪ A2 ∪ ... ∪ An)
 
+The probability of a union depends on the relationship between events: disjoint, independent, or general. The complement method is often the most efficient approach.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Disjoint Events
+**Disjoint events:** $P(\bigcup A_i) = \sum P(A_i)$
 
-When $A_1, A_2, \ldots$ are **mutually disjoint** ($A_i \cap A_j = \emptyset$ for $i \ne j$), the union probability is simply the sum:
-
-$$
-P\!\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i) \quad \text{(countable additivity)}
-$$
+**General (inclusion-exclusion):**
 
 $$
-P\!\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i) \quad \text{(finite additivity)}
+P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{k=1}^{n}(-1)^{k+1}\sum_{i_1 < \cdots < i_k} P(A_{i_1} \cap \cdots \cap A_{i_k})
 $$
 
-## Non-Disjoint Events — Inclusion-Exclusion Principle
-
-When the events are **not** disjoint, we must account for overlaps using the **inclusion-exclusion principle**.
-
-### Bonferroni Inequalities (Truncated Forms)
-
-The inclusion-exclusion alternating sum can be truncated at any level to obtain bounds:
-
-**First-order bound (union bound):**
+**Complement method (via De Morgan):**
 
 $$
-P\!\left(\bigcup_{i=1}^{n} A_i\right) \le \sum_{i=1}^{n} P(A_i)
+P\left(\bigcup_{i=1}^{n} A_i\right) = 1 - P\left(\bigcap_{i=1}^{n} A_i^c\right)
 $$
 
-**Second-order bound:**
+For independent events: $= 1 - \prod_{i=1}^{n}(1 - P(A_i))$.
 
-$$
-P\!\left(\bigcup_{i=1}^{n} A_i\right) \ge \sum_{i=1}^{n} P(A_i) - \sum_{1 \le i < j \le n} P(A_i A_j)
-$$
+## Explanation
 
-**Third-order bound:**
-
-$$
-P\!\left(\bigcup_{i=1}^{n} A_i\right) \le \sum_{i=1}^{n} P(A_i) - \sum_{1 \le i < j \le n} P(A_i A_j) + \sum_{1 \le i < j < k \le n} P(A_i A_j A_k)
-$$
-
-The pattern alternates: truncating after an odd number of terms gives an **upper bound**, and truncating after an even number gives a **lower bound**.
-
-### Exact Formula
-
-$$
-P\!\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i) - \sum_{1 \le i < j \le n} P(A_i A_j) + \sum_{1 \le i < j < k \le n} P(A_i A_j A_k) - \cdots + (-1)^{n+1} P(A_1 A_2 \cdots A_n)
-$$
-
-## Complement Method
-
-An alternative approach uses De Morgan's law:
-
-$$
-P\!\left(\bigcup_{i=1}^{n} A_i\right) = 1 - P\!\left(\bigcap_{i=1}^{n} A_i^c\right)
-$$
-
-This is particularly useful when the complements $A_i^c$ are **independent**, because then:
-
-$$
-P\!\left(\bigcap_{i=1}^{n} A_i^c\right) = \prod_{i=1}^{n} P(A_i^c) = \prod_{i=1}^{n} \bigl(1 - P(A_i)\bigr)
-$$
-
-So:
-
-$$
-P\!\left(\bigcup_{i=1}^{n} A_i\right) = 1 - \prod_{i=1}^{n} \bigl(1 - P(A_i)\bigr)
-$$
-
-## Summary — Which Method to Use
-
-| Scenario | Best Method |
-|----------|-------------|
-| Disjoint events | Direct sum: $\sum P(A_i)$ |
-| Independent events | Complement: $1 - \prod(1 - P(A_i))$ |
+| Scenario | Best method |
+|:---|:---|
+| Disjoint | Direct sum |
+| Independent | Complement: $1 - \prod(1-P(A_i))$ |
 | Few events, overlaps known | Inclusion-exclusion |
-| Many events, need a bound | Union bound or Bonferroni |
-| General dependent events | Inclusion-exclusion (exact) or complement + chain rule |
+| Many events, need bound | Union bound: $\le \sum P(A_i)$ |
+
+The **Bonferroni inequalities** truncate inclusion-exclusion: odd-order truncation gives upper bounds, even-order gives lower bounds.
+
+## Examples
+
+**Example.** $P(A) = 0.3$, $P(B) = 0.4$, $P(A \cap B) = 0.1$.
+
+$P(A \cup B) = 0.3 + 0.4 - 0.1 = 0.6$.
+
+---
+
+**Example (Independent).** 5 independent trials, each with $P(\text{success}) = 0.2$.
+
+$P(\text{at least one success}) = 1 - 0.8^5 \approx 0.672$.
+
+```python
+# Independent trials
+P_at_least_one = 1 - 0.8**5
+print(f"P(at least one success in 5 trials) = {P_at_least_one:.4f}")
+```
