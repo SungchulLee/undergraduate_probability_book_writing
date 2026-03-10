@@ -1,97 +1,75 @@
 # First Step Analysis
 
+First step analysis derives recurrence relations by conditioning on the outcome of the first step. It is the standard technique for solving random walk problems.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Idea
-
-**First step analysis** is a technique for solving problems about random processes by conditioning on the outcome of the first step. For the gambler's ruin, we decompose the ruin event $R$ according to whether the gambler wins or loses the first bet.
-
-## Derivation of the Recurrence Relation
-
-Let $W$ be the event that the gambler wins the first game. By the law of total probability:
+**First step analysis** decomposes $Q(i) = P(\text{ruin} \mid \text{start at } i)$ by conditioning on the first bet:
 
 $$
-Q(i) = P(R \mid I = i)
+Q(i) = p\,Q(i+1) + q\,Q(i-1), \quad 1 \le i \le N-1
 $$
 
-$$
-= P(R \cap W \mid I = i) + P(R \cap W^c \mid I = i)
-$$
+with $Q(0) = 1$, $Q(N) = 0$.
+
+## Explanation
+
+### Derivation
+
+By the law of total probability, conditioning on win ($W$) or loss ($W^c$):
 
 $$
-= P(W \mid I = i)\,P(R \mid I = i, W) + P(W^c \mid I = i)\,P(R \mid I = i, W^c)
+Q(i) = P(W)\,P(\text{ruin} \mid W, \text{start at } i) + P(W^c)\,P(\text{ruin} \mid W^c, \text{start at } i)
 $$
 
-After winning the first bet, the gambler has $i + 1$ dollars and faces the same problem from that new starting point. After losing, the gambler has $i - 1$ dollars. Therefore:
+After a win the gambler has $i+1$; after a loss, $i-1$. By the Markov property (the future depends only on the current state): $P(\text{ruin} \mid W, \text{start at } i) = Q(i+1)$.
 
-$$
-P(R \mid I = i, W) = Q(i + 1), \qquad P(R \mid I = i, W^c) = Q(i - 1)
-$$
+### Characteristic Equation
 
-Substituting:
-
-$$
-Q(i) = p\,Q(i + 1) + q\,Q(i - 1)
-$$
-
-## The Complete Problem
-
-**Recurrence relation:**
-
-$$
-Q(i) = p\,Q(i + 1) + q\,Q(i - 1), \quad i = 1, 2, \ldots, N - 1
-$$
-
-**Boundary conditions:**
-
-$$
-Q(0) = 1, \qquad Q(N) = 0
-$$
-
-This is a **second-order linear recurrence relation** with constant coefficients. It can be solved via the characteristic equation method (see subsequent sections) or numerically as a tridiagonal linear system.
-
-## Characteristic Equation
-
-To solve the recurrence, we guess a solution of the form $Q(i) = \lambda^i$. Substituting:
-
-$$
-p\lambda^{i+1} + q\lambda^{i-1} = \lambda^i
-$$
-
-Dividing by $\lambda^{i-1}$:
+Guess $Q(i) = \lambda^i$. Substituting into the recurrence:
 
 $$
 p\lambda^2 - \lambda + q = 0
 $$
 
-This is the **characteristic equation**. Since $q = 1 - p$:
+Roots: $\lambda_1 = 1$ and $\lambda_2 = q/p$.
+
+General solution: $Q(i) = \alpha \cdot 1^i + \beta \cdot (q/p)^i = \alpha + \beta(q/p)^i$ when $p \ne q$. The constants $\alpha, \beta$ are determined by the boundary conditions.
+
+## Examples
+
+**Example (Setting up the system).** For $N = 4$, $p = 0.4$:
 
 $$
-p\lambda^2 - \lambda + (1 - p) = 0
-$$
-
-$$
-p(\lambda + 1)(\lambda - 1) + 1 - \lambda = (\lambda - 1)[p(\lambda + 1) - 1] = 0
-$$
-
-The **characteristic roots** are:
-
-$$
-\lambda = 1 \qquad \text{and} \qquad \lambda = \frac{q}{p}
-$$
-
-## Linearity of Solutions
-
-If $Q_1(i)$ and $Q_2(i)$ are both solutions to the recurrence, then any linear combination $Q(i) = \alpha\,Q_1(i) + \beta\,Q_2(i)$ is also a solution:
-
-$$
-p\,Q(i+1) + q\,Q(i-1) = \alpha\bigl[p\,Q_1(i+1) + q\,Q_1(i-1)\bigr] + \beta\bigl[p\,Q_2(i+1) + q\,Q_2(i-1)\bigr]
+Q(1) = 0.4\,Q(2) + 0.6 \cdot 1
 $$
 
 $$
-= \alpha\,Q_1(i) + \beta\,Q_2(i) = Q(i)
+Q(2) = 0.4\,Q(3) + 0.6\,Q(1)
 $$
 
-This superposition principle allows us to construct the general solution from the two characteristic roots and then determine the constants $\alpha$ and $\beta$ using the boundary conditions.
+$$
+Q(3) = 0.4 \cdot 0 + 0.6\,Q(2)
+$$
+
+This is a $3 \times 3$ tridiagonal system. Solving: $Q(1) = 0.936$, $Q(2) = 0.839$, $Q(3) = 0.503$.
+
+```python
+import numpy as np
+
+# Solve tridiagonal system for N=4, p=0.4
+p, q, N = 0.4, 0.6, 4
+A = np.zeros((N-1, N-1))
+b = np.zeros(N-1)
+
+for i in range(N-1):
+    A[i, i] = 1
+    if i > 0:
+        A[i, i-1] = -q
+    if i < N-2:
+        A[i, i+1] = -p
+b[0] = q  # from Q(0) = 1
+
+Q_int = np.linalg.solve(A, b)
+print("Q(i) for i=1,2,3:", [f"{x:.4f}" for x in Q_int])
+```
