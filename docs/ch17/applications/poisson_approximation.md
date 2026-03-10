@@ -1,70 +1,53 @@
-# Approximating Poisson Probabilities
+# Normal Approximation to the Poisson
 
+For large $\lambda$, the Poisson distribution is well approximated by a normal with matching mean and variance — both equal to $\lambda$.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Why the CLT Applies to the Poisson
+If $X \sim \operatorname{Pois}(\lambda)$, then for large $\lambda$:
 
-If $X \sim \text{Po}(\lambda)$, then $X$ can be decomposed as a sum of iid Poisson random variables:
+$$
+X \approx N(\lambda, \lambda)
+$$
 
-$$X = \sum_{i=1}^{\lambda} Y_i, \qquad Y_i \sim \text{Po}(1) \text{ iid}$$
+Equivalently, $\frac{X - \lambda}{\sqrt{\lambda}} \approx N(0, 1)$.
 
-(when $\lambda$ is a positive integer). Since $E[Y_i] = 1$ and $\text{Var}(Y_i) = 1$, the CLT gives:
+## Explanation
 
-$$\frac{X - \lambda}{\sqrt{\lambda}} \xrightarrow{d} N(0,1) \quad \text{as } \lambda \to \infty$$
+### Why the CLT Applies
 
-For large $\lambda$:
+Decompose $X = \sum_{i=1}^{\lambda} Y_i$ where $Y_i \sim \operatorname{Pois}(1)$ are iid (when $\lambda$ is a positive integer). Since $E[Y_i] = \operatorname{Var}(Y_i) = 1$, the CLT gives:
 
-$$X \approx N(\lambda, \lambda)$$
+$$
+\frac{X - \lambda}{\sqrt{\lambda}} \xrightarrow{d} N(0,1) \quad \text{as } \lambda \to \infty
+$$
 
-## The Approximation Chain
+### Approximation Chain
 
-For a sum of iid Bernoulli trials with $n$ large and $p$ small:
+For $n$ large and $p$ small:
 
-$$B(n, p) \approx \text{Po}(np) \approx N(np, np)$$
+$$
+\operatorname{Bin}(n, p) \approx \operatorname{Pois}(np) \approx N(np, np)
+$$
 
-- The first approximation (Poisson) is best when $p$ is small.
-- The second approximation (Normal) is best when $\lambda = np$ is large.
+The Poisson approximation is best when $p$ is small; the normal approximation is best when $\lambda = np$ is large.
 
-## Example
+### Continuity Correction
 
-Let $X \sim \text{Po}(100)$. Find $P(X \geq 120)$.
+Since Poisson is discrete, use $P(X \ge k) \approx 1 - \Phi\!\left(\frac{k - 0.5 - \lambda}{\sqrt{\lambda}}\right)$.
 
-**Using CLT with continuity correction:**
+## Examples
 
-$$P(X \geq 120) = P(X \geq 119.5) = P\left(Z \geq \frac{119.5 - 100}{\sqrt{100}}\right) = P(Z \geq 1.95)$$
-
-$$= 1 - \Phi(1.95) = 0.0256$$
-
-## Python Implementation
+**Example.** Compare normal approximation accuracy across increasing $\lambda$.
 
 ```python
 import numpy as np
 from scipy import stats
 
-lambdas = [10, 25, 50, 100, 200]
-
-for lam in lambdas:
-    # Exact: P(X >= lam + 2*sqrt(lam))
-    threshold = int(lam + 2 * np.sqrt(lam))
-    exact = 1 - stats.poisson.cdf(threshold - 1, lam)
-    
-    # Normal approximation with CC
-    z = (threshold - 0.5 - lam) / np.sqrt(lam)
+for lam in [10, 25, 50, 100, 200]:
+    k = int(lam + 2 * np.sqrt(lam))  # threshold at mu + 2*sigma
+    exact = 1 - stats.poisson.cdf(k - 1, lam)
+    z = (k - 0.5 - lam) / np.sqrt(lam)
     approx = 1 - stats.norm.cdf(z)
-    
-    print(f"λ={lam:>3d}, threshold={threshold:>3d}: "
-          f"Exact={exact:.4f}, Normal≈{approx:.4f}")
+    print(f"λ={lam:>3d}, k={k:>3d}: exact={exact:.4f}, normal≈{approx:.4f}")
 ```
-
-**Output:**
-```
-λ= 10, threshold= 16: Exact=0.0487, Normal≈0.0418
-λ= 25, threshold= 35: Exact=0.0297, Normal≈0.0287
-λ= 50, threshold= 64: Exact=0.0302, Normal≈0.0294
-λ=100, threshold=120: Exact=0.0282, Normal≈0.0256
-λ=200, threshold=228: Exact=0.0281, Normal≈0.0274
-```
-
-The normal approximation improves as $\lambda$ increases.

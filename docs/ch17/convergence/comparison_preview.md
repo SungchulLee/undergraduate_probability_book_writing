@@ -1,37 +1,51 @@
-# Convergence in Distribution vs Other Modes (Preview)
+# Convergence Modes (Preview)
 
+Convergence in distribution is the weakest of three standard modes; stronger notions (in probability, almost sure) are needed for the law of large numbers.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Overview of Convergence Modes
+| Mode | Notation | Meaning |
+|:---|:---:|:---|
+| Almost sure | $X_n \xrightarrow{a.s.} X$ | Sample paths converge for almost every $\omega$ |
+| In probability | $X_n \xrightarrow{p} X$ | $P(\lvert X_n - X \rvert > \varepsilon) \to 0$ for all $\varepsilon > 0$ |
+| In distribution | $X_n \xrightarrow{d} X$ | CDFs converge pointwise at continuity points |
 
-There are several notions of convergence for sequences of random variables, listed here from **strongest to weakest**:
+The implication hierarchy:
 
-| Mode | Notation | Intuitive Meaning |
-|------|----------|-------------------|
-| Almost Sure | $X_n \xrightarrow{a.s.} X$ | Sample paths converge for almost every $\omega$ |
-| In Probability | $X_n \xrightarrow{p} X$ | Probability of large deviations vanishes |
-| In Distribution | $X_n \xrightarrow{d} X$ | CDFs converge pointwise |
+$$
+X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{p} X \implies X_n \xrightarrow{d} X
+$$
 
-## Implications
+Reverse implications are **not** true in general.
 
-$$X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{p} X \implies X_n \xrightarrow{d} X$$
+## Explanation
 
-The reverse implications are **not** true in general.
+### Special Case: Constant Limits
 
-!!! warning "Special Case"
-    If $X_n \xrightarrow{d} c$ where $c$ is a **constant**, then $X_n \xrightarrow{p} c$ as well. Convergence in distribution to a constant is equivalent to convergence in probability to that constant.
+If $X_n \xrightarrow{d} c$ where $c$ is a **constant**, then $X_n \xrightarrow{p} c$ as well. Convergence in distribution to a constant is the same as convergence in probability.
 
-## Why This Matters for the CLT
+### CLT vs LLN
 
-The CLT is a statement about **convergence in distribution**:
+- **CLT** (this chapter): $\frac{S_n - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0,1)$ — convergence in distribution
+- **WLLN** (Chapter 20): $\bar{X}_n \xrightarrow{p} \mu$ — convergence in probability
+- **SLLN** (Chapter 20): $\bar{X}_n \xrightarrow{a.s.} \mu$ — almost sure convergence
 
-$$\frac{S_n - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0,1)$$
+??? note "Full treatment"
+    The detailed comparison, including proofs of the implication hierarchy and counterexamples showing the reverse implications fail, is presented in Chapter 20.
 
-It tells us the **shape** of the distribution of the standardized sum approaches the standard normal, but it does not say anything about the sample-path behavior.
+## Examples
 
-The **Law of Large Numbers** (Ch 20) makes the stronger statement of convergence in probability (WLLN) or almost sure convergence (SLLN) for the sample mean $\bar{X}_n \xrightarrow{p} \mu$.
+**Example.** $\bar{X}_n \to \mu$ in probability (LLN) vs the CLT rescaling.
 
-!!! note "Full Treatment"
-    The detailed comparison of convergence modes, including proofs of the implication hierarchy, is presented in **Chapter 20: Law of Large Numbers**.
+```python
+import numpy as np
+
+np.random.seed(42)
+n_sim = 50_000
+mu, sigma = 5.0, 2.0
+
+for n in [10, 100, 1000, 10000]:
+    X_bar = np.random.normal(mu, sigma, (n_sim, n)).mean(axis=1)
+    p_dev = np.mean(np.abs(X_bar - mu) > 0.1)
+    print(f"n={n:5d}: P(|X̄ - μ| > 0.1) = {p_dev:.4f}")
+```

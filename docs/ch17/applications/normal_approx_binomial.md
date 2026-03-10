@@ -1,70 +1,61 @@
 # Normal Approximation to the Binomial
 
+Since $\operatorname{Bin}(n, p)$ is a sum of iid Bernoulli trials, the CLT provides a normal approximation that avoids computing large binomial coefficients.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Setup
+If $X \sim \operatorname{Bin}(n, p)$, then for large $n$:
 
-Let $X \sim B(n, p)$. Since $X = \sum_{i=1}^n X_i$ where $X_i \sim \text{Bernoulli}(p)$ are iid, the CLT gives:
+$$
+X \approx N(np, \; np(1-p))
+$$
 
-$$\frac{X - np}{\sqrt{np(1-p)}} \xrightarrow{d} N(0,1) \quad \text{as } n \to \infty$$
+The approximation is reasonable when both $np \ge 5$ and $n(1-p) \ge 5$.
 
-For large $n$:
+## Explanation
 
-$$X \approx N(np, \, np(1-p))$$
+### Why It Works
 
-## When to Use
+Since $X = \sum_{i=1}^n X_i$ with $X_i \sim \operatorname{Bernoulli}(p)$ iid, the CLT gives:
 
-The normal approximation to the binomial is reasonable when both $np$ and $n(1-p)$ are at least 5–10.
+$$
+\frac{X - np}{\sqrt{np(1-p)}} \xrightarrow{d} N(0,1)
+$$
 
-!!! tip "Comparison with Poisson Approximation"
-    - **Poisson approximation**: $n$ large, $p$ small, $np = \lambda$ moderate → $B(n,p) \approx \text{Po}(\lambda)$
-    - **Normal approximation**: $n$ large, $p$ not too extreme → $B(n,p) \approx N(np, np(1-p))$
+### Continuity Correction
 
-## Example: Psychology Course Enrollment
+Since $X$ is integer-valued, apply continuity correction for better accuracy: e.g., $P(X \le k) \approx \Phi\!\left(\frac{k + 0.5 - np}{\sqrt{np(1-p)}}\right)$.
 
-The number of students enrolling in a psychology course is a Poisson random variable with mean $100$. If $120$ or more enroll, the professor teaches two sections. What is the probability of teaching two sections?
+### Comparison with Poisson Approximation
 
-**Exact (Poisson):**
+| Regime | Approximation |
+|:---|:---|
+| $n$ large, $p$ small, $np$ moderate | $\operatorname{Bin}(n,p) \approx \operatorname{Pois}(np)$ |
+| $n$ large, $p$ not extreme | $\operatorname{Bin}(n,p) \approx N(np, np(1-p))$ |
 
-$$P(X \geq 120) = \sum_{k=120}^{\infty} \frac{100^k}{k!} e^{-100} = 0.0282$$
+## Examples
 
-**Normal approximation with continuity correction:**
+**Example.** $X \sim \operatorname{Bin}(200, 0.4)$. Find $P(X \le 75)$.
 
-Since $X \sim \text{Po}(100)$ can be written as $X = \sum_{i=1}^{100} Y_i$ where $Y_i \sim \text{Po}(1)$ iid, we have $\mu = 100$, $\sigma^2 = 100$.
-
-$$P(X \geq 120) = P(X \geq 119.5) = P\left(\frac{X - 100}{\sqrt{100}} \geq \frac{119.5 - 100}{\sqrt{100}}\right)$$
-
-$$\approx 1 - \Phi(1.95) = 1 - 0.9744 = 0.0256$$
-
-The approximation $0.0256$ is close to the exact value $0.0282$.
-
-## Python Implementation
+With continuity correction: $z = (75.5 - 80)/\sqrt{48} = -0.6495$, so $P(X \le 75) \approx \Phi(-0.6495) = 0.258$.
 
 ```python
-import numpy as np
 from scipy import stats
 
-# Exact Poisson
-lam = 100
-exact = 1 - stats.poisson.cdf(119, lam)
-print(f"Exact (Poisson): {exact:.4f}")
+n, p = 200, 0.4
+mu = n * p
+sigma = (n * p * (1 - p)) ** 0.5
 
-# Normal approximation with continuity correction
-z = (119.5 - 100) / np.sqrt(100)
-approx = 1 - stats.norm.cdf(z)
-print(f"Normal approx (with CC): {approx:.4f}")
+# Exact
+exact = stats.binom.cdf(75, n, p)
 
-# Normal approximation without continuity correction
-z_no_cc = (120 - 100) / np.sqrt(100)
-approx_no_cc = 1 - stats.norm.cdf(z_no_cc)
-print(f"Normal approx (without CC): {approx_no_cc:.4f}")
-```
+# Normal with continuity correction
+z_cc = (75.5 - mu) / sigma
+approx_cc = stats.norm.cdf(z_cc)
 
-**Output:**
-```
-Exact (Poisson): 0.0282
-Normal approx (with CC): 0.0256
-Normal approx (without CC): 0.0228
+# Normal without CC
+z = (75 - mu) / sigma
+approx = stats.norm.cdf(z)
+
+print(f"P(X ≤ 75): exact={exact:.4f}, with CC={approx_cc:.4f}, no CC={approx:.4f}")
 ```
