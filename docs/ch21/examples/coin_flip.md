@@ -1,74 +1,42 @@
-# Coin Flip Using Uniform Samples
+# Coin Flip from Uniform Samples
 
+Converting a uniform random variable into a Bernoulli trial is the simplest instance of the inverse CDF method — the building block for all discrete simulation.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## From Uniform to Bernoulli
-
-One of the most fundamental simulation techniques is generating Bernoulli random variables from uniform random variables. Given $U \sim U(0,1)$ and a success probability $p \in [0,1]$, we define
+Given $U \sim U(0,1)$ and success probability $p$:
 
 $$
-B = \begin{cases} 1 & \text{if } U > 1 - p \\ 0 & \text{if } U \leq 1 - p \end{cases}
+B = \mathbf{1}(U > 1 - p) = \begin{cases} 1 & U > 1-p \\ 0 & U \le 1-p \end{cases}
 $$
 
-Then $B \sim \text{Bernoulli}(p)$, since $P(B = 1) = P(U > 1-p) = p$.
+Then $B \sim \operatorname{Bernoulli}(p)$, since $P(B = 1) = P(U > 1-p) = p$.
 
-## Example
+## Explanation
 
-Generate 5 uniform samples $U_i$ from $[0,1]$ and convert them to Bernoulli samples $B_i$ with success rate $p = 0.499$.
+### Why It Works
 
-**MATLAB:**
+The CDF of $\operatorname{Bernoulli}(p)$ is $F(0) = 1-p$, $F(1) = 1$. Setting $B = \mathbf{1}(U > 1-p)$ is the generalized inverse CDF applied to $U$: whenever $U$ falls in $(1-p, 1]$, output 1; otherwise output 0.
 
-```matlab
-clear all; close all; clc; rng('default')
+### Extension to General Discrete
 
-n = 5; p = 0.499;
+For any discrete distribution on $\{x_1, x_2, \ldots\}$ with probabilities $p_1, p_2, \ldots$, partition $[0,1)$ into intervals of lengths $p_i$ and assign $X = x_k$ when $U$ falls in the $k$-th interval.
 
-% n uniform samples
-U = rand(1, n)
+## Examples
 
-% n Bernoulli samples B(p)
-B = U; B(U <= 1-p) = 0; B(U > 1-p) = 1
-```
-
-**Output:**
-
-```
-U =
-    0.8147    0.9058    0.1270    0.9134    0.6324
-
-B =
-    1    1    0    1    1
-```
-
-Since $1 - p = 0.501$, only $U_3 = 0.1270$ falls below the threshold, so $B_3 = 0$ while the rest are 1.
-
-**Python:**
+**Example.** Generate 10,000 Bernoulli(0.499) samples and verify.
 
 ```python
 import numpy as np
 
-np.random.seed(0)
-
-n = 5
+np.random.seed(42)
+n = 10_000
 p = 0.499
 
-# n uniform samples
 U = np.random.rand(n)
-print("U =", U)
-
-# n Bernoulli samples
 B = (U > 1 - p).astype(int)
-print("B =", B)
+
+print(f"Sample mean: {B.mean():.4f} (theory: {p})")
+print(f"First 20 U: {U[:5].round(3)}")
+print(f"First 20 B: {B[:5]}")
 ```
-
-## Why This Works
-
-This technique is an instance of the **inverse transform method**. The CDF of a Bernoulli($p$) random variable is
-
-$$
-F(x) = \begin{cases} 0 & x < 0 \\ 1 - p & 0 \leq x < 1 \\ 1 & x \geq 1 \end{cases}
-$$
-
-Setting $B = \mathbf{1}(U > 1 - p)$ is equivalent to applying the generalized inverse of $F$ to $U$. This principle generalizes: any distribution can be sampled from a uniform random variable via its inverse CDF (see the Probability Integral Transform).
