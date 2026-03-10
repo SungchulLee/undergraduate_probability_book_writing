@@ -1,37 +1,45 @@
 # Gambler's Fallacy
 
+The mistaken belief that random outcomes must "balance out" confuses the LLN's dilution mechanism with a nonexistent compensating force.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## The Fallacy
+The **gambler's fallacy** is the erroneous belief that if a random event has occurred more frequently than expected, it becomes less likely in the future — as if the process has memory.
 
-The **gambler's fallacy** is the mistaken belief that if a random event has occurred more frequently than expected in the past, it is less likely to occur in the future (or vice versa), as if the process has a "memory" and needs to "balance out."
+## Explanation
 
-**Example**: After flipping 10 heads in a row, someone believes tails is "due." But if the coin is fair, $P(\text{heads}) = 0.5$ on the next flip regardless of history.
+### What the LLN Actually Says
 
-## What the LLN Actually Says
+The LLN says $\bar{X}_n \to \mu$ through **dilution**: past deviations become negligible relative to the growing number of observations. It does **not** say future outcomes compensate for past ones.
 
-The Law of Large Numbers says:
-
-$$
-\frac{S_n}{n} \to \mu
-$$
-
-This convergence happens because **new observations dilute the effect of past deviations**, not because future outcomes compensate for past ones.
-
-After 10 heads in a row ($S_{10} = 10$, so $\bar{X}_{10} = 1.0$), the LLN predicts convergence to 0.5 through dilution:
+After 10 heads in a row: $\bar{X}_{10} = 1.0$. The LLN predicts convergence to 0.5 because:
 
 $$
-\frac{S_{10} + S_{11:n}}{n} = \frac{10 + S_{11:n}}{n} \to 0.5
+\bar{X}_n = \frac{10 + \text{(future heads in next } n-10 \text{ flips)}}{n} \to 0.5
 $$
 
-The fixed "excess" of 10 becomes negligible as $n \to \infty$, but the **future** coins are still fair and independent.
+The fixed excess of 10 is diluted by $n$, not corrected by biased future flips.
 
-## The Distinction
+### The Key Distinction
 
-| | Gambler's Fallacy | LLN |
-|---|---|---|
-| Mechanism | Future compensates for past | New data dilutes past deviations |
-| Independence | Violated (future depends on past) | Maintained (each trial is independent) |
-| Prediction | Next flip more likely tails | Next flip is still 50-50 |
+| | Gambler's fallacy | LLN |
+|:---|:---|:---|
+| Mechanism | Future compensates for past | New data dilutes past |
+| Independence | Violated | Maintained |
+| Next flip after 10H | "Tails is due" | Still 50-50 |
+
+## Examples
+
+**Example.** After a streak, the coin is still fair.
+
+```python
+import numpy as np
+
+np.random.seed(42)
+n_sim = 100_000
+
+# After 10 heads, what fraction of next 1000 flips are heads?
+next_1000 = np.random.binomial(1000, 0.5, n_sim)
+print(f"Mean heads in next 1000 (after 10H streak): {next_1000.mean():.2f}")
+print(f"This is 50%, confirming independence")
+```

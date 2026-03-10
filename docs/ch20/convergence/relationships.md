@@ -1,37 +1,48 @@
-# Relationships Between Modes of Convergence
+# Relationships Between Convergence Modes
 
+Almost sure convergence implies convergence in probability, which implies convergence in distribution — a strict hierarchy with no reverse implications in general.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Hierarchy of Convergence
-
-The three modes of convergence studied so far satisfy the following implications:
+The implication chain:
 
 $$
 X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{p} X \implies X_n \xrightarrow{d} X
 $$
 
-None of the reverse implications hold in general.
+**Special case**: $X_n \xrightarrow{d} c \iff X_n \xrightarrow{p} c$ when the limit is a constant.
 
-## Special Case: Convergence to a Constant
+## Explanation
 
-When the limit is a **constant** $c$, convergence in distribution and convergence in probability are equivalent:
+### Summary Table
 
-$$
-X_n \xrightarrow{d} c \iff X_n \xrightarrow{p} c
-$$
+| Mode | Notation | What converges |
+|:---|:---:|:---|
+| Almost sure | $X_n \xrightarrow{a.s.} X$ | Sample paths (with prob. 1) |
+| In probability | $X_n \xrightarrow{p} X$ | Tail probabilities to 0 |
+| In distribution | $X_n \xrightarrow{d} X$ | CDFs pointwise |
 
-This is particularly useful because the Law of Large Numbers states convergence to the constant $\mu$.
+### Why Reverse Fails
 
-## Summary Table
+The **typewriter sequence** gives convergence in probability but not a.s.: indicators of intervals cycling through $[0,1]$ with shrinking width satisfy $X_n \xrightarrow{p} 0$, but $X_n(\omega) = 1$ infinitely often for every $\omega$.
 
-| Mode | Notation | Requires |
-|------|----------|----------|
-| Almost sure (strong) | $X_n \xrightarrow{a.s.} X$ | $P(\lim X_n = X) = 1$ |
-| In probability (weak) | $X_n \xrightarrow{p} X$ | $P(\|X_n - X\| > \varepsilon) \to 0$ for all $\varepsilon > 0$ |
-| In distribution | $X_n \xrightarrow{d} X$ | $F_{X_n}(x) \to F_X(x)$ at continuity points |
+### Constant Limit Exception
 
-## Key Takeaway
+When $X_n \xrightarrow{d} c$ (a constant), the CDF of the limit is a step function, and convergence of CDFs forces $P(\lvert X_n - c \rvert > \varepsilon) \to 0$.
 
-Almost sure convergence talks about the **behavior of sample paths** (with probability 1, the entire trajectory converges). Convergence in probability talks about **tail probabilities vanishing**. Convergence in distribution talks only about **CDFs approaching** each other. Each successive mode is strictly weaker.
+## Examples
+
+**Example.** The LLN gives $\bar{X}_n \xrightarrow{p} \mu$ (constant limit), so convergence in distribution also holds.
+
+```python
+import numpy as np
+
+np.random.seed(42)
+n_sim = 50_000
+
+# Demonstrate all three modes for sample mean
+for n in [50, 500, 5000]:
+    means = np.random.exponential(1.0, (n_sim, n)).mean(axis=1)
+    p_dev = np.mean(np.abs(means - 1.0) > 0.05)
+    print(f"n={n:5d}: P(|X̄-1|>0.05) = {p_dev:.4f}")
+```

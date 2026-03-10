@@ -1,77 +1,52 @@
-# One-Sided Chebyshev's Inequality
+# One-Sided Chebyshev Inequality
 
+Also called the Cantelli inequality, this bounds a single tail more tightly than the two-sided Chebyshev by optimizing a shift parameter.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## Statement
-
-For any random variable $X$ with mean $\mu = \mathbb{E}X$ and variance $\sigma^2 = Var(X)$, and for $\varepsilon > 0$,
+For $X$ with mean $\mu$ and variance $\sigma^2$, and $\varepsilon > 0$:
 
 $$
-P(X - \mathbb{E}X \geq \varepsilon) \leq \frac{\sigma^2}{\varepsilon^2 + \sigma^2}
+P(X - \mu \ge \varepsilon) \le \frac{\sigma^2}{\sigma^2 + \varepsilon^2}
 $$
 
-$$
-P(X - \mathbb{E}X \leq -\varepsilon) \leq \frac{\sigma^2}{\varepsilon^2 + \sigma^2}
-$$
+The same bound holds for $P(X - \mu \le -\varepsilon)$.
 
-This is also known as the **Cantelli inequality**.
+## Explanation
 
-## Proof
+### Proof
 
-The key idea is to shift the random variable by a constant $b > 0$ and then apply Markov's inequality.
-
-For any $b > 0$:
+For any $b > 0$: $X - \mu \ge \varepsilon \implies (X - \mu + b)^2 \ge (\varepsilon + b)^2$. By Markov:
 
 $$
-X - \mathbb{E}X \geq \varepsilon \iff X - \mathbb{E}X + b \geq \varepsilon + b
+P(X - \mu \ge \varepsilon) \le \frac{E[(X - \mu + b)^2]}{(\varepsilon + b)^2} = \frac{\sigma^2 + b^2}{(\varepsilon + b)^2}
 $$
 
-Since $\varepsilon + b > 0$, squaring preserves the inequality:
+Minimizing over $b > 0$ gives $b^* = \sigma^2 / \varepsilon$, yielding $\sigma^2/(\sigma^2 + \varepsilon^2)$.
+
+### Comparison with Chebyshev
+
+Since $\frac{\sigma^2}{\sigma^2 + \varepsilon^2} < \frac{\sigma^2}{\varepsilon^2}$, the one-sided bound is always tighter than the two-sided Chebyshev (which bounds both tails combined).
+
+## Examples
+
+**Example.** $X \sim \operatorname{Bin}(1000, 0.01)$: bound $P(X \ge 20) = P(X - 10 \ge 10)$.
 
 $$
-\implies (X - \mathbb{E}X + b)^2 \geq (\varepsilon + b)^2
+\frac{9.9}{9.9 + 100} = 0.0901 \quad \text{(vs Chebyshev: } 0.0990\text{)}
 $$
 
-Applying Markov's inequality:
+```python
+from scipy import stats
 
-$$
-P(X - \mathbb{E}X \geq \varepsilon) \leq \frac{\mathbb{E}(X - \mathbb{E}X + b)^2}{(\varepsilon + b)^2} = \frac{\sigma^2 + b^2}{(\varepsilon + b)^2}
-$$
+n, p = 1000, 0.01
+mu, var = n * p, n * p * (1 - p)
 
-where we used $\mathbb{E}(X - \mu + b)^2 = Var(X) + b^2$.
-
-Minimizing over $b > 0$: set $b = \frac{\sigma^2}{\varepsilon}$ to obtain
-
-$$
-P(X - \mathbb{E}X \geq \varepsilon) \leq \frac{\sigma^2 + \sigma^4/\varepsilon^2}{(\varepsilon + \sigma^2/\varepsilon)^2} = \frac{\sigma^2}{\varepsilon^2 + \sigma^2}
-$$
-
-## Comparison with Chebyshev
-
-The standard Chebyshev inequality bounds $P(|X - \mu| \geq \varepsilon) \leq \sigma^2 / \varepsilon^2$. Since $|X - \mu| \geq \varepsilon$ includes both tails, for a **one-sided** bound the one-sided Chebyshev is tighter:
-
-$$
-\frac{\sigma^2}{\varepsilon^2 + \sigma^2} \leq \frac{\sigma^2}{\varepsilon^2}
-$$
-
-## Example: Binomial X ~ B(1000, 0.01)
-
-With $\mathbb{E}X = 10$, $Var(X) = 9.9$, bound $P(X \geq 20) = P(X - 10 \geq 10)$:
-
-$$
-P(X - 10 \geq 10) \leq \frac{9.9}{10^2 + 9.9} = \frac{9.9}{109.9} = 0.0901
-$$
-
-Compare with Chebyshev: $0.0990$. The one-sided bound is tighter.
-
-## Example: Poisson X ~ Poi(100)
-
-With $\mathbb{E}X = 100$, $Var(X) = 100$, bound $P(X \geq 200) = P(X - 100 \geq 100)$:
-
-$$
-P(X - 100 \geq 100) \leq \frac{100}{100^2 + 100} = \frac{100}{10100} = 0.0099
-$$
-
-Compare with Chebyshev: $0.0100$.
+for threshold in [20, 100]:
+    eps = threshold - mu
+    exact = 1 - stats.binom.cdf(threshold - 1, n, p)
+    cantelli = var / (var + eps**2)
+    chebyshev = var / eps**2
+    print(f"P(X ≥ {threshold}): exact={exact:.6f}, "
+          f"Cantelli≤{cantelli:.4f}, Chebyshev≤{min(chebyshev, 1):.4f}")
+```

@@ -1,29 +1,39 @@
 # Frequentist Interpretation of Probability
 
+The SLLN provides the mathematical foundation for defining probability as long-run relative frequency — repeating an experiment makes the observed frequency converge to the true probability.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+## Definition
 
-## The Connection
-
-The Law of Large Numbers provides the mathematical foundation for the **frequentist interpretation** of probability. If we repeat an experiment independently many times, the relative frequency of an event $A$ converges to its probability:
+For iid indicator variables $\mathbf{1}_{A_i}$ of event $A$:
 
 $$
-\frac{\text{number of times } A \text{ occurs in } n \text{ trials}}{n} \xrightarrow{a.s.} P(A) \quad \text{as } n \to \infty
+\frac{1}{n}\sum_{i=1}^n \mathbf{1}_{A_i} \xrightarrow{a.s.} P(A)
 $$
 
-This follows directly from the Strong Law of Large Numbers applied to the indicator variables $\mathbf{1}_A$:
+This is the SLLN applied to $X_i = \mathbf{1}(A_i)$ with $\mu = P(A)$.
 
-$$
-\frac{1}{n}\sum_{i=1}^n \mathbf{1}_{A_i} \xrightarrow{a.s.} \mathbb{E}[\mathbf{1}_A] = P(A)
-$$
+## Explanation
 
-## Interpretation
+### Interpretation
 
-Under the frequentist view, saying "the probability of heads is 0.5" means that if you flip the coin many times, the fraction of heads will converge to 0.5. Probability is defined as the long-run relative frequency.
+Saying "the probability of heads is 0.5" means: if you flip the coin many times, the fraction of heads converges to 0.5 with probability 1. The LLN converts this from an empirical observation into a theorem.
 
-The LLN makes this precise: it is not merely an empirical observation but a mathematical theorem.
+### Limitation
 
-## Limitations
+The frequentist view requires **repeatable** experiments. For one-time events ("probability of rain tomorrow"), the framework is less natural — motivating the Bayesian interpretation.
 
-The frequentist interpretation requires the notion of **repeatable experiments**. For one-time events (e.g., "the probability of rain tomorrow" or "the probability that a particular defendant is guilty"), the frequentist framework is less natural. This is one motivation for the **Bayesian** interpretation of probability.
+## Examples
+
+**Example.** Relative frequency of heads converges to 0.5.
+
+```python
+import numpy as np
+
+np.random.seed(42)
+n = 50_000
+flips = np.random.binomial(1, 0.5, n)
+freq = np.cumsum(flips) / np.arange(1, n + 1)
+
+for k in [100, 1000, 10000, 50000]:
+    print(f"n={k:>5d}: relative frequency = {freq[k-1]:.6f}")
+```

@@ -1,35 +1,48 @@
-# Convergence in Distribution (Review from Ch 17)
+# Convergence in Distribution
 
-
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+The weakest mode of convergence — CDFs converge pointwise — is all the CLT provides, yet it suffices for normal approximation.
 
 ## Definition
 
-A sequence of random variables $X_1, X_2, \ldots$ **converges in distribution** to a random variable $X$ if
+$X_n \xrightarrow{d} X$ if:
 
 $$
 \lim_{n \to \infty} F_{X_n}(x) = F_X(x)
 $$
 
-at every point $x$ where $F_X$ is continuous. We write
+at every $x$ where $F_X$ is continuous.
 
-$$
-X_n \xrightarrow{d} X
-$$
+## Explanation
 
-## Recap
+### What It Says
 
-Convergence in distribution is the weakest mode of convergence. It says that the **CDFs** of the sequence approach the CDF of the limit, but makes no statement about whether the random variables are "close" on the same probability space.
+The histograms of $X_n$ approach the density of $X$. This makes no claim about the random variables being on the same probability space — only the **distributions** must match.
 
-The Central Limit Theorem (Ch 17) is the most important example:
+### CLT as the Key Example
 
 $$
 \frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} \xrightarrow{d} N(0,1)
 $$
 
-This tells us the **shape** of the distribution of the standardized sample mean approaches a standard normal, but it does not say that the sample mean itself converges to any single value.
+This tells us the shape of the distribution approaches the standard normal, but does not say the sample mean itself converges to any single value. That requires the LLN.
 
-## Key Point
+### MGF Characterization
 
-Convergence in distribution concerns only the **distribution functions**, not the random variables themselves. Two sequences can converge in distribution to the same limit even if they are defined on completely different probability spaces.
+If $M_{X_n}(t) \to M_X(t)$ for all $t$ in a neighborhood of 0, then $X_n \xrightarrow{d} X$ (continuity theorem).
+
+## Examples
+
+**Example.** Uniform on $\{1/n, 2/n, \ldots, 1\}$ converges in distribution to $U(0,1)$.
+
+```python
+import numpy as np
+from scipy import stats
+
+np.random.seed(42)
+n_sim = 100_000
+
+for n in [10, 100, 1000]:
+    X = np.random.choice(np.arange(1, n+1) / n, n_sim)
+    ks_stat, p_val = stats.kstest(X, 'uniform')
+    print(f"n={n:5d}: KS stat={ks_stat:.4f}, p-value={p_val:.4f}")
+```

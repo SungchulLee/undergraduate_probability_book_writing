@@ -1,39 +1,44 @@
-# Exercises: Law of Large Numbers
+# Chapter 20 Exercises
 
+!!! warning "Exercise page"
+    This page collects practice problems for Chapter 20 and does not follow the five-section structure used by concept pages.
 
-!!! warning "Incomplete page"
-    This page is missing the required five-section structure (Concept Definition, Explanation, Diagram / Example). Content needs to be reorganized and expanded.
+Exercises on convergence modes, tail bounds, the weak and strong laws, and applications including Monte Carlo estimation.
 
-## Tail Bounds
+## Section 20.1 — Convergence Modes
 
-**Exercise 1.** Let $X \sim \text{Poi}(50)$. Use Markov's, Chebyshev's, one-sided Chebyshev's, and Chernoff's bounds to estimate $P(X \geq 75)$. Compare with the CLT approximation.
+**Exercise 20.1.** Define convergence in probability, almost sure convergence, and convergence in distribution. State the implication hierarchy.
 
-**Exercise 2.** Prove that Chebyshev's inequality follows from Markov's inequality applied to the random variable $(X - \mu)^2$.
+**Exercise 20.2.** Give an example of a sequence that converges in probability but not almost surely.
 
-**Exercise 3.** Let $X$ have mean $\mu$ and variance $\sigma^2$. Show that the optimal choice of $b$ in the one-sided Chebyshev proof is $b = \sigma^2/\varepsilon$.
+**Exercise 20.3.** Prove that $X_n \xrightarrow{d} c$ (constant) implies $X_n \xrightarrow{p} c$.
 
-## Law of Large Numbers
+## Section 20.2 — Tail Bounds
 
-**Exercise 4.** Let $X_1, X_2, \ldots$ be iid $\text{Exp}(\lambda)$. Use the Weak Law of Large Numbers to show that $\bar{X}_n \xrightarrow{p} 1/\lambda$.
+**Exercise 20.4.** Let $X \sim \operatorname{Pois}(50)$. Bound $P(X \ge 75)$ using Markov, Chebyshev, one-sided Chebyshev, and Chernoff. Compare with the exact value.
 
-**Exercise 5.** Let $X_1, X_2, \ldots$ be iid $\text{Uniform}(0, 1)$. Show that $\frac{1}{n}\sum_{i=1}^n X_i^2 \xrightarrow{p} 1/3$.
+**Exercise 20.5.** Prove Chebyshev's inequality from Markov's inequality.
 
-**Exercise 6.** In the coupon collector problem with $n = 50$ coupon types, approximately how many purchases are needed to collect all types? Compute the exact expected value $\mathbb{E}T_{50}$.
+**Exercise 20.6.** Show the optimal shift in the one-sided Chebyshev proof is $b = \sigma^2/\varepsilon$.
 
-## Monte Carlo
+## Section 20.3 — Weak Law of Large Numbers
 
-**Exercise 7.** Design a Monte Carlo simulation to estimate $\int_0^1 e^{-x^2} dx$.
+**Exercise 20.7.** Let $X_i$ be iid $\operatorname{Exp}(\lambda)$. Use the WLLN and Chebyshev to bound $P(\lvert \bar{X}_n - 1/\lambda \rvert > 0.1)$ for $n = 1000$.
 
-*Hint*: Write the integral as $\mathbb{E}[g(U)]$ where $U \sim \text{Uniform}(0,1)$.
+**Exercise 20.8.** Show that $\frac{1}{n}\sum_{i=1}^n X_i^2 \xrightarrow{p} 1/3$ for iid $X_i \sim U(0,1)$.
 
-**Exercise 8.** In the Monte Carlo estimation of $\pi$, if we use $n = 10{,}000$ darts, what is the approximate standard deviation of the estimate? Use the CLT.
+## Section 20.4 — Strong Law of Large Numbers
 
-**Exercise 9.** Implement Buffon's needle simulation in Python. Run $n = 10{,}000$ drops and estimate $\pi$. Repeat the experiment 500 times and plot a histogram of the estimates.
+**Exercise 20.9.** Explain the Borel-Cantelli argument for why a.s. convergence along the subsequence $n_k = k^2$ suffices.
 
-## Conceptual
+**Exercise 20.10.** State Borel's theorem and explain its connection to the frequentist interpretation of probability.
 
-**Exercise 10.** Explain why the Gambler's Fallacy is inconsistent with the Law of Large Numbers. Specifically, after observing 20 heads in a row from a fair coin, what does the LLN predict about the next 1000 flips?
+## Section 20.5 — Applications
 
-**Exercise 11.** In the coin-flipping illustration of WLLN vs SLLN (see the SLLN intuition section), explain which plot corresponds to which law and why.
+**Exercise 20.11.** Design a Monte Carlo simulation to estimate $\int_0^1 e^{-x^2} dx$. Compute a 95% confidence interval for your estimate using $n = 10{,}000$ samples.
 
-**Exercise 12.** Give an example of a sequence that converges in probability but not almost surely.
+**Exercise 20.12.** In the coupon collector problem with $n = 50$ types, compute $E[T_{50}]$ exactly and verify by simulation.
+
+**Exercise 20.13.** Explain why the gambler's fallacy contradicts the independence assumption of the LLN.
+
+**Exercise 20.14.** Implement Buffon's needle with $n = 10{,}000$ drops and estimate $\pi$. Repeat 500 times and report the mean and standard deviation of the estimates.
