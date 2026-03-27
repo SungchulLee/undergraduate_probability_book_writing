@@ -1,66 +1,119 @@
 # Correlation Coefficient
 
-Correlation is the standardized version of covariance — it is unitless and always lies between $-1$ and $+1$.
+## Motivation
+
+Covariance tells us the direction of a linear relationship, but its magnitude depends on the units of $X$ and $Y$. Doubling all values of $X$ would double the covariance, even though the relationship has not changed. The **correlation coefficient** solves this by normalizing covariance to a dimensionless quantity between $-1$ and $1$.
+
+---
 
 ## Definition
 
-The **correlation** (or Pearson correlation coefficient) of $X$ and $Y$ is
+!!! info "Correlation Coefficient"
+    For random variables $X$ and $Y$ with positive standard deviations $\sigma_X$ and $\sigma_Y$, the **(Pearson) correlation coefficient** is
+
+    $$
+    \rho(X, Y) = \frac{\text{Cov}(X, Y)}{\sigma_X \, \sigma_Y}
+    $$
+
+Equivalently, $\rho(X, Y) = \text{Cov}\!\left(\frac{X - \mu_X}{\sigma_X},\; \frac{Y - \mu_Y}{\sigma_Y}\right)$, so correlation is the covariance of the standardized variables.
+
+---
+
+## Range of Correlation
 
 $$
-\rho(X, Y) = \text{Corr}(X, Y) = \frac{\text{Cov}(X, Y)}{\text{SD}(X)\,\text{SD}(Y)} = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X)\,\text{Var}(Y)}}
+-1 \leq \rho(X, Y) \leq 1
 $$
 
-provided both standard deviations are positive.
+This follows from the **Cauchy--Schwarz inequality** $|\text{Cov}(X,Y)| \leq \sigma_X \sigma_Y$, which is proved in the next section.
 
-## Explanation
+---
 
-### Range and Extreme Cases
+## Equality Cases
 
-The Cauchy-Schwarz inequality guarantees $-1 \le \rho \le 1$.
+!!! info "Perfect Linear Relationship"
+    $\rho(X, Y) = 1$ if and only if $Y = aX + b$ for some constants with $a > 0$.
 
-| $\rho$ value | Interpretation |
-|:-------------|:---------------|
-| $\rho = 1$ | Perfect positive linear relationship: $Y = a + bX$, $b > 0$ |
-| $\rho = -1$ | Perfect negative linear relationship: $Y = a + bX$, $b < 0$ |
-| $\rho = 0$ | Uncorrelated (no linear association) |
-| $0 < \rho < 1$ | Positive linear tendency |
-| $-1 < \rho < 0$ | Negative linear tendency |
+    $\rho(X, Y) = -1$ if and only if $Y = aX + b$ for some constants with $a < 0$.
 
-### Properties
+**Proof sketch.** If $Y = aX + b$ with $a > 0$, then $\text{Cov}(X, Y) = a\,\text{Var}(X)$, $\sigma_Y = a\sigma_X$, so $\rho = a\,\text{Var}(X)/(a\sigma_X^2) = 1$. The converse follows from the equality condition of Cauchy--Schwarz.
 
-- **Scale invariant:** $\text{Corr}(aX + b, cY + d) = \text{sign}(ac)\,\text{Corr}(X, Y)$ for $ac \ne 0$
-- **Symmetric:** $\text{Corr}(X, Y) = \text{Corr}(Y, X)$
-- **Self-correlation:** $\text{Corr}(X, X) = 1$
+---
 
-### Correlation Is Not Causation
+## Interpretation
 
-$\rho$ measures linear association, not causal effect. Two variables can have $\rho = 0$ yet be strongly dependent (e.g., $X \sim N(0,1)$ and $Y = X^2$).
+| Range of $\rho$ | Interpretation |
+|:---:|:---|
+| $\rho = 1$ | Perfect positive linear relationship |
+| $0.7 \leq \rho < 1$ | Strong positive linear association |
+| $0.3 \leq \rho < 0.7$ | Moderate positive linear association |
+| $0 < \rho < 0.3$ | Weak positive linear association |
+| $\rho = 0$ | No linear association (uncorrelated) |
+| $\rho < 0$ | Negative linear association (same scale) |
 
-## Examples
+!!! warning "Correlation Is Not Causation"
+    A high correlation between $X$ and $Y$ does not imply that changes in $X$ cause changes in $Y$. They may both be driven by a third variable, or the relationship may be coincidental.
 
-**Example.** $X$ = first die, $Y$ = sum of two dice. With $\text{Cov}(X, Y) = 35/12$, $\text{Var}(X) = 35/12$, $\text{Var}(Y) = 35/6$:
+!!! tip "Correlation Measures Linear Association Only"
+    Two variables can have a strong nonlinear relationship yet $\rho = 0$. For instance, if $X \sim \text{Uniform}(-1, 1)$ and $Y = X^2$, then $\rho(X, Y) = 0$ even though $Y$ is completely determined by $X$.
 
-$$
-\rho(X, Y) = \frac{35/12}{\sqrt{(35/12)(35/6)}} = \frac{1}{\sqrt{2}} \approx 0.707
-$$
+---
+
+## Properties
+
+1. $\rho(X, Y) = \rho(Y, X)$
+
+2. $\rho(aX + b,\; cY + d) = \text{sign}(ac)\,\rho(X, Y)$ for $ac \neq 0$
+
+3. $\rho(X, X) = 1$
+
+4. If $X$ and $Y$ are independent, then $\rho(X, Y) = 0$ (converse is false in general)
+
+---
+
+## Example
+
+??? example "Computing Correlation from a Joint PMF"
+    Using the joint PMF from the covariance section:
+
+    |  | $Y = 0$ | $Y = 1$ |
+    |:---:|:---:|:---:|
+    | $X = 1$ | 0.2 | 0.3 |
+    | $X = 2$ | 0.4 | 0.1 |
+
+    We found $\text{Cov}(X, Y) = -0.1$, $E[X] = 1.5$, $E[Y] = 0.4$.
+
+    **Compute variances:**
+
+    $$
+    E[X^2] = 1^2(0.5) + 2^2(0.5) = 2.5, \quad \text{Var}(X) = 2.5 - 1.5^2 = 0.25
+    $$
+
+    $$
+    E[Y^2] = 0^2(0.6) + 1^2(0.4) = 0.4, \quad \text{Var}(Y) = 0.4 - 0.4^2 = 0.24
+    $$
+
+    **Correlation:**
+
+    $$
+    \rho(X, Y) = \frac{-0.1}{\sqrt{0.25}\sqrt{0.24}} = \frac{-0.1}{0.5 \times 0.4899} \approx -0.408
+    $$
+
+    The moderate negative correlation is consistent with the pattern in the PMF table: higher $X$ values are associated with lower $Y$ values.
+
+---
+
+## Visualizing Correlation
+
+The companion script `correlation_simulation.py` generates scatter plots of bivariate normal samples at $\rho = -0.8, 0, 0.5, 0.95$, showing how the shape of the point cloud tightens around a line as $|\rho| \to 1$.
 
 ```python
 import numpy as np
 
-np.random.seed(42)
-n_sim = 200_000
+# Compute sample correlation
+x = np.array([1, 2, 3, 4, 5])
+y = np.array([2, 4, 5, 4, 5])
 
-X = np.random.randint(1, 7, n_sim)
-Z = np.random.randint(1, 7, n_sim)
-Y = X + Z
-
-rho = np.corrcoef(X, Y)[0, 1]
-print(f"Corr(X, Y) = {rho:.4f}  (theory: {1/np.sqrt(2):.4f})")
-
-# Uncorrelated but dependent: X ~ N(0,1), Y = X^2
-X2 = np.random.standard_normal(n_sim)
-Y2 = X2**2
-rho2 = np.corrcoef(X2, Y2)[0, 1]
-print(f"\nCorr(X, X^2) = {rho2:.4f}  (theory: 0)")
-print(f"But E[Y|X=x] = x^2, clearly dependent!")
+rho = np.corrcoef(x, y)[0, 1]
+print(f"Sample correlation: {rho:.4f}")  # 0.7746
 ```

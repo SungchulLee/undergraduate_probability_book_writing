@@ -1,68 +1,129 @@
-# Expectation of Products
+# Expectation of Products (Independent Case)
 
-For independent random variables, the expectation of a product equals the product of expectations.
+## Motivation
 
-## Definition
+Linearity tells us $E[X + Y] = E[X] + E[Y]$ always. What about $E[XY]$? In general, $E[XY] \neq E[X]\,E[Y]$. However, when $X$ and $Y$ are independent, expectations **do** factor over products.
 
-If $X_1, \ldots, X_n$ are **mutually independent**, then
+---
+
+## Theorem
+
+!!! info "Expectation of a Product of Independent Random Variables"
+    If $X$ and $Y$ are independent, then
+
+    $$
+    E[XY] = E[X]\,E[Y]
+    $$
+
+    provided both expectations exist.
+
+**Proof (discrete case).** By independence, $p(x, y) = p_X(x)\,p_Y(y)$:
 
 $$
-E\!\left[\prod_{i=1}^n X_i\right] = \prod_{i=1}^n E[X_i]
+E[XY] = \sum_x \sum_y xy\,p(x,y) = \sum_x \sum_y xy\,p_X(x)\,p_Y(y)
 $$
 
-More generally, if $X$ and $Y$ are independent, then for any functions $g$ and $h$:
+$$
+= \left(\sum_x x\,p_X(x)\right)\!\left(\sum_y y\,p_Y(y)\right) = E[X]\,E[Y]
+$$
+
+$\blacksquare$
+
+**Proof (continuous case).** By independence, $f(x,y) = f_X(x)\,f_Y(y)$:
+
+$$
+E[XY] = \int_{-\infty}^{\infty}\!\int_{-\infty}^{\infty} xy\,f_X(x)\,f_Y(y)\,dx\,dy = \left(\int x\,f_X(x)\,dx\right)\!\left(\int y\,f_Y(y)\,dy\right)
+$$
+
+$\blacksquare$
+
+---
+
+## Extension to Multiple Variables
+
+!!! info "Product of n Independent Random Variables"
+    If $X_1, X_2, \ldots, X_n$ are mutually independent, then
+
+    $$
+    E\!\left[\prod_{i=1}^n X_i\right] = \prod_{i=1}^n E[X_i]
+    $$
+
+This follows by induction on $n$.
+
+---
+
+## More General Functions
+
+Independence gives a stronger result: for **any** functions $g$ and $h$,
 
 $$
 E[g(X)\,h(Y)] = E[g(X)]\,E[h(Y)]
 $$
 
-## Explanation
+provided the expectations exist. This is because $g(X)$ and $h(Y)$ are also independent when $X$ and $Y$ are independent.
 
-### Proof (Two Variables, Continuous)
+---
+
+## Failure for Dependent Variables
+
+!!! warning "Independence Is Essential"
+    When $X$ and $Y$ are dependent, $E[XY]$ can differ from $E[X]\,E[Y]$ by the covariance:
+
+    $$
+    E[XY] = E[X]\,E[Y] + \text{Cov}(X, Y)
+    $$
+
+??? example "Dependent Case: E[XY] vs E[X]E[Y]"
+    Let $X \sim \text{Bernoulli}(1/2)$ and $Y = X$ (perfectly dependent). Then:
+
+    $$
+    E[XY] = E[X^2] = E[X] = \frac{1}{2}
+    $$
+
+    $$
+    E[X]\,E[Y] = \frac{1}{2} \cdot \frac{1}{2} = \frac{1}{4}
+    $$
+
+    The difference is $\text{Cov}(X,Y) = \text{Var}(X) = 1/4$.
+
+---
+
+## Application: Variance of a Product
+
+For independent $X$ and $Y$:
 
 $$
-E[XY] = \int\!\!\int xy\,f_{X,Y}(x,y)\,dx\,dy = \int\!\!\int xy\,f_X(x)\,f_Y(y)\,dx\,dy = \left(\int x\,f_X(x)\,dx\right)\!\left(\int y\,f_Y(y)\,dy\right)
+\text{Var}(XY) = E[X^2 Y^2] - (E[XY])^2 = E[X^2]\,E[Y^2] - (E[X])^2(E[Y])^2
 $$
 
-The key step uses the factorization $f_{X,Y}(x,y) = f_X(x)\,f_Y(y)$, which is the definition of independence.
-
-### When Independence Fails
-
-Without independence, $E[XY] \ne E[X]\,E[Y]$ in general. The difference is exactly the covariance:
+This can be rewritten as:
 
 $$
-E[XY] = E[X]\,E[Y] + \text{Cov}(X, Y)
+\text{Var}(XY) = \text{Var}(X)\,\text{Var}(Y) + \text{Var}(X)(E[Y])^2 + (E[X])^2\,\text{Var}(Y)
 $$
 
-### Important Non-Example
+---
 
-Pairwise independence is **not** sufficient for the $n$-fold product formula. Mutual independence is required.
-
-## Examples
-
-**Example.** $X \sim \text{Uniform}(0,1)$, $Y \sim \text{Exp}(1)$, independent. Then:
-
-$$
-E[XY] = E[X]\,E[Y] = \frac{1}{2} \cdot 1 = \frac{1}{2}
-$$
-
-For dependent variables: $X \sim N(0,1)$, $Y = X$. Then $E[XY] = E[X^2] = 1 \ne 0 = E[X]\,E[Y]$.
+## Python Verification
 
 ```python
 import numpy as np
 
 np.random.seed(42)
-n_sim = 200_000
+N = 1_000_000
 
 # Independent case
-X = np.random.uniform(0, 1, n_sim)
-Y = np.random.exponential(1, n_sim)
-print(f"E[XY] = {np.mean(X*Y):.4f}  (theory: 0.5)")
-print(f"E[X]*E[Y] = {X.mean()*Y.mean():.4f}")
+X = np.random.exponential(2, N)  # E[X] = 2
+Y = np.random.poisson(3, N)     # E[Y] = 3
+
+print("--- Independent X, Y ---")
+print(f"E[XY] = {np.mean(X * Y):.4f}")
+print(f"E[X]*E[Y] = {np.mean(X) * np.mean(Y):.4f}")  # ≈ 6
 
 # Dependent case: Y = X
-X2 = np.random.standard_normal(n_sim)
-Y2 = X2  # perfectly dependent
-print(f"\nDependent: E[XY] = {np.mean(X2*Y2):.4f}  (= E[X^2] = 1)")
-print(f"E[X]*E[Y] = {X2.mean()*Y2.mean():.6f}  (≈ 0)")
+Y_dep = X
+print("\n--- Dependent: Y = X ---")
+print(f"E[XY] = E[X^2] = {np.mean(X * Y_dep):.4f}")
+print(f"E[X]*E[Y] = {np.mean(X) * np.mean(Y_dep):.4f}")
+print(f"Cov(X,Y) = {np.cov(X, Y_dep)[0,1]:.4f}")
 ```

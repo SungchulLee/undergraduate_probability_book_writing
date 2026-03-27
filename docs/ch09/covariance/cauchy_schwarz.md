@@ -1,91 +1,137 @@
-# Cauchy-Schwarz Inequality
+# Cauchy--Schwarz Inequality
 
-The Cauchy-Schwarz inequality bounds the covariance by the product of standard deviations, proving that correlation lies in $[-1, 1]$.
+## Statement
 
-## Definition
+!!! info "Cauchy--Schwarz Inequality for Random Variables"
+    For any random variables $X$ and $Y$ with finite second moments:
 
-For any random variables $X$ and $Y$ with finite second moments:
+    $$
+    \bigl|E[XY]\bigr|^2 \leq E[X^2]\,E[Y^2]
+    $$
 
-$$
-\bigl|E[XY]\bigr|^2 \le E[X^2]\,E[Y^2]
-$$
+    Equivalently, in terms of covariance:
 
-Equivalently, in terms of covariance:
+    $$
+    \bigl|\text{Cov}(X, Y)\bigr| \leq \sigma_X \, \sigma_Y
+    $$
 
-$$
-\bigl|\text{Cov}(X, Y)\bigr| \le \text{SD}(X)\,\text{SD}(Y)
-$$
+    Equality holds if and only if $Y = aX + b$ for some constants $a, b$ (i.e., $X$ and $Y$ are linearly related with probability 1).
 
-Equality holds if and only if $Y = aX + b$ for some constants $a, b$ (i.e., $X$ and $Y$ are linearly related).
+---
 
-## Explanation
+## Proof
 
-### Proof
+The proof uses a simple but powerful idea: the variance of any random variable is non-negative.
 
-For any real $t$, define $h(t) = E[(X + tY)^2] \ge 0$. Expanding:
-
-$$
-h(t) = E[X^2] + 2t\,E[XY] + t^2\,E[Y^2] \ge 0
-$$
-
-This is a quadratic in $t$ that is non-negative everywhere. A non-negative quadratic has non-positive discriminant:
+Let $U = X - \mu_X$ and $V = Y - \mu_Y$ be the centered versions. For any real number $t$, consider the random variable $U + tV$. Since variance is non-negative:
 
 $$
-4(E[XY])^2 - 4\,E[X^2]\,E[Y^2] \le 0
+0 \leq \text{Var}(U + tV) = E[(U + tV)^2]
 $$
 
-which gives $|E[XY]|^2 \le E[X^2]\,E[Y^2]$.
-
-### Covariance Version
-
-Apply the basic form to the centered variables $\tilde{X} = X - E[X]$ and $\tilde{Y} = Y - E[Y]$:
+Expanding:
 
 $$
-|\text{Cov}(X,Y)|^2 = |E[\tilde{X}\tilde{Y}]|^2 \le E[\tilde{X}^2]\,E[\tilde{Y}^2] = \text{Var}(X)\,\text{Var}(Y)
+0 \leq E[U^2] + 2t\,E[UV] + t^2\,E[V^2]
 $$
 
-Dividing both sides by $\text{Var}(X)\,\text{Var}(Y)$ gives $|\rho(X,Y)| \le 1$.
-
-### When Is Equality Achieved?
-
-$|E[XY]|^2 = E[X^2]\,E[Y^2]$ iff the quadratic $h(t)$ has a real root, meaning $X + t^*Y = 0$ a.s. for some $t^*$. This means $X$ is a scalar multiple of $Y$ (plus a constant, after centering).
-
-## Examples
-
-**Example.** Verify with $X \sim \text{Uniform}(0,1)$ and $Y = 2X + 3$ (perfect linear relationship).
+This is a quadratic in $t$: $f(t) = E[V^2]\,t^2 + 2\,E[UV]\,t + E[U^2]$. Since $f(t) \geq 0$ for all $t$, the discriminant must be non-positive:
 
 $$
-\text{Cov}(X, Y) = 2\,\text{Var}(X) = 2/12 = 1/6
+\Delta = 4\bigl(E[UV]\bigr)^2 - 4\,E[U^2]\,E[V^2] \leq 0
 $$
 
+Therefore:
+
 $$
-\text{SD}(X)\,\text{SD}(Y) = \frac{1}{\sqrt{12}} \cdot \frac{2}{\sqrt{12}} = \frac{2}{12} = 1/6
+\bigl(E[UV]\bigr)^2 \leq E[U^2]\,E[V^2]
 $$
 
-Equality holds: $|\text{Cov}| = \text{SD}(X)\,\text{SD}(Y)$, confirming $|\rho| = 1$.
+Since $E[UV] = \text{Cov}(X, Y)$, $E[U^2] = \text{Var}(X) = \sigma_X^2$, and $E[V^2] = \text{Var}(Y) = \sigma_Y^2$:
+
+$$
+\bigl|\text{Cov}(X, Y)\bigr| \leq \sigma_X\,\sigma_Y
+$$
+
+$\blacksquare$
+
+---
+
+## Equality Condition
+
+Equality holds ($\Delta = 0$) if and only if $f(t^*) = 0$ for some $t^* \in \mathbb{R}$, which means $U + t^* V = 0$ with probability 1, i.e., $X - \mu_X = -t^*(Y - \mu_Y)$ almost surely.
+
+This is equivalent to $Y = aX + b$ for constants $a = -1/t^*$ and $b = \mu_Y - a\mu_X$.
+
+---
+
+## Corollary: Correlation Is Bounded
+
+Dividing both sides of $|\text{Cov}(X,Y)| \leq \sigma_X \sigma_Y$ by $\sigma_X \sigma_Y > 0$:
+
+$$
+|\rho(X, Y)| \leq 1 \qquad\text{i.e.,}\qquad -1 \leq \rho(X, Y) \leq 1
+$$
+
+This is the rigorous justification for the range of the correlation coefficient stated in the previous section.
+
+---
+
+## The E[XY] Form
+
+Applying the inequality to non-centered variables $X$ and $Y$ directly:
+
+$$
+\bigl(E[XY]\bigr)^2 \leq E[X^2]\,E[Y^2]
+$$
+
+This is sometimes called the **Schwarz inequality for expectations** and is useful for bounding mixed moments.
+
+---
+
+## Example
+
+??? example "Bounding an Unknown Expectation"
+    Suppose $E[X^2] = 4$ and $E[Y^2] = 9$. Without knowing the joint distribution, we can bound:
+
+    $$
+    |E[XY]| \leq \sqrt{E[X^2]\,E[Y^2]} = \sqrt{4 \cdot 9} = 6
+    $$
+
+    So $-6 \leq E[XY] \leq 6$.
+
+??? example "Application to Correlation"
+    Suppose $\text{Var}(X) = 16$, $\text{Var}(Y) = 25$, and $\text{Cov}(X,Y) = -15$. Then:
+
+    $$
+    |\text{Cov}(X,Y)| = 15 \leq \sqrt{16 \cdot 25} = 20 \quad\checkmark
+    $$
+
+    $$
+    \rho(X,Y) = \frac{-15}{\sqrt{16}\sqrt{25}} = \frac{-15}{20} = -0.75
+    $$
+
+    which satisfies $|\rho| \leq 1$.
+
+---
+
+## Python Verification
 
 ```python
 import numpy as np
 
 np.random.seed(42)
-n_sim = 200_000
+N = 1_000_000
 
-# Perfect linear: Y = 2X + 3
-X = np.random.uniform(0, 1, n_sim)
-Y_lin = 2 * X + 3
-rho_lin = np.corrcoef(X, Y_lin)[0, 1]
-print(f"|rho| for Y = 2X + 3: {abs(rho_lin):.6f}  (theory: 1.0)")
+# Generate correlated random variables
+X = np.random.normal(0, 2, N)  # sigma_X = 2
+Y = 0.6 * X + np.random.normal(0, 1, N)
 
-# Non-perfect: X, Z independent uniform
-Z = np.random.uniform(0, 1, n_sim)
-Y_mix = X + Z
-rho_mix = np.corrcoef(X, Y_mix)[0, 1]
-print(f"|rho| for Y = X + Z: {abs(rho_mix):.4f}  (theory: {1/np.sqrt(2):.4f})")
+cov_XY = np.cov(X, Y)[0, 1]
+sigma_X = np.std(X, ddof=0)
+sigma_Y = np.std(Y, ddof=0)
 
-# Cauchy-Schwarz check: |E[XY]|^2 <= E[X^2] E[Y^2]
-lhs = np.mean(X * Y_mix)**2
-rhs = np.mean(X**2) * np.mean(Y_mix**2)
-print(f"\n|E[XY]|^2 = {lhs:.6f}")
-print(f"E[X^2]*E[Y^2] = {rhs:.6f}")
-print(f"CS holds: {lhs <= rhs + 1e-10}")
+print(f"|Cov(X,Y)| = {abs(cov_XY):.4f}")
+print(f"sigma_X * sigma_Y = {sigma_X * sigma_Y:.4f}")
+print(f"Cauchy-Schwarz satisfied: {abs(cov_XY) <= sigma_X * sigma_Y}")
 ```
