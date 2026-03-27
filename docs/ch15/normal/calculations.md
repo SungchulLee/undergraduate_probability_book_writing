@@ -1,181 +1,112 @@
 # Normal Probability Calculations
 
-Computing probabilities for the normal distribution reduces to standardization: convert to Z-scores, then evaluate the standard normal CDF $\Phi$.
+## Standardization
 
-## Definition
+Every normal probability calculation reduces to the standard normal via the **Z-score transformation**.
 
-For $X \sim N(\mu, \sigma^2)$, the probability that $X$ falls in the interval $(a, b)$ is:
+!!! info "Standardization"
+    If $X \sim N(\mu, \sigma^2)$, then $Z = \dfrac{X - \mu}{\sigma} \sim N(0, 1)$, and:
 
-$$
-P(a < X < b) = \Phi\!\left(\frac{b - \mu}{\sigma}\right) - \Phi\!\left(\frac{a - \mu}{\sigma}\right)
-$$
+    $$P(a < X < b) = \Phi\!\left(\frac{b - \mu}{\sigma}\right) - \Phi\!\left(\frac{a - \mu}{\sigma}\right)$$
 
-where $\Phi$ is the CDF of the standard normal $N(0,1)$.
+    where $\Phi$ is the standard normal CDF.
 
-The **standardization technique** converts any normal probability into a standard normal probability via the substitution $Z = (X - \mu)/\sigma$:
+## Computing Tail Probabilities
 
-$$
-P(X \leq x) = P\!\left(Z \leq \frac{x - \mu}{\sigma}\right) = \Phi\!\left(\frac{x - \mu}{\sigma}\right)
-$$
+**Left tail.** $P(X \leq x) = \Phi\!\left(\dfrac{x - \mu}{\sigma}\right)$
 
-## Explanation
+**Right tail.** Using the complement rule:
 
-### The three-step calculation procedure
+$$P(X > x) = 1 - \Phi\!\left(\frac{x - \mu}{\sigma}\right)$$
 
-Every normal probability calculation follows the same pattern:
+**Symmetry shortcut.** Since $\Phi(-z) = 1 - \Phi(z)$:
 
-**Step 1.** Identify $\mu$ and $\sigma$ from the problem.
+$$P(X < \mu - c) = P(X > \mu + c) = 1 - \Phi\!\left(\frac{c}{\sigma}\right)$$
 
-**Step 2.** Standardize the bounds: replace each bound $x$ with $z = (x - \mu)/\sigma$.
+## Worked Examples
 
-**Step 3.** Evaluate using $\Phi$: use $\Phi(z)$, the symmetry identity $\Phi(-z) = 1 - \Phi(z)$, and the interval formula $P(a < Z < b) = \Phi(b) - \Phi(a)$.
+??? example "Example: Exam Scores"
+    Exam scores follow $X \sim N(65, 9)$ (so $\sigma = 3$).
 
-### Common probability patterns
+    **(a)** Find $P(X > 70)$.
 
-| Desired probability | Formula |
-|---|---|
-| $P(X \leq x)$ | $\Phi\!\left(\frac{x-\mu}{\sigma}\right)$ |
-| $P(X \geq x)$ | $1 - \Phi\!\left(\frac{x-\mu}{\sigma}\right)$ |
-| $P(a < X < b)$ | $\Phi\!\left(\frac{b-\mu}{\sigma}\right) - \Phi\!\left(\frac{a-\mu}{\sigma}\right)$ |
-| $P(\lvert X - \mu \rvert < k\sigma)$ | $2\Phi(k) - 1$ |
+    $$P(X > 70) = 1 - \Phi\!\left(\frac{70 - 65}{3}\right) = 1 - \Phi(1.67) \approx 1 - 0.9525 = 0.0475$$
 
-### Inverse problems (finding cutoffs)
+    About 4.8% of students score above 70.
 
-Sometimes the probability is given and you need to find the cutoff value $x$. If $P(X \leq x) = p$, then:
+    **(b)** Find $P(60 < X < 68)$.
 
-$$
-\frac{x - \mu}{\sigma} = \Phi^{-1}(p) \quad \implies \quad x = \mu + \sigma \, \Phi^{-1}(p)
-$$
+    $$P(60 < X < 68) = \Phi\!\left(\frac{68 - 65}{3}\right) - \Phi\!\left(\frac{60 - 65}{3}\right) = \Phi(1) - \Phi(-1.67)$$
 
-### Continuity considerations
+    $$= 0.8413 - 0.0475 = 0.7938$$
 
-Since the normal distribution is continuous, $P(X = x) = 0$ for any single point $x$. This means:
+??? example "Example: Manufacturing Tolerance"
+    A machine produces rods with length $X \sim N(50, 4)$ cm (so $\sigma = 2$). Rods are rejected if they deviate from the mean by more than 3 cm. Find the rejection rate.
 
-$$
-P(X \leq x) = P(X < x), \qquad P(a \leq X \leq b) = P(a < X < b)
-$$
+    $$P(|X - 50| > 3) = P(X < 47) + P(X > 53) = 2\bigl[1 - \Phi(1.5)\bigr] = 2(1 - 0.9332) = 0.1336$$
 
-Strict and non-strict inequalities give the same result for continuous distributions.
+    About 13.4% of rods are rejected.
 
-### Working with symmetric intervals
+## The 68-95-99.7 Rule
 
-For intervals symmetric about the mean, the calculation simplifies. If $X \sim N(\mu, \sigma^2)$:
+For any $X \sim N(\mu, \sigma^2)$:
 
-$$
-P(\lvert X - \mu \rvert < c) = P(-c < X - \mu < c) = P\!\left(-\frac{c}{\sigma} < Z < \frac{c}{\sigma}\right) = 2\Phi\!\left(\frac{c}{\sigma}\right) - 1
-$$
+| Interval | Probability |
+|:---:|:---:|
+| $\mu \pm \sigma$ | $\approx 0.6827$ |
+| $\mu \pm 2\sigma$ | $\approx 0.9545$ |
+| $\mu \pm 3\sigma$ | $\approx 0.9973$ |
 
-The inverse question -- find $c$ such that $P(\lvert X - \mu \rvert < c) = 1 - \alpha$ -- gives:
+These follow from $P(|Z| \leq k) = 2\Phi(k) - 1$.
 
-$$
-c = \sigma \, \Phi^{-1}\!\left(1 - \frac{\alpha}{2}\right) = \sigma \, z_{1-\alpha/2}
-$$
+## Finding Percentiles
 
-## Examples
+To find the value $x_\alpha$ such that $P(X \leq x_\alpha) = \alpha$, invert the standardization:
 
-**Example 1: Interval probability.**
+$$x_\alpha = \mu + \sigma \cdot z_\alpha$$
 
-Let $X \sim N(50, 8^2)$. Find $P(42 < X < 62)$.
+where $z_\alpha = \Phi^{-1}(\alpha)$ is the $\alpha$-quantile of $N(0, 1)$.
 
-$$
-P(42 < X < 62) = \Phi\!\left(\frac{62 - 50}{8}\right) - \Phi\!\left(\frac{42 - 50}{8}\right) = \Phi(1.5) - \Phi(-1) = 0.9332 - 0.1587 = 0.7745
-$$
+??? example "Example: Top 10% Cutoff"
+    Scores are $N(65, 9)$. Find the cutoff for the top 10%.
+
+    We need $P(X > c) = 0.10$, so $P(X \leq c) = 0.90$.
+
+    $$c = 65 + 3 \cdot z_{0.90} = 65 + 3 \cdot 1.282 = 68.85$$
+
+    A score of about 68.85 places a student in the top 10%.
+
+## Python Implementation
 
 ```python
 from scipy import stats
 
-mu, sigma = 50, 8
-p = stats.norm.cdf(62, mu, sigma) - stats.norm.cdf(42, mu, sigma)
-print(f"P(42 < X < 62) = Phi({(62-mu)/sigma}) - Phi({(42-mu)/sigma})")
-print(f"               = {stats.norm.cdf((62-mu)/sigma):.4f} - {stats.norm.cdf((42-mu)/sigma):.4f}")
-print(f"               = {p:.4f}")
+mu, sigma = 65, 3  # N(65, 9)
+
+# Interval probability
+p1 = stats.norm.cdf(70, mu, sigma) - stats.norm.cdf(60, mu, sigma)
+print(f"P(60 < X < 70) = {p1:.4f}")
+
+# Upper-tail probability
+p2 = 1 - stats.norm.cdf(70, mu, sigma)
+print(f"P(X > 70) = {p2:.4f}")
+
+# Percentile (top 10% cutoff)
+c = stats.norm.ppf(0.90, mu, sigma)
+print(f"Top 10% cutoff: {c:.2f}")
+
+# 68-95-99.7 verification
+for k in [1, 2, 3]:
+    p = stats.norm.cdf(k) - stats.norm.cdf(-k)
+    print(f"P(|Z| <= {k}) = {p:.4f}")
 ```
 
 **Output:**
 ```
-P(42 < X < 62) = Phi(1.5) - Phi(-1.0)
-               = 0.9332 - 0.1587
-               = 0.7745
-```
-
-**Example 2: Tail probability.**
-
-The lifetime of a component follows $X \sim N(1000, 100^2)$ hours. Find the probability it lasts more than 1150 hours.
-
-$$
-P(X > 1150) = 1 - \Phi\!\left(\frac{1150 - 1000}{100}\right) = 1 - \Phi(1.5) = 1 - 0.9332 = 0.0668
-$$
-
-```python
-from scipy import stats
-
-mu, sigma = 1000, 100
-x = 1150
-z = (x - mu) / sigma
-p = 1 - stats.norm.cdf(z)
-print(f"Z-score: z = ({x} - {mu}) / {sigma} = {z:.1f}")
-print(f"P(X > {x}) = 1 - Phi({z:.1f}) = 1 - {stats.norm.cdf(z):.4f} = {p:.4f}")
-```
-
-**Output:**
-```
-Z-score: z = (1150 - 1000) / 100 = 1.5
-P(X > 1150) = 1 - Phi(1.5) = 1 - 0.9332 = 0.0668
-```
-
-**Example 3: Finding a cutoff (inverse problem).**
-
-Exam scores follow $X \sim N(72, 9^2)$. The top 10% of students receive an A. What is the minimum score for an A?
-
-$$
-P(X \geq x) = 0.10 \implies P(X \leq x) = 0.90 \implies x = 72 + 9 \cdot \Phi^{-1}(0.90)
-$$
-
-```python
-from scipy import stats
-
-mu, sigma = 72, 9
-z_90 = stats.norm.ppf(0.90)
-cutoff = mu + sigma * z_90
-print(f"z_{{0.90}} = {z_90:.4f}")
-print(f"Minimum A score = {mu} + {sigma} * {z_90:.4f} = {cutoff:.2f}")
-print(f"Verification: P(X >= {cutoff:.2f}) = {1 - stats.norm.cdf(cutoff, mu, sigma):.4f}")
-```
-
-**Output:**
-```
-z_{0.90} = 1.2816
-Minimum A score = 72 + 9 * 1.2816 = 83.53
-Verification: P(X >= 83.53) = 0.1000
-```
-
-**Example 4: Symmetric interval.**
-
-A machine fills bottles to a target of $\mu = 500$ mL with $\sigma = 3$ mL. Find the interval that contains 99% of all fill levels.
-
-$$
-P(\lvert X - 500 \rvert < c) = 0.99 \implies c = 3 \cdot z_{0.995}
-$$
-
-```python
-from scipy import stats
-
-mu, sigma = 500, 3
-z_995 = stats.norm.ppf(0.995)
-c = sigma * z_995
-print(f"z_{{0.995}} = {z_995:.4f}")
-print(f"Half-width c = {sigma} * {z_995:.4f} = {c:.2f} mL")
-print(f"99% of bottles have fill level in ({mu - c:.2f}, {mu + c:.2f}) mL")
-
-# Verify
-p = stats.norm.cdf(mu + c, mu, sigma) - stats.norm.cdf(mu - c, mu, sigma)
-print(f"Verification: P({mu - c:.2f} < X < {mu + c:.2f}) = {p:.4f}")
-```
-
-**Output:**
-```
-z_{0.995} = 2.5758
-Half-width c = 3 * 2.5758 = 7.73 mL
-99% of bottles have fill level in (492.27, 507.73) mL
-Verification: P(492.27 < X < 507.73) = 0.9900
+P(60 < X < 70) = 0.8940
+P(X > 70) = 0.0478
+Top 10% cutoff: 68.84
+P(|Z| <= 1) = 0.6827
+P(|Z| <= 2) = 0.9545
+P(|Z| <= 3) = 0.9973
 ```

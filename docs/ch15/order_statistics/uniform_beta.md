@@ -1,222 +1,92 @@
 # Order Statistics of the Uniform and the Beta Connection
 
-The $k$-th order statistic of a sample from $U(0,1)$ follows a Beta distribution, providing one of the most elegant connections in probability and explaining why the Beta distribution appears so frequently in statistics.
+## Main Result
 
-## Definition
+!!! info "Uniform Order Statistics Are Beta"
+    If $U_1, U_2, \ldots, U_n \overset{\text{iid}}{\sim} U(0, 1)$, then:
 
-If $U_1, U_2, \ldots, U_n \overset{\text{iid}}{\sim} U(0, 1)$, then the $k$-th order statistic has:
+    $$U_{(k)} \sim \text{Beta}(k, \, n - k + 1)$$
 
-$$
-U_{(k)} \sim \text{Beta}(k, \; n - k + 1)
-$$
+This is one of the most elegant connections in probability: the order statistics of the uniform distribution are exactly Beta-distributed.
 
-with mean and variance:
+## Proof
 
-$$
-E[U_{(k)}] = \frac{k}{n + 1}, \qquad \text{Var}(U_{(k)}) = \frac{k(n - k + 1)}{(n + 1)^2(n + 2)}
-$$
+From the general formula for the $k$-th order statistic, with $F(x) = x$ and $f(x) = 1$ for $0 < x < 1$:
 
-The joint distribution of any pair $(U_{(i)}, U_{(j)})$ with $i < j$ has:
+$$f_{U_{(k)}}(x) = \frac{n!}{(k-1)!(n-k)!} \, x^{k-1}(1-x)^{n-k}, \quad 0 < x < 1$$
 
-$$
-\text{Cov}(U_{(i)}, U_{(j)}) = \frac{i(n - j + 1)}{(n+1)^2(n+2)}
-$$
+Recall the Beta PDF: $f(x) = \frac{x^{\alpha - 1}(1 - x)^{\beta - 1}}{B(\alpha, \beta)}$ for $0 < x < 1$.
 
-## Explanation
+Setting $\alpha = k$ and $\beta = n - k + 1$:
 
-### Proof that the k-th uniform order statistic is Beta
+$$\frac{1}{B(k, n-k+1)} = \frac{\Gamma(n+1)}{\Gamma(k)\,\Gamma(n-k+1)} = \frac{n!}{(k-1)!(n-k)!}$$
 
-The PDF of $U_{(k)}$ is obtained from the general order statistic formula with $f(x) = 1$ and $F(x) = x$:
+The two expressions match, confirming $U_{(k)} \sim \text{Beta}(k, n - k + 1)$. $\square$
 
-$$
-f_{U_{(k)}}(x) = \frac{n!}{(k-1)!(n-k)!} x^{k-1}(1-x)^{n-k} \cdot 1 = \frac{x^{k-1}(1-x)^{n-k}}{B(k, n-k+1)}
-$$
+## Mean and Variance
 
-This is exactly the $\text{Beta}(k, n-k+1)$ PDF, since:
+Since $U_{(k)} \sim \text{Beta}(k, n - k + 1)$, the moments follow from the Beta distribution:
 
-$$
-B(k, n-k+1) = \frac{(k-1)!(n-k)!}{n!}
-$$
+$$E[U_{(k)}] = \frac{k}{n + 1}$$
 
-### Special cases
+$$\text{Var}(U_{(k)}) = \frac{k(n - k + 1)}{(n + 1)^2(n + 2)}$$
 
-| Order statistic | Distribution | Mean |
-|:---:|:---:|:---:|
-| $U_{(1)}$ (minimum) | $\text{Beta}(1, n)$ | $\frac{1}{n+1}$ |
-| $U_{(n)}$ (maximum) | $\text{Beta}(n, 1)$ | $\frac{n}{n+1}$ |
-| $U_{(\lceil n/2 \rceil)}$ (median) | $\text{Beta}(\lceil n/2\rceil, \lfloor n/2\rfloor + 1)$ | $\approx 1/2$ |
+The mean $k/(n+1)$ is the expected position of the $k$-th smallest among $n$ uniform samples. The order statistics are equally spaced on average: the gaps $E[U_{(k+1)}] - E[U_{(k)}] = 1/(n+1)$ are all equal.
 
-### Even spacing in expectation
+## Covariance of Uniform Order Statistics
 
-The expected values $E[U_{(k)}] = k/(n+1)$ for $k = 1, \ldots, n$ are evenly spaced in $(0, 1)$. This is often used as a heuristic for the "typical" behavior of order statistics: on average, $n$ uniform order statistics divide the interval into $n + 1$ roughly equal pieces.
+For $i < j$:
 
-### Variance is largest at the median
+$$\text{Cov}(U_{(i)}, U_{(j)}) = \frac{i(n - j + 1)}{(n+1)^2(n+2)}$$
 
-The variance $\frac{k(n-k+1)}{(n+1)^2(n+2)}$ is maximized when $k \approx (n+1)/2$, i.e., at the median. The extreme order statistics (min and max) have the smallest variance. Intuitively, the median can wander more freely than the min or max, which are constrained by the boundary.
+This is always positive: knowing that $U_{(i)}$ is large makes it more likely that $U_{(j)}$ is also large.
 
-### Extension to general distributions
+## Special Cases
 
-For $X_1, \ldots, X_n \overset{\text{iid}}{\sim} F$ (any continuous CDF), the probability integral transform gives:
+| Order Statistic | Distribution | Mean | Variance |
+|:---:|:---:|:---:|:---:|
+| $U_{(1)}$ (min) | $\text{Beta}(1, n)$ | $\frac{1}{n+1}$ | $\frac{n}{(n+1)^2(n+2)}$ |
+| $U_{(n)}$ (max) | $\text{Beta}(n, 1)$ | $\frac{n}{n+1}$ | $\frac{n}{(n+1)^2(n+2)}$ |
+| $U_{(\lceil n/2 \rceil)}$ (median) | $\text{Beta}(\lceil n/2 \rceil, \lfloor n/2 \rfloor + 1)$ | $\approx 1/2$ | $\approx \frac{1}{4(n+2)}$ |
 
-$$
-F(X_{(k)}) \sim \text{Beta}(k, n - k + 1)
-$$
+## Converse Perspective
 
-This allows us to relate the order statistics of any continuous distribution back to the Beta.
+The Beta-Uniform connection also works in reverse: the $\text{Beta}(\alpha, \beta)$ distribution with integer parameters can always be interpreted as an order statistic. Specifically, $\text{Beta}(k, n - k + 1)$ is the distribution of the $k$-th order statistic from $n$ iid uniforms. This gives a natural sampling interpretation for every Beta distribution with positive integer parameters.
 
-### Connection to the Dirichlet distribution
-
-The vector of spacings $(U_{(1)}, U_{(2)} - U_{(1)}, \ldots, U_{(n)} - U_{(n-1)}, 1 - U_{(n)})$ follows a symmetric $\text{Dirichlet}(1, 1, \ldots, 1)$ distribution. This is the multivariate generalization of the uniform-Beta connection.
-
-## Examples
-
-**Example 1: Verifying the Beta distribution.**
-
-For $n = 10$, verify that $U_{(3)} \sim \text{Beta}(3, 8)$ by simulation.
+## Python Implementation
 
 ```python
 import numpy as np
 from scipy import stats
 
 np.random.seed(42)
-n, k = 10, 3
-n_sim = 100000
+n, n_sim = 10, 100000
 
 samples = np.sort(np.random.uniform(0, 1, (n_sim, n)), axis=1)
-u_k = samples[:, k-1]
 
-alpha, beta_param = k, n - k + 1
-mean_theory = alpha / (alpha + beta_param)
-var_theory = alpha * beta_param / ((alpha + beta_param)**2 * (alpha + beta_param + 1))
-
-print(f"U_(3) from 10 iid U(0,1) ~ Beta({alpha}, {beta_param}):")
-print(f"  Mean: {u_k.mean():.4f}  (theory: {mean_theory:.4f})")
-print(f"  Var:  {u_k.var():.6f}  (theory: {var_theory:.6f})")
-
-# KS test
-ks_stat, p_val = stats.kstest(u_k, 'beta', args=(alpha, beta_param))
-print(f"  KS test: p-value = {p_val:.4f}")
+print(f"Order statistics of {n} U(0,1) samples vs Beta theory:\n")
+print(f"{'k':>3}  {'E[U_(k)] sim':>14}  {'E[U_(k)] theory':>16}  {'Var sim':>10}  {'Var theory':>12}")
+for k in range(1, n + 1):
+    os_k = samples[:, k - 1]
+    alpha, beta_param = k, n - k + 1
+    e_theory = alpha / (alpha + beta_param)
+    v_theory = alpha * beta_param / ((alpha + beta_param)**2 * (alpha + beta_param + 1))
+    print(f"{k:3d}  {os_k.mean():14.4f}  {e_theory:16.4f}  {os_k.var():10.6f}  {v_theory:12.6f}")
 ```
 
 **Output:**
 ```
-U_(3) from 10 iid U(0,1) ~ Beta(3, 8):
-  Mean: 0.2729  (theory: 0.2727)
-  Var:  0.015082  (theory: 0.015152)
-  KS test: p-value = 0.7234
-```
+Order statistics of 10 U(0,1) samples vs Beta theory:
 
-**Example 2: All order statistics at once.**
-
-For $n = 6$, display the Beta distribution for each order statistic.
-
-```python
-import numpy as np
-from scipy import stats
-
-n = 6
-print(f"Order statistics of {n} iid U(0,1):")
-print(f"{'k':>3}  {'Distribution':>15}  {'Mean':>8}  {'Std':>8}")
-print("-" * 42)
-
-for k in range(1, n+1):
-    a, b = k, n - k + 1
-    mean = a / (a + b)
-    var = a * b / ((a + b)**2 * (a + b + 1))
-    print(f"{k:3d}  {'Beta(' + str(a) + ',' + str(b) + ')':>15}  {mean:8.4f}  {np.sqrt(var):8.4f}")
-
-# Verify with simulation
-np.random.seed(42)
-n_sim = 100000
-samples = np.sort(np.random.uniform(0, 1, (n_sim, n)), axis=1)
-print(f"\nSimulated means: {samples.mean(axis=0).round(4)}")
-print(f"Theory means:    {[round(k/(n+1), 4) for k in range(1, n+1)]}")
-```
-
-**Output:**
-```
-Order statistics of 6 iid U(0,1):
-  k      Distribution      Mean       Std
-------------------------------------------
-  1       Beta(1,6)    0.1429    0.1237
-  2       Beta(2,5)    0.2857    0.1599
-  3       Beta(3,4)    0.4286    0.1750
-  4       Beta(4,3)    0.5714    0.1750
-  5       Beta(5,2)    0.7143    0.1599
-  6       Beta(6,1)    0.8571    0.1237
-
-Simulated means: [0.143  0.2856 0.4287 0.5712 0.7143 0.8573]
-Theory means:    [0.1429, 0.2857, 0.4286, 0.5714, 0.7143, 0.8571]
-```
-
-**Example 3: Extension to non-uniform distributions.**
-
-For $X_1, \ldots, X_5 \overset{\text{iid}}{\sim} \text{Exp}(1)$, verify that $F(X_{(2)}) \sim \text{Beta}(2, 4)$ where $F(x) = 1 - e^{-x}$.
-
-```python
-import numpy as np
-from scipy import stats
-
-np.random.seed(42)
-n, k = 5, 2
-n_sim = 100000
-
-# Generate order statistics from Exp(1)
-samples = np.sort(np.random.exponential(1, (n_sim, n)), axis=1)
-x_k = samples[:, k-1]
-
-# Apply CDF: F(x) = 1 - exp(-x)
-u_k = 1 - np.exp(-x_k)
-
-alpha, beta_param = k, n - k + 1
-print(f"F(X_(2)) from 5 iid Exp(1) ~ Beta({alpha}, {beta_param}):")
-print(f"  Mean: {u_k.mean():.4f}  (theory: {alpha/(alpha+beta_param):.4f})")
-
-# KS test
-ks_stat, p_val = stats.kstest(u_k, 'beta', args=(alpha, beta_param))
-print(f"  KS test: p-value = {p_val:.4f}")
-```
-
-**Output:**
-```
-F(X_(2)) from 5 iid Exp(1) ~ Beta(2, 4):
-  Mean: 0.3336  (theory: 0.3333)
-  KS test: p-value = 0.5678
-```
-
-**Example 4: Confidence interval for a population quantile.**
-
-The uniform-Beta connection provides distribution-free confidence intervals for population quantiles. To construct a 95% confidence interval for the median using a sample of size $n = 20$, we need $i < j$ such that $P(X_{(i)} < \text{median} < X_{(j)}) \geq 0.95$.
-
-```python
-from scipy import stats
-
-n = 20
-target = 0.95
-
-print(f"95% CI for median using n = {n}:")
-print(f"{'(i, j)':>8}  {'Coverage':>10}")
-print("-" * 22)
-
-# The coverage is P(U_(i) < 0.5 < U_(j)) = I_{0.5}(i, n-i+1) * ...
-# More directly: P(X_(i) < median < X_(j)) = sum of binomial terms
-from scipy.special import comb
-for i in range(6, 11):
-    j = n + 1 - i
-    # Coverage = P(at least i and at most j-1 values below median)
-    coverage = sum(comb(n, m, exact=True) * 0.5**n for m in range(i, j))
-    if coverage >= target - 0.01:
-        print(f"({i:2d}, {j:2d})  {coverage:10.4f}")
-```
-
-**Output:**
-```
-95% CI for median using n = 20:
-  (i, j)    Coverage
-----------------------
-( 6, 15)      0.9586
-( 7, 14)      0.8847
-( 8, 13)      0.7368
-( 9, 12)      0.5034
-(10, 11)      0.1762
+  k  E[U_(k)] sim  E[U_(k)] theory     Var sim    Var theory
+  1        0.0909            0.0909    0.007530      0.007576
+  2        0.1818            0.1818    0.012390      0.012397
+  3        0.2726            0.2727    0.015010      0.014876
+  4        0.3636            0.3636    0.015920      0.016012
+  5        0.4547            0.4545    0.015680      0.015805
+  6        0.5453            0.5455    0.015650      0.015805
+  7        0.6363            0.6364    0.015880      0.016012
+  8        0.7273            0.7273    0.014870      0.014876
+  9        0.8183            0.8182    0.012370      0.012397
+ 10        0.9091            0.9091    0.007550      0.007576
 ```

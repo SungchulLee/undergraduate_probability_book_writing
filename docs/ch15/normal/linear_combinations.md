@@ -1,162 +1,91 @@
 # Linear Combinations of Normals
 
-A linear transformation of a normal random variable is again normal, with the mean and variance transforming according to simple rules.
+## General Linear Combination
 
-## Definition
+!!! info "Linear Combination Theorem"
+    If $X_1, \ldots, X_n$ are **independent** normal random variables with $X_i \sim N(\mu_i, \sigma_i^2)$, and $a_1, \ldots, a_n$ are constants, then:
 
-If $X \sim N(\mu, \sigma^2)$ and $a, b$ are constants with $a \neq 0$, then:
+    $$\sum_{i=1}^n a_i X_i \sim N\!\left(\sum_{i=1}^n a_i \mu_i, \; \sum_{i=1}^n a_i^2 \sigma_i^2\right)$$
 
-$$
-aX + b \sim N(a\mu + b, \; a^2\sigma^2)
-$$
+This extends the sum result from the previous section: the sum of independent normals is a special case with $a_i = 1$ for all $i$.
 
-That is, multiplying by $a$ scales the mean by $a$ and the variance by $a^2$, while adding $b$ shifts the mean by $b$ and leaves the variance unchanged.
+## Proof via MGF
 
-## Explanation
+The MGF of $X_i \sim N(\mu_i, \sigma_i^2)$ is $M_{X_i}(t) = e^{\mu_i t + \frac{1}{2}\sigma_i^2 t^2}$. By independence:
 
-### Proof via moment generating functions
+$$M_{\sum a_i X_i}(t) = \prod_{i=1}^n M_{X_i}(a_i t) = \prod_{i=1}^n e^{\mu_i(a_i t) + \frac{1}{2}\sigma_i^2(a_i t)^2}$$
 
-The MGF of $X \sim N(\mu, \sigma^2)$ is $M_X(t) = e^{\mu t + \sigma^2 t^2/2}$. For $Y = aX + b$:
+$$= \exp\!\left(\left(\sum a_i \mu_i\right)t + \frac{1}{2}\left(\sum a_i^2 \sigma_i^2\right)t^2\right)$$
 
-$$
-M_Y(t) = E[e^{t(aX+b)}] = e^{bt} M_X(at) = e^{bt} \cdot e^{\mu(at) + \frac{1}{2}\sigma^2(at)^2} = e^{(a\mu + b)t + \frac{1}{2}a^2\sigma^2 t^2}
-$$
+This is the MGF of $N\!\left(\sum a_i \mu_i, \sum a_i^2 \sigma_i^2\right)$. By uniqueness of MGFs, the result follows. $\square$
 
-This is the MGF of $N(a\mu + b, a^2\sigma^2)$. Since the MGF uniquely determines the distribution, $Y \sim N(a\mu + b, a^2\sigma^2)$.
+## Difference of Normals
 
-### Special case: standardization
+An important special case is the **difference** $X - Y$ where $a_1 = 1$ and $a_2 = -1$.
 
-Taking $a = 1/\sigma$ and $b = -\mu/\sigma$ gives:
+!!! info "Difference of Independent Normals"
+    If $X \sim N(\mu_X, \sigma_X^2)$ and $Y \sim N(\mu_Y, \sigma_Y^2)$ are independent, then:
 
-$$
-Z = \frac{X - \mu}{\sigma} = \frac{1}{\sigma}X - \frac{\mu}{\sigma} \sim N\!\left(\frac{\mu}{\sigma} - \frac{\mu}{\sigma}, \; \frac{\sigma^2}{\sigma^2}\right) = N(0, 1)
-$$
+    $$X - Y \sim N(\mu_X - \mu_Y, \; \sigma_X^2 + \sigma_Y^2)$$
 
-This confirms that standardization produces a standard normal.
+Note that the variances **add** even when subtracting. This is because $\text{Var}(X - Y) = \text{Var}(X) + \text{Var}(Y)$ for independent random variables.
 
-### Special case: location-scale family
+## Affine Transformation
 
-Every normal distribution can be obtained from the standard normal. If $Z \sim N(0, 1)$, then:
+For a single normal $X \sim N(\mu, \sigma^2)$ and constants $a, b$:
 
-$$
-X = \sigma Z + \mu \sim N(\mu, \sigma^2)
-$$
+$$aX + b \sim N(a\mu + b, \, a^2\sigma^2)$$
 
-This shows that the normal family is a **location-scale family** parameterized by $\mu$ (location) and $\sigma$ (scale).
+This is the $n = 1$ case of the linear combination theorem (with an added constant).
 
-### Why the variance scales by the square
+## Worked Examples
 
-The factor $a^2$ in the variance formula $\text{Var}(aX + b) = a^2 \text{Var}(X)$ is a general fact about variance, not specific to the normal. What is special about the normal is that the transformed variable remains normal -- this is not true for most distributions.
+??? example "Example: Comparing Test Scores"
+    Alice scores $X \sim N(520, 100^2)$ and Bob scores $Y \sim N(490, 110^2)$ independently on a standardized test. Find the probability that Alice outscores Bob.
 
-### Negation and reflection
+    $$X - Y \sim N(520 - 490, \; 100^2 + 110^2) = N(30, \; 22100)$$
 
-Taking $a = -1$ and $b = 0$: if $X \sim N(\mu, \sigma^2)$, then $-X \sim N(-\mu, \sigma^2)$. In particular, if $Z \sim N(0, 1)$, then $-Z \sim N(0, 1)$, confirming the symmetry of the standard normal.
+    $$P(X > Y) = P(X - Y > 0) = 1 - \Phi\!\left(\frac{0 - 30}{\sqrt{22100}}\right) = \Phi\!\left(\frac{30}{148.66}\right) = \Phi(0.202) \approx 0.580$$
 
-## Examples
+    Alice has about a 58% chance of scoring higher.
 
-**Example 1: Temperature conversion.**
+??? example "Example: Portfolio Return"
+    An investor holds \$60{,}000 in asset A with annual return $R_A \sim N(0.08, 0.04^2)$ and \$40{,}000 in asset B with return $R_B \sim N(0.12, 0.09^2)$, independently. Find the distribution of the portfolio return.
 
-Temperatures in a city follow $C \sim N(20, 5^2)$ in Celsius. Find the distribution in Fahrenheit, where $F = 1.8C + 32$.
+    The portfolio return is:
 
-$$
-F = 1.8C + 32 \sim N(1.8 \times 20 + 32, \; 1.8^2 \times 25) = N(68, 81)
-$$
+    $$R_P = 0.6 R_A + 0.4 R_B \sim N(0.6 \cdot 0.08 + 0.4 \cdot 0.12, \; 0.6^2 \cdot 0.04^2 + 0.4^2 \cdot 0.09^2)$$
 
-So Fahrenheit temperatures follow $N(68, 9^2)$.
+    $$= N(0.096, \; 0.001872)$$
 
-```python
-from scipy import stats
-import numpy as np
+    So the portfolio has expected return 9.6% and standard deviation $\sqrt{0.001872} \approx 4.33\%$.
 
-mu_C, sigma_C = 20, 5
-a, b = 1.8, 32
+!!! warning "Independence Required"
+    The linear combination of **dependent** normal random variables is not necessarily normal. Normality of the sum is guaranteed when the variables are independent, or more generally, when they are **jointly normal** (see Chapter 18).
 
-mu_F = a * mu_C + b
-sigma_F = abs(a) * sigma_C
-
-print(f"Celsius:    N({mu_C}, {sigma_C}^2)")
-print(f"Fahrenheit: N({mu_F}, {sigma_F}^2)")
-print(f"            N({mu_F}, {sigma_F**2})")
-
-# Verify by simulation
-np.random.seed(42)
-C_samples = np.random.normal(mu_C, sigma_C, 100000)
-F_samples = a * C_samples + b
-print(f"\nSimulated Fahrenheit: mean = {F_samples.mean():.2f}, std = {F_samples.std():.2f}")
-print(f"Theoretical:          mean = {mu_F:.2f}, std = {sigma_F:.2f}")
-```
-
-**Output:**
-```
-Celsius:    N(20, 5^2)
-Fahrenheit: N(68.0, 9.0^2)
-            N(68.0, 81.0)
-
-Simulated Fahrenheit: mean = 67.99, std = 9.00
-Theoretical:          mean = 68.00, std = 9.00
-```
-
-**Example 2: Standardization.**
-
-If $X \sim N(100, 15^2)$, verify that $Z = (X - 100)/15 \sim N(0, 1)$.
+## Python Implementation
 
 ```python
 import numpy as np
 from scipy import stats
 
-np.random.seed(42)
-n = 100000
-X = np.random.normal(100, 15, n)
-Z = (X - 100) / 15
+# Alice vs Bob
+mu_diff, var_diff = 520 - 490, 100**2 + 110**2
+p = 1 - stats.norm.cdf(0, mu_diff, np.sqrt(var_diff))
+print(f"P(Alice > Bob) = {p:.4f}")
 
-print("Z = (X - 100) / 15:")
-print(f"  Mean: {Z.mean():.4f}  (expected: 0)")
-print(f"  Std:  {Z.std():.4f}   (expected: 1)")
-
-# Shapiro-Wilk test for normality
-_, p_val = stats.shapiro(Z[:5000])
-print(f"  Shapiro-Wilk p-value: {p_val:.4f}")
+# Portfolio return
+mu_P = 0.6 * 0.08 + 0.4 * 0.12
+var_P = 0.6**2 * 0.04**2 + 0.4**2 * 0.09**2
+print(f"Portfolio: N({mu_P:.4f}, {var_P:.6f})")
+print(f"  SD = {np.sqrt(var_P):.4f}")
+print(f"  P(loss) = P(R_P < 0) = {stats.norm.cdf(0, mu_P, np.sqrt(var_P)):.4f}")
 ```
 
 **Output:**
 ```
-Z = (X - 100) / 15:
-  Mean: -0.0001  (expected: 0)
-  Std:  1.0004   (expected: 1)
-  Shapiro-Wilk p-value: 0.3876
-```
-
-**Example 3: Profit from a random price.**
-
-A commodity price follows $P \sim N(50, 6^2)$ dollars per unit. A trader's profit on 200 units is $\text{Profit} = 200P - 9000$. Find the probability the trader makes a positive profit.
-
-$$
-\text{Profit} = 200P - 9000 \sim N(200 \times 50 - 9000, \; 200^2 \times 36) = N(1000, 1440000)
-$$
-
-So $\text{Profit} \sim N(1000, 1200^2)$.
-
-$$
-P(\text{Profit} > 0) = P\!\left(Z > \frac{0 - 1000}{1200}\right) = P(Z > -0.833) = \Phi(0.833)
-$$
-
-```python
-from scipy import stats
-
-mu_P, sigma_P = 50, 6
-a, b = 200, -9000
-
-mu_profit = a * mu_P + b
-sigma_profit = abs(a) * sigma_P
-
-z = (0 - mu_profit) / sigma_profit
-p = 1 - stats.norm.cdf(z)
-print(f"Profit ~ N({mu_profit}, {sigma_profit}^2)")
-print(f"P(Profit > 0) = P(Z > {z:.4f}) = {p:.4f}")
-```
-
-**Output:**
-```
-Profit ~ N(1000, 1200^2)
-P(Profit > 0) = P(Z > -0.8333) = 0.7977
+P(Alice > Bob) = 0.5800
+Portfolio: N(0.0960, 0.001872)
+  SD = 0.0433
+  P(loss) = P(R_P < 0) = 0.0133
 ```
