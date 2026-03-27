@@ -1,81 +1,97 @@
 # Coupon Collector Problem
 
-The coupon collector problem asks how many random draws are needed to see every type at least once — a natural application of geometric decomposition.
+## The Problem
 
-## Definition
+A cereal company places one of $n$ different coupons in each box, uniformly at random and independently. You want to collect all $n$ distinct coupons. How many boxes must you buy?
 
-There are $n$ types of coupons, each equally likely to appear. Let $T$ be the number of draws until all $n$ types have been collected. Then:
+This classic problem appears in many guises: collecting all Monopoly game pieces at a fast food restaurant, seeing every face of a die, or covering all states in a random survey. The solution is a beautiful application of the Geometric distribution.
 
-$$
-E[T] = n\,H_n = n\sum_{k=1}^n \frac{1}{k}
-$$
+## Setup and Decomposition
 
-$$
-\text{Var}(T) = n^2 \sum_{k=1}^n \frac{1}{k^2} - n\,H_n
-$$
+Let $T$ be the total number of boxes needed. We decompose the collection process into **phases**.
 
-where $H_n = 1 + 1/2 + \cdots + 1/n$ is the $n$-th harmonic number.
+- **Phase 1**: You have 0 distinct coupons. Each box gives a new coupon with probability $n/n = 1$. So $T_1 = 1$ (deterministic).
+- **Phase 2**: You have 1 distinct coupon. Each box gives a new coupon with probability $(n-1)/n$. So $T_2 \sim \text{Geo}\!\left(\frac{n-1}{n}\right)$.
+- **Phase $i$**: You have $i - 1$ distinct coupons. Each box gives a new coupon with probability $\frac{n - (i-1)}{n}$. So $T_i \sim \text{Geo}\!\left(\frac{n-i+1}{n}\right)$.
 
-## Explanation
-
-### Decomposition into Phases
-
-Divide the collection process into $n$ phases. Phase $i$ starts when you have $i - 1$ distinct types and ends when you get the $i$-th new type. In phase $i$, each draw yields a new type with probability $(n - i + 1)/n$.
+The total number of boxes is
 
 $$
-T = \tau_1 + \tau_2 + \cdots + \tau_n, \qquad \tau_i \sim \text{Geo}\!\left(\frac{n - i + 1}{n}\right)
+T = T_1 + T_2 + \cdots + T_n
 $$
 
-The phases are independent (memoryless property of geometric). Therefore:
+where the $T_i$ are **independent** Geometric random variables.
+
+---
+
+## Expected Value
+
+By linearity of expectation:
 
 $$
-E[T] = \sum_{i=1}^n \frac{n}{n-i+1} = n\sum_{k=1}^n \frac{1}{k}
+E[T] = \sum_{i=1}^{n} E[T_i] = \sum_{i=1}^{n} \frac{n}{n - i + 1} = n \sum_{j=1}^{n} \frac{1}{j} = n H_n
 $$
 
-### Asymptotic Behavior
+where $H_n = 1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}$ is the **$n$-th harmonic number**.
 
-$H_n \approx \ln n + \gamma$ where $\gamma \approx 0.577$ is the Euler-Mascheroni constant, so:
+!!! info "Coupon Collector Expected Time"
+    The expected number of boxes to collect all $n$ coupons is
 
-$$
-E[T] \approx n\ln n + \gamma n
-$$
+    $$E[T] = n H_n = n\ln n + \gamma n + O(1)$$
 
-For $n = 100$: $E[T] \approx 100 \cdot 5.187 \approx 519$.
+    where $\gamma \approx 0.5772$ is the Euler--Mascheroni constant and $H_n \approx \ln n + \gamma$ for large $n$.
 
-### Birthday Problem Connection
+---
 
-The coupon collector is the "complement" of the birthday problem: the birthday problem asks when a collision (duplicate) first occurs; the coupon collector asks when coverage (all types seen) is complete.
+## Variance
 
-## Examples
-
-**Example.** $n = 50$ collectible cards.
+Since the phases are independent:
 
 $$
-E[T] = 50\,H_{50} \approx 50 \times 4.499 \approx 225
+\text{Var}(T) = \sum_{i=1}^{n} \text{Var}(T_i) = \sum_{i=1}^{n} \frac{1 - \frac{n-i+1}{n}}{\left(\frac{n-i+1}{n}\right)^2} = n^2 \sum_{j=1}^{n} \frac{1}{j^2} - n \sum_{j=1}^{n} \frac{1}{j}
 $$
 
-```python
-import numpy as np
+Using $\sum_{j=1}^{\infty} \frac{1}{j^2} = \frac{\pi^2}{6}$, for large $n$:
 
-np.random.seed(42)
-n = 50
-H_n = sum(1/k for k in range(1, n + 1))
-E_T = n * H_n
-Var_T = n**2 * sum(1/k**2 for k in range(1, n + 1)) - n * H_n
+$$
+\text{Var}(T) \approx \frac{\pi^2}{6} n^2
+$$
 
-print(f"Theory: E[T] = {E_T:.1f}, SD(T) = {np.sqrt(Var_T):.1f}")
+The standard deviation grows as $\Theta(n)$, which is smaller order than the mean $\Theta(n \ln n)$, so the relative variability decreases as $n$ grows.
 
-# Simulate
-n_sim = 100_000
-results = []
-for _ in range(n_sim):
-    collected = set()
-    t = 0
-    while len(collected) < n:
-        collected.add(np.random.randint(n))
-        t += 1
-    results.append(t)
+---
 
-results = np.array(results)
-print(f"Simulated: E[T] = {results.mean():.1f}, SD(T) = {results.std():.1f}")
-```
+## Example: Dice Faces
+
+Collect all 6 faces of a fair die by rolling repeatedly. With $n = 6$:
+
+$$
+E[T] = 6 \left(1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \frac{1}{5} + \frac{1}{6}\right) = 6 \cdot \frac{49}{20} = 14.7
+$$
+
+On average, you need about 14.7 rolls to see all six faces.
+
+The breakdown by phase:
+
+| Phase $i$ | Coupons held | $P(\text{new})$ | $E[T_i]$ |
+|:---------:|:------------:|:----------------:|:---------:|
+| 1 | 0 | $6/6$ | 1.00 |
+| 2 | 1 | $5/6$ | 1.20 |
+| 3 | 2 | $4/6$ | 1.50 |
+| 4 | 3 | $3/6$ | 2.00 |
+| 5 | 4 | $2/6$ | 3.00 |
+| 6 | 5 | $1/6$ | 6.00 |
+
+The last phase -- waiting for the final coupon -- dominates and alone contributes $n/1 = n$ to the expected total.
+
+---
+
+## Asymptotic Behavior
+
+For large $n$, the coupon collector time concentrates around its mean. One can show that
+
+$$
+P\!\left(T > n \ln n + cn\right) \to 1 - e^{-e^{-c}} \quad \text{as } n \to \infty
+$$
+
+for any constant $c$. This is a **Gumbel distribution** limit, indicating that the fluctuations around $n \ln n$ are of order $n$.

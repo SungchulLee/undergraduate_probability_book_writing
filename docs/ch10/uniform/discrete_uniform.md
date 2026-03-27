@@ -1,71 +1,82 @@
 # Discrete Uniform Distribution
 
-The discrete uniform distribution assigns equal probability to each value in a finite set — the mathematical model for "equally likely outcomes."
+## Motivation
+
+When all outcomes are equally likely -- rolling a fair die, picking a random integer, selecting a lottery number -- we have a **discrete uniform distribution**. This is the mathematical formalization of the classical "equally likely outcomes" model from Chapter 2. Despite its simplicity, it appears throughout probability as a building block and a benchmark.
 
 ## Definition
 
-$X \sim \text{DUnif}(a, a+1, \ldots, b)$ if
+A random variable $X$ has a **Discrete Uniform distribution** on $\{a, a+1, \ldots, b\}$, written $X \sim \text{DiscreteUniform}(a, b)$, if each value is equally likely:
 
 $$
-P(X = k) = \frac{1}{n}, \qquad k = a, a+1, \ldots, b
+P(X = k) = \frac{1}{n}, \quad k = a, a+1, \ldots, b
 $$
 
-where $n = b - a + 1$. The CDF is a staircase: $F(x) = \lfloor x - a + 1 \rfloor / n$ for $a \le x \le b$.
+where $n = b - a + 1$ is the number of possible values.
 
-**Moments:**
+!!! info "Discrete Uniform PMF"
+    The PMF is flat: every outcome has the same probability $1/n$. This is the defining feature that distinguishes the uniform from all other distributions.
 
-$$
-E[X] = \frac{a + b}{2}, \qquad \text{Var}(X) = \frac{n^2 - 1}{12}
-$$
+---
 
-**MGF:**
+## Mean
 
-$$
-M_X(t) = \frac{e^{at}(1 - e^{nt})}{n(1 - e^t)}, \qquad t \ne 0
-$$
-
-## Explanation
-
-### Mean by Symmetry
-
-The PMF is symmetric about $(a + b)/2$, so the mean is the midpoint. For a fair die ($a = 1, b = 6$): $E[X] = 3.5$.
-
-### Variance Derivation
-
-For $X \sim \text{DUnif}(1, \ldots, n)$:
+By symmetry, the distribution is centered at the midpoint of its support:
 
 $$
-E[X^2] = \frac{1}{n}\sum_{k=1}^n k^2 = \frac{(n+1)(2n+1)}{6}
+E[X] = \frac{1}{n}\sum_{k=a}^{b} k = \frac{a + b}{2}
 $$
 
+This can also be seen by noting that the PMF is symmetric about $(a+b)/2$.
+
+---
+
+## CDF
+
+The CDF increases in equal steps of $1/n$:
+
 $$
-\text{Var}(X) = \frac{(n+1)(2n+1)}{6} - \left(\frac{n+1}{2}\right)^2 = \frac{n^2 - 1}{12}
+F(x) = \frac{\lfloor x \rfloor - a + 1}{n}, \quad a \le x \le b
 $$
 
-The general case $\text{DUnif}(a, \ldots, b)$ has the same variance since shifting does not change spread.
+with $F(x) = 0$ for $x < a$ and $F(x) = 1$ for $x \ge b$.
 
-### Connection to Continuous Uniform
+---
 
-As $n \to \infty$ with the range $[a, b]$ fixed, the discrete uniform converges to the continuous $\text{Uniform}(a, b)$.
+## Variance and Further Properties
+
+The variance, moment generating function, and sum of independent discrete uniforms are developed on the [Properties](properties.md) page:
+
+$$
+\text{Var}(X) = \frac{n^2 - 1}{12}
+$$
+
+---
 
 ## Examples
 
-**Example.** Fair die: $X \sim \text{DUnif}(1, 6)$, $E[X] = 3.5$, $\text{Var}(X) = 35/12 \approx 2.917$.
+**Fair die.** Let $X$ be the outcome of rolling a standard die: $X \sim \text{DiscreteUniform}(1, 6)$.
 
-```python
-import numpy as np
+- $n = 6$ values, each with probability $1/6$.
+- $E[X] = (1 + 6)/2 = 3.5$.
+- $\text{Var}(X) = (36 - 1)/12 = 35/12 \approx 2.917$.
+- $P(X \le 4) = 4/6 = 2/3$.
 
-np.random.seed(42)
-n_sim = 200_000
+**Random digit.** Select a digit uniformly at random from $\{0, 1, \ldots, 9\}$: $X \sim \text{DiscreteUniform}(0, 9)$.
 
-# Fair die
-X = np.random.randint(1, 7, n_sim)
-print(f"Die: E[X] = {X.mean():.4f}  (theory: 3.5)")
-print(f"Die: Var(X) = {X.var():.4f}  (theory: {35/12:.4f})")
+- $E[X] = 4.5$.
+- $\text{Var}(X) = (100 - 1)/12 = 99/12 = 8.25$.
 
-# DUnif(1,...,20)
-n = 20
-Y = np.random.randint(1, n + 1, n_sim)
-print(f"\nDUnif(1,20): E[Y] = {Y.mean():.3f}  (theory: {(1+n)/2:.1f})")
-print(f"DUnif(1,20): Var(Y) = {Y.var():.2f}  (theory: {(n**2-1)/12:.2f})")
-```
+**Lottery draw.** Pick a number from $\{1, 2, \ldots, 49\}$ uniformly at random: $E[X] = 25$ and $\text{Var}(X) = (49^2 - 1)/12 = 200$.
+
+---
+
+## Connection to Classical Probability
+
+Any experiment with $n$ equally likely outcomes and a numerical labeling produces a discrete uniform random variable. The probability of an event $A$ in the classical model is
+
+$$
+P(A) = \frac{|A|}{n}
+$$
+
+which is simply $P(X \in A)$ when $X \sim \text{DiscreteUniform}(1, n)$. The discrete uniform distribution is where counting methods from Chapter 1 meet the formal probability framework of Chapter 2.

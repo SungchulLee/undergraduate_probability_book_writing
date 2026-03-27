@@ -1,69 +1,94 @@
 # Hypergeometric Distribution
 
-The hypergeometric distribution counts successes in draws without replacement — the finite-population analogue of the binomial.
+## Motivation
+
+A deck has 52 cards, 4 of which are aces. You draw 5 cards **without replacement**. What is the probability of getting exactly 2 aces? Since cards are drawn without replacement, the draws are **dependent** -- each draw changes the composition of the remaining deck. The **Hypergeometric distribution** handles this setting.
+
+## Setup
+
+Consider a population of $N$ items, of which $K$ are "successes" and $N - K$ are "failures." We draw $n$ items **without replacement**. Let $X$ be the number of successes in the sample.
 
 ## Definition
 
-Draw $n$ items without replacement from a population of $N$ containing $K$ successes. The number of successes $X \sim \text{HGeom}(N, K, n)$ has
+!!! info "Hypergeometric PMF"
+    $X \sim \text{HGeom}(N, K, n)$ has PMF
 
-**PMF:**
+    $$P(X = k) = \frac{\dbinom{K}{k}\dbinom{N-K}{n-k}}{\dbinom{N}{n}}$$
+
+    for $k = \max(0, n - N + K), \ldots, \min(n, K)$.
+
+**Reading the formula.** The denominator $\binom{N}{n}$ counts all ways to choose $n$ items from $N$. The numerator counts favorable outcomes: choose $k$ of the $K$ successes and $n - k$ of the $N - K$ failures.
+
+---
+
+## Mean
+
+The mean can be derived elegantly using indicator variables. Let $X_i = 1$ if the $i$-th drawn item is a success. Then $X = X_1 + \cdots + X_n$, and by symmetry each item in the sample is equally likely to be any of the $N$ items, so
 
 $$
-P(X = k) = \frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}, \qquad \max(0, n-N+K) \le k \le \min(n, K)
+E[X_i] = \frac{K}{N}
 $$
 
-**Moments:**
+By linearity of expectation (which does **not** require independence):
 
 $$
-E[X] = n\frac{K}{N}, \qquad \text{Var}(X) = n\frac{K}{N}\frac{N-K}{N}\frac{N-n}{N-1}
+E[X] = n \cdot \frac{K}{N}
 $$
 
-## Explanation
+This is the same as the Binomial mean $np$ with $p = K/N$. The mean is unaffected by whether we sample with or without replacement.
 
-### PMF Intuition
+---
 
-The PMF counts favorable arrangements over total arrangements. To get $k$ successes: choose $k$ of $K$ success items ($\binom{K}{k}$) and $n-k$ of $N-K$ failure items ($\binom{N-K}{n-k}$), out of $\binom{N}{n}$ total ways to draw $n$ items.
+## Variance
 
-### Variance and Finite Population Correction
+The variance requires more care because the $X_i$ are **not** independent. Using the formula $\text{Var}(X) = \sum_i \text{Var}(X_i) + 2\sum_{i < j} \text{Cov}(X_i, X_j)$:
 
-The variance has the same $npq$ form as the binomial (with $p = K/N$), multiplied by the **finite population correction** $(N-n)/(N-1)$. This factor is less than 1 when $n > 1$, reflecting reduced variability from sampling without replacement.
+Each $X_i$ is Bernoulli with $p = K/N$, so $\text{Var}(X_i) = p(1-p)$.
 
-- When $n = 1$: correction = 1, same as binomial
-- When $n = N$: correction = 0, no randomness (you draw the entire population)
+For the covariance, $E[X_i X_j] = P(\text{items } i \text{ and } j \text{ both successes}) = \frac{K(K-1)}{N(N-1)}$, so
 
-### Support Constraints
+$$
+\text{Cov}(X_i, X_j) = \frac{K(K-1)}{N(N-1)} - \frac{K^2}{N^2} = -\frac{K(N-K)}{N^2(N-1)}
+$$
 
-The support $\max(0, n - N + K) \le k \le \min(n, K)$ reflects physical constraints: you can't draw more successes than exist ($k \le K$), more than you draw ($k \le n$), and you must draw enough successes if failures are insufficient ($k \ge n - N + K$).
+Combining $n$ variance terms and $\binom{n}{2}$ covariance terms:
+
+$$
+\text{Var}(X) = n \cdot \frac{K}{N} \cdot \frac{N-K}{N} \cdot \frac{N-n}{N-1}
+$$
+
+!!! info "Hypergeometric Variance"
+    $$\text{Var}(X) = n \cdot \frac{K}{N} \cdot \frac{N-K}{N} \cdot \frac{N-n}{N-1}$$
+
+    The factor $\dfrac{N-n}{N-1}$ is the **finite population correction**. It is always $\le 1$, so the Hypergeometric variance is always at most the corresponding Binomial variance $npq$.
+
+---
+
+## Support
+
+The support of $X$ is not simply $\{0, 1, \ldots, n\}$. We need both:
+
+- at least $k$ successes available: $k \le K$
+- at least $n - k$ failures available: $n - k \le N - K$
+
+So $k$ ranges from $\max(0, n - N + K)$ to $\min(n, K)$.
+
+---
 
 ## Examples
 
-**Example.** Draw 5 cards from a standard deck. $X$ = number of aces. $X \sim \text{HGeom}(52, 4, 5)$.
+**Card draw.** Draw $n = 5$ cards from a standard deck ($N = 52$) containing $K = 4$ aces. The number of aces $X \sim \text{HGeom}(52, 4, 5)$ has
 
 $$
-E[X] = 5 \cdot \frac{4}{52} = \frac{5}{13} \approx 0.385
+P(X = 2) = \frac{\binom{4}{2}\binom{48}{3}}{\binom{52}{5}} = \frac{6 \times 17296}{2598960} \approx 0.0399
 $$
 
 $$
-P(X = 2) = \frac{\binom{4}{2}\binom{48}{3}}{\binom{52}{5}} = \frac{6 \cdot 17296}{2598960} \approx 0.0399
+E[X] = 5 \cdot \frac{4}{52} \approx 0.385, \qquad \text{Var}(X) \approx 0.341
 $$
 
-```python
-import numpy as np
-from scipy import stats
-from math import comb
+**Quality inspection.** A shipment of $N = 100$ items contains $K = 8$ defectives. An inspector draws $n = 10$ items without replacement. The expected number of defectives found is $E[X] = 10 \cdot 8/100 = 0.8$. The probability of finding no defectives is
 
-N, K, n = 52, 4, 5
-X = stats.hypergeom(N, K, n)
-
-print(f"E[X] = {X.mean():.4f}  (theory: {n*K/N:.4f})")
-print(f"Var(X) = {X.var():.6f}")
-
-fpc = (N - n) / (N - 1)
-var_theory = n * K/N * (N-K)/N * fpc
-print(f"Var (formula) = {var_theory:.6f}")
-
-# PMF check
-for k in range(5):
-    pmf_exact = comb(K, k) * comb(N-K, n-k) / comb(N, n)
-    print(f"P(X={k}) = {pmf_exact:.6f}  (scipy: {X.pmf(k):.6f})")
-```
+$$
+P(X = 0) = \frac{\binom{8}{0}\binom{92}{10}}{\binom{100}{10}} \approx 0.410
+$$
