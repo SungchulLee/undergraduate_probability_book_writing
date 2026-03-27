@@ -1,91 +1,86 @@
-# PDF-CDF Relationship
+# Relationship Between PDF and CDF
 
-Integration converts the PDF to the CDF; differentiation converts the CDF back to the PDF. This duality is the Fundamental Theorem of Calculus applied to probability.
+## Motivation
 
-## Definition
+The CDF and PDF are two descriptions of the same continuous distribution.
+The CDF accumulates probability from $-\infty$ up to $x$, while the PDF
+describes the rate at which probability is accumulating at each point. The
+Fundamental Theorem of Calculus connects the two: integration turns a PDF into
+a CDF, and differentiation turns a CDF back into a PDF.
 
-**From PDF to CDF** (integration):
+## From PDF to CDF
 
-$$
-F_X(x) = \int_{-\infty}^{x} f_X(t)\,dt
-$$
+!!! info "Integration: PDF to CDF"
+    Given the PDF $f_X(x)$, the CDF is obtained by integration:
 
-**From CDF to PDF** (differentiation, wherever $F_X$ is differentiable):
+    $$
+    F_X(x) = \int_{-\infty}^{x} f_X(s) \, ds
+    $$
 
-$$
-f_X(x) = \frac{d}{dx} F_X(x) = F_X'(x)
-$$
+Geometrically, $F_X(x)$ equals the area under the PDF curve to the left of $x$.
+As $x$ increases, this area grows from 0 to 1.
 
-## Explanation
+## From CDF to PDF
 
-### Unified View
+!!! info "Differentiation: CDF to PDF"
+    Given the CDF $F_X(x)$, the PDF is recovered by differentiation (wherever
+    $F_X$ is differentiable):
+
+    $$
+    f_X(x) = \frac{d}{dx} F_X(x) = F_X'(x)
+    $$
+
+Where the CDF is steep, probability is densely packed (high PDF). Where the CDF
+is nearly flat, probability is sparse (low PDF).
+
+## Unified View: Discrete and Continuous
+
+The table below summarizes the parallel structure between the discrete and
+continuous cases.
 
 | | Discrete | Continuous |
-|:--|:---------|:-----------|
-| Distribution | PMF: $p_X(x_i)$ | PDF: $f_X(x)$ |
-| CDF formula | $F(x) = \sum_{x_i \le x} p_X(x_i)$ | $F(x) = \int_{-\infty}^{x} f_X(t)\,dt$ |
+|---|---|---|
+| Distribution function | PMF: $p_X(x_i)$ | PDF: $f_X(x)$ |
+| CDF formula | $F(x) = \displaystyle\sum_{x_i \le x} p_X(x_i)$ | $F(x) = \displaystyle\int_{-\infty}^{x} f_X(s) \, ds$ |
 | Recover distribution | $p_X(x_i) = F(x_i) - F(x_i^-)$ | $f_X(x) = F'(x)$ |
-| $P(X \in A)$ | $\sum_{x_i \in A} p_X(x_i)$ | $\int_A f_X(x)\,dx$ |
+| $P(X \in A)$ | $\displaystyle\sum_{x_i \in A} p_X(x_i)$ | $\displaystyle\int_A f_X(x) \, dx$ |
+| Operation | Summation $\sum$ | Integration $\int$ |
 
-The pattern: summation and differences for discrete; integration and differentiation for continuous.
+In both cases, the CDF is the "running total" of probability mass, and the
+distribution function (PMF or PDF) captures the local rate at which mass is
+added.
 
-### Geometric Interpretation
+## Example 1: Triangular Density
 
-- **CDF from PDF:** $F(x)$ is the area under $f$ from $-\infty$ to $x$. As $x$ increases, more area accumulates.
-- **PDF from CDF:** $f(x)$ is the slope of $F$ at $x$. Where $F$ is steep, the density is high; where $F$ is flat, the density is zero.
-
-### Checking Consistency
-
-Given a candidate PDF-CDF pair, verify:
-
-1. $F(-\infty) = 0$ and $F(+\infty) = 1$
-2. $F$ is non-decreasing and continuous
-3. $F'(x) = f(x)$ wherever $f$ is continuous
-
-## Examples
-
-**Example 1.** Let $f(x) = 2x$ for $0 \le x \le 1$.
+Let $f_X(x) = 2x$ for $0 \le x \le 1$ and $f_X(x) = 0$ otherwise. Then
 
 $$
-F(x) = \int_0^x 2t\,dt = t^2\big|_0^x = x^2, \quad 0 \le x \le 1
+F_X(x) = \int_0^x 2s \, ds = x^2, \quad 0 \le x \le 1
 $$
 
-Full CDF: $F(x) = 0$ for $x < 0$, $F(x) = x^2$ for $0 \le x \le 1$, $F(x) = 1$ for $x > 1$.
+with $F_X(x) = 0$ for $x < 0$ and $F_X(x) = 1$ for $x > 1$.
 
-Check: $F'(x) = 2x = f(x)$ on $(0,1)$. $F(0) = 0$, $F(1) = 1$.
+Verification: $F_X'(x) = 2x = f_X(x)$ on $(0, 1)$.
 
-**Example 2.** Given CDF $F(x) = 1 - e^{-3x}$ for $x \ge 0$, find the PDF.
+## Example 2: Exponential Distribution
+
+Let $f_X(x) = \lambda e^{-\lambda x}$ for $x \ge 0$ (with $\lambda > 0$) and
+$f_X(x) = 0$ for $x < 0$. Then
 
 $$
-f(x) = F'(x) = 3e^{-3x}, \quad x \ge 0
+F_X(x) = \int_0^x \lambda e^{-\lambda s} \, ds = 1 - e^{-\lambda x}, \quad x \ge 0
 $$
 
-This is $\text{Exp}(3)$. Verify: $\int_0^{\infty} 3e^{-3x}\,dx = 1$.
+Verification: $F_X'(x) = \lambda e^{-\lambda x} = f_X(x)$ for $x > 0$.
 
-```python
-import numpy as np
-from scipy import integrate
+Using the CDF, we can quickly compute tail probabilities:
 
-# Example 1: f(x) = 2x, F(x) = x^2
-f = lambda x: 2 * x
-F = lambda x: x**2
+$$
+P(X > t) = 1 - F_X(t) = e^{-\lambda t}
+$$
 
-# Verify F via numerical integration
-for x_val in [0.25, 0.5, 0.75, 1.0]:
-    F_num, _ = integrate.quad(f, 0, x_val)
-    print(f"x={x_val}: F(x) = {F(x_val):.4f}, integral = {F_num:.4f}")
-
-# Example 2: F(x) = 1 - e^(-3x), f(x) = 3e^(-3x)
-lam = 3
-F2 = lambda x: 1 - np.exp(-lam * x)
-f2 = lambda x: lam * np.exp(-lam * x)
-
-# Verify normalization
-norm, _ = integrate.quad(f2, 0, np.inf)
-print(f"\nExp(3) PDF normalization: {norm:.6f}")
-
-# Verify F'(x) = f(x) numerically at x = 1
-h = 1e-8
-deriv = (F2(1 + h) - F2(1)) / h
-print(f"F'(1) = {deriv:.4f}, f(1) = {f2(1):.4f}")
-```
+!!! tip "Which Direction to Use?"
+    **PDF to CDF** (integration) is the natural direction when you are given a
+    density and need cumulative probabilities. **CDF to PDF** (differentiation)
+    is useful when the CDF has a simple closed form and you want the density for
+    visualization or further computation.

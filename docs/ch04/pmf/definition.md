@@ -1,73 +1,85 @@
-# Probability Mass Function
+# PMF Definition and Properties
 
-The PMF is the complete description of a discrete random variable's distribution — it assigns a probability to each possible value.
+## Motivation
+
+For a discrete random variable $X$, the most natural way to describe its
+distribution is to list every possible value together with its probability.
+This list is called the **probability mass function (PMF)**. In the brick
+analogy from Section 4.1, the PMF records the weight of each brick after it has
+been placed on the real line.
 
 ## Definition
 
-The **probability mass function (PMF)** of a discrete random variable $X$ with values in $\{x_1, x_2, \ldots\}$ is
+!!! info "Definition — Probability Mass Function"
+    Let $X$ be a discrete random variable taking values in a countable set
+    $\{x_1, x_2, x_3, \ldots\}$. The **probability mass function (PMF)** of $X$
+    is the function
 
-$$
-p_X(x_i) = P(X = x_i)
-$$
+    $$
+    p_X(x_i) = P(X = x_i)
+    $$
 
-A valid PMF satisfies two properties:
+    that assigns a probability to each possible value $x_i$.
 
-1. **Non-negativity:** $p_X(x) \ge 0$ for all $x$.
-2. **Normalization:** $\displaystyle\sum_i p_X(x_i) = 1$.
+The subscript $X$ in $p_X$ emphasizes which random variable the PMF belongs to.
+When the random variable is clear from context, we sometimes write $p(x_i)$ or
+$p_{x_i}$.
 
-Any function satisfying these two properties defines a valid discrete distribution.
+## Properties
 
-## Explanation
+A valid PMF must satisfy two conditions:
 
-### Computing Probabilities from the PMF
+!!! info "PMF Properties"
+    1. **Non-negativity:** $p_X(x_i) \ge 0$ for all $i$
+    2. **Normalization:** $\displaystyle\sum_{i} p_X(x_i) = 1$
 
-For any set $A \subseteq \mathbb{R}$:
+Any function on a countable set satisfying these two properties defines a valid
+discrete distribution. Conversely, every discrete distribution gives rise to a
+PMF satisfying both properties.
+
+## Computing Probabilities from the PMF
+
+For any set $A \subseteq \mathbb{R}$, the probability that $X$ falls in $A$ is
+obtained by summing the PMF over all values in $A$:
 
 $$
 P(X \in A) = \sum_{x_i \in A} p_X(x_i)
 $$
 
-The PMF contains all probabilistic information about $X$. Every probability question about $X$ reduces to summing the appropriate PMF values.
+This is the discrete counterpart of integration for continuous distributions.
 
-### PMF as a Weight Distribution
+## Visualization
 
-Return to the brick analogy: the PMF tells you the weight of the brick sitting at each point on the real line. The total weight is 1, and the weight at points not in the support is 0.
-
-### Visualization
-
-The PMF is displayed as a spike plot (or bar chart), where the height of each spike at $x_i$ equals $P(X = x_i)$. Unlike a histogram, spikes sit at isolated points — the probability between spikes is zero.
-
-### PMF vs PDF
-
-A common early confusion: the PMF gives actual probabilities ($p_X(x) = P(X = x)$), while the PDF for continuous variables gives probability *density* ($f_X(x) \ne P(X = x)$). Only the PMF can be read directly as a probability.
+The PMF is typically displayed as a **spike plot** (or bar chart), where a
+vertical bar at each $x_i$ has height equal to $P(X = x_i)$. The heights must
+sum to 1.
 
 ## Examples
 
-**Example 1.** Let $X$ be the result of rolling a fair die.
+**Example 1 (Fair Die).** Let $X$ be the result of rolling a fair six-sided die. The PMF is
 
 $$
-p_X(k) = \frac{1}{6}, \quad k = 1, 2, 3, 4, 5, 6
+p_X(k) = P(X = k) = \frac{1}{6}, \quad k = 1, 2, 3, 4, 5, 6
 $$
 
-Verification: $\sum_{k=1}^{6} 1/6 = 1$.
+Verification: $\sum_{k=1}^{6} \frac{1}{6} = 1$.
 
-Then $P(X \ge 5) = p_X(5) + p_X(6) = 1/6 + 1/6 = 1/3$.
+**Example 2 (Loaded Coin).** Flip a coin with $P(\text{Heads}) = 0.7$. Let $X = 1$ if heads, $X = 0$ if tails. Then
 
-**Example 2.** A loaded coin has $P(H) = 0.7$. Flip it twice and let $X$ = number of heads. The PMF:
+$$
+p_X(0) = 0.3, \qquad p_X(1) = 0.7
+$$
 
-| $k$ | 0 | 1 | 2 |
+This is a Bernoulli PMF with parameter $p = 0.7$. Note that $0.3 + 0.7 = 1$.
+
+**Example 3 (Number of Heads).** Flip a fair coin twice and let $X$ count the
+number of heads. The possible values are $\{0, 1, 2\}$ with
+
+| $x$ | 0 | 1 | 2 |
 |:---:|:---:|:---:|:---:|
-| $p_X(k)$ | $0.09$ | $0.42$ | $0.49$ |
+| $p_X(x)$ | $1/4$ | $1/2$ | $1/4$ |
 
-```python
-# Loaded coin: P(H) = 0.7, two flips, X = number of heads
-p = 0.7
-pmf = {0: (1-p)**2, 1: 2*p*(1-p), 2: p**2}
+From this PMF we can compute $P(X \geq 1) = p_X(1) + p_X(2) = \frac{1}{2} + \frac{1}{4} = \frac{3}{4}$.
 
-for k, prob in pmf.items():
-    print(f"P(X = {k}) = {prob:.2f}")
-print(f"Sum = {sum(pmf.values()):.2f}")
-
-# P(X >= 1)
-print(f"P(X >= 1) = {pmf[1] + pmf[2]:.2f}")
-```
+!!! tip "PMF vs PDF"
+    The PMF applies only to **discrete** random variables. For continuous random variables, the analogous object is the probability density function (PDF), introduced in Section 4.4. A key difference: $p_X(x_i)$ is a genuine probability, while the PDF value $f_X(x)$ is a density that can exceed 1.

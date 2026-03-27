@@ -1,79 +1,82 @@
-# Continuous CDF
+# CDF for Continuous Random Variables
 
-The CDF of a continuous random variable is a smooth, non-decreasing curve with no jumps — reflecting the fact that no single point carries positive probability.
+## Motivation
 
-## Definition
+In Section 4.3, we defined the CDF $F(x) = P(X \le x)$ for any random variable
+and saw that a discrete CDF is a step function with jumps at each possible
+value. For a continuous random variable the situation is different: probability
+is spread smoothly across an interval, so the CDF has **no jumps** and is
+obtained by integrating the PDF.
 
-For a continuous random variable $X$ with PDF $f_X(x)$, the CDF is
+## CDF via Integration
 
-$$
-F_X(x) = P(X \le x) = \int_{-\infty}^{x} f_X(t)\,dt
-$$
+!!! info "Continuous CDF"
+    If $X$ is a continuous random variable with PDF $f(x)$, then its CDF is
 
-The CDF is continuous (no jumps), so $P(X = a) = 0$ for every $a$.
+    $$
+    F(x) = P(X \le x) = \int_{-\infty}^{x} f(s) \, ds
+    $$
 
-## Explanation
+The dummy variable $s$ is used inside the integral to avoid confusion with the
+upper limit $x$.
 
-### CDF-PDF Relationship
+## Shape of Continuous CDFs
 
-By the Fundamental Theorem of Calculus, wherever $f_X$ is continuous:
-
-$$
-f_X(x) = F_X'(x) = \frac{d}{dx}F_X(x)
-$$
-
-The PDF is the derivative of the CDF. The CDF is the antiderivative (integral) of the PDF.
-
-### Strict vs Non-Strict Inequalities
-
-Since $P(X = a) = 0$ for continuous variables, strict and non-strict inequalities are interchangeable:
+Because $F$ is defined as an integral of a non-negative function, every
+continuous CDF is a **continuous, non-decreasing** curve --- unlike the staircase
+pattern of a discrete CDF. In particular, there are no jumps, which means
 
 $$
-P(a \le X \le b) = P(a < X < b) = P(a \le X < b) = F(b) - F(a)
+P(X = a) = F(a) - \lim_{x \to a^-} F(x) = 0
 $$
 
-This simplification does not hold for discrete random variables, where $P(X = a) > 0$.
+for every real number $a$. No single point carries positive probability.
 
-### Recognizing the CDF Shape
+## Recovering the PDF
 
-- Starts at 0, ends at 1
-- Always increasing where $f_X(x) > 0$
-- Steepest where the PDF is highest (most probability density)
-- Has an inflection point where the PDF has its mode
+By the Fundamental Theorem of Calculus, wherever $f$ is continuous we can
+recover the PDF from the CDF by differentiation:
 
-## Examples
+$$
+f(x) = F'(x) = \frac{d}{dx} F(x)
+$$
 
-**Example 1.** $X \sim \text{Uniform}(0, 1)$ with $f(x) = 1$ on $[0,1]$.
+This is the continuous analogue of recovering the PMF from a discrete CDF via
+jump sizes.
+
+## Computing Probabilities
+
+For continuous random variables, strict and non-strict inequalities give the
+same result because $P(X = a) = 0$:
+
+$$
+P(a \le X \le b) = P(a < X < b) = F(b) - F(a) = \int_a^b f(x) \, dx
+$$
+
+!!! tip "Strict vs Non-Strict Inequalities"
+    For discrete random variables, $P(X \le b)$ and $P(X < b)$ can differ.
+    For continuous random variables, they are always equal.
+
+## Example: Uniform on the Unit Interval
+
+Let $X \sim \text{Uniform}(0, 1)$, so $f(x) = 1$ for $0 \le x \le 1$ and
+$f(x) = 0$ otherwise. Integrating:
 
 $$
 F(x) = \begin{cases} 0 & x < 0 \\ x & 0 \le x \le 1 \\ 1 & x > 1 \end{cases}
 $$
 
-Then $P(0.3 \le X \le 0.7) = F(0.7) - F(0.3) = 0.7 - 0.3 = 0.4$.
+For instance, $P(0.2 \le X \le 0.7) = F(0.7) - F(0.2) = 0.7 - 0.2 = 0.5$.
 
-**Example 2.** $X \sim \text{Exp}(\lambda)$ with $f(x) = \lambda e^{-\lambda x}$ for $x \ge 0$.
+## Example: Quadratic PDF
+
+Let $f(x) = 3x^2$ for $0 \le x \le 1$ and $f(x) = 0$ otherwise. Then
 
 $$
-F(x) = \begin{cases} 0 & x < 0 \\ 1 - e^{-\lambda x} & x \ge 0 \end{cases}
+F(x) = \int_0^x 3s^2 \, ds = x^3, \quad 0 \le x \le 1
 $$
 
-For $\lambda = 2$: $P(X > 1) = 1 - F(1) = e^{-2} \approx 0.1353$.
+with $F(x) = 0$ for $x < 0$ and $F(x) = 1$ for $x > 1$. Verification:
+$F'(x) = 3x^2 = f(x)$ on $(0, 1)$.
 
-```python
-import numpy as np
-
-# Exponential(lambda=2) CDF
-lam = 2
-F = lambda x: 1 - np.exp(-lam * x) if x >= 0 else 0
-
-print(f"F(0.5) = P(X <= 0.5) = {F(0.5):.4f}")
-print(f"F(1.0) = P(X <= 1.0) = {F(1.0):.4f}")
-print(f"P(X > 1) = {1 - F(1.0):.4f}")
-print(f"P(0.5 < X <= 1.5) = {F(1.5) - F(0.5):.4f}")
-
-# Verify: CDF derivative at x=1 should equal PDF at x=1
-h = 1e-8
-numerical_deriv = (F(1 + h) - F(1)) / h
-pdf_at_1 = lam * np.exp(-lam * 1)
-print(f"\nF'(1) = {numerical_deriv:.4f}, f(1) = {pdf_at_1:.4f}")
-```
+We can compute $P(X > 0.5) = 1 - F(0.5) = 1 - 0.125 = 0.875$.

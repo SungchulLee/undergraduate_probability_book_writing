@@ -1,89 +1,87 @@
-# Probability Density Function
+# PDF Definition and Properties
 
-The PDF describes how probability is distributed continuously across the real line — it gives probability *density*, not probability itself.
+## Motivation
+
+For a discrete random variable, the PMF tells us the probability of each value
+directly: $P(X = x_i) = p_X(x_i)$. For a continuous random variable, however,
+$P(X = a) = 0$ for every individual point $a$. Instead of asking "what is the
+probability of this exact value?", we ask "how densely is probability packed
+near this point?" The answer is the **probability density function (PDF)**.
 
 ## Definition
 
-The **probability density function (PDF)** of a continuous random variable $X$ is a function $f_X(x)$ satisfying
+!!! info "Definition — Probability Density Function"
+    A continuous random variable $X$ has **probability density function (PDF)**
+    $f_X(x)$ if, for every subset $A \subseteq \mathbb{R}$,
+
+    $$
+    P(X \in A) = \int_A f_X(x) \, dx
+    $$
+
+The PDF describes the **density** of probability at each point, not the
+probability itself. Thinking in terms of the brick analogy, the bricks are now
+ground into a continuous layer of sand, and $f_X(x)$ measures how thickly the
+sand is spread at position $x$.
+
+## Properties
+
+A valid PDF must satisfy two conditions:
+
+!!! info "PDF Properties"
+    1. **Non-negativity:** $f_X(x) \ge 0$ for all $x$
+    2. **Normalization:** $\displaystyle\int_{-\infty}^{\infty} f_X(x) \, dx = 1$
+
+These are the continuous analogues of the PMF properties (non-negativity and
+summation to 1).
+
+!!! warning "A PDF Value Is Not a Probability"
+    The value $f_X(x)$ can exceed 1. For example, if
+    $X \sim \text{Uniform}(0, 1/2)$, then $f_X(x) = 2$ for $x \in [0, 1/2]$.
+    Only the **integral** of $f_X$ over an interval gives a probability, and
+    that integral is always at most 1.
+
+## Probability from the PDF
+
+For an interval $[a, b]$:
 
 $$
-P(X \in A) = \int_A f_X(x)\,dx
+P(a \le X \le b) = \int_a^b f_X(x) \, dx
 $$
 
-A valid PDF must satisfy:
+Geometrically, this is the **area under the PDF curve** between $a$ and $b$.
 
-1. **Non-negativity:** $f_X(x) \ge 0$ for all $x$
-2. **Normalization:** $\displaystyle\int_{-\infty}^{\infty} f_X(x)\,dx = 1$
+## Infinitesimal Interpretation
 
-## Explanation
-
-### Density, Not Probability
-
-!!! warning "Common misconception"
-    $f_X(x)$ is **not** a probability. It is a density, and $f_X(x)$ can exceed 1. For example, $X \sim \text{Uniform}(0, 1/3)$ has $f(x) = 3$ on $[0, 1/3]$.
-
-The correct interpretation: $f_X(x)\,dx$ is the infinitesimal probability mass in the interval $[x, x+dx]$.
-
-### Infinitesimal Interpretation
-
-For small $\varepsilon > 0$:
+For a small increment $\epsilon > 0$:
 
 $$
-P(x \le X \le x + \varepsilon) \approx f_X(x) \cdot \varepsilon
+P(x \le X \le x + \epsilon) \approx f_X(x) \cdot \epsilon
 $$
 
-The PDF gives probability per unit length near $x$. To get an actual probability, you must integrate (i.e., multiply density by length and sum).
-
-### Probability as Area
-
-$$
-P(a \le X \le b) = \int_a^b f_X(x)\,dx = \text{area under } f_X \text{ between } a \text{ and } b
-$$
-
-The total area under the entire PDF curve is 1.
-
-### PMF vs PDF
-
-| | PMF $p_X(x)$ | PDF $f_X(x)$ |
-|:--|:-------------|:-------------|
-| Meaning | Probability at $x$ | Density at $x$ |
-| Range | $[0, 1]$ | $[0, \infty)$ |
-| Total | $\sum p_X(x) = 1$ | $\int f_X(x)\,dx = 1$ |
-| Read directly? | Yes: $P(X=x)$ | No: must integrate |
+The PDF gives the probability per unit length near the point $x$. This
+approximation becomes exact in the limit as $\epsilon \to 0$.
 
 ## Examples
 
-**Example 1.** Let $f(x) = 2x$ for $0 \le x \le 1$, and $f(x) = 0$ otherwise.
-
-Verification: $\int_0^1 2x\,dx = x^2\big|_0^1 = 1$.
-
-$$
-P(X > 0.5) = \int_{0.5}^{1} 2x\,dx = x^2\big|_{0.5}^{1} = 1 - 0.25 = 0.75
-$$
-
-Note: $f(0.8) = 1.6 > 1$ — the density exceeds 1, which is perfectly valid.
-
-**Example 2.** $X \sim \text{Exp}(1)$ with $f(x) = e^{-x}$ for $x \ge 0$.
+**Example 1 (Uniform).** Let $X \sim \text{Uniform}(0, 1)$, so
+$f_X(x) = 1$ for $0 \le x \le 1$ and $f_X(x) = 0$ otherwise. Then
 
 $$
-P(1 \le X \le 2) = \int_1^2 e^{-x}\,dx = -e^{-x}\big|_1^2 = e^{-1} - e^{-2} \approx 0.2325
+P(0.3 \le X \le 0.7) = \int_{0.3}^{0.7} 1 \, dx = 0.4
 $$
 
-```python
-import numpy as np
-from scipy import integrate
+**Example 2 (Triangular density).** Let $f_X(x) = 2x$ for $0 \le x \le 1$ and $f_X(x) = 0$ otherwise.
 
-# Example 1: f(x) = 2x on [0, 1]
-f1 = lambda x: 2 * x
-norm, _ = integrate.quad(f1, 0, 1)
-p_gt_half, _ = integrate.quad(f1, 0.5, 1)
-print(f"f(x) = 2x: normalization = {norm:.4f}")
-print(f"P(X > 0.5) = {p_gt_half:.4f}")
-print(f"f(0.8) = {f1(0.8):.1f}  (density > 1 is OK)")
+- Verification: $\int_0^1 2x \, dx = x^2 \big|_0^1 = 1$.
+- Probability computation:
 
-# Example 2: Exp(1)
-f2 = lambda x: np.exp(-x)
-p_12, _ = integrate.quad(f2, 1, 2)
-print(f"\nExp(1): P(1 <= X <= 2) = {p_12:.4f}")
-print(f"Exact: e^-1 - e^-2 = {np.exp(-1) - np.exp(-2):.4f}")
-```
+$$
+P\!\left(X \le \frac{1}{2}\right) = \int_0^{1/2} 2x \, dx = x^2 \Big|_0^{1/2} = \frac{1}{4}
+$$
+
+Most of the probability is concentrated near $x = 1$ because the density is
+increasing.
+
+**Example 3 (Density exceeding 1).** Let $f_X(x) = 3$ for
+$0 \le x \le 1/3$ and $f_X(x) = 0$ otherwise. Here $f_X(x) = 3 > 1$ on the
+support, yet $\int_0^{1/3} 3 \, dx = 1$, confirming this is a valid PDF.
