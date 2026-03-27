@@ -1,78 +1,80 @@
-# Independence of Random Variables
+# Definition of Independence for Random Variables
 
-Two random variables are independent if knowing the value of one provides no information about the other — their joint distribution factors into the product of the marginals.
+## From Events to Random Variables
 
-## Definition
+In Chapter 3, two events $A$ and $B$ are independent when $P(A \cap B) = P(A) \, P(B)$. Independence for random variables extends this idea: knowing the value of one variable provides no information about the other. The formal definition requires the factorization condition to hold for **every** pair of values simultaneously.
 
-Random variables $X$ and $Y$ are **independent** if for all $x, y$:
+## Independence of Two Discrete Random Variables
 
-$$
-p_{X,Y}(x, y) = p_X(x) \cdot p_Y(y) \qquad \text{(discrete)}
-$$
+!!! info "Definition"
+    Discrete random variables $X$ and $Y$ are **independent** if for all $x$ and $y$:
 
-$$
-f_{X,Y}(x, y) = f_X(x) \cdot f_Y(y) \qquad \text{(continuous)}
-$$
+    $$p_{X,Y}(x, y) = p_X(x) \cdot p_Y(y)$$
 
-$X_1, \ldots, X_n$ are **mutually independent** if for all $x_1, \ldots, x_n$:
+    That is, the joint PMF factors into the product of the marginal PMFs at every point.
 
-$$
-p(x_1, \ldots, x_n) = p_{X_1}(x_1) \cdots p_{X_n}(x_n)
-$$
+If even a single pair $(x, y)$ violates this equation, then $X$ and $Y$ are **dependent**.
 
-## Explanation
+**Example.** Roll two fair dice independently. Let $X$ be the result of the first die and $Y$ the result of the second. Then $p_X(x) = 1/6$ for $x \in \{1,\ldots,6\}$ and $p_Y(y) = 1/6$ for $y \in \{1,\ldots,6\}$. Every entry of the joint PMF equals
 
-### Equivalent Characterizations
+$$p_{X,Y}(x,y) = \frac{1}{36} = \frac{1}{6} \cdot \frac{1}{6} = p_X(x) \cdot p_Y(y)$$
 
-$X$ and $Y$ are independent if and only if any of the following hold:
+so $X$ and $Y$ are independent.
 
-1. Joint = product of marginals (definition above)
-2. $p_{X|Y}(x \mid y) = p_X(x)$ for all $x, y$ (conditional equals marginal)
-3. $F_{X,Y}(x, y) = F_X(x) \cdot F_Y(y)$ for all $x, y$ (joint CDF factors)
-4. $E[g(X)h(Y)] = E[g(X)]\,E[h(Y)]$ for all bounded $g, h$
+## Independence of Two Continuous Random Variables
 
-### Pairwise vs Mutual Independence
+!!! info "Definition"
+    Continuous random variables $X$ and $Y$ are **independent** if for all $x$ and $y$:
 
-**Pairwise independence:** every pair $X_i, X_j$ is independent. **Mutual independence:** the full joint factors into a product of all marginals.
+    $$f_{X,Y}(x, y) = f_X(x) \cdot f_Y(y)$$
+
+    That is, the joint PDF factors into the product of the marginal PDFs everywhere.
+
+## General Definition via CDFs
+
+The most general definition covers both discrete, continuous, and mixed cases.
+
+!!! info "Definition"
+    Random variables $X$ and $Y$ are **independent** if for all $x$ and $y$:
+
+    $$F_{X,Y}(x, y) = F_X(x) \cdot F_Y(y)$$
+
+    Equivalently, $P(X \le x, \, Y \le y) = P(X \le x) \, P(Y \le y)$ for all $x, y \in \mathbb{R}$.
+
+## Independence of Multiple Random Variables
+
+Random variables $X_1, X_2, \ldots, X_n$ are **(mutually) independent** if the joint distribution factors into the product of all marginals. In the discrete case, this means for all $x_1, x_2, \ldots, x_n$:
+
+$$p_{X_1, \ldots, X_n}(x_1, \ldots, x_n) = p_{X_1}(x_1) \cdot p_{X_2}(x_2) \cdots p_{X_n}(x_n)$$
+
+Mutual independence is a strong requirement: it demands that **every** sub-collection of the variables is also independent, not just each pair.
+
+## Pairwise vs Mutual Independence
+
+$X_1, X_2, \ldots, X_n$ are **pairwise independent** if every pair $X_i, X_j$ (with $i \ne j$) is independent.
 
 !!! warning "Pairwise does not imply mutual"
-    Mutual independence requires the joint to factor for *all* subsets, not just pairs. Pairwise independence is strictly weaker.
+    Pairwise independence is strictly weaker than mutual independence.
 
-### Conditional Independence
+**Counterexample.** Let $X_1$ and $X_2$ be independent fair coin flips taking values $0$ or $1$, and define $X_3 = X_1 \oplus X_2$ (addition mod 2). Then:
 
-$X$ and $Y$ are **conditionally independent given $Z$** if $p(x, y \mid z) = p(x \mid z) \cdot p(y \mid z)$ for all $x, y, z$.
+- Each $X_i$ is $\text{Bernoulli}(1/2)$.
+- Any pair $(X_i, X_j)$ is independent: for instance, $P(X_1 = a, X_3 = b) = 1/4$ for all $a, b \in \{0,1\}$.
+- But the three variables are **not** mutually independent because $X_3$ is completely determined by $X_1$ and $X_2$.
 
-Neither conditional independence nor unconditional independence implies the other.
+## Checking Independence via Conditional Distributions
 
-## Examples
+An equivalent characterization: $X$ and $Y$ are independent if and only if the conditional distribution of $X$ given $Y = y$ does not depend on $y$. In the discrete case:
 
-**Example.** Roll two fair dice independently. Let $X$ = first die, $Y$ = second die, $S = X + Y$.
+$$p_{X \mid Y}(x \mid y) = p_X(x) \quad \text{for all } x, y$$
 
-$X$ and $Y$ are independent: $P(X = i, Y = j) = 1/36 = (1/6)(1/6)$ for all $i, j$.
+Intuitively, learning the value of $Y$ tells us nothing new about $X$.
 
-$X$ and $S$ are **not** independent: $P(X = 6, S = 2) = 0$ but $P(X = 6) \cdot P(S = 2) = (1/6)(1/36) > 0$.
+## Conditional Independence
 
-```python
-# Verify X and Y independent, X and S dependent
-from itertools import product
+$X_1, \ldots, X_n$ are **conditionally independent given** $Y$ if, for all $x_1, \ldots, x_n$ and $y$:
 
-outcomes = [(i, j) for i in range(1,7) for j in range(1,7)]
+$$p_{X_1, \ldots, X_n \mid Y}(x_1, \ldots, x_n \mid y) = p_{X_1 \mid Y}(x_1 \mid y) \cdot p_{X_2 \mid Y}(x_2 \mid y) \cdots p_{X_n \mid Y}(x_n \mid y)$$
 
-# Check X, Y independence
-for i in range(1, 7):
-    for j in range(1, 7):
-        joint = sum(1 for x, y in outcomes if x == i and y == j) / 36
-        marginal = (1/6) * (1/6)
-        assert abs(joint - marginal) < 1e-10
-
-print("X, Y: independent (all 36 cells match product of marginals)")
-
-# Check X, S dependence: find a counterexample
-x_val, s_val = 6, 2
-joint = sum(1 for x, y in outcomes if x == x_val and x + y == s_val) / 36
-px = 1/6
-ps = sum(1 for x, y in outcomes if x + y == s_val) / 36
-print(f"\nP(X=6, S=2) = {joint:.4f}")
-print(f"P(X=6) * P(S=2) = {px * ps:.6f}")
-print("X, S: dependent")
-```
+!!! note "Independence and conditional independence are separate properties"
+    Conditional independence given $Y$ does **not** imply unconditional independence, and unconditional independence does **not** imply conditional independence given $Y$. The two concepts must be checked separately.
