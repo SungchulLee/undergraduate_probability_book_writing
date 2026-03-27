@@ -1,54 +1,81 @@
 # MGF of Exponential and Gamma
 
-The gamma MGF is a power of the exponential MGF, reflecting the sum-of-exponentials decomposition.
+## MGF of Exponential$(\lambda)$
 
-## Definition
+If $X \sim \text{Exp}(\lambda)$ with PDF $f(x) = \lambda e^{-\lambda x}$ for $x \geq 0$, then:
 
-**Exponential:** If $X \sim \text{Exp}(\lambda)$:
+$$M_X(t) = E[e^{tX}] = \int_0^{\infty} e^{tx} \lambda e^{-\lambda x}\,dx = \lambda \int_0^{\infty} e^{-(\lambda - t)x}\,dx$$
 
-$$
-M_X(t) = \frac{\lambda}{\lambda - t}, \qquad t < \lambda
-$$
+The integral converges when $\lambda - t > 0$, i.e., $t < \lambda$:
 
-**Gamma:** If $X \sim \text{Gamma}(\alpha, \lambda)$:
+$$M_X(t) = \lambda \cdot \frac{1}{\lambda - t} = \frac{\lambda}{\lambda - t}$$
 
-$$
-M_X(t) = \left(\frac{\lambda}{\lambda - t}\right)^\alpha, \qquad t < \lambda
-$$
+$$\boxed{M_{\text{Exp}(\lambda)}(t) = \frac{\lambda}{\lambda - t}, \quad t < \lambda}$$
 
-## Explanation
+### Deriving Moments
 
-### Derivation
+Write $M_X(t) = \lambda(\lambda - t)^{-1}$:
 
-$$
-M_X(t) = \int_0^{\infty} e^{tx}\,\lambda e^{-\lambda x}\,dx = \frac{\lambda}{\lambda - t}
-$$
+$$M_X'(t) = \lambda(\lambda - t)^{-2}$$
 
-Convergence requires $t < \lambda$.
+$$E[X] = M_X'(0) = \frac{\lambda}{\lambda^2} = \frac{1}{\lambda}$$
 
-### Moments
+$$M_X''(t) = 2\lambda(\lambda - t)^{-3}$$
 
-Exponential: $E[X] = 1/\lambda$, $\text{Var}(X) = 1/\lambda^2$.
+$$E[X^2] = M_X''(0) = \frac{2\lambda}{\lambda^3} = \frac{2}{\lambda^2}$$
 
-Gamma: $E[X] = \alpha/\lambda$, $\text{Var}(X) = \alpha/\lambda^2$.
+$$\text{Var}(X) = \frac{2}{\lambda^2} - \frac{1}{\lambda^2} = \frac{1}{\lambda^2}$$
 
-### Sum Property
+## MGF of Gamma$(\alpha, \lambda)$
 
-$\sum_{i=1}^n \text{Exp}(\lambda) \sim \text{Gamma}(n, \lambda)$, since $(\lambda/(\lambda-t))^n$ is the gamma MGF. More generally, $\text{Gamma}(\alpha_1, \lambda) + \text{Gamma}(\alpha_2, \lambda) \sim \text{Gamma}(\alpha_1 + \alpha_2, \lambda)$ (same rate required).
+If $X \sim \text{Gamma}(\alpha, \lambda)$ with PDF $f(x) = \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha - 1} e^{-\lambda x}$ for $x > 0$, then:
 
-## Examples
+$$M_X(t) = \int_0^{\infty} e^{tx} \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha - 1} e^{-\lambda x}\,dx = \frac{\lambda^\alpha}{\Gamma(\alpha)} \int_0^{\infty} x^{\alpha - 1} e^{-(\lambda - t)x}\,dx$$
 
-**Example.** $X_1, \ldots, X_5 \stackrel{\text{iid}}{\sim} \text{Exp}(2)$: $S \sim \text{Gamma}(5, 2)$, $E[S] = 5/2$, $\text{Var}(S) = 5/4$.
+For $t < \lambda$, substitute $u = (\lambda - t)x$:
+
+$$= \frac{\lambda^\alpha}{\Gamma(\alpha)} \cdot \frac{\Gamma(\alpha)}{(\lambda - t)^\alpha} = \left(\frac{\lambda}{\lambda - t}\right)^\alpha$$
+
+$$\boxed{M_{\text{Gamma}(\alpha, \lambda)}(t) = \left(\frac{\lambda}{\lambda - t}\right)^\alpha, \quad t < \lambda}$$
+
+!!! note "Exponential as a Special Case"
+    Setting $\alpha = 1$ recovers $M_{\text{Exp}(\lambda)}(t) = \frac{\lambda}{\lambda - t}$, confirming that $\text{Exp}(\lambda) = \text{Gamma}(1, \lambda)$.
+
+### Deriving Moments
+
+$$M_X'(t) = \alpha \lambda^\alpha (\lambda - t)^{-\alpha - 1}$$
+
+$$E[X] = M_X'(0) = \frac{\alpha}{\lambda}$$
+
+$$M_X''(t) = \alpha(\alpha + 1)\lambda^\alpha (\lambda - t)^{-\alpha - 2}$$
+
+$$E[X^2] = M_X''(0) = \frac{\alpha(\alpha + 1)}{\lambda^2}$$
+
+$$\text{Var}(X) = \frac{\alpha(\alpha + 1)}{\lambda^2} - \frac{\alpha^2}{\lambda^2} = \frac{\alpha}{\lambda^2}$$
+
+## Python Verification
 
 ```python
 import numpy as np
+from scipy.misc import derivative
 
-np.random.seed(42)
-n_sim = 200_000
+def mgf_exp(t, lam=2.0):
+    return lam / (lam - t)
 
-X = np.random.exponential(1/2, (n_sim, 5))  # rate 2, scale 1/2
-S = X.sum(axis=1)
+def mgf_gamma(t, alpha=3.0, lam=2.0):
+    return (lam / (lam - t))**alpha
 
-print(f"E[S] = {S.mean():.4f}  (theory: {5/2})")
-print(f"Var(S) = {S.var():.4f}  (theory: {5/4})")
+# Exp(2): E[X] = 0.5, Var(X) = 0.25
+EX = derivative(mgf_exp, 0, n=1, dx=1e-6)
+EX2 = derivative(mgf_exp, 0, n=2, dx=1e-6)
+print("Exp(2):")
+print(f"  E[X]   = {EX:.4f}  (exact: 0.5)")
+print(f"  Var(X) = {EX2 - EX**2:.4f}  (exact: 0.25)")
+
+# Gamma(3, 2): E[X] = 1.5, Var(X) = 0.75
+EX = derivative(mgf_gamma, 0, n=1, dx=1e-6)
+EX2 = derivative(mgf_gamma, 0, n=2, dx=1e-6)
+print("\nGamma(3, 2):")
+print(f"  E[X]   = {EX:.4f}  (exact: 1.5)")
+print(f"  Var(X) = {EX2 - EX**2:.4f}  (exact: 0.75)")
 ```

@@ -1,67 +1,77 @@
 # Finding Moments from the MGF
 
-Differentiating the MGF at zero extracts moments one by one — often easier than computing $E[X^n]$ directly from the definition.
+## Derivative Method
 
-## Definition
+The $n$-th derivative of the MGF evaluated at $t = 0$ gives the $n$-th moment:
 
-If $M_X(t)$ exists in a neighborhood of $t = 0$:
+$$M_X^{(n)}(0) = E[X^n]$$
 
-$$
-E[X^n] = M_X^{(n)}(0)
-$$
+The first few derivatives yield the most commonly needed quantities:
 
-The **variance shortcut:**
+- **First moment:** $E[X] = M_X'(0)$
+- **Second moment:** $E[X^2] = M_X''(0)$
+- **Variance:** $\text{Var}(X) = M_X''(0) - [M_X'(0)]^2$
 
-$$
-\text{Var}(X) = M_X''(0) - \bigl(M_X'(0)\bigr)^2
-$$
+## Taylor Expansion Approach
 
-## Explanation
+Since $e^{tX} = \sum_{n=0}^{\infty} \frac{(tX)^n}{n!}$, taking expectations term by term gives:
 
-### Practical Technique
+$$M_X(t) = E[e^{tX}] = \sum_{n=0}^{\infty} \frac{E[X^n]}{n!}\,t^n$$
 
-1. Write down $M_X(t)$
-2. Differentiate: $M_X'(0) = E[X]$, $M_X''(0) = E[X^2]$
-3. Compute $\text{Var}(X) = E[X^2] - (E[X])^2$
+This is a power series whose coefficients encode every moment of $X$. To extract the $n$-th moment, read off the coefficient of $t^n$ and multiply by $n!$:
 
-### Cumulant Generating Function
+$$E[X^n] = n! \cdot [\text{coefficient of } t^n \text{ in } M_X(t)]$$
 
-The **cumulant generating function** $K_X(t) = \ln M_X(t)$ simplifies variance calculations:
+!!! tip "When to Use Each Method"
+    - **Derivative method:** best when the MGF has a simple closed form that is easy to differentiate (e.g., exponential, Poisson).
+    - **Taylor expansion:** best when the MGF is already expressed as a power series or is easy to expand (e.g., $e^{\lambda(e^t - 1)}$).
 
-$$
-K_X'(0) = E[X], \qquad K_X''(0) = \text{Var}(X)
-$$
+## Worked Example
 
-For the Poisson: $K_X(t) = \lambda(e^t - 1)$, so $K_X'(0) = \lambda$ and $K_X''(0) = \lambda$.
+???+ example "Extracting moments from $M_X(t) = e^{3t + 2t^2}$"
+    **Derivative method.** Write $M_X(t) = e^{3t + 2t^2}$ and let $g(t) = 3t + 2t^2$.
 
-### Taylor Expansion Method
+    $$M_X'(t) = g'(t)\,M_X(t) = (3 + 4t)\,e^{3t + 2t^2}$$
 
-Sometimes it is easier to expand $M_X(t)$ as a power series and read off $E[X^n]/n!$ as the coefficient of $t^n$.
+    $$E[X] = M_X'(0) = 3 \cdot 1 = 3$$
 
-## Examples
+    For the second derivative, use the product rule:
 
-**Example.** $X \sim \text{Bin}(n, p)$: $M_X(t) = (q + pe^t)^n$.
+    $$M_X''(t) = g''(t)\,M_X(t) + [g'(t)]^2\,M_X(t) = [4 + (3+4t)^2]\,e^{3t + 2t^2}$$
 
-$$
-M_X'(t) = n(q + pe^t)^{n-1}\,pe^t \implies E[X] = np
-$$
+    $$E[X^2] = M_X''(0) = 4 + 9 = 13$$
 
-$$
-E[X^2] = M_X''(0) = n(n-1)p^2 + np \implies \text{Var}(X) = npq
-$$
+    $$\text{Var}(X) = 13 - 3^2 = 4$$
+
+    **Taylor expansion method.** Expand $e^{3t + 2t^2} = e^{3t} \cdot e^{2t^2}$:
+
+    $$e^{3t} = 1 + 3t + \frac{9t^2}{2} + \cdots, \qquad e^{2t^2} = 1 + 2t^2 + \cdots$$
+
+    $$M_X(t) = 1 + 3t + \left(\frac{9}{2} + 2\right)t^2 + \cdots = 1 + 3t + \frac{13}{2}\,t^2 + \cdots$$
+
+    Reading off coefficients: $E[X] = 1! \cdot 3 = 3$ and $E[X^2] = 2! \cdot \frac{13}{2} = 13$.
+
+## Recognizing the Normal MGF
+
+The MGF $M_X(t) = e^{3t + 2t^2}$ matches the normal form $e^{\mu t + \frac{1}{2}\sigma^2 t^2}$ with $\mu = 3$ and $\sigma^2 = 4$. So $X \sim N(3, 4)$, which is consistent with $E[X] = 3$ and $\text{Var}(X) = 4$.
+
+## Python Verification
 
 ```python
 import numpy as np
+from scipy.misc import derivative
 
-def mgf_binom(t, n, p):
-    return ((1 - p) + p * np.exp(t))**n
+def mgf(t):
+    """M_X(t) = exp(3t + 2t^2)"""
+    return np.exp(3 * t + 2 * t**2)
 
-n, p = 20, 0.3
-dt = 1e-6
-M0 = mgf_binom(0, n, p)
-M1 = (mgf_binom(dt, n, p) - mgf_binom(-dt, n, p)) / (2 * dt)
-M2 = (mgf_binom(dt, n, p) - 2*M0 + mgf_binom(-dt, n, p)) / dt**2
+# Extract moments via numerical differentiation
+EX = derivative(mgf, 0, n=1, dx=1e-6)
+EX2 = derivative(mgf, 0, n=2, dx=1e-6)
+VarX = EX2 - EX**2
 
-print(f"E[X] = {M1:.4f}  (exact: {n*p})")
-print(f"Var(X) = {M2 - M1**2:.4f}  (exact: {n*p*(1-p):.1f})")
+print("M_X(t) = exp(3t + 2t^2)")
+print(f"  E[X]   = {EX:.4f}   (exact: 3)")
+print(f"  E[X^2] = {EX2:.4f}  (exact: 13)")
+print(f"  Var(X) = {VarX:.4f}   (exact: 4)")
 ```

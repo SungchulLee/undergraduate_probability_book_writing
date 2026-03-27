@@ -1,53 +1,57 @@
 # Uniqueness Theorem
 
-If two random variables share the same MGF in a neighborhood of zero, they have the same distribution — enabling distribution identification purely from the MGF.
+## Statement
 
-## Definition
+!!! info "MGF Uniqueness Theorem"
+    If $M_X(t)$ exists (is finite) for all $t$ in some open interval $(-\delta, \delta)$ containing $0$, then $M_X(t)$ uniquely determines the distribution of $X$.
 
-**Uniqueness theorem.** If $M_X(t) = M_Y(t)$ for all $t \in (-h, h)$ with $h > 0$, then $X \stackrel{d}{=} Y$.
+    That is, if $M_X(t) = M_Y(t)$ for all $t \in (-\delta, \delta)$, then $X$ and $Y$ have the same CDF.
 
-**Convergence theorem.** If $M_{X_n}(t) \to M_Y(t)$ for all $t$ in a neighborhood of 0, then $X_n \xrightarrow{d} Y$.
+This is the property that makes MGFs a powerful identification tool: once you compute the MGF of a sum or transformation and recognize it as the MGF of a known distribution, you can conclude the two distributions are identical.
 
-## Explanation
+## Why a Neighborhood of Zero Suffices
 
-### Why Uniqueness Holds
+The MGF is an analytic function wherever it is finite. If two analytic functions agree on any open interval, they agree everywhere on their common domain. Therefore, agreement on $(-\delta, \delta)$, no matter how small $\delta$ is, forces agreement wherever both MGFs are defined.
 
-The MGF is a Laplace transform of the distribution. Since the Laplace transform is injective when it converges in a neighborhood of the origin, no two different distributions can share the same MGF.
+## When the MGF Does Not Exist
 
-### Strategy: Identify via MGF
+Not every distribution has an MGF. The expectation $E[e^{tX}]$ may diverge for all $t \neq 0$.
 
-1. Compute $M_X(t)$ from the definition or by algebraic manipulation
-2. Recognize the result as the MGF of a known distribution
-3. Conclude $X$ has that distribution by uniqueness
+???+ example "Cauchy distribution"
+    If $X$ has the standard Cauchy distribution with PDF $f(x) = \frac{1}{\pi(1 + x^2)}$, then $E[e^{tX}] = \infty$ for every $t \neq 0$. The Cauchy distribution has no MGF.
 
-This is especially powerful for sums: compute $M_{X+Y}(t) = M_X(t)\,M_Y(t)$ and recognize the product.
+    The heavy tails of the Cauchy make $e^{tX}$ grow too fast for the integral to converge.
 
-### Convergence and the CLT
+???+ example "Log-normal distribution"
+    If $X \sim \text{Lognormal}(\mu, \sigma^2)$, then $M_X(t) = \infty$ for all $t > 0$. The MGF exists only at $t \leq 0$, so it is not finite on any open interval around $0$.
 
-The convergence version is the key tool for proving the CLT: show the MGF of the standardized sum converges to $e^{t^2/2}$ (the MGF of $N(0,1)$).
+When the MGF does not exist, alternative tools such as the **characteristic function** $\varphi_X(t) = E[e^{itX}]$ (which always exists) can be used instead.
 
-## Examples
+## Connection to the Moment Problem
 
-**Example.** $X \sim \text{Bin}(n, p)$, $Y \sim \text{Bin}(m, p)$ independent.
+Two distinct distributions can share all moments $E[X^n]$ for $n = 1, 2, 3, \ldots$ without being identical. This is the **Hamburger moment problem**.
 
-$$
-M_{X+Y}(t) = (q + pe^t)^{n+m}
-$$
+!!! warning "Moments Alone Do Not Determine a Distribution"
+    There exist pairs of distinct distributions that have the same moments of all orders. The classic example is the log-normal: the distribution of $X \sim \text{Lognormal}(0, 1)$ is not uniquely determined by its moments.
 
-By uniqueness, $X + Y \sim \text{Bin}(n + m, p)$.
+The MGF, when it exists, resolves this ambiguity. Existence of $M_X(t)$ in a neighborhood of $0$ implies that the moment sequence $\{E[X^n]\}$ grows slowly enough to uniquely determine the distribution. Specifically, the Taylor series $\sum E[X^n]\,t^n / n!$ converges, and this convergent generating function pins down the distribution.
 
-```python
-import numpy as np
+## Convergence Theorem
 
-np.random.seed(42)
-n_sim = 200_000
+The uniqueness theorem has a companion result for sequences of random variables.
 
-X = np.random.binomial(10, 0.3, n_sim)
-Y = np.random.binomial(15, 0.3, n_sim)
-S = X + Y
-Z = np.random.binomial(25, 0.3, n_sim)
+!!! info "MGF Convergence Theorem"
+    If $M_{X_n}(t) \to M_X(t)$ for all $t$ in a neighborhood of $0$, and $M_X(t)$ is the MGF of a random variable $X$ (finite in that neighborhood), then:
 
-print(f"X+Y: mean={S.mean():.3f}, var={S.var():.3f}")
-print(f"Bin(25,0.3): mean={Z.mean():.3f}, var={Z.var():.3f}")
-print(f"Theory: mean={25*0.3}, var={25*0.3*0.7}")
-```
+    $$X_n \xrightarrow{d} X$$
+
+This theorem is the MGF route to proving the **Central Limit Theorem**: show that the MGF of the standardized sum converges pointwise to $e^{t^2/2}$, the MGF of $N(0, 1)$.
+
+## Summary of Applicability
+
+| Tool | Exists for | Uniqueness |
+|:---|:---|:---|
+| MGF $M_X(t) = E[e^{tX}]$ | Some distributions | Yes, when it exists in a neighborhood of $0$ |
+| CF $\varphi_X(t) = E[e^{itX}]$ | All distributions | Always |
+
+When the MGF exists, it is often the more convenient tool because it avoids complex arithmetic. When it does not exist, the characteristic function is the universal alternative.

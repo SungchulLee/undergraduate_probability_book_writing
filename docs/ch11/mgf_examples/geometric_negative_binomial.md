@@ -1,60 +1,79 @@
 # MGF of Geometric and Negative Binomial
 
-The negative binomial MGF is a power of the geometric MGF, mirroring the sum-of-geometrics decomposition.
+## MGF of Geometric$(p)$
 
-## Definition
+Let $X \sim \text{Geo}(p)$ count the number of trials until the first success, so $P(X = k) = (1-p)^{k-1}p$ for $k = 1, 2, 3, \ldots$
 
-**Geometric** ($X \sim \text{Geo}(p)$, trials until first success):
+$$M_X(t) = E[e^{tX}] = \sum_{k=1}^{\infty} e^{tk}(1-p)^{k-1}p = pe^t \sum_{k=0}^{\infty} [(1-p)e^t]^k$$
 
-$$
-M_X(t) = \frac{pe^t}{1 - qe^t}, \qquad t < -\ln q
-$$
+The geometric series converges when $(1-p)e^t < 1$, i.e., $t < -\ln(1-p)$:
 
-**Negative binomial** ($X \sim \text{NB}(r, p)$):
+$$M_X(t) = \frac{pe^t}{1 - (1-p)e^t}$$
 
-$$
-M_X(t) = \left(\frac{pe^t}{1 - qe^t}\right)^r, \qquad t < -\ln q
-$$
+$$\boxed{M_{\text{Geo}(p)}(t) = \frac{pe^t}{1 - (1-p)e^t}, \quad t < -\ln(1-p)}$$
 
-where $q = 1 - p$.
+### Deriving Moments
 
-## Explanation
+Let $q = 1 - p$. Write $M(t) = pe^t(1 - qe^t)^{-1}$ and differentiate using the quotient rule:
 
-### Derivation
+$$M'(t) = \frac{pe^t(1 - qe^t) + pe^t \cdot qe^t}{(1 - qe^t)^2} = \frac{pe^t}{(1 - qe^t)^2}$$
 
-$$
-M_X(t) = \sum_{k=1}^{\infty}e^{tk}q^{k-1}p = pe^t\sum_{k=0}^{\infty}(qe^t)^k = \frac{pe^t}{1 - qe^t}
-$$
+$$E[X] = M'(0) = \frac{p}{(1 - q)^2} = \frac{p}{p^2} = \frac{1}{p}$$
 
-Convergence requires $qe^t < 1$, i.e., $t < -\ln q$.
+For the second derivative:
 
-### Moments
+$$M''(t) = \frac{pe^t(1 - qe^t)^2 + 2pe^t \cdot qe^t(1 - qe^t)}{(1 - qe^t)^4} = \frac{pe^t(1 + qe^t)}{(1 - qe^t)^3}$$
 
-Geometric: $E[X] = 1/p$, $\text{Var}(X) = q/p^2$.
+$$E[X^2] = M''(0) = \frac{p(1 + q)}{p^3} = \frac{1 + q}{p^2} = \frac{2 - p}{p^2}$$
 
-Negative binomial: $E[X] = r/p$, $\text{Var}(X) = rq/p^2$.
+$$\text{Var}(X) = \frac{2 - p}{p^2} - \frac{1}{p^2} = \frac{1 - p}{p^2} = \frac{q}{p^2}$$
 
-### Sum Property
+## MGF of Negative Binomial$(r, p)$
 
-$\text{NB}(r_1, p) + \text{NB}(r_2, p) \sim \text{NB}(r_1 + r_2, p)$ for independent summands with the same $p$.
+The negative binomial $X \sim \text{NB}(r, p)$ counts the number of trials until the $r$-th success. It can be written as a sum of $r$ independent geometric random variables:
 
-## Examples
+$$X = X_1 + X_2 + \cdots + X_r, \quad X_i \stackrel{\text{iid}}{\sim} \text{Geo}(p)$$
 
-**Example.** $X \sim \text{Geo}(0.3)$: $E[X] \approx 3.33$, $\text{Var}(X) \approx 7.78$.
+By independence, the MGF of a sum is the product of the MGFs:
+
+$$M_X(t) = \prod_{i=1}^r M_{X_i}(t) = \left[\frac{pe^t}{1 - (1-p)e^t}\right]^r$$
+
+$$\boxed{M_{\text{NB}(r,p)}(t) = \left[\frac{pe^t}{1 - (1-p)e^t}\right]^r, \quad t < -\ln(1-p)}$$
+
+### Deriving Moments via the Geometric
+
+Since $X = \sum_{i=1}^r X_i$ with $X_i$ iid Geo$(p)$:
+
+$$E[X] = r \cdot E[X_1] = \frac{r}{p}$$
+
+$$\text{Var}(X) = r \cdot \text{Var}(X_1) = \frac{r(1-p)}{p^2}$$
+
+## Python Verification
 
 ```python
 import numpy as np
+from scipy.misc import derivative
 
-np.random.seed(42)
-n_sim = 200_000
+def mgf_geo(t, p=0.3):
+    q = 1 - p
+    return p * np.exp(t) / (1 - q * np.exp(t))
+
+def mgf_nb(t, r=5, p=0.3):
+    return mgf_geo(t, p)**r
+
+# Geo(0.3): E[X] = 10/3, Var(X) = 70/9
 p = 0.3
+EX = derivative(mgf_geo, 0, n=1, dx=1e-6)
+EX2 = derivative(mgf_geo, 0, n=2, dx=1e-6)
+print(f"Geo({p}):")
+print(f"  E[X]   = {EX:.4f}  (exact: {1/p:.4f})")
+print(f"  Var(X) = {EX2 - EX**2:.4f}  (exact: {(1-p)/p**2:.4f})")
 
-X = np.random.geometric(p, n_sim)
-print(f"Geo(0.3): E={X.mean():.3f} (theory: {1/p:.3f}), "
-      f"Var={X.var():.3f} (theory: {(1-p)/p**2:.3f})")
-
+# NB(5, 0.3): E[X] = 50/3, Var(X) = 350/9
 r = 5
-S = sum(np.random.geometric(p, n_sim) for _ in range(r))
-print(f"NB(5,0.3): E={S.mean():.3f} (theory: {r/p:.3f}), "
-      f"Var={S.var():.2f} (theory: {r*(1-p)/p**2:.2f})")
+EX = derivative(mgf_nb, 0, n=1, dx=1e-6)
+EX2 = derivative(mgf_nb, 0, n=2, dx=1e-6)
+print(f"\nNB({r}, {p}):")
+print(f"  E[X]   = {EX:.4f}  (exact: {r/p:.4f})")
+print(f"  Var(X) = {EX2 - EX**2:.4f}  (exact: {r*(1-p)/p**2:.4f})")
 ```

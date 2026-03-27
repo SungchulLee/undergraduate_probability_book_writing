@@ -1,83 +1,96 @@
 # Random Sums and Compound Distributions
 
-The PGF of a random sum $S = \sum_{i=1}^N X_i$ is a composition $G_N(G_X(s))$ — a key tool for insurance and queuing models.
+## Setup
 
-## Definition
+Let $N$ be a non-negative integer-valued random variable and let $X_1, X_2, \ldots$ be iid non-negative integer-valued random variables, independent of $N$. The **random sum** is:
 
-Let $N$ be a non-negative integer RV and $X_1, X_2, \ldots$ be iid non-negative integer RVs independent of $N$. The **compound** (random) sum is
+$$S = X_1 + X_2 + \cdots + X_N$$
 
-$$
-S = \sum_{i=1}^N X_i
-$$
+with the convention $S = 0$ when $N = 0$. The distribution of $S$ is called a **compound distribution**.
 
-Its PGF is the **composition**:
+## The Composition Formula
 
-$$
-G_S(s) = G_N(G_X(s))
-$$
+!!! info "PGF of a Random Sum"
+    $$G_S(s) = G_N(G_X(s))$$
 
-## Explanation
+    The PGF of the random sum is the PGF of $N$ evaluated at the PGF of $X$.
 
-### Proof
+**Proof.** Condition on $N$:
 
-Conditioning on $N$:
+$$G_S(s) = E[s^S] = \sum_{n=0}^{\infty} E[s^S \mid N = n]\,P(N = n)$$
 
-$$
-G_S(s) = E[s^S] = E\bigl[E[s^{X_1+\cdots+X_N} \mid N]\bigr] = E\bigl[(G_X(s))^N\bigr] = G_N(G_X(s))
-$$
+Given $N = n$, $S = X_1 + \cdots + X_n$, so:
 
-### Moments of the Random Sum
+$$E[s^S \mid N = n] = E[s^{X_1 + \cdots + X_n}] = [G_X(s)]^n$$
 
-$$
-E[S] = E[N]\,E[X]
-$$
+by independence. Therefore:
 
-$$
-\text{Var}(S) = E[N]\,\text{Var}(X) + (E[X])^2\,\text{Var}(N)
-$$
+$$G_S(s) = \sum_{n=0}^{\infty} [G_X(s)]^n P(N = n) = G_N(G_X(s)) \qquad \square$$
 
-These follow from the tower property and Eve's law (or by differentiating the compound PGF).
+## Moments of the Random Sum
 
-### Compound Poisson
+Differentiating $G_S(s) = G_N(G_X(s))$ at $s = 1$:
 
-If $N \sim \text{Pois}(\lambda)$ and $X_i$ are iid:
+$$G_S'(s) = G_N'(G_X(s)) \cdot G_X'(s)$$
 
-$$
-G_S(s) = e^{\lambda(G_X(s) - 1)}
-$$
+$$E[S] = G_S'(1) = G_N'(1) \cdot G_X'(1) = E[N] \cdot E[X]$$
 
-This is the **compound Poisson** distribution, fundamental in insurance mathematics for modeling aggregate claims.
+For the variance, use the law of total variance or differentiate again:
 
-## Examples
+$$\text{Var}(S) = E[N] \cdot \text{Var}(X) + \text{Var}(N) \cdot (E[X])^2$$
 
-**Example.** $N \sim \text{Pois}(10)$ claims per day, each claim $X_i \sim \text{Geo}(0.5)$. Total payout $S = \sum_{i=1}^N X_i$.
+!!! tip "Wald's Identity for Variance"
+    The variance formula decomposes into two sources:
 
-$$
-E[S] = 10 \cdot 2 = 20, \qquad \text{Var}(S) = 10 \cdot 2 + 4 \cdot 10 = 60
-$$
+    - $E[N] \cdot \text{Var}(X)$: randomness **within** each claim
+    - $\text{Var}(N) \cdot (E[X])^2$: randomness in the **number** of claims
+
+## Example: Compound Poisson
+
+Let $N \sim \text{Po}(\lambda)$ and $X_i \stackrel{\text{iid}}{\sim} \text{Geo}(p)$ with PGF $G_X(s) = \frac{ps}{1-(1-p)s}$.
+
+The PGF of $N$ is $G_N(s) = e^{\lambda(s-1)}$. By the composition formula:
+
+$$G_S(s) = \exp\!\left[\lambda\!\left(\frac{ps}{1-(1-p)s} - 1\right)\right] = \exp\!\left[\lambda \cdot \frac{ps - 1 + (1-p)s}{1-(1-p)s}\right]$$
+
+$$= \exp\!\left[\lambda \cdot \frac{s - 1}{1-(1-p)s}\right]$$
+
+**Moments:**
+
+$$E[S] = E[N] \cdot E[X] = \lambda \cdot \frac{1}{p} = \frac{\lambda}{p}$$
+
+$$\text{Var}(S) = \lambda \cdot \frac{1-p}{p^2} + \lambda \cdot \frac{1}{p^2} = \frac{\lambda(2-p)}{p^2}$$
+
+## Example: Compound Binomial
+
+Let $N \sim B(n, q)$ and $X_i \stackrel{\text{iid}}{\sim} \text{Bernoulli}(p)$, all independent. Then:
+
+$$G_S(s) = [1 - q + q(1 - p + ps)]^n = [1 - qp + qps]^n$$
+
+This is the PGF of $B(n, qp)$, so $S \sim B(n, qp)$. The compound binomial with Bernoulli summands collapses to a simple binomial.
+
+## Python Verification
 
 ```python
 import numpy as np
 
 np.random.seed(42)
-n_sim = 200_000
+n_sim = 100000
 
-lam = 10
-p = 0.5
+# Compound Poisson: N ~ Po(10), X_i ~ Geo(0.4)
+lam, p = 10.0, 0.4
 
-results = []
-for _ in range(n_sim):
+S = np.zeros(n_sim)
+for i in range(n_sim):
     N = np.random.poisson(lam)
     if N > 0:
-        claims = np.random.geometric(p, N)
-        results.append(claims.sum())
-    else:
-        results.append(0)
+        X = np.random.geometric(p, size=N)
+        S[i] = X.sum()
 
-S = np.array(results)
-EX = 1/p
-VarX = (1-p)/p**2
+EX = 1 / p
+VarX = (1 - p) / p**2
 
-print(f"E[S] = {S.mean():.2f}  (theory: {lam * EX:.1f})")
-print(f"Var(S) = {S.var():.1f}  (theory: {lam*VarX + EX**2*lam:.1f})")
+print("Compound Poisson: N ~ Po(10), X_i ~ Geo(0.4)")
+print(f"  E[S]   = {S.mean():.4f}  (exact: {lam * EX:.4f})")
+print(f"  Var(S) = {S.var():.4f}  (exact: {lam*VarX + lam*EX**2:.4f})")
 ```

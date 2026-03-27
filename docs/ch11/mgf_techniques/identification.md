@@ -1,57 +1,81 @@
 # Identifying Distributions via MGFs
 
-Compute the MGF, match it to a known form, and invoke uniqueness — the standard technique for proving distributional results without direct PMF/PDF computation.
+## The Strategy
 
-## Definition
+The MGF identification method has three steps:
 
-**Strategy.** To show $X$ has distribution $\mathcal{D}$:
+1. **Compute** the MGF of the random variable of interest (often a sum).
+2. **Recognize** the result as the MGF of a known distribution.
+3. **Conclude** by the uniqueness theorem that the two distributions are identical.
 
-1. Compute $M_X(t)$
-2. Show $M_X(t)$ equals the MGF of $\mathcal{D}$
-3. Conclude $X \sim \mathcal{D}$ by the uniqueness theorem
+This avoids working directly with convolutions or CDFs, which can be much harder.
 
-## Explanation
-
-### MGF Reference Table
+## MGF Reference Table
 
 | Distribution | MGF $M_X(t)$ | Domain |
-|:-------------|:-------------|:-------|
-| $\text{Bern}(p)$ | $q + pe^t$ | all $t$ |
-| $\text{Bin}(n, p)$ | $(q + pe^t)^n$ | all $t$ |
-| $\text{Pois}(\lambda)$ | $e^{\lambda(e^t-1)}$ | all $t$ |
-| $\text{Geo}(p)$ | $pe^t/(1-qe^t)$ | $t < -\ln q$ |
-| $\text{NB}(r, p)$ | $(pe^t/(1-qe^t))^r$ | $t < -\ln q$ |
-| $N(\mu, \sigma^2)$ | $e^{\mu t + \sigma^2 t^2/2}$ | all $t$ |
-| $\text{Exp}(\lambda)$ | $\lambda/(\lambda - t)$ | $t < \lambda$ |
-| $\text{Gamma}(\alpha, \lambda)$ | $(\lambda/(\lambda-t))^\alpha$ | $t < \lambda$ |
+|:---|:---:|:---:|
+| $\text{Bernoulli}(p)$ | $1 + p(e^t - 1)$ | all $t$ |
+| $B(n, p)$ | $[1 + p(e^t - 1)]^n$ | all $t$ |
+| $\text{Po}(\lambda)$ | $e^{\lambda(e^t - 1)}$ | all $t$ |
+| $\text{Geo}(p)$ | $\frac{pe^t}{1 - (1-p)e^t}$ | $t < -\ln(1-p)$ |
+| $\text{NB}(r, p)$ | $\left[\frac{pe^t}{1-(1-p)e^t}\right]^r$ | $t < -\ln(1-p)$ |
+| $\text{Exp}(\lambda)$ | $\frac{\lambda}{\lambda - t}$ | $t < \lambda$ |
+| $\text{Gamma}(\alpha, \lambda)$ | $\left(\frac{\lambda}{\lambda - t}\right)^\alpha$ | $t < \lambda$ |
+| $N(\mu, \sigma^2)$ | $e^{\mu t + \frac{1}{2}\sigma^2 t^2}$ | all $t$ |
 
-### Common Applications
+## Example: Sum of Independent Poissons
 
-- **Sum of independent RVs:** Multiply MGFs and identify the product
-- **Poisson limit theorem:** Show binomial MGF converges to Poisson MGF
-- **CLT:** Show standardized-sum MGF converges to $e^{t^2/2}$
-- **Chi-squared:** Sum of squared standard normals has $\text{Gamma}(n/2, 1/2)$ MGF
+Let $X \sim \text{Po}(\lambda)$ and $Y \sim \text{Po}(\mu)$ be independent.
 
-## Examples
+**Step 1.** Compute:
 
-**Example.** Let $X \sim \text{Pois}(\lambda_1)$ and $Y \sim \text{Pois}(\lambda_2)$ be independent. Then:
+$$M_{X+Y}(t) = e^{\lambda(e^t - 1)} \cdot e^{\mu(e^t - 1)} = e^{(\lambda + \mu)(e^t - 1)}$$
 
-$$
-M_{X+Y}(t) = e^{\lambda_1(e^t-1)}\,e^{\lambda_2(e^t-1)} = e^{(\lambda_1+\lambda_2)(e^t-1)}
-$$
+**Step 2.** Recognize: this is the MGF of $\text{Po}(\lambda + \mu)$.
 
-This is the MGF of $\text{Pois}(\lambda_1 + \lambda_2)$, so $X + Y \sim \text{Pois}(\lambda_1 + \lambda_2)$.
+**Step 3.** Conclude: $X + Y \sim \text{Po}(\lambda + \mu)$.
 
-```python
-import numpy as np
+## Example: Sum of Independent Normals
 
-np.random.seed(42)
-n_sim = 200_000
+Let $X \sim N(\mu_1, \sigma_1^2)$ and $Y \sim N(\mu_2, \sigma_2^2)$ be independent.
 
-X = np.random.poisson(3, n_sim)
-Y = np.random.poisson(7, n_sim)
-S = X + Y
+**Step 1.** Compute:
 
-print(f"Pois(3) + Pois(7): mean={S.mean():.3f}, var={S.var():.3f}")
-print(f"Theory Pois(10):   mean=10, var=10")
-```
+$$M_{X+Y}(t) = e^{\mu_1 t + \frac{1}{2}\sigma_1^2 t^2} \cdot e^{\mu_2 t + \frac{1}{2}\sigma_2^2 t^2} = e^{(\mu_1+\mu_2)t + \frac{1}{2}(\sigma_1^2 + \sigma_2^2)t^2}$$
+
+**Step 2.** Recognize: this is the MGF of $N(\mu_1 + \mu_2, \, \sigma_1^2 + \sigma_2^2)$.
+
+**Step 3.** Conclude: $X + Y \sim N(\mu_1 + \mu_2, \, \sigma_1^2 + \sigma_2^2)$.
+
+## Example: Sum of Independent Gammas (Same Rate)
+
+Let $X \sim \text{Gamma}(\alpha_1, \lambda)$ and $Y \sim \text{Gamma}(\alpha_2, \lambda)$ be independent.
+
+**Step 1.** Compute:
+
+$$M_{X+Y}(t) = \left(\frac{\lambda}{\lambda - t}\right)^{\alpha_1} \cdot \left(\frac{\lambda}{\lambda - t}\right)^{\alpha_2} = \left(\frac{\lambda}{\lambda - t}\right)^{\alpha_1 + \alpha_2}$$
+
+**Step 2.** Recognize: this is the MGF of $\text{Gamma}(\alpha_1 + \alpha_2, \lambda)$.
+
+**Step 3.** Conclude: $X + Y \sim \text{Gamma}(\alpha_1 + \alpha_2, \lambda)$.
+
+!!! warning "Same Rate Parameter Required"
+    The gamma additivity result requires the same rate $\lambda$. If $X \sim \text{Gamma}(\alpha_1, \lambda_1)$ and $Y \sim \text{Gamma}(\alpha_2, \lambda_2)$ with $\lambda_1 \neq \lambda_2$, the sum is **not** gamma-distributed.
+
+## Example: Sum of Independent Binomials (Same $p$)
+
+Let $X \sim B(n_1, p)$ and $Y \sim B(n_2, p)$ be independent.
+
+$$M_{X+Y}(t) = [1 + p(e^t - 1)]^{n_1} \cdot [1 + p(e^t - 1)]^{n_2} = [1 + p(e^t - 1)]^{n_1 + n_2}$$
+
+This is the MGF of $B(n_1 + n_2, p)$, so $X + Y \sim B(n_1 + n_2, p)$.
+
+## Summary of Closure Properties
+
+| Family | Condition | Result |
+|:---|:---|:---|
+| Poisson | independent | $\text{Po}(\lambda) + \text{Po}(\mu) = \text{Po}(\lambda + \mu)$ |
+| Normal | independent | $N(\mu_1, \sigma_1^2) + N(\mu_2, \sigma_2^2) = N(\mu_1+\mu_2, \sigma_1^2+\sigma_2^2)$ |
+| Gamma | independent, same $\lambda$ | $\text{Gamma}(\alpha_1, \lambda) + \text{Gamma}(\alpha_2, \lambda) = \text{Gamma}(\alpha_1+\alpha_2, \lambda)$ |
+| Binomial | independent, same $p$ | $B(n_1, p) + B(n_2, p) = B(n_1+n_2, p)$ |
+| NB | independent, same $p$ | $\text{NB}(r_1, p) + \text{NB}(r_2, p) = \text{NB}(r_1+r_2, p)$ |
