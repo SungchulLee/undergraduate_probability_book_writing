@@ -1,32 +1,37 @@
-# Chapter 16 Exercises
+# Exercises: Convolutions and Distributions of Sums
 
-!!! warning "Exercise page"
-    This page collects practice problems for Chapter 16 and does not follow the five-section structure used by concept pages.
+## Discrete Convolution
 
-Exercises on convolution: discrete and continuous convolution formulas, sums of standard distributions, and the Irwin-Hall distribution.
+**Exercise 16.1.** Let $X$ and $Y$ be independent, each uniform on $\{0, 1, 2\}$. Compute the PMF of $X + Y$ using the convolution formula and verify that the probabilities sum to 1.
 
-## Section 16.1 — Discrete Convolution
+**Exercise 16.2.** Let $X \sim \text{Bin}(3, 1/2)$ and $Y \sim \text{Bin}(2, 1/2)$ be independent. Use the convolution formula to compute $P(X + Y = 3)$.
 
-**Exercise 16.1.** Compute the PMF of $X + Y$ where $X \sim \operatorname{Bin}(3, 1/2)$ and $Y \sim \operatorname{Bin}(2, 1/2)$ are independent, using the convolution formula. Verify that the result is $\operatorname{Bin}(5, 1/2)$.
+*Hint: Sum over all valid values of $X$.*
 
-**Exercise 16.2.** Let $X$ and $Y$ be independent with $P(X = k) = 1/3$ for $k \in \{0, 1, 2\}$ and $P(Y = 0) = P(Y = 1) = 1/2$. Find the PMF of $X + Y$.
+**Exercise 16.3.** If $X \sim \text{Po}(2)$ and $Y \sim \text{Po}(3)$ are independent, find $P(X + Y = 4)$ in two ways: (a) by direct convolution of the Poisson PMFs, and (b) by recognizing $X + Y \sim \text{Po}(5)$.
 
-**Exercise 16.3.** Use `np.convolve` to compute the PMF of the sum of three fair dice. What is the most likely sum?
+## Continuous Convolution
 
-## Section 16.2 — Continuous Convolution
+**Exercise 16.4.** Let $X$ and $Y$ be independent $\text{Exp}(1)$ random variables. Compute the PDF of $X + Y$ using the convolution integral and verify that the result matches $\Gamma(2, 1)$.
 
-**Exercise 16.4.** Compute the convolution $f_{X+Y}$ where $X \sim U(0, 1)$ and $Y \sim U(0, 2)$ are independent. Carefully determine the integration limits for each piece.
+**Exercise 16.5.** Let $X \sim U(0, 1)$ and $Y \sim U(0, 2)$ be independent. Compute $f_{X+Y}(a)$ for all $a \geq 0$.
 
-**Exercise 16.5.** If $X \sim \operatorname{Exp}(1)$ and $Y \sim \operatorname{Exp}(2)$ are independent, compute $f_{X+Y}(a)$ for $a > 0$ and verify it is a hypoexponential density.
+*Hint: Determine the integration limits by intersecting the supports $0 \leq b \leq 1$ and $0 \leq a - b \leq 2$. Consider the cases $0 \leq a \leq 1$, $1 < a \leq 2$, and $2 < a \leq 3$ separately.*
 
-**Exercise 16.6.** Prove commutativity of continuous convolution: $f_X * f_Y = f_Y * f_X$.
+## Identifying Distributions via Convolution
 
-## Section 16.3 — Sums of Standard Distributions
+**Exercise 16.6.** A random variable $W$ has MGF $M_W(t) = (1 - 2t)^{-5}$ for $t < 1/2$. Identify the distribution of $W$. If $W = V_1 + V_2$ where $V_1 \sim \chi^2_3$ and $V_2 \sim \chi^2_7$, explain why this contradicts the MGF.
 
-**Exercise 16.7.** Show that $\operatorname{Pois}(\lambda_1) * \operatorname{Pois}(\lambda_2) = \operatorname{Pois}(\lambda_1 + \lambda_2)$ using MGFs.
+**Exercise 16.7.** Let $X_1, \ldots, X_n$ be iid $\text{Exp}(\lambda)$. Use the MGF of $S_n = \sum_{i=1}^n X_i$ to show that $S_n \sim \Gamma(n, \lambda)$. Compute $E[S_n]$ and $\text{Var}(S_n)$.
 
-**Exercise 16.8.** If $X_1, \ldots, X_{10}$ are iid $\operatorname{Exp}(3)$, find $P(S_{10} > 5)$ where $S_{10} = \sum X_i$.
+## Sum of Normals
 
-**Exercise 16.9.** Let $X_1, \ldots, X_n$ be iid $N(\mu, \sigma^2)$. Show that $\bar{X} \sim N(\mu, \sigma^2/n)$ using the MGF of a sum.
+**Exercise 16.8.** Let $X_1, \ldots, X_4$ be independent with $X_i \sim N(i, i^2)$. Find the exact distribution of $S = X_1 + X_2 + X_3 + X_4$.
 
-**Exercise 16.10.** Write a simulation comparing the Irwin-Hall PDF for $n = 3, 6, 12$ with the corresponding normal approximation.
+**Exercise 16.9.** Suppose $X \sim N(3, 4)$ and $Y \sim N(-1, 9)$ are independent. Find $P(X + Y > 5)$.
+
+*Hint: First identify the distribution of $X + Y$, then standardize.*
+
+## Conceptual
+
+**Exercise 16.10.** Give an example showing that convolution does **not** give the correct distribution of $X + Y$ when $X$ and $Y$ are dependent. Specifically, let $X \sim U(0, 1)$ and $Y = X$. Find the distribution of $X + Y$ and show it differs from the triangular distribution obtained by convolving $U(0,1)$ with itself.

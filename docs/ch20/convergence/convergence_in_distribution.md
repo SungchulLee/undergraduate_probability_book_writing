@@ -1,48 +1,52 @@
-# Convergence in Distribution
-
-The weakest mode of convergence — CDFs converge pointwise — is all the CLT provides, yet it suffices for normal approximation.
+# Convergence in Distribution (Review from Ch 17)
 
 ## Definition
 
-$X_n \xrightarrow{d} X$ if:
+A sequence of random variables $X_1, X_2, \ldots$ **converges in distribution** to a random variable $X$ if
 
 $$
 \lim_{n \to \infty} F_{X_n}(x) = F_X(x)
 $$
 
-at every $x$ where $F_X$ is continuous.
+at every point $x$ where $F_X$ is continuous. We write $X_n \xrightarrow{d} X$.
 
-## Explanation
+## Why Review This Here?
 
-### What It Says
+Convergence in distribution was introduced in Chapter 17 as the language for the Central Limit Theorem. In this chapter, we place it alongside two stronger notions -- convergence in probability and almost sure convergence -- to understand where the CLT and the Law of Large Numbers fit in the hierarchy.
 
-The histograms of $X_n$ approach the density of $X$. This makes no claim about the random variables being on the same probability space — only the **distributions** must match.
+## Key Properties
 
-### CLT as the Key Example
+Convergence in distribution is the **weakest** of the three modes. It concerns only the **CDFs** of the random variables, not the random variables themselves. Two sequences can converge in distribution to the same limit even if they are defined on entirely different probability spaces.
+
+!!! info "Equivalent Characterization"
+    $X_n \xrightarrow{d} X$ if and only if $E[g(X_n)] \to E[g(X)]$ for every bounded continuous function $g$.
+
+## The CLT as an Example
+
+The Central Limit Theorem (Chapter 17) is the most important example of convergence in distribution:
 
 $$
 \frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} \xrightarrow{d} N(0,1)
 $$
 
-This tells us the shape of the distribution approaches the standard normal, but does not say the sample mean itself converges to any single value. That requires the LLN.
+This tells us the **shape** of the distribution of the standardized sample mean approaches the standard normal bell curve. It does not tell us that the sample mean converges to any particular value -- the limit $N(0,1)$ is not a constant.
 
-### MGF Characterization
+## Special Case: Convergence to a Constant
 
-If $M_{X_n}(t) \to M_X(t)$ for all $t$ in a neighborhood of 0, then $X_n \xrightarrow{d} X$ (continuity theorem).
+When the limit is a **constant** $c$ (i.e., $F_X$ is a step function jumping from 0 to 1 at $x = c$), convergence in distribution becomes equivalent to convergence in probability:
 
-## Examples
+$$
+X_n \xrightarrow{d} c \iff X_n \xrightarrow{p} c
+$$
 
-**Example.** Uniform on $\{1/n, 2/n, \ldots, 1\}$ converges in distribution to $U(0,1)$.
+This special case is crucial because the Law of Large Numbers states $\bar{X}_n \to \mu$, where $\mu$ is a constant. Thus there is no gap between the WLLN (convergence in probability) and saying the CDF of $\bar{X}_n$ collapses to a point mass at $\mu$.
 
-```python
-import numpy as np
-from scipy import stats
+## Relationship to Other Modes
 
-np.random.seed(42)
-n_sim = 100_000
+Both convergence in probability and almost sure convergence imply convergence in distribution:
 
-for n in [10, 100, 1000]:
-    X = np.random.choice(np.arange(1, n+1) / n, n_sim)
-    ks_stat, p_val = stats.kstest(X, 'uniform')
-    print(f"n={n:5d}: KS stat={ks_stat:.4f}, p-value={p_val:.4f}")
-```
+$$
+X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{p} X \implies X_n \xrightarrow{d} X
+$$
+
+The reverse implications fail in general (see the section on relationships between modes of convergence).

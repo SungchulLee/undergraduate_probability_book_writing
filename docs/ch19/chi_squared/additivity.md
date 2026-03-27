@@ -1,69 +1,63 @@
 # Additivity of Chi-Squared
 
-Independent chi-squared random variables add: the sum is again chi-squared with degrees of freedom equal to the sum of the individual degrees of freedom. This property is central to the decomposition of sums of squares in ANOVA and regression.
+## Motivation
 
-## Definition
+The chi-squared distribution arises as a sum of squared standard normals. A natural question is: what happens when we add two independent chi-squared random variables? Additivity -- the fact that degrees of freedom simply add -- is the key property that makes Cochran's decomposition and analysis of variance work.
 
-If $V_1 \sim \chi^2_{d_1}$ and $V_2 \sim \chi^2_{d_2}$ are independent, then:
+## Statement
 
-$$
-V_1 + V_2 \sim \chi^2_{d_1 + d_2}
-$$
+!!! info "Additivity"
+    If $V_1 \sim \chi^2_{d_1}$ and $V_2 \sim \chi^2_{d_2}$ are **independent**, then
 
-More generally, for independent $V_i \sim \chi^2_{d_i}$, $i = 1, \ldots, k$:
+    $$V_1 + V_2 \sim \chi^2_{d_1 + d_2}$$
 
-$$
-\sum_{i=1}^k V_i \sim \chi^2_{d_1 + \cdots + d_k}
-$$
+## Proof via Gamma Additivity
 
-## Explanation
-
-### Proof via moment generating functions
-
-Using the MGF of the chi-squared and independence:
+Since $\chi^2_{d} \sim \Gamma(d/2, 1/2)$, and independent Gamma random variables with the **same rate** are additive:
 
 $$
-\varphi_{V_1+V_2}(t) = (1-2t)^{-d_1/2} \cdot (1-2t)^{-d_2/2} = (1-2t)^{-(d_1+d_2)/2}
+V_1 + V_2 \sim \Gamma\!\left(\frac{d_1}{2}, \frac{1}{2}\right) + \Gamma\!\left(\frac{d_2}{2}, \frac{1}{2}\right) = \Gamma\!\left(\frac{d_1 + d_2}{2}, \frac{1}{2}\right) \sim \chi^2_{d_1 + d_2}
 $$
 
-This is the MGF of $\chi^2_{d_1+d_2}$, so the result follows by uniqueness.
+where the addition denotes convolution of independent random variables (Chapter 16).
 
-### Proof via Gamma additivity
+## Proof via MGFs
 
-Since $\chi^2_{d_i} \sim \operatorname{Gamma}(d_i/2, 1/2)$ and independent Gamma random variables with a common rate add in the shape parameter:
-
-$$
-V_1 + V_2 \sim \operatorname{Gamma}\!\left(\frac{d_1+d_2}{2},\; \frac{1}{2}\right) = \chi^2_{d_1+d_2}
-$$
-
-### Application: Cochran's decomposition
-
-Additivity used in reverse yields the key identity:
+By independence, $M_{V_1+V_2}(t) = M_{V_1}(t) \cdot M_{V_2}(t)$. Using the chi-squared MGF:
 
 $$
-\underbrace{\sum_{i=1}^n \left(\frac{X_i - \mu}{\sigma}\right)^2}_{\chi^2_n} = \underbrace{\sum_{i=1}^n \left(\frac{X_i - \bar{X}}{\sigma}\right)^2}_{\chi^2_{n-1}} + \underbrace{\left(\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}\right)^2}_{\chi^2_1}
+M_{V_1+V_2}(t) = (1-2t)^{-d_1/2} \cdot (1-2t)^{-d_2/2} = (1-2t)^{-(d_1+d_2)/2}
 $$
 
-If the two right-hand terms are independent, the MGF factorization forces the first term to be $\chi^2_{n-1}$.
+This is the MGF of $\chi^2_{d_1+d_2}$. By the uniqueness theorem, $V_1 + V_2 \sim \chi^2_{d_1+d_2}$.
 
-## Examples
+## General Case
 
-**Example 1.** Verify additivity: generate independent $\chi^2_3$ and $\chi^2_7$ samples and test that their sum is $\chi^2_{10}$.
+For mutually independent $V_i \sim \chi^2_{d_i}$, $i = 1, \ldots, k$:
 
-```python
-import numpy as np
-from scipy import stats
+$$
+\sum_{i=1}^k V_i \sim \chi^2_{d_1 + d_2 + \cdots + d_k}
+$$
 
-np.random.seed(42)
-n_sim = 200_000
+This is consistent with the definition: each $V_i$ is a sum of $d_i$ independent squared standard normals, so the total is a sum of $d_1 + \cdots + d_k$ independent squared standard normals.
 
-v1 = np.random.chisquare(3, n_sim)
-v2 = np.random.chisquare(7, n_sim)
-total = v1 + v2
+??? example "Numerical Example"
+    Let $V_1 \sim \chi^2_3$ and $V_2 \sim \chi^2_7$ be independent. Then $V_1 + V_2 \sim \chi^2_{10}$.
 
-print(f"Mean: {total.mean():.3f}  (theory: 10)")
-print(f"Var:  {total.var():.3f}  (theory: 20)")
+    - $E[V_1 + V_2] = 3 + 7 = 10$
+    - $\text{Var}(V_1 + V_2) = 2(3) + 2(7) = 20$
 
-stat, pval = stats.kstest(total, 'chi2', args=(10,))
-print(f"KS test p-value: {pval:.4f}")
-```
+    These match the chi-squared formulas: $E[\chi^2_d] = d$ and $\text{Var}(\chi^2_d) = 2d$.
+
+## Application: Cochran's Decomposition
+
+A key application uses additivity **in reverse**. For $X_1, \ldots, X_n$ iid $N(\mu, \sigma^2)$:
+
+$$
+\underbrace{\sum_{i=1}^n \left(\frac{X_i - \mu}{\sigma}\right)^2}_{\chi^2_n} = \underbrace{\sum_{i=1}^n \left(\frac{X_i - \bar{X}}{\sigma}\right)^2}_{?} + \underbrace{\left(\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}\right)^2}_{\chi^2_1}
+$$
+
+The left side has $n$ degrees of freedom and the last term has 1. If the two right-hand terms are independent, then by the MGF factorization, the first term must be $\chi^2_{n-1}$. This is proved in the section on the distribution of the sample variance.
+
+!!! warning "Independence Is Essential"
+    Additivity requires independence. If $V_1$ and $V_2$ are dependent chi-squared random variables, then $V_1 + V_2$ is generally **not** chi-squared.

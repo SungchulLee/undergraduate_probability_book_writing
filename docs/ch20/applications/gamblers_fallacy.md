@@ -1,45 +1,48 @@
 # Gambler's Fallacy
 
-The mistaken belief that random outcomes must "balance out" confuses the LLN's dilution mechanism with a nonexistent compensating force.
+## The Fallacy
 
-## Definition
+The **gambler's fallacy** is the mistaken belief that if a random event has occurred more frequently than expected in the past, it is less likely to occur in the future (or vice versa), as if the process has a "memory" and needs to "balance out."
 
-The **gambler's fallacy** is the erroneous belief that if a random event has occurred more frequently than expected, it becomes less likely in the future — as if the process has memory.
+**Example.** After flipping 10 heads in a row, someone believes tails is "due." But if the coin is fair, $P(\text{heads}) = 0.5$ on the next flip regardless of history. The coin has no memory.
 
-## Explanation
+## What the LLN Actually Says
 
-### What the LLN Actually Says
-
-The LLN says $\bar{X}_n \to \mu$ through **dilution**: past deviations become negligible relative to the growing number of observations. It does **not** say future outcomes compensate for past ones.
-
-After 10 heads in a row: $\bar{X}_{10} = 1.0$. The LLN predicts convergence to 0.5 because:
+The Law of Large Numbers states that
 
 $$
-\bar{X}_n = \frac{10 + \text{(future heads in next } n-10 \text{ flips)}}{n} \to 0.5
+\bar{X}_n = \frac{S_n}{n} \xrightarrow{a.s.} \mu
 $$
 
-The fixed excess of 10 is diluted by $n$, not corrected by biased future flips.
+This convergence happens because **new observations dilute the effect of past deviations**, not because future outcomes compensate for past ones.
 
-### The Key Distinction
+After 10 heads in a row ($S_{10} = 10$, so $\bar{X}_{10} = 1.0$), the SLLN predicts convergence to 0.5 through dilution:
 
-| | Gambler's fallacy | LLN |
-|:---|:---|:---|
-| Mechanism | Future compensates for past | New data dilutes past |
-| Independence | Violated | Maintained |
-| Next flip after 10H | "Tails is due" | Still 50-50 |
+$$
+\frac{S_{10} + S_{11:n}}{n} = \frac{10 + S_{11:n}}{n} \xrightarrow{a.s.} 0.5
+$$
 
-## Examples
+where $S_{11:n} = X_{11} + \cdots + X_n$ is the sum of **future** flips. The fixed excess of 10 becomes negligible as $n \to \infty$, but the future coins are still fair and independent.
 
-**Example.** After a streak, the coin is still fair.
+??? example "A Concrete Calculation"
+    After 10 heads in a row, the sample mean is $\bar{X}_{10} = 1.0$. After $n = 1{,}000$ additional fair flips, we expect about 500 heads and 500 tails among the new flips. The total is then approximately $510$ heads in $1{,}010$ flips, giving $\bar{X}_{1010} \approx 0.505$. After $n = 100{,}000$ additional flips, $\bar{X}_{100{,}010} \approx 0.50005$. The initial excess is swamped, with no compensation required.
 
-```python
-import numpy as np
+## The Distinction
 
-np.random.seed(42)
-n_sim = 100_000
+| | Gambler's Fallacy | Law of Large Numbers |
+|---|---|---|
+| Mechanism | Future compensates for past | New data dilutes past deviations |
+| Independence | Falsely assumes dependence | Each trial is independent |
+| Prediction | Next flip more likely tails | Next flip is still 50-50 |
 
-# After 10 heads, what fraction of next 1000 flips are heads?
-next_1000 = np.random.binomial(1000, 0.5, n_sim)
-print(f"Mean heads in next 1000 (after 10H streak): {next_1000.mean():.2f}")
-print(f"This is 50%, confirming independence")
-```
+!!! warning "The Fallacy in Both Directions"
+    The gambler's fallacy works in reverse too. After a run of losses, a gambler may believe a win is "due," and after a run of wins, they may believe they are on a "hot streak." Both beliefs are incorrect for independent trials: past outcomes carry no information about future ones.
+
+## Connection to the iid Assumption
+
+The mathematical root of the fallacy lies in confusing two statements:
+
+1. **True**: $\bar{X}_n \to \mu$ as $n \to \infty$ (the LLN)
+2. **False**: Future outcomes adjust to correct past deviations
+
+Statement 1 holds because the ratio $S_n / n$ has the excess in the numerator but $n$ grows in the denominator. Statement 2 would require the future $X_i$ to depend on the past, violating the iid assumption.

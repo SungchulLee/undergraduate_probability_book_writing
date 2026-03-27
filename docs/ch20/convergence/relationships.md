@@ -1,48 +1,63 @@
-# Relationships Between Convergence Modes
+# Relationships Between Modes of Convergence
 
-Almost sure convergence implies convergence in probability, which implies convergence in distribution — a strict hierarchy with no reverse implications in general.
+## Hierarchy of Convergence
 
-## Definition
-
-The implication chain:
+The three modes of convergence satisfy the following implications:
 
 $$
 X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{p} X \implies X_n \xrightarrow{d} X
 $$
 
-**Special case**: $X_n \xrightarrow{d} c \iff X_n \xrightarrow{p} c$ when the limit is a constant.
+None of the reverse implications hold in general.
 
-## Explanation
+## Why a.s. Implies in Probability
 
-### Summary Table
+If $P(\lim X_n = X) = 1$, then for any $\varepsilon > 0$, the set of outcomes where $|X_n - X| > \varepsilon$ must shrink. More precisely, almost sure convergence implies that the "bad" events $\{|X_n - X| > \varepsilon\}$ can only occur finitely often (with probability 1), so their probabilities must tend to zero:
 
-| Mode | Notation | What converges |
-|:---|:---:|:---|
-| Almost sure | $X_n \xrightarrow{a.s.} X$ | Sample paths (with prob. 1) |
-| In probability | $X_n \xrightarrow{p} X$ | Tail probabilities to 0 |
-| In distribution | $X_n \xrightarrow{d} X$ | CDFs pointwise |
+$$
+P(|X_n - X| > \varepsilon) \to 0
+$$
 
-### Why Reverse Fails
+which is convergence in probability.
 
-The **typewriter sequence** gives convergence in probability but not a.s.: indicators of intervals cycling through $[0,1]$ with shrinking width satisfy $X_n \xrightarrow{p} 0$, but $X_n(\omega) = 1$ infinitely often for every $\omega$.
+## Why in Probability Implies in Distribution
 
-### Constant Limit Exception
+If $P(|X_n - X| > \varepsilon) \to 0$ for all $\varepsilon > 0$, then for any continuity point $x$ of $F_X$, one can show that $F_{X_n}(x) \to F_X(x)$ by bounding the CDF difference in terms of the deviation probability.
 
-When $X_n \xrightarrow{d} c$ (a constant), the CDF of the limit is a step function, and convergence of CDFs forces $P(\lvert X_n - c \rvert > \varepsilon) \to 0$.
+## Reverse Implications Fail
 
-## Examples
+??? example "Convergence in Probability but Not Almost Surely"
+    Let $\Omega = [0,1]$ with the uniform distribution. Define $X_n = \mathbf{1}_{I_n}$ where the intervals $I_n$ cycle through $[0,1]$ with shrinking length: $I_1 = [0,1]$, $I_2 = [0,1/2]$, $I_3 = [1/2,1]$, $I_4 = [0,1/3]$, $I_5 = [1/3,2/3]$, $I_6 = [2/3,1]$, and so on.
 
-**Example.** The LLN gives $\bar{X}_n \xrightarrow{p} \mu$ (constant limit), so convergence in distribution also holds.
+    Then $P(X_n = 1) \to 0$, so $X_n \xrightarrow{p} 0$. But for every $\omega \in [0,1]$, the sequence $X_n(\omega)$ takes the value 1 infinitely often, so $X_n(\omega) \not\to 0$ for any $\omega$. Thus $X_n$ does **not** converge almost surely.
 
-```python
-import numpy as np
+??? example "Convergence in Distribution but Not in Probability"
+    Let $X \sim N(0,1)$ and define $X_n = -X$ for all $n$. Then $X_n \sim N(0,1)$ for every $n$, so $X_n \xrightarrow{d} X$. But $|X_n - X| = 2|X|$, so $P(|X_n - X| > \varepsilon) = P(2|X| > \varepsilon) > 0$ for all $\varepsilon > 0$ and all $n$. Thus $X_n$ does **not** converge to $X$ in probability.
 
-np.random.seed(42)
-n_sim = 50_000
+## Special Case: Convergence to a Constant
 
-# Demonstrate all three modes for sample mean
-for n in [50, 500, 5000]:
-    means = np.random.exponential(1.0, (n_sim, n)).mean(axis=1)
-    p_dev = np.mean(np.abs(means - 1.0) > 0.05)
-    print(f"n={n:5d}: P(|X̄-1|>0.05) = {p_dev:.4f}")
-```
+When the limit is a **constant** $c$, convergence in distribution and convergence in probability are equivalent:
+
+$$
+X_n \xrightarrow{d} c \iff X_n \xrightarrow{p} c
+$$
+
+This is particularly important because the Law of Large Numbers asserts convergence to the constant $\mu$.
+
+## Summary Table
+
+| Mode | Notation | Definition |
+|------|----------|------------|
+| Almost sure (strong) | $X_n \xrightarrow{a.s.} X$ | $P(\lim X_n = X) = 1$ |
+| In probability (weak) | $X_n \xrightarrow{p} X$ | $P(\|X_n - X\| > \varepsilon) \to 0$ for all $\varepsilon > 0$ |
+| In distribution | $X_n \xrightarrow{d} X$ | $F_{X_n}(x) \to F_X(x)$ at continuity points |
+
+## Where Each Mode Appears
+
+| Theorem | Mode of Convergence |
+|---------|---------------------|
+| Central Limit Theorem | In distribution |
+| Weak Law of Large Numbers | In probability |
+| Strong Law of Large Numbers | Almost sure |
+
+Each successive theorem makes a stronger claim about how the sample mean behaves.
