@@ -1,50 +1,99 @@
 # Merging and Splitting of Poisson Processes
 
-Merging independent Poisson processes yields a Poisson process; splitting one by random classification yields independent Poisson processes.
+## Merging (Superposition)
 
-## Definition
+When two independent Poisson processes are combined, the result is again a Poisson process.
 
-**Merging.** If $\{N_1(t)\}$ and $\{N_2(t)\}$ are independent Poisson processes with rates $\lambda_1$ and $\lambda_2$, then $\{N_1(t) + N_2(t)\}$ is Poisson with rate $\lambda_1 + \lambda_2$.
+!!! info "Merging Theorem"
+    Let $\{N_1(t)\}$ and $\{N_2(t)\}$ be independent Poisson processes with rates $\lambda_1$ and $\lambda_2$. Then the **merged process** $\{N(t)\} = \{N_1(t) + N_2(t)\}$ is a Poisson process with rate $\lambda_1 + \lambda_2$.
 
-**Splitting (Thinning).** If $\{N(t)\}$ is Poisson with rate $\lambda$, and each event is independently classified as type A (probability $p$) or type B (probability $1 - p$), then:
+**Proof.** We verify the three axioms for $N(t) = N_1(t) + N_2(t)$:
 
-- Type A events form a Poisson process with rate $\lambda p$
-- Type B events form a Poisson process with rate $\lambda(1-p)$
-- The two processes are **independent**
+1. $N(0) = N_1(0) + N_2(0) = 0$
 
-## Explanation
+2. **Independent increments**: For disjoint intervals, $N_1$ and $N_2$ each have independent increments, and the two processes are independent of each other. Therefore the increments of the sum are also independent.
 
-### Why Merging Works
+3. **Poisson distribution**: For any interval of length $t$, the increment $N(s, s+t) = N_1(s, s+t) + N_2(s, s+t)$ is the sum of independent Poisson random variables:
 
-Events from both processes in $(s, s+h]$ form a count $N_1(s,s+h) + N_2(s,s+h) \sim \text{Pois}(\lambda_1 h) + \text{Pois}(\lambda_2 h) = \text{Pois}((\lambda_1+\lambda_2)h)$ by additivity. Independent increments are preserved.
+$$
+N_1(s, s+t) \sim \text{Po}(\lambda_1 t), \quad N_2(s, s+t) \sim \text{Po}(\lambda_2 t)
+$$
 
-### Why Splitting Works
+By the additivity of independent Poisson random variables (Chapter 12):
 
-Conditioning on $N(t) = n$: the number of type A events is $\text{Bin}(n, p)$. Since $N(t) \sim \text{Pois}(\lambda t)$, the type A count is $\text{Pois}(\lambda p t)$ (compound Poisson argument). Independence of the two subprocesses follows from the "chicken-egg" relationship with Poisson and binomial.
+$$
+N(s, s+t) \sim \text{Po}(\lambda_1 t + \lambda_2 t) = \text{Po}((\lambda_1 + \lambda_2) t) \qquad \blacksquare
+$$
 
-### Generalization
+**Generalization.** If $N_1, N_2, \ldots, N_m$ are independent Poisson processes with rates $\lambda_1, \ldots, \lambda_m$, then their superposition is a Poisson process with rate $\lambda_1 + \cdots + \lambda_m$.
 
-Splitting into $k$ types with probabilities $p_1, \ldots, p_k$ ($\sum p_i = 1$) produces $k$ independent Poisson processes with rates $\lambda p_1, \ldots, \lambda p_k$.
+---
+
+## Splitting (Thinning)
+
+The reverse operation is **splitting** (also called **thinning**): each event in a Poisson process is independently classified into one of several types.
+
+!!! info "Splitting Theorem"
+    Let $\{N(t)\}$ be a Poisson process with rate $\lambda$. Suppose each event is independently classified as Type 1 with probability $p$ and Type 2 with probability $q = 1 - p$. Let $N_1(t)$ and $N_2(t)$ count the Type 1 and Type 2 events respectively. Then:
+
+    1. $\{N_1(t)\}$ is a Poisson process with rate $p\lambda$
+    2. $\{N_2(t)\}$ is a Poisson process with rate $q\lambda$
+    3. $\{N_1(t)\}$ and $\{N_2(t)\}$ are **independent**
+
+**Proof sketch.** Consider any interval of length $t$. Conditional on $N(t) = n$, each of the $n$ events is independently Type 1 with probability $p$, so $N_1(t) \mid N(t) = n \sim B(n, p)$. Then:
+
+$$
+P(N_1(t) = k) = \sum_{n=k}^{\infty} \binom{n}{k} p^k q^{n-k} \cdot \frac{e^{-\lambda t}(\lambda t)^n}{n!}
+$$
+
+$$
+= \frac{e^{-\lambda t}(p\lambda t)^k}{k!} \sum_{n=k}^{\infty} \frac{(q\lambda t)^{n-k}}{(n-k)!}
+= \frac{e^{-\lambda t}(p\lambda t)^k}{k!} \cdot e^{q\lambda t}
+= \frac{e^{-p\lambda t}(p\lambda t)^k}{k!}
+$$
+
+So $N_1(t) \sim \text{Po}(p\lambda t)$. Similarly, $N_2(t) \sim \text{Po}(q\lambda t)$. Independence of $N_1$ and $N_2$ follows from a similar joint calculation. $\blacksquare$
+
+---
+
+## Generalization: Multi-Way Splitting
+
+Each event can be classified into $m$ types with probabilities $p_1, p_2, \ldots, p_m$ (where $\sum p_i = 1$). The resulting processes $N_1, N_2, \ldots, N_m$ are:
+
+- Independent Poisson processes
+- With rates $p_1 \lambda, p_2 \lambda, \ldots, p_m \lambda$
+
+This follows by applying the two-way splitting theorem repeatedly, or by a direct multinomial argument.
+
+---
 
 ## Examples
 
-**Example.** Customers arrive at rate 20/hour. 30% buy product A, 70% buy product B.
+??? example "Hospital Emergency Room"
+    Patients arrive at an ER as a Poisson process with rate $\lambda = 10$ per hour. Each patient is independently classified as:
 
-```python
-import numpy as np
+    - Critical (probability 0.1): rate $= 0.1 \times 10 = 1$ per hour
+    - Urgent (probability 0.3): rate $= 0.3 \times 10 = 3$ per hour
+    - Non-urgent (probability 0.6): rate $= 0.6 \times 10 = 6$ per hour
 
-np.random.seed(42)
-lam = 20
-p = 0.3
-n_sim = 100_000
+    The three streams are independent Poisson processes. The probability of no critical patients in a 2-hour shift is:
 
-# Splitting
-N_total = np.random.poisson(lam, n_sim)
-N_A = np.random.binomial(N_total, p)
-N_B = N_total - N_A
+    $$
+    P(N_{\text{crit}}(2) = 0) = e^{-1 \times 2} = e^{-2} \approx 0.1353
+    $$
 
-print(f"Total: mean={N_total.mean():.2f}  (theory: {lam})")
-print(f"Type A: mean={N_A.mean():.2f}  (theory: {lam*p})")
-print(f"Type B: mean={N_B.mean():.2f}  (theory: {lam*(1-p)})")
-print(f"Corr(A,B) = {np.corrcoef(N_A, N_B)[0,1]:.4f}  (theory: 0)")
-```
+??? example "Network Traffic"
+    Two independent servers generate requests at rates $\lambda_1 = 20$ and $\lambda_2 = 30$ per second. By merging, the total traffic to a load balancer is a Poisson process with rate $50$ per second.
+
+    The probability of more than 60 requests in 1 second is $P(N(1) > 60)$ where $N(1) \sim \text{Po}(50)$.
+
+---
+
+## Summary
+
+| Operation | Input | Output |
+|:---|:---|:---|
+| Merging | Independent $\text{PP}(\lambda_1)$ and $\text{PP}(\lambda_2)$ | $\text{PP}(\lambda_1 + \lambda_2)$ |
+| Splitting (prob $p$) | $\text{PP}(\lambda)$ | Independent $\text{PP}(p\lambda)$ and $\text{PP}((1-p)\lambda)$ |
+
+Merging and splitting are inverses of each other, and both preserve the Poisson process structure. These operations make the Poisson process a natural building block for modeling complex systems composed of multiple independent streams.

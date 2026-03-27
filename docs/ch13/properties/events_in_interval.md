@@ -1,68 +1,125 @@
 # Number of Events in an Interval
 
-The count of Poisson process events in any interval of length $h$ follows $\text{Pois}(\lambda h)$, regardless of when the interval starts.
+## The Fundamental Property
 
-## Definition
+The defining property of a Poisson process with rate $\lambda$ is that the number of events in any interval of length $t$ follows a Poisson distribution.
 
-For a Poisson process with rate $\lambda$, the number of events in any interval $(s, s+h]$ is
+!!! info "Events in an Interval"
+    If $\{N(t)\}$ is a Poisson process with rate $\lambda$, then for any $s \geq 0$ and $t > 0$:
 
-$$
-N(s, s+h) = N(s+h) - N(s) \sim \text{Pois}(\lambda h)
-$$
+    $$
+    N(s, s+t) \sim \text{Po}(\lambda t)
+    $$
 
-This depends only on the length $h$, not the starting point $s$.
+    with PMF
 
-## Explanation
+    $$
+    P(N(s, s+t) = k) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}, \quad k = 0, 1, 2, \ldots
+    $$
 
-### Moments
+Note that the distribution depends only on the **length** $t$ of the interval, not on the starting time $s$. This is the stationarity property at work.
 
-$$
-E[N(s, s+h)] = \lambda h, \qquad \text{Var}(N(s, s+h)) = \lambda h
-$$
+---
 
-### Tail Probabilities
+## Derivation from the Infinitesimal Conditions
 
-For large $\lambda h$, the normal approximation applies:
+Starting from the infinitesimal characterization, let $P_k(t) = P(N(t) = k)$. Consider what happens in the interval $(t, t+h]$:
 
-$$
-P(N(t) > k) \approx P\!\left(Z > \frac{k - \lambda t}{\sqrt{\lambda t}}\right)
-$$
-
-### Multiple Intervals
-
-The counts in disjoint intervals are independent Poisson random variables. For intervals $I_1, I_2, \ldots, I_m$ of lengths $h_1, \ldots, h_m$:
+**Case $k = 0$:** No events in $[0, t+h]$ requires no events in $[0, t]$ and none in $(t, t+h]$:
 
 $$
-N(I_1), N(I_2), \ldots, N(I_m) \text{ are independent with } N(I_k) \sim \text{Pois}(\lambda h_k)
+P_0(t+h) = P_0(t)\bigl[1 - \lambda h + o(h)\bigr]
 $$
 
-## Examples
+Rearranging: $\frac{P_0(t+h) - P_0(t)}{h} = -\lambda P_0(t) + o(1)$. Taking $h \to 0$:
 
-**Example.** Calls arrive at rate 10/hour. Count in the first 30 min: $\text{Pois}(5)$. Count in the next 2 hours: $\text{Pois}(20)$. Independent.
+$$
+P_0'(t) = -\lambda P_0(t), \quad P_0(0) = 1
+$$
 
-```python
-import numpy as np
-from scipy.stats import poisson
+The solution is $P_0(t) = e^{-\lambda t}$.
 
-np.random.seed(42)
-lam = 10  # per hour
-n_sim = 100_000
+**Case $k \geq 1$:** Exactly $k$ events in $[0, t+h]$ can happen as $k$ events in $[0, t]$ and none in $(t, t+h]$, or $k-1$ events in $[0, t]$ and one in $(t, t+h]$:
 
-# Simulate and count in [0, 0.5] and [0.5, 2.5]
-count1, count2 = [], []
-for _ in range(n_sim):
-    arrivals = []
-    t = 0
-    while t < 2.5:
-        t += np.random.exponential(1/lam)
-        if t < 2.5:
-            arrivals.append(t)
-    arr = np.array(arrivals)
-    count1.append(np.sum(arr <= 0.5))
-    count2.append(np.sum((arr > 0.5) & (arr <= 2.5)))
+$$
+P_k(t+h) = P_k(t)(1 - \lambda h) + P_{k-1}(t) \cdot \lambda h + o(h)
+$$
 
-c1, c2 = np.array(count1), np.array(count2)
-print(f"[0, 0.5]: mean={c1.mean():.3f} var={c1.var():.3f}  (Pois(5))")
-print(f"[0.5, 2.5]: mean={c2.mean():.3f} var={c2.var():.3f}  (Pois(20))")
-print(f"Corr = {np.corrcoef(c1, c2)[0,1]:.4f}  (theory: 0)")
-```
+Taking $h \to 0$:
+
+$$
+P_k'(t) = -\lambda P_k(t) + \lambda P_{k-1}(t), \quad P_k(0) = 0
+$$
+
+Solving recursively (e.g., using the integrating factor $e^{\lambda t}$) yields:
+
+$$
+P_k(t) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}
+$$
+
+This confirms $N(t) \sim \text{Po}(\lambda t)$.
+
+---
+
+## Mean and Variance
+
+Since $N(s, s+t) \sim \text{Po}(\lambda t)$:
+
+$$
+E[N(s, s+t)] = \lambda t, \qquad \text{Var}(N(s, s+t)) = \lambda t
+$$
+
+The expected count is proportional to the interval length, and the variance equals the mean — the hallmark of the Poisson distribution.
+
+---
+
+## Worked Examples
+
+??? example "Phone Calls in One Hour"
+    A switchboard receives calls at a rate of $\lambda = 5$ calls per hour.
+
+    **How many calls are expected in 1 hour?**
+
+    $E[N(1)] = 5 \times 1 = 5$ calls.
+
+    **What is the probability of receiving exactly 3 calls?**
+
+    $$
+    P(N(1) = 3) = \frac{e^{-5} \cdot 5^3}{3!} = \frac{e^{-5} \cdot 125}{6} \approx 0.1404
+    $$
+
+    **What is the probability of receiving 8 or more calls?**
+
+    $$
+    P(N(1) \geq 8) = 1 - \sum_{k=0}^{7} \frac{e^{-5} \cdot 5^k}{k!} \approx 1 - 0.8666 = 0.1334
+    $$
+
+??? example "Events in a 30-Minute Window"
+    With the same rate $\lambda = 5$ calls per hour, the number of calls in a 30-minute window is $N(0.5) \sim \text{Po}(5 \times 0.5) = \text{Po}(2.5)$.
+
+    The probability of no calls in 30 minutes is:
+
+    $$
+    P(N(0.5) = 0) = e^{-2.5} \approx 0.0821
+    $$
+
+---
+
+## Counts in Multiple Disjoint Intervals
+
+By independent increments, the counts in non-overlapping intervals are independent Poisson random variables. For disjoint intervals $(a_1, b_1], (a_2, b_2], \ldots, (a_m, b_m]$:
+
+$$
+N(a_i, b_i) \sim \text{Po}(\lambda(b_i - a_i)) \quad \text{independently for } i = 1, 2, \ldots, m
+$$
+
+This makes it straightforward to compute joint probabilities by multiplying the individual Poisson PMFs.
+
+??? example "Two Disjoint Intervals"
+    With $\lambda = 5$ per hour, find $P(N(0,1) = 3 \text{ and } N(2,4) = 7)$.
+
+    By independence: $N(0,1) \sim \text{Po}(5)$ and $N(2,4) \sim \text{Po}(10)$ are independent, so
+
+    $$
+    P(N(0,1) = 3,\; N(2,4) = 7) = \frac{e^{-5} \cdot 5^3}{3!} \cdot \frac{e^{-10} \cdot 10^7}{7!} \approx 0.1404 \times 0.0901 \approx 0.0126
+    $$
