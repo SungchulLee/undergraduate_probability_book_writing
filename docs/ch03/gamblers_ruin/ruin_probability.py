@@ -3,8 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-# ========================================================================
-
 def compute_ruin_probability(N, p):
     """Solve for ruin probability Q[i] for each initial capital i = 0, 1, ..., N."""
     q = 1 - p
@@ -17,8 +15,6 @@ def compute_ruin_probability(N, p):
     Q = np.linalg.solve(I - A, b).reshape(N + 1)
     return Q
 
-
-# ========================================================================
 
 def main():
     N = 100  # goal
@@ -39,8 +35,6 @@ def main():
     idx = np.where(Q <= 0.5)[0][0]
     print(f"Minimum initial capital with ruin probability <= 0.5: {idx}")
 
-
-# ========================================================================
 
 if __name__ == "__main__":
     main()

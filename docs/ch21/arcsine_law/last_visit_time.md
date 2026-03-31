@@ -1,61 +1,91 @@
 # Arcsine Law — Last Visit Time
 
-The last time a symmetric random walk visits the origin follows the arcsine distribution — concentrating near the endpoints rather than the middle.
+## Statement
 
-## Definition
+Starting from the origin, run a simple random walk $S_0 = 0, S_1, S_2, \ldots, S_{2n}$ up to time $2n$ on $\mathbb{Z}$. Let $L_{2n}$ be the **last visit time to the origin**, i.e., the last time the walk returns to zero.
 
-For a simple random walk $S_0 = 0, S_1, \ldots, S_{2n}$ on $\mathbb{Z}$, let $L_{2n}$ be the last visit time to zero. Then as $n \to \infty$:
-
-$$
-\frac{L_{2n}}{2n} \xrightarrow{d} \operatorname{Arcsine}
-$$
-
-The **arcsine density** is:
+Then, for $0 \leq a < b \leq 1$,
 
 $$
-f(x) = \frac{1}{\pi\sqrt{x(1-x)}}, \quad 0 < x < 1
+P\!\left(a \leq \frac{L_{2n}}{2n} \leq b\right) \to \int_a^b \frac{1}{\pi} \cdot \frac{1}{\sqrt{x(1-x)}} \, dx = \frac{2}{\pi}\left[\arcsin(\sqrt{b}) - \arcsin(\sqrt{a})\right]
 $$
 
-with CDF $F(x) = \frac{2}{\pi}\arcsin(\sqrt{x})$.
+as $n \to \infty$.
 
-## Explanation
+## The Arcsine Distribution
 
-### Counterintuitive Shape
+The limiting density
 
-The density is $U$-shaped: the last visit to zero is most likely near the beginning or end of the walk, not in the middle. The walk tends to stay on one side of zero for long stretches.
+$$
+f(x) = \frac{1}{\pi \sqrt{x(1-x)}}, \quad 0 < x < 1
+$$
 
-### Three Arcsine Laws
+is called the **arcsine distribution**. Its CDF is
 
-All three share the same limiting arcsine distribution:
+$$
+F(x) = \frac{2}{\pi} \arcsin(\sqrt{x})
+$$
 
-1. **Last visit time** $L_{2n}/(2n)$
-2. **Fraction of time positive** — proportion of steps above zero
-3. **Time of the maximum** — when the walk achieves its peak
+This distribution is $U$-shaped: it assigns the most probability mass near $x = 0$ and $x = 1$. This means the random walk's last visit to zero is most likely to occur either very early or very late — not in the middle.
 
-These results, due to Paul Levy, are among the most surprising in probability theory.
+## Intuition
 
-## Examples
+The arcsine law is counterintuitive. One might expect the walk to visit zero "evenly" throughout its duration, but in fact the opposite is true. The walk tends to stay on one side of zero for long stretches, and the last time it touches zero is typically near the beginning or end of the walk.
 
-**Example.** Simulate the last visit time for 1000 random walks of length 10,000.
+## Simulation
+
+**MATLAB:**
+
+```matlab
+clear all; close all; clc; rng('default')
+
+% Parameters
+p = 0.5; n = 10000;       % We flip a fair coin n times
+NumSimu = 1000;            % We do this experiment NumSimu times
+x = random('Binomial', 1*ones(NumSimu, n), p*ones(NumSimu, n));
+x = 2*x - 1;              % Convert to +1/-1 steps
+
+Last_Visit_Time = zeros(NumSimu, 1);
+for NumS = 1:NumSimu
+    Sn = cumsum(x(NumS, :));
+    Random_Walk = [0 Sn];
+    Last_Visit_Time(NumS, 1) = find(Random_Walk == 0, 1, 'last') - 1;
+end
+
+hist(Last_Visit_Time)
+```
+
+**Python:**
 
 ```python
 import numpy as np
+import matplotlib.pyplot as plt
 
-np.random.seed(42)
-n = 10_000
-n_sim = 1_000
+np.random.seed(0)
 
-last_visits = np.zeros(n_sim)
-for s in range(n_sim):
-    steps = 2 * np.random.randint(0, 2, n) - 1
-    walk = np.concatenate([[0], np.cumsum(steps)])
+p = 0.5
+n = 10000
+num_simu = 1000
+
+# Generate +1/-1 steps
+x = 2 * np.random.binomial(1, p, size=(num_simu, n)) - 1
+
+last_visit_time = np.zeros(num_simu)
+for s in range(num_simu):
+    walk = np.concatenate([[0], np.cumsum(x[s, :])])
     zeros = np.where(walk == 0)[0]
-    last_visits[s] = zeros[-1]
+    last_visit_time[s] = zeros[-1]
 
-# Should be U-shaped (arcsine)
-normalized = last_visits / n
-print(f"Fraction near start (< 0.1): {np.mean(normalized < 0.1):.3f}")
-print(f"Fraction near middle (0.4-0.6): {np.mean((normalized > 0.4) & (normalized < 0.6)):.3f}")
-print(f"Fraction near end (> 0.9): {np.mean(normalized > 0.9):.3f}")
-print(f"Mean: {normalized.mean():.3f} (theory: 0.5)")
+plt.figure()
+plt.hist(last_visit_time, bins=20, edgecolor='black')
+plt.xlabel('Last Visit Time to Origin')
+plt.ylabel('Frequency')
+plt.title(f'Arcsine Law: Last visit time ({num_simu} simulations of {n} steps)')
+plt.show()
 ```
+
+## Observations
+
+The histogram shows a clear $U$-shaped distribution: the last visit to zero clusters near the endpoints (time 0 and time $n$), with relatively few visits in the middle. This matches the arcsine density perfectly.
+
+This is one of three classical arcsine laws for random walks, alongside the fraction of time spent positive (see next section) and the time of the maximum.

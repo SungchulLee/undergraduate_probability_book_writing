@@ -1,73 +1,146 @@
 # Properties Derived from Axioms
 
-The three Kolmogorov axioms imply a rich set of properties that form the everyday toolkit for probability computation.
+## Overview
 
-## Definition
+Starting from the three Kolmogorov axioms, we can derive a rich collection of properties. These properties are the everyday tools of probability computation.
 
-The following properties hold for any probability measure $P$ on $(\Omega, \mathcal{F}, P)$:
+## Property 4: Finite Additivity
 
-| Property | Statement |
-|:---|:---|
-| Complement | $P(A^c) = 1 - P(A)$ |
-| Monotonicity | $A \subseteq B \implies P(A) \le P(B)$ |
-| Difference | $P(A \setminus B) = P(A) - P(A \cap B)$ |
-| Union (2 events) | $P(A \cup B) = P(A) + P(B) - P(A \cap B)$ |
-| Subadditivity | $P(\bigcup_{i=1}^n A_i) \le \sum_{i=1}^n P(A_i)$ |
+For any **pairwise disjoint** events $A_1, A_2, \ldots, A_n$:
 
-## Explanation
+$$
+P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i)
+$$
 
-### Complement Rule
+This follows from Axiom 3 by setting $A_{n+1} = A_{n+2} = \cdots = \emptyset$.
 
-Since $A$ and $A^c$ partition $\Omega$, Axiom 3 gives $P(A) + P(A^c) = P(\Omega) = 1$.
+## Property 5: Monotonicity
 
-This is one of the most frequently used tools: **$P(\text{at least one}) = 1 - P(\text{none})$**.
+If $A \subseteq B$, then:
 
-### Monotonicity
+$$
+P(A) \leq P(B)
+$$
 
-If $A \subseteq B$, write $B = A \cup (B \setminus A)$ as a disjoint union. Then $P(B) = P(A) + P(B \setminus A) \ge P(A)$.
+**Proof:** Write $B = A \cup (B \setminus A)$ where $A$ and $B \setminus A$ are disjoint. By finite additivity:
+
+$$
+P(B) = P(A) + P(B \setminus A) \geq P(A)
+$$
+
+since $P(B \setminus A) \geq 0$.
+
+## Property 6: Complement Rule
+
+$$
+P(A) = 1 - P(A^c)
+$$
+
+**Proof:** Since $A$ and $A^c$ are disjoint and $A \cup A^c = \Omega$:
+
+$$
+1 = P(\Omega) = P(A \cup A^c) = P(A) + P(A^c)
+$$
+
+!!! tip "Practical Importance"
+    The complement rule is one of the most frequently used tools in probability. It is often easier to compute $P(A^c)$ (the probability that $A$ does **not** happen) than $P(A)$ directly.
+
+    The strategy: **$P(\text{at least one}) = 1 - P(\text{none})$**
+
+## Additional Useful Properties
 
 ### Difference Rule
 
-$A = (A \setminus B) \cup (A \cap B)$ is disjoint, so $P(A) = P(A \setminus B) + P(A \cap B)$.
+For any events $A$ and $B$:
 
-### Union of Two Events
+$$
+P(A \setminus B) = P(A) - P(A \cap B)
+$$
 
-$A \cup B = A \cup (B \setminus A)$ is disjoint, and $P(B \setminus A) = P(B) - P(A \cap B)$ by the difference rule. So $P(A \cup B) = P(A) + P(B) - P(A \cap B)$.
+**Proof:** $A = (A \setminus B) \cup (A \cap B)$ is a disjoint union, so $P(A) = P(A \setminus B) + P(A \cap B)$.
 
-### Subadditivity (Boole's Inequality)
+### Probability of a Union (General)
 
-Follows by induction from the two-event union formula and the fact that $P(A \cap B) \ge 0$.
+For any two events (not necessarily disjoint):
 
-## Examples
+$$
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
+$$
 
-**Example (Fair die).** $\Omega = \{1,2,3,4,5,6\}$, uniform. Let $A = \{1,2,3\}$ (at most 3), $B = \{2,4,6\}$ (even).
+This is the simplest case of the inclusion-exclusion principle (covered in the next section).
 
-- $P(A^c) = 1 - 3/6 = 1/2$
-- $A \cap B = \{2\}$, so $P(A \cup B) = 3/6 + 3/6 - 1/6 = 5/6$
-- $P(A \setminus B) = P(A) - P(A \cap B) = 3/6 - 1/6 = 2/6$
-- Boole: $P(A \cup B) = 5/6 \le P(A) + P(B) = 6/6$ ✓
+### Subadditivity (Union Bound)
+
+For any events $A_1, A_2, \ldots, A_n$ (not necessarily disjoint):
+
+$$
+P\left(\bigcup_{i=1}^{n} A_i\right) \leq \sum_{i=1}^{n} P(A_i)
+$$
+
+This is **Boole's inequality**, and it provides a useful upper bound.
+
+## Summary Table
+
+| # | Property | Statement |
+|---|----------|-----------|
+| 4 | Finite additivity | $P(\cup_{i=1}^n A_i) = \sum_{i=1}^n P(A_i)$ for disjoint $A_i$ |
+| 5 | Monotonicity | $A \subseteq B \Rightarrow P(A) \leq P(B)$ |
+| 6 | Complement rule | $P(A) = 1 - P(A^c)$ |
+
+## Python Example
 
 ```python
-omega = set(range(1, 7))
-P = lambda E: len(E) / len(omega)
+import numpy as np
 
-A = {1, 2, 3}
-B = {2, 4, 6}
+# Demonstrate properties with a fair die
+omega = {1, 2, 3, 4, 5, 6}
+P = lambda event: len(event) / len(omega)
 
-# Complement
-assert abs(P(omega - A) - (1 - P(A))) < 1e-10
-print(f"P(A^c) = {P(omega - A):.4f} = 1 - P(A) = {1 - P(A):.4f}")
+A = {1, 2, 3}    # ≤ 3
+B = {2, 3, 4, 5}  # between 2 and 5
 
-# Monotonicity
+# Property 5: Monotonicity
 C = {2, 3}  # C ⊂ A
-print(f"P(C={C}) = {P(C):.4f} ≤ P(A={A}) = {P(A):.4f}")
+print(f"Monotonicity: P(C) = {P(C):.4f} ≤ P(A) = {P(A):.4f}: {P(C) <= P(A)}")
 
-# Difference
-print(f"P(A\\B) = {P(A - B):.4f} = P(A) - P(A∩B) = {P(A) - P(A & B):.4f}")
+# Property 6: Complement rule
+print(f"\nComplement rule:")
+print(f"P(A) = {P(A):.4f}")
+print(f"P(A^c) = {P(omega - A):.4f}")
+print(f"P(A) + P(A^c) = {P(A) + P(omega - A):.4f}")
 
-# Union
-print(f"P(A∪B) = {P(A | B):.4f} = P(A)+P(B)-P(A∩B) = {P(A) + P(B) - P(A & B):.4f}")
+# Difference rule
+print(f"\nDifference rule:")
+print(f"P(A \\ B) = {P(A - B):.4f}")
+print(f"P(A) - P(A ∩ B) = {P(A) - P(A & B):.4f}")
 
-# Boole
-print(f"P(A∪B) = {P(A | B):.4f} ≤ P(A)+P(B) = {P(A) + P(B):.4f}")
+# Union formula
+print(f"\nUnion formula:")
+print(f"P(A ∪ B) = {P(A | B):.4f}")
+print(f"P(A) + P(B) - P(A ∩ B) = {P(A) + P(B) - P(A & B):.4f}")
+
+# Boole's inequality
+print(f"\nBoole's inequality:")
+print(f"P(A ∪ B) = {P(A | B):.4f} ≤ P(A) + P(B) = {P(A) + P(B):.4f}")
+```
+
+**Output:**
+```
+Monotonicity: P(C) = 0.3333 ≤ P(A) = 0.5000: True
+
+Complement rule:
+P(A) = 0.5000
+P(A^c) = 0.5000
+P(A) + P(A^c) = 1.0000
+
+Difference rule:
+P(A \ B) = 0.1667
+P(A) - P(A ∩ B) = 0.1667
+
+Union formula:
+P(A ∪ B) = 0.8333
+P(A) + P(B) - P(A ∩ B) = 0.8333
+
+Boole's inequality:
+P(A ∪ B) = 0.8333 ≤ P(A) + P(B) = 1.1667
 ```

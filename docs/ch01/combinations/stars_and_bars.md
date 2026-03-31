@@ -1,77 +1,73 @@
 # Combinations with Repetition (Stars and Bars)
 
-Stars and bars is the standard technique for counting selections where repetition is allowed. It converts a distribution problem into a simple binomial coefficient.
+## Overview
 
-## Definition
+**Combinations with repetition** count the number of ways to choose $k$ items from $n$ types when repetition is allowed and order does not matter. The classic technique for solving these problems is the **stars and bars** method.
 
-The number of ways to choose $k$ items from $n$ types (with repetition, order irrelevant) is
+## Problem Statement
 
-$$
-\binom{k + n - 1}{n - 1} = \binom{k + n - 1}{k}
-$$
+How many ways can we choose $k$ items from $n$ types, where each type can be chosen multiple times?
 
-Equivalently, this counts non-negative integer solutions to $x_1 + x_2 + \cdots + x_n = k$.
+Equivalently: how many non-negative integer solutions are there to:
 
-**With at least 1 per type:** the number of positive integer solutions to $x_1 + \cdots + x_n = k$ (each $x_i \ge 1$) is
+$$x_1 + x_2 + \cdots + x_n = k, \qquad x_i \geq 0$$
 
-$$
-\binom{k - 1}{n - 1}
-$$
+## Stars and Bars Formula
 
-## Explanation
+Represent the $k$ items as $k$ stars ($\star$) and separate the $n$ types using $n - 1$ bars ($|$). Any arrangement of $k$ stars and $n - 1$ bars gives a valid selection.
 
-Represent the $k$ items as **stars** ($\star$) and separate $n$ types using $n-1$ **bars** ($|$). Every arrangement of $k$ stars and $n-1$ bars corresponds to exactly one valid selection: the stars between the $(i-1)$-th and $i$-th bar represent items of type $i$.
+The total number of symbols is $k + n - 1$, and we choose positions for the $n - 1$ bars (or equivalently, for the $k$ stars):
 
-The total number of symbols is $k + n - 1$. Choosing which $n-1$ positions are bars (the rest are stars) gives $\binom{k+n-1}{n-1}$.
+$$\binom{k + n - 1}{n - 1} = \binom{k + n - 1}{k}$$
 
-**Positive solutions.** If each type must appear at least once, first give 1 item to each type (using $n$ of the $k$ items), then distribute the remaining $k - n$ freely:
+## Example
 
-$$
-\binom{(k-n)+n-1}{n-1} = \binom{k-1}{n-1}
-$$
+Choose 3 items from 4 types ($n = 4$, $k = 3$):
 
-## Examples
+$$\binom{3 + 4 - 1}{4 - 1} = \binom{6}{3} = 20$$
 
-**Example 1.** Choose 3 items from 4 types: $\binom{6}{3} = 20$.
+One arrangement: $\star \star \, | \, \star \, | \, | \,$ means 2 of type 1, 1 of type 2, 0 of type 3, 0 of type 4.
 
-One arrangement: $\star\star\,|\,\star\,|\,|\,$ means $(x_1,x_2,x_3,x_4) = (2,1,0,0)$.
-
----
-
-**Example 2 (Distributing money).** Split \$10 among 3 people so each gets at least \$1.
-
-Positive solutions to $x_1 + x_2 + x_3 = 10$: $\binom{9}{2} = 36$.
-
-Without the "at least \$1" constraint: $\binom{12}{2} = 66$.
-
----
-
-**Example 3 (Upper bounds).** How many non-negative integer solutions to $x_1 + x_2 + x_3 \le 8$?
-
-Introduce a slack variable $x_4 \ge 0$ so $x_1 + x_2 + x_3 + x_4 = 8$: $\binom{11}{3} = 165$.
+## Python Implementation
 
 ```python
 from math import comb
 
-# Example 1
-print(f"Choose 3 from 4 types: {comb(6, 3)}")
-# Output: Choose 3 from 4 types: 20
+def combinations_with_repetition(n, k):
+    """
+    Number of ways to choose k items from n types with repetition.
+    
+    Parameters
+    ----------
+    n : int
+        Number of types.
+    k : int
+        Number of items to choose.
+    
+    Returns
+    -------
+    int
+        Number of multisets of size k from n types.
+    """
+    return comb(k + n - 1, n - 1)
 
-# Verify by enumeration
-k, n = 3, 4
-solutions = [
-    (x1, x2, x3, k - x1 - x2 - x3)
-    for x1 in range(k + 1)
-    for x2 in range(k - x1 + 1)
-    for x3 in range(k - x1 - x2 + 1)
-]
-print(f"Enumeration: {len(solutions)}")
-# Output: Enumeration: 20
+# Example: Choose 3 items from 4 types
+n, k = 4, 3
+print(f"Combinations with repetition: C({k+n-1}, {n-1}) = {combinations_with_repetition(n, k)}")
+# Output: 20
 
-# Example 2
-print(f"$10 among 3, each ≥ $1: {comb(9, 2)}")
-print(f"$10 among 3, each ≥ $0: {comb(12, 2)}")
-
-# Example 3
-print(f"x1+x2+x3 ≤ 8 (non-neg): {comb(11, 3)}")
+# Verification by enumeration
+count = 0
+solutions = []
+for x1 in range(k + 1):
+    for x2 in range(k - x1 + 1):
+        for x3 in range(k - x1 - x2 + 1):
+            x4 = k - x1 - x2 - x3
+            solutions.append((x1, x2, x3, x4))
+            count += 1
+print(f"Verification by enumeration: {count}")
 ```
+
+## Key Takeaway
+
+The stars and bars technique transforms a selection-with-repetition problem into a problem of placing dividers among identical objects, reducing it to a standard combination $\binom{k+n-1}{n-1}$.

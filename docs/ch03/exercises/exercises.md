@@ -1,10 +1,5 @@
 # Chapter 3 Exercises
 
-!!! warning "Exercise page"
-    This page collects practice problems for Chapter 3 and does not follow the five-section structure used by concept pages.
-
-Exercises covering conditional probability, Bayes' theorem, independence, gambler's ruin, and Simpson's paradox.
-
 ## Section 3.1 — Conditional Probability and Chain Rule
 
 **Exercise 3.1.** A box contains 5 red and 3 blue balls. Two balls are drawn without replacement. What is the probability that the second ball is red given that the first ball is red?
@@ -51,9 +46,7 @@ Exercises covering conditional probability, Bayes' theorem, independence, gamble
 
 **Exercise 3.18.** A gambler starts with \$50 and bets \$1 on each round of a game with win probability $p = 0.49$. The gambler's goal is \$100. Compute the exact ruin probability using the formula
 
-$$
-Q(i) = \frac{(q/p)^N - (q/p)^i}{(q/p)^N - 1}
-$$
+$$Q(i) = \frac{(q/p)^N - (q/p)^i}{(q/p)^N - 1}$$
 
 with $i = 50$ and $N = 100$.
 
@@ -73,8 +66,6 @@ with $i = 50$ and $N = 100$.
 
 **Exercise 3.24.** Prove the following identity using the chain rule:
 
-$$
-P(A_1 A_2 \cdots A_n) = P(A_1)\,P(A_2 \mid A_1)\,P(A_3 \mid A_1 A_2) \cdots P(A_n \mid A_1 A_2 \cdots A_{n-1})
-$$
+$$P(A_1 A_2 \cdots A_n) = P(A_1)\,P(A_2 \mid A_1)\,P(A_3 \mid A_1 A_2) \cdots P(A_n \mid A_1 A_2 \cdots A_{n-1})$$
 
 **Exercise 3.25.** Let $A$ and $B$ be events with $P(A) = 0.6$, $P(B) = 0.4$, and $P(A \mid B) = 0.5$. Find $P(B \mid A)$, $P(A \cup B)$, and determine whether $A$ and $B$ are independent.

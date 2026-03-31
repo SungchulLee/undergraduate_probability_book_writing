@@ -3,8 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-# ========================================================================
-
 def main():
     np.random.seed(42)
 
@@ -70,8 +68,6 @@ def main():
     print(f"Estimated (unbiased): mu_hat = {mu_hat:.4f}, sigma^2_hat = {sigma2_hat_unbiased:.4f}")
     print(f"Estimated (biased):   sigma^2_hat = {sigma2_hat_biased:.4f}")
 
-
-# ========================================================================
 
 if __name__ == "__main__":
     main()

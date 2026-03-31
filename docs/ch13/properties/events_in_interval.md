@@ -1,4 +1,5 @@
 # Number of Events in an Interval
+<<<<<<< Updated upstream
 
 ## The Fundamental Property
 
@@ -123,3 +124,5 @@ This makes it straightforward to compute joint probabilities by multiplying the 
     $$
     P(N(0,1) = 3,\; N(2,4) = 7) = \frac{e^{-5} \cdot 5^3}{3!} \cdot \frac{e^{-10} \cdot 10^7}{7!} \approx 0.1404 \times 0.0901 \approx 0.0126
     $$
+=======
+>>>>>>> Stashed changes

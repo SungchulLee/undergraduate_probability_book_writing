@@ -1,4 +1,5 @@
 # Rate Parameter and Intensity
+<<<<<<< Updated upstream
 
 ## The Rate Parameter
 
@@ -80,3 +81,5 @@ The increments remain independent but are no longer stationary, since the distri
 ## Summary
 
 The rate parameter $\lambda$ is the single parameter that governs the entire Poisson process. It determines the expected event count ($\lambda t$), the variance ($\lambda t$), the mean waiting time between events ($1/\lambda$, as we will see in Chapter 14), and the probability of events in any interval. Always check that $\lambda$ and the time variable share consistent units.
+=======
+>>>>>>> Stashed changes

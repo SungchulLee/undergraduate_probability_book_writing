@@ -1,4 +1,5 @@
 # PGF Definition and Properties
+<<<<<<< Updated upstream
 
 ## Definition
 
@@ -90,3 +91,5 @@ EXX1 = derivative(pgf_poisson, 1, n=2, dx=1e-6)
 VarX = EXX1 + EX - EX**2
 print(f"  Var(X) = {VarX:.4f}  (exact: {lam})")
 ```
+=======
+>>>>>>> Stashed changes

@@ -1,4 +1,5 @@
 # Covariance Definition and Properties
+<<<<<<< Updated upstream
 
 ## Motivation
 
@@ -140,3 +141,5 @@ print(f"E[Y]  = {E_Y}")
 print(f"E[XY] = {E_XY}")
 print(f"Cov(X,Y) = {cov_XY}")  # -0.1
 ```
+=======
+>>>>>>> Stashed changes

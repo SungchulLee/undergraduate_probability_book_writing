@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # Chapter 15 Exercises
 
 ## Uniform Distribution
@@ -208,3 +209,6 @@
     (a) $Z_1 \sim N(0, 1)$ and $Z_2 \sim N(0, 1)$.
 
     (b) Yes, $Z_1$ and $Z_2$ are independent standard normals. This follows from the Box-Muller transform: if $R^2 = -2\ln U_1 \sim \text{Exp}(1/2)$ and $\Theta = 2\pi U_2 \sim U(0, 2\pi)$ are independent, then $(R\cos\Theta, R\sin\Theta)$ is a pair of iid $N(0,1)$ random variables.
+=======
+# Exercises
+>>>>>>> Stashed changes

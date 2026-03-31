@@ -1,4 +1,5 @@
 # Coupon Collector Problem
+<<<<<<< Updated upstream
 
 ## The Problem
 
@@ -95,3 +96,5 @@ P\!\left(T > n \ln n + cn\right) \to 1 - e^{-e^{-c}} \quad \text{as } n \to \inf
 $$
 
 for any constant $c$. This is a **Gumbel distribution** limit, indicating that the fluctuations around $n \ln n$ are of order $n$.
+=======
+>>>>>>> Stashed changes

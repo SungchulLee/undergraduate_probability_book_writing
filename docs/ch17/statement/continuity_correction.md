@@ -1,56 +1,47 @@
 # Continuity Correction
 
-When approximating a discrete distribution with the continuous normal, shifting boundaries by $\pm 0.5$ accounts for the gap between integer values and continuous density.
+## The Problem
 
-## Definition
+When using the CLT to approximate probabilities for **discrete** random variables with a **continuous** normal distribution, a systematic error occurs at the boundaries. The continuity correction adjusts for this.
 
-For a discrete random variable $X$ taking integer values, the **continuity correction** adjusts the normal approximation as follows:
+## The Idea
 
-| Discrete probability | Continuity-corrected form |
-|:---|:---|
-| $P(X \le k)$ | $P(Y \le k + 0.5)$ |
-| $P(X \ge k)$ | $P(Y \ge k - 0.5)$ |
-| $P(X < k)$ | $P(Y \le k - 0.5)$ |
-| $P(X > k)$ | $P(Y \ge k + 0.5)$ |
-| $P(X = k)$ | $P(k - 0.5 \le Y \le k + 0.5)$ |
+A discrete random variable $X$ that takes integer values satisfies:
 
-where $Y \sim N(\mu, \sigma^2)$ is the normal approximation to $X$.
+$$P(X = k) = P(k - 0.5 \leq X \leq k + 0.5)$$
 
-## Explanation
+in the continuous approximation. Each integer value "occupies" a unit interval centered at that integer.
 
-### Why It Helps
+Therefore:
 
-Each integer $k$ "occupies" the interval $[k - 0.5, k + 0.5]$ in the continuous approximation. Without the correction, $P(X \le k)$ maps to $P(Y \le k)$, which misses half the probability mass at $k$ itself.
+| Discrete Probability | With Continuity Correction |
+|---------------------|---------------------------|
+| $P(X \leq k)$ | $P(X \leq k + 0.5)$ |
+| $P(X \geq k)$ | $P(X \geq k - 0.5)$ |
+| $P(X < k)$ | $P(X \leq k - 0.5)$ |
+| $P(X > k)$ | $P(X \geq k + 0.5)$ |
+| $P(X = k)$ | $P(k - 0.5 \leq X \leq k + 0.5)$ |
 
-### When to Use
+## Example: Poisson with Continuity Correction
 
-- **Use** when approximating discrete distributions (Binomial, Poisson, etc.) with the normal
-- **Skip** when the original variable is already continuous
+Let $X \sim \text{Po}(100)$. To find $P(X \geq 120)$:
 
-### Diminishing Importance
+**Without continuity correction:**
 
-For large $n$, the correction $\pm 0.5$ is small relative to the standard deviation $\sigma\sqrt{n}$, so its effect diminishes. It matters most for moderate $n$.
+$$P(X \geq 120) = P\left(\frac{X - 100}{\sqrt{100}} \geq \frac{120 - 100}{\sqrt{100}}\right) \approx 1 - \Phi(2.0) = 0.0228$$
 
-## Examples
+**With continuity correction:**
 
-**Example.** $X \sim \operatorname{Pois}(100)$. Find $P(X \ge 120)$.
+$$P(X \geq 120) = P(X \geq 119.5) = P\left(\frac{X - 100}{\sqrt{100}} \geq \frac{119.5 - 100}{\sqrt{100}}\right) \approx 1 - \Phi(1.95) = 0.0256$$
 
-- Without correction: $z = (120 - 100)/10 = 2.0$, giving $1 - \Phi(2.0) = 0.0228$
-- With correction: $z = (119.5 - 100)/10 = 1.95$, giving $1 - \Phi(1.95) = 0.0256$
-- Exact: $P(X \ge 120) = 0.0282$
+**Exact value:** $P(X \geq 120) = 0.0282$
 
-The corrected answer ($0.0256$) is closer to the exact value.
+The continuity-corrected answer ($0.0256$) is closer to the exact value ($0.0282$) than the uncorrected answer ($0.0228$).
 
-```python
-from scipy import stats
+## When to Use Continuity Correction
 
-lam = 100
+- **Use it** when approximating a discrete distribution (Binomial, Poisson, Geometric, etc.) with the normal distribution.
+- **Skip it** when the original random variable is already continuous.
 
-exact = 1 - stats.poisson.cdf(119, lam)
-no_cc = 1 - stats.norm.cdf((120 - lam) / lam**0.5)
-with_cc = 1 - stats.norm.cdf((119.5 - lam) / lam**0.5)
-
-print(f"Exact:      {exact:.4f}")
-print(f"No CC:      {no_cc:.4f}")
-print(f"With CC:    {with_cc:.4f}")
-```
+!!! tip "Rule of Thumb"
+    Continuity correction is most important when $n$ is moderate. For very large $n$, the correction becomes negligible relative to $\sigma\sqrt{n}$.

@@ -1,4 +1,5 @@
 # Normal Probability Calculations
+<<<<<<< Updated upstream
 
 ## Standardization
 
@@ -110,3 +111,5 @@ P(|Z| <= 1) = 0.6827
 P(|Z| <= 2) = 0.9545
 P(|Z| <= 3) = 0.9973
 ```
+=======
+>>>>>>> Stashed changes

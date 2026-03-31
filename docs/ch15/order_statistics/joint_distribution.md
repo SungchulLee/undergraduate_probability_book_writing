@@ -1,4 +1,5 @@
 # Joint Distribution of Order Statistics
+<<<<<<< Updated upstream
 
 ## Joint PDF of All Order Statistics
 
@@ -97,3 +98,5 @@ Joint density f(0.2, 0.8) = 7.2000
 
 Cov(X_(1), X_(n)) = 0.003937  (theory 0.003968)
 ```
+=======
+>>>>>>> Stashed changes

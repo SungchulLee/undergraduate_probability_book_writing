@@ -1,68 +1,96 @@
 # Skewness and Kurtosis
 
-Skewness measures asymmetry; kurtosis measures tail weight. Both are dimensionless, standardized moments.
+## Skewness — Measure of Symmetry
 
-## Definition
+### Definition
 
-**Skewness** (third standardized moment):
+The **skewness** of a random variable $X$ with mean $\mu$ and standard deviation $\sigma$ is:
 
-$$
-\gamma_1 = E\!\left[\left(\frac{X-\mu}{\sigma}\right)^3\right]
-$$
+$$\text{Skewness}(X) = E\left[\left(\frac{X - \mu}{\sigma}\right)^3\right]$$
 
-**Kurtosis** (fourth standardized moment):
+For discrete and continuous cases:
 
-$$
-\kappa_4 = E\!\left[\left(\frac{X-\mu}{\sigma}\right)^4\right]
-$$
+$$\text{Skewness}(X) = \begin{cases} \displaystyle\sum_x \left(\frac{x - \mu}{\sigma}\right)^3 p(x) & \text{if } X \text{ is discrete} \\[10pt] \displaystyle\int_{-\infty}^{\infty} \left(\frac{x - \mu}{\sigma}\right)^3 f(x)\,dx & \text{if } X \text{ is continuous} \end{cases}$$
 
-**Excess kurtosis** $= \kappa_4 - 3$ (normalized so the normal distribution gives 0).
+### Interpretation
 
-## Explanation
+| Skewness | Shape | Description |
+|----------|-------|-------------|
+| Negative | Left-skewed | Tail extends to the left; Mean < Median < Mode |
+| Zero | Symmetric | Balanced around the mean (e.g., Normal distribution) |
+| Positive | Right-skewed | Tail extends to the right; Mode < Median < Mean |
 
-### Skewness Interpretation
+### Key Properties
 
-| $\gamma_1$ | Shape | Tail |
-|:-----------|:------|:-----|
-| $< 0$ | Left-skewed | Long left tail |
-| $= 0$ | Symmetric | Balanced |
-| $> 0$ | Right-skewed | Long right tail |
+- Any **symmetric** distribution (Normal, Uniform, $t$-distribution) has skewness $= 0$.
+- The **Exponential** distribution has skewness $= 2$ (always right-skewed).
+- Skewness is dimensionless (the standardization by $\sigma$ removes units).
 
-Any symmetric distribution has $\gamma_1 = 0$. The exponential has $\gamma_1 = 2$.
+---
 
-### Kurtosis Interpretation
+## Kurtosis — Measure of Tail Thickness
 
-| Excess kurtosis | Type | Tails |
-|:----------------|:-----|:------|
-| $> 0$ | Leptokurtic | Heavier than normal |
-| $= 0$ | Mesokurtic | Normal-like |
-| $< 0$ | Platykurtic | Lighter than normal |
+### Definition
 
-Kurtosis measures **tail weight**, not peakedness. The $t$-distribution with $\nu > 4$ has excess kurtosis $6/(\nu-4)$. Uniform has excess kurtosis $-6/5$.
+The **kurtosis** of $X$ is:
 
-## Examples
+$$\text{Kurtosis}(X) = E\left[\left(\frac{X - \mu}{\sigma}\right)^4\right]$$
 
-**Example.** Compare common distributions:
+$$= \begin{cases} \displaystyle\sum_x \left(\frac{x - \mu}{\sigma}\right)^4 p(x) & \text{if } X \text{ is discrete} \\[10pt] \displaystyle\int_{-\infty}^{\infty} \left(\frac{x - \mu}{\sigma}\right)^4 f(x)\,dx & \text{if } X \text{ is continuous} \end{cases}$$
 
-| Distribution | Skewness | Excess Kurtosis |
-|:-------------|:--------:|:---------------:|
-| $N(0,1)$ | 0 | 0 |
-| $\text{Exp}(1)$ | 2 | 6 |
-| $\text{Uniform}(0,1)$ | 0 | $-1.2$ |
-| $t(5)$ | 0 | 6 |
+The **excess kurtosis** is defined as:
+
+$$\text{Excess Kurtosis}(X) = \text{Kurtosis}(X) - 3$$
+
+The subtraction of $3$ is because the normal distribution has kurtosis exactly $3$.
+
+### Interpretation
+
+| Kurtosis | Excess Kurtosis | Tail Behavior | Name |
+|----------|----------------|---------------|------|
+| $> 3$ | $> 0$ | Fat tails (heavier than Normal) | Leptokurtic |
+| $= 3$ | $= 0$ | Like the Normal distribution | Mesokurtic |
+| $< 3$ | $< 0$ | Light tails (thinner than Normal) | Platykurtic |
+
+### Key Properties
+
+- Kurtosis is always $\geq 1$ (since it is the expectation of a non-negative quantity raised to the 4th power of a standardized variable).
+- The **Normal distribution** has kurtosis $= 3$ (excess kurtosis $= 0$), serving as the reference.
+- The **$t$-distribution** with $\nu > 4$ has excess kurtosis $= 6/(\nu - 4)$, which is always positive (fat-tailed).
+- The **Uniform distribution** has kurtosis $= 9/5 = 1.8$ (light-tailed, platykurtic).
+
+## Python Implementation
 
 ```python
+import numpy as np
 from scipy import stats
 
-dists = {
-    'Normal': stats.norm(),
-    'Exp(1)': stats.expon(),
-    'Uniform': stats.uniform(),
-    't(5)': stats.t(5),
-    'Chi2(3)': stats.chi2(3),
+# Compare skewness and kurtosis of common distributions
+distributions = {
+    'Normal(0,1)':    stats.norm(0, 1),
+    'Exp(1)':         stats.expon(scale=1),
+    'Uniform(0,1)':   stats.uniform(0, 1),
+    'Beta(2,5)':      stats.beta(2, 5),
+    't(5)':           stats.t(5),
+    'Chi-sq(3)':      stats.chi2(3),
 }
 
-for name, d in dists.items():
-    s, k = float(d.stats('s')), float(d.stats('k'))
-    print(f"{name:10s}: skew={s:+.4f}, excess_kurt={k:+.4f}")
+print(f"{'Distribution':<16} {'Skewness':>10} {'Kurtosis':>10} {'Excess Kurt':>12}")
+print("-" * 52)
+for name, dist in distributions.items():
+    skew = dist.stats(moments='s')
+    kurt = dist.stats(moments='k')  # scipy returns excess kurtosis
+    print(f"{name:<16} {float(skew):>10.4f} {float(kurt)+3:>10.4f} {float(kurt):>12.4f}")
+```
+
+**Output:**
+```
+Distribution     Skewness   Kurtosis  Excess Kurt
+----------------------------------------------------
+Normal(0,1)        0.0000     3.0000        0.0000
+Exp(1)             2.0000     9.0000        6.0000
+Uniform(0,1)       0.0000     1.8000       -1.2000
+Beta(2,5)          0.5963     2.8466       -0.1534
+t(5)               0.0000     9.0000        6.0000
+Chi-sq(3)          1.6330     7.0000        4.0000
 ```

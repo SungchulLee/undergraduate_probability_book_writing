@@ -1,59 +1,84 @@
-# Markov and Chebyshev Inequalities
+# Tail Bounds: Markov and Chebyshev Inequalities
 
-Upper bounds on tail probabilities using only moments — Markov uses the mean, Chebyshev uses the variance, and both are tools for proving the law of large numbers.
+Tail bounds provide **upper bounds** on the probability that a random variable deviates from its mean by a large amount. These are essential tools for proving the Law of Large Numbers.
 
-## Definition
+## Markov's Inequality
 
-**Markov's inequality.** For nonnegative $X$ and $a > 0$:
-
-$$
-P(X \ge a) \le \frac{E[X]}{a}
-$$
-
-**Chebyshev's inequality.** For any $X$ with mean $\mu$ and variance $\sigma^2$, and $\varepsilon > 0$:
+For any nonnegative random variable $|X|$ and $\varepsilon > 0$,
 
 $$
-P(|X - \mu| \ge \varepsilon) \le \frac{\sigma^2}{\varepsilon^2}
+P(|X| \geq \varepsilon) \leq \frac{\mathbb{E}|X|}{\varepsilon}
 $$
 
-## Explanation
+**Intuition**: If $X$ has a small expected value, then $X$ cannot be large too often. Markov's inequality makes this precise using only the first moment.
 
-### Proof of Chebyshev from Markov
+## Chebyshev's Inequality
 
-Apply Markov to $(X - \mu)^2$:
-
-$$
-P(|X - \mu| \ge \varepsilon) = P((X-\mu)^2 \ge \varepsilon^2) \le \frac{E[(X-\mu)^2]}{\varepsilon^2} = \frac{\sigma^2}{\varepsilon^2}
-$$
-
-### Strength Comparison
-
-Markov uses only the first moment; Chebyshev uses the second. Chebyshev is always at least as tight for two-sided bounds, and often much tighter.
-
-### Application to WLLN
-
-For $\bar{X}_n$ with variance $\sigma^2/n$:
+For any random variable $X$ with finite mean $\mu$ and variance $\sigma^2$, and for $\varepsilon > 0$,
 
 $$
-P(|\bar{X}_n - \mu| \ge \varepsilon) \le \frac{\sigma^2}{n\varepsilon^2} \to 0
+P(|X - \mathbb{E}X| \geq \varepsilon) \leq \frac{Var(X)}{\varepsilon^2}
 $$
 
-This one-line proof establishes the Weak Law.
+**Proof**: Apply Markov's inequality to $(X - \mu)^2$:
 
-## Examples
+$$
+P(|X - \mu| \geq \varepsilon) = P((X - \mu)^2 \geq \varepsilon^2) \leq \frac{\mathbb{E}(X - \mu)^2}{\varepsilon^2} = \frac{\sigma^2}{\varepsilon^2}
+$$
 
-**Example.** $X \sim \operatorname{Bin}(1000, 0.01)$: $\mu = 10$, $\sigma^2 = 9.9$.
+**Intuition**: Chebyshev uses the variance (second moment) to give a tighter bound than Markov. If the variance is small, the random variable is concentrated around its mean.
 
-```python
-from scipy import stats
+## Geometric Interpretation
 
-n, p = 1000, 0.01
-mu, var = n * p, n * p * (1 - p)
+- **Markov**: The area under the curve of $f_{|X|}(x)$ to the right of $\varepsilon$ is bounded by the total area (expectation) divided by $\varepsilon$.
+- **Chebyshev**: The area under the curve of $f_{(X-\mu)^2}(x)$ to the right of $\varepsilon^2$ is bounded by the variance divided by $\varepsilon^2$.
 
-for threshold in [20, 100]:
-    exact = 1 - stats.binom.cdf(threshold - 1, n, p)
-    markov = mu / threshold
-    chebyshev = var / (threshold - mu)**2
-    print(f"P(X ≥ {threshold}): exact={exact:.6f}, "
-          f"Markov≤{markov:.4f}, Chebyshev≤{min(chebyshev, 1):.4f}")
-```
+## Example: Binomial $X \sim B(1000, 0.01)$
+
+Here $\mathbb{E}X = np = 10$ and $Var(X) = npq = 9.9$.
+
+**Bound $P(X \geq 20)$:**
+
+**Markov:**
+
+$$
+P(X \geq 20) \leq \frac{\mathbb{E}X}{20} = \frac{10}{20} = 0.5
+$$
+
+**Chebyshev:**
+
+$$
+P(X \geq 20) \leq P(|X - 10| \geq 10) \leq \frac{9.9}{10^2} = 0.0990
+$$
+
+**Bound $P(X \geq 100)$:**
+
+**Markov:**
+
+$$
+P(X \geq 100) \leq \frac{10}{100} = 0.1
+$$
+
+**Chebyshev:**
+
+$$
+P(X \geq 100) \leq P(|X - 10| \geq 90) \leq \frac{9.9}{90^2} = 0.0012
+$$
+
+## Example: Poisson $X \sim Poi(100)$
+
+Here $\mathbb{E}X = \lambda = 100$ and $Var(X) = \lambda = 100$.
+
+**Bound $P(X \geq 200)$:**
+
+**Markov:**
+
+$$
+P(X \geq 200) \leq \frac{100}{200} = 0.5
+$$
+
+**Chebyshev:**
+
+$$
+P(X \geq 200) \leq P(|X - 100| \geq 100) \leq \frac{100}{100^2} = 0.0100
+$$

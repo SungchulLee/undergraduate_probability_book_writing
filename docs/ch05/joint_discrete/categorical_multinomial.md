@@ -1,72 +1,46 @@
 # Categorical and Multinomial Distributions
 
-The Categorical and Multinomial distributions generalize the Bernoulli and Binomial from two outcomes to $K$ outcomes — from coin flips to die rolls.
+## Distributions Related to Dice Rolling
 
-## Definition
+Just as the Bernoulli and Binomial distributions arise from coin flipping, the **Categorical** and **Multinomial** distributions arise from dice rolling — experiments with more than two outcomes.
 
-**Categorical** $\text{Cat}(\mathbf{p})$: Roll a $K$-sided die once with probability vector $\mathbf{p} = (p_1, \ldots, p_K)$, $\sum p_j = 1$. Record the outcome as a one-hot vector $(X_1, \ldots, X_K)$:
+## Parameters
 
-$$
-P(X_j = 1, X_k = 0 \text{ for } k \ne j) = p_j
-$$
+The parameter is a probability vector $\mathbf{p} = (p_1, \ldots, p_K)$ where:
 
-**Multinomial** $\text{Mult}(n, \mathbf{p})$: Roll the die $n$ times independently. Let $X_j$ count face $j$. Then
+$$p_j \ge 0, \qquad \sum_{j=1}^K p_j = 1$$
 
-$$
-P(X_1 = n_1, \ldots, X_K = n_K) = \frac{n!}{n_1!\cdots n_K!}\,p_1^{n_1}\cdots p_K^{n_K}
-$$
+This represents a $K$-sided die where face $j$ appears with probability $p_j$.
 
-where $n_1 + \cdots + n_K = n$.
+## Categorical Distribution $\text{Cat}(\mathbf{p})$
 
-## Explanation
+Roll a $\mathbf{p}$-die once and record the result. The outcome is represented by a vector $(X_1, \ldots, X_K)$ where exactly one component equals 1 and the rest equal 0:
 
-### Relationship to Coin-Flip Distributions
+$$P(X_1 = 0, \ldots, X_j = 1, \ldots, X_K = 0) = p_j$$
 
-| Coin (2 outcomes) | Die ($K$ outcomes) |
-|:-------------------|:-------------------|
-| $\text{Bern}(p)$ | $\text{Cat}(\mathbf{p})$ |
-| $\text{Bin}(n, p)$ | $\text{Mult}(n, \mathbf{p})$ |
+The Categorical distribution generalizes the Bernoulli distribution from 2 outcomes to $K$ outcomes.
 
-Setting $K = 2$ with $\mathbf{p} = (p, 1-p)$ recovers the Bernoulli and Binomial.
+## Multinomial Distribution $\text{Mul}(n, \mathbf{p})$
 
-### Marginals are Binomial
+Roll a $\mathbf{p}$-die $n$ times independently and count the number of each outcome. If $X_j$ denotes the number of times face $j$ appears:
 
-Each component $X_j$ of a Multinomial is marginally Binomial:
+$$P(X_1 = n_1, \ldots, X_K = n_K) = \binom{n}{n_1 \cdots n_K} p_1^{n_1} \cdots p_K^{n_K}$$
 
-$$
-X_j \sim \text{Bin}(n, p_j)
-$$
+where $\binom{n}{n_1 \cdots n_K} = \frac{n!}{n_1! \cdots n_K!}$ is the **multinomial coefficient**, and $n_1 + \cdots + n_K = n$.
 
-However, the components are **not independent** because $X_1 + \cdots + X_K = n$. Knowing that face 1 appeared often means less room for the others.
+The Multinomial distribution generalizes the Binomial distribution from 2 outcomes to $K$ outcomes.
 
-### Multinomial Coefficient
+## Relationship Summary
 
-The factor $\frac{n!}{n_1!\cdots n_K!}$ counts the number of sequences of length $n$ with exactly $n_j$ copies of symbol $j$. Each such sequence has probability $p_1^{n_1}\cdots p_K^{n_K}$.
+| Coin (2 outcomes) | Dice ($K$ outcomes) |
+|---|---|
+| Bernoulli $\text{B}(p)$ | Categorical $\text{Cat}(\mathbf{p})$ |
+| Binomial $\text{B}(n, p)$ | Multinomial $\text{Mul}(n, \mathbf{p})$ |
 
-## Examples
+## Marginals of the Multinomial
 
-**Example.** A fair six-sided die is rolled $n = 12$ times. What is the probability that each face appears exactly twice?
+Each individual component of a Multinomial is Binomial:
 
-$$
-P(X_1 = \cdots = X_6 = 2) = \frac{12!}{(2!)^6}\left(\frac{1}{6}\right)^{12} \approx 0.00344
-$$
+$$X_j \sim \text{B}(n, p_j)$$
 
-```python
-from math import factorial, comb
-
-# Each face appears exactly twice in 12 rolls of a fair die
-n, K = 12, 6
-p = 1 / K
-numer = factorial(n)
-denom = factorial(2)**K
-multinomial_coeff = numer // denom
-prob = multinomial_coeff * p**n
-print(f"Multinomial coefficient: {multinomial_coeff}")
-print(f"P(each face twice) = {prob:.6f}")
-
-# Marginal: X_1 ~ Bin(12, 1/6)
-from math import comb
-p_x1_2 = comb(12, 2) * (1/6)**2 * (5/6)**10
-print(f"\nMarginal: P(X_1 = 2) = {p_x1_2:.4f}")
-print(f"E[X_1] = {n * p:.2f}, Var(X_1) = {n * p * (1-p):.2f}")
-```
+However, the components are **not independent** since they must sum to $n$.

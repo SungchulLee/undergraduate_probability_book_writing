@@ -1,4 +1,5 @@
 # Distribution of the Minimum and Maximum
+<<<<<<< Updated upstream
 
 ## CDF of the Maximum
 
@@ -111,3 +112,5 @@ Range:
 Min of 10 Exp(2):
   E[X_(1)] = 0.0501  (theory 0.0500)
 ```
+=======
+>>>>>>> Stashed changes

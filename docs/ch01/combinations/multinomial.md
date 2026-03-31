@@ -1,89 +1,94 @@
 # Multinomial Coefficients
 
-The multinomial coefficient generalizes the binomial coefficient to partitioning $n$ objects into more than two groups. It arises in both counting arrangements with repeated types and in the multinomial expansion.
+## Overview
+
+The **multinomial coefficient** generalizes the binomial coefficient to partitioning $n$ objects into more than two groups. It counts the number of ways to divide $n$ distinct objects into groups of specified sizes, or equivalently, the number of distinct arrangements of objects with repeated types.
 
 ## Definition
 
-The **multinomial coefficient** is
+The multinomial coefficient is:
 
-$$
-\binom{n}{k_1 \; k_2 \; \cdots \; k_m} = \frac{n!}{k_1!\, k_2! \cdots k_m!}
-$$
+$$\binom{n}{k_1 \; k_2 \; \cdots \; k_m} = \frac{n!}{k_1! \, k_2! \cdots k_m!}$$
 
-where $k_1 + k_2 + \cdots + k_m = n$ and each $k_i \ge 0$. It counts the number of ways to partition $n$ distinct objects into $m$ labeled groups of sizes $k_1, \ldots, k_m$.
+where $k_1 + k_2 + \cdots + k_m = n$.
 
-When $m = 2$, this reduces to the binomial coefficient: $\binom{n}{k_1\;k_2} = \binom{n}{k_1}$.
+## Connection to Permutations with Repetition
 
-## Explanation
+As derived in the permutations with repetition section, the number of distinct arrangements of $n$ objects where there are $k_i$ identical objects of type $i$ is exactly the multinomial coefficient:
 
-### Two Equivalent Interpretations
+$$\frac{n!}{k_1! \, k_2! \cdots k_m!}$$
 
-**Interpretation 1 (Partitioning).** Divide $n$ distinct objects into $m$ *labeled* groups of prescribed sizes. Choose $k_1$ for group 1, then $k_2$ from the remaining for group 2, etc.:
+For example, the number of distinct words from BBOOO:
 
-$$
-\binom{n}{k_1}\binom{n-k_1}{k_2}\cdots\binom{k_m}{k_m} = \frac{n!}{k_1!\,k_2!\cdots k_m!}
-$$
+$$\binom{5}{2 \; 3} = \frac{5!}{2! \cdot 3!} = 10$$
 
-**Interpretation 2 (Permutations with repetition).** Count distinct arrangements of $n$ objects where $k_i$ are identical copies of type $i$. Divide the $n!$ total orderings by $k_i!$ for each type to remove internal rearrangements.
+## Multinomial Expansion
 
-!!! warning "Labeled vs unlabeled groups"
-    The multinomial coefficient assumes groups are **distinguishable** (labeled). If the groups are identical (e.g., dividing 12 people into three unlabeled teams of 4), divide by the number of ways to permute identical groups: $\frac{1}{3!}\binom{12}{4\;4\;4}$.
+The multinomial coefficient appears as the coefficient in the **multinomial expansion**:
 
-### Multinomial Expansion
+$$(x_1 + x_2 + \cdots + x_m)^n = \sum_{k_1 + k_2 + \cdots + k_m = n} \binom{n}{k_1 \; k_2 \; \cdots \; k_m} x_1^{k_1} x_2^{k_2} \cdots x_m^{k_m}$$
 
-$$
-(x_1 + x_2 + \cdots + x_m)^n = \sum_{k_1+\cdots+k_m=n} \binom{n}{k_1\;\cdots\;k_m}\, x_1^{k_1}\cdots x_m^{k_m}
-$$
+where the sum ranges over all non-negative integer solutions to $k_1 + k_2 + \cdots + k_m = n$.
 
-Each term counts the ways to assign each of the $n$ factors to one of the $x_i$'s, choosing $x_i$ exactly $k_i$ times.
+Each term $\binom{n}{k_1 \cdots k_m} x_1^{k_1} \cdots x_m^{k_m}$ counts the number of ways to assign each of the $n$ factors $(x_1 + \cdots + x_m)$ to one of the $x_i$'s, such that $x_i$ is chosen $k_i$ times.
 
-## Examples
+## Special Case: Binomial Coefficient
 
-**Example 1 (Anagram counting).** Distinct arrangements of the letters in MISSISSIPPI ($n=11$: M=1, I=4, S=4, P=2):
+When $m = 2$, the multinomial coefficient reduces to the binomial coefficient:
 
-$$
-\binom{11}{1\;4\;4\;2} = \frac{11!}{1!\,4!\,4!\,2!} = 34{,}650
-$$
+$$\binom{n}{k_1 \; k_2} = \frac{n!}{k_1! \, k_2!} = \binom{n}{k_1}$$
 
----
+since $k_2 = n - k_1$.
 
-**Example 2 (Labeled teams).** Divide 12 players into teams A (4), B (4), C (4):
-
-$$
-\binom{12}{4\;4\;4} = \frac{12!}{4!\,4!\,4!} = 34{,}650
-$$
-
-If the teams are **unlabeled** (no distinction between A, B, C): $34{,}650 / 3! = 5{,}775$.
-
----
-
-**Example 3 (Expansion).** List all terms of $(x+y+z)^3$:
+## Python Implementation
 
 ```python
-from math import factorial
+from math import factorial, comb
+from itertools import product
 
 def multinomial(n, groups):
-    """Compute n! / (k1! * k2! * ... * km!)."""
+    """
+    Compute the multinomial coefficient n! / (k1! * k2! * ... * km!).
+    
+    Parameters
+    ----------
+    n : int
+        Total number of objects.
+    groups : list of int
+        Sizes of each group (must sum to n).
+    
+    Returns
+    -------
+    int
+        The multinomial coefficient.
+    """
+    assert sum(groups) == n, "Group sizes must sum to n"
     result = factorial(n)
     for k in groups:
         result //= factorial(k)
     return result
 
-# Example 1: MISSISSIPPI
-print(f"MISSISSIPPI arrangements: {multinomial(11, [1, 4, 4, 2])}")
-# Output: MISSISSIPPI arrangements: 34650
+# Example: Words from BBOOO
+print(f"Multinomial(5; 2, 3) = {multinomial(5, [2, 3])}")
+# Output: 10
 
-# Example 2: Labeled vs unlabeled teams
-labeled = multinomial(12, [4, 4, 4])
-unlabeled = labeled // factorial(3)
-print(f"Labeled teams: {labeled}, Unlabeled teams: {unlabeled}")
-# Output: Labeled teams: 34650, Unlabeled teams: 5775
+# Example: Divide 12 people into groups of 4, 4, 4
+print(f"Multinomial(12; 4, 4, 4) = {multinomial(12, [4, 4, 4])}")
+# Output: 34650
 
-# Example 3: All terms of (x + y + z)^3
-print("\n(x + y + z)^3 expansion:")
-for k1 in range(4):
-    for k2 in range(4 - k1):
-        k3 = 3 - k1 - k2
-        coeff = multinomial(3, [k1, k2, k3])
-        print(f"  {coeff} * x^{k1} y^{k2} z^{k3}")
+# Verify multinomial expansion: (x + y + z)^3
+# All terms with their coefficients
+n = 3
+m = 3
+print(f"\nMultinomial expansion of (x1 + x2 + x3)^{n}:")
+for k1 in range(n + 1):
+    for k2 in range(n - k1 + 1):
+        k3 = n - k1 - k2
+        coeff = multinomial(n, [k1, k2, k3])
+        if coeff > 0:
+            print(f"  ({k1},{k2},{k3}): coefficient = {coeff}")
 ```
+
+## Key Takeaway
+
+The multinomial coefficient $\frac{n!}{k_1! \cdots k_m!}$ unifies two perspectives: it counts distinct arrangements of objects with repeated types, and it gives the coefficients in the multinomial expansion. The binomial coefficient is the special case $m = 2$.

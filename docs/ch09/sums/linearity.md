@@ -1,4 +1,5 @@
 # Linearity of Expectation for Sums
+<<<<<<< Updated upstream
 
 ## Recap
 
@@ -105,3 +106,5 @@ for _ in range(N):
 print(f"\nE[fixed points] theory = 1")
 print(f"E[fixed points] MC = {np.mean(fixed_points):.4f}")
 ```
+=======
+>>>>>>> Stashed changes

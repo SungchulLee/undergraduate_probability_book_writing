@@ -4,6 +4,7 @@
 
 The **gambler's fallacy** is the mistaken belief that if a random event has occurred more frequently than expected in the past, it is less likely to occur in the future (or vice versa), as if the process has a "memory" and needs to "balance out."
 
+<<<<<<< Updated upstream
 **Example.** After flipping 10 heads in a row, someone believes tails is "due." But if the coin is fair, $P(\text{heads}) = 0.5$ on the next flip regardless of history. The coin has no memory.
 
 ## What the LLN Actually Says
@@ -12,10 +13,21 @@ The Law of Large Numbers states that
 
 $$
 \bar{X}_n = \frac{S_n}{n} \xrightarrow{a.s.} \mu
+=======
+**Example**: After flipping 10 heads in a row, someone believes tails is "due." But if the coin is fair, $P(\text{heads}) = 0.5$ on the next flip regardless of history.
+
+## What the LLN Actually Says
+
+The Law of Large Numbers says:
+
+$$
+\frac{S_n}{n} \to \mu
+>>>>>>> Stashed changes
 $$
 
 This convergence happens because **new observations dilute the effect of past deviations**, not because future outcomes compensate for past ones.
 
+<<<<<<< Updated upstream
 After 10 heads in a row ($S_{10} = 10$, so $\bar{X}_{10} = 1.0$), the SLLN predicts convergence to 0.5 through dilution:
 
 $$
@@ -46,3 +58,20 @@ The mathematical root of the fallacy lies in confusing two statements:
 2. **False**: Future outcomes adjust to correct past deviations
 
 Statement 1 holds because the ratio $S_n / n$ has the excess in the numerator but $n$ grows in the denominator. Statement 2 would require the future $X_i$ to depend on the past, violating the iid assumption.
+=======
+After 10 heads in a row ($S_{10} = 10$, so $\bar{X}_{10} = 1.0$), the LLN predicts convergence to 0.5 through dilution:
+
+$$
+\frac{S_{10} + S_{11:n}}{n} = \frac{10 + S_{11:n}}{n} \to 0.5
+$$
+
+The fixed "excess" of 10 becomes negligible as $n \to \infty$, but the **future** coins are still fair and independent.
+
+## The Distinction
+
+| | Gambler's Fallacy | LLN |
+|---|---|---|
+| Mechanism | Future compensates for past | New data dilutes past deviations |
+| Independence | Violated (future depends on past) | Maintained (each trial is independent) |
+| Prediction | Next flip more likely tails | Next flip is still 50-50 |
+>>>>>>> Stashed changes

@@ -1,4 +1,5 @@
 # Uniform Distribution of Arrivals (Given N(t) = n)
+<<<<<<< Updated upstream
 
 ## The Main Result
 
@@ -98,3 +99,5 @@ The conditional uniformity property has both conceptual and practical significan
 ## Connection to Splitting
 
 The conditional uniformity theorem is closely related to the splitting property. Asking "given $N(t) = n$, did the $k$-th event fall in a subinterval $A$?" is equivalent to thinning each event with probability $|A|/t$ (the fraction of the interval occupied by $A$). This perspective unifies the conditional and splitting results.
+=======
+>>>>>>> Stashed changes

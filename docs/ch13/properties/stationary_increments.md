@@ -1,4 +1,5 @@
 # Stationary Increments
+<<<<<<< Updated upstream
 
 ## Definition
 
@@ -73,3 +74,5 @@ In these situations, the **non-homogeneous Poisson process** with a time-varying
 ## Summary
 
 Stationarity is the property that makes the Poisson process "clock-invariant": shifting the observation window in time does not change the statistical behavior. Together with independent increments and the initialization $N(0) = 0$, it completely determines the Poisson process. When stationarity is violated, we move to the non-homogeneous Poisson process, which retains independent increments but allows a time-varying rate.
+=======
+>>>>>>> Stashed changes

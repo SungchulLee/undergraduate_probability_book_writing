@@ -1,4 +1,5 @@
 # Binomial Distribution
+<<<<<<< Updated upstream
 
 ## Motivation
 
@@ -89,3 +90,5 @@ $$
 $$
 P(X = 0) = (0.96)^{50} \approx 0.130
 $$
+=======
+>>>>>>> Stashed changes

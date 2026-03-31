@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # Exercises: Convolutions and Distributions of Sums
 
 ## Discrete Convolution
@@ -35,3 +36,6 @@
 ## Conceptual
 
 **Exercise 16.10.** Give an example showing that convolution does **not** give the correct distribution of $X + Y$ when $X$ and $Y$ are dependent. Specifically, let $X \sim U(0, 1)$ and $Y = X$. Find the distribution of $X + Y$ and show it differs from the triangular distribution obtained by convolving $U(0,1)$ with itself.
+=======
+# Exercises
+>>>>>>> Stashed changes

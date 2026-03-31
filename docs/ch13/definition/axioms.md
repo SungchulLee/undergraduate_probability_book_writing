@@ -1,4 +1,5 @@
 # Definition and Axioms
+<<<<<<< Updated upstream
 
 ## The Counting Process
 
@@ -84,3 +85,5 @@ Throughout this chapter, we use the following notation:
 The formal axioms capture precisely the three properties we identified in the subdivision argument from the previous section. Dividing $[0, t]$ into $n$ subintervals with independent Bernoulli trials naturally produces independent increments and stationary increments. The Poisson limit theorem then delivers the Poisson distribution for counts in any interval.
 
 The infinitesimal characterization makes this connection even more transparent: each tiny subinterval of length $h$ is like a single Bernoulli trial with success probability $\lambda h$, and we are performing infinitely many such trials.
+=======
+>>>>>>> Stashed changes

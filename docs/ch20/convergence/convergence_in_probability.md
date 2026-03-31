@@ -1,47 +1,43 @@
 # Convergence in Probability
 
-A sequence of random variables converges in probability to a limit if the chance of large deviations vanishes — the mode of convergence used in the Weak Law of Large Numbers.
-
 ## Definition
 
-$X_n \xrightarrow{p} X$ if for every $\varepsilon > 0$:
+A sequence of random variables $X_1, X_2, \ldots$ **converges in probability** to a random variable $X$ if for every $\varepsilon > 0$,
 
 $$
 \lim_{n \to \infty} P(|X_n - X| > \varepsilon) = 0
 $$
 
-## Explanation
+We write
 
-### Intuition
+$$
+X_n \xrightarrow{p} X
+$$
 
-For any tolerance $\varepsilon$, the probability that $X_n$ deviates from $X$ by more than $\varepsilon$ goes to zero. Large deviations become increasingly unlikely, though they are not completely ruled out for any finite $n$.
+## Interpretation
 
-### Key Properties
+Convergence in probability means that for any tolerance $\varepsilon > 0$, the probability that $X_n$ deviates from $X$ by more than $\varepsilon$ vanishes as $n \to \infty$. In other words, large deviations become increasingly unlikely, though they are not completely ruled out for any finite $n$.
 
-| Property | Statement |
-|:---|:---|
-| Implies convergence in distribution | $X_n \xrightarrow{p} X \implies X_n \xrightarrow{d} X$ |
-| Constant limit equivalence | $X_n \xrightarrow{d} c \iff X_n \xrightarrow{p} c$ |
-| Preserved under continuous maps | $X_n \xrightarrow{p} X \implies g(X_n) \xrightarrow{p} g(X)$ for continuous $g$ |
+## Example: Sample Mean
 
-### WLLN Connection
+Let $X_1, X_2, \ldots$ be iid with mean $\mu$ and variance $\sigma^2 < \infty$. The sample mean $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i$ satisfies
 
-The sample mean $\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i$ of iid random variables with finite variance satisfies $\bar{X}_n \xrightarrow{p} \mu$ — this is the Weak Law.
+$$
+\bar{X}_n \xrightarrow{p} \mu
+$$
 
-## Examples
+This is precisely the statement of the **Weak Law of Large Numbers**.
 
-**Example.** Verify convergence in probability for the sample mean of $\operatorname{Exp}(1)$ variables.
+## Relationship to Convergence in Distribution
 
-```python
-import numpy as np
+Convergence in probability implies convergence in distribution:
 
-np.random.seed(42)
-n_sim = 50_000
-mu = 1.0
+$$
+X_n \xrightarrow{p} X \implies X_n \xrightarrow{d} X
+$$
 
-for n in [10, 100, 1000, 10000]:
-    means = np.random.exponential(1.0, (n_sim, n)).mean(axis=1)
-    for eps in [0.1, 0.01]:
-        p = np.mean(np.abs(means - mu) > eps)
-        print(f"n={n:5d}, ε={eps}: P(|X̄-μ|>ε) = {p:.4f}")
-```
+The converse is generally false, except when the limit is a **constant** $c$:
+
+$$
+X_n \xrightarrow{d} c \iff X_n \xrightarrow{p} c
+$$

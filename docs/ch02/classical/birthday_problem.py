@@ -3,8 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-# ========================================================================
-
 def main():
     # probability_B[k]: probability that first k people all have different birthdays
     probability_B = np.zeros(100)
@@ -33,8 +31,6 @@ def main():
 
     print(f"Smallest number of people with matching probability >= 0.5: {idx}")
 
-
-# ========================================================================
 
 if __name__ == "__main__":
     main()

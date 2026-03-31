@@ -1,88 +1,91 @@
 # Partition Problems
 
-Many counting problems reduce to distributing $n$ objects into $k$ boxes. The answer depends on whether objects and boxes are distinguishable or indistinguishable, making this a unifying framework for combinatorics.
+## Distributing Objects into Boxes
 
-## Definition
+Many counting problems reduce to distributing $n$ objects into $k$ boxes under various constraints. The answer depends on whether the objects and boxes are **distinguishable** or **indistinguishable**.
 
-A **distribution problem** assigns $n$ objects to $k$ boxes. The four fundamental cases are:
+## Summary of Cases
 
-| Objects | Boxes | Constraint | Formula |
-|:---:|:---:|:---:|:---:|
-| Distinguishable | Distinguishable | None | $k^n$ |
-| Distinguishable | Distinguishable | At most 1 per box ($n \le k$) | $k!/(k-n)!$ |
-| Indistinguishable | Distinguishable | None | $\binom{n+k-1}{k-1}$ |
-| Indistinguishable | Distinguishable | At least 1 per box | $\binom{n-1}{k-1}$ |
-| Distinguishable | Indistinguishable | Exactly $k$ non-empty groups | $S(n,k)$ |
-| Indistinguishable | Indistinguishable | At most $k$ parts | $p_k(n)$ |
+!!! info "Distribution Counting"
+    | Objects | Boxes | Constraint | Formula |
+    |:---:|:---:|:---:|:---:|
+    | Distinguishable | Distinguishable | None | $k^n$ |
+    | Distinguishable | Distinguishable | At most 1 per box ($n \leq k$) | $k!/(k-n)!$ |
+    | Distinguishable | Distinguishable | Exactly 1 per box ($n = k$) | $k!$ |
+    | Indistinguishable | Distinguishable | None | $\binom{n+k-1}{k-1}$ |
+    | Indistinguishable | Distinguishable | At least 1 per box | $\binom{n-1}{k-1}$ |
+    | Distinguishable | Indistinguishable | None | $\sum_{j=1}^{k} S(n,j)$ |
+    | Indistinguishable | Indistinguishable | None | $p_k(n)$ |
 
-Here $S(n,k)$ is the **Stirling number of the second kind** and $p_k(n)$ is the number of **integer partitions** of $n$ into at most $k$ parts. This classification is part of the **twelvefold way**.
+Here $S(n, k)$ denotes the **Stirling number of the second kind** and $p_k(n)$ denotes the number of **partitions of $n$ into at most $k$ parts**.
 
-## Explanation
-
-### Case 1: Distinguishable Objects, Distinguishable Boxes
+## Case 1: Distinguishable Objects, Distinguishable Boxes (No Constraint)
 
 Each of $n$ objects independently goes into one of $k$ boxes. By the multiplication rule: $k^n$.
 
-### Case 2: Indistinguishable Objects, Distinguishable Boxes (Stars and Bars)
+**Example.** Assign 3 students to 4 groups: $4^3 = 64$ ways.
 
-Since objects are identical, only the count per box matters. This is the **stars and bars** problem (see Section 1.3):
+## Case 2: Indistinguishable Objects, Distinguishable Boxes — Stars and Bars
 
-$$
-\binom{n + k - 1}{k - 1}
-$$
+This is the classic **stars and bars** problem (covered in Section 1.3).
 
-With the constraint that each box gets at least 1: first give 1 to each box, then distribute the remaining $n - k$ freely:
+!!! info "Stars and Bars"
+    The number of ways to distribute $n$ identical objects into $k$ distinct boxes is:
 
-$$
-\binom{n - 1}{k - 1}
-$$
+    $$\binom{n + k - 1}{k - 1}$$
 
-### Case 3: Distinguishable Objects, Indistinguishable Boxes (Stirling Numbers)
+    With the constraint "each box gets at least 1":
 
-The number of ways to partition $n$ distinct objects into exactly $k$ non-empty groups is
+    $$\binom{n - 1}{k - 1}$$
 
-$$
-S(n, k) = \frac{1}{k!}\sum_{j=0}^{k}(-1)^{k-j}\binom{k}{j}j^n
-$$
+**Example.** Distribute 10 identical cookies to 4 children: $\binom{13}{3} = 286$ ways.
 
-with recurrence $S(n,k) = k \cdot S(n-1,k) + S(n-1,k-1)$ and boundary conditions $S(n,1) = S(n,n) = 1$.
+**With at least 1 each:** First give 1 to each child (using 4), then distribute remaining 6 freely: $\binom{9}{3} = 84$.
 
-The **Bell number** $B_n = \sum_{k=0}^{n} S(n,k)$ counts all partitions of an $n$-element set (any number of groups). The first values: $B_0 = 1,\; B_1 = 1,\; B_2 = 2,\; B_3 = 5,\; B_4 = 15,\; B_5 = 52$.
+## Case 3: Distinguishable Objects, Indistinguishable Boxes — Stirling Numbers
 
-### Case 4: Indistinguishable Objects, Indistinguishable Boxes (Integer Partitions)
+When boxes are indistinguishable, the number of ways to partition $n$ distinct objects into exactly $k$ non-empty groups is the **Stirling number of the second kind** $S(n, k)$.
 
-The number of ways to write $n$ as a sum of at most $k$ positive integers (order irrelevant) is $p_k(n)$. No simple closed form exists; the standard approach uses a recurrence:
+!!! info "Stirling Number of the Second Kind"
+    $S(n, k)$ counts the number of ways to partition a set of $n$ elements into exactly $k$ non-empty subsets.
 
-$$
-p_k(n) = p_k(n - k) + p_{k-1}(n)
-$$
+    $$S(n, k) = \frac{1}{k!} \sum_{j=0}^{k} (-1)^{k-j} \binom{k}{j} j^n$$
 
-with $p_0(0) = 1$ and $p_k(n) = 0$ for $n < 0$ or $k = 0, n > 0$.
+    **Recurrence:** $S(n, k) = k \cdot S(n-1, k) + S(n-1, k-1)$
 
-## Examples
+    **Boundary conditions:** $S(n, 1) = S(n, n) = 1$, and $S(n, 0) = 0$ for $n \geq 1$.
 
-**Example 1 (Dist-Dist).** Assign 3 students to 4 study groups: $4^3 = 64$ ways.
+**Example.** Partition $\{a, b, c\}$ into 2 non-empty groups:
 
-**Example 2 (Stars and Bars).** Distribute 10 identical cookies to 4 children: $\binom{13}{3} = 286$. With at least 1 each: give 1 to each child first, then distribute the remaining 6: $\binom{9}{3} = 84$.
+$\{a\}\{b,c\}$, $\{b\}\{a,c\}$, $\{c\}\{a,b\}$ — so $S(3, 2) = 3$.
 
-**Example 3 (Stirling).** Partition $\{a, b, c\}$ into exactly 2 non-empty groups:
+## Case 4: Indistinguishable Objects, Indistinguishable Boxes — Integer Partitions
 
-$$
-\{a\}\{b,c\},\quad \{b\}\{a,c\},\quad \{c\}\{a,b\} \implies S(3,2) = 3
-$$
+The number of ways to write $n$ as an ordered sum of at most $k$ positive integers (where order doesn't matter) is the **partition function** $p_k(n)$.
 
-**Example 4 (Integer Partitions).** Partitions of 5 into at most 3 parts:
+**Example.** Partitions of 5 into at most 3 parts: $5 = 5 = 4+1 = 3+2 = 3+1+1 = 2+2+1$, so $p_3(5) = 5$.
 
-$$
-5,\quad 4+1,\quad 3+2,\quad 3+1+1,\quad 2+2+1 \implies p_3(5) = 5
-$$
+## The Bell Numbers
+
+The **Bell number** $B_n$ counts the total number of partitions of an $n$-element set into any number of non-empty subsets:
+
+$$B_n = \sum_{k=0}^{n} S(n, k)$$
+
+The first few: $B_0 = 1, B_1 = 1, B_2 = 2, B_3 = 5, B_4 = 15, B_5 = 52$.
+
+## The Twelvefold Way
+
+The table above is part of what combinatorialists call the **twelvefold way** — a systematic classification of distribution problems by whether objects/boxes are distinguishable and whether each box can hold any number, at most one, or at least one.
+
+## Python Implementation
 
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
-from math import comb
+from math import comb, factorial
 from functools import lru_cache
 
+# Stirling numbers
 @lru_cache(maxsize=None)
 def stirling2(n, k):
     if k == 0:
@@ -93,9 +96,11 @@ def stirling2(n, k):
         return 0
     return k * stirling2(n - 1, k) + stirling2(n - 1, k - 1)
 
+# Bell numbers
 def bell(n):
     return sum(stirling2(n, k) for k in range(n + 1))
 
+# Integer partitions
 @lru_cache(maxsize=None)
 def partitions(n, max_part=None):
     if max_part is None:
@@ -106,17 +111,9 @@ def partitions(n, max_part=None):
         return 0
     return partitions(n - max_part, max_part) + partitions(n, max_part - 1)
 
-# Verify examples
-assert 4**3 == 64
-assert comb(13, 3) == 286
-assert comb(9, 3) == 84
-assert stirling2(3, 2) == 3
-assert partitions(5, 3) == 5
-print("All examples verified.")
-
 fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 
-# Panel 1: Stirling triangle
+# --- Panel 1: Stirling triangle ---
 N = 8
 triangle = np.zeros((N + 1, N + 1))
 for n in range(N + 1):
@@ -137,7 +134,7 @@ axes[0].set_xticklabels(range(1, N + 1))
 axes[0].set_yticks(range(N))
 axes[0].set_yticklabels(range(1, N + 1))
 
-# Panel 2: Bell numbers
+# --- Panel 2: Bell numbers ---
 ns = range(0, 13)
 bells = [bell(n) for n in ns]
 axes[1].bar(list(ns), bells, color='steelblue', alpha=0.7)
@@ -147,12 +144,13 @@ axes[1].set_ylabel('$B_n$')
 axes[1].set_yscale('log')
 axes[1].grid(True, alpha=0.3)
 
-# Panel 3: Comparison of distribution formulas
+# --- Panel 3: Comparison of distribution formulas ---
 n_objects = 6
 ks = range(1, 7)
-dist_dist = [k**n_objects for k in ks]
-stars_bars = [comb(n_objects + k - 1, k - 1) for k in ks]
-stirling_vals = [sum(stirling2(n_objects, j) for j in range(1, k + 1)) for k in ks]
+
+dist_dist = [k**n_objects for k in ks]           # dist obj, dist box
+stars_bars = [comb(n_objects + k - 1, k - 1) for k in ks]  # indist obj, dist box
+stirling_vals = [sum(stirling2(n_objects, j) for j in range(1, k+1)) for k in ks]
 part_vals = [partitions(n_objects, k) for k in ks]
 
 axes[2].plot(list(ks), dist_dist, 'ro-', label='Dist-Dist: $k^n$', lw=2)

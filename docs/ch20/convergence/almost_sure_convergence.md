@@ -1,51 +1,44 @@
 # Almost Sure Convergence
 
-With probability one, the entire sample path of $X_n$ converges to the limit — the strongest standard mode of convergence, used in the Strong Law.
-
 ## Definition
 
-$X_n \xrightarrow{a.s.} X$ if:
+A sequence of random variables $X_1, X_2, \ldots$ **converges almost surely** (a.s.) to a random variable $X$ if
 
 $$
-P\!\left(\lim_{n \to \infty} X_n = X\right) = 1
+P\left(\lim_{n \to \infty} X_n = X\right) = 1
+$$
+
+We write
+
+$$
+X_n \xrightarrow{a.s.} X
 $$
 
 This is also called **convergence with probability 1**.
 
-## Explanation
+## Interpretation
 
-### Comparison with Convergence in Probability
+Almost sure convergence means that the set of outcomes $\omega$ for which $X_n(\omega) \to X(\omega)$ has probability 1. For **almost every** realization of the random sequence, the values eventually settle down to the limit.
 
-| | Convergence in probability | Almost sure convergence |
-|:---|:---|:---|
-| Statement | $P(\lvert X_n - X \rvert > \varepsilon) \to 0$ for each $\varepsilon$ | $P(X_n \to X) = 1$ |
-| Allows | Infinitely many deviations (if rare enough) | Only finitely many deviations |
-| Strength | Weaker | Stronger |
+!!! note "Weak vs Strong"
+    - **Convergence in probability** (weak): For any fixed $\varepsilon$, the probability of a deviation $> \varepsilon$ goes to 0.
+    - **Almost sure convergence** (strong): With probability 1, the entire sample path converges.
 
-Almost sure convergence implies convergence in probability, but not conversely.
+## Comparison with Convergence in Probability
 
-### Visual Intuition
+Almost sure convergence is **stronger** than convergence in probability:
 
-- **SLLN (a.s.)**: A single sequence of coin flips — the running average converges to 0.5 and eventually stays close
-- **WLLN (in prob.)**: Repeat the experiment many times — the histogram of sample means concentrates around 0.5
+$$
+X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{p} X
+$$
 
-### SLLN Connection
+The converse is not true in general.
 
-For iid $X_i$ with $E[\lvert X_i \rvert] < \infty$: $\bar{X}_n \xrightarrow{a.s.} \mu$.
+## Visual Intuition
 
-## Examples
+Consider flipping a fair coin many times and tracking the running sample mean:
 
-**Example.** Multiple sample paths of $\bar{X}_n$ for $\operatorname{Exp}(1)$ — all converge to $\mu = 1$.
+- **Strong law** (a.s. convergence): A single sequence of flips. As the number of flips grows, the running average converges to 0.5. The plot of one sample path approaches the true mean.
+- **Weak law** (convergence in probability): Repeat the experiment many times (each time flipping $n$ coins and recording the average). As $n$ grows, the histogram of sample means concentrates around 0.5.
 
-```python
-import numpy as np
-
-np.random.seed(42)
-n = 10_000
-
-for path in range(5):
-    samples = np.random.exponential(1.0, n)
-    running_mean = np.cumsum(samples) / np.arange(1, n + 1)
-    final_dev = abs(running_mean[-1] - 1.0)
-    print(f"Path {path+1}: X̄_{n} = {running_mean[-1]:.6f}, |X̄-μ| = {final_dev:.6f}")
-```
+The left panel (single trajectory converging) illustrates the **strong** law, while the right panel (histogram concentrating) illustrates the **weak** law.

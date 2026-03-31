@@ -1,70 +1,47 @@
-# Standardization in the CLT
+# Standardization
 
-Standardization converts any sum into a mean-zero, variance-one quantity, allowing the CLT approximation via the standard normal CDF $\Phi$.
+## Standardization of a Random Variable
 
-## Definition
+If $X$ has mean $\mu$ and standard deviation $\sigma$, then:
 
-For a random variable $X$ with mean $\mu$ and standard deviation $\sigma$:
+$$Z = \frac{X - \mu}{\sigma}$$
 
-$$
-Z = \frac{X - \mu}{\sigma}
-$$
+has mean $0$ and standard deviation $1$.
 
-has $E[Z] = 0$ and $\operatorname{Var}(Z) = 1$. The reverse transformation is $X = \mu + \sigma Z$.
+If $X$ is normal, then $Z$ is also normal, i.e., $Z \sim N(0,1)$.
 
-## Explanation
+## Reverse Standardization
 
-### Standardized Sum
+If $Z$ has mean $0$ and standard deviation $1$, then:
 
-For iid $X_1, \ldots, X_n$ with mean $\mu$ and variance $\sigma^2$, the CLT says:
+$$X = \mu + \sigma Z$$
 
-$$
-Z_n = \frac{S_n - n\mu}{\sigma\sqrt{n}} \approx N(0,1) \quad \text{for large } n
-$$
+has mean $\mu$ and standard deviation $\sigma$.
 
-Reverse standardization gives the practical approximation $S_n \approx N(n\mu, n\sigma^2)$.
+If $Z$ is normal, then $X$ is also normal, i.e., $X \sim N(\mu, \sigma^2)$.
 
-### Computing Probabilities
+## Standardization in the CLT
 
-To approximate $P(a \le S_n \le b)$:
+The CLT tells us that for iid $X_1, \ldots, X_n$ with mean $\mu$ and variance $\sigma^2$:
 
-**Step 1.** Standardize both endpoints:
+$$Z_n = \frac{S_n - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0,1)$$
 
-$$
-P(a \le S_n \le b) = P\!\left(\frac{a - n\mu}{\sigma\sqrt{n}} \le Z_n \le \frac{b - n\mu}{\sigma\sqrt{n}}\right)
-$$
+This means the **standardized sum** converges to the standard normal. Equivalently, by reverse standardization:
 
-**Step 2.** Apply the CLT:
+$$S_n \approx n\mu + \sigma\sqrt{n} \cdot Z \quad \text{where } Z \sim N(0,1)$$
 
-$$
-\approx \Phi\!\left(\frac{b - n\mu}{\sigma\sqrt{n}}\right) - \Phi\!\left(\frac{a - n\mu}{\sigma\sqrt{n}}\right)
-$$
+so $S_n \approx N(n\mu, \, n\sigma^2)$.
 
-### Sample Mean Version
+## Using Standardization to Compute Probabilities
 
-Since $\bar{X}_n = S_n / n$:
+To approximate $P(a \leq S_n \leq b)$:
 
-$$
-\frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} \approx N(0,1)
-$$
+**Step 1.** Standardize:
 
-so $\bar{X}_n \approx N(\mu, \sigma^2/n)$.
+$$P(a \leq S_n \leq b) = P\left(\frac{a - n\mu}{\sigma\sqrt{n}} \leq \frac{S_n - n\mu}{\sigma\sqrt{n}} \leq \frac{b - n\mu}{\sigma\sqrt{n}}\right)$$
 
-## Examples
+**Step 2.** Apply the CLT approximation:
 
-**Example.** $X_i$ iid with $\mu = 10$, $\sigma = 3$, $n = 100$. Find $P(S_{100} > 1030)$.
+$$\approx \Phi\left(\frac{b - n\mu}{\sigma\sqrt{n}}\right) - \Phi\left(\frac{a - n\mu}{\sigma\sqrt{n}}\right)$$
 
-Standardize: $z = (1030 - 1000)/(3 \cdot 10) = 1.0$. Then $P(S_{100} > 1030) \approx 1 - \Phi(1) = 0.1587$.
-
-```python
-import numpy as np
-from scipy import stats
-
-mu, sigma, n = 10, 3, 100
-threshold = 1030
-
-z = (threshold - n * mu) / (sigma * np.sqrt(n))
-p = 1 - stats.norm.cdf(z)
-print(f"z = {z:.4f}")
-print(f"P(S_100 > 1030) ≈ 1 - Φ({z:.2f}) = {p:.4f}")
-```
+where $\Phi$ is the CDF of $N(0,1)$.

@@ -1,56 +1,62 @@
 # Circular Permutations
 
-Circular permutations arrange objects around a circle, where rotations are considered identical. This is a clean application of the many-to-one principle.
+## Overview
 
-## Definition
+A **circular permutation** arranges objects around a circle, where rotations of the same arrangement are considered identical. This is another application of the many-to-one principle.
 
-The number of ways to arrange $n$ distinct objects in a circle is
+## Derivation
 
-$$
-(n-1)!
-$$
+To arrange $n$ distinct objects in a circle:
 
-## Explanation
+**Step 1:** Arrange all $n$ objects in a line. There are $n!$ such arrangements.
 
-**Approach 1 (Many-to-one).** Start with the $n!$ linear arrangements. Each circular arrangement corresponds to exactly $n$ linear ones (by choosing which element appears "first"). Dividing: $n!/n = (n-1)!$.
+**Step 2:** Recognize that for each circular arrangement, there are exactly $n$ linear arrangements that correspond to it (obtained by rotating the circle — choosing which element appears "first" in the line).
 
-**Approach 2 (Fix one element).** A circle has no distinguished starting position. Fix one object to break the rotational symmetry, then arrange the remaining $n-1$ objects: $(n-1)!$ ways.
+**Step 3:** This is an $n$-to-1 mapping. By the many-to-one principle:
 
-### With Reflections
+$$\text{Number of circular permutations} = \frac{n!}{n} = (n-1)!$$
 
-If the circle can be flipped (e.g., a bracelet rather than a seated table), reflections also produce equivalent arrangements. Each circular arrangement and its mirror image are the same, giving
+## Formula
 
-$$
-\frac{(n-1)!}{2}
-$$
+The number of ways to arrange $n$ distinct objects in a circle is:
 
-distinct arrangements (for $n \ge 3$).
+$$(n-1)!$$
 
-## Examples
+## Intuitive Explanation
 
-**Example 1 (Dinner table).** Seat 6 people around a circular table: $(6-1)! = 120$.
+In a circular arrangement, there is no distinguished "first position." We can fix one object's position (breaking the rotational symmetry) and arrange the remaining $n-1$ objects in $(n-1)!$ ways.
 
-For comparison, in a row: $6! = 720 = 6 \times 120$ — exactly 6 times as many, since each circular seating corresponds to 6 linear ones.
-
----
-
-**Example 2 (Keychain).** Arrange 5 keys on a keychain (reflections equivalent): $(5-1)!/2 = 24/2 = 12$.
+## Python Implementation
 
 ```python
 from math import factorial
 
-# Example 1
-n = 6
-circular = factorial(n - 1)
-linear = factorial(n)
-print(f"Circular permutations of {n}: {circular}")
-print(f"Linear permutations: {linear}")
-print(f"Ratio: {linear // circular}")
-# Output: Circular: 120, Linear: 720, Ratio: 6
+def circular_permutations(n):
+    """
+    Number of ways to arrange n distinct objects in a circle.
+    
+    Parameters
+    ----------
+    n : int
+        Number of distinct objects.
+    
+    Returns
+    -------
+    int
+        Number of circular permutations.
+    """
+    return factorial(n - 1)
 
-# Example 2
+# Example: Seat 5 people around a circular table
 n = 5
-bracelet = factorial(n - 1) // 2
-print(f"Bracelet arrangements of {n}: {bracelet}")
-# Output: Bracelet arrangements of 5: 12
+print(f"Circular permutations of {n} people: {circular_permutations(n)}")
+# Output: Circular permutations of 5 people: 24
+
+# Compare with linear permutations
+print(f"Linear permutations: {factorial(n)}")
+print(f"Ratio (should be {n}): {factorial(n) // circular_permutations(n)}")
 ```
+
+## Key Takeaway
+
+Circular permutations illustrate the many-to-one principle: each circular arrangement corresponds to $n$ linear arrangements (one for each rotation), so we divide $n!$ by $n$ to get $(n-1)!$.

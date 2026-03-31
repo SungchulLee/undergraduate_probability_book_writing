@@ -1,12 +1,18 @@
-site_name: Probability
+site_name: Probability with Python
 theme:
     name: material
+    favicon: assets/favicon.ico
 
 markdown_extensions:
     - admonition
+    - pymdownx.details
     - toc:
         permalink: true
-    - pymdownx.superfences
+    - pymdownx.superfences:
+        custom_fences:
+          - name: mermaid
+            class: mermaid
+            format: !!python/name:mermaid2.fence_mermaid_custom
     - pymdownx.arithmatex:
         generic: true
 
@@ -449,3 +455,4 @@ nav:
 
 plugins:
     - search
+    - mermaid2

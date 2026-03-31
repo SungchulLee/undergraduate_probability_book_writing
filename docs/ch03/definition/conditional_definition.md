@@ -1,60 +1,110 @@
 # Conditional Probability Definition
 
-Conditional probability quantifies how the probability of an event changes when we learn that another event has occurred. It is one of the most important concepts in all of probability.
-
 ## Definition
 
-The **conditional probability** of $B$ given $A$ (with $P(A) > 0$) is
+The **conditional probability** of event $B$ given event $A$ is defined as
 
 $$
-P(B \mid A) = \frac{P(A \cap B)}{P(A)}
+P(B \mid A) = \frac{P(AB)}{P(A)}, \quad P(A) > 0
 $$
 
-This measures the fraction of $A$ that also belongs to $B$. Conditioning on $A$ effectively restricts the sample space from $\Omega$ to $A$.
+This measures the probability that $B$ occurs, given that we know $A$ has occurred. Here $P(AB) = P(A \cap B)$ denotes the probability of both $A$ and $B$ occurring.
 
-## Explanation
+## Intuition
 
-### Conditional Probability Is a Probability Measure
+Conditioning on $A$ effectively **restricts the sample space** from $\Omega$ to $A$. Within this reduced sample space, the conditional probability asks: what fraction of $A$ also belongs to $B$?
 
-A crucial fact: $P(\cdot \mid B)$ satisfies all the Kolmogorov axioms. Every property of probability carries over — complement rule, inclusion-exclusion, monotonicity — simply by adding "$\mid B$" to every term. Specifically:
+If we think of probability as a measure of the "size" of events, then $P(B \mid A)$ is the ratio of the size of $AB$ to the size of $A$.
 
-- $P(\Omega \mid B) = 1$, $\;P(\emptyset \mid B) = 0$
-- $P(A^c \mid B) = 1 - P(A \mid B)$
-- Finite/countable additivity holds for disjoint events
-- $P(A_1 \cup A_2 \mid B) = P(A_1 \mid B) + P(A_2 \mid B) - P(A_1 \cap A_2 \mid B)$
+## Conditional Probability as a Probability Measure
 
-This means you never need to re-derive results for conditional probabilities — every unconditional identity has a conditional counterpart.
+A crucial fact is that $P(\cdot \mid B)$ is itself a valid probability measure. It satisfies all the axioms and properties that the usual probability measure $P(\cdot)$ satisfies. To convert any probability identity or inequality into its conditional version, you simply **add $\mid B$ before the closing parenthesis**.
 
-## Examples
+Specifically, $P(\cdot \mid B)$ satisfies:
 
-**Example (Double ace).** Draw 2 cards from a 52-card deck.
-
-- $A$ = at least one ace, $A_1$ = spade ace is drawn, $B$ = both cards are aces.
-
-**$P(B \mid A_1)$:** Given the spade ace is drawn, we need one of the 3 remaining aces from the 51 other cards:
+**(1) Normalization:**
 
 $$
-P(B \mid A_1) = \frac{3}{51} \approx 0.0588
+P(\Omega \mid B) = 1, \quad P(\emptyset \mid B) = 0
 $$
 
-**$P(B \mid A)$:** Since $B \subset A$, we have $P(B \cap A) = P(B) = \binom{4}{2}/\binom{52}{2}$ and $P(A) = 1 - \binom{48}{2}/\binom{52}{2}$:
+**(2) Bounded:**
 
 $$
-P(B \mid A) = \frac{\binom{4}{2}/\binom{52}{2}}{1 - \binom{48}{2}/\binom{52}{2}} \approx 0.0303
+0 \le P(A \mid B) \le 1 \quad \text{for any event } A
 $$
 
-Knowing a *specific* ace was drawn ($A_1$) gives higher probability of two aces than knowing merely that *some* ace was drawn ($A$), because $A_1$ is a smaller, more informative event.
+**(3) Countable additivity:**
 
-```python
-from math import comb
+$$
+P\!\left(\bigcup_{i=1}^{\infty} A_i \;\middle|\; B\right) = \sum_{i=1}^{\infty} P(A_i \mid B) \quad \text{for disjoint } A_i
+$$
 
-# P(B | A1): specific ace drawn
-P_B_given_A1 = 3 / 51
-print(f"P(B | A1) = {P_B_given_A1:.4f}")
+**(4) Finite additivity:**
 
-# P(B | A): at least one ace
-P_B = comb(4, 2) / comb(52, 2)
-P_A = 1 - comb(48, 2) / comb(52, 2)
-P_B_given_A = P_B / P_A
-print(f"P(B | A)  = {P_B_given_A:.4f}")
-```
+$$
+P\!\left(\bigcup_{i=1}^{n} A_i \;\middle|\; B\right) = \sum_{i=1}^{n} P(A_i \mid B) \quad \text{for disjoint } A_i
+$$
+
+**(5) Monotonicity:**
+
+$$
+P(A_1 \mid B) \le P(A_2 \mid B) \quad \text{for } A_1 \subset A_2
+$$
+
+**(6) Complement rule:**
+
+$$
+P(A^c \mid B) = 1 - P(A \mid B)
+$$
+
+**(7) Inclusion–exclusion (all forms):**
+
+$$
+P\!\left(\bigcup_{i=1}^{n} A_i \;\middle|\; B\right) \le \sum_{i=1}^{n} P(A_i \mid B)
+$$
+
+$$
+P\!\left(\bigcup_{i=1}^{n} A_i \;\middle|\; B\right) \ge \sum_{i=1}^{n} P(A_i \mid B) - \sum_{1 \le i < j \le n} P(A_i A_j \mid B)
+$$
+
+$$
+P\!\left(\bigcup_{i=1}^{n} A_i \;\middle|\; B\right) = \sum_{i=1}^{n} P(A_i \mid B) - \sum_{1 \le i < j \le n} P(A_i A_j \mid B) + \cdots + (-1)^{n+1} P(A_1 A_2 \cdots A_n \mid B)
+$$
+
+## Example — Double Ace
+
+We choose two cards from an ordinary 52-card deck. Define:
+
+| Event | Description |
+|-------|-------------|
+| $A$ | An ace is chosen (at least one ace among the two cards) |
+| $A_1$ | The spade ace is chosen |
+| $B$ | Both cards are aces |
+
+**Calculate $P(B \mid A_1)$ and $P(B \mid A)$.**
+
+### Computing $P(B \mid A_1)$
+
+Suppose the spade ace is chosen. Then there are 51 cards remaining, and to have both cards be aces we must choose the diamond, heart, or club ace. So
+
+$$
+P(B \mid A_1) = \frac{3}{51} = 0.0588
+$$
+
+### Computing $P(B \mid A)$
+
+Since $B \subset A$ (both aces implies at least one ace), we have $P(AB) = P(B)$:
+
+$$
+P(B \mid A) = \frac{P(AB)}{P(A)} = \frac{P(B)}{P(A)} = \frac{P(B)}{1 - P(A^c)}
+$$
+
+The probability that no ace is chosen is $P(A^c) = \binom{48}{2}/\binom{52}{2}$, and $P(B) = \binom{4}{2}/\binom{52}{2}$, so
+
+$$
+P(B \mid A) = \frac{\binom{4}{2}/\binom{52}{2}}{1 - \binom{48}{2}/\binom{52}{2}} = 0.0303
+$$
+
+!!! note "Observation"
+    Knowing a *specific* ace (the spade ace) was chosen gives a higher probability of both aces ($0.0588$) than merely knowing *some* ace was chosen ($0.0303$). This is because the event $A_1$ is more specific (and smaller) than $A$, concentrating the conditional probability on outcomes where a second ace is more likely.

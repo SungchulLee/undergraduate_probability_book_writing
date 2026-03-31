@@ -1,4 +1,5 @@
 # Definition, Existence, and Relationship to MGF
+<<<<<<< Updated upstream
 
 ## Definition
 
@@ -116,3 +117,5 @@ for t in t_vals:
     cf_mc = np.mean(np.exp(1j * t * X_cauchy))
     print(f"  t={t}: exact={cf_exact:.4f}, MC real={cf_mc.real:.4f}")
 ```
+=======
+>>>>>>> Stashed changes

@@ -1,64 +1,73 @@
 # Coupon Collector Problem
 
-Collecting all $n$ coupon types requires about $n \ln n$ purchases — proved by decomposing the process into geometric phases and applying the WLLN.
+## Problem Setup
 
-## Definition
+Suppose there are $n$ different types of coupons (e.g., toys in happy meals). Each time you buy a happy meal, you receive one coupon uniformly at random. Let $T_n$ be the total number of purchases needed to collect **all** $n$ types.
 
-With $n$ coupon types, each purchase yields a uniformly random type. Let $T_n$ be the number of purchases to collect all $n$ types. Then:
-
-$$
-\frac{T_n}{n \ln n} \xrightarrow{p} 1
-$$
-
-## Explanation
-
-### Phase Decomposition
-
-Let $\tau_i$ = additional purchases needed for the $i$-th new coupon after holding $i-1$ distinct types. Then $T_n = \sum_{i=1}^n \tau_i$ where:
+**Claim**: As $n \to \infty$,
 
 $$
-\tau_i \sim \operatorname{Geom}\!\left(\frac{n - i + 1}{n}\right), \quad \text{independent}
+\frac{T_n}{n \log n} \xrightarrow{p} 1
 $$
 
-### Mean
+## Decomposition
+
+Let $\tau_i$ be the number of additional purchases needed to get the $i$-th **new** coupon after collecting $i-1$ distinct coupons. Then:
+
+**1. Decomposition:**
 
 $$
-E[T_n] = \sum_{i=1}^n \frac{n}{n - i + 1} = n \sum_{k=1}^n \frac{1}{k} = n H_n \sim n \ln n
+T_n = \sum_{i=1}^n \tau_i
 $$
 
-### Variance
+**2. Distribution:** When you have $i-1$ distinct coupons, the probability of getting a new one is $\frac{n-(i-1)}{n}$. So:
 
 $$
-\operatorname{Var}(T_n) = \sum_{i=1}^n \frac{n^2(1 - p_i)}{(n-i+1)^2 \cdot p_i^{-2}} \le n^2 \sum_{k=1}^n \frac{1}{k^2} \le \frac{\pi^2 n^2}{6}
+\tau_i \sim \text{Geo}\left(\frac{n-(i-1)}{n}\right)
 $$
 
-### Proof of Convergence
+**3. Independence:** The $\tau_i$ are independent (each phase starts fresh once a new coupon is found).
 
-By Chebyshev: $P\!\left(\left\lvert \frac{T_n}{n\ln n} - \frac{H_n}{\ln n}\right\rvert > \varepsilon\right) \le \frac{Cn^2}{\varepsilon^2 n^2 (\ln n)^2} \to 0$. Since $H_n/\ln n \to 1$, we get $T_n/(n\ln n) \xrightarrow{p} 1$.
+## Step 1: Compute the Mean
 
-## Examples
+$$
+\mathbb{E}T_n = \sum_{i=1}^n \mathbb{E}\tau_i = \sum_{i=1}^n \frac{n}{n-(i-1)} = n\left(1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}\right) = nH_n
+$$
 
-**Example.** With $n = 100$ types, expect about $100 \ln 100 \approx 461$ purchases.
+where $H_n = \sum_{k=1}^n \frac{1}{k}$ is the $n$-th harmonic number. Since $H_n \sim \log n$:
 
-```python
-import numpy as np
+$$
+\mathbb{E}T_n \sim n \log n
+$$
 
-np.random.seed(42)
+## Step 2: Compute the Variance
 
-def coupon_collector(n):
-    """Simulate collecting all n coupon types."""
-    collected = set()
-    count = 0
-    while len(collected) < n:
-        collected.add(np.random.randint(0, n))
-        count += 1
-    return count
+$$
+Var(T_n) = \sum_{i=1}^n Var(\tau_i) = \sum_{i=1}^n \frac{1 - p_i}{p_i^2} \leq \sum_{i=1}^n \frac{n^2}{(n-i+1)^2} = n^2 \sum_{k=1}^n \frac{1}{k^2} \leq Cn^2
+$$
 
-n = 100
-H_n = sum(1/k for k in range(1, n + 1))
-E_T = n * H_n
+since $\sum_{k=1}^{\infty} 1/k^2 = \pi^2/6 < \infty$.
 
-trials = [coupon_collector(n) for _ in range(10_000)]
-print(f"n={n}: E[T] = {E_T:.1f}, simulated mean = {np.mean(trials):.1f}")
-print(f"n*ln(n) = {n * np.log(n):.1f}")
-```
+## Step 3: Apply Chebyshev's Inequality
+
+Choose $a_n = n\log n$. Then for any $\varepsilon > 0$:
+
+$$
+P\left(\left|\frac{T_n - \mathbb{E}T_n}{a_n}\right| > \varepsilon\right) \leq \frac{Var(T_n)}{\varepsilon^2 a_n^2} \leq \frac{Cn^2}{\varepsilon^2 (n\log n)^2} = \frac{C}{\varepsilon^2 (\log n)^2} \to 0
+$$
+
+We also need $\mathbb{E}T_n / a_n \to 1$:
+
+$$
+\frac{\mathbb{E}T_n}{n\log n} = \frac{nH_n}{n\log n} = \frac{H_n}{\log n} \to 1
+$$
+
+Combining these two facts:
+
+$$
+\frac{T_n}{n\log n} = \frac{T_n - \mathbb{E}T_n}{n\log n} + \frac{\mathbb{E}T_n}{n\log n} \xrightarrow{p} 0 + 1 = 1
+$$
+
+## Interpretation
+
+To collect all $n$ coupons, you need approximately $n\ln n$ purchases. For example, with $n = 100$ coupon types, you'd expect to need about $100 \times \ln(100) \approx 461$ purchases to collect them all.

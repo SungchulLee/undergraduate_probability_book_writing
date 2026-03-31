@@ -1,77 +1,68 @@
 # Law of Iterated Expectations (Tower Property)
 
-The overall average of $X$ equals the average of the conditional averages — compute group means first, then average over groups.
-
-## Definition
+## Statement
 
 For any random variables $X$ and $Y$:
 
 $$
-E[X] = E\bigl[E[X \mid Y]\bigr]
+E(X) = E\bigl[E(X \mid Y)\bigr]
 $$
 
-The outer expectation averages over the randomness in $Y$. Explicitly:
+This is also called the **tower property** or the **law of total expectation**. The outer expectation is taken over the randomness in $Y$.
 
-**Discrete:**
+## Properties of Conditional Expectation
 
-$$
-E[X] = \sum_y E[X \mid Y = y]\,P(Y = y)
-$$
+The following properties hold and are essential tools for computing conditional expectations:
 
-**Continuous:**
+**(1) Linearity:** $E(X + Y \mid Z) = E(X \mid Z) + E(Y \mid Z)$
 
-$$
-E[X] = \int_{-\infty}^{\infty} E[X \mid Y = y]\,f_Y(y)\,dy
-$$
+**(2) Scaling:** $E(aX \mid Y) = a \, E(X \mid Y)$
 
-## Explanation
+**(3) Known values pull out:** $E(g(Y) \mid Y) = g(Y)$
 
-### Proof (Discrete Case)
+**(4) Factoring out known:** $E(g(Y) \cdot X \mid Y) = g(Y) \cdot E(X \mid Y)$
+
+**(5) Independence:** $E(X \mid Y) = E(X)$ if $X$ and $Y$ are independent
+
+**(6) Tower property:** $E(X) = E\bigl[E(X \mid Y)\bigr]$
+
+Properties (3) and (4) capture the idea that when conditioning on $Y$, any function of $Y$ behaves like a constant and can be pulled out of the expectation.
+
+## Proof of the Tower Property (Discrete Case)
 
 $$
 \begin{aligned}
-E\bigl[E[X \mid Y]\bigr] &= \sum_y E[X \mid Y = y]\,P(Y = y) \\
-&= \sum_y \left(\sum_x x\,P(X = x \mid Y = y)\right) P(Y = y) \\
-&= \sum_x x \sum_y P(X = x \mid Y = y)\,P(Y = y) \\
-&= \sum_x x\,P(X = x) = E[X]
+E\bigl[E(X \mid Y)\bigr] &= \sum_{y_j} E(X \mid Y = y_j) \, P(Y = y_j) \\[6pt]
+&= \sum_{y_j} \left( \sum_{x_i} x_i \, P(X = x_i \mid Y = y_j) \right) P(Y = y_j) \\[6pt]
+&= \sum_{x_i} x_i \left( \sum_{y_j} P(X = x_i \mid Y = y_j) \, P(Y = y_j) \right) \\[6pt]
+&= \sum_{x_i} x_i \, P(X = x_i) \\[6pt]
+&= E(X)
 \end{aligned}
 $$
 
-The key step uses the law of total probability to collapse the inner sum.
+The key step uses the law of total probability: $\sum_{y_j} P(X = x_i \mid Y = y_j) \, P(Y = y_j) = P(X = x_i)$.
 
-### Intuition
+## Intuition
 
-The tower property is a weighted average of weighted averages. To find the mean height of all students in a university, compute the mean height in each department and then take a weighted average by department size. The result equals the overall mean.
+The tower property says: to compute the overall average of $X$, you can first compute the average of $X$ within each group defined by $Y$, and then take a weighted average of these group averages (weighted by the probability of each group). This is the same idea behind stratified sampling or group-by-then-aggregate operations.
 
-### Properties of Conditional Expectation
+## Example: Symmetry Argument
 
-These identities hold as equalities between random variables and are essential for applying the tower property:
+Let $X$ and $Y$ be iid $\text{Binomial}(n, p)$. Compute $E(X \mid X + Y = m)$.
 
-| Property | Statement |
-|:---------|:----------|
-| Linearity | $E[aX + bZ \mid Y] = a\,E[X \mid Y] + b\,E[Z \mid Y]$ |
-| Known values | $E[h(Y) \mid Y] = h(Y)$ |
-| Factoring out | $E[h(Y) \cdot X \mid Y] = h(Y) \cdot E[X \mid Y]$ |
-| Independence | $E[X \mid Y] = E[X]$ when $X \perp Y$ |
-| Tower | $E\bigl[E[X \mid Y]\bigr] = E[X]$ |
+**Known information:** Since $X + Y = m$ is given, $E(X + Y \mid X + Y = m) = m$.
 
-### Strategy for Computing $E[X]$
+**By linearity:** $E(X + Y \mid X + Y = m) = E(X \mid X + Y = m) + E(Y \mid X + Y = m)$.
 
-1. Choose a conditioning variable $Y$ that simplifies the problem
-2. Compute $E[X \mid Y = y]$ for each $y$
-3. Average over $Y$: $E[X] = E\bigl[E[X \mid Y]\bigr]$
+**By symmetry:** Since $X$ and $Y$ are iid, they play identical roles in determining $X + Y$. Therefore $E(X \mid X + Y = m) = E(Y \mid X + Y = m)$.
 
-The tower property converts hard marginal calculations into easier conditional ones.
-
-## Examples
-
-**Example.** $X, Y$ iid $\text{Bin}(n, p)$. Find $E[X \mid X + Y = m]$.
-
-By the tower property applied to $X + Y$: $E[X + Y \mid X + Y = m] = m$. By linearity and symmetry (since $X$ and $Y$ are iid), $E[X \mid X + Y = m] = E[Y \mid X + Y = m]$. Therefore:
+**Combining:** $2 \, E(X \mid X + Y = m) = m$, so:
 
 $$
-E[X \mid X + Y = m] = \frac{m}{2}
+E(X \mid X + Y = m) = \frac{m}{2}
 $$
+
+## Python Simulation
 
 ```python
 import numpy as np
@@ -84,12 +75,13 @@ X = np.random.binomial(n, p, n_sim)
 Y = np.random.binomial(n, p, n_sim)
 S = X + Y
 
-# Verify E[X | X+Y = m] = m/2
+# Verify E(X | X+Y = m) = m/2
 for m in [3, 5, 8, 10]:
     mask = (S == m)
-    if mask.sum() > 100:
-        print(f"E[X | X+Y={m}] = {X[mask].mean():.3f}  (theory: {m/2:.1f})")
+    if mask.sum() > 0:
+        cond_mean = X[mask].mean()
+        print(f"E(X | X+Y={m}) = {cond_mean:.3f}  (theory: {m/2:.1f})")
 
-# Verify tower property
-print(f"\nE[X] = {X.mean():.4f}  (theory: {n*p})")
+# Verify tower property: E[E(X|Y)] = E(X)
+print(f"\nE(X) = {X.mean():.4f}  (theory: {n*p})")
 ```

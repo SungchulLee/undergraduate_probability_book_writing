@@ -1,69 +1,84 @@
-# Chernoff Bound
+# Chernoff's Bound
 
-By exponentiating and applying Markov's inequality, Chernoff's bound leverages the full MGF to produce exponentially decaying tail bounds — far tighter than Chebyshev for large deviations.
+## Statement
 
-## Definition
-
-For any random variable $X$ and $a > 0$:
+For any random variable $X$ and $\varepsilon > 0$,
 
 $$
-P(X \ge a) \le \min_{t > 0} \frac{M_X(t)}{e^{ta}}
+P(X \geq \varepsilon) \leq \min_{t > 0} \frac{\mathbb{E}e^{tX}}{e^{t\varepsilon}}
 $$
 
-where $M_X(t) = E[e^{tX}]$ is the moment generating function.
+## Proof
 
-## Explanation
-
-### Proof
-
-For any $t > 0$: $X \ge a \iff e^{tX} \ge e^{ta}$. By Markov:
+For any $t > 0$:
 
 $$
-P(X \ge a) = P(e^{tX} \ge e^{ta}) \le \frac{E[e^{tX}]}{e^{ta}} = \frac{M_X(t)}{e^{ta}}
+X \geq \varepsilon \iff tX \geq t\varepsilon \iff e^{tX} \geq e^{t\varepsilon}
 $$
 
-Optimizing over $t > 0$ gives the tightest bound.
-
-### Why It Excels for Large Deviations
-
-Chernoff uses the MGF, which encodes all moments. The optimization over $t$ adapts the bound to the specific threshold, typically giving exponential decay in the deviation size. For moderate deviations near the mean, it can be loose.
-
-### Comparison Table for Bin(1000, 0.01)
-
-| Bound | $P(X \ge 20)$ | $P(X \ge 100)$ |
-|:---|:---|:---|
-| Markov | $\le 0.50$ | $\le 0.10$ |
-| Chebyshev | $\le 0.099$ | $\le 0.0012$ |
-| Cantelli | $\le 0.090$ | $\le 0.0012$ |
-| Chernoff | $\le 0.021$ | $\le 1.2 \times 10^{-61}$ |
-
-## Examples
-
-**Example.** Chernoff bound for $X \sim \operatorname{Pois}(100)$ at $P(X \ge 200)$.
-
-Using $M_X(t) = e^{\lambda(e^t - 1)}$ with $t = \ln 2$:
+Since $e^{tX}$ is nonneg, apply Markov's inequality:
 
 $$
-P(X \ge 200) \le \frac{e^{100(2-1)}}{2^{200}} = \frac{e^{100}}{2^{200}} \approx 1.67 \times 10^{-17}
+P(X \geq \varepsilon) = P(e^{tX} \geq e^{t\varepsilon}) \leq \frac{\mathbb{E}e^{tX}}{e^{t\varepsilon}}
 $$
 
-```python
-import numpy as np
-from scipy import stats
+Since this holds for all $t > 0$, we take the minimum.
 
-lam = 100
-a = 200
+## Why Chernoff is Often the Tightest
 
-# Chernoff with t = ln(a/lam)
-t_opt = np.log(a / lam)
-chernoff = np.exp(lam * (np.exp(t_opt) - 1) - t_opt * a)
+Chernoff's bound uses the **moment generating function** $M_X(t) = \mathbb{E}e^{tX}$, which encodes information about all moments. By optimizing over $t$, the bound adapts to the full shape of the distribution, often giving exponentially decaying bounds.
 
-exact = 1 - stats.poisson.cdf(a - 1, lam)
-markov = lam / a
-chebyshev = lam / (a - lam)**2
+## Example: Binomial $X \sim B(1000, 0.01)$
 
-print(f"P(X ≥ {a}): exact={exact:.2e}")
-print(f"Markov:    ≤ {markov:.4f}")
-print(f"Chebyshev: ≤ {chebyshev:.4f}")
-print(f"Chernoff:  ≤ {chernoff:.2e}")
-```
+The MGF of a single $X_i \sim B(1, p)$ is $\mathbb{E}e^{tX_i} = 1 + p(e^t - 1)$. For $X = \sum_{i=1}^n X_i$:
+
+$$
+\mathbb{E}e^{tX} = \left(1 + p(e^t - 1)\right)^n \leq e^{np(e^t - 1)}
+$$
+
+using the inequality $1 + x \leq e^x$.
+
+With $n = 1000$, $p = 0.01$, so $np = 10$. Choosing $t$ such that $e^t = 2$ (i.e., $t = \log 2$):
+
+$$
+P(X \geq 20) \leq \frac{e^{10(2-1)}}{e^{20\log 2}} = \frac{e^{10}}{2^{20}} = 0.0210
+$$
+
+This is much tighter than Markov ($0.5$), Chebyshev ($0.099$), or one-sided Chebyshev ($0.0901$).
+
+For $P(X \geq 100)$:
+
+$$
+P(X \geq 100) \leq \frac{e^{10(2-1)}}{e^{100\log 2}} = \frac{e^{10}}{2^{100}} = 1.2204 \times 10^{-61}
+$$
+
+## Example: Poisson $X \sim Poi(100)$
+
+The MGF is $\mathbb{E}e^{tX} = e^{\lambda(e^t - 1)}$ with $\lambda = 100$. Choosing $e^t = 2$:
+
+$$
+P(X \geq 200) \leq \frac{e^{100(2-1)}}{e^{200\log 2}} = \frac{e^{100}}{2^{200}} = 1.6728 \times 10^{-17}
+$$
+
+## Comparison Table: $B(1000, 0.01)$
+
+| Bound | $P(X \geq 20)$ | $P(X \geq 100)$ |
+|-------|-----------------|------------------|
+| Markov | $0.5$ | $0.1$ |
+| Chebyshev | $0.0990$ | $0.0012$ |
+| One-sided Chebyshev | $0.0901$ | $0.0012$ |
+| Chernoff | $0.0210$ | $1.22 \times 10^{-61}$ |
+| CLT approximation | $7.41 \times 10^{-4}$ | $\approx 0$ |
+
+## Comparison Table: $Poi(100)$
+
+| Bound | $P(X \geq 200)$ | $P(X \geq 110)$ |
+|-------|------------------|------------------|
+| Markov | $0.5$ | $0.9091$ |
+| Chebyshev | $0.0100$ | $1$ |
+| One-sided Chebyshev | $0.0099$ | $0.5$ |
+| Chernoff | $1.67 \times 10^{-17}$ | $0.6162$ |
+| CLT approximation | $7.62 \times 10^{-24}$ | $0.1587$ |
+
+!!! note
+    Chernoff's bound excels for **large deviations** (far from the mean) due to its exponential decay, but can be loose for moderate deviations close to the mean.

@@ -1,75 +1,65 @@
-# Central Limit Theorem
+# Central Limit Theorem (Statement)
 
-The standardized sum of iid random variables converges in distribution to the standard normal, regardless of the original distribution — the most important limit theorem in probability.
+## Setup
 
-## Definition
+Let $X_1, X_2, \ldots$ be **iid** random variables with:
 
-Let $X_1, X_2, \ldots$ be iid with mean $\mu$ and finite variance $\sigma^2 > 0$. Then as $n \to \infty$:
+- Mean: $E[X_i] = \mu$
+- Variance: $\text{Var}(X_i) = \sigma^2 < \infty$
 
-$$
-\frac{S_n - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0, 1)
-$$
+Define the partial sum:
 
-where $S_n = X_1 + \cdots + X_n$. Equivalently, for all $x \in \mathbb{R}$:
+$$S_n = X_1 + X_2 + \cdots + X_n$$
 
-$$
-P\!\left(\frac{S_n - n\mu}{\sigma\sqrt{n}} \le x\right) \to \Phi(x)
-$$
+Then $S_n$ has mean $n\mu$ and variance $n\sigma^2$.
 
-## Explanation
+## The Central Limit Theorem
 
-### What the CLT Says
+!!! info "CLT"
+    Let $X_1, X_2, \ldots$ be iid with mean $\mu$ and variance $\sigma^2$. Then:
 
-| Quantity | Mean | Variance | Distribution |
-|:---|:---:|:---:|:---|
-| $X_i$ | $\mu$ | $\sigma^2$ | Arbitrary |
-| $S_n$ | $n\mu$ | $n\sigma^2$ | $\approx N(n\mu,\; n\sigma^2)$ for large $n$ |
-| $\bar{X}_n = S_n/n$ | $\mu$ | $\sigma^2/n$ | $\approx N(\mu,\; \sigma^2/n)$ for large $n$ |
+    $$\frac{S_n - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0, 1) \quad \text{as } n \to \infty$$
 
-The CLT is an **approximation** statement: the exact distribution of $S_n$ is generally not normal, but the approximation improves with $n$.
+    That is, for any $x$:
 
-### Normal Case vs General Case
+    $$P\left(\frac{S_n - n\mu}{\sigma\sqrt{n}} \leq x\right) \to \Phi(x) = \int_{-\infty}^{x} \frac{1}{\sqrt{2\pi}} e^{-s^2/2}\, ds$$
 
-| | iid $N(\mu, \sigma^2)$ | iid non-normal |
-|:---|:---|:---|
-| $S_n$ | Exactly $N(n\mu, n\sigma^2)$ | $\approx N(n\mu, n\sigma^2)$ for large $n$ |
-| CLT needed? | No | Yes |
+## What the CLT Says
 
-### Universality
+| Random Variable | Mean | Variance | Distribution |
+|----------------|------|----------|-------------|
+| $X_i$ | $\mu$ | $\sigma^2$ | **Not** necessarily Normal |
+| $S_n$ | $n\mu$ | $n\sigma^2$ | **Not** Normal, but **approximately normal** for large $n$ |
+| $\frac{S_n - n\mu}{\sigma\sqrt{n}}$ | $0$ | $1$ | **Not** Normal, but **approximately** $N(0,1)$ for large $n$ |
 
-The CLT applies regardless of the shape of the $X_i$ distribution: Bernoulli, exponential, Poisson, Beta, Gamma, or any distribution with finite variance. Even with $n = 20$--$30$, the normal approximation is typically excellent.
+## Contrast: Normal Case vs General Case
 
-### Conditions
+When the $X_i$ are themselves normal, the sum $S_n$ is **exactly** normal for all $n$ — no approximation is needed.
 
-- **iid**: identically distributed and independent
-- **Finite variance**: $\sigma^2 < \infty$ (fails for Cauchy)
-- More general versions (Lindeberg, Lyapunov) relax the "identical" requirement
+| | iid $N(\mu, \sigma^2)$ | iid with mean $\mu$, variance $\sigma^2$ (not Normal) |
+|---|---|---|
+| $S_n$ | $N(n\mu, n\sigma^2)$ exactly | $\approx N(n\mu, n\sigma^2)$ for large $n$ |
+| $\frac{S_n - n\mu}{\sigma\sqrt{n}}$ | $N(0,1)$ exactly | $\approx N(0,1)$ for large $n$ |
 
-## Examples
+## Practical Approximation
 
-**Example.** $X_i \sim \operatorname{Exp}(2)$, so $\mu = 0.5$, $\sigma^2 = 0.25$. For $n = 50$:
+For large $n$, we use:
 
-$$
-S_{50} \approx N(25, 12.5)
-$$
+$$S_n \approx N(n\mu, \, n\sigma^2)$$
 
-```python
-import numpy as np
-from scipy import stats
+or equivalently:
 
-np.random.seed(42)
-n_sim = 100_000
+$$\bar{X}_n = \frac{S_n}{n} \approx N\left(\mu, \, \frac{\sigma^2}{n}\right)$$
 
-# Sum of 50 iid Exp(2) random variables
-n = 50
-lam = 2.0
-mu, sig2 = 1/lam, 1/lam**2
+## Simulation Evidence
 
-S = np.random.exponential(1/lam, (n_sim, n)).sum(axis=1)
-Z = (S - n * mu) / np.sqrt(n * sig2)
+The CLT applies regardless of the original distribution of $X_i$. The following all produce approximately normal sums when $n$ is large:
 
-# KS test against N(0,1)
-ks_stat, p_val = stats.kstest(Z, 'norm')
-print(f"Standardized sum: mean={Z.mean():.4f}, var={Z.var():.4f}")
-print(f"KS test vs N(0,1): stat={ks_stat:.4f}, p={p_val:.4f}")
-```
+- $X_i \sim \text{Bernoulli}(0.7)$: right-skewed discrete
+- $X_i \sim \text{Exp}(2)$: right-skewed continuous
+- $X_i \sim \text{Po}(2)$: right-skewed discrete
+- $X_i \sim \text{Beta}(2, 5)$: skewed continuous on $[0,1]$
+- $X_i \sim F(2, 5)$: heavily right-skewed
+- $X_i \sim \text{Gamma}(2, 5)$: right-skewed continuous
+
+Even with $n = 20$, the histograms of $S_{20}$ are strikingly bell-shaped for all these distributions.

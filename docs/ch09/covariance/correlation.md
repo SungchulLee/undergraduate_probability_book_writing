@@ -1,4 +1,5 @@
 # Correlation Coefficient
+<<<<<<< Updated upstream
 
 ## Motivation
 
@@ -117,3 +118,5 @@ y = np.array([2, 4, 5, 4, 5])
 rho = np.corrcoef(x, y)[0, 1]
 print(f"Sample correlation: {rho:.4f}")  # 0.7746
 ```
+=======
+>>>>>>> Stashed changes

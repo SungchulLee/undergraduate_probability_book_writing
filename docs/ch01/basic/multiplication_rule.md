@@ -1,36 +1,41 @@
 # Multiplication Rule
 
-The multiplication rule is the most fundamental counting principle. It converts a multi-stage procedure into a single product, and underpins nearly every formula in combinatorics.
+## Overview
 
-## Definition
+The **multiplication rule** (also called the **counting principle** or **rule of product**) is the most fundamental tool in combinatorics. It states that if a procedure can be broken into sequential stages, and the number of choices at each stage is independent of the choices made at previous stages, then the total number of outcomes is the product of the choices at each stage.
 
-If a procedure consists of $k$ sequential stages with $n_1, n_2, \ldots, n_k$ possible outcomes at each stage (where the count at each stage does not depend on the choices made at earlier stages), then the total number of outcomes is
+## Statement
 
-$$
-n_1 \times n_2 \times \cdots \times n_k
-$$
+If an experiment consists of two sequential stages where:
 
-The key requirement is **independence of stage counts**: the number of choices available at stage $i$ must be the same regardless of which outcomes occurred at stages $1, \ldots, i-1$. When this condition fails (e.g., "choose a letter, then choose a digit different from the letter" — which makes no sense), the multiplication rule does not directly apply.
+- Stage 1 has $m$ possible outcomes
+- Stage 2 has $n$ possible outcomes (regardless of Stage 1's outcome)
 
-## Explanation
+then the total number of outcomes for the combined experiment is:
 
-### Tree Diagram Interpretation
+$$m \times n$$
 
-The multiplication rule is most naturally visualized as a **tree diagram**. Each stage of the experiment corresponds to a level of branching. Every path from the root to a leaf represents one outcome, and the total number of leaves equals the product of the branching factors at each level.
+More generally, if an experiment consists of $k$ sequential stages with $n_1, n_2, \ldots, n_k$ possible outcomes respectively, the total number of outcomes is:
 
-For a two-stage experiment with $m$ choices at Stage 1 and $n$ choices at Stage 2, the tree has $m$ branches at the first level, each splitting into $n$ branches at the second level, for $m \times n$ leaves total.
+$$n_1 \times n_2 \times \cdots \times n_k$$
 
-### When Stage Counts Vary
+## Tree Diagram Interpretation
 
-Sometimes the number of choices at a later stage depends on earlier choices — for instance, "choose two distinct elements from $\{1, \ldots, n\}$." Here Stage 2 always has $n-1$ choices regardless of which element was chosen first, so the multiplication rule still applies: the count is $n(n-1)$.
+The multiplication rule is most naturally understood through **tree diagrams**. Each stage of the experiment corresponds to a level of branching in the tree. The total number of paths from the root to the leaves gives the total count.
 
-But if different first-stage choices led to *different* numbers of second-stage options, you would need to use a tree diagram with unequal branching and sum the leaf counts (the addition rule), rather than multiply.
+### Example — Number of Paths from $A$ to $C$
 
-## Examples
+Consider counting the number of paths from $A$ to $C$, where travel passes through an intermediate point $B$.
 
-**Example 1 (Paths through a network).** Count the paths from $A$ to $C$ via $B$, where there are 2 paths from $A$ to $B$ and 3 paths from $B$ to $C$.
+$$A \longrightarrow B \longrightarrow C$$
 
-| $A \to B$ | $B \to C$ | Combined |
+**Branching of paths from $A$ to $B$:** Suppose there are 2 paths, labeled $1$ and $2$.
+
+**Branching of paths from $B$ to $C$:** Suppose there are 3 paths, labeled $a$, $b$, and $c$.
+
+Using a tree diagram, we enumerate all paths from $A$ to $C$:
+
+| Path from $A$ to $B$ | Path from $B$ to $C$ | Combined path $A$ to $C$ |
 |:---:|:---:|:---:|
 | 1 | $a$ | $1a$ |
 | 1 | $b$ | $1b$ |
@@ -39,41 +44,66 @@ But if different first-stage choices led to *different* numbers of second-stage 
 | 2 | $b$ | $2b$ |
 | 2 | $c$ | $2c$ |
 
-Total: $2 \times 3 = 6$ paths.
+By the multiplication rule:
 
----
+$$\text{Number of paths from } A \text{ to } C = 2 \times 3 = 6$$
 
-**Example 2 (Choosing officers).** From $n$ people, choose a president, vice-president, and secretary (all distinct).
+## Choosing Officers — A Classic Application
 
-- President: $n$ choices
-- Vice-president: $n - 1$ choices (anyone except the president)
-- Secretary: $n - 2$ choices
+Suppose there are $n$ people and we wish to choose a **president**, **vice-president**, and **secretary** (all distinct).
 
-Total: $n(n-1)(n-2)$. For $n = 10$: $10 \times 9 \times 8 = 720$.
+- **Choose president:** $n$ choices (number of branching $= n$)
+- **Choose vice-president:** $n - 1$ choices (number of branching $= n - 1$)
+- **Choose secretary:** $n - 2$ choices (number of branching $= n - 2$)
 
-This is a **permutation** — an ordered selection without repetition — and leads directly to the general permutation formula.
+By the multiplication rule (via tree diagram):
 
----
+$$\text{Number of ways to choose president, vice-president, secretary} = n \times (n-1) \times (n-2)$$
 
-**Example 3 (License plates).** A license plate consists of 3 letters followed by 4 digits. How many plates are possible if repetition is allowed?
+This is a **permutation** — an ordered selection — and it forms the basis for the general permutation formula discussed in later sections.
 
-$$
-26 \times 26 \times 26 \times 10 \times 10 \times 10 \times 10 = 26^3 \times 10^4 = 175{,}760{,}000
-$$
+## Python Implementation
 
 ```python
+import itertools
 from math import prod
-from itertools import permutations
 
-# Example 2: Officers from 10 people
+def count_by_multiplication_rule(stage_counts):
+    """
+    Apply the multiplication rule.
+    
+    Parameters
+    ----------
+    stage_counts : list of int
+        Number of choices at each stage.
+    
+    Returns
+    -------
+    int
+        Total number of outcomes.
+    """
+    return prod(stage_counts)
+
+# Example: Paths from A to C
+paths_A_to_B = 2
+paths_B_to_C = 3
+total = count_by_multiplication_rule([paths_A_to_B, paths_B_to_C])
+print(f"Number of paths from A to C: {total}")
+# Output: Number of paths from A to C: 6
+
+# Example: Choosing president, VP, secretary from 10 people
 n = 10
-officers = n * (n - 1) * (n - 2)
-verification = len(list(permutations(range(1, n + 1), 3)))
-print(f"Officers from {n} people: {officers} (verified: {verification})")
-# Output: Officers from 10 people: 720 (verified: 720)
+officers = count_by_multiplication_rule([n, n-1, n-2])
+print(f"Number of ways to choose 3 officers from {n} people: {officers}")
+# Output: Number of ways to choose 3 officers from 10 people: 720
 
-# Example 3: License plates
-plates = 26**3 * 10**4
-print(f"License plates: {plates:,}")
-# Output: License plates: 175,760,000
+# Verification via enumeration
+people = list(range(1, n+1))
+ordered_triples = list(itertools.permutations(people, 3))
+print(f"Verification by enumeration: {len(ordered_triples)}")
+# Output: Verification by enumeration: 720
 ```
+
+## Key Takeaway
+
+The multiplication rule transforms a complex counting problem into a sequence of simpler counting problems. The tree diagram provides both a visual proof and a systematic enumeration method: the number of leaves equals the product of the branching factors at each level.

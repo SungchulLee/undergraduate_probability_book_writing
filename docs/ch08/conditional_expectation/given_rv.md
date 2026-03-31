@@ -1,80 +1,54 @@
 # Conditional Expectation Given a Random Variable
 
-Letting $y$ vary over all values of $Y$ turns the number $E[X \mid Y = y]$ into a random variable $E[X \mid Y]$ — a function of $Y$.
+## From Numbers to Random Variables
 
-## Definition
+While $E(X \mid Y = y)$ is a number for each fixed $y$, we can define $E(X \mid Y)$ as a **random variable** by letting $y$ vary over all possible values of $Y$.
 
-Define $g(y) = E[X \mid Y = y]$. The **conditional expectation of $X$ given $Y$** is the random variable
-
-$$
-E[X \mid Y] = g(Y)
-$$
-
-Formally, $E[X \mid Y](\omega) = E[X \mid Y = Y(\omega)]$.
-
-When $Y$ is discrete with values $y_1, y_2, \ldots$:
+The key idea is that as the outcome $\omega$ determines $Y(\omega) = y$, which in turn determines $P(X = x \mid Y = y)$, which in turn determines $E(X \mid Y = y)$:
 
 $$
-E[X \mid Y] = \begin{cases}
-E[X \mid Y = y_1] & \text{if } Y = y_1 \\
-E[X \mid Y = y_2] & \text{if } Y = y_2 \\
-\vdots
+\omega \;\longrightarrow\; y = Y(\omega) \;\longrightarrow\; P(X = x \mid Y = y) \;\longrightarrow\; E(X \mid Y = y)
+$$
+
+Formally:
+
+$$
+E(X \mid Y)(\omega) = E(X \mid Y = Y(\omega))
+$$
+
+## $E(X \mid Y)$ as a Function of $Y$
+
+$E(X \mid Y)$ is a function of the random variable $Y$. If we define $g(y) = E(X \mid Y = y)$, then:
+
+$$
+E(X \mid Y) = g(Y)
+$$
+
+Since $g(Y)$ is a function of a random variable, $E(X \mid Y)$ is itself a random variable. It inherits its randomness entirely from $Y$.
+
+## Discrete Representation
+
+When $Y$ takes values $y_1, y_2, \ldots, y_n$, the random variable $E(X \mid Y)$ can be written explicitly:
+
+$$
+E(X \mid Y) = \begin{cases}
+E(X \mid Y = y_1) & \text{if } Y = y_1, \text{ with probability } P(Y = y_1) \\
+E(X \mid Y = y_2) & \text{if } Y = y_2, \text{ with probability } P(Y = y_2) \\
+\vdots & \vdots \\
+E(X \mid Y = y_n) & \text{if } Y = y_n, \text{ with probability } P(Y = y_n)
 \end{cases}
 $$
 
-## Explanation
+## Example: Joint PDF (Continued)
 
-### From Number to Random Variable
-
-The chain $\omega \to Y(\omega) = y \to E[X \mid Y = y]$ shows how the randomness of $E[X \mid Y]$ is inherited entirely from $Y$. Once $Y$ is observed, $E[X \mid Y]$ becomes a known number.
-
-### Key Properties
-
-All the following hold as identities between random variables:
-
-1. **Linearity:** $E[aX + bZ \mid Y] = a\,E[X \mid Y] + b\,E[Z \mid Y]$
-2. **Known values pull out:** $E[h(Y) \mid Y] = h(Y)$
-3. **Factoring out known:** $E[h(Y) \cdot X \mid Y] = h(Y) \cdot E[X \mid Y]$
-4. **Independence:** If $X \perp Y$, then $E[X \mid Y] = E[X]$ (a constant)
-
-Properties (2) and (3) express the idea that conditioning on $Y$ makes any function of $Y$ behave like a constant.
-
-### Variance Version
-
-Similarly, $\text{Var}(X \mid Y)$ is the random variable obtained by evaluating $\text{Var}(X \mid Y = y)$ at $Y$:
+From the joint PDF example where $f(x, y) = \frac{e^{-x/y} e^{-y}}{y}$, we found $E(X \mid Y = y) = y$. Therefore:
 
 $$
-\text{Var}(X \mid Y) = E[X^2 \mid Y] - (E[X \mid Y])^2
+E(X \mid Y) = Y
 $$
 
-## Examples
+$$
+\text{Var}(X \mid Y) = Y^2
+$$
 
-**Example.** Three fair coin flips. $X$ = total heads, $Y$ = indicator of head on first flip.
-
-- $E[X \mid Y = 1] = (3 + 2 + 2 + 1)/4 = 2$
-- $E[X \mid Y = 0] = (2 + 1 + 1 + 0)/4 = 1$
-
-So $E[X \mid Y] = Y + 1$, taking value 2 or 1 each with probability $1/2$.
-
-```python
-import numpy as np
-
-np.random.seed(42)
-n_sim = 100_000
-
-flips = np.random.randint(0, 2, size=(n_sim, 3))
-X = flips.sum(axis=1)
-Y = flips[:, 0]
-
-E_X_given_Y1 = X[Y == 1].mean()
-E_X_given_Y0 = X[Y == 0].mean()
-
-print(f"E[X | Y=1] = {E_X_given_Y1:.4f}  (theory: 2.0)")
-print(f"E[X | Y=0] = {E_X_given_Y0:.4f}  (theory: 1.0)")
-
-# Verify E[E[X|Y]] = E[X]
-E_X = X.mean()
-E_EXY = 0.5 * E_X_given_Y1 + 0.5 * E_X_given_Y0
-print(f"\nE[X] = {E_X:.4f}")
-print(f"E[E[X|Y]] = {E_EXY:.4f}  (should match)")
-```
+Here $E(X \mid Y) = Y$ is a random variable — it takes whatever value $Y$ happens to take.

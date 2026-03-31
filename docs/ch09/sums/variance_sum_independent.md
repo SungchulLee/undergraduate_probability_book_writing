@@ -1,4 +1,5 @@
 # Variance of a Sum (Independent Case)
+<<<<<<< Updated upstream
 
 ## The Simplification
 
@@ -120,3 +121,5 @@ dice = np.random.randint(1, 7, (N, 10))
 S_dice = dice.sum(axis=1)
 print(f"\nVar(10 dice) theory = {10*35/12:.2f}, MC = {np.var(S_dice):.2f}")
 ```
+=======
+>>>>>>> Stashed changes

@@ -1,4 +1,5 @@
 # PGF of Common Discrete Distributions
+<<<<<<< Updated upstream
 
 ## Bernoulli$(p)$
 
@@ -91,3 +92,5 @@ for name, G in pgfs.items():
     mu, var = exact[name]
     print(f"{name}:  E[X]={EX:.4f} (exact {mu:.4f}),  Var={VarX:.4f} (exact {var:.4f})")
 ```
+=======
+>>>>>>> Stashed changes

@@ -1,4 +1,5 @@
 # Comparison with Binomial
+<<<<<<< Updated upstream
 
 ## The Core Question
 
@@ -71,3 +72,5 @@ The probabilities are very close. With $n/N = 0.01$, the Binomial is an excellen
 - **Use Hypergeometric** when sampling without replacement from a finite, known population (e.g., quality inspection of a batch, card games, committee selection).
 - **Use Binomial** when sampling with replacement, or when the population is so large that the sampling fraction $n/N$ is negligible.
 - **Practical guideline**: if $n/N < 0.05$, use the Binomial for simplicity. If $n/N \ge 0.05$, the Hypergeometric is more accurate.
+=======
+>>>>>>> Stashed changes

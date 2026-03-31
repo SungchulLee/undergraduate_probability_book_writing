@@ -1,4 +1,5 @@
 # Definition and Notation
+<<<<<<< Updated upstream
 
 ## Order Statistics
 
@@ -82,3 +83,5 @@ Order statistics: [0.1560 0.3745 0.5987 0.7320 0.9507]
   Median  X_(3) = 0.5987
   Range         = 0.7947
 ```
+=======
+>>>>>>> Stashed changes

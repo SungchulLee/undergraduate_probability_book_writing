@@ -1,43 +1,103 @@
 # Random Points and the Unit Circle
 
-Uniform random points in the square, classified by whether they fall inside the unit circle, provide a visual introduction to Monte Carlo estimation of $\pi$.
+## 100 Random Points in $[0,1]^2$
 
-## Definition
+Generating random points uniformly in the unit square is straightforward: generate two independent $U(0,1)$ samples for the $x$- and $y$-coordinates.
 
-Generate $(X_i, Y_i)$ uniformly in $[-1,1]^2$. The point is inside the unit circle iff $X_i^2 + Y_i^2 \le 1$. The fraction inside estimates:
+**MATLAB:**
 
-$$
-\frac{\text{Area of circle}}{\text{Area of square}} = \frac{\pi}{4}
-$$
+```matlab
+clear all; close all; clc; rng('default')
 
-So $\hat{\pi} = 4 \times \frac{\text{points inside}}{n}$.
+n = 100;
+x = rand(2, n);
 
-## Explanation
+plot(x(1,:), x(2,:), 'o')
+```
 
-### Why It Works
-
-Each $(X_i, Y_i)$ is iid $U([-1,1]^2)$. Letting $R_i = \mathbf{1}(X_i^2 + Y_i^2 \le 1)$, we have $E[R_i] = \pi/4$. By the SLLN, $\bar{R}_n \xrightarrow{a.s.} \pi/4$.
-
-### Convergence Rate
-
-The standard error is $\sqrt{\operatorname{Var}(R_1)/n} = \sqrt{(\pi/4)(1 - \pi/4)/n} \approx 0.42/\sqrt{n}$. With $n = 10{,}000$, the SE is about 0.004, giving roughly one decimal of $\pi$.
-
-## Examples
-
-**Example.** Estimate $\pi$ with 100,000 random points.
+**Python:**
 
 ```python
 import numpy as np
+import matplotlib.pyplot as plt
 
-np.random.seed(42)
-n = 100_000
+np.random.seed(0)
 
-X = np.random.uniform(-1, 1, n)
-Y = np.random.uniform(-1, 1, n)
-inside = (X**2 + Y**2) <= 1
+n = 100
+x = np.random.rand(2, n)
 
-pi_hat = 4 * inside.mean()
-print(f"Points inside: {inside.sum()} / {n}")
-print(f"π estimate: {pi_hat:.6f} (true: {np.pi:.6f})")
-print(f"Error: {abs(pi_hat - np.pi):.6f}")
+plt.figure()
+plt.plot(x[0, :], x[1, :], 'o')
+plt.xlabel('x'); plt.ylabel('y')
+plt.title('100 random points in $[0,1]^2$')
+plt.show()
 ```
+
+The resulting scatter plot shows the characteristic appearance of uniformly distributed points — roughly evenly spread, but with natural random clustering and gaps.
+
+## Points Inside the Unit Circle
+
+A more interesting exercise: generate 100 uniform points on $[-1, 1]^2$ and classify them as inside or outside the unit circle $x^2 + y^2 = 1$.
+
+**MATLAB:**
+
+```matlab
+clear all; close all; clc; rng('default')
+
+n = 100;
+x = 2*rand(2, n) - 1;
+
+plot(x(1,:), x(2,:), 'o'); grid on; hold on
+
+r2 = x(1,:).^2 + x(2,:).^2;
+i = find(r2 <= 1);
+plot(x(1,i), x(2,i), 'or')
+
+xp = -1:0.01:1;
+yp = sqrt(1 - xp.^2);
+plot(xp, yp, '-r', xp, -yp, '-r')
+```
+
+**Python:**
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(0)
+
+n = 100
+x = 2 * np.random.rand(2, n) - 1
+
+r2 = x[0, :]**2 + x[1, :]**2
+inside = r2 <= 1
+outside = ~inside
+
+plt.figure(figsize=(6, 6))
+plt.plot(x[0, outside], x[1, outside], 'ob', label='Outside')
+plt.plot(x[0, inside], x[1, inside], 'or', label='Inside')
+
+theta = np.linspace(0, 2*np.pi, 200)
+plt.plot(np.cos(theta), np.sin(theta), '-r')
+
+plt.axis('equal'); plt.grid(True)
+plt.title('Points inside the unit circle')
+plt.legend()
+plt.show()
+```
+
+## Connection to Monte Carlo Estimation of $\pi$
+
+The fraction of points falling inside the circle approximates the ratio of areas:
+
+$$
+\frac{\text{Area of circle}}{\text{Area of square}} = \frac{\pi \cdot 1^2}{(2)^2} = \frac{\pi}{4}
+$$
+
+Therefore, if $k$ out of $n$ points land inside the circle,
+
+$$
+\hat{\pi} = \frac{4k}{n}
+$$
+
+is a Monte Carlo estimate of $\pi$. By the Law of Large Numbers, $\hat{\pi} \to \pi$ as $n \to \infty$.

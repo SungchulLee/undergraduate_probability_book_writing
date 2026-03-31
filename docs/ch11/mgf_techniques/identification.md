@@ -1,4 +1,5 @@
 # Identifying Distributions via MGFs
+<<<<<<< Updated upstream
 
 ## The Strategy
 
@@ -79,3 +80,5 @@ This is the MGF of $B(n_1 + n_2, p)$, so $X + Y \sim B(n_1 + n_2, p)$.
 | Gamma | independent, same $\lambda$ | $\text{Gamma}(\alpha_1, \lambda) + \text{Gamma}(\alpha_2, \lambda) = \text{Gamma}(\alpha_1+\alpha_2, \lambda)$ |
 | Binomial | independent, same $p$ | $B(n_1, p) + B(n_2, p) = B(n_1+n_2, p)$ |
 | NB | independent, same $p$ | $\text{NB}(r_1, p) + \text{NB}(r_2, p) = \text{NB}(r_1+r_2, p)$ |
+=======
+>>>>>>> Stashed changes

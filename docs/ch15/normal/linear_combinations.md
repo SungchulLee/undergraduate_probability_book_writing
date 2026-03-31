@@ -1,4 +1,5 @@
 # Linear Combinations of Normals
+<<<<<<< Updated upstream
 
 ## General Linear Combination
 
@@ -89,3 +90,5 @@ Portfolio: N(0.0960, 0.001872)
   SD = 0.0433
   P(loss) = P(R_P < 0) = 0.0133
 ```
+=======
+>>>>>>> Stashed changes

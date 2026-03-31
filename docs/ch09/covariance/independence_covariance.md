@@ -1,4 +1,5 @@
 # Independence Implies Zero Covariance
+<<<<<<< Updated upstream
 
 ## The Forward Direction
 
@@ -97,3 +98,5 @@ independent = np.allclose(
 print(f"Cov(X, Y) = {cov:.4f}")      # ≈ 0
 print(f"Independent? {independent}")   # False
 ```
+=======
+>>>>>>> Stashed changes

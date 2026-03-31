@@ -1,4 +1,5 @@
 # MGF of Geometric and Negative Binomial
+<<<<<<< Updated upstream
 
 ## MGF of Geometric$(p)$
 
@@ -77,3 +78,5 @@ print(f"\nNB({r}, {p}):")
 print(f"  E[X]   = {EX:.4f}  (exact: {r/p:.4f})")
 print(f"  Var(X) = {EX2 - EX**2:.4f}  (exact: {r*(1-p)/p**2:.4f})")
 ```
+=======
+>>>>>>> Stashed changes

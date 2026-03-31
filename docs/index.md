@@ -1,5 +1,6 @@
 # Probability: An Undergraduate Textbook
 
+<<<<<<< Updated upstream
 An introduction to probability theory for undergraduates, covering combinatorics, random variables, distributions, limit theorems, and simulation.
 
 ## What This Book Covers
@@ -51,3 +52,6 @@ Calculus (single and multivariable) and basic linear algebra. No prior knowledge
 ## How to Use This Book
 
 Each chapter contains expository pages with definitions, theorems, and proofs, followed by Python simulation scripts and exercises. The navigation panel on the left provides access to all sections. Python code can be run independently to explore the concepts.
+=======
+Welcome to the Probability textbook.
+>>>>>>> Stashed changes

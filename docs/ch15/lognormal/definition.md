@@ -1,192 +1,86 @@
 # Log-Normal Distribution
 
-The log-normal distribution models positive-valued random variables whose logarithm is normally distributed, making it the natural model for quantities that grow multiplicatively, such as stock prices, incomes, and biological measurements.
-
 ## Definition
 
-A random variable $X$ has a **log-normal distribution** with parameters $\mu$ and $\sigma^2$, written $X \sim \text{LogN}(\mu, \sigma^2)$, if:
+A random variable $X$ has a **Log-Normal distribution** with parameters $\mu$ and $\sigma^2$ if:
 
-$$
-\ln X \sim N(\mu, \sigma^2)
-$$
+$$Y \sim N(\mu, \sigma^2) \quad \Longleftrightarrow \quad X = e^Y \sim \text{Log-N}(\mu, \sigma^2)$$
 
-Equivalently, $X = e^Y$ where $Y \sim N(\mu, \sigma^2)$. The PDF of $X$ is:
+Equivalently, $X$ is Log-Normal if and only if $\log X$ is normal.
 
-$$
-f(x) = \frac{1}{x\sigma\sqrt{2\pi}} \exp\!\left(-\frac{(\ln x - \mu)^2}{2\sigma^2}\right), \quad x > 0
-$$
+## PDF Derivation
 
-The key summary statistics are:
+### Via CDF Method
+
+$$P(X \leq x) = P(e^Y \leq x) = P(Y \leq \log x) = \int_{-\infty}^{\log x} \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(s - \mu)^2}{2\sigma^2}}\, ds$$
+
+Differentiating with respect to $x$:
+
+$$f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(\log x - \mu)^2}{2\sigma^2}} \cdot \frac{1}{x}, \quad x > 0$$
+
+### Via Jacobian Method
+
+With $y = \log x$, so $dy/dx = 1/x$:
+
+$$f_X(x) = f_Y(y) \left|\frac{dy}{dx}\right| = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(\log x - \mu)^2}{2\sigma^2}} \cdot \frac{1}{x}, \quad x > 0$$
+
+## PDF, Mean, and Variance
 
 | Property | Formula |
 |----------|---------|
+| PDF | $\frac{1}{x\sqrt{2\pi\sigma^2}} \exp\!\left(-\frac{(\log x - \mu)^2}{2\sigma^2}\right)$ for $x > 0$ |
 | Mean | $e^{\mu + \sigma^2/2}$ |
 | Variance | $(e^{\sigma^2} - 1) \cdot e^{2\mu + \sigma^2}$ |
 | Median | $e^{\mu}$ |
 | Mode | $e^{\mu - \sigma^2}$ |
 
-!!! warning "Parameter Interpretation"
-    The parameters $\mu$ and $\sigma^2$ are the mean and variance of $\ln X$, **not** of $X$ itself. The mean of $X$ is $e^{\mu + \sigma^2/2}$, which is always greater than the median $e^{\mu}$.
+!!! note "Parameter Interpretation"
+    The parameters $\mu$ and $\sigma^2$ are the mean and variance of the **log** of $X$, not of $X$ itself. The mean of $X$ is $e^{\mu + \sigma^2/2}$, which is always greater than the median $e^{\mu}$, reflecting the right skewness.
 
-## Explanation
+## Shape
 
-### PDF derivation via the CDF method
+The Log-Normal distribution is:
 
-Since $X = e^Y$ with $Y \sim N(\mu, \sigma^2)$:
+- Supported on $(0, \infty)$
+- Right-skewed (skewness increases with $\sigma^2$)
+- Has a heavier right tail than the normal
+- Commonly used to model stock prices, income distributions, and particle sizes
 
-$$
-F_X(x) = P(X \leq x) = P(e^Y \leq x) = P(Y \leq \ln x) = \Phi\!\left(\frac{\ln x - \mu}{\sigma}\right)
-$$
-
-Differentiating with respect to $x$ using the chain rule:
-
-$$
-f_X(x) = \phi\!\left(\frac{\ln x - \mu}{\sigma}\right) \cdot \frac{1}{x\sigma} = \frac{1}{x\sigma\sqrt{2\pi}} \exp\!\left(-\frac{(\ln x - \mu)^2}{2\sigma^2}\right)
-$$
-
-### PDF derivation via the Jacobian method
-
-With $y = \ln x$ so that $dy/dx = 1/x$:
-
-$$
-f_X(x) = f_Y(\ln x) \cdot \left|\frac{dy}{dx}\right| = \frac{1}{\sigma\sqrt{2\pi}} e^{-(\ln x - \mu)^2/(2\sigma^2)} \cdot \frac{1}{x}
-$$
-
-Both methods yield the same result.
-
-### Shape of the distribution
-
-The log-normal distribution is:
-
-- Supported on $(0, \infty)$ -- it only takes positive values
-- Always right-skewed (the right tail is heavier)
-- The ordering $\text{Mode} < \text{Median} < \text{Mean}$ always holds for $\sigma > 0$
-- As $\sigma \to 0$, the distribution concentrates around $e^{\mu}$ and becomes approximately normal
-- As $\sigma$ increases, the right tail becomes increasingly heavy
-
-### Why mode < median < mean
-
-The mode $e^{\mu - \sigma^2}$ is pushed to the left of the median $e^{\mu}$ because the density is compressed on the left side and stretched on the right by the exponential transformation. The mean $e^{\mu + \sigma^2/2}$ exceeds the median because the heavy right tail pulls the average above the 50th percentile.
-
-### CDF and quantiles
-
-The CDF is:
-
-$$
-F(x) = \Phi\!\left(\frac{\ln x - \mu}{\sigma}\right), \quad x > 0
-$$
-
-The $p$-th quantile is:
-
-$$
-Q(p) = \exp\!\left(\mu + \sigma\,\Phi^{-1}(p)\right)
-$$
-
-## Examples
-
-**Example 1: Computing log-normal probabilities.**
-
-Let $X \sim \text{LogN}(2, 0.5^2)$. Find $P(X > 10)$.
-
-$$
-P(X > 10) = P(\ln X > \ln 10) = P\!\left(Z > \frac{\ln 10 - 2}{0.5}\right) = 1 - \Phi\!\left(\frac{2.303 - 2}{0.5}\right)
-$$
+## Python Implementation
 
 ```python
 import numpy as np
 from scipy import stats
+import matplotlib.pyplot as plt
 
-mu, sigma = 2, 0.5
-x = 10
-z = (np.log(x) - mu) / sigma
-p = 1 - stats.norm.cdf(z)
-print(f"X ~ LogN({mu}, {sigma}^2)")
-print(f"P(X > {x}) = P(Z > {z:.4f}) = {p:.4f}")
+x = np.linspace(0.01, 10, 500)
 
-# Using scipy's lognorm directly
-p2 = 1 - stats.lognorm.cdf(x, s=sigma, scale=np.exp(mu))
-print(f"Via scipy lognorm: {p2:.4f}")
-```
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-**Output:**
-```
-X ~ LogN(2, 0.5^2)
-P(X > 10) = P(Z > 0.6052) = 0.2726
-Via scipy lognorm: 0.2726
-```
+# Varying sigma
+ax = axes[0]
+mu = 0
+for sigma in [0.25, 0.5, 1.0, 1.5]:
+    ax.plot(x, stats.lognorm.pdf(x, s=sigma, scale=np.exp(mu)),
+            label=f'$\\sigma = {sigma}$')
+ax.set_title(f'Log-Normal PDF ($\\mu = {mu}$, varying $\\sigma$)')
+ax.set_xlabel('$x$'); ax.set_ylabel('$f(x)$')
+ax.set_ylim(0, 1.5); ax.legend()
 
-**Example 2: Mean, median, and mode.**
-
-For $X \sim \text{LogN}(0, 1)$, compute and compare the three measures of center.
-
-```python
-import numpy as np
-from scipy import stats
-
+# Mean, median, mode comparison
+ax = axes[1]
 mu, sigma = 0, 1
+ax.plot(x, stats.lognorm.pdf(x, s=sigma, scale=np.exp(mu)), 'b-', lw=2)
+mean_val = np.exp(mu + sigma**2 / 2)
+median_val = np.exp(mu)
+mode_val = np.exp(mu - sigma**2)
+ax.axvline(mode_val, color='g', ls='--', label=f'Mode = {mode_val:.2f}')
+ax.axvline(median_val, color='orange', ls='--', label=f'Median = {median_val:.2f}')
+ax.axvline(mean_val, color='r', ls='--', label=f'Mean = {mean_val:.2f}')
+ax.set_title('Log-N(0, 1): Mode < Median < Mean')
+ax.set_xlabel('$x$'); ax.set_ylabel('$f(x)$')
+ax.legend()
 
-mean = np.exp(mu + sigma**2 / 2)
-median = np.exp(mu)
-mode = np.exp(mu - sigma**2)
-
-print(f"LogN({mu}, {sigma}^2):")
-print(f"  Mode   = exp({mu} - {sigma**2}) = {mode:.4f}")
-print(f"  Median = exp({mu})           = {median:.4f}")
-print(f"  Mean   = exp({mu} + {sigma**2}/2) = {mean:.4f}")
-print(f"  Ordering: Mode < Median < Mean")
-
-# Verify by simulation
-np.random.seed(42)
-samples = np.random.lognormal(mu, sigma, 100000)
-print(f"\nSimulated: mean = {samples.mean():.4f}, median = {np.median(samples):.4f}")
-```
-
-**Output:**
-```
-LogN(0, 1^2):
-  Mode   = exp(0 - 1) = 0.3679
-  Median = exp(0)           = 1.0000
-  Mean   = exp(0 + 1/2) = 1.6487
-  Ordering: Mode < Median < Mean
-
-Simulated: mean = 1.6515, median = 1.0009
-```
-
-**Example 3: Relationship between parameters and moments.**
-
-Given that incomes have mean \$50,000 and standard deviation \$30,000, find $\mu$ and $\sigma$ for the log-normal model.
-
-We need to solve $e^{\mu + \sigma^2/2} = 50000$ and $e^{2\mu + \sigma^2}(e^{\sigma^2} - 1) = 30000^2$.
-
-```python
-import numpy as np
-
-mean_X = 50000
-sd_X = 30000
-var_X = sd_X**2
-
-# From the formulas: Var/Mean^2 = exp(sigma^2) - 1
-sigma2 = np.log(1 + var_X / mean_X**2)
-mu = np.log(mean_X) - sigma2 / 2
-sigma = np.sqrt(sigma2)
-
-print(f"Target: mean = ${mean_X:,}, SD = ${sd_X:,}")
-print(f"Log-normal parameters: mu = {mu:.4f}, sigma = {sigma:.4f}")
-
-# Verify
-mean_check = np.exp(mu + sigma2/2)
-var_check = np.exp(2*mu + sigma2) * (np.exp(sigma2) - 1)
-print(f"Verification: mean = ${mean_check:,.0f}, SD = ${np.sqrt(var_check):,.0f}")
-
-# Median (always less than mean for right-skewed distributions)
-median = np.exp(mu)
-print(f"Median income = ${median:,.0f}")
-```
-
-**Output:**
-```
-Target: mean = $50,000, SD = $30,000
-Log-normal parameters: mu = 10.6594, sigma = 0.5545
-Verification: mean = $50,000, SD = $30,000
-Median income = $42,640
+plt.tight_layout()
+plt.show()
 ```

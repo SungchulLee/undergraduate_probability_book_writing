@@ -1,203 +1,124 @@
 # Change of Variables (Single Variable)
 
-When a random variable $X$ is transformed by a function $g$ to produce $Y = g(X)$, the PDF of $Y$ can be found systematically using either the CDF method or the Jacobian (change-of-variables) formula.
+## Two Methods for Finding PDFs
 
-## Definition
+Given a random variable $X$ with known PDF $f_X(x)$ and a transformation $Y = g(X)$, there are two systematic methods to find the PDF of $Y$.
 
-Given $X$ with known PDF $f_X$ and a transformation $Y = g(X)$, the PDF of $Y$ can be found by two methods.
+## Method 1: CDF Method
 
-**CDF method (always works):**
+!!! info "CDF Method"
+    1. Find $F_Y(y) = P(Y \leq y) = P(g(X) \leq y)$
+    2. Express in terms of $P(X \leq \cdot)$ or $P(X \geq \cdot)$
+    3. Differentiate: $f_Y(y) = F_Y'(y)$
 
-$$
-F_Y(y) = P(Y \leq y) = P(g(X) \leq y), \qquad f_Y(y) = F_Y'(y)
-$$
+This method is fully general and works for any transformation, including non-monotone ones.
 
-**Jacobian method (requires monotone $g$):** If $g$ is monotone and differentiable with inverse $x = g^{-1}(y)$, then:
+## Method 2: Jacobian Method
 
-$$
-f_Y(y) = f_X(g^{-1}(y)) \left|\frac{dx}{dy}\right|
-$$
+!!! info "Jacobian Method (Single Variable)"
+    If $Y = g(X)$ where $g$ is a **monotone, differentiable** function with inverse $x = g^{-1}(y)$, then:
 
-where $\left|\frac{dx}{dy}\right| = \left|\frac{d}{dy}g^{-1}(y)\right|$ is the absolute value of the derivative of the inverse function.
+    $$f_Y(y) = f_X(x) \left|\frac{dx}{dy}\right|$$
 
-## Explanation
+    where $x = g^{-1}(y)$.
 
-### The CDF method in detail
+The absolute value ensures the PDF is non-negative regardless of whether $g$ is increasing or decreasing. The factor $|dx/dy|$ accounts for how the transformation stretches or compresses the density.
 
-The CDF method proceeds in three steps:
+### Intuitive Justification
 
-1. **Express the event:** Write $P(Y \leq y) = P(g(X) \leq y)$ in terms of $X$.
-2. **Solve for X:** Determine which values of $X$ satisfy $g(X) \leq y$.
-3. **Differentiate:** Compute $f_Y(y) = F_Y'(y)$.
+If $g$ is increasing, then $P(Y \leq y) = P(X \leq x)$, so:
 
-This method is fully general and works even for non-monotone transformations (e.g., $Y = X^2$).
+$$f_Y(y) = f_X(x) \frac{dx}{dy}$$
 
-### The Jacobian method in detail
+If $g$ is decreasing, then $P(Y \leq y) = P(X \geq x)$, giving a negative sign that is absorbed by the absolute value.
 
-If $g$ is increasing, then $P(Y \leq y) = P(X \leq g^{-1}(y))$, so:
+### Connection Between the Methods
 
-$$
-f_Y(y) = f_X(g^{-1}(y)) \cdot \frac{dx}{dy}
-$$
+The Jacobian method is a shortcut derived from the CDF method. Using the chain rule:
 
-If $g$ is decreasing, then $P(Y \leq y) = P(X \geq g^{-1}(y))$, introducing a negative sign. The absolute value absorbs both cases:
+$$F_Y(y) = P(X \leq g^{-1}(y)) \implies f_Y(y) = f_X(g^{-1}(y)) \cdot \frac{d}{dy}g^{-1}(y) = f_X(x)\left|\frac{dx}{dy}\right|$$
 
-$$
-f_Y(y) = f_X(g^{-1}(y)) \left|\frac{dx}{dy}\right|
-$$
+### Reciprocal Property
 
-### The reciprocal property
+The Jacobian can be computed either way:
 
-The Jacobian can be computed in either direction:
+$$\left|\frac{dx}{dy}\right| = \frac{1}{\left|\dfrac{dy}{dx}\right|}$$
 
-$$
-\left|\frac{dx}{dy}\right| = \frac{1}{\left|\dfrac{dy}{dx}\right|}
-$$
+This is often easier when $dy/dx$ is simpler to compute than $dx/dy$ directly.
 
-This is often more convenient when $dy/dx$ is simpler than computing $dx/dy$ directly.
+## Worked Example: $Y = X^3$ where $X \sim U(0, 1)$
 
-### Intuition for the Jacobian factor
+??? example "Example: Cube of a Uniform"
+    Let $X \sim U(0,1)$ and $Y = X^3$. Find $f_Y(y)$ for $0 < y < 1$.
 
-The factor $|dx/dy|$ accounts for how the transformation stretches or compresses the density. Where $g$ changes slowly ($|dy/dx|$ is small, so $|dx/dy|$ is large), many $x$-values map to a narrow range of $y$-values, concentrating probability. Where $g$ changes rapidly, probability is spread out.
+    **Method 1: CDF**
 
-### Handling non-monotone transformations
+    $$P(Y \leq y) = P(X^3 \leq y) = P(X \leq y^{1/3}) = y^{1/3}$$
 
-For non-monotone $g$, the CDF method is safest. Alternatively, if $g^{-1}(y)$ has multiple branches $x_1(y), x_2(y), \ldots$, the PDF is:
+    Differentiating:
 
-$$
-f_Y(y) = \sum_j f_X(x_j(y)) \left|\frac{dx_j}{dy}\right|
-$$
+    $$f_Y(y) = \frac{1}{3} y^{-2/3}, \quad 0 < y < 1$$
 
-For example, if $Y = X^2$ where $X$ has a symmetric PDF, then $x_1 = \sqrt{y}$ and $x_2 = -\sqrt{y}$ both contribute.
+    **Method 2: Jacobian**
 
-## Examples
+    With $y = x^3$, we have $x = y^{1/3}$:
 
-**Example 1: Cube of a uniform.**
+    $$\frac{dy}{dx} = 3x^2 = 3(x^3)^{2/3} = 3y^{2/3}$$
 
-Let $X \sim U(0,1)$ and $Y = X^3$. Find $f_Y(y)$.
+    $$\left|\frac{dx}{dy}\right| = \frac{1}{3y^{2/3}} = \frac{1}{3}y^{-2/3}$$
 
-**CDF method:**
+    Therefore:
 
-$$
-F_Y(y) = P(X^3 \leq y) = P(X \leq y^{1/3}) = y^{1/3}
-$$
+    $$f_Y(y) = f_X(x) \left|\frac{dx}{dy}\right| = 1 \cdot \frac{1}{3}y^{-2/3} = \frac{1}{3}y^{-2/3}, \quad 0 < y < 1$$
 
-$$
-f_Y(y) = \frac{1}{3} y^{-2/3}, \quad 0 < y < 1
-$$
+    Both methods agree. The density is concentrated near $y = 0$ because the cube function compresses values near $0$ and stretches values near $1$.
 
-**Jacobian method:** With $x = y^{1/3}$ and $dx/dy = \frac{1}{3}y^{-2/3}$:
-
-$$
-f_Y(y) = f_X(y^{1/3}) \cdot \frac{1}{3}y^{-2/3} = 1 \cdot \frac{1}{3}y^{-2/3}
-$$
+## Python Implementation
 
 ```python
 import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
 
 np.random.seed(42)
-n = 100000
+n_sim = 100000
 
-X = np.random.uniform(0, 1, n)
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+# Y = X^3 where X ~ U(0,1)
+X = np.random.uniform(0, 1, n_sim)
 Y = X ** 3
 
-# Verify PDF at several points
-y_test = [0.1, 0.3, 0.5, 0.7, 0.9]
-print("f_Y(y) = (1/3) * y^(-2/3):")
-for y in y_test:
-    theory = (1/3) * y**(-2/3)
-    # Empirical density via histogram bin
-    h = 0.02
-    empirical = np.mean((Y > y - h) & (Y < y + h)) / (2*h)
-    print(f"  y = {y}: theory = {theory:.4f}, empirical = {empirical:.4f}")
-```
+y_vals = np.linspace(0.01, 0.99, 200)
+pdf_theory = (1/3) * y_vals ** (-2/3)
 
-**Output:**
-```
-f_Y(y) = (1/3) * y^(-2/3):
-  y = 0.1: theory = 1.5443, empirical = 1.5455
-  y = 0.3: theory = 0.7418, empirical = 0.7360
-  y = 0.5: theory = 0.5291, empirical = 0.5365
-  y = 0.7: theory = 0.4222, empirical = 0.4252
-  y = 0.9: theory = 0.3569, empirical = 0.3548
-```
+axes[0].hist(Y, bins=80, density=True, alpha=0.5, color='steelblue',
+             label='Y = X³ simulated')
+axes[0].plot(y_vals, pdf_theory, 'r-', lw=2,
+             label=r'$f_Y(y) = \frac{1}{3}y^{-2/3}$')
+axes[0].set_title('Y = X³ where X ~ U(0,1)')
+axes[0].set_xlabel('y')
+axes[0].set_ylabel('Density')
+axes[0].set_ylim(0, 5)
+axes[0].legend()
+axes[0].grid(True, alpha=0.3)
 
-**Example 2: Square of a standard normal (non-monotone).**
+# CDF comparison
+y_grid = np.linspace(0, 1, 200)
+cdf_empirical = np.array([np.mean(Y <= y) for y in y_grid])
+cdf_theory = y_grid ** (1/3)
 
-Let $Z \sim N(0, 1)$ and $W = Z^2$. Find $f_W(w)$.
+axes[1].plot(y_grid, cdf_empirical, 'b-', lw=2, alpha=0.7,
+             label='Empirical CDF')
+axes[1].plot(y_grid, cdf_theory, 'r--', lw=2,
+             label=r'$F_Y(y) = y^{1/3}$')
+axes[1].set_title('CDF of Y = X³')
+axes[1].set_xlabel('y')
+axes[1].set_ylabel('F(y)')
+axes[1].legend()
+axes[1].grid(True, alpha=0.3)
 
-Since $Z^2 \leq w$ iff $-\sqrt{w} \leq Z \leq \sqrt{w}$:
-
-$$
-F_W(w) = \Phi(\sqrt{w}) - \Phi(-\sqrt{w}) = 2\Phi(\sqrt{w}) - 1
-$$
-
-$$
-f_W(w) = 2\phi(\sqrt{w}) \cdot \frac{1}{2\sqrt{w}} = \frac{1}{\sqrt{2\pi w}} e^{-w/2}, \quad w > 0
-$$
-
-This is the $\chi^2_1 = \Gamma(1/2, 1/2)$ density.
-
-```python
-import numpy as np
-from scipy import stats
-
-np.random.seed(42)
-n = 100000
-
-Z = np.random.normal(0, 1, n)
-W = Z ** 2
-
-print("W = Z^2 where Z ~ N(0,1):")
-print(f"  Mean: {W.mean():.4f}  (Chi-squared(1) mean = 1)")
-print(f"  Var:  {W.var():.4f}  (Chi-squared(1) var = 2)")
-
-# KS test against chi-squared(1)
-ks_stat, p_val = stats.kstest(W, 'chi2', args=(1,))
-print(f"  KS test vs chi2(1): p-value = {p_val:.4f}")
-```
-
-**Output:**
-```
-W = Z^2 where Z ~ N(0,1):
-  Mean: 1.0053  (Chi-squared(1) mean = 1)
-  Var:  2.0313  (Chi-squared(1) var = 2)
-  KS test vs chi2(1): p-value = 0.4567
-```
-
-**Example 3: Exponential from uniform.**
-
-Let $U \sim U(0, 1)$ and $X = -\ln(U)/\lambda$. Verify $X \sim \text{Exp}(\lambda)$.
-
-With $u = e^{-\lambda x}$ and $|du/dx| = \lambda e^{-\lambda x}$:
-
-$$
-f_X(x) = f_U(e^{-\lambda x}) \cdot \lambda e^{-\lambda x} = 1 \cdot \lambda e^{-\lambda x}
-$$
-
-```python
-import numpy as np
-from scipy import stats
-
-np.random.seed(42)
-n = 100000
-lam = 2.0
-
-U = np.random.uniform(0, 1, n)
-X = -np.log(U) / lam
-
-print(f"X = -ln(U)/{lam} should be Exp({lam}):")
-print(f"  Mean: {X.mean():.4f}  (theory: {1/lam:.4f})")
-print(f"  Var:  {X.var():.4f}  (theory: {1/lam**2:.4f})")
-
-ks_stat, p_val = stats.kstest(X, 'expon', args=(0, 1/lam))
-print(f"  KS test: p-value = {p_val:.4f}")
-```
-
-**Output:**
-```
-X = -ln(U)/2.0 should be Exp(2.0):
-  Mean: 0.5011  (theory: 0.5000)
-  Var:  0.2500  (theory: 0.2500)
-  KS test: p-value = 0.5832
+plt.tight_layout()
+plt.savefig('change_of_variables.png', dpi=150, bbox_inches='tight')
+plt.show()
 ```

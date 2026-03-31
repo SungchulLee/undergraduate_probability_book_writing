@@ -1,57 +1,86 @@
-# Mixture of Normals
+# Samples from Normal Distributions
 
-Combining samples from different normal distributions produces a mixture distribution — a weighted sum of densities that can model multimodal data.
+## Generating Normal Samples
 
-## Definition
-
-A **mixture of two normals** has density:
+To generate samples from $N(\mu, \sigma^2)$, we use the standard transformation: if $Z \sim N(0,1)$, then
 
 $$
-f(x) = w_1 \, \phi(x; \mu_1, \sigma_1^2) + w_2 \, \phi(x; \mu_2, \sigma_2^2)
+X = \mu + \sigma Z \sim N(\mu, \sigma^2)
 $$
 
-where $w_1 + w_2 = 1$, $w_i > 0$, and $\phi(x; \mu, \sigma^2)$ is the normal density.
+In MATLAB, `randn(1, n)` generates $n$ standard normal samples, so `mu + sigma * randn(1, n)` generates samples from $N(\mu, \sigma^2)$.
 
-## Explanation
+## Example: Mixture of Two Normals
 
-### Simulation
+Generate 600 samples from $N(1, 1)$ and 400 samples from $N(4, 1)$, then combine them into a single dataset of 1000 samples.
 
-To sample from a mixture: with probability $w_1$ draw from $N(\mu_1, \sigma_1^2)$, otherwise from $N(\mu_2, \sigma_2^2)$. This is equivalent to generating $n_1 = w_1 n$ samples from the first component and $n_2 = w_2 n$ from the second.
+**MATLAB:**
 
-### Moments
+```matlab
+clear all; close all; clc; rng('default')
 
-$$
-E[X] = w_1 \mu_1 + w_2 \mu_2
-$$
+% n1 samples from N(mu1, si1)
+n1 = 600;
+mu1 = 1; si1 = 1;
+x1 = mu1 + si1 * randn(1, n1);
+subplot(131)
+hist(x1)
 
-$$
-\operatorname{Var}(X) = w_1(\sigma_1^2 + \mu_1^2) + w_2(\sigma_2^2 + \mu_2^2) - (w_1\mu_1 + w_2\mu_2)^2
-$$
+% n2 samples from N(mu2, si2)
+n2 = 400;
+mu2 = 4; si2 = 1;
+x2 = mu2 + si1 * randn(1, n2);
+subplot(132)
+hist(x2)
 
-### Bimodality
+% Samples from two different normal distributions
+x = [x1 x2];
+subplot(133)
+hist(x)
+```
 
-The mixture is bimodal when the component means are sufficiently separated relative to their standard deviations: roughly $\lvert \mu_1 - \mu_2 \rvert > 2\max(\sigma_1, \sigma_2)$.
-
-## Examples
-
-**Example.** 60% from $N(1, 1)$ and 40% from $N(4, 1)$.
+**Python:**
 
 ```python
 import numpy as np
+import matplotlib.pyplot as plt
 
-np.random.seed(42)
+np.random.seed(0)
 
-w1, mu1, sig1 = 0.6, 1.0, 1.0
-w2, mu2, sig2 = 0.4, 4.0, 1.0
-n = 10_000
+# 600 samples from N(1, 1)
+n1 = 600; mu1 = 1; si1 = 1
+x1 = mu1 + si1 * np.random.randn(n1)
 
-n1 = int(w1 * n)
-n2 = n - n1
-X = np.concatenate([np.random.normal(mu1, sig1, n1),
-                    np.random.normal(mu2, sig2, n2)])
+# 400 samples from N(4, 1)
+n2 = 400; mu2 = 4; si2 = 1
+x2 = mu2 + si2 * np.random.randn(n2)
 
-E_theory = w1 * mu1 + w2 * mu2
-print(f"Sample mean: {X.mean():.4f} (theory: {E_theory})")
-print(f"Sample var:  {X.var():.4f}")
-print(f"Min={X.min():.2f}, Max={X.max():.2f}")
+# Combined samples
+x = np.concatenate([x1, x2])
+
+fig, axes = plt.subplots(1, 3, figsize=(14, 4))
+
+axes[0].hist(x1, bins=20, edgecolor='black')
+axes[0].set_title(f'600 samples from $N({mu1}, {si1}^2)$')
+
+axes[1].hist(x2, bins=20, edgecolor='black')
+axes[1].set_title(f'400 samples from $N({mu2}, {si2}^2)$')
+
+axes[2].hist(x, bins=20, edgecolor='black')
+axes[2].set_title('Combined 1000 samples')
+
+plt.tight_layout()
+plt.show()
 ```
+
+## Mixture Distributions
+
+The combined histogram is an example of a **mixture distribution**. The density of the mixture is
+
+$$
+f(x) = w_1 \, f_1(x) + w_2 \, f_2(x)
+$$
+
+where $w_1 = \frac{n_1}{n_1 + n_2} = 0.6$, $w_2 = 0.4$, and $f_i$ is the density of $N(\mu_i, \sigma_i^2)$.
+
+The resulting histogram shows a bimodal shape — a characteristic signature of mixture distributions when the component means are sufficiently separated relative to their standard deviations.

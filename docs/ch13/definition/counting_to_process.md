@@ -1,4 +1,5 @@
 # From Counting to the Poisson Process
+<<<<<<< Updated upstream
 
 ## Counting Rare Events in Continuous Time
 
@@ -84,3 +85,5 @@ These properties, formalized in the next section, define the Poisson process pre
 | Fixed number of trials | Infinitely many infinitesimal "trials" |
 
 The Poisson process is the natural continuous-time extension of Bernoulli counting. The Poisson limit theorem provides the mathematical bridge between these two frameworks.
+=======
+>>>>>>> Stashed changes

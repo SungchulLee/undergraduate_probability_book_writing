@@ -1,4 +1,5 @@
 # Independent Increments
+<<<<<<< Updated upstream
 
 ## Definition
 
@@ -88,3 +89,5 @@ The Poisson process models **completely random** event occurrences, with no clus
     $$
 
     Each factor can be computed from the Poisson CDF.
+=======
+>>>>>>> Stashed changes

@@ -1,86 +1,135 @@
 # Kolmogorov Axioms
 
-The Kolmogorov axioms provide the rigorous foundation for all of probability theory. Every probability result in this book ultimately traces back to these three axioms.
-
 ## Definition
 
-A **probability space** is a triple $(\Omega, \mathcal{F}, P)$ where:
-
-1. $\Omega$ is the **sample space** (set of all possible outcomes)
-2. $\mathcal{F}$ is a **$\sigma$-algebra** on $\Omega$ (the collection of events, closed under complements and countable unions)
-3. $P\colon \mathcal{F} \to [0,1]$ is a **probability measure** satisfying:
-
-**Axiom 1 (Normalization):**
+A **probability measure** $P$ is a real-valued function defined on events $A$:
 
 $$
-P(\Omega) = 1
+A \xrightarrow{P} P(A)
 $$
 
-**Axiom 2 (Non-negativity):**
+More precisely, $P$ is a function from the collection of events to the real numbers that satisfies the following three axioms.
+
+## The Three Axioms
+
+### Axiom 1: Normalization
 
 $$
-P(A) \geq 0 \quad \text{for every event } A \in \mathcal{F}
+P(\Omega) = 1, \qquad P(\emptyset) = 0
 $$
 
-**Axiom 3 (Countable additivity):** For any sequence of pairwise disjoint events $A_1, A_2, \ldots$:
+The certain event has probability 1, and the impossible event has probability 0.
+
+### Axiom 2: Non-negativity
+
+$$
+0 \leq P(A) \leq 1 \quad \text{for every event } A
+$$
+
+Every event has a probability between 0 and 1.
+
+### Axiom 3: Countable Additivity ($\sigma$-additivity)
+
+For any sequence of **pairwise disjoint** events $A_1, A_2, \ldots$:
 
 $$
 P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i)
 $$
 
-!!! note "What the axioms do not include"
-    The statement $P(\emptyset) = 0$ is **not** an axiom — it follows from Axiom 3 by taking $A_1 = \Omega, A_2 = A_3 = \cdots = \emptyset$. Similarly, $P(A) \le 1$ is derived from $P(A) + P(A^c) = 1$ and non-negativity.
+If events cannot occur simultaneously, the probability of their union equals the sum of their individual probabilities.
 
-## Explanation
+!!! note "Historical Note"
+    These axioms were formalized by Andrey Kolmogorov in his 1933 monograph *Grundbegriffe der Wahrscheinlichkeitsrechnung* (Foundations of the Theory of Probability). This axiomatic framework put probability theory on rigorous mathematical footing by grounding it in measure theory.
 
-### Why These Three Axioms?
+## The Probability Triple $(\Omega, \mathcal{F}, P)$
 
-- **Axiom 1** fixes the scale: certainty is 1.
-- **Axiom 2** excludes negative probabilities.
-- **Axiom 3** is the workhorse: it lets us compute probabilities of complex events by decomposing them into disjoint pieces. It also implies finite additivity (set $A_{n+1} = A_{n+2} = \cdots = \emptyset$).
+Formally, a probability model consists of three components:
 
-The countable (rather than merely finite) additivity in Axiom 3 is essential for handling limits, which pervade probability theory (laws of large numbers, convergence of series, etc.).
+1. **Sample space** $\Omega$: the set of all possible outcomes
+2. **$\sigma$-algebra** $\mathcal{F}$: a collection of subsets of $\Omega$ (the "events") that is closed under complementation and countable unions
+3. **Probability measure** $P$: a function $P: \mathcal{F} \to [0,1]$ satisfying the three axioms
 
-### Constructing a Probability Measure
+For finite and countable sample spaces, we typically take $\mathcal{F} = 2^\Omega$ (all subsets). The $\sigma$-algebra becomes important for uncountable spaces like $\mathbb{R}$.
 
-For a finite sample space $\Omega = \{\omega_1, \ldots, \omega_n\}$, assign weights $p_1, \ldots, p_n$ with $p_i \ge 0$ and $\sum p_i = 1$. Then $P(A) = \sum_{\omega_i \in A} p_i$ defines a valid probability measure. The $\sigma$-algebra is simply $\mathcal{F} = 2^\Omega$ (all subsets).
+## Why These Axioms?
 
-For uncountable spaces like $\mathbb{R}$, the $\sigma$-algebra must be restricted (to the Borel sets) — not all subsets can be assigned probabilities consistently.
+The axioms capture the minimal requirements for a coherent notion of probability:
 
-## Examples
+- **Axiom 1** fixes the scale — certainty is 1, impossibility is 0.
+- **Axiom 2** ensures probabilities are meaningful as "proportions of likelihood."
+- **Axiom 3** is the most powerful axiom — it allows us to compute probabilities of complex events by decomposing them into simpler, non-overlapping pieces.
 
-**Example 1 (Loaded die).** $\Omega = \{1,2,3,4,5,6\}$ with $P(6) = 1/2$ and $P(k) = 1/10$ for $k = 1,\ldots,5$.
+!!! tip "Finite Additivity as a Consequence"
+    Axiom 3 immediately implies **finite additivity**: for pairwise disjoint events $A_1, \ldots, A_n$,
 
-Verify: $5 \times (1/10) + 1/2 = 1/2 + 1/2 = 1$. ✓
+    $$
+    P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i)
+    $$
 
-$P(\text{even}) = P(2) + P(4) + P(6) = 1/10 + 1/10 + 1/2 = 7/10$.
+    Simply set $A_{n+1} = A_{n+2} = \cdots = \emptyset$ in Axiom 3.
 
----
+## Constructing a Probability Measure
 
-**Example 2 (Axiom verification).** Check all three axioms for the loaded die:
+For a finite sample space $\Omega = \{\omega_1, \omega_2, \ldots, \omega_n\}$, any assignment of weights $p_1, p_2, \ldots, p_n$ satisfying:
+
+1. $p_i \geq 0$ for all $i$
+2. $\sum_{i=1}^{n} p_i = 1$
+
+defines a valid probability measure via $P(\{\omega_i\}) = p_i$.
+
+## Python Example
 
 ```python
 import numpy as np
 
+# Define a probability measure on Ω = {1, 2, 3, 4, 5, 6}
+# Example: loaded die with P(6) = 1/2, others equally likely
 omega = [1, 2, 3, 4, 5, 6]
 weights = [1/10, 1/10, 1/10, 1/10, 1/10, 1/2]
 
-# Axiom 1
-assert abs(sum(weights) - 1.0) < 1e-10, "Axiom 1 violated"
-print(f"Axiom 1: P(Ω) = {sum(weights)}")
+# Verify Axiom 1: P(Ω) = 1
+print(f"Axiom 1: P(Ω) = {sum(weights):.4f}")
 
-# Axiom 2
-assert all(w >= 0 for w in weights), "Axiom 2 violated"
-print(f"Axiom 2: all P(ω) ≥ 0: True")
+# Verify Axiom 2: 0 ≤ P(ω) ≤ 1
+print(f"Axiom 2: All probabilities in [0,1]: {all(0 <= w <= 1 for w in weights)}")
 
-# Axiom 3 (finite): P({1,2} ∪ {3,4}) = P({1,2}) + P({3,4})
-P_12 = weights[0] + weights[1]
-P_34 = weights[2] + weights[3]
-P_union = sum(weights[i] for i in range(4))
-assert abs(P_union - P_12 - P_34) < 1e-10
-print(f"Axiom 3: P({{1,2}}) + P({{3,4}}) = {P_12 + P_34:.2f} = P({{1,2,3,4}}) = {P_union:.2f}")
+# Verify Axiom 3 (finite case): disjoint events
+# A = {1, 2}, B = {3, 4}  → disjoint
+P_A = weights[0] + weights[1]
+P_B = weights[2] + weights[3]
+P_AuB = sum(weights[i] for i in [0, 1, 2, 3])
+print(f"\nAxiom 3 check:")
+print(f"P(A) = {P_A:.4f}, P(B) = {P_B:.4f}")
+print(f"P(A) + P(B) = {P_A + P_B:.4f}")
+print(f"P(A ∪ B) = {P_AuB:.4f}")
+print(f"P(A ∪ B) = P(A) + P(B): {np.isclose(P_AuB, P_A + P_B)}")
 
-# Derived: P(∅) = 0
-print(f"\nDerived: P(∅) = 0 (follows from Axiom 3)")
-print(f"P(even) = {weights[1] + weights[3] + weights[5]:.2f}")
+# Simulate to verify
+np.random.seed(42)
+n_sim = 100_000
+samples = np.random.choice(omega, size=n_sim, p=weights)
+print(f"\nSimulated frequencies:")
+for val in omega:
+    freq = np.mean(samples == val)
+    print(f"  P({val}) = {weights[val-1]:.2f}, simulated = {freq:.4f}")
+```
+
+**Output:**
+```
+Axiom 1: P(Ω) = 1.0000
+Axiom 2: All probabilities in [0,1]: True
+
+Axiom 3 check:
+P(A) = 0.2000, P(B) = 0.2000
+P(A) + P(B) = 0.4000
+P(A ∪ B) = 0.4000
+P(A ∪ B) = P(A) + P(B): True
+
+Simulated frequencies:
+  P(1) = 0.10, simulated = 0.1003
+  P(2) = 0.10, simulated = 0.0988
+  P(3) = 0.10, simulated = 0.1001
+  P(4) = 0.10, simulated = 0.1007
+  P(5) = 0.10, simulated = 0.1002
+  P(6) = 0.50, simulated = 0.4999
 ```

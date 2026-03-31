@@ -1,65 +1,75 @@
 # MGF Definition and Properties
 
-The moment generating function encodes all moments of a distribution into a single function, enabling algebraic techniques for identifying distributions and proving limit theorems.
-
 ## Definition
 
-The **moment generating function (MGF)** of $X$ is
+The **moment generating function (MGF)** of a random variable $X$ is:
 
-$$
-M_X(t) = E[e^{tX}]
-$$
+$$M_X(t) = E[e^{tX}]$$
 
 provided the expectation exists in a neighborhood of $t = 0$.
 
-$$
-M_X(t) = \begin{cases} \displaystyle\sum_x e^{tx}\,p(x) & \text{(discrete)} \\[10pt] \displaystyle\int_{-\infty}^{\infty} e^{tx}\,f(x)\,dx & \text{(continuous)} \end{cases}
-$$
+For discrete and continuous cases:
 
-The $n$-th moment is recovered by: $E[X^n] = M_X^{(n)}(0)$.
+$$M_X(t) = \begin{cases} \displaystyle\sum_x e^{tx} \, p(x) & \text{if } X \text{ is discrete} \\[10pt] \displaystyle\int_{-\infty}^{\infty} e^{tx} f(x)\,dx & \text{if } X \text{ is continuous} \end{cases}$$
 
-## Explanation
+## Why "Moment Generating"?
 
-### Why It Generates Moments
+The MGF generates all moments of $X$ via differentiation at $t = 0$:
 
-Expanding $e^{tX} = \sum_{n=0}^{\infty}(tX)^n/n!$ and taking expectations:
+$$M_X^{(n)}(0) = E[X^n]$$
 
-$$
-M_X(t) = \sum_{n=0}^{\infty}\frac{E[X^n]}{n!}\,t^n
-$$
+**Derivation:**
 
-Differentiating $n$ times and setting $t = 0$ picks out $E[X^n]$. In particular:
+$$M_X(t) = E[e^{tX}] \implies M_X'(t) = E[Xe^{tX}] \implies M_X'(0) = E[X]$$
 
-- $M_X'(0) = E[X]$
-- $\text{Var}(X) = M_X''(0) - (M_X'(0))^2$
+$$M_X''(t) = E[X^2 e^{tX}] \implies M_X''(0) = E[X^2]$$
 
-### Key Properties
+$$\vdots$$
 
-| Property | Formula |
-|:---------|:--------|
-| Constant | $M_c(t) = e^{ct}$ |
-| Scaling | $M_{aX+b}(t) = e^{bt}\,M_X(at)$ |
-| Independence | $M_{X+Y}(t) = M_X(t)\,M_Y(t)$ |
-| Uniqueness | $M_X = M_Y$ near 0 $\Rightarrow$ $X \stackrel{d}{=} Y$ |
+$$M_X^{(n)}(t) = E[X^n e^{tX}] \implies M_X^{(n)}(0) = E[X^n]$$
 
-### When the MGF Does Not Exist
+In particular:
 
-Not every distribution has an MGF. The Cauchy and log-normal have $E[e^{tX}] = \infty$ for all $t \ne 0$. The characteristic function $\varphi_X(t) = E[e^{itX}]$ always exists as an alternative.
+- $E[X] = M_X'(0)$
+- $\text{Var}(X) = M_X''(0) - [M_X'(0)]^2$
 
-## Examples
+## Why MGFs Are Useful
 
-**Example.** $X \sim \text{Exp}(1)$: $M_X(t) = 1/(1-t)$ for $t < 1$.
+!!! info "Two Key Properties"
+    1. **Uniqueness:** If $M_X(t) = M_Y(t)$ for all $t$ in a neighborhood of $0$, then $X$ and $Y$ have the **same distribution**.
+
+    2. **Convergence:** If $M_{X_n}(t) \to M_Y(t)$ for all $t$ in a neighborhood of $0$, then $X_n \xrightarrow{d} Y$ (convergence in distribution).
+
+Property (1) allows us to **identify** distributions by matching MGFs. Property (2) is the key tool in the **proof of the CLT**.
+
+## Python Implementation
 
 ```python
 import numpy as np
 from scipy.misc import derivative
 
+# Numerically verify MGF properties for X ~ Exp(1)
+# M_X(t) = 1/(1-t) for t < 1
 def mgf_exp(t, lam=1):
+    """MGF of Exp(lambda): lambda/(lambda - t)"""
     return lam / (lam - t)
 
+# First moment: E[X] = M'(0)
 EX = derivative(mgf_exp, 0, n=1, dx=1e-6)
+print(f"E[X] = M'(0) = {EX:.6f}  (exact: 1.0)")
+
+# Second moment: E[X^2] = M''(0)
 EX2 = derivative(mgf_exp, 0, n=2, dx=1e-6)
-print(f"E[X] = M'(0) = {EX:.6f}  (exact: 1)")
-print(f"E[X^2] = M''(0) = {EX2:.4f}  (exact: 2)")
-print(f"Var(X) = {EX2 - EX**2:.4f}  (exact: 1)")
+print(f"E[X²] = M''(0) = {EX2:.4f}  (exact: 2.0)")
+
+# Variance
+VarX = EX2 - EX**2
+print(f"Var(X) = {VarX:.4f}  (exact: 1.0)")
+```
+
+**Output:**
+```
+E[X] = M'(0) = 1.000000  (exact: 1.0)
+E[X²] = M''(0) = 2.0000  (exact: 2.0)
+Var(X) = 1.0000  (exact: 1.0)
 ```

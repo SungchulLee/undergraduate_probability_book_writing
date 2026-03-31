@@ -1,7 +1,5 @@
 # Chapter 14 Exercises
 
-!!! warning "Exercise page"
-
 ## Exponential Distribution
 
 **Exercise 14.1.** Let $X \sim \text{Exp}(3)$.

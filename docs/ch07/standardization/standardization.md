@@ -1,56 +1,77 @@
-# Standardization
+# Standardization and Reverse Standardization
 
-Standardizing a random variable centers it at zero and scales it to unit variance, enabling comparison across different distributions.
+## Standardization
 
-## Definition
+If $X$ has mean $\mu$ and standard deviation $\sigma$, the **standardized** version of $X$ is:
 
-If $X$ has mean $\mu$ and standard deviation $\sigma > 0$, the **standardized** version is
+$$Z = \frac{X - \mu}{\sigma}$$
 
-$$
-Z = \frac{X - \mu}{\sigma}
-$$
+This transformation yields:
 
-with $E[Z] = 0$ and $\text{SD}(Z) = 1$.
+- $E[Z] = 0$
+- $\text{SD}(Z) = 1$
 
-**Reverse standardization:** $X = \mu + \sigma Z$.
+If $X$ is **normal**, then $Z \sim N(0, 1)$.
 
-## Explanation
+### Why Standardize?
 
-### Why Standardize
+Standardization converts any random variable to a common scale, enabling comparison across different distributions. For the normal distribution specifically, it reduces every $N(\mu, \sigma^2)$ problem to a standard normal $N(0,1)$ table lookup.
 
-- Converts any distribution to a common scale (mean 0, SD 1)
-- For normal variables: $X \sim N(\mu, \sigma^2)$ implies $Z \sim N(0,1)$, reducing every normal problem to a standard normal table
-- Quantile connection: the $\alpha$-quantile of $N(\mu, \sigma^2)$ is $q_\alpha = \mu + \sigma z_\alpha$
+## Reverse Standardization
 
-### Summary
+If $Z$ has mean $0$ and standard deviation $1$, then:
+
+$$X = \mu + \sigma Z$$
+
+has mean $\mu$ and standard deviation $\sigma$.
+
+If $Z \sim N(0, 1)$, then $X \sim N(\mu, \sigma^2)$.
+
+## Summary
 
 | Direction | Formula | Result |
-|:----------|:--------|:-------|
-| Standardize | $Z = (X-\mu)/\sigma$ | Mean 0, SD 1 |
-| Reverse | $X = \mu + \sigma Z$ | Mean $\mu$, SD $\sigma$ |
+|-----------|---------|--------|
+| Standardize | $Z = \frac{X - \mu}{\sigma}$ | Mean $0$, SD $1$ |
+| Reverse standardize | $X = \mu + \sigma Z$ | Mean $\mu$, SD $\sigma$ |
 
-## Examples
+## Quantile Connection
 
-**Example.** Test scores $\sim N(70, 100)$. What fraction score above 85?
+The $\alpha$-quantile $q_\alpha$ of $N(\mu, \sigma^2)$ can be expressed in terms of the $\alpha$-quantile $z_\alpha$ of $N(0,1)$:
 
-$$
-Z = \frac{85 - 70}{10} = 1.5
-$$
+$$q_\alpha = \mu + \sigma \cdot z_\alpha$$
 
-$$
-P(X > 85) = P(Z > 1.5) = 1 - \Phi(1.5) \approx 0.067
-$$
+This follows directly from reverse standardization applied to the quantile.
+
+## Python Implementation
 
 ```python
+import numpy as np
 from scipy import stats
 
+# Standardization example
 mu, sigma = 70, 10
 x = 85
-z = (x - mu) / sigma
-print(f"Z = {z}, P(X > {x}) = {1 - stats.norm.cdf(z):.4f}")
 
-# 95th percentile
-z95 = stats.norm.ppf(0.95)
-q95 = mu + sigma * z95
-print(f"95th percentile = {q95:.2f}")
+z = (x - mu) / sigma
+print(f"X = {x} with μ={mu}, σ={sigma}")
+print(f"Standardized: Z = {z}")
+print(f"P(X ≤ {x}) = P(Z ≤ {z}) = {stats.norm.cdf(z):.4f}")
+
+# Reverse standardization: find x such that P(X ≤ x) = 0.95
+z_95 = stats.norm.ppf(0.95)
+x_95 = mu + sigma * z_95
+print(f"\n95th percentile of N({mu},{sigma}²):")
+print(f"z_0.95 = {z_95:.4f}")
+print(f"q_0.95 = {mu} + {sigma} × {z_95:.4f} = {x_95:.4f}")
+```
+
+**Output:**
+```
+X = 85 with μ=70, σ=10
+Standardized: Z = 1.5
+P(X ≤ 85) = P(Z ≤ 1.5) = 0.9332
+
+95th percentile of N(70,100):
+z_0.95 = 1.6449
+q_0.95 = 70 + 10 × 1.6449 = 86.4485
 ```

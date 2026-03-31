@@ -1,4 +1,5 @@
 # Expectation of Products (Independent Case)
+<<<<<<< Updated upstream
 
 ## Motivation
 
@@ -127,3 +128,5 @@ print(f"E[XY] = E[X^2] = {np.mean(X * Y_dep):.4f}")
 print(f"E[X]*E[Y] = {np.mean(X) * np.mean(Y_dep):.4f}")
 print(f"Cov(X,Y) = {np.cov(X, Y_dep)[0,1]:.4f}")
 ```
+=======
+>>>>>>> Stashed changes

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # Chapter 10 Exercises
 
 ## Section 10.1: Bernoulli and Binomial
@@ -71,3 +72,6 @@
 **Exercise 10.5.1** Let $X \sim \text{DiscreteUniform}(1, n)$. Use the identity $\sum_{k=1}^{n} k^2 = \frac{n(n+1)(2n+1)}{6}$ to derive $\text{Var}(X) = \frac{n^2 - 1}{12}$.
 
 **Exercise 10.5.2** Two fair dice are rolled independently. Let $S$ be the sum. Find $P(S = 7)$ and explain why 7 is the most likely sum.
+=======
+# Exercises
+>>>>>>> Stashed changes

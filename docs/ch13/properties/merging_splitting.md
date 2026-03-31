@@ -1,4 +1,5 @@
 # Merging and Splitting of Poisson Processes
+<<<<<<< Updated upstream
 
 ## Merging (Superposition)
 
@@ -97,3 +98,5 @@ This follows by applying the two-way splitting theorem repeatedly, or by a direc
 | Splitting (prob $p$) | $\text{PP}(\lambda)$ | Independent $\text{PP}(p\lambda)$ and $\text{PP}((1-p)\lambda)$ |
 
 Merging and splitting are inverses of each other, and both preserve the Poisson process structure. These operations make the Poisson process a natural building block for modeling complex systems composed of multiple independent streams.
+=======
+>>>>>>> Stashed changes

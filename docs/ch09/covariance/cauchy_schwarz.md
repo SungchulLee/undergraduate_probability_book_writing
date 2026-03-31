@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # Cauchy--Schwarz Inequality
 
 ## Statement
@@ -135,3 +136,6 @@ print(f"|Cov(X,Y)| = {abs(cov_XY):.4f}")
 print(f"sigma_X * sigma_Y = {sigma_X * sigma_Y:.4f}")
 print(f"Cauchy-Schwarz satisfied: {abs(cov_XY) <= sigma_X * sigma_Y}")
 ```
+=======
+# Cauchy–Schwarz Inequality
+>>>>>>> Stashed changes

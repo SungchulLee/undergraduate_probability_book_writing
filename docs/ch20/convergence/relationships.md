@@ -2,7 +2,11 @@
 
 ## Hierarchy of Convergence
 
+<<<<<<< Updated upstream
 The three modes of convergence satisfy the following implications:
+=======
+The three modes of convergence studied so far satisfy the following implications:
+>>>>>>> Stashed changes
 
 $$
 X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{p} X \implies X_n \xrightarrow{d} X
@@ -10,6 +14,7 @@ $$
 
 None of the reverse implications hold in general.
 
+<<<<<<< Updated upstream
 ## Why a.s. Implies in Probability
 
 If $P(\lim X_n = X) = 1$, then for any $\varepsilon > 0$, the set of outcomes where $|X_n - X| > \varepsilon$ must shrink. More precisely, almost sure convergence implies that the "bad" events $\{|X_n - X| > \varepsilon\}$ can only occur finitely often (with probability 1), so their probabilities must tend to zero:
@@ -61,3 +66,26 @@ This is particularly important because the Law of Large Numbers asserts converge
 | Strong Law of Large Numbers | Almost sure |
 
 Each successive theorem makes a stronger claim about how the sample mean behaves.
+=======
+## Special Case: Convergence to a Constant
+
+When the limit is a **constant** $c$, convergence in distribution and convergence in probability are equivalent:
+
+$$
+X_n \xrightarrow{d} c \iff X_n \xrightarrow{p} c
+$$
+
+This is particularly useful because the Law of Large Numbers states convergence to the constant $\mu$.
+
+## Summary Table
+
+| Mode | Notation | Requires |
+|------|----------|----------|
+| Almost sure (strong) | $X_n \xrightarrow{a.s.} X$ | $P(\lim X_n = X) = 1$ |
+| In probability (weak) | $X_n \xrightarrow{p} X$ | $P(\|X_n - X\| > \varepsilon) \to 0$ for all $\varepsilon > 0$ |
+| In distribution | $X_n \xrightarrow{d} X$ | $F_{X_n}(x) \to F_X(x)$ at continuity points |
+
+## Key Takeaway
+
+Almost sure convergence talks about the **behavior of sample paths** (with probability 1, the entire trajectory converges). Convergence in probability talks about **tail probabilities vanishing**. Convergence in distribution talks only about **CDFs approaching** each other. Each successive mode is strictly weaker.
+>>>>>>> Stashed changes

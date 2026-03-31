@@ -1,4 +1,5 @@
 # Order Statistics of the Uniform and the Beta Connection
+<<<<<<< Updated upstream
 
 ## Main Result
 
@@ -90,3 +91,5 @@ Order statistics of 10 U(0,1) samples vs Beta theory:
   9        0.8183            0.8182    0.012370      0.012397
  10        0.9091            0.9091    0.007550      0.007576
 ```
+=======
+>>>>>>> Stashed changes

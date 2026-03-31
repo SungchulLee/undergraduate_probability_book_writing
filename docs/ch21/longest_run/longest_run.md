@@ -1,55 +1,98 @@
 # Longest Run
 
-In $n$ fair coin flips, the longest consecutive run of heads (or tails) grows as $\log_2 n$ — surprisingly long streaks are the norm, not the exception.
+## Problem Statement
 
-## Definition
+If one flips a fair coin $n$ times, what is the probability distribution of the **longest run** — the length of the longest sequence of consecutive heads (or tails)?
 
-For $n$ iid Bernoulli(0.5) trials, let $R_n$ be the length of the longest run of identical outcomes. Then:
+This is a classic problem in probability that is difficult to solve analytically but easy to explore via simulation.
+
+## Theoretical Background
+
+For a fair coin flipped $n$ times, the expected length of the longest run is approximately
 
 $$
-\frac{R_n}{\log_2 n} \xrightarrow{p} 1 \quad \text{as } n \to \infty
+E[\text{Longest Run}] \approx \log_2 n
 $$
 
-The expected longest run is approximately $\log_2 n$.
+More precisely, the longest run $R_n$ satisfies
 
-## Explanation
+$$
+\frac{R_n}{\log_2 n} \to 1 \quad \text{in probability as } n \to \infty
+$$
 
-### Intuition
+For $n = 10{,}000$, we expect $\log_2(10{,}000) \approx 13.3$, consistent with the simulation histogram centered around 13–15.
 
-There are about $n/k$ non-overlapping blocks of length $k$. A block is all-heads with probability $2^{-k}$, so the expected number of all-heads blocks is $n \cdot 2^{-k}/k \approx n \cdot 2^{-k}$. Setting this to 1 gives $k \approx \log_2 n$.
+## Simulation
 
-### Practical Implication
+We flip a fair coin $n = 10{,}000$ times and record the longest run. We repeat this experiment 1000 times to build a histogram.
 
-People underestimate natural streak lengths. In 10,000 flips, runs of 13-16 are typical ($\log_2 10000 \approx 13.3$). Truly random sequences contain longer streaks than people intuitively expect.
+**MATLAB:**
 
-### Exact Distribution
+```matlab
+clear all; close all; clc; rng('default')
 
-The exact distribution of $R_n$ involves inclusion-exclusion over runs, making it analytically complex. Simulation is the practical approach.
+p = 0.5; n = 10000;       % We flip a fair coin n times
+NumSimu = 1000;            % We do this experiment NumSimu times
+x = random('Binomial', 1*ones(NumSimu, n), p*ones(NumSimu, n));
 
-## Examples
+Run = zeros(NumSimu, 1);
+for NumS = 1:NumSimu
+    Current_Run = 1;
+    Overall_Run = 1;
+    for i = 2:n
+        if x(NumS, i) == x(NumS, i-1)
+            Current_Run = Current_Run + 1;
+            Overall_Run = max(Current_Run, Overall_Run);
+        else
+            Current_Run = 1;
+        end
+    end
+    Run(NumS, 1) = Overall_Run;
+end
 
-**Example.** Simulate longest runs in 10,000 flips, repeated 1,000 times.
+hist(Run)
+```
+
+**Python:**
 
 ```python
 import numpy as np
+import matplotlib.pyplot as plt
 
-np.random.seed(42)
-n = 10_000
-n_sim = 1_000
+np.random.seed(0)
 
-runs = np.zeros(n_sim)
-for s in range(n_sim):
-    flips = np.random.randint(0, 2, n)
-    max_run = current = 1
+p = 0.5
+n = 10000
+num_simu = 1000
+
+x = np.random.binomial(1, p, size=(num_simu, n))
+
+runs = np.zeros(num_simu)
+for s in range(num_simu):
+    current_run = 1
+    overall_run = 1
     for i in range(1, n):
-        if flips[i] == flips[i-1]:
-            current += 1
-            max_run = max(max_run, current)
+        if x[s, i] == x[s, i-1]:
+            current_run += 1
+            overall_run = max(current_run, overall_run)
         else:
-            current = 1
-    runs[s] = max_run
+            current_run = 1
+    runs[s] = overall_run
 
-print(f"Mean longest run: {runs.mean():.2f} (theory ≈ log₂({n}) = {np.log2(n):.2f})")
-print(f"Range: [{runs.min():.0f}, {runs.max():.0f}]")
-print(f"Std dev: {runs.std():.2f}")
+plt.figure()
+plt.hist(runs, bins=range(int(runs.min()), int(runs.max()) + 2),
+         edgecolor='black', align='left')
+plt.xlabel('Longest Run Length')
+plt.ylabel('Frequency')
+plt.title(f'Histogram of longest run in {n} coin flips ({num_simu} simulations)')
+plt.show()
+
+print(f"Mean longest run: {runs.mean():.2f}")
+print(f"Theoretical approximation (log2 n): {np.log2(n):.2f}")
 ```
+
+## Observations
+
+The histogram of 1000 simulations shows that the longest run in 10,000 fair coin flips typically falls between 10 and 22, with the distribution concentrated around 13–16. This is remarkably consistent with the $\log_2 n$ approximation.
+
+This result has practical implications: people tend to underestimate how long runs can naturally occur in random sequences, which is why truly random sequences often "look" less random than people expect.

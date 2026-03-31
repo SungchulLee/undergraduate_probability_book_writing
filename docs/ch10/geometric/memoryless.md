@@ -1,4 +1,5 @@
 # Memoryless Property
+<<<<<<< Updated upstream
 
 ## Intuition
 
@@ -72,3 +73,5 @@ This parallel is not a coincidence: as $n \to \infty$ with $p = \lambda / n$, th
 
 !!! warning "Gambler's Fallacy"
     The memoryless property is the mathematical reason behind the **Gambler's Fallacy**: past failures do not make future success "due." If each trial is independent with the same probability, the system truly has no memory.
+=======
+>>>>>>> Stashed changes

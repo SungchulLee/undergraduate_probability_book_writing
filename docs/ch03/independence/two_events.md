@@ -1,59 +1,78 @@
 # Independence of Two Events
 
-Independence is the probabilistic formalization of "no information": knowing one event occurred tells you nothing about whether the other occurred.
-
 ## Definition
 
 Events $A$ and $B$ are **independent** if
 
 $$
-P(A \cap B) = P(A)\,P(B)
+P(AB) = P(A)\,P(B)
 $$
 
-Equivalently (when $P(A), P(B) > 0$): $P(B \mid A) = P(B)$ and $P(A \mid B) = P(A)$.
-
-## Explanation
-
-### Independence vs Disjointness
-
-These are fundamentally different:
-
-- **Disjoint** events ($A \cap B = \emptyset$) are *maximally dependent*: knowing $A$ occurred tells you $B$ did not.
-- **Independent** events with positive probability must overlap: $P(A \cap B) = P(A)P(B) > 0$.
-
-### Complements
-
-If $A$ and $B$ are independent, then so are $A$ and $B^c$, $A^c$ and $B$, and $A^c$ and $B^c$.
-
-*Proof:* $P(AB^c) = P(A) - P(AB) = P(A) - P(A)P(B) = P(A)(1 - P(B)) = P(A)P(B^c)$. $\square$
-
-### Computing Unions and Intersections
-
-For **independent** events: $P(A_1 \cdots A_n) = \prod P(A_i)$.
-
-The complement method for unions is especially clean:
+Equivalently (when $P(A) > 0$ and $P(B) > 0$):
 
 $$
-P\left(\bigcup_{i=1}^n A_i\right) = 1 - \prod_{i=1}^n (1 - P(A_i))
+P(B \mid A) = P(B) \quad \text{and} \quad P(A \mid B) = P(A)
 $$
 
-## Examples
+Independence means that knowing $A$ occurred gives no information about whether $B$ occurs, and vice versa.
 
-**Example.** Flip a fair coin and roll a fair die. $A$ = "heads", $B$ = "even roll."
+## Key Properties
 
-$P(A) = 1/2$, $P(B) = 1/2$, $P(AB) = P(\text{heads and even}) = 1/4 = P(A)P(B)$. Independent. ✓
+**Complements:** If $A$ and $B$ are independent, then so are:
 
----
+- $A$ and $B^c$
+- $A^c$ and $B$
+- $A^c$ and $B^c$
 
-**Example (At least one 6).** Roll a die 4 times. $P(\text{at least one 6}) = 1 - (5/6)^4 \approx 0.518$.
+**Proof for $A$ and $B^c$:**
 
-```python
-# Independence verification
-P_A = 1/2  # heads
-P_B = 1/2  # even die
-P_AB = 1/4  # heads AND even
-print(f"P(AB) = {P_AB}, P(A)*P(B) = {P_A * P_B}, Independent: {P_AB == P_A * P_B}")
+$$
+P(AB^c) = P(A) - P(AB) = P(A) - P(A)\,P(B) = P(A)\,(1 - P(B)) = P(A)\,P(B^c)
+$$
 
-# At least one 6 in 4 rolls
-print(f"P(at least one 6) = {1 - (5/6)**4:.4f}")
-```
+## Independence vs. Disjointness
+
+Independence and disjointness are very different concepts:
+
+- **Disjoint events** ($A \cap B = \emptyset$) **cannot** be independent (unless one has probability 0), because $P(AB) = 0 \ne P(A)\,P(B)$ when both have positive probability.
+- **Independent events** with positive probabilities must have nonempty intersection.
+
+Intuitively: if $A$ and $B$ are disjoint, then knowing $A$ occurred tells you $B$ did **not** occur — they are maximally dependent (negatively).
+
+## Computing Intersection and Union Probabilities
+
+### Intersection: $P\!\left(\bigcap_{i=1}^{n} A_i\right)$
+
+**Independent events:**
+
+$$
+P(A_1 A_2 \cdots A_n) = P(A_1)\,P(A_2) \cdots P(A_n)
+$$
+
+**Dependent events (chain rule):**
+
+$$
+P(A_1 A_2 \cdots A_n) = P(A_1)\,P(A_2 \mid A_1)\,P(A_3 \mid A_1 A_2) \cdots P(A_n \mid A_1 \cdots A_{n-1})
+$$
+
+### Union: $P\!\left(\bigcup_{i=1}^{n} A_i\right)$
+
+**Disjoint events:**
+
+$$
+P\!\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i)
+$$
+
+**Non-disjoint events (inclusion–exclusion):**
+
+$$
+P\!\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i) - \sum_{1 \le i < j \le n} P(A_i A_j) + \cdots + (-1)^{n+1} P(A_1 A_2 \cdots A_n)
+$$
+
+**Complement method:**
+
+$$
+P\!\left(\bigcup_{i=1}^{n} A_i\right) = 1 - P\!\left(\bigcap_{i=1}^{n} A_i^c\right)
+$$
+
+This is often the most efficient approach when the $A_i$ are independent, since then $P\!\left(\bigcap_{i=1}^{n} A_i^c\right) = \prod_{i=1}^{n} P(A_i^c)$.

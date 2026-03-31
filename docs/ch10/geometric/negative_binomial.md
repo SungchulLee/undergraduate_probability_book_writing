@@ -1,4 +1,5 @@
 # Negative Binomial Distribution
+<<<<<<< Updated upstream
 
 ## Motivation
 
@@ -75,3 +76,5 @@ This connection to the negative binomial series is the origin of the distributio
 **Baseball hits.** A batter has a 0.300 batting average. The number of at-bats until 3 hits is $X \sim \text{NB}(3, 0.3)$ with $E[X] = 10$ and $\text{SD}(X) = \sqrt{3 \cdot 0.7 / 0.09} \approx 4.83$.
 
 **Relation to Binomial.** The Binomial fixes the number of trials and counts successes. The Negative Binomial fixes the number of successes and counts trials. They are "complementary" views of the same Bernoulli process.
+=======
+>>>>>>> Stashed changes

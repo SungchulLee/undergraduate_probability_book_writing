@@ -1,4 +1,5 @@
 # Bernoulli Distribution
+<<<<<<< Updated upstream
 
 ## Motivation
 
@@ -70,3 +71,5 @@ $$
 **Quality control.** A factory produces items with a 3% defect rate. Let $X = 1$ if a randomly selected item is defective. Then $X \sim \text{Bernoulli}(0.03)$ with $E[X] = 0.03$ and $\text{Var}(X) = 0.03 \times 0.97 = 0.0291$.
 
 **Free throw.** A basketball player makes 80% of free throws. Let $X = 1$ if the next shot is made. Then $X \sim \text{Bernoulli}(0.8)$ with $E[X] = 0.8$ and $\text{Var}(X) = 0.16$.
+=======
+>>>>>>> Stashed changes

@@ -6,6 +6,7 @@
 
 **Exercise 5.2.** Three fair coins are flipped. Let $X$ denote the number of heads in the first two flips and $Y$ the total number of heads. Construct the joint PMF table and verify the entries sum to 1.
 
+<<<<<<< Updated upstream
 **Exercise 5.3.** The joint PMF of $(X, Y)$ is given by $P(X = i, Y = j) = c(i + j)$ for $i \in \{1, 2\}$, $j \in \{1, 2, 3\}$. Find the constant $c$ and compute $P(X + Y \le 3)$.
 
 ## Joint PDF Problems
@@ -25,6 +26,13 @@
 ## Independence Problems
 
 **Exercise 5.7.** Given the joint PMF table:
+=======
+**Exercise 5.3.** The joint PMF of $(X, Y)$ is given by $P(X = i, Y = j) = c(i + j)$ for $i \in \{1, 2\}$, $j \in \{1, 2, 3\}$. Find the constant $c$.
+
+## Independence Problems
+
+**Exercise 5.4.** Given the joint PMF table:
+>>>>>>> Stashed changes
 
 | | $x=0$ | $x=1$ |
 |---|---|---|
@@ -33,6 +41,7 @@
 
 Determine whether $X$ and $Y$ are independent by checking the factorization condition at every cell.
 
+<<<<<<< Updated upstream
 **Exercise 5.8.** Suppose $X$ and $Y$ are independent with $X \sim \text{B}(3, 0.5)$ and $Y \sim \text{Geo}(0.5)$. Compute $P(X = 2, Y = 1)$.
 
 **Exercise 5.9.** A bin contains 3 red balls and 1 blue ball. Two balls are drawn without replacement. Let $X_1$ and $X_2$ be indicator variables for the first and second ball being blue. Are $X_1$ and $X_2$ independent? Justify your answer by computing the joint PMF and checking the factorization condition.
@@ -54,3 +63,14 @@ Determine whether $X$ and $Y$ are independent by checking the factorization cond
 **Exercise 5.15.** Explain why conditional independence given $Y$ does not imply unconditional independence. Provide a concrete example with a joint PMF table.
 
 **Exercise 5.16.** Prove that if $X$ and $Y$ are independent discrete random variables, then $g(X)$ and $h(Y)$ are also independent for any functions $g$ and $h$.
+=======
+**Exercise 5.5.** Suppose $X$ and $Y$ are independent with $X \sim \text{B}(3, 0.5)$ and $Y \sim \text{Geo}(0.5)$. Compute $P(X = 2, Y = 1)$.
+
+**Exercise 5.6.** A bin contains 3 red balls and 1 blue ball. Two balls are drawn without replacement. Let $X_1$ and $X_2$ be indicator variables for the first and second ball being blue. Are $X_1$ and $X_2$ independent? Justify.
+
+## Conceptual Questions
+
+**Exercise 5.7.** Give an example of three random variables that are pairwise independent but not mutually independent.
+
+**Exercise 5.8.** Explain why conditional independence given $Y$ does not imply unconditional independence. Provide a concrete example.
+>>>>>>> Stashed changes

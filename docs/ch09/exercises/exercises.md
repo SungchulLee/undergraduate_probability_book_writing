@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # Chapter 9 Exercises
 
 ## Section 9.1: Covariance and Correlation
@@ -58,3 +59,6 @@ $$
 What happens as $n \to \infty$? Interpret the result.
 
 **Exercise 9.3.5** Let $X$ and $Y$ be random variables with $\text{Var}(X) = \text{Var}(Y) = \sigma^2$ and correlation $\rho$. Find the value of $c$ that minimizes $\text{Var}(X - cY)$.
+=======
+# Exercises
+>>>>>>> Stashed changes

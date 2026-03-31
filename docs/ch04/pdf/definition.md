@@ -1,4 +1,5 @@
 # PDF Definition and Properties
+<<<<<<< Updated upstream
 
 ## Motivation
 
@@ -47,9 +48,26 @@ For an interval $[a, b]$:
 $$
 P(a \le X \le b) = \int_a^b f_X(x) \, dx
 $$
+=======
+
+## Definition
+
+The **probability density function (PDF)** of a continuous random variable $X$ is a function $f(x)$ such that:
+
+$$P(X \in A) = \int_A f(x) \, dx$$
+
+Using the brick analogy:
+
+$$f(x) \, dx = \text{Weight of the bricks in } [x, x + dx]$$
+
+The PDF represents the **density** of probability at each point, not the probability itself.
+
+## Properties
+>>>>>>> Stashed changes
 
 Geometrically, this is the **area under the PDF curve** between $a$ and $b$.
 
+<<<<<<< Updated upstream
 ## Infinitesimal Interpretation
 
 For a small increment $\epsilon > 0$:
@@ -85,3 +103,26 @@ increasing.
 **Example 3 (Density exceeding 1).** Let $f_X(x) = 3$ for
 $0 \le x \le 1/3$ and $f_X(x) = 0$ otherwise. Here $f_X(x) = 3 > 1$ on the
 support, yet $\int_0^{1/3} 3 \, dx = 1$, confirming this is a valid PDF.
+=======
+1. **Non-negativity:** $f(x) \ge 0$ for all $x$.
+2. **Normalization:** $\displaystyle\int_{-\infty}^{\infty} f(x) \, dx = 1$.
+
+!!! warning "Important"
+    $f(x)$ is **not** a probability. It is a density, and $f(x)$ can exceed 1. For example, $X \sim \text{Uniform}(0, 1/2)$ has $f(x) = 2$ on $[0, 1/2]$.
+
+## Probability from the PDF
+
+For an interval $[a, b]$:
+
+$$P(a \le X \le b) = \int_a^b f(x) \, dx$$
+
+This is the area under the PDF curve between $a$ and $b$.
+
+## Infinitesimal Interpretation
+
+For small $\epsilon > 0$:
+
+$$P(x \le X \le x + \epsilon) \approx f(x) \cdot \epsilon$$
+
+The PDF gives the probability per unit length near $x$.
+>>>>>>> Stashed changes

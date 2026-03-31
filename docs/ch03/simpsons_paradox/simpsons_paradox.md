@@ -1,51 +1,48 @@
 # Simpson's Paradox
 
-Simpson's paradox occurs when a trend present in every subgroup reverses in the aggregate. It is a fundamental warning about confounding variables and the dangers of naive data aggregation.
-
 ## Definition
 
-Simpson's paradox: it is possible that
+**Simpson's paradox** occurs when a trend that appears in each of several groups of data **reverses** when the groups are combined. The aggregate data shows the opposite conclusion from the stratified data.
 
-$$
-P(S \mid G\!=\!A,\, C\!=\!c) > P(S \mid G\!=\!B,\, C\!=\!c) \quad \text{for all } c
-$$
+## Example — Good Doctor vs. Bad Doctor
 
-yet $P(S \mid G\!=\!A) < P(S \mid G\!=\!B)$.
+| Doctor A | Successes | Fails | Success Rate |
+|----------|-----------|-------|-------------|
+| Easy operation | 10 | 0 | **100%** |
+| Hard operation | 75 | 15 | **83%** |
+| **Total** | **85** | **15** | **85%** |
 
-The reversal occurs because the confounding variable $C$ has different distributions across groups:
+| Doctor B | Successes | Fails | Success Rate |
+|----------|-----------|-------|-------------|
+| Easy operation | 85 | 5 | 94% |
+| Hard operation | 1 | 9 | 10% |
+| **Total** | **86** | **14** | **86%** |
 
-$$
-P(S \mid G\!=\!g) = \sum_c P(S \mid G\!=\!g,\, C\!=\!c)\,P(C\!=\!c \mid G\!=\!g)
-$$
+Doctor A has a higher success rate **in both categories** (100% vs. 94% for easy operations; 83% vs. 10% for hard operations), yet Doctor B has a higher **overall** success rate (86% vs. 85%).
 
-Even if every conditional term favors group $A$, the weighted average can reverse if the weights differ enough.
+### Explanation
 
-## Explanation
+The paradox arises because the two doctors have very different **case mixes**. Doctor A predominantly performs hard operations (90 out of 100), while Doctor B predominantly performs easy operations (90 out of 100). The aggregate rate is dominated by the type of operation each doctor performs most, masking the within-category advantage of Doctor A.
 
-The paradox arises from **confounding**: the groups being compared differ systematically in their exposure to the lurking variable $C$. The aggregate statistic conflates the effect of the treatment with the effect of the confound.
+## Example — Berkeley Gender Bias Case
 
-The practical lesson: always check whether a confounding variable could drive an apparent trend. Aggregate statistics are reliable only when subgroups have similar compositions.
+One of the best-known real-life examples of Simpson's paradox occurred at the University of California, Berkeley, which was sued for bias against women in graduate admissions for fall 1973.
 
-## Examples
+### Aggregate Data
 
-**Example 1 (Good doctor, bad odds).**
+| | Applicants | Admitted Rate |
+|---|-----------|-------------|
+| Men | 8,442 | 44% |
+| Women | 4,321 | 35% |
 
-| Doctor A | Easy | Hard | Total |
-|:---|:---:|:---:|:---:|
-| Success rate | 100% (10/10) | 83% (75/90) | 85% |
+The difference was large enough to appear statistically significant.
 
-| Doctor B | Easy | Hard | Total |
-|:---|:---:|:---:|:---:|
-| Success rate | 94% (85/90) | 10% (1/10) | 86% |
+### Department-Level Data
 
-Doctor A is better in **both** categories, yet Doctor B has higher overall rate. The confound: Doctor A handles mostly hard cases.
+When examining the six largest departments individually, no department showed significant bias against women. In fact, most showed a small but statistically significant bias **in favor of women**:
 
----
-
-**Example 2 (Berkeley admissions, 1973).** Aggregate: men 44%, women 35% admitted. Department-level: most departments slightly favored women. The confound: women applied disproportionately to competitive departments.
-
-| Dept | Men (admitted) | Women (admitted) |
-|:---|:---:|:---:|
+| Dept | Male Applicants (Admitted) | Female Applicants (Admitted) |
+|------|---------------------------|------------------------------|
 | A | 825 (62%) | 108 (82%) |
 | B | 560 (63%) | 25 (68%) |
 | C | 325 (37%) | 593 (34%) |
@@ -53,15 +50,31 @@ Doctor A is better in **both** categories, yet Doctor B has higher overall rate.
 | E | 191 (28%) | 393 (24%) |
 | F | 272 (6%) | 341 (7%) |
 
-```python
-# Doctor example
-A_easy, A_hard = (10, 0), (75, 15)
-B_easy, B_hard = (85, 5), (1, 9)
+### Resolution
 
-rate = lambda s, f: s / (s + f) if s + f > 0 else 0
-for label, easy, hard in [("A", A_easy, A_hard), ("B", B_easy, B_hard)]:
-    total_s = easy[0] + hard[0]
-    total_f = easy[1] + hard[1]
-    print(f"Doctor {label}: easy={rate(*easy):.0%}, hard={rate(*hard):.0%}, "
-          f"total={rate(total_s, total_f):.0%}")
-```
+Women tended to apply to more competitive departments (C, D, E, F) with lower overall admission rates, while men applied more to less competitive departments (A, B) with higher acceptance rates. The aggregate statistic confounded the effect of gender with the choice of department.
+
+## Connection to Conditional Probability
+
+Simpson's paradox is fundamentally about the difference between conditional and marginal probabilities. Let $S$ = success, $G$ = group (e.g., gender), and $C$ = category (e.g., department). It is possible that:
+
+$$
+P(S \mid G = A,\; C = c) > P(S \mid G = B,\; C = c) \quad \text{for all } c
+$$
+
+yet
+
+$$
+P(S \mid G = A) < P(S \mid G = B)
+$$
+
+The marginal relationship reverses the conditional relationships because the **lurking variable** $C$ has different distributions across groups. Formally, the marginal success rate is:
+
+$$
+P(S \mid G = g) = \sum_{c} P(S \mid G = g, C = c)\,P(C = c \mid G = g)
+$$
+
+Even if every term $P(S \mid G = A, C = c) > P(S \mid G = B, C = c)$, the weighted average can reverse if the weights $P(C = c \mid G = g)$ are sufficiently different.
+
+!!! warning "Practical Lesson"
+    Always consider whether a lurking variable (confounding factor) could be driving an apparent trend. Aggregate statistics can be misleading when subgroups have different compositions. This insight is central to causal inference, observational studies, and experimental design.

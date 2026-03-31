@@ -1,4 +1,5 @@
 # Uniqueness Theorem
+<<<<<<< Updated upstream
 
 ## Statement
 
@@ -55,3 +56,5 @@ This theorem is the MGF route to proving the **Central Limit Theorem**: show tha
 | CF $\varphi_X(t) = E[e^{itX}]$ | All distributions | Always |
 
 When the MGF exists, it is often the more convenient tool because it avoids complex arithmetic. When it does not exist, the characteristic function is the universal alternative.
+=======
+>>>>>>> Stashed changes

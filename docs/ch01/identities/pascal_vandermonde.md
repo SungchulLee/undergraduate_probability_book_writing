@@ -1,103 +1,100 @@
 # Pascal's Rule and Vandermonde's Identity
 
-These two fundamental identities for binomial coefficients both arise from counting the same quantity in two different ways — a technique that pervades combinatorics.
+## Overview
 
-## Definition
+Combinatorial identities often arise from counting the same quantity in two different ways. This section presents **Pascal's rule** and **Vandermonde's identity**, two fundamental identities involving binomial coefficients.
 
-**Pascal's Rule.** For $1 \le k \le n-1$:
+## Pascal's Rule
 
-$$
-\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}
-$$
+### Statement
 
-**Vandermonde's Identity.** For non-negative integers $m, n, k$:
+$$\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$$
 
-$$
-\binom{m+n}{k} = \sum_{\ell=0}^{k} \binom{m}{\ell}\binom{n}{k-\ell}
-$$
+### Combinatorial Proof
 
-## Explanation
+Consider forming a committee of $k$ people from $n$ people. Fix one person, say person $X$:
 
-### Pascal's Rule — Condition on One Element
+- **$X$ is on the committee:** Choose the remaining $k - 1$ members from the other $n - 1$ people: $\binom{n-1}{k-1}$
+- **$X$ is not on the committee:** Choose all $k$ members from the other $n - 1$ people: $\binom{n-1}{k}$
 
-Fix one person $X$ among $n$. Every $k$-person committee either includes $X$ or not:
+These two cases are disjoint and exhaustive, so by the addition rule:
 
-- **$X$ included:** choose the remaining $k-1$ from $n-1$ people: $\binom{n-1}{k-1}$
-- **$X$ excluded:** choose all $k$ from $n-1$ people: $\binom{n-1}{k}$
+$$\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$$
 
-These cases are disjoint and exhaustive, so $\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$.
+Pascal's rule generates **Pascal's triangle**, where each entry is the sum of the two entries above it.
 
-Pascal's rule generates **Pascal's triangle**: each entry is the sum of the two entries directly above it. Row $n$ gives the coefficients of $(x+y)^n$.
+## Vandermonde's Identity
 
-### Vandermonde's Identity — Partition by Group Composition
+### Statement
 
-Choose a committee of $k$ from $m$ men and $n$ women.
+$$\binom{m + n}{k} = \sum_{\ell = \max(0, k-n)}^{\min(m, k)} \binom{m}{\ell} \binom{n}{k - \ell}$$
 
-**Direct count:** $\binom{m+n}{k}$.
+When the bounds are clear (i.e., $\binom{m}{\ell} = 0$ for $\ell > m$ and $\binom{n}{k-\ell} = 0$ for $k - \ell > n$), this simplifies to:
 
-**By gender breakdown:** Choose $\ell$ men and $k-\ell$ women, then sum over $\ell$:
+$$\binom{m + n}{k} = \sum_{\ell=0}^{k} \binom{m}{\ell} \binom{n}{k - \ell}$$
 
-$$
-\sum_{\ell=0}^{k} \binom{m}{\ell}\binom{n}{k-\ell}
-$$
+### Combinatorial Proof — Committee from Men and Women
 
-Both expressions count the same committees, establishing the identity.
+Consider choosing a committee of $k$ people from a group of $m$ men and $n$ women.
 
-**Special case ($m = n = k$):**
+**Method 1 (direct):** Choose $k$ people from all $m + n$: $\binom{m+n}{k}$
 
-$$
-\binom{2n}{n} = \sum_{\ell=0}^{n}\binom{n}{\ell}^2
-$$
+**Method 2 (by gender composition):** Choose $\ell$ men and $k - \ell$ women:
 
-The sum of squares of the entries in row $n$ of Pascal's triangle equals the central binomial coefficient.
+- Choose $\ell$ men from $m$: $\binom{m}{\ell}$
+- Choose $k - \ell$ women from $n$: $\binom{n}{k-\ell}$
+- Sum over all valid values of $\ell$: $\sum_\ell \binom{m}{\ell}\binom{n}{k-\ell}$
 
-## Examples
+Since both methods count the same thing:
 
-**Example 1 (Pascal).** $\binom{7}{3} = \binom{6}{2} + \binom{6}{3} = 15 + 20 = 35$. ✓
+$$\binom{m+n}{k} = \sum_{\ell} \binom{m}{\ell} \binom{n}{k-\ell}$$
 
----
-
-**Example 2 (Vandermonde).** Verify $\binom{10}{5} = \sum_{\ell=0}^{4}\binom{4}{\ell}\binom{6}{5-\ell}$:
-
-$$
-1\cdot 6 + 4\cdot 15 + 6\cdot 20 + 4\cdot 15 + 1\cdot 6 = 6 + 60 + 120 + 60 + 6 = 252 = \binom{10}{5}
-$$
-
----
-
-**Example 3 (Committee selection).** From 5 men and 7 women, form a committee of 4. The breakdown by gender:
-
-| Men $\ell$ | Women $4-\ell$ | Ways |
-|:---:|:---:|:---:|
-| 0 | 4 | $\binom{5}{0}\binom{7}{4} = 35$ |
-| 1 | 3 | $\binom{5}{1}\binom{7}{3} = 175$ |
-| 2 | 2 | $\binom{5}{2}\binom{7}{2} = 210$ |
-| 3 | 1 | $\binom{5}{3}\binom{7}{1} = 70$ |
-| 4 | 0 | $\binom{5}{4}\binom{7}{0} = 5$ |
-
-Total: $495 = \binom{12}{4}$. ✓
+## Python Implementation
 
 ```python
 from math import comb
 
-# Pascal's rule verification
-for n in range(2, 10):
+def verify_pascal(n, k):
+    """Verify Pascal's rule: C(n,k) = C(n-1,k-1) + C(n-1,k)."""
+    lhs = comb(n, k)
+    rhs = comb(n - 1, k - 1) + comb(n - 1, k)
+    return lhs, rhs, lhs == rhs
+
+def verify_vandermonde(m, n, k):
+    """Verify Vandermonde's identity: C(m+n, k) = sum_l C(m,l)*C(n,k-l)."""
+    lhs = comb(m + n, k)
+    rhs = sum(comb(m, l) * comb(n, k - l) for l in range(k + 1))
+    return lhs, rhs, lhs == rhs
+
+# Verify Pascal's rule
+for n in range(2, 8):
     for k in range(1, n):
-        assert comb(n, k) == comb(n - 1, k - 1) + comb(n - 1, k)
-print("Pascal's rule verified for n=2..9")
+        lhs, rhs, ok = verify_pascal(n, k)
+        assert ok, f"Failed for n={n}, k={k}"
+print("Pascal's rule verified for n=2..7, all valid k")
 
-# Vandermonde verification (Example 2)
-lhs = comb(10, 5)
-rhs = sum(comb(4, l) * comb(6, 5 - l) for l in range(5))
-print(f"C(10,5) = {lhs}, sum = {rhs}, match: {lhs == rhs}")
-
-# Example 3 breakdown
+# Verify Vandermonde's identity
 m, n, k = 5, 7, 4
-total = 0
+lhs, rhs, ok = verify_vandermonde(m, n, k)
+print(f"\nVandermonde: C({m}+{n}, {k}) = {lhs}")
+print(f"Sum of C({m},l)*C({n},{k}-l) = {rhs}")
+print(f"Match: {ok}")
+
+# Show the breakdown
+print(f"\nBreakdown (m={m} men, n={n} women, committee of {k}):")
 for l in range(k + 1):
-    ways = comb(m, l) * comb(n, k - l)
-    if ways > 0:
-        total += ways
-        print(f"  {l} men, {k-l} women: {comb(m,l)}*{comb(n,k-l)} = {ways}")
-print(f"Total: {total} = C({m+n},{k}) = {comb(m+n, k)}")
+    c_m = comb(m, l)
+    c_n = comb(n, k - l)
+    if c_m > 0 and c_n > 0:
+        print(f"  {l} men, {k-l} women: C({m},{l})*C({n},{k-l}) = {c_m}*{c_n} = {c_m*c_n}")
+
+# Generate Pascal's triangle
+print("\nPascal's Triangle (rows 0-7):")
+for row in range(8):
+    values = [comb(row, k) for k in range(row + 1)]
+    print(f"  Row {row}: {values}")
 ```
+
+## Key Takeaway
+
+Pascal's rule and Vandermonde's identity are both proved elegantly by the "two ways of counting" technique. Pascal's rule partitions by the status of one fixed element; Vandermonde's identity partitions by the composition across two disjoint groups. Both identities are fundamental building blocks in combinatorics and probability.

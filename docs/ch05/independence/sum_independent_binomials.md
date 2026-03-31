@@ -1,69 +1,42 @@
 # Sum of Independent Binomials
 
-The sum of independent Binomial random variables with the same success probability is again Binomial — a closure property that fails without independence.
+## Statement
 
-## Definition
+If $X \sim \text{B}(n, p)$ and $Y \sim \text{B}(m, p)$ are **independent**, then:
 
-If $X \sim \text{Bin}(n, p)$ and $Y \sim \text{Bin}(m, p)$ are **independent**, then
+$$X + Y \sim \text{B}(n + m, p)$$
 
-$$
-X + Y \sim \text{Bin}(n + m, p)
-$$
+!!! warning "Independence Required"
+    Without independence, the result does **not** hold in general. $X \sim \text{B}(n, p)$ and $Y \sim \text{B}(m, p)$ does **not** imply $X + Y \sim \text{B}(n+m, p)$ unless $X$ and $Y$ are independent.
 
-!!! warning "Independence is essential"
-    Without independence, $X + Y$ need not be Binomial even if both $X$ and $Y$ are individually Binomial with the same $p$.
+## Proof by Story
 
-## Explanation
+Flip a $p$-coin $n$ times and count the number $X$ of heads. Then flip the same coin $m$ additional times and count the number $Y$ of heads in these additional flips. Since the two sets of flips are independent, $X$ and $Y$ are independent. The total $X + Y$ is simply the number of heads in $n + m$ flips, so $X + Y \sim \text{B}(n + m, p)$.
 
-### Proof by Story
+## Proof by Divide and Conquer
 
-Flip a $p$-coin $n$ times: $X$ counts heads. Flip it $m$ more times: $Y$ counts heads. Since the two groups of flips are independent, $X \perp Y$. The total $X + Y$ counts heads in $n + m$ independent flips, so $X + Y \sim \text{Bin}(n+m, p)$.
+**Divide:** Using the law of total probability:
 
-### Proof by Convolution
+$$P(X + Y = k) = \sum_{\substack{0 \le l \le n \\ 0 \le k-l \le m}} P(X = l, Y = k - l)$$
 
-Using the law of total probability and independence:
+**Conquer:** By independence:
 
-$$
-P(X + Y = k) = \sum_{l} P(X = l)\,P(Y = k - l) = \sum_{l}\binom{n}{l}\binom{m}{k-l}p^k q^{n+m-k}
-$$
+$$P(X = l, Y = k - l) = P(X = l) \cdot P(Y = k - l) = \binom{n}{l} p^l q^{n-l} \cdot \binom{m}{k-l} p^{k-l} q^{m-(k-l)}$$
 
-By Vandermonde's identity, $\sum_l \binom{n}{l}\binom{m}{k-l} = \binom{n+m}{k}$, confirming $X+Y \sim \text{Bin}(n+m, p)$.
+Summing and applying **Vandermonde's identity**:
 
-### When Independence Fails
+$$P(X + Y = k) = \left[\sum_l \binom{n}{l} \binom{m}{k-l}\right] p^k q^{n+m-k} = \binom{n+m}{k} p^k q^{n+m-k}$$
 
-Consider $n$ people, each with an independently uniform birthday out of 365 days. For each pair $(i,j)$, let $I_{ij} = \mathbf{1}(\text{same birthday})$. Each $I_{ij} \sim \text{Bern}(1/365)$, but the total
+This confirms $X + Y \sim \text{B}(n+m, p)$.
 
-$$
-X = \sum_{i < j} I_{ij}
-$$
+## Example: Number of Couples with Same Birthday
 
-is **not** Binomial because the indicators are dependent: if persons 1,2 share a birthday and persons 1,3 share a birthday, then 2,3 must also share a birthday.
+There are $n$ people in a class. Each chooses a birthday independently and uniformly over 365 days. For each pair $(i, j)$, let $A_{ij}$ be the event that $i$ and $j$ share a birthday, and let $\mathbf{1}_{A_{ij}}$ be its indicator. The number of common-birthday pairs is:
 
-## Examples
+$$X = \sum_{1 \le i < j \le n} \mathbf{1}_{A_{ij}}$$
 
-**Example.** $X \sim \text{Bin}(10, 0.3)$, $Y \sim \text{Bin}(15, 0.3)$, independent. Then $X + Y \sim \text{Bin}(25, 0.3)$.
+Each indicator $\mathbf{1}_{A_{ij}} \sim \text{B}(1/365)$, but **$X$ is not binomial** because the indicators are **not independent**. For example:
 
-$$
-P(X + Y = 8) = \binom{25}{8}(0.3)^8(0.7)^{17}
-$$
+$$P(A_{23} \mid A_{12}, A_{13}) = 1 \ne \frac{1}{365} = P(A_{23})$$
 
-```python
-from math import comb
-from scipy.stats import binom
-
-# X ~ Bin(10, 0.3), Y ~ Bin(15, 0.3), independent
-n1, n2, p = 10, 15, 0.3
-k = 8
-
-# Direct from Bin(25, 0.3)
-direct = binom.pmf(k, n1 + n2, p)
-
-# Convolution
-conv = sum(binom.pmf(l, n1, p) * binom.pmf(k - l, n2, p)
-           for l in range(min(k, n1) + 1) if k - l <= n2)
-
-print(f"P(X+Y = {k}):")
-print(f"  Bin({n1+n2}, {p}): {direct:.6f}")
-print(f"  Convolution:    {conv:.6f}")
-print(f"  Match: {abs(direct - conv) < 1e-10}")
-```
+If persons 1 and 2 share a birthday, and persons 1 and 3 share a birthday, then persons 2 and 3 must share a birthday. This dependence invalidates the binomial model.

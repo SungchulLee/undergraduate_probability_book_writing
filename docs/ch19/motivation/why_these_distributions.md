@@ -1,63 +1,85 @@
-# Why Chi-Squared, t, and F Arise Naturally
+# Why Chi-Squared, $t$, and $F$ Arise Naturally
 
-When sampling from a normal population, replacing the unknown $\sigma$ with the sample standard deviation $S$ changes the sampling distribution from normal to something heavier-tailed. The chi-squared, Student's $t$, and $F$ distributions are the three distributions that emerge from this substitution.
+## The Central Question
 
-## Definition
+When working with a normal population $N(\mu, \sigma^2)$, inference requires knowing the **sampling distributions** of $\bar{X}$ and $S^2$. Three distributions emerge naturally from this setup.
 
-The three distributions derived from normal samples are built in sequence:
+## From Samples to Sampling Distributions
 
-$$
-\chi^2_d = \sum_{i=1}^d Z_i^2, \qquad t_d = \frac{Z}{\sqrt{\chi^2_d / d}}, \qquad F_{d_1,d_2} = \frac{\chi^2_{d_1}/d_1}{\chi^2_{d_2}/d_2}
-$$
+For $X_1, \ldots, X_n$ iid from $N(\mu, \sigma^2)$:
 
-where all component random variables are independent and $Z, Z_i \sim N(0,1)$.
+**When $\sigma$ is known**, the standardized sample mean is:
 
-## Explanation
+$$\frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N(0, 1)$$
 
-### Known versus unknown variance
+This is straightforward — a linear combination of normals is normal.
 
-For $X_1, \ldots, X_n$ iid from $N(\mu, \sigma^2)$, when $\sigma$ is known the standardized mean is standard normal:
+**When $\sigma$ is unknown**, we must replace $\sigma$ with $S$:
 
-$$
-\frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N(0, 1)
-$$
+$$\frac{\bar{X} - \mu}{S / \sqrt{n}} \sim \; ?$$
 
-When $\sigma$ is unknown, replacing it with $S$ gives a ratio whose distribution depends on the random denominator:
+This is **not** normal, because $S$ is random and depends on the same data. To determine its distribution, we need to understand $S^2$, which leads to the chi-squared distribution.
 
-$$
-\frac{\bar{X} - \mu}{S / \sqrt{n}} \sim t_{n-1}
-$$
+## The Three Distributions and Their Roles
 
-### The logical chain
+### Chi-Squared: Distribution of $S^2$
 
-Each distribution builds on the previous one:
+$$\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$$
 
-- **Chi-squared** captures the distribution of sums of squared standard normals, governing $S^2$.
-- **Student's $t$** arises as the ratio of a standard normal to $\sqrt{\chi^2/d}$, governing the studentized mean.
-- **$F$** arises as the ratio of two independent chi-squared variables (each divided by their degrees of freedom), governing comparisons of variances.
+The chi-squared distribution captures the variability in the sample variance. It arises because the sum of squared deviations from the mean is a sum of squared normal quantities (with a rank reduction from estimating $\mu$ by $\bar{X}$).
 
-### Techniques for deriving PDFs
+### Student's $t$: When $\sigma$ Is Unknown
 
-The derivations in this chapter rely on two transformation methods. The **CDF method** computes $P(Y \le y)$ and differentiates. The **Jacobian method** uses the change-of-variables formula for densities:
+$$\frac{\bar{X} - \mu}{S/\sqrt{n}} = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \Big/ \sqrt{\frac{(n-1)S^2/\sigma^2}{n-1}} = \frac{N(0,1)}{\sqrt{\chi^2_{n-1}/(n-1)}} \sim t_{n-1}$$
 
-$$
-f_Y(y) = f_X\!\bigl(g^{-1}(y)\bigr) \left|\frac{dx}{dy}\right|
-$$
+The $t$ distribution arises as the ratio of a standard normal to the square root of an independent chi-squared divided by its degrees of freedom.
 
-## Examples
+### $F$: Comparing Two Variances
 
-**Example 1.** Verify the CDF and Jacobian methods agree for $Y = X^3$ where $X \sim U(0,1)$.
+$$\frac{S_1^2 / \sigma_1^2}{S_2^2 / \sigma_2^2} = \frac{\chi^2_{n_1 - 1} / (n_1 - 1)}{\chi^2_{n_2 - 1} / (n_2 - 1)} \sim F_{n_1 - 1, \, n_2 - 1}$$
 
-```python
-import numpy as np
+The $F$ distribution arises when comparing variability from two independent normal samples.
 
-np.random.seed(42)
-x = np.random.uniform(0, 1, 500_000)
-y = x**3
+## The Logical Chain
 
-# Theoretical PDF: f_Y(y) = (1/3) y^{-2/3} for 0 < y < 1
-# Check P(Y <= 0.5) = 0.5^{1/3}
-empirical = np.mean(y <= 0.5)
-theory = 0.5 ** (1/3)
-print(f"P(Y <= 0.5): simulated={empirical:.4f}, theory={theory:.4f}")
-```
+$$\boxed{N(\mu, \sigma^2)} \;\xrightarrow{\text{square}}\; \boxed{\chi^2} \;\xrightarrow{N/\sqrt{\chi^2/d}}\; \boxed{t} \;\xrightarrow{\chi^2/\chi^2}\; \boxed{F}$$
+
+Each distribution builds on the previous one, all originating from the normal distribution.
+
+## Prerequisite: How to Find PDFs
+
+The derivations in this chapter rely on two techniques for finding the PDF of a transformed random variable.
+
+### Method 1: CDF Method
+
+Compute the CDF of $Y = g(X)$, then differentiate:
+
+$$P(Y \leq y) = P(X \leq g^{-1}(y)) \quad \Rightarrow \quad f_Y(y) = \frac{d}{dy} F_Y(y)$$
+
+### Method 2: Jacobian Method
+
+For a one-to-one transformation $Y = g(X)$ with inverse $x = g^{-1}(y)$:
+
+$$f_Y(y) = f_X(x) \left|\frac{dx}{dy}\right|$$
+
+For multivariate transformations $(X_1, \ldots, X_n) \to (Y_1, \ldots, Y_n)$:
+
+$$f_{Y_1, \ldots, Y_n}(y_1, \ldots, y_n) = f_{X_1, \ldots, X_n}(x_1, \ldots, x_n) \left|\frac{\partial(x_1, \ldots, x_n)}{\partial(y_1, \ldots, y_n)}\right|$$
+
+where the Jacobian determinant satisfies:
+
+$$\left|\frac{\partial(x_1, \ldots, x_n)}{\partial(y_1, \ldots, y_n)}\right| = \frac{1}{\left|\frac{\partial(y_1, \ldots, y_n)}{\partial(x_1, \ldots, x_n)}\right|}$$
+
+### Example: PDF of $Y = X^3$ Where $X \sim U(0,1)$
+
+**CDF method.** For $0 < y < 1$:
+
+$$P(Y \leq y) = P(X^3 \leq y) = P(X \leq y^{1/3}) = y^{1/3}$$
+
+$$\Rightarrow \quad f_Y(y) = \frac{1}{3} y^{-2/3} \quad \text{for } 0 < y < 1$$
+
+**Jacobian method.** With $y = x^3$:
+
+$$\frac{dy}{dx} = 3x^2 = 3y^{2/3} \quad \Rightarrow \quad \left|\frac{dx}{dy}\right| = \frac{1}{3} y^{-2/3}$$
+
+$$f_Y(y) = f_X(x) \left|\frac{dx}{dy}\right| = 1 \cdot \frac{1}{3} y^{-2/3} = \frac{1}{3} y^{-2/3} \quad \text{for } 0 < y < 1$$

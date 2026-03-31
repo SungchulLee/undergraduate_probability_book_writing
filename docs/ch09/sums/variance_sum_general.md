@@ -1,4 +1,5 @@
 # Variance of a Sum (General Formula)
+<<<<<<< Updated upstream
 
 ## Motivation
 
@@ -144,3 +145,5 @@ S_neg = samples_neg.sum(axis=1)
 print(f"\nVar (neg cov) theory = 6")
 print(f"Var (neg cov) MC = {np.var(S_neg):.2f}")
 ```
+=======
+>>>>>>> Stashed changes

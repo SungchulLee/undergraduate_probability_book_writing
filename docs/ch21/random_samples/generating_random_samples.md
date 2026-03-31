@@ -1,59 +1,62 @@
-# Generating Random Samples
+# How to Generate Random Samples
 
-All simulation begins with pseudo-random number generators — uniform samples that can be transformed into any target distribution via the inverse CDF or other methods.
+## Overview
 
-## Definition
+Simulation is a powerful tool in probability and statistics. By generating random samples from known distributions, we can explore probabilistic phenomena, verify theoretical results, and solve problems that may be analytically intractable.
 
-A **pseudo-random number generator** (PRNG) produces a deterministic sequence that approximates iid $U(0,1)$ samples. Given $U \sim U(0,1)$, any target distribution can be obtained through transformations:
+Most programming environments provide built-in functions for generating random numbers. In MATLAB, the core random number generators are:
 
-$$
-X = F^{-1}(U) \sim F
-$$
+| Function | Description |
+|----------|-------------|
+| `rand` | Uniform on $[0, 1]$ — generates $U(0,1)$ samples |
+| `randn` | Standard normal — generates $N(0,1)$ samples |
+| `randi` | Uniform on $\{1, 2, \ldots, N\}$ |
+| `randperm` | Random permutation of $\{1, 2, \ldots, N\}$ |
 
-where $F^{-1}$ is the quantile function (inverse CDF).
+## The `random` Function
 
-## Explanation
+For more general distributions, MATLAB provides the `random` function:
 
-### Core Functions (NumPy)
+```matlab
+x = random('Dist', Pa1*ones(n,m), Pa2*ones(n,m))
+```
 
-| Function | Distribution |
-|:---|:---|
-| `np.random.rand(n)` | $U(0,1)$ |
-| `np.random.randn(n)` | $N(0,1)$ |
-| `np.random.randint(a, b, n)` | Uniform on $\{a, \ldots, b-1\}$ |
-| `np.random.exponential(1/lam, n)` | $\operatorname{Exp}(\lambda)$ |
-| `np.random.poisson(lam, n)` | $\operatorname{Pois}(\lambda)$ |
+This generates an $n \times m$ matrix of samples from the specified distribution with parameters `Pa1` and `Pa2`. Use `help random` for detailed distribution names and corresponding parameters.
 
-### Reproducibility
+## Controlling the Random Number Generator
 
-Setting the seed (`np.random.seed(42)`) ensures the same sequence each run — essential for debugging and reproducible experiments.
+For reproducibility, it is important to control the state of the random number generator (RNG):
 
-### From Uniform to Everything
+| Command | Description |
+|---------|-------------|
+| `rng('default')` | Reset RNG to its default initial state |
+| `rng(n)` | Reset RNG with seed `n` |
 
-- **Bernoulli**: $B = \mathbf{1}(U > 1-p)$
-- **Exponential**: $X = -\ln(U)/\lambda$
-- **Normal**: Box-Muller or built-in `randn`
-- **General**: Inverse CDF $F^{-1}(U)$
+Setting the seed ensures that the same sequence of "random" numbers is generated each time, which is essential for debugging and reproducible experiments.
 
-## Examples
+## Python Equivalents
 
-**Example.** Generate Bernoulli and exponential samples from uniform.
+In Python (NumPy), the equivalent functions are:
 
 ```python
 import numpy as np
 
-np.random.seed(42)
-n = 10_000
+# Set seed for reproducibility
+np.random.seed(0)
+# or using the newer Generator API:
+rng = np.random.default_rng(seed=0)
 
-U = np.random.rand(n)
+# Uniform on [0, 1]
+U = np.random.rand(n, m)        # or rng.random((n, m))
 
-# Bernoulli(0.3) from uniform
-p = 0.3
-B = (U > 1 - p).astype(int)
-print(f"Bernoulli({p}): mean={B.mean():.4f} (theory {p})")
+# Standard normal N(0, 1)
+Z = np.random.randn(n, m)       # or rng.standard_normal((n, m))
 
-# Exp(2) from uniform via inverse CDF
-lam = 2.0
-X = -np.log(1 - np.random.rand(n)) / lam
-print(f"Exp({lam}): mean={X.mean():.4f} (theory {1/lam})")
+# Uniform on {1, 2, ..., N}
+X = np.random.randint(1, N+1, size=(n, m))  # or rng.integers(1, N+1, size=(n, m))
+
+# Random permutation of {0, 1, ..., N-1}
+perm = np.random.permutation(N)  # or rng.permutation(N)
 ```
+
+For general distributions, NumPy provides functions such as `np.random.binomial`, `np.random.poisson`, `np.random.exponential`, and many more.

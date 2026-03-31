@@ -1,64 +1,62 @@
-# Marginal PMF
-
-The marginal PMF extracts the distribution of a single variable from a joint distribution by summing over all values of the other variable.
+# Marginal PMF from Joint PMF
 
 ## Definition
 
-Given the joint PMF $p_{X,Y}(x, y)$, the **marginal PMFs** are
+Given the joint PMF $p(x, y) = P(X = x, Y = y)$, the **marginal PMF** of $X$ is obtained by summing over all values of $Y$:
 
-$$
-p_X(x) = \sum_y p_{X,Y}(x, y), \qquad p_Y(y) = \sum_x p_{X,Y}(x, y)
-$$
+$$p_X(x) = P(X = x) = \sum_y p(x, y)$$
 
-In a joint PMF table: column sums give $p_X$, row sums give $p_Y$.
+Similarly, the marginal PMF of $Y$ is:
 
-## Explanation
+$$p_Y(y) = P(Y = y) = \sum_x p(x, y)$$
 
-### Why "Marginal"
+## Interpretation
 
-The name comes from writing marginal totals in the margins of a joint PMF table. The right margin contains row sums ($p_Y$) and the bottom margin contains column sums ($p_X$).
+Marginalization "collapses" the joint distribution onto one variable by integrating out (summing over) the other. In the joint PMF table, the marginal of $X$ is obtained by computing **column sums**, and the marginal of $Y$ by computing **row sums**.
 
-### Information Loss
+## Worked Example
 
-Marginalization discards information about the relationship between $X$ and $Y$. Different joint PMFs can produce the same marginals — the marginals alone cannot reconstruct the joint (unless independence is known).
+The joint PMF of $X$ and $Y$ is:
 
-### Discrete vs Continuous
+| | $x=0$ | $x=1$ | $x=2$ |
+|---|---|---|---|
+| $y=3$ | $1/10$ | $1/10$ | $1/10$ |
+| $y=2$ | $1/10$ | $0$ | $1/10$ |
+| $y=1$ | $0$ | $2/10$ | $1/10$ |
+| $y=0$ | $1/10$ | $0$ | $1/10$ |
 
-| Operation | Discrete | Continuous |
-|:----------|:---------|:-----------|
-| Marginal of $X$ | $p_X(x) = \sum_y p(x,y)$ | $f_X(x) = \int f(x,y)\,dy$ |
-| Marginal of $Y$ | $p_Y(y) = \sum_x p(x,y)$ | $f_Y(y) = \int f(x,y)\,dx$ |
+**Marginal PMF of $X$ (column sums):**
 
-## Examples
+$$P(X = 0) = \frac{1}{10} + \frac{1}{10} + 0 + \frac{1}{10} = \frac{3}{10}$$
 
-**Example.** Joint PMF table with marginals:
+$$P(X = 1) = \frac{1}{10} + 0 + \frac{2}{10} + 0 = \frac{3}{10}$$
 
-| | $x=0$ | $x=1$ | $x=2$ | $p_Y(y)$ |
-|:---|:---:|:---:|:---:|:---:|
+$$P(X = 2) = \frac{1}{10} + \frac{1}{10} + \frac{1}{10} + \frac{1}{10} = \frac{4}{10}$$
+
+**Marginal PMF of $Y$ (row sums):**
+
+$$P(Y = 0) = \frac{1}{10} + 0 + \frac{1}{10} = \frac{2}{10}$$
+
+$$P(Y = 1) = 0 + \frac{2}{10} + \frac{1}{10} = \frac{3}{10}$$
+
+$$P(Y = 2) = \frac{1}{10} + 0 + \frac{1}{10} = \frac{2}{10}$$
+
+$$P(Y = 3) = \frac{1}{10} + \frac{1}{10} + \frac{1}{10} = \frac{3}{10}$$
+
+## Augmented Joint PMF Table
+
+| | $x=0$ | $x=1$ | $x=2$ | $P(Y=y_j)$ |
+|---|---|---|---|---|
 | $y=3$ | $1/10$ | $1/10$ | $1/10$ | $3/10$ |
 | $y=2$ | $1/10$ | $0$ | $1/10$ | $2/10$ |
 | $y=1$ | $0$ | $2/10$ | $1/10$ | $3/10$ |
 | $y=0$ | $1/10$ | $0$ | $1/10$ | $2/10$ |
-| $p_X(x)$ | $3/10$ | $3/10$ | $4/10$ | $1$ |
+| $P(X=x_i)$ | $3/10$ | $3/10$ | $4/10$ | $1$ |
 
-$P(X = 0) = 1/10 + 1/10 + 0 + 1/10 = 3/10$ (column sum).
+The bottom row contains the marginal of $X$, and the right column contains the marginal of $Y$. These are sometimes called the "margins" of the table, which is where the name "marginal distribution" comes from.
 
-$P(Y = 1) = 0 + 2/10 + 1/10 = 3/10$ (row sum).
+## Coin Flip Example
 
-```python
-import numpy as np
+For $X$ = number of heads in first two flips and $Y$ = total heads in three fair coin flips:
 
-joint = np.array([
-    [1/10, 1/10, 1/10],  # y=3
-    [1/10, 0,    1/10],  # y=2
-    [0,    2/10, 1/10],  # y=1
-    [1/10, 0,    1/10],  # y=0
-])
-
-px = joint.sum(axis=0)  # column sums
-py = joint.sum(axis=1)  # row sums
-
-print("Marginal of X:", [f"{p:.1f}" for p in px])
-print("Marginal of Y:", [f"{p:.1f}" for p in py])
-print(f"Total: {joint.sum():.1f}")
-```
+**From joint to marginal of $X$:** Summing over $Y$ values in each column of the joint PMF table, we obtain $P(X = 0) = 2/8 = 1/4$, $P(X = 1) = 4/8 = 1/2$, $P(X = 2) = 2/8 = 1/4$, which is the $\text{B}(2, 1/2)$ distribution as expected.

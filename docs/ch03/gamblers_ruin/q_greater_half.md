@@ -1,55 +1,87 @@
-# Unfair Game Solution (q > 1/2)
+# Linear Recurrence Solution ($q > 1/2$)
 
-When the game is unfair ($q > p$), ruin is nearly certain. The ruin probability converges to 1 exponentially fast as the gambler's starting capital decreases.
+## Two Distinct Characteristic Roots
 
-## Definition
-
-For $p \ne 1/2$ (distinct characteristic roots $1$ and $q/p$):
+When $p \ne q$ (i.e., $p \ne 1/2$), the characteristic equation $p\lambda^2 - \lambda + q = 0$ has two distinct roots:
 
 $$
-Q(i) = \frac{(q/p)^N - (q/p)^i}{(q/p)^N - 1}
+\lambda_1 = 1, \qquad \lambda_2 = \frac{q}{p}
 $$
 
-## Explanation
-
-### Derivation
-
-General solution: $Q(i) = \alpha + \beta(q/p)^i$.
-
-From $Q(0) = 1$: $\alpha + \beta = 1$.
-From $Q(N) = 0$: $\alpha + \beta(q/p)^N = 0$.
-
-Solving: $\alpha = (q/p)^N / ((q/p)^N - 1)$, $\beta = -1/((q/p)^N - 1)$.
-
-### Exponential Convergence to Ruin
-
-Since $q/p > 1$, for large $N$: $(q/p)^N \gg (q/p)^i$, so
+The two corresponding linearly independent solutions are:
 
 $$
-Q(i) \approx 1 - (q/p)^{-(N-i)} = 1 - e^{-(N-i)\ln(q/p)}
+Q_1(i) = 1, \qquad Q_2(i) = \left(\frac{q}{p}\right)^i
 $$
 
-The ruin probability approaches 1 exponentially fast as $i$ decreases from $N$.
+## General Solution
 
-## Examples
+The general solution is:
 
-**Example ($p = 0.49$, $N = 200$):**
+$$
+Q(i) = \alpha + \beta \left(\frac{q}{p}\right)^i
+$$
 
-| $i$ | $Q(i)$ |
-|:---:|:---:|
-| 200 | 0 |
-| 190 | 0.331 |
-| 150 | 0.982 |
+## Applying Boundary Conditions
+
+**From $Q(0) = 1$:**
+
+$$
+\alpha + \beta = 1
+$$
+
+**From $Q(N) = 0$:**
+
+$$
+\alpha + \beta \left(\frac{q}{p}\right)^N = 0
+$$
+
+Solving this system:
+
+$$
+\alpha = \frac{(q/p)^N}{(q/p)^N - 1}, \qquad \beta = \frac{-1}{(q/p)^N - 1}
+$$
+
+## Solution
+
+$$
+\boxed{Q(i) = \frac{(q/p)^N - (q/p)^i}{(q/p)^N - 1}}
+$$
+
+## Why Gambler's Ruin?
+
+Since $q/p > 1$, we have $(q/p)^N \gg 1$ for large $N$, so:
+
+$$
+Q(i) \approx \frac{(q/p)^N - (q/p)^i}{(q/p)^N} = 1 - \left(\frac{q}{p}\right)^{i - N} = 1 - \left(\frac{q}{p}\right)^{-(N - i)}
+$$
+
+$$
+= 1 - e^{-(N-i)\ln(q/p)}
+$$
+
+Since $q/p > 1$, we have $\ln(q/p) > 0$, and as $i$ decreases from $N$ (i.e., the gambler loses money):
+
+$$
+e^{-(N-i)\ln(q/p)} \to 0 \quad \text{exponentially fast}
+$$
+
+$$
+Q(i) \to 1 \quad \text{exponentially fast}
+$$
+
+Even a slight disadvantage ($p = 0.49$) leads to near-certain ruin. The exponential convergence means that losing even a small amount of capital dramatically increases the ruin probability.
+
+## Numerical Example
+
+With $p = 0.49$, $q = 0.51$, and $N = 200$:
+
+| Initial Capital $i$ | $Q(i)$ |
+|---------------------|---------|
+| 200 | 0.0000 |
+| 190 | 0.3309 |
+| 150 | 0.9817 |
 | 100 | 0.9998 |
+| 50 | $\approx 1$ |
 
-Starting halfway to the goal, ruin is 99.98% certain — despite losing only a 2% edge per bet.
-
-```python
-def Q(i, N, p):
-    r = (1 - p) / p
-    return (r**N - r**i) / (r**N - 1)
-
-N = 200
-for i in [200, 190, 150, 100, 50]:
-    print(f"Q({i}) = {Q(i, N, 0.49):.6f}")
-```
+Even starting with \$100 out of a \$200 goal (halfway there), the ruin probability exceeds 99.98%.

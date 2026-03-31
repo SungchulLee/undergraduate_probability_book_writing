@@ -1,39 +1,43 @@
 # Markov's Inequality
 
-Markov's inequality bounds the tail probability of a non-negative random variable using only its mean — the simplest concentration inequality.
+## Statement
 
-## Definition
-
-If $X \ge 0$ and $a > 0$, then
+If $X$ is a non-negative random variable and $a > 0$, then
 
 $$
-P(X \ge a) \le \frac{E[X]}{a}
+P(X \geq a) \leq \frac{E[X]}{a}
 $$
 
-## Explanation
+---
 
-### Proof
+## Proof
 
 $$
-E[X] = \int_0^{\infty} x\,f(x)\,dx \ge \int_a^{\infty} x\,f(x)\,dx \ge a\int_a^{\infty} f(x)\,dx = a\,P(X \ge a)
+E[X] = \int_0^{\infty} x f(x) \, dx \geq \int_a^{\infty} x f(x) \, dx \geq a \int_a^{\infty} f(x) \, dx = a \, P(X \geq a)
 $$
 
-### Strengths and Weaknesses
+---
 
-The bound requires only the mean — no variance, no distributional shape. But it is often very loose. It becomes the foundation for stronger bounds: Chebyshev's inequality applies Markov to $(X - \mu)^2$, and Chernoff bounds apply it to $e^{tX}$.
+## Example
 
-## Examples
+If $X$ has mean 10, then $P(X \geq 50) \leq 10/50 = 0.2$.
 
-**Example.** $X \sim \text{Exp}(1)$, so $E[X] = 1$. Markov gives $P(X \ge 3) \le 1/3$. The exact value is $e^{-3} \approx 0.05$.
+The bound is often loose, but it requires only knowledge of the mean — no information about the shape of the distribution.
+
+---
+
+## Python Implementation
 
 ```python
 import numpy as np
 
 np.random.seed(42)
-X = np.random.exponential(1, 1_000_000)
+N = 1_000_000
 
-for a in [2, 3, 5]:
-    bound = 1 / a
-    actual = np.mean(X >= a)
-    print(f"P(X >= {a}): Markov <= {bound:.4f}, actual = {actual:.4f}")
+# Exponential(1): mean = 1
+X = np.random.exponential(1, N)
+a = 3
+markov_bound = 1 / a
+actual_prob = np.mean(X >= a)
+print(f"P(X >= {a}): Markov bound = {markov_bound:.4f}, actual = {actual_prob:.4f}")
 ```

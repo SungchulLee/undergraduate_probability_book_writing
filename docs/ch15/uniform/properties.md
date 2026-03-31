@@ -1,186 +1,102 @@
 # Properties and Applications of the Uniform Distribution
 
-The uniform distribution has remarkable structural properties, most notably the universality of $U(0,1)$: every continuous distribution can be generated from it, and applying any continuous CDF to its own random variable produces it.
+## Symmetry
 
-## Definition
+If $X \sim U(a, b)$, then $X$ is symmetric about its mean $(a+b)/2$:
 
-The key properties of $X \sim U(a, b)$ are collected here:
+$$a + b - X \sim U(a, b)$$
 
-**Symmetry:** $a + b - X \sim U(a, b)$, so $X$ and its reflection about the midpoint have the same distribution.
+This means $X$ and $a + b - X$ have the same distribution. In particular, if $U \sim U(0,1)$, then $1 - U \sim U(0,1)$.
 
-**Linear transformation:** If $Y = cX + d$ with $c > 0$, then $Y \sim U(ca + d, \; cb + d)$.
+## Linear Transformation
 
-**Universality (forward):** If $X$ has continuous CDF $F$, then $F(X) \sim U(0, 1)$.
+If $X \sim U(a, b)$ and $Y = cX + d$ with $c > 0$, then:
 
-**Universality (inverse):** If $U \sim U(0, 1)$, then $F^{-1}(U)$ has CDF $F$.
+$$Y \sim U(ca + d, \; cb + d)$$
 
-**CDF of the standard uniform:**
+Any Uniform can be obtained from the standard Uniform: if $U \sim U(0,1)$, then $X = a + (b-a)U \sim U(a,b)$.
 
-$$
-F(x) = x, \quad 0 \leq x \leq 1
-$$
+## Decomposition Technique
 
-## Explanation
-
-### Universality of the uniform
-
-The $U(0, 1)$ distribution is universal in two senses.
-
-**Probability Integral Transform.** If $X$ is a continuous random variable with CDF $F$, then:
-
-$$
-F(X) \sim U(0, 1)
-$$
-
-*Proof.* Let $U = F(X)$. Since $F$ is continuous and non-decreasing:
-
-$$
-P(U \leq u) = P(F(X) \leq u) = P(X \leq F^{-1}(u)) = F(F^{-1}(u)) = u
-$$
-
-for $0 < u < 1$. This is the CDF of $U(0,1)$.
-
-**Inverse Transform Method.** Conversely, if $U \sim U(0, 1)$, then $X = F^{-1}(U)$ has CDF $F$:
-
-$$
-P(F^{-1}(U) \leq x) = P(U \leq F(x)) = F(x)
-$$
-
-This provides a universal recipe for simulating any distribution from uniform random numbers.
-
-### Decomposition technique
-
-A powerful technique for uniform problems is to **decompose** the random variable into a known constant plus a simpler uniform component.
+A powerful technique for Uniform problems is to **decompose** the random variable into a known constant plus a simpler Uniform component.
 
 ??? example "Example: Breaking the Stick"
-    We break a stick of length $L$ at a uniformly random point. Let $X$ be the length of the **longer** piece. Find its mean and variance.
+    We break a stick of length $L$ into two pieces by choosing the break point uniformly over $[0, L]$. Let $X$ be the length of the **longer** piece. Find its mean and variance.
 
-    The longer piece always has length at least $L/2$. Write $X = L/2 + Y$ where $Y$ is the excess beyond the midpoint. Since the break point is uniform on $[0, L]$, the excess $Y \sim U(0, L/2)$.
+    **Key insight:** The longer piece always has length at least $L/2$. Decompose $X$ as:
+
+    $$X = \underbrace{\frac{L}{2}}_{\text{half of the stick}} + \underbrace{Y}_{\text{the excess}}$$
+
+    where $Y$ is the distance from the midpoint to the break point, reflected to always be positive. Since the break point is uniform on $[0, L]$, the excess $Y$ is $U(0, L/2)$.
 
     **Mean:**
 
-    $$
-    E[X] = \frac{L}{2} + E[Y] = \frac{L}{2} + \frac{L}{4} = \frac{3L}{4}
-    $$
+    $$E[X] = \frac{L}{2} + E[Y] = \frac{L}{2} + \frac{L}{4} = \frac{3L}{4}$$
 
-    **Variance:** Since shifting by a constant does not change variance:
+    **Variance:** Since shifting by a constant doesn't change variance:
 
-    $$
-    \text{Var}(X) = \text{Var}(Y) = \frac{(L/2)^2}{12} = \frac{L^2}{48}
-    $$
+    $$\text{Var}(X) = \text{Var}(Y) = \frac{1}{12}\left(\frac{L}{2}\right)^2 = \frac{L^2}{48}$$
 
-### Sum of uniforms is not uniform
+## Universality of the Uniform
 
-The sum of independent uniforms is **not** uniform (unless the variables are degenerate). The sum of two iid $U(0, 1)$ variables has a triangular distribution on $(0, 2)$ with PDF $f(s) = s$ for $0 < s < 1$ and $f(s) = 2 - s$ for $1 \leq s < 2$. As more uniforms are summed, the distribution approaches normal by the Central Limit Theorem.
+The $U(0,1)$ distribution is universal in two senses:
 
-### Memorylessness -- or lack thereof
+1. **Any CDF applied to its own random variable gives $U(0,1)$:** If $X$ has continuous CDF $F$, then $F(X) \sim U(0,1)$ (the Probability Integral Transform).
 
-Unlike the exponential distribution, the uniform distribution is **not** memoryless. If $X \sim U(0, 1)$ and we learn that $X > 0.5$, the conditional distribution $X \mid X > 0.5$ is $U(0.5, 1)$, not $U(0, 0.5)$. The conditional distribution shifts, reflecting the information gained.
+2. **Any distribution can be generated from $U(0,1)$:** If $U \sim U(0,1)$, then $F^{-1}(U)$ has CDF $F$ (the Inverse Transform Method, see the Transformations section).
 
-### Higher moments
+## Sum of Uniforms
 
-For $X \sim U(a, b)$, the $k$-th raw moment is:
+The sum of independent Uniforms produces a distribution that is **not** Uniform (unless the individual Uniforms are degenerate). The sum of two iid $U(0,1)$ has a triangular distribution on $(0, 2)$. As more Uniforms are summed, the distribution approaches Normal by the Central Limit Theorem (see Chapter 16 for convolution details).
 
-$$
-E[X^k] = \frac{1}{b - a} \int_a^b x^k \, dx = \frac{b^{k+1} - a^{k+1}}{(k+1)(b-a)}
-$$
-
-For the standard uniform $U(0, 1)$: $E[U^k] = 1/(k+1)$.
-
-## Examples
-
-**Example 1: Probability integral transform.**
-
-Generate $X \sim \text{Exp}(2)$ from $U \sim U(0, 1)$ and verify that $F(X) \sim U(0, 1)$.
-
-The CDF of $\text{Exp}(2)$ is $F(x) = 1 - e^{-2x}$. The inverse is $F^{-1}(u) = -\frac{1}{2}\ln(1 - u)$.
+## Python Implementation
 
 ```python
 import numpy as np
-from scipy import stats
+import matplotlib.pyplot as plt
 
 np.random.seed(42)
-n = 100000
+n_sim = 100000
 
-# Generate Exp(2) from uniform via inverse CDF
-U = np.random.uniform(0, 1, n)
-X = -0.5 * np.log(1 - U)  # Exp(2) via inverse CDF
-
-# Verify X ~ Exp(2)
-print("X = F^{-1}(U) should be Exp(2):")
-print(f"  Mean: {X.mean():.4f}  (expected: {1/2:.4f})")
-print(f"  Var:  {X.var():.4f}  (expected: {1/4:.4f})")
-
-# Apply CDF to X: should get U(0,1)
-U_back = 1 - np.exp(-2 * X)
-print(f"\nF(X) should be U(0,1):")
-print(f"  Mean: {U_back.mean():.4f}  (expected: 0.5000)")
-print(f"  Var:  {U_back.var():.4f}  (expected: {1/12:.4f})")
-```
-
-**Output:**
-```
-X = F^{-1}(U) should be Exp(2):
-  Mean: 0.5011  (expected: 0.5000)
-  Var:  0.2500  (expected: 0.2500)
-
-F(X) should be U(0,1):
-  Mean: 0.4998  (expected: 0.5000)
-  Var:  0.0833  (expected: 0.0833)
-```
-
-**Example 2: Breaking the stick.**
-
-Verify the decomposition result: for a stick of length $L = 10$, the longer piece has mean $3L/4 = 7.5$ and variance $L^2/48 \approx 2.083$.
-
-```python
-import numpy as np
-
-np.random.seed(42)
-n = 100000
+# Break the stick example
 L = 10.0
+break_points = np.random.uniform(0, L, n_sim)
+longer_piece = np.maximum(break_points, L - break_points)
 
-break_point = np.random.uniform(0, L, n)
-longer = np.maximum(break_point, L - break_point)
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-print(f"Stick of length L = {L}:")
-print(f"  E[longer piece] = {longer.mean():.4f}  (theory: {3*L/4:.4f})")
-print(f"  Var[longer piece] = {longer.var():.4f}  (theory: {L**2/48:.4f})")
-```
+# Distribution of longer piece
+axes[0].hist(longer_piece, bins=60, density=True, alpha=0.7,
+             color='steelblue', label='Simulated')
+axes[0].axvline(np.mean(longer_piece), color='red', lw=2, linestyle='--',
+                label=f'Mean = {np.mean(longer_piece):.3f}')
+axes[0].axvline(3*L/4, color='black', lw=2, linestyle=':',
+                label=f'Theory = {3*L/4:.3f}')
+axes[0].set_title(f'Length of Longer Piece (L={L})')
+axes[0].set_xlabel('Length')
+axes[0].legend()
+axes[0].grid(True, alpha=0.3)
 
-**Output:**
-```
-Stick of length L = 10.0:
-  E[longer piece] = 7.5013  (theory: 7.5000)
-  Var[longer piece] = 2.0851  (theory: 2.0833)
-```
+print(f"Break the stick (L={L}):")
+print(f"  E[X] = {np.mean(longer_piece):.4f} (theory {3*L/4:.4f})")
+print(f"  Var(X) = {np.var(longer_piece):.4f} (theory {L**2/48:.4f})")
 
-**Example 3: Sum of two uniforms is triangular.**
-
-```python
-import numpy as np
+# Universality: F(X) ~ U(0,1)
 from scipy import stats
+X_exp = np.random.exponential(2.0, n_sim)  # Exp(0.5)
+U_transform = stats.expon.cdf(X_exp, scale=2.0)  # F(X)
 
-np.random.seed(42)
-n = 100000
+axes[1].hist(U_transform, bins=50, density=True, alpha=0.7,
+             color='orange', label='F(X) where X ~ Exp(0.5)')
+axes[1].axhline(1.0, color='black', lw=2, linestyle='--',
+                label='U(0,1) PDF')
+axes[1].set_title('Probability Integral Transform: F(X) ~ U(0,1)')
+axes[1].set_xlabel('u')
+axes[1].set_ylabel('Density')
+axes[1].legend()
+axes[1].grid(True, alpha=0.3)
 
-U1 = np.random.uniform(0, 1, n)
-U2 = np.random.uniform(0, 1, n)
-S = U1 + U2
-
-print("S = U1 + U2 where U1, U2 ~ iid U(0,1):")
-print(f"  Mean: {S.mean():.4f}  (expected: 1.0000)")
-print(f"  Var:  {S.var():.4f}  (expected: {2/12:.4f})")
-
-# Compare with triangular distribution
-triang = stats.triang(c=0.5, loc=0, scale=2)  # symmetric triangular on [0, 2]
-print(f"  Triangular mean: {triang.mean():.4f}, var: {triang.var():.4f}")
-```
-
-**Output:**
-```
-S = U1 + U2 where U1, U2 ~ iid U(0,1):
-  Mean: 1.0017  (expected: 1.0000)
-  Var:  0.1666  (expected: 0.1667)
-  Triangular mean: 1.0000, var: 0.1667
+plt.tight_layout()
+plt.savefig('uniform_properties.png', dpi=150, bbox_inches='tight')
+plt.show()
 ```

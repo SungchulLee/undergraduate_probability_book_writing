@@ -3,8 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-# ========================================================================
-
 def main():
     # define a discrete random variable X
     outcomes = np.array([-3, -1, 1, 2, 5])
@@ -52,8 +50,6 @@ def main():
     print(f"Theoretical E[X] = {expected_value:.4f}")
     print(f"Sample mean       = {np.mean(samples):.4f}")
 
-
-# ========================================================================
 
 if __name__ == "__main__":
     main()

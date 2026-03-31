@@ -1,4 +1,5 @@
 # Geometric Distribution
+<<<<<<< Updated upstream
 
 ## Motivation
 
@@ -88,3 +89,5 @@ $$
 - $P(X > 10) = (5/6)^{10} \approx 0.162$.
 
 **Network packet.** A packet is transmitted with success probability $p = 0.9$. The number of attempts until the first successful transmission is $X \sim \text{Geo}(0.9)$ with $E[X] = 1/0.9 \approx 1.11$ and $P(X > 3) = (0.1)^3 = 0.001$.
+=======
+>>>>>>> Stashed changes

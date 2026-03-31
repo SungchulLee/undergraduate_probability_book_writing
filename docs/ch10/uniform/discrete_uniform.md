@@ -1,4 +1,5 @@
 # Discrete Uniform Distribution
+<<<<<<< Updated upstream
 
 ## Motivation
 
@@ -80,3 +81,5 @@ P(A) = \frac{|A|}{n}
 $$
 
 which is simply $P(X \in A)$ when $X \sim \text{DiscreteUniform}(1, n)$. The discrete uniform distribution is where counting methods from Chapter 1 meet the formal probability framework of Chapter 2.
+=======
+>>>>>>> Stashed changes

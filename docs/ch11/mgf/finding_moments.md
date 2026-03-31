@@ -1,4 +1,5 @@
 # Finding Moments from the MGF
+<<<<<<< Updated upstream
 
 ## Derivative Method
 
@@ -75,3 +76,5 @@ print(f"  E[X]   = {EX:.4f}   (exact: 3)")
 print(f"  E[X^2] = {EX2:.4f}  (exact: 13)")
 print(f"  Var(X) = {VarX:.4f}   (exact: 4)")
 ```
+=======
+>>>>>>> Stashed changes

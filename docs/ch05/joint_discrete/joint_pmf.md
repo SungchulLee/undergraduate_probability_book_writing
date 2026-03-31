@@ -1,75 +1,65 @@
 # Joint PMF
 
-The joint PMF describes the simultaneous behavior of two or more discrete random variables — it is the multivariate generalization of the PMF.
+## Random Vectors
 
-## Definition
+A **random vector** is a function that maps outcomes from a sample space to $\mathbb{R}^d$:
 
-For discrete random variables $X$ and $Y$, the **joint PMF** is
+$$\mathbf{X} : \Omega \longrightarrow \mathbb{R}^d$$
 
-$$
-p_{X,Y}(x, y) = P(X = x, Y = y)
-$$
+For a pair of discrete random variables $(X, Y)$, the random vector maps each outcome $\omega$ to the point $(X(\omega), Y(\omega))$ in $\mathbb{R}^2$.
 
-A valid joint PMF satisfies:
+## Joint Distribution via the Brick Analogy
 
-1. **Non-negativity:** $p_{X,Y}(x, y) \ge 0$ for all $(x, y)$
-2. **Normalization:** $\displaystyle\sum_x \sum_y p_{X,Y}(x, y) = 1$
+The **joint distribution** of $(X, Y)$ is defined by moving bricks from $\Omega$ to $\mathbb{R}^2$:
+
+- Each outcome $\omega$ has a brick with weight $P(\{\omega\})$.
+- The function $\mathbf{X}$ moves each brick from $\omega$ to $\mathbf{X}(\omega)$ in $\mathbb{R}^d$.
+- The total weight of all bricks in $\mathbb{R}^d$ is 1.
+- This weight distribution over $\mathbb{R}^d$ is the **joint distribution** of $\mathbf{X}$.
+
+## Definition of Joint PMF
+
+For discrete random variables $X$ and $Y$, the **joint PMF** is:
+
+$$p(x, y) = P(X = x, Y = y)$$
+
+This gives the weight of the brick at each point $(x, y)$ in $\mathbb{R}^2$.
+
+## Properties
+
+1. **Non-negativity:** $p(x, y) \ge 0$ for all $(x, y)$.
+2. **Normalization:** $\displaystyle\sum_x \sum_y p(x, y) = 1$.
+
+## Computing Probabilities
 
 For any set $A \subseteq \mathbb{R}^2$:
 
-$$
-P((X, Y) \in A) = \sum_{(x,y) \in A} p_{X,Y}(x, y)
-$$
+$$P((X, Y) \in A) = \sum_{(x,y) \in A} p(x, y)$$
 
-## Explanation
+## Example: Coin Flips
 
-### Random Vectors
+Consider flipping a fair coin 3 times. Let $X$ = number of heads in the first two flips, and $Y$ = total number of heads.
 
-A **random vector** $(X, Y) : \Omega \to \mathbb{R}^2$ maps each outcome $\omega$ to the point $(X(\omega), Y(\omega))$. The joint distribution describes how probability mass is spread across $\mathbb{R}^2$.
+The sample space and the mapping to $(X, Y)$:
 
-In the brick analogy: each outcome $\omega$ carries a brick to the point $(X(\omega), Y(\omega))$ in the plane. The weight at each point $(x, y)$ is the joint PMF value $p_{X,Y}(x, y)$.
+| Outcome | $X$ | $Y$ |
+|---------|-----|-----|
+| HHH | 2 | 3 |
+| HHT | 2 | 2 |
+| HTH | 1 | 2 |
+| HTT | 1 | 1 |
+| THH | 1 | 2 |
+| THT | 1 | 1 |
+| TTH | 0 | 1 |
+| TTT | 0 | 0 |
 
-### Structural Zeros
-
-Some joint PMF entries may be zero not by coincidence but by necessity. If $Y \ge X$ always holds (as when $X$ counts a subset of what $Y$ counts), then $p_{X,Y}(x, y) = 0$ for all $y < x$. Recognizing structural zeros helps catch errors in table construction.
-
-### Joint PMF Determines Everything
-
-The joint PMF contains all probabilistic information about $(X, Y)$. From it you can derive:
-
-- Marginal PMFs (by summing rows or columns)
-- Conditional PMFs (by normalizing a row or column)
-- Independence (by checking if joint = product of marginals)
-
-## Examples
-
-**Example.** Flip a fair coin 3 times. Let $X$ = heads in first two flips, $Y$ = total heads.
+The joint PMF table (each outcome has probability $1/8$):
 
 | | $X=0$ | $X=1$ | $X=2$ |
-|:---|:---:|:---:|:---:|
+|---|---|---|---|
 | $Y=3$ | 0 | 0 | $1/8$ |
 | $Y=2$ | 0 | $2/8$ | $1/8$ |
 | $Y=1$ | $1/8$ | $2/8$ | 0 |
 | $Y=0$ | $1/8$ | 0 | 0 |
 
-Structural zeros: $Y < X$ is impossible, and $Y > X + 1$ is impossible (only one remaining flip). So $Y \in \{X, X+1\}$.
-
-$P(X = 1, Y = 2) = 2/8$ because two outcomes (HTH, THH) give $X=1, Y=2$.
-
-```python
-from itertools import product
-
-outcomes = list(product('HT', repeat=3))
-table = {}
-for w in outcomes:
-    x = w[:2].count('H')
-    y = w.count('H')
-    table[(x, y)] = table.get((x, y), 0) + 1/8
-
-print("Joint PMF table:")
-for y in range(3, -1, -1):
-    row = [f"{table.get((x, y), 0):.3f}" for x in range(3)]
-    print(f"  Y={y}: {row}")
-
-print(f"Sum = {sum(table.values()):.4f}")
-```
+Note that $Y \ge X$ always holds (the total heads cannot be less than heads in the first two flips), so some entries are necessarily 0.

@@ -1,41 +1,61 @@
-# Bayes' Theorem
+# Bayes' Theorem and Prior–Posterior Updating
 
-Bayes' theorem "reverses" a conditional probability: it computes $P(B \mid A)$ from $P(A \mid B)$. It is the foundation of Bayesian inference and one of the most consequential results in probability.
+## Bayes' Rule
 
-## Definition
+**Bayes' theorem** provides a way to "reverse" a conditional probability — computing $P(B \mid A)$ from $P(A \mid B)$:
 
 $$
 P(B \mid A) = \frac{P(A \mid B)\,P(B)}{P(A)}
 $$
 
-Combined with the law of total probability over a partition $\{B_1, \ldots, B_n\}$:
-
-$$
-P(B_j \mid A) = \frac{P(A \mid B_j)\,P(B_j)}{\sum_{k=1}^{n} P(A \mid B_k)\,P(B_k)}
-$$
-
-## Explanation
-
 ### Derivation
 
-From the chain rule: $P(AB) = P(A)P(B \mid A) = P(B)P(A \mid B)$. Solving for $P(B \mid A)$ gives Bayes' theorem.
+From the definition of conditional probability and the chain rule:
 
-### Prior-Posterior Interpretation
+$$
+P(AB) = P(A)\,P(B \mid A) = P(B)\,P(A \mid B)
+$$
 
-| Term | Expression | Meaning |
-|:---|:---|:---|
-| **Prior** | $P(B_j)$ | Belief about $B_j$ before data |
-| **Likelihood** | $P(A \mid B_j)$ | Probability of data under hypothesis $B_j$ |
-| **Evidence** | $P(A)$ | Total probability of observed data |
-| **Posterior** | $P(B_j \mid A)$ | Updated belief after observing data |
+Solving for $P(B \mid A)$:
+
+$$
+P(B \mid A) = \frac{P(B)\,P(A \mid B)}{P(A)}
+$$
+
+## Bayes' Rule with Total Probability
+
+When the sample space is partitioned as $\Omega = \bigcup_{k=1}^{n} B_k$ (disjointly), Bayes' rule becomes:
+
+$$
+P(B_1 \mid A) = \frac{P(B_1)\,P(A \mid B_1)}{\displaystyle\sum_{k=1}^{n} P(B_k)\,P(A \mid B_k)}
+$$
+
+More generally, for any $B_j$ in the partition:
+
+$$
+P(B_j \mid A) = \frac{P(B_j)\,P(A \mid B_j)}{\displaystyle\sum_{k=1}^{n} P(B_k)\,P(A \mid B_k)}
+$$
+
+## Prior–Posterior Interpretation
+
+Bayes' theorem is the foundation of **Bayesian inference**, which updates beliefs in light of evidence:
+
+| Term | Expression | Interpretation |
+|------|-----------|----------------|
+| **Prior** | $P(B_j)$ | Initial belief about $B_j$ before observing data |
+| **Likelihood** | $P(A \mid B_j)$ | How likely the observed data $A$ is under hypothesis $B_j$ |
+| **Evidence** (marginal likelihood) | $P(A) = \sum_k P(B_k)\,P(A \mid B_k)$ | Total probability of observing $A$ |
+| **Posterior** | $P(B_j \mid A)$ | Updated belief about $B_j$ after observing data $A$ |
+
+The updating formula can be summarized as:
 
 $$
 \text{Posterior} = \frac{\text{Likelihood} \times \text{Prior}}{\text{Evidence}}
 $$
 
-### Odds Form
+## Odds Form of Bayes' Rule
 
-For two hypotheses $B_1, B_2$, the normalizing constant cancels:
+For two competing hypotheses $B_1$ and $B_2$, the **posterior odds** equal the **prior odds** times the **likelihood ratio** (also called the Bayes factor):
 
 $$
 \frac{P(B_1 \mid A)}{P(B_2 \mid A)} = \frac{P(B_1)}{P(B_2)} \cdot \frac{P(A \mid B_1)}{P(A \mid B_2)}
@@ -45,31 +65,4 @@ $$
 \text{Posterior odds} = \text{Prior odds} \times \text{Bayes factor}
 $$
 
-## Examples
-
-**Example (Medical test).** Disease prevalence $P(D) = 0.0001$, sensitivity $P(+ \mid D) = 0.95$, false positive rate $P(+ \mid H) = 0.01$.
-
-$$
-P(D \mid +) = \frac{(0.0001)(0.95)}{(0.0001)(0.95) + (0.9999)(0.01)} = \frac{0.000095}{0.010094} \approx 0.0094
-$$
-
-Despite 95% test accuracy, a positive result gives only a 0.94% chance of disease, because the low prevalence means false positives vastly outnumber true positives.
-
-```python
-# Medical testing example
-P_D = 0.0001
-P_pos_D = 0.95
-P_pos_H = 0.01
-P_H = 1 - P_D
-
-P_D_pos = (P_D * P_pos_D) / (P_D * P_pos_D + P_H * P_pos_H)
-print(f"P(Disease | Positive) = {P_D_pos:.4f}")
-
-# Per million breakdown
-pop = 1_000_000
-tp = pop * P_D * P_pos_D
-fp = pop * P_H * P_pos_H
-print(f"True positives:  {tp:.0f}")
-print(f"False positives: {fp:.0f}")
-print(f"P(D|+) = {tp/(tp+fp):.4f}")
-```
+This form is useful because the normalizing constant $P(A)$ cancels out.

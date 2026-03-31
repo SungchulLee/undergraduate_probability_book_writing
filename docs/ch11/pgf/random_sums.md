@@ -1,4 +1,5 @@
 # Random Sums and Compound Distributions
+<<<<<<< Updated upstream
 
 ## Setup
 
@@ -94,3 +95,5 @@ print("Compound Poisson: N ~ Po(10), X_i ~ Geo(0.4)")
 print(f"  E[S]   = {S.mean():.4f}  (exact: {lam * EX:.4f})")
 print(f"  Var(S) = {S.var():.4f}  (exact: {lam*VarX + lam*EX**2:.4f})")
 ```
+=======
+>>>>>>> Stashed changes

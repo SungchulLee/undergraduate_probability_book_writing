@@ -1,90 +1,58 @@
 # Mean and Variance of the Exponential Distribution
 
-The mean and variance of $\text{Exp}(\lambda)$ have clean closed forms that mirror the Geometric distribution, with the rate $\lambda$ playing the role of the success probability $p$.
+## Mean
 
-## Definition
+!!! info "Mean of Exp(λ)"
+    If $X \sim \text{Exp}(\lambda)$, then:
 
-If $X \sim \text{Exp}(\lambda)$, then
+    $$E[X] = \frac{1}{\lambda}$$
 
-$$
-E[X] = \frac{1}{\lambda}, \qquad \text{Var}(X) = \frac{1}{\lambda^2}, \qquad \text{SD}(X) = \frac{1}{\lambda}
-$$
+### Derivation
 
-The $n$-th moment is
+Using integration by parts with $u = x$, $dv = \lambda e^{-\lambda x} dx$:
 
-$$
-E[X^n] = \frac{n!}{\lambda^n}
-$$
+$$E[X] = \int_0^\infty x \lambda e^{-\lambda x} \, dx = \left[-x e^{-\lambda x}\right]_0^\infty + \int_0^\infty e^{-\lambda x} \, dx = 0 + \frac{1}{\lambda} = \frac{1}{\lambda}$$
 
-The moment generating function is
+### Interpretation
 
-$$
-M_X(t) = \frac{\lambda}{\lambda - t}, \quad t < \lambda
-$$
+The mean $1/\lambda$ is the **average waiting time** between events in a Poisson process with rate $\lambda$. If events occur at rate $\lambda = 5$ per hour, the average time between events is $1/5$ hour $= 12$ minutes.
 
-## Explanation
+## Variance
 
-### Deriving the Mean
+!!! info "Variance of Exp(λ)"
+    If $X \sim \text{Exp}(\lambda)$, then:
 
-Using integration by parts with $u = x$ and $dv = \lambda e^{-\lambda x} \, dx$:
+    $$\text{Var}(X) = \frac{1}{\lambda^2}$$
 
-$$
-E[X] = \int_0^\infty x \lambda e^{-\lambda x} \, dx = \left[-x e^{-\lambda x}\right]_0^\infty + \int_0^\infty e^{-\lambda x} \, dx = 0 + \frac{1}{\lambda} = \frac{1}{\lambda}
-$$
+### Derivation
 
-The boundary term vanishes because $x e^{-\lambda x} \to 0$ as $x \to \infty$ (the exponential decay dominates the linear growth).
+First compute $E[X^2]$ using integration by parts (or the Gamma function technique):
 
-**Interpretation.** The mean $1/\lambda$ is the average waiting time between events in a Poisson process with rate $\lambda$. If events occur at rate $\lambda = 5$ per hour, the average time between events is $1/5$ hour $= 12$ minutes.
+$$E[X^2] = \int_0^\infty x^2 \lambda e^{-\lambda x} \, dx$$
 
-### Deriving the Second Moment
+Substituting $u = \lambda x$:
 
-Compute $E[X^2]$ using the substitution $u = \lambda x$:
+$$E[X^2] = \frac{1}{\lambda^2} \int_0^\infty u^2 e^{-u} \, du = \frac{\Gamma(3)}{\lambda^2} = \frac{2!}{\lambda^2} = \frac{2}{\lambda^2}$$
 
-$$
-E[X^2] = \int_0^\infty x^2 \lambda e^{-\lambda x} \, dx = \frac{1}{\lambda^2} \int_0^\infty u^2 e^{-u} \, du = \frac{\Gamma(3)}{\lambda^2} = \frac{2!}{\lambda^2} = \frac{2}{\lambda^2}
-$$
+Therefore:
 
-### Deriving the Variance
+$$\text{Var}(X) = E[X^2] - (E[X])^2 = \frac{2}{\lambda^2} - \frac{1}{\lambda^2} = \frac{1}{\lambda^2}$$
 
-$$
-\text{Var}(X) = E[X^2] - (E[X])^2 = \frac{2}{\lambda^2} - \frac{1}{\lambda^2} = \frac{1}{\lambda^2}
-$$
+### Standard Deviation
 
-### Standard Deviation Equals the Mean
+$$\text{SD}(X) = \frac{1}{\lambda} = E[X]$$
 
-A notable property: for the Exponential distribution, the standard deviation equals the mean:
+A notable property: for the Exponential distribution, the **standard deviation equals the mean**. This means the coefficient of variation is always $1$, regardless of the rate parameter.
 
-$$
-\text{SD}(X) = \frac{1}{\lambda} = E[X]
-$$
+## Higher Moments
 
-This means the **coefficient of variation** $\text{CV} = \text{SD}(X) / E[X]$ is always $1$, regardless of the rate parameter. The Exponential distribution is the boundary case: distributions with $\text{CV} < 1$ are more regular (less variable) than exponential, while those with $\text{CV} > 1$ are more bursty (more variable).
+Using the Gamma function, the $n$-th moment of $X \sim \text{Exp}(\lambda)$ is:
 
-### General Moments via the Gamma Function
+$$E[X^n] = \int_0^\infty x^n \lambda e^{-\lambda x} \, dx = \frac{\Gamma(n+1)}{\lambda^n} = \frac{n!}{\lambda^n}$$
 
-The $n$-th moment has a clean factorial form:
+## Summary Table
 
-$$
-E[X^n] = \int_0^\infty x^n \lambda e^{-\lambda x} \, dx = \frac{1}{\lambda^n} \int_0^\infty u^n e^{-u} \, du = \frac{\Gamma(n+1)}{\lambda^n} = \frac{n!}{\lambda^n}
-$$
-
-### MGF Derivation and Moment Extraction
-
-$$
-M_X(t) = E[e^{tX}] = \int_0^\infty e^{tx} \lambda e^{-\lambda x} \, dx = \lambda \int_0^\infty e^{-(\lambda - t)x} \, dx = \frac{\lambda}{\lambda - t}
-$$
-
-The integral converges when $\lambda - t > 0$, i.e., $t < \lambda$. Differentiating:
-
-$$
-M_X'(t) = \frac{\lambda}{(\lambda - t)^2} \implies M_X'(0) = \frac{1}{\lambda} = E[X]
-$$
-
-$$
-M_X''(t) = \frac{2\lambda}{(\lambda - t)^3} \implies M_X''(0) = \frac{2}{\lambda^2} = E[X^2]
-$$
-
-### Discrete-Continuous Analogy
+The Exponential distribution fits into a broader pattern relating discrete and continuous distributions:
 
 | Distribution | Mean | Variance |
 |:---:|:---:|:---:|
@@ -92,50 +60,71 @@ $$
 | $\text{NegBin}(n, p)$ | $\dfrac{n}{p}$ | $\dfrac{nq}{p^2}$ |
 | $\text{Exp}(\lambda)$ | $\dfrac{1}{\lambda}$ | $\dfrac{1}{\lambda^2}$ |
 | $\Gamma(n, \lambda)$ | $\dfrac{n}{\lambda}$ | $\dfrac{n}{\lambda^2}$ |
+| $\Gamma(\alpha, \lambda)$ | $\dfrac{\alpha}{\lambda}$ | $\dfrac{\alpha}{\lambda^2}$ |
 
-The Geometric is to the Negative Binomial as the Exponential is to the Gamma: each row is $n$ times (or $\alpha$ times) the first.
+The Geometric is to the Negative Binomial as the Exponential is to the Gamma: the sum of $n$ iid copies.
 
-## Examples
+## MGF of the Exponential
 
-**Example 1.** A radioactive source emits particles at rate $\lambda = 3$ per second. Find the mean, variance, and standard deviation of the time between emissions.
+The moment generating function of $X \sim \text{Exp}(\lambda)$ is:
 
-The interarrival time is $X \sim \text{Exp}(3)$, so $E[X] = 1/3$ seconds, $\text{Var}(X) = 1/9$ seconds$^2$, and $\text{SD}(X) = 1/3$ seconds.
+$$M_X(t) = E[e^{tX}] = \int_0^\infty e^{tx} \lambda e^{-\lambda x} \, dx = \frac{\lambda}{\lambda - t}, \quad t < \lambda$$
 
-**Example 2.** Verify the moments and the MGF numerically for several rate parameters.
+This can be used to verify the moments:
+
+$$M_X'(0) = \frac{\lambda}{(\lambda - t)^2}\bigg|_{t=0} = \frac{1}{\lambda} = E[X]$$
+
+$$M_X''(0) = \frac{2\lambda}{(\lambda - t)^3}\bigg|_{t=0} = \frac{2}{\lambda^2} = E[X^2]$$
+
+## Python Implementation
 
 ```python
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy import stats
 
 np.random.seed(42)
-n_sim = 200_000
 
-print("=== Moment Verification ===")
-print(f"{'lam':>5} | {'E[X] thy':>9} {'E[X] sim':>9} | "
-      f"{'Var thy':>9} {'Var sim':>9} | {'SD=Mean?':>9}")
-print("-" * 68)
+# Compare mean and variance across different rates
+rates = [0.5, 1.0, 2.0, 5.0]
+n_sim = 50000
 
-for lam in [0.5, 1.0, 2.0, 5.0]:
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+
+for lam in rates:
     X = np.random.exponential(1/lam, n_sim)
-    mean_thy = 1 / lam
-    var_thy = 1 / lam**2
-    print(f"{lam:5.1f} | {mean_thy:9.4f} {np.mean(X):9.4f} | "
-          f"{var_thy:9.4f} {np.var(X):9.4f} | "
-          f"{np.std(X)/np.mean(X):9.4f}")
+    x = np.linspace(0, 6, 200)
+    pdf = lam * np.exp(-lam * x)
 
-# Verify higher moments: E[X^n] = n! / lambda^n
-print("\n=== Higher Moments for Exp(2) ===")
-lam = 2.0
-X = np.random.exponential(1/lam, n_sim)
-for n in range(1, 6):
-    theory = np.math.factorial(n) / lam**n
-    simulated = np.mean(X**n)
-    print(f"E[X^{n}]: theory={theory:.4f}, sim={simulated:.4f}")
+    axes[0].plot(x, pdf, lw=2, label=f'λ={lam}, E[X]={1/lam:.2f}')
+    axes[0].axvline(1/lam, linestyle='--', alpha=0.3)
 
-# Verify MGF: M(t) = lambda/(lambda-t)
-print("\n=== MGF Verification for Exp(2) ===")
-for t in [0.5, 1.0, 1.5]:
-    mgf_theory = lam / (lam - t)
-    mgf_sim = np.mean(np.exp(t * X))
-    print(f"M({t}): theory={mgf_theory:.4f}, sim={mgf_sim:.4f}")
+axes[0].set_title('Exponential PDFs with Means Marked')
+axes[0].set_xlabel('x')
+axes[0].set_ylabel('f(x)')
+axes[0].legend()
+axes[0].grid(True, alpha=0.3)
+
+# Verify mean = std dev property
+lam_range = np.linspace(0.2, 5, 50)
+means = 1 / lam_range
+stds = 1 / lam_range
+
+axes[1].plot(lam_range, means, 'b-', lw=2, label='E[X] = 1/λ')
+axes[1].plot(lam_range, stds, 'r--', lw=2, label='SD(X) = 1/λ')
+axes[1].set_title('Mean Equals Standard Deviation')
+axes[1].set_xlabel('λ')
+axes[1].set_ylabel('Value')
+axes[1].legend()
+axes[1].grid(True, alpha=0.3)
+
+plt.tight_layout()
+plt.savefig('exponential_mean_variance.png', dpi=150, bbox_inches='tight')
+plt.show()
+
+# Numerical verification
+for lam in rates:
+    X = np.random.exponential(1/lam, n_sim)
+    print(f"λ = {lam}: E[X] = {np.mean(X):.4f} (theory {1/lam:.4f}), "
+          f"Var(X) = {np.var(X):.4f} (theory {1/lam**2:.4f})")
 ```

@@ -1,5 +1,6 @@
 # Chapter 4 Exercises
 
+<<<<<<< Updated upstream
 ## Section 4.1 — Random Variables
 
 **Exercise 4.1.** Explain in your own words why $P(X = a) = 0$ for every value $a$ when $X$ is a continuous random variable, even though $X$ must take some value.
@@ -7,11 +8,21 @@
 **Exercise 4.2.** A random variable $X$ has a discrete CDF with jumps of size 0.1, 0.2, 0.3, 0.15, 0.25 at $x = 1, 3, 5, 7, 10$ respectively. Determine $P(X = 5)$, $P(X \ge 7)$, $P(3 < X \le 7)$, and $P(X < 5)$.
 
 **Exercise 4.3.** Flip a fair coin four times. Let $X$ be the length of the longest run of consecutive heads. List all 16 outcomes, find $X(\omega)$ for each, and write down the PMF of $X$.
+=======
+## Conceptual Questions
+
+**Exercise 4.1.** Explain in your own words why $P(X = a) = 0$ for every value $a$ when $X$ is a continuous random variable, even though $X$ must take some value.
+
+**Exercise 4.2.** A random variable $X$ has the CDF shown below (step function with jumps at $x = 5, 10, 20, 25$). Determine $P(X = 5)$, $P(X \ge 20)$, and $P(10 < X \le 25)$ from the CDF.
+
+## PMF Problems
+>>>>>>> Stashed changes
 
 ## Section 4.2 — Probability Mass Function
 
 **Exercise 4.4.** Let $X$ be the number of heads in 3 flips of a fair coin. Write down the PMF of $X$ and verify it sums to 1.
 
+<<<<<<< Updated upstream
 **Exercise 4.5.** A random variable $X$ has PMF $P(X = k) = c \cdot k$ for $k = 1, 2, 3, 4, 5$. Find the constant $c$ and compute $P(X \ge 3)$.
 
 **Exercise 4.6.** A random variable $X$ has PMF $P(X = k) = c \cdot 2^{-k}$ for $k = 1, 2, 3, \ldots$ Find the constant $c$ and compute $P(X \le 3)$.
@@ -69,3 +80,16 @@ $$
 **Exercise 4.21.** Let $X$ have PMF $P(X = k) = (1-p)^{k-1} p$ for $k = 1, 2, 3, \ldots$ (Geometric). Show that the CDF is $F(k) = 1 - (1-p)^k$ for positive integers $k$, and use this to compute $P(X > n)$ for any positive integer $n$.
 
 **Exercise 4.22.** A sensor reports temperature readings that are uniformly distributed on $[20, 30]$ (in Celsius). The reading is converted to Fahrenheit via $Y = 1.8X + 32$. Find the PDF of $Y$ using the change-of-variables formula and verify that $\int f_Y(y)\,dy = 1$.
+=======
+## CDF Problems
+
+**Exercise 4.5.** Given the PMF from Exercise 4.3, write the CDF $F(x)$ as a piecewise function and sketch it.
+
+**Exercise 4.6.** A continuous random variable has PDF $f(x) = 3x^2$ for $0 \le x \le 1$. Find the CDF and compute $P(0.5 \le X \le 0.8)$.
+
+## Transformation Problems
+
+**Exercise 4.7.** If $X \sim \text{B}(0.3)$ (Bernoulli with $p = 0.3$), find the PMF of $Y = 5X + 2$.
+
+**Exercise 4.8.** Let $X$ be a random variable taking values $\{-2, -1, 0, 1, 2\}$ each with probability $1/5$. Find the PMF of $Y = X^2$.
+>>>>>>> Stashed changes

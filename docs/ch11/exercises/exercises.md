@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # Chapter 11 Exercises: MGFs, PGFs, and Characteristic Functions
 
 ---
@@ -239,3 +240,6 @@ Let $X \sim \text{Po}(3)$ and $Y \sim \text{Po}(7)$ be independent.
     **(b)** This is the PGF of $\text{Po}(10)$, so $X + Y \sim \text{Po}(10)$.
 
     **(c)** $E[X+Y] = 3 + 7 = 10$ and $\text{Var}(X+Y) = 3 + 7 = 10$, both matching $\text{Po}(10)$.
+=======
+# Exercises
+>>>>>>> Stashed changes

@@ -1,10 +1,5 @@
 # Chapter 1 Exercises — Counting
 
-These exercises cover the multiplication rule, combinations, permutations, inclusion-exclusion, derangements, stars and bars, and double counting.
-
-!!! warning "Incomplete page"
-    Exercise page — does not follow the five-section content structure (no Concept Definition, Explanation, or Diagram sections).
-
 ## Exercise 1: Multiplication Rule
 
 A license plate consists of 3 letters followed by 4 digits. How many different license plates are possible if:
@@ -59,7 +54,6 @@ Verify Vandermonde's identity for $m = 4$, $n = 6$, $k = 5$:
 $$\binom{10}{5} = \sum_{\ell=0}^{4} \binom{4}{\ell}\binom{6}{5-\ell}$$
 
 ??? note "Solution"
-
     $$\binom{4}{0}\binom{6}{5} + \binom{4}{1}\binom{6}{4} + \binom{4}{2}\binom{6}{3} + \binom{4}{3}\binom{6}{2} + \binom{4}{4}\binom{6}{1}$$
 
     $$= 1 \cdot 6 + 4 \cdot 15 + 6 \cdot 20 + 4 \cdot 15 + 1 \cdot 6 = 6 + 60 + 120 + 60 + 6 = 252$$

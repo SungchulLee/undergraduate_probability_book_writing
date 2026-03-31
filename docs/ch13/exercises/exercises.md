@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # Chapter 13 Exercises: Poisson Process
 
 ---
@@ -313,3 +314,6 @@ Let $\{N(t)\}$ be a counting process with $N(0) = 0$, independent increments, an
     print(f"Mean of N(0,2): {counts.mean():.3f} (theory: 10)")
     print(f"Var of N(0,2):  {counts.var(ddof=1):.3f} (theory: 10)")
     ```
+=======
+# Exercises
+>>>>>>> Stashed changes

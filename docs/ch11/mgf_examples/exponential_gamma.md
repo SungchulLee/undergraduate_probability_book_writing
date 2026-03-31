@@ -1,4 +1,5 @@
 # MGF of Exponential and Gamma
+<<<<<<< Updated upstream
 
 ## MGF of Exponential$(\lambda)$
 
@@ -79,3 +80,5 @@ print("\nGamma(3, 2):")
 print(f"  E[X]   = {EX:.4f}  (exact: 1.5)")
 print(f"  Var(X) = {EX2 - EX**2:.4f}  (exact: 0.75)")
 ```
+=======
+>>>>>>> Stashed changes

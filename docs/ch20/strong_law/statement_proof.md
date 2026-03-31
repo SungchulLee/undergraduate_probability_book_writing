@@ -1,54 +1,62 @@
-# Strong Law of Large Numbers
+# Strong Law of Large Numbers: Statement and Proof
 
-The sample mean converges almost surely to the population mean — with probability one, the running average eventually settles at $\mu$ and stays there.
+## Statement
 
-## Definition
+Let $X_1, X_2, \ldots$ be **iid** random variables with PDF/PMF $f(x)$.
 
-Let $X_1, X_2, \ldots$ be iid with $E[\lvert X_i \rvert] < \infty$. Then:
+If $\mathbb{E}|X_i| < \infty$, then the sample mean converges **almost surely** to the population mean:
 
 $$
-P\!\left(\lim_{n \to \infty} \bar{X}_n = \mu\right) = 1
+\frac{1}{N}\sum_{i=1}^N X_i \xrightarrow{a.s.} \int x\, f(x)\, dx = \mu
 $$
 
-More generally, $\frac{1}{n}\sum_{i=1}^n g(X_i) \xrightarrow{a.s.} E[g(X)]$ whenever $E[\lvert g(X) \rvert] < \infty$.
+More generally, if $\mathbb{E}|g(X_i)| < \infty$, then
 
-## Explanation
+$$
+\frac{1}{N}\sum_{i=1}^N g(X_i) \xrightarrow{a.s.} \int g(x)\, f(x)\, dx = \mathbb{E}[g(X)]
+$$
 
-### Proof Sketch (Finite Fourth Moment)
+## Proof Sketch (Assuming Finite Fourth Moment)
 
-Assume $E[X_i^4] < \infty$. Let $S_n = \sum X_i$.
+Assume $\mathbb{E}X_i^4 < \infty$. Let $S_n = \sum_{i=1}^n X_i$.
 
-**Step 1.** Show $\sum_{n=1}^\infty E[(\bar{X}_n - \mu)^4] < \infty$. Cross-terms vanish by independence, leaving $E[(S_n - n\mu)^4] = O(n^2)$, so $E[(\bar{X}_n - \mu)^4] = O(n^{-2})$.
+**Step 1**: Show the fourth moment sum converges.
 
-**Step 2.** Since expectations sum to a finite value, the sum $\sum (\bar{X}_n - \mu)^4 < \infty$ a.s.
+$$
+\sum_{n=1}^{\infty} \mathbb{E}\left(\frac{S_n - n\mu}{n}\right)^4 \leq C\sum_{n=1}^{\infty} n^{-2} < \infty
+$$
 
-**Step 3.** Terms of a convergent series go to zero: $(\bar{X}_n - \mu)^4 \to 0$ a.s.
+The key computation uses the fact that most cross-terms in expanding $(S_n - n\mu)^4$ vanish by independence, leaving only $O(n^2)$ terms, so $\mathbb{E}(S_n - n\mu)^4 = O(n^2)$.
 
-**Step 4.** Take fourth roots: $\bar{X}_n \to \mu$ a.s. $\square$
+**Step 2**: Since the sum of expectations is finite, the sum itself is finite almost surely:
 
-The full SLLN (Kolmogorov) requires only $E[\lvert X \rvert] < \infty$ but uses more advanced tools.
+$$
+\sum_{n=1}^{\infty} \left(\frac{S_n - n\mu}{n}\right)^4 < \infty \quad \text{a.s.}
+$$
 
-### WLLN vs SLLN
+**Step 3**: If a series of nonnegative terms converges, the terms must go to 0:
 
-| | Weak Law | Strong Law |
-|:---|:---|:---|
-| Mode | In probability | Almost surely |
-| Simple proof needs | $\sigma^2 < \infty$ | $E[X^4] < \infty$ |
-| General version needs | $E[\lvert X \rvert] < \infty$ | $E[\lvert X \rvert] < \infty$ |
-| Technique | Chebyshev | Fourth moment + series |
+$$
+\left(\frac{S_n - n\mu}{n}\right)^4 \to 0 \quad \text{a.s.}
+$$
 
-## Examples
+**Step 4**: Taking fourth roots:
 
-**Example.** Verify SLLN for $\operatorname{Exp}(1)$: all paths converge to $\mu = 1$.
+$$
+\frac{S_n}{n} \to \mu \quad \text{a.s.}
+$$
 
-```python
-import numpy as np
+$\square$
 
-np.random.seed(42)
-n = 50_000
+!!! info "Remark"
+    The full SLLN (Kolmogorov's version) requires only $\mathbb{E}|X_i| < \infty$. The proof with finite fourth moment is more accessible and illustrates the main strategy: use summability of moments to establish almost sure convergence.
 
-for trial in range(5):
-    X = np.random.exponential(1.0, n)
-    X_bar = np.cumsum(X) / np.arange(1, n + 1)
-    print(f"Trial {trial+1}: X̄_{n} = {X_bar[-1]:.6f}")
-```
+## WLLN vs SLLN
+
+| Property | Weak Law | Strong Law |
+|----------|----------|------------|
+| Convergence mode | In probability | Almost surely |
+| Assumption (simple proof) | $\sigma^2 < \infty$ | $\mathbb{E}X^4 < \infty$ |
+| Assumption (general) | $\mathbb{E}\|X\| < \infty$ | $\mathbb{E}\|X\| < \infty$ |
+| Proof technique | Chebyshev inequality | Fourth moment + series convergence |
+| Conclusion | $P(\|\bar{X}_n - \mu\| > \varepsilon) \to 0$ | $P(\bar{X}_n \to \mu) = 1$ |

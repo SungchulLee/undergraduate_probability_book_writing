@@ -1,55 +1,77 @@
-# F Distribution Properties
+# $F$ Distribution: Properties
 
-The $F$ distribution has a mean that depends only on the denominator degrees of freedom, and it satisfies a clean reciprocal property: inverting an $F$ swaps the two degree-of-freedom parameters.
+## Mean and Variance
 
-## Definition
+| Property | Value | Condition |
+|----------|-------|-----------|
+| Mean | $\frac{d_2}{d_2 - 2}$ | $d_2 > 2$ |
+| Variance | $\frac{2d_2^2(d_1 + d_2 - 2)}{d_1(d_2 - 2)^2(d_2 - 4)}$ | $d_2 > 4$ |
+| Mode | $\frac{d_1 - 2}{d_1} \cdot \frac{d_2}{d_2 + 2}$ | $d_1 > 2$ |
 
-For $F \sim F_{d_1, d_2}$:
+!!! note
+    The mean depends **only** on $d_2$, not on $d_1$. For small $d_2$, the mean can be substantially greater than 1.
 
-$$
-E[F] = \frac{d_2}{d_2 - 2} \;\;(d_2 > 2), \qquad \operatorname{Var}(F) = \frac{2d_2^2(d_1+d_2-2)}{d_1(d_2-2)^2(d_2-4)} \;\;(d_2 > 4)
-$$
+## Key Properties
 
-The reciprocal property states:
+### Support and Shape
 
-$$
-\frac{1}{F} \sim F_{d_2, d_1}
-$$
+The $F$ distribution is supported on $(0, \infty)$ and is **right-skewed**. The skewness decreases as both $d_1$ and $d_2$ increase.
 
-## Explanation
-
-### Mean depends only on the denominator
-
-The mean $d_2/(d_2-2)$ is independent of $d_1$. For small $d_2$, the mean is substantially larger than 1. As $d_2 \to \infty$, the mean approaches 1.
-
-### Reciprocal property
-
-By definition, $F = (V_1/d_1)/(V_2/d_2)$, so $1/F = (V_2/d_2)/(V_1/d_1) \sim F_{d_2, d_1}$. Swapping numerator and denominator swaps the degrees of freedom.
-
-### Connection to the Beta distribution
+### Reciprocal Property
 
 If $F \sim F_{d_1, d_2}$, then:
 
-$$
-\frac{d_1 F/d_2}{1 + d_1 F/d_2} \sim \operatorname{Beta}\!\left(\frac{d_1}{2},\; \frac{d_2}{2}\right)
-$$
+$$\frac{1}{F} \sim F_{d_2, d_1}$$
 
-## Examples
+This follows directly from the definition: swapping numerator and denominator swaps the degrees of freedom.
 
-**Example 1.** Verify the mean and the reciprocal property by simulation.
+## Relationship to the $t$ Distribution
+
+If $T \sim t_d$, then:
+
+$$T^2 \sim F_{1, d}$$
+
+**Proof.** Write $T = Z / \sqrt{V/d}$ where $Z \sim N(0,1)$ and $V \sim \chi^2_d$ are independent. Then:
+
+$$T^2 = \frac{Z^2}{V/d} = \frac{Z^2 / 1}{V / d} = \frac{\chi^2_1 / 1}{\chi^2_d / d} \sim F_{1, d}$$
+
+This connection means that a two-sided $t$-test with $d$ degrees of freedom is equivalent to an $F$-test with $(1, d)$ degrees of freedom.
+
+## Relationship to the Beta Distribution
+
+If $F \sim F_{d_1, d_2}$, then:
+
+$$\frac{d_1 F / d_2}{1 + d_1 F / d_2} \sim \text{Beta}\!\left(\frac{d_1}{2}, \frac{d_2}{2}\right)$$
+
+## Python Exploration
 
 ```python
 import numpy as np
 from scipy import stats
+import matplotlib.pyplot as plt
 
-np.random.seed(42)
-d1, d2, n_sim = 5, 10, 200_000
+x = np.linspace(0.01, 5, 500)
 
-f_samples = np.random.f(d1, d2, n_sim)
-print(f"Mean of F({d1},{d2}): {f_samples.mean():.4f}  (theory: {d2/(d2-2):.4f})")
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-# Reciprocal property
-recip = 1.0 / f_samples
-stat, pval = stats.kstest(recip, 'f', args=(d2, d1))
-print(f"KS test 1/F({d1},{d2}) ~ F({d2},{d1}): p={pval:.4f}")
+# Varying d1
+ax = axes[0]
+d2 = 10
+for d1 in [1, 2, 5, 10, 30]:
+    ax.plot(x, stats.f.pdf(x, d1, d2), label=f'$F_{{{d1},{d2}}}$')
+ax.set_title(f'Varying $d_1$ (fixed $d_2 = {d2}$)')
+ax.set_xlabel('$x$'); ax.set_ylabel('Density')
+ax.legend()
+
+# Varying d2
+ax = axes[1]
+d1 = 5
+for d2 in [3, 5, 10, 30, 100]:
+    ax.plot(x, stats.f.pdf(x, d1, d2), label=f'$F_{{{d1},{d2}}}$')
+ax.set_title(f'Varying $d_2$ (fixed $d_1 = {d1}$)')
+ax.set_xlabel('$x$'); ax.set_ylabel('Density')
+ax.legend()
+
+plt.tight_layout()
+plt.show()
 ```

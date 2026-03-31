@@ -1,4 +1,5 @@
 # MGF of Sums of Independent Random Variables
+<<<<<<< Updated upstream
 
 ## The Product Rule
 
@@ -87,3 +88,5 @@ print(f"\nPo(3) + Po(5):")
 print(f"  Mean:  {S.mean():.4f}  (exact: 8)")
 print(f"  Var:   {S.var():.4f}  (exact: 8)")
 ```
+=======
+>>>>>>> Stashed changes

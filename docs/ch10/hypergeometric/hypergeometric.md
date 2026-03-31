@@ -1,4 +1,5 @@
 # Hypergeometric Distribution
+<<<<<<< Updated upstream
 
 ## Motivation
 
@@ -92,3 +93,5 @@ $$
 $$
 P(X = 0) = \frac{\binom{8}{0}\binom{92}{10}}{\binom{100}{10}} \approx 0.410
 $$
+=======
+>>>>>>> Stashed changes

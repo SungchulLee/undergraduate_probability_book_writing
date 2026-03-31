@@ -1,245 +1,175 @@
 # Beta Distribution Properties
 
-The Beta distribution encompasses a rich variety of shapes depending on its parameters, and its moments, mode, and symmetry properties all have clean closed-form expressions.
+## Special Cases
 
-## Definition
+The Beta distribution encompasses several familiar distributions as special cases.
 
-For $X \sim \text{Beta}(\alpha, \beta)$, the key properties are:
+!!! info "Special Cases of Beta(α, β)"
+    | Parameters | Distribution | PDF |
+    |:---:|:---:|:---:|
+    | $\alpha = 1, \beta = 1$ | $\text{Uniform}(0,1)$ | $f(x) = 1$ |
+    | $\alpha = n, \beta = 1$ | Power distribution | $f(x) = nx^{n-1}$ |
+    | $\alpha = 1, \beta = n$ | Reflected power | $f(x) = n(1-x)^{n-1}$ |
+    | $\alpha = \tfrac{1}{2}, \beta = \tfrac{1}{2}$ | Arcsine distribution | $f(x) = \frac{1}{\pi\sqrt{x(1-x)}}$ |
 
-$$
-E[X] = \frac{\alpha}{\alpha + \beta}, \qquad \text{Var}(X) = \frac{\alpha\beta}{(\alpha + \beta)^2(\alpha + \beta + 1)}
-$$
+The $\text{Beta}(1,1) = \text{Uniform}(0,1)$ case is immediate: when $\alpha = \beta = 1$, the PDF is $f(x) = \frac{x^0(1-x)^0}{B(1,1)} = \frac{1}{1} = 1$.
 
-$$
-\text{Mode} = \frac{\alpha - 1}{\alpha + \beta - 2} \quad (\text{for } \alpha, \beta > 1)
-$$
-
-$$
-E[X^k] = \prod_{j=0}^{k-1} \frac{\alpha + j}{\alpha + \beta + j}
-$$
-
-The **reflection property** states: if $X \sim \text{Beta}(\alpha, \beta)$, then $1 - X \sim \text{Beta}(\beta, \alpha)$.
-
-## Explanation
-
-### Special cases
-
-| Parameters | Distribution | PDF |
-|:---:|:---:|:---:|
-| $\alpha = 1, \beta = 1$ | $\text{Uniform}(0,1)$ | $f(x) = 1$ |
-| $\alpha = n, \beta = 1$ | Power distribution | $f(x) = nx^{n-1}$ |
-| $\alpha = 1, \beta = n$ | Reflected power | $f(x) = n(1-x)^{n-1}$ |
-| $\alpha = \tfrac{1}{2}, \beta = \tfrac{1}{2}$ | Arcsine distribution | $f(x) = \frac{1}{\pi\sqrt{x(1-x)}}$ |
-
-The $\text{Beta}(1,1) = \text{Uniform}(0,1)$ case is immediate: when $\alpha = \beta = 1$, the PDF is $f(x) = x^0(1-x)^0 / B(1,1) = 1$.
-
-### Shape analysis
+## Shape Analysis
 
 The shape of the Beta PDF depends on the parameter values relative to 1.
+
+**Mode.** For $\alpha, \beta > 1$, the Beta distribution is unimodal with mode:
+
+$$\text{Mode} = \frac{\alpha - 1}{\alpha + \beta - 2}$$
+
+This follows from setting $f'(x) = 0$, yielding $(\alpha - 1)(1 - x) = (\beta - 1)x$.
 
 **Shape regimes:**
 
 - $\alpha > 1, \beta > 1$: unimodal, bell-shaped on $(0, 1)$
-- $\alpha < 1, \beta < 1$: U-shaped (bimodal at the boundaries)
+- $\alpha < 1, \beta < 1$: U-shaped (bimodal at boundaries)
 - $\alpha = \beta$: symmetric about $x = 1/2$
 - $\alpha > \beta$: skewed left (mass concentrated toward 1)
 - $\alpha < \beta$: skewed right (mass concentrated toward 0)
 
-**Mode.** For $\alpha, \beta > 1$, setting $f'(x) = 0$ yields $(\alpha - 1)(1 - x) = (\beta - 1)x$, so:
+## Higher Moments
 
-$$
-\text{Mode} = \frac{\alpha - 1}{\alpha + \beta - 2}
-$$
+!!! info "Raw Moments"
+    For $X \sim \text{Beta}(\alpha, \beta)$:
 
-When $\alpha \leq 1$ or $\beta \leq 1$ the mode occurs at the boundary (0 or 1), and for $\alpha = \beta = 1$ every point is a mode.
-
-### Higher moments
-
-The $k$-th raw moment has a product formula that follows from the Beta function identity:
-
-$$
-E[X^k] = \frac{B(\alpha + k, \beta)}{B(\alpha, \beta)} = \prod_{j=0}^{k-1} \frac{\alpha + j}{\alpha + \beta + j}
-$$
+    $$E[X^k] = \frac{B(\alpha + k, \beta)}{B(\alpha, \beta)} = \prod_{j=0}^{k-1} \frac{\alpha + j}{\alpha + \beta + j}$$
 
 In particular:
 
-$$
-E[X] = \frac{\alpha}{\alpha + \beta}, \qquad E[X^2] = \frac{\alpha(\alpha+1)}{(\alpha+\beta)(\alpha+\beta+1)}
-$$
+$$E[X] = \frac{\alpha}{\alpha + \beta}, \qquad E[X^2] = \frac{\alpha(\alpha+1)}{(\alpha+\beta)(\alpha+\beta+1)}$$
 
-### Skewness and kurtosis
+**Skewness:**
 
-$$
-\gamma_1 = \frac{2(\beta - \alpha)\sqrt{\alpha + \beta + 1}}{(\alpha + \beta + 2)\sqrt{\alpha\beta}}
-$$
+$$\gamma_1 = \frac{2(\beta - \alpha)\sqrt{\alpha + \beta + 1}}{(\alpha + \beta + 2)\sqrt{\alpha\beta}}$$
 
-When $\alpha = \beta$, the skewness is zero (the distribution is symmetric). The sign of $\beta - \alpha$ determines the direction of skew.
+When $\alpha = \beta$, the skewness is zero (the distribution is symmetric).
 
-### Reflection property
+**Kurtosis (excess):**
 
-If $X \sim \text{Beta}(\alpha, \beta)$, then $1 - X \sim \text{Beta}(\beta, \alpha)$.
+$$\gamma_2 = \frac{6(\alpha^3 - \alpha^2(2\beta - 1) + \beta^2(\beta + 1) - 2\alpha\beta(\beta + 2))}{{\alpha\beta(\alpha + \beta + 2)(\alpha + \beta + 3)}}$$
 
-*Proof.* Let $Y = 1 - X$. For $0 < y < 1$:
+## Bayesian Conjugacy
 
-$$
-P(Y \leq y) = P(X \geq 1 - y) = \int_{1-y}^{1} \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}\,dx
-$$
+The Beta distribution is the **conjugate prior** for the Binomial likelihood. This means that if we start with a Beta prior and observe Binomial data, the posterior is also Beta.
+
+!!! info "Beta-Binomial Conjugacy"
+    **Prior:** $p \sim \text{Beta}(\alpha, \beta)$
+
+    **Likelihood:** $X \mid p \sim \text{Binomial}(n, p)$
+
+    **Posterior:** $p \mid X = k \sim \text{Beta}(\alpha + k, \beta + n - k)$
+
+**Derivation.** By Bayes' theorem:
+
+$$f(p \mid X = k) \propto f(k \mid p) \cdot f(p) \propto p^k(1-p)^{n-k} \cdot p^{\alpha - 1}(1-p)^{\beta - 1} = p^{\alpha + k - 1}(1-p)^{\beta + n - k - 1}$$
+
+This is the kernel of a $\text{Beta}(\alpha + k, \beta + n - k)$ density.
+
+**Interpretation:**
+
+- $\alpha$ acts as "prior successes" and $\beta$ as "prior failures"
+- $\alpha + \beta$ controls how informative the prior is
+- The posterior mean is a weighted average of the prior mean and the data:
+
+$$E[p \mid X = k] = \frac{\alpha + k}{\alpha + \beta + n} = \frac{\alpha + \beta}{\alpha + \beta + n} \cdot \underbrace{\frac{\alpha}{\alpha + \beta}}_{\text{prior mean}} + \frac{n}{\alpha + \beta + n} \cdot \underbrace{\frac{k}{n}}_{\text{MLE}}$$
+
+## Symmetry and Reflection
+
+!!! info "Reflection Property"
+    If $X \sim \text{Beta}(\alpha, \beta)$, then $1 - X \sim \text{Beta}(\beta, \alpha)$.
+
+**Proof.** Let $Y = 1 - X$. For $0 < y < 1$:
+
+$$P(Y \leq y) = P(X \geq 1 - y) = \int_{1-y}^{1} \frac{x^{\alpha-1}(1-x)^{\beta-1}}{B(\alpha,\beta)}\,dx$$
 
 Substituting $u = 1 - x$:
 
-$$
-= \int_0^{y} \frac{(1-u)^{\alpha-1}u^{\beta-1}}{B(\alpha,\beta)}\,du
-$$
+$$= \int_0^{y} \frac{(1-u)^{\alpha-1}u^{\beta-1}}{B(\alpha,\beta)}\,du$$
 
-which is the CDF of $\text{Beta}(\beta, \alpha)$.
+which is the CDF of $\text{Beta}(\beta, \alpha)$. $\square$
 
-### Connection to order statistics
+## Connection to Order Statistics
 
-If $U_1, U_2, \ldots, U_n \overset{\text{iid}}{\sim} U(0,1)$ and $U_{(k)}$ is the $k$-th smallest value, then:
+The Beta distribution arises naturally as the distribution of order statistics from the Uniform distribution.
 
-$$
-U_{(k)} \sim \text{Beta}(k, n - k + 1)
-$$
+!!! info "Order Statistic Connection"
+    If $U_1, U_2, \ldots, U_n \overset{\text{iid}}{\sim} \text{Uniform}(0,1)$ and $U_{(k)}$ is the $k$-th smallest value, then:
 
-This deep connection is proved in the order statistics section.
+    $$U_{(k)} \sim \text{Beta}(k, n - k + 1)$$
 
-### Bayesian conjugacy preview
+This is proven in detail in Section 15.5 (Order Statistics).
 
-The Beta distribution is the conjugate prior for the Binomial likelihood. If $p \sim \text{Beta}(\alpha, \beta)$ and $X \mid p \sim \text{Binomial}(n, p)$, then $p \mid X = k \sim \text{Beta}(\alpha + k, \beta + n - k)$. This is explored in detail in the Bayesian applications page.
-
-## Examples
-
-**Example 1: Shape regimes.**
-
-Compare the PDF shapes for different parameter combinations.
+## Python Implementation
 
 ```python
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy import stats
 
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+
+# --- Panel 1: Shape regimes ---
 x = np.linspace(0.001, 0.999, 500)
 cases = [
-    (0.5, 0.5, "U-shaped"),
-    (1, 1, "Uniform"),
-    (2, 5, "Right-skewed"),
-    (5, 2, "Left-skewed"),
-    (5, 5, "Symmetric bell"),
+    ((0.5, 0.5), 'U-shaped', 'red'),
+    ((1, 1), 'Uniform', 'black'),
+    ((2, 5), 'Right-skewed', 'blue'),
+    ((5, 2), 'Left-skewed', 'green'),
+    ((5, 5), 'Symmetric bell', 'purple'),
+    ((10, 10), 'Concentrated', 'orange'),
 ]
+for (a, b), label, color in cases:
+    pdf = stats.beta.pdf(x, a, b)
+    pdf = np.clip(pdf, 0, 8)
+    axes[0].plot(x, pdf, color=color, lw=2, label=f'({a},{b}) {label}')
+axes[0].set_title('Beta PDF Shape Regimes')
+axes[0].set_xlabel('x')
+axes[0].set_ylabel('f(x)')
+axes[0].set_ylim(0, 5)
+axes[0].legend(fontsize=8)
+axes[0].grid(True, alpha=0.3)
 
-for a, b, desc in cases:
-    mean = a / (a + b)
-    var = a * b / ((a + b)**2 * (a + b + 1))
-    print(f"Beta({a}, {b}) [{desc}]: mean = {mean:.3f}, var = {var:.4f}")
-```
+# --- Panel 2: Bayesian updating ---
+alpha_prior, beta_prior = 2, 2
+n_obs, k_obs = 10, 7
 
-**Output:**
-```
-Beta(0.5, 0.5) [U-shaped]: mean = 0.500, var = 0.1250
-Beta(1, 1) [Uniform]: mean = 0.500, var = 0.0833
-Beta(2, 5) [Right-skewed]: mean = 0.286, var = 0.0255
-Beta(5, 2) [Left-skewed]: mean = 0.714, var = 0.0255
-Beta(5, 5) [Symmetric bell]: mean = 0.500, var = 0.0227
-```
+alpha_post = alpha_prior + k_obs
+beta_post = beta_prior + n_obs - k_obs
 
-**Example 2: Mode calculation.**
+axes[1].plot(x, stats.beta.pdf(x, alpha_prior, beta_prior),
+             'b-', lw=2, label=f'Prior: Beta({alpha_prior},{beta_prior})')
+axes[1].plot(x, stats.beta.pdf(x, alpha_post, beta_post),
+             'r-', lw=2, label=f'Posterior: Beta({alpha_post},{beta_post})')
+axes[1].axvline(k_obs / n_obs, color='green', ls='--', lw=1.5,
+                label=f'MLE = {k_obs}/{n_obs}')
+axes[1].set_title(f'Bayesian Updating (observed {k_obs}/{n_obs})')
+axes[1].set_xlabel('p')
+axes[1].legend()
+axes[1].grid(True, alpha=0.3)
 
-For $X \sim \text{Beta}(5, 3)$, find the mean, mode, and verify by simulation.
-
-$$
-E[X] = \frac{5}{8} = 0.625, \qquad \text{Mode} = \frac{5 - 1}{5 + 3 - 2} = \frac{4}{6} = 0.667
-$$
-
-```python
-import numpy as np
-from scipy import stats
-
-a, b = 5, 3
-mean = a / (a + b)
-mode = (a - 1) / (a + b - 2)
-var = a * b / ((a + b)**2 * (a + b + 1))
-
-print(f"Beta({a}, {b}):")
-print(f"  Mean = {mean:.4f}")
-print(f"  Mode = {mode:.4f}")
-print(f"  Var  = {var:.4f}")
-
-# Verify by simulation
+# --- Panel 3: Order statistics ---
 np.random.seed(42)
-samples = np.random.beta(a, b, 100000)
-print(f"\nSimulated: mean = {samples.mean():.4f}, var = {samples.var():.4f}")
-```
+n, k = 10, 3
+n_sim = 100000
+samples = np.sort(np.random.uniform(size=(n_sim, n)), axis=1)
+order_stat = samples[:, k - 1]
 
-**Output:**
-```
-Beta(5, 3):
-  Mean = 0.6250
-  Mode = 0.6667
-  Var  = 0.0260
+axes[2].hist(order_stat, bins=60, density=True, alpha=0.5,
+             color='steelblue', label=f'$U_{{({k})}}$ simulated')
+theory = stats.beta.pdf(x, k, n - k + 1)
+axes[2].plot(x, theory, 'r-', lw=2,
+             label=f'Beta({k},{n-k+1}) PDF')
+axes[2].set_title(f'Order Statistic $U_{{({k})}}$ from Uniform(0,1), n={n}')
+axes[2].set_xlabel('x')
+axes[2].legend()
+axes[2].grid(True, alpha=0.3)
 
-Simulated: mean = 0.6253, var = 0.0261
-```
-
-**Example 3: Reflection property.**
-
-Verify that if $X \sim \text{Beta}(2, 5)$, then $1 - X \sim \text{Beta}(5, 2)$.
-
-```python
-import numpy as np
-from scipy import stats
-
-np.random.seed(42)
-n = 100000
-
-X = np.random.beta(2, 5, n)
-Y = 1 - X  # Should be Beta(5, 2)
-
-print("X ~ Beta(2, 5):")
-print(f"  Mean: {X.mean():.4f}  (theory: {2/7:.4f})")
-
-print("1 - X ~ Beta(5, 2):")
-print(f"  Mean: {Y.mean():.4f}  (theory: {5/7:.4f})")
-
-# KS test comparing 1-X to Beta(5, 2)
-ks_stat, p_val = stats.kstest(Y, 'beta', args=(5, 2))
-print(f"  KS test p-value: {p_val:.4f}  (large p => good fit)")
-```
-
-**Output:**
-```
-X ~ Beta(2, 5):
-  Mean: 0.2861  (theory: 0.2857)
-1 - X ~ Beta(5, 2):
-  Mean: 0.7139  (theory: 0.7143)
-  KS test p-value: 0.8234  (large p => good fit)
-```
-
-**Example 4: Raw moments via the product formula.**
-
-Compute $E[X^3]$ for $X \sim \text{Beta}(3, 2)$.
-
-$$
-E[X^3] = \frac{3}{5} \cdot \frac{4}{6} \cdot \frac{5}{7} = \frac{60}{210} = \frac{2}{7}
-$$
-
-```python
-import numpy as np
-from scipy import stats
-
-a, b = 3, 2
-# Product formula
-E_X3 = (a/(a+b)) * ((a+1)/(a+b+1)) * ((a+2)/(a+b+2))
-print(f"E[X^3] = {a}/{a+b} * {a+1}/{a+b+1} * {a+2}/{a+b+2} = {E_X3:.6f}")
-print(f"       = {E_X3} = 2/7 = {2/7:.6f}")
-
-# Verify by simulation
-np.random.seed(42)
-samples = np.random.beta(a, b, 100000)
-print(f"Simulated E[X^3] = {np.mean(samples**3):.6f}")
-```
-
-**Output:**
-```
-E[X^3] = 3/5 * 4/6 * 5/7 = 0.285714
-       = 0.2857142857142857 = 2/7 = 0.285714
-Simulated E[X^3] = 0.285921
+plt.tight_layout()
+plt.savefig('beta_properties.png', dpi=150, bbox_inches='tight')
+plt.show()
 ```

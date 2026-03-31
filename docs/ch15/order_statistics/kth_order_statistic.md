@@ -1,4 +1,5 @@
 # PDF of the k-th Order Statistic
+<<<<<<< Updated upstream
 
 ## Main Result
 
@@ -91,3 +92,5 @@ Median X_(3) of 5 U(0,1) samples:
 X_(2) of 6 U(0,1) samples:
   E[X_(2)] = 0.2856  (theory 0.2857)
 ```
+=======
+>>>>>>> Stashed changes

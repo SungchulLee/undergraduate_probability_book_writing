@@ -1,91 +1,57 @@
-# Joint PMF Tables and Marginals
+# Joint PMF Tables and Visualization
 
-A joint PMF table organizes the probabilities of $(X, Y)$ into a grid, with marginal distributions appearing as row and column sums.
+## Joint PMF Table Format
 
-## Definition
+A joint PMF for discrete random variables $(X, Y)$ is conveniently displayed as a table where:
 
-A **joint PMF table** has:
+- Columns correspond to values of $X$.
+- Rows correspond to values of $Y$.
+- Each cell contains $P(X = x_i, Y = y_j)$.
+- All entries are non-negative and sum to 1.
 
-- Columns indexed by values of $X$
-- Rows indexed by values of $Y$
-- Cell $(x_i, y_j)$ contains $p_{X,Y}(x_i, y_j) = P(X = x_i, Y = y_j)$
+## Worked Example
 
-The **marginal PMFs** are obtained by summing:
+The joint PMF of $X$ and $Y$ is given by:
 
-$$
-p_X(x) = \sum_y p_{X,Y}(x, y), \qquad p_Y(y) = \sum_x p_{X,Y}(x, y)
-$$
+| | $x=0$ | $x=1$ | $x=2$ |
+|---|---|---|---|
+| $y=3$ | $1/10$ | $1/10$ | $1/10$ |
+| $y=2$ | $1/10$ | $0$ | $1/10$ |
+| $y=1$ | $0$ | $2/10$ | $1/10$ |
+| $y=0$ | $1/10$ | $0$ | $1/10$ |
 
-## Explanation
+**Verification:** All 10 entries sum to $10/10 = 1$. ✓
 
-### Reading the Table
+## Adding Marginals to the Table
 
-- Any probability about $(X, Y)$ is computed by summing the relevant cells
-- Row sums give the marginal PMF of $Y$
-- Column sums give the marginal PMF of $X$
-- The grand total (sum of all cells) must equal 1
+By summing rows and columns, we can augment the table with **marginal distributions** (covered in detail in Chapter 6):
 
-### Chain Rule Construction
-
-When the joint PMF is not given directly, build it using the chain rule:
-
-$$
-p_{X,Y}(x, y) = p_X(x) \cdot p_{Y|X}(y \mid x)
-$$
-
-This is especially useful for sequential experiments (drawing without replacement, multistage sampling).
-
-### Visualization
-
-- **3D bar chart:** height at $(x, y)$ equals the joint probability
-- **Heat map:** color intensity represents probability
-- **Bubble plot:** bubble area is proportional to probability
-
-## Examples
-
-**Example 1.** Joint PMF table with marginals.
-
-| | $x=0$ | $x=1$ | $x=2$ | $p_Y(y)$ |
-|:---|:---:|:---:|:---:|:---:|
+| | $x=0$ | $x=1$ | $x=2$ | $P(Y=y_j)$ |
+|---|---|---|---|---|
 | $y=3$ | $1/10$ | $1/10$ | $1/10$ | $3/10$ |
 | $y=2$ | $1/10$ | $0$ | $1/10$ | $2/10$ |
 | $y=1$ | $0$ | $2/10$ | $1/10$ | $3/10$ |
 | $y=0$ | $1/10$ | $0$ | $1/10$ | $2/10$ |
-| $p_X(x)$ | $3/10$ | $3/10$ | $4/10$ | $1$ |
+| $P(X=x_i)$ | $3/10$ | $3/10$ | $4/10$ | $1$ |
 
-$P(X \ge 1, Y \le 1) = p(1,1) + p(1,0) + p(2,1) + p(2,0) = 2/10 + 0 + 1/10 + 1/10 = 4/10$.
+The row sums give the marginal PMF of $Y$, and the column sums give the marginal PMF of $X$.
 
-**Example 2.** Urn with 3 red and 1 blue ball, draw 2 without replacement. Let $X_i = 1$ if draw $i$ is blue.
+## Visualization
 
-Using the chain rule:
+Joint PMFs can be visualized as:
 
-$$
-P(X_1 = 0, X_2 = 1) = P(X_1 = 0) \cdot P(X_2 = 1 \mid X_1 = 0) = \frac{3}{4} \cdot \frac{1}{3} = \frac{1}{4}
-$$
+- **3D bar charts:** Height of bar at $(x_i, y_j)$ equals $p(x_i, y_j)$.
+- **Heat maps:** Color intensity at $(x_i, y_j)$ represents $p(x_i, y_j)$.
+- **Bubble plots:** Bubble size at $(x_i, y_j)$ is proportional to probability.
 
-| | $X_1=0$ | $X_1=1$ | $p_{X_2}$ |
-|:---|:---:|:---:|:---:|
-| $X_2=0$ | $1/2$ | $1/4$ | $3/4$ |
-| $X_2=1$ | $1/4$ | $0$ | $1/4$ |
-| $p_{X_1}$ | $3/4$ | $1/4$ | $1$ |
+## Example: 3 Red Balls and 1 Blue Ball
 
-Note: $P(X_1=1, X_2=1) = 0$ because there is only one blue ball.
+There are 3 red balls and 1 blue ball in a bin. We draw two balls without replacement. Let:
 
-```python
-# Build the urn example via chain rule
-# 3 red, 1 blue, draw 2 without replacement
-table = {}
-for x1 in [0, 1]:
-    for x2 in [0, 1]:
-        if x1 == 0:
-            p_x1 = 3/4
-            p_x2_given = (2/3 if x2 == 0 else 1/3)
-        else:
-            p_x1 = 1/4
-            p_x2_given = (1.0 if x2 == 0 else 0.0)
-        table[(x1, x2)] = p_x1 * p_x2_given
+$$X_i = \begin{cases} 1 & \text{if } i\text{-th ball is blue} \\ 0 & \text{otherwise} \end{cases}$$
 
-for (x1, x2), p in sorted(table.items()):
-    print(f"P(X1={x1}, X2={x2}) = {p:.4f}")
-print(f"Total = {sum(table.values()):.4f}")
-```
+Using the chain rule for joint probabilities:
+
+$$P(X_1 = 0, X_2 = 1) = P(X_1 = 0) \cdot P(X_2 = 1 \mid X_1 = 0) = \frac{3}{4} \times \frac{1}{3} = \frac{1}{4}$$
+
+This illustrates that the joint PMF can be computed from marginal and conditional probabilities using the **chain rule**: $p(x, y) = p(x) \cdot p(y|x)$.

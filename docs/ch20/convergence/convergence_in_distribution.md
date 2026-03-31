@@ -8,6 +8,7 @@ $$
 \lim_{n \to \infty} F_{X_n}(x) = F_X(x)
 $$
 
+<<<<<<< Updated upstream
 at every point $x$ where $F_X$ is continuous. We write $X_n \xrightarrow{d} X$.
 
 ## Why Review This Here?
@@ -24,11 +25,25 @@ Convergence in distribution is the **weakest** of the three modes. It concerns o
 ## The CLT as an Example
 
 The Central Limit Theorem (Chapter 17) is the most important example of convergence in distribution:
+=======
+at every point $x$ where $F_X$ is continuous. We write
+
+$$
+X_n \xrightarrow{d} X
+$$
+
+## Recap
+
+Convergence in distribution is the weakest mode of convergence. It says that the **CDFs** of the sequence approach the CDF of the limit, but makes no statement about whether the random variables are "close" on the same probability space.
+
+The Central Limit Theorem (Ch 17) is the most important example:
+>>>>>>> Stashed changes
 
 $$
 \frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} \xrightarrow{d} N(0,1)
 $$
 
+<<<<<<< Updated upstream
 This tells us the **shape** of the distribution of the standardized sample mean approaches the standard normal bell curve. It does not tell us that the sample mean converges to any particular value -- the limit $N(0,1)$ is not a constant.
 
 ## Special Case: Convergence to a Constant
@@ -50,3 +65,10 @@ X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{p} X \implies X_n \xrightarro
 $$
 
 The reverse implications fail in general (see the section on relationships between modes of convergence).
+=======
+This tells us the **shape** of the distribution of the standardized sample mean approaches a standard normal, but it does not say that the sample mean itself converges to any single value.
+
+## Key Point
+
+Convergence in distribution concerns only the **distribution functions**, not the random variables themselves. Two sequences can converge in distribution to the same limit even if they are defined on completely different probability spaces.
+>>>>>>> Stashed changes

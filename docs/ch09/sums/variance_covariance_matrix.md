@@ -1,4 +1,5 @@
 # Variance-Covariance Matrix
+<<<<<<< Updated upstream
 
 ## Motivation
 
@@ -130,3 +131,5 @@ D_inv = np.diag(1 / np.sqrt(np.diag(Sigma)))
 R = D_inv @ Sigma @ D_inv
 print(f"Correlation matrix:\n{R}")
 ```
+=======
+>>>>>>> Stashed changes
