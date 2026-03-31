@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 # Exercises: Convolutions and Distributions of Sums
 
 ## Discrete Convolution
@@ -13,7 +12,7 @@
 
 ## Continuous Convolution
 
-**Exercise 16.4.** Let $X$ and $Y$ be independent $\text{Exp}(1)$ random variables. Compute the PDF of $X + Y$ using the convolution integral and verify that the result matches $\Gamma(2, 1)$.
+**Exercise 16.4.** Let $X$ and $Y$ be independent $\text{Exp}(1)$ random variables. Compute the PDF of $X + Y$ using the convolution integral and verify that the result matches $\text{Gamma}(2, 1)$.
 
 **Exercise 16.5.** Let $X \sim U(0, 1)$ and $Y \sim U(0, 2)$ be independent. Compute $f_{X+Y}(a)$ for all $a \geq 0$.
 
@@ -21,9 +20,9 @@
 
 ## Identifying Distributions via Convolution
 
-**Exercise 16.6.** A random variable $W$ has MGF $M_W(t) = (1 - 2t)^{-5}$ for $t < 1/2$. Identify the distribution of $W$. If $W = V_1 + V_2$ where $V_1 \sim \chi^2_3$ and $V_2 \sim \chi^2_7$, explain why this contradicts the MGF.
+**Exercise 16.6.** A random variable $W$ has MGF $M_W(t) = (1 - 2t)^{-5}$ for $t < 1/2$. Identify the distribution of $W$. If $W = V_1 + V_2$ where $V_1 \sim \chi^2_3$ and $V_2 \sim \chi^2_7$ are independent, verify that the MGF of $V_1 + V_2$ matches $M_W(t)$ and identify the resulting distribution.
 
-**Exercise 16.7.** Let $X_1, \ldots, X_n$ be iid $\text{Exp}(\lambda)$. Use the MGF of $S_n = \sum_{i=1}^n X_i$ to show that $S_n \sim \Gamma(n, \lambda)$. Compute $E[S_n]$ and $\text{Var}(S_n)$.
+**Exercise 16.7.** Let $X_1, \ldots, X_n$ be iid $\text{Exp}(\lambda)$. Use the MGF of $S_n = \sum_{i=1}^n X_i$ to show that $S_n \sim \text{Gamma}(n, \lambda)$. Compute $E[S_n]$ and $\text{Var}(S_n)$.
 
 ## Sum of Normals
 
@@ -36,6 +35,3 @@
 ## Conceptual
 
 **Exercise 16.10.** Give an example showing that convolution does **not** give the correct distribution of $X + Y$ when $X$ and $Y$ are dependent. Specifically, let $X \sim U(0, 1)$ and $Y = X$. Find the distribution of $X + Y$ and show it differs from the triangular distribution obtained by convolving $U(0,1)$ with itself.
-=======
-# Exercises
->>>>>>> Stashed changes
