@@ -1,65 +1,80 @@
-# Central Limit Theorem (Statement)
+# 중심극한정리(서술)
 
-## Setup
+## 문제 설정
 
-Let $X_1, X_2, \ldots$ be **iid** random variables with:
+$X_1, X_2, \ldots$ 를 다음을 만족하는 **i.i.d.** 확률변수라고 하자.
 
-- Mean: $E[X_i] = \mu$
-- Variance: $\text{Var}(X_i) = \sigma^2 < \infty$
+- 평균: $E[X_i] = \mu$
+- 분산: $\text{Var}(X_i) = \sigma^2 < \infty$
 
-Define the partial sum:
+부분합을 다음과 같이 정의한다.
 
 $$S_n = X_1 + X_2 + \cdots + X_n$$
 
-Then $S_n$ has mean $n\mu$ and variance $n\sigma^2$.
+그러면 $S_n$ 의 평균은 $n\mu$ 이고 분산은 $n\sigma^2$ 이다.
 
-## The Central Limit Theorem
+## 중심극한정리
 
-!!! info "CLT"
-    Let $X_1, X_2, \ldots$ be iid with mean $\mu$ and variance $\sigma^2$. Then:
+!!! info "중심극한정리"
+    $X_1, X_2, \ldots$ 가 i.i.d. 이고 평균이 $\mu$, 분산이 $\sigma^2$ 이라고 하자. 그러면 다음이 성립한다.
 
-    $$\frac{S_n - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0, 1) \quad \text{as } n \to \infty$$
+    $$\frac{S_n - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0, 1) \quad n \to \infty \text{ 일 때}$$
 
-    That is, for any $x$:
+    곧 아무 $x$ 에 대하여 다음이 성립한다.
 
-    $$P\left(\frac{S_n - n\mu}{\sigma\sqrt{n}} \leq x\right) \to \Phi(x) = \int_{-\infty}^{x} \frac{1}{\sqrt{2\pi}} e^{-s^2/2}\, ds$$
+    $$P\left(\frac{S_n - n\mu}{\sigma\sqrt{n}} \leq x\right) \to \mathcal{N}(x) = \int_{-\infty}^{x} \frac{1}{\sqrt{2\pi}} e^{-s^2/2}\, ds$$
 
-## What the CLT Says
+## 중심극한정리가 말하는 것
 
-| Random Variable | Mean | Variance | Distribution |
+| 확률변수 | 평균 | 분산 | 분포 |
 |----------------|------|----------|-------------|
-| $X_i$ | $\mu$ | $\sigma^2$ | **Not** necessarily Normal |
-| $S_n$ | $n\mu$ | $n\sigma^2$ | **Not** Normal, but **approximately normal** for large $n$ |
-| $\frac{S_n - n\mu}{\sigma\sqrt{n}}$ | $0$ | $1$ | **Not** Normal, but **approximately** $N(0,1)$ for large $n$ |
+| $X_i$ | $\mu$ | $\sigma^2$ | 정규분포일 필요가 **없다** |
+| $S_n$ | $n\mu$ | $n\sigma^2$ | 정규분포가 **아니지만** $n$ 이 크면 **거의 정규분포** |
+| $\frac{S_n - n\mu}{\sigma\sqrt{n}}$ | $0$ | $1$ | 정규분포가 **아니지만** $n$ 이 크면 **거의** $N(0,1)$ |
 
-## Contrast: Normal Case vs General Case
+## 견주어 보기: 정규분포인 경우와 일반적인 경우
 
-When the $X_i$ are themselves normal, the sum $S_n$ is **exactly** normal for all $n$ — no approximation is needed.
+$X_i$ 자체가 정규분포를 따르면 합 $S_n$ 은 모든 $n$ 에 대하여 **정확히** 정규분포를 따르며, 근사가 필요 없다.
 
-| | iid $N(\mu, \sigma^2)$ | iid with mean $\mu$, variance $\sigma^2$ (not Normal) |
+| | i.i.d. $N(\mu, \sigma^2)$ | 평균 $\mu$, 분산 $\sigma^2$ 인 i.i.d. (정규분포 아님) |
 |---|---|---|
-| $S_n$ | $N(n\mu, n\sigma^2)$ exactly | $\approx N(n\mu, n\sigma^2)$ for large $n$ |
-| $\frac{S_n - n\mu}{\sigma\sqrt{n}}$ | $N(0,1)$ exactly | $\approx N(0,1)$ for large $n$ |
+| $S_n$ | 정확히 $N(n\mu, n\sigma^2)$ | $n$ 이 크면 $\approx N(n\mu, n\sigma^2)$ |
+| $\frac{S_n - n\mu}{\sigma\sqrt{n}}$ | 정확히 $N(0,1)$ | $n$ 이 크면 $\approx N(0,1)$ |
 
-## Practical Approximation
+## 실제로 쓰는 근사
 
-For large $n$, we use:
+$n$ 이 크면 다음을 쓴다.
 
 $$S_n \approx N(n\mu, \, n\sigma^2)$$
 
-or equivalently:
+같은 말로 다음과 같다.
 
 $$\bar{X}_n = \frac{S_n}{n} \approx N\left(\mu, \, \frac{\sigma^2}{n}\right)$$
 
-## Simulation Evidence
+## 모의실험으로 본 증거
 
-The CLT applies regardless of the original distribution of $X_i$. The following all produce approximately normal sums when $n$ is large:
+중심극한정리는 $X_i$ 의 원래 분포가 무엇이든 상관없이 적용된다. 다음은 모두 $n$ 이 클 때 거의 정규분포인 합을 내놓는다.
 
-- $X_i \sim \text{Bernoulli}(0.7)$: right-skewed discrete
-- $X_i \sim \text{Exp}(2)$: right-skewed continuous
-- $X_i \sim \text{Po}(2)$: right-skewed discrete
-- $X_i \sim \text{Beta}(2, 5)$: skewed continuous on $[0,1]$
-- $X_i \sim F(2, 5)$: heavily right-skewed
-- $X_i \sim \text{Gamma}(2, 5)$: right-skewed continuous
+- $X_i \sim \text{Bernoulli}(0.7)$: 오른쪽으로 치우친 이산분포
+- $X_i \sim \text{Exp}(2)$: 오른쪽으로 치우친 연속분포
+- $X_i \sim \text{Po}(2)$: 오른쪽으로 치우친 이산분포
+- $X_i \sim \text{Beta}(2, 5)$: $[0,1]$ 위에서 치우친 연속분포
+- $X_i \sim F(2, 5)$: 오른쪽으로 크게 치우친 분포
+- $X_i \sim \text{Gamma}(2, 5)$: 오른쪽으로 치우친 연속분포
 
-Even with $n = 20$, the histograms of $S_{20}$ are strikingly bell-shaped for all these distributions.
+$n = 20$ 만 되어도 이 모든 분포에 대하여 $S_{20}$ 의 히스토그램이 놀랄 만큼 종 모양이다.
+
+## 연습문제
+
+**연습문제 1.**
+중심극한정리를 정확히 서술하여라. 확률변수 $X_1, X_2, \ldots$ 에 어떤 조건이 필요한가?
+
+---
+
+**연습문제 2.**
+i.i.d. 코시확률변수에는 중심극한정리를 적용할 수 없는 까닭을 설명하여라. 중심극한정리의 어떤 조건이 무너지는가?
+
+---
+
+**연습문제 3.**
+$X_1, X_2, \ldots$ 가 i.i.d. $N(\mu, \sigma^2)$ 이라면 $\frac{S_n - n\mu}{\sigma\sqrt{n}} \sim N(0,1)$ 이라고 결론짓는 데 중심극한정리가 필요한가? 설명하여라.

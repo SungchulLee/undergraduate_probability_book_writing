@@ -1,20 +1,20 @@
-# Continuity Correction
+# 연속성 보정
 
-## The Problem
+## 문제
 
-When using the CLT to approximate probabilities for **discrete** random variables with a **continuous** normal distribution, a systematic error occurs at the boundaries. The continuity correction adjusts for this.
+중심극한정리를 써서 **이산**확률변수의 확률을 **연속**인 정규분포로 근사하면 경계에서 한쪽으로 치우친 오차가 생긴다. 연속성 보정은 이를 바로잡는다.
 
-## The Idea
+## 생각의 줄기
 
-A discrete random variable $X$ that takes integer values satisfies:
+정수값을 가지는 이산확률변수 $X$ 는 연속 근사에서 다음을 만족한다.
 
 $$P(X = k) = P(k - 0.5 \leq X \leq k + 0.5)$$
 
-in the continuous approximation. Each integer value "occupies" a unit interval centered at that integer.
+곧 각 정수값이 그 정수를 가운데에 둔 길이 $1$ 의 구간을 "차지한다"고 본다.
 
-Therefore:
+따라서 다음과 같이 바꾼다.
 
-| Discrete Probability | With Continuity Correction |
+| 이산확률 | 연속성 보정을 한 것 |
 |---------------------|---------------------------|
 | $P(X \leq k)$ | $P(X \leq k + 0.5)$ |
 | $P(X \geq k)$ | $P(X \geq k - 0.5)$ |
@@ -22,26 +22,31 @@ Therefore:
 | $P(X > k)$ | $P(X \geq k + 0.5)$ |
 | $P(X = k)$ | $P(k - 0.5 \leq X \leq k + 0.5)$ |
 
-## Example: Poisson with Continuity Correction
+## 예: 연속성 보정을 한 푸아송분포
 
-Let $X \sim \text{Po}(100)$. To find $P(X \geq 120)$:
+$X \sim \text{Po}(100)$ 이라 하고 $P(X \geq 120)$ 을 구해 보자.
 
-**Without continuity correction:**
+**연속성 보정을 하지 않으면:**
 
-$$P(X \geq 120) = P\left(\frac{X - 100}{\sqrt{100}} \geq \frac{120 - 100}{\sqrt{100}}\right) \approx 1 - \Phi(2.0) = 0.0228$$
+$$P(X \geq 120) = P\left(\frac{X - 100}{\sqrt{100}} \geq \frac{120 - 100}{\sqrt{100}}\right) \approx 1 - \mathcal{N}(2.0) = 0.0228$$
 
-**With continuity correction:**
+**연속성 보정을 하면:**
 
-$$P(X \geq 120) = P(X \geq 119.5) = P\left(\frac{X - 100}{\sqrt{100}} \geq \frac{119.5 - 100}{\sqrt{100}}\right) \approx 1 - \Phi(1.95) = 0.0256$$
+$$P(X \geq 120) = P(X \geq 119.5) = P\left(\frac{X - 100}{\sqrt{100}} \geq \frac{119.5 - 100}{\sqrt{100}}\right) \approx 1 - \mathcal{N}(1.95) = 0.0256$$
 
-**Exact value:** $P(X \geq 120) = 0.0282$
+**정확한 값:** $P(X \geq 120) = 0.0282$
 
-The continuity-corrected answer ($0.0256$) is closer to the exact value ($0.0282$) than the uncorrected answer ($0.0228$).
+연속성 보정을 한 답 $0.0256$ 이 보정하지 않은 답 $0.0228$ 보다 정확한 값 $0.0282$ 에 더 가깝다.
 
-## When to Use Continuity Correction
+## 언제 연속성 보정을 하는가
 
-- **Use it** when approximating a discrete distribution (Binomial, Poisson, Geometric, etc.) with the normal distribution.
-- **Skip it** when the original random variable is already continuous.
+- 이산분포(이항분포, 푸아송분포, 기하분포 등)를 정규분포로 근사할 때에는 **쓴다**.
+- 원래 확률변수가 이미 연속이면 **쓰지 않는다**.
 
-!!! tip "Rule of Thumb"
-    Continuity correction is most important when $n$ is moderate. For very large $n$, the correction becomes negligible relative to $\sigma\sqrt{n}$.
+!!! tip "어림 규칙"
+    연속성 보정은 $n$ 이 중간 정도일 때 가장 중요하다. $n$ 이 아주 크면 보정량이 $\sigma\sqrt{n}$ 에 견주어 무시할 만해진다.
+
+## 연습문제
+
+**연습문제 1.**
+연속성 보정은 무엇을 위한 것인가? 언제 써야 하고 언제 쓸 필요가 없는가?

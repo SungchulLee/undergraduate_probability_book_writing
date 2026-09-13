@@ -1,78 +1,97 @@
-# Convergence in Distribution vs Other Modes (Preview)
+# 분포수렴과 다른 수렴(미리보기)
 
-<<<<<<< Updated upstream
-## Why Multiple Modes of Convergence?
+## 수렴의 방식이 여럿인 까닭
 
-When we say a sequence of random variables "converges," we need to specify what we mean. Unlike sequences of real numbers, random variables can converge in several distinct senses. These modes differ in strength and in what they tell us about the behavior of the sequence.
+확률변수의 열이 "수렴한다"고 말할 때에는 어떤 뜻으로 하는 말인지 밝혀야 한다. 실수의 수열과 달리 확률변수는 서로 다른 여러 뜻으로 수렴할 수 있다. 이 방식들은 세기가 다르고, 그 열의 움직임에 대하여 알려 주는 바도 다르다.
 
-## Overview of Convergence Modes
+## 수렴 방식 훑어보기
 
-There are three principal modes of convergence, listed from strongest to weakest:
+주된 수렴 방식은 셋이며, 아래에 강한 것부터 약한 것 순으로 적는다.
 
-| Mode | Notation | Formal Definition |
+| 방식 | 기호 | 엄밀한 정의 |
 |------|----------|-------------------|
-| Almost sure | $X_n \xrightarrow{a.s.} X$ | $P(\lim_{n\to\infty} X_n = X) = 1$ |
-| In probability | $X_n \xrightarrow{p} X$ | $P(\|X_n - X\| > \varepsilon) \to 0$ for all $\varepsilon > 0$ |
-| In distribution | $X_n \xrightarrow{d} X$ | $F_{X_n}(x) \to F_X(x)$ at every continuity point of $F_X$ |
+| 거의 확실한 수렴 | $X_n \xrightarrow{a.s.} X$ | $P(\lim_{n\to\infty} X_n = X) = 1$ |
+| 확률수렴 | $X_n \xrightarrow{p} X$ | 모든 $\varepsilon > 0$ 에 대하여 $P(\|X_n - X\| > \varepsilon) \to 0$ |
+| 분포수렴 | $X_n \xrightarrow{d} X$ | $F_X$ 의 모든 연속점에서 $F_{X_n}(x) \to F_X(x)$ |
 
-**Almost sure convergence** says that for almost every outcome $\omega$, the entire sample path $X_n(\omega)$ converges to $X(\omega)$. **Convergence in probability** says that the probability of a large deviation shrinks to zero. **Convergence in distribution** says only that the CDFs converge pointwise.
+**거의 확실한 수렴**은 거의 모든 결과 $\omega$ 에 대하여 표본경로 $X_n(\omega)$ 전체가 $X(\omega)$ 로 수렴한다는 뜻이다. **확률수렴**은 크게 벗어날 확률이 $0$ 으로 줄어든다는 뜻이다. **분포수렴**은 누적분포함수가 각 점별로 수렴한다는 뜻일 뿐이다.
 
-=======
-## Overview of Convergence Modes
-
-There are several notions of convergence for sequences of random variables, listed here from **strongest to weakest**:
-
-| Mode | Notation | Intuitive Meaning |
-|------|----------|-------------------|
-| Almost Sure | $X_n \xrightarrow{a.s.} X$ | Sample paths converge for almost every $\omega$ |
-| In Probability | $X_n \xrightarrow{p} X$ | Probability of large deviations vanishes |
-| In Distribution | $X_n \xrightarrow{d} X$ | CDFs converge pointwise |
-
->>>>>>> Stashed changes
-## Implications
+## 함의 관계
 
 $$X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{p} X \implies X_n \xrightarrow{d} X$$
 
-<<<<<<< Updated upstream
-The reverse implications do **not** hold in general.
+거꾸로 가는 함의는 일반적으로 성립하지 **않는다**.
 
-!!! warning "Special Case: Convergence to a Constant"
-=======
-The reverse implications are **not** true in general.
+!!! warning "특별한 경우: 상수로의 수렴"
+    $c$ 가 **상수**이고 $X_n \xrightarrow{d} c$ 이면 $X_n \xrightarrow{p} c$ 이기도 하다. 상수로의 분포수렴은 그 상수로의 확률수렴과 같은 말이다.
 
-!!! warning "Special Case"
->>>>>>> Stashed changes
-    If $X_n \xrightarrow{d} c$ where $c$ is a **constant**, then $X_n \xrightarrow{p} c$ as well. Convergence in distribution to a constant is equivalent to convergence in probability to that constant.
+## 중심극한정리에서 왜 중요한가
 
-## Why This Matters for the CLT
-
-<<<<<<< Updated upstream
-The Central Limit Theorem is a statement about **convergence in distribution**:
+중심극한정리는 **분포수렴**에 대한 주장이다.
 
 $$
 \frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} \xrightarrow{d} N(0,1)
 $$
 
-This tells us that the **shape** of the distribution of the standardized sample mean approaches the bell curve. It says nothing about the behavior of individual sample paths. In particular, the standardized mean does not converge to any single value -- the standard normal is not a constant.
+이는 표준화한 표본평균의 분포가 그 **모양**에서 종 모양 곡선으로 다가간다는 말이다. 개개의 표본경로가 어떻게 움직이는지에 대해서는 아무 말도 하지 않는다. 특히 표준화한 평균은 어떤 하나의 값으로도 수렴하지 않는다. 표준정규분포는 상수가 아니기 때문이다.
 
-By contrast, the **Law of Large Numbers** (Chapter 20) gives the stronger statements:
+이에 견주어 **큰수의 법칙**(20장)은 더 강한 주장을 준다.
 
-- **Weak Law**: $\bar{X}_n \xrightarrow{p} \mu$ (convergence in probability)
-- **Strong Law**: $\bar{X}_n \xrightarrow{a.s.} \mu$ (almost sure convergence)
+- **약법칙**: $\bar{X}_n \xrightarrow{p} \mu$ (확률수렴)
+- **강법칙**: $\bar{X}_n \xrightarrow{a.s.} \mu$ (거의 확실한 수렴)
 
-These are stronger because $\mu$ is a constant, and the LLN tells us the sample mean itself settles down to $\mu$. The CLT tells us **how** the fluctuations around $\mu$ are distributed.
+$\mu$ 가 상수이기 때문에 이들이 더 강한 주장이며, 큰수의 법칙은 표본평균 자체가 $\mu$ 에 내려앉는다고 말해 준다. 중심극한정리는 $\mu$ 둘레의 흔들림이 **어떻게** 분포하는지를 말해 준다.
 
-!!! note "Full Treatment in Chapter 20"
-    Formal definitions, proofs of the implication hierarchy, counterexamples showing reverse implications fail, and the connection to the Law of Large Numbers are presented in **Chapter 20: Law of Large Numbers**, Section 20.2.
-=======
-The CLT is a statement about **convergence in distribution**:
+!!! note "20장에서 본격적으로 다룬다"
+    엄밀한 정의, 함의의 위계에 대한 증명, 거꾸로 가는 함의가 성립하지 않음을 보이는 반례, 그리고 큰수의 법칙과의 관계는 **20장 큰수의 법칙**의 20.2절에서 다룬다.
 
-$$\frac{S_n - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} N(0,1)$$
+## 연습문제
 
-It tells us the **shape** of the distribution of the standardized sum approaches the standard normal, but it does not say anything about the sample-path behavior.
+**연습문제 1.** 세 가지 수렴 방식을 적고 강한 것부터 약한 것 순으로 늘어놓아라.
 
-The **Law of Large Numbers** (Ch 20) makes the stronger statement of convergence in probability (WLLN) or almost sure convergence (SLLN) for the sample mean $\bar{X}_n \xrightarrow{p} \mu$.
+??? success "연습문제 1 풀이"
+    강한 것부터 약한 것 순으로 다음과 같다.
 
-!!! note "Full Treatment"
-    The detailed comparison of convergence modes, including proofs of the implication hierarchy, is presented in **Chapter 20: Law of Large Numbers**.
->>>>>>> Stashed changes
+    1. **거의 확실한 수렴:** $P(\lim_{n\to\infty} X_n = X) = 1$
+    2. **확률수렴:** 모든 $\varepsilon > 0$ 에 대하여 $P(|X_n - X| > \varepsilon) \to 0$
+    3. **분포수렴:** $F_X$ 의 모든 연속점에서 $F_{X_n}(x) \to F_X(x)$
+
+---
+
+**연습문제 2.** $X_n \sim N(0, 1/n)$ 이라고 하자. 체비쇼프 부등식을 써서 $X_n \xrightarrow{p} 0$ 임을 보여라.
+
+??? success "연습문제 2 풀이"
+    $E[X_n] = 0$ 이고 $\text{Var}(X_n) = 1/n$ 이다. 체비쇼프 부등식에 따라 $n \to \infty$ 일 때 다음이 성립한다.
+
+    $$
+    P(|X_n| > \varepsilon) \leq \frac{\text{Var}(X_n)}{\varepsilon^2} = \frac{1}{n\varepsilon^2} \to 0
+    $$
+
+    $\square$
+
+---
+
+**연습문제 3.** 참인가 거짓인가: $X_n \xrightarrow{d} X$ 이면 $E[X_n] \to E[X]$ 이다. 근거를 들어라.
+
+??? success "연습문제 3 풀이"
+    **거짓이다.** 분포수렴은 적률의 수렴을 뜻하지 않는다. 반례를 보자. $X_n$ 이 확률 $1/n$ 로 $n$ 이 되고 확률 $1 - 1/n$ 로 $0$ 이 된다고 하자. 그러면 (누적분포함수가 수렴하므로) $X_n \xrightarrow{d} 0$ 이지만, 모든 $n$ 에 대하여 $E[X_n] = 1$ 인 반면 $E[0] = 0$ 이다.
+
+---
+
+**연습문제 4.** 상수 $c$ 로의 분포수렴이 $c$ 로의 확률수렴을 뜻하는 까닭을 설명하여라.
+
+??? success "연습문제 4 풀이"
+    $X_n \xrightarrow{d} c$ 이면 $x \neq c$ 인 모든 $x$ 에서 $F_{X_n}(x) \to F_c(x) = \mathbf{1}(x \geq c)$ 이다. 아무 $\varepsilon > 0$ 에 대하여 다음이 성립한다.
+
+    $$
+    P(|X_n - c| > \varepsilon) = 1 - P(c - \varepsilon < X_n \leq c + \varepsilon) = 1 - [F_{X_n}(c+\varepsilon) - F_{X_n}(c-\varepsilon)]
+    $$
+
+    $n \to \infty$ 일 때 $F_{X_n}(c + \varepsilon) \to 1$ 이고 $F_{X_n}(c - \varepsilon) \to 0$ 이므로 $P(|X_n - c| > \varepsilon) \to 0$ 이다. $\square$
+
+---
+
+**연습문제 5.** 중심극한정리는 $\frac{\bar{X}_n - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0,1)$ 이라고 말한다. 이것이 $N(0,1)$ 로의 확률수렴도 뜻하는가? 그 까닭은 무엇인가?
+
+??? success "연습문제 5 풀이"
+    **아니다.** 극한인 $N(0,1)$ 은 (상수가 아니라) 퇴화하지 않은 확률변수이므로, 분포수렴이 확률수렴을 뜻하지 않는다. 표준화한 표본평균은 분포의 모양에서 표준정규분포에 가까워지지만, 개개의 값이 어떤 고정된 목표로 수렴하지는 않는다.

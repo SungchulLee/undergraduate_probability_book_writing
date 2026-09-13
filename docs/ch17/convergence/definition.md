@@ -1,50 +1,107 @@
-# Convergence in Distribution: Definition and Examples
+# 정의와 예
 
-## Definition
+## 정의
 
-A sequence of random variables $X_1, X_2, \ldots$ **converges in distribution** to a random variable $X$ if
+확률변수의 열 $X_1, X_2, \ldots$ 가 확률변수 $X$ 로 **분포수렴**한다는 것은, $F_X$ 가 연속인 모든 점 $x$ 에서 다음이 성립한다는 뜻이다.
 
 $$\lim_{n \to \infty} F_{X_n}(x) = F_X(x)$$
 
-for every $x$ at which $F_X$ is continuous. We write $X_n \xrightarrow{d} X$.
+이때 $X_n \xrightarrow{d} X$ 로 적는다.
 
-Equivalently, for all bounded continuous functions $g$,
+이와 같은 말로, 유계이고 연속인 모든 함수 $g$ 에 대하여 다음이 성립한다는 것이다.
 
 $$\lim_{n \to \infty} E[g(X_n)] = E[g(X)]$$
 
-## Intuition
+## 직관
 
-Convergence in distribution is the **weakest** form of convergence. It says nothing about the random variables being defined on the same probability space — it only concerns the **CDFs**.
+분포수렴은 수렴 가운데 가장 **약한** 형태이다. 확률변수들이 같은 확률공간 위에 정의되어 있을 것을 요구하지 않으며, 오직 **누적분포함수**에만 관한 이야기이다.
 
-Think of it as: "the histograms of $X_n$ look more and more like the density of $X$."
+이렇게 생각하면 좋다. "$X_n$ 의 히스토그램이 점점 더 $X$ 의 밀도함수를 닮아 간다."
 
-## Key Examples
+## 중요한 예
 
-### Example 1: Binomial Approaching Normal
+### 예 1: 이항분포가 정규분포로 다가간다
 
-Let $X_n \sim B(n, p)$. Define the standardized version:
+$X_n \sim B(n, p)$ 라 하고 표준화한 것을 다음과 같이 두자.
 
 $$Z_n = \frac{X_n - np}{\sqrt{np(1-p)}}$$
 
-Then $Z_n \xrightarrow{d} Z \sim N(0,1)$ as $n \to \infty$. This is precisely the **Central Limit Theorem** applied to sums of iid Bernoulli random variables.
+그러면 $n \to \infty$ 일 때 $Z_n \xrightarrow{d} Z \sim N(0,1)$ 이다. 이것이 바로 i.i.d. 베르누이확률변수의 합에 **중심극한정리**를 적용한 것이다.
 
-### Example 2: Poisson Approaching Normal
+### 예 2: 푸아송분포가 정규분포로 다가간다
 
-Let $X_n \sim \text{Po}(n)$. Then:
+$X_n \sim \text{Po}(n)$ 이라 하자. 그러면 다음이 성립한다.
 
 $$\frac{X_n - n}{\sqrt{n}} \xrightarrow{d} N(0,1)$$
 
-Since $X_n = \sum_{i=1}^n Y_i$ where $Y_i \sim \text{Po}(1)$ are iid, this follows directly from the CLT.
+i.i.d. 인 $Y_i \sim \text{Po}(1)$ 에 대하여 $X_n = \sum_{i=1}^n Y_i$ 이므로 이는 중심극한정리에서 바로 따라 나온다.
 
-### Example 3: Discrete to Continuous
+### 예 3: 이산에서 연속으로
 
-Let $X_n$ be uniform on $\left\{\frac{1}{n}, \frac{2}{n}, \ldots, \frac{n}{n}\right\}$. Then $X_n \xrightarrow{d} U(0,1)$.
+$X_n$ 이 $\left\{\frac{1}{n}, \frac{2}{n}, \ldots, \frac{n}{n}\right\}$ 위에서 균등하다고 하자. 그러면 $X_n \xrightarrow{d} U(0,1)$ 이다.
 
-## Convergence via MGFs
+## 적률생성함수를 쓴 수렴
 
-A powerful tool for proving convergence in distribution:
+분포수렴을 증명하는 데 쓰는 강력한 도구가 있다.
 
-!!! info "Continuity Theorem for MGFs"
-    If $M_{X_n}(t) \to M_X(t)$ for all $t$ in a neighborhood of $0$, and $M_X(t)$ is the MGF of $X$, then $X_n \xrightarrow{d} X$.
+!!! info "적률생성함수에 대한 연속성 정리"
+    $0$ 의 어떤 근방에 있는 모든 $t$ 에 대하여 $M_{X_n}(t) \to M_X(t)$ 이고 $M_X(t)$ 가 $X$ 의 적률생성함수이면, $X_n \xrightarrow{d} X$ 이다.
 
-This is the key technique used in the **proof of the CLT**.
+이것이 **중심극한정리의 증명**에서 쓰는 핵심 기법이다.
+
+## 연습문제
+
+**연습문제 1.** $X_n \sim \text{Uniform}(0, 1 + 1/n)$ 이라고 하자. $X \sim \text{Uniform}(0, 1)$ 에 대하여 $X_n \xrightarrow{d} X$ 임을 보여라.
+
+??? success "연습문제 1 풀이"
+    $0 \leq x \leq 1 + 1/n$ 에서 $F_{X_n}(x) = x/(1 + 1/n)$ 이다. $0 < x < 1$ 일 때 다음이 성립한다.
+
+    $$
+    \lim_{n\to\infty} F_{X_n}(x) = \lim_{n\to\infty} \frac{x}{1 + 1/n} = x = F_X(x)
+    $$
+
+    $x \geq 1$ 일 때에는 $F_{X_n}(x) \to 1 = F_X(x)$ 이고, $x < 0$ 일 때에는 $F_{X_n}(x) = 0 = F_X(x)$ 이다. 따라서 $F_X$ 의 모든 연속점에서 각 점별 수렴이 성립한다. $\square$
+
+---
+
+**연습문제 2.** $\lambda > 0$ 이 고정되어 있고 $X_n \sim B(n, \lambda/n)$ 이라고 하자. $P(X_n = 0) \to e^{-\lambda}$ 임을 확인하여 $\text{Po}(\lambda)$ 로의 분포수렴을 살펴보아라.
+
+??? success "연습문제 2 풀이"
+    $$
+    P(X_n = 0) = \left(1 - \frac{\lambda}{n}\right)^n \to e^{-\lambda}
+    $$
+
+    이는 잘 알려진 극한이다. 그리고 $P(\text{Po}(\lambda) = 0) = e^{-\lambda}$ 이다. $\checkmark$
+
+---
+
+**연습문제 3.** $X_n \xrightarrow{d} X$ 이려면 $X_n$ 과 $X$ 가 같은 확률공간 위에 정의되어 있어야 하는가?
+
+??? success "연습문제 3 풀이"
+    **아니다.** 분포수렴은 오로지 누적분포함수로 정의된다. 곧 $F_{X_n}(x) \to F_X(x)$ 이다. 확률변수들이 서로 전혀 다른 확률공간 위에 있어도 된다. 이 점이 확률수렴이나 거의 확실한 수렴과 크게 다르다. 그 둘은 공통의 확률공간을 요구하기 때문이다.
+
+---
+
+**연습문제 4.** $X_n \sim B(n, p)$ 에 대하여 $Z_n = \frac{X_n - np}{\sqrt{np(1-p)}}$ 이라고 하자. $p = 0.3$, $n = 100$ 일 때 $P(Z_n \leq 1.5)$ 를 정확한 이항분포와 정규근사 두 가지로 구하여라.
+
+??? success "연습문제 4 풀이"
+    $\mu = 30$ 이고 $\sigma = \sqrt{21} \approx 4.583$ 이다. $Z_n \leq 1.5$ 는 $X_n \leq 30 + 1.5 \times 4.583 = 36.87$, 곧 $X_n \leq 36$ 을 뜻한다.
+
+    정규근사: $P(Z \leq 1.5) = \mathcal{N}(1.5) \approx 0.9332$.
+
+    정확한 이항분포: $P(X_{100} \leq 36) \approx 0.9265$.
+
+    근사가 가까우며, 이것이 분포수렴을 보여 준다.
+
+---
+
+**연습문제 5.** 분포수렴이 연속인 변환에서 보존됨을 증명하여라. 곧 $X_n \xrightarrow{d} X$ 이고 $g$ 가 연속이면 $g(X_n) \xrightarrow{d} g(X)$ 임을 보여라(연속사상정리).
+
+??? success "연습문제 5 풀이"
+    $h$ 를 유계이고 연속인 아무 함수라 하자. 그러면 $h \circ g$ 도 유계이고 연속이다. 분포수렴의 포트만토 특성화에 따라 다음이 성립한다.
+
+    $$
+    E[h(g(X_n))] \to E[h(g(X))]
+    $$
+
+    이것이 유계이고 연속인 모든 $h$ 에 대하여 성립하므로 $g(X_n) \xrightarrow{d} g(X)$ 이다. $\square$
