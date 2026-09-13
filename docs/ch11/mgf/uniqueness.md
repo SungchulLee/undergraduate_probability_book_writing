@@ -1,60 +1,89 @@
-# Uniqueness Theorem
-<<<<<<< Updated upstream
+# 유일성 정리
 
-## Statement
+## 정리의 서술
 
-!!! info "MGF Uniqueness Theorem"
-    If $M_X(t)$ exists (is finite) for all $t$ in some open interval $(-\delta, \delta)$ containing $0$, then $M_X(t)$ uniquely determines the distribution of $X$.
+!!! info "적률생성함수의 유일성 정리"
+    $0$ 을 품는 어떤 열린구간 $(-\delta, \delta)$ 의 모든 $t$ 에서 $M_X(t)$ 가 존재하면(유한하면), $M_X(t)$ 는 $X$ 의 분포를 유일하게 결정한다.
 
-    That is, if $M_X(t) = M_Y(t)$ for all $t \in (-\delta, \delta)$, then $X$ and $Y$ have the same CDF.
+    곧 모든 $t \in (-\delta, \delta)$ 에 대해 $M_X(t) = M_Y(t)$ 이면 $X$ 와 $Y$ 는 같은 누적분포함수를 갖는다.
 
-This is the property that makes MGFs a powerful identification tool: once you compute the MGF of a sum or transformation and recognize it as the MGF of a known distribution, you can conclude the two distributions are identical.
+적률생성함수가 분포를 알아내는 강력한 도구가 되는 것은 바로 이 성질 덕분이다. 합이나 변환의 적률생성함수를 구해 그것이 이미 아는 분포의 적률생성함수임을 알아보면, 두 분포가 같다고 결론지을 수 있다.
 
-## Why a Neighborhood of Zero Suffices
+## 왜 0의 근방만으로 충분한가
 
-The MGF is an analytic function wherever it is finite. If two analytic functions agree on any open interval, they agree everywhere on their common domain. Therefore, agreement on $(-\delta, \delta)$, no matter how small $\delta$ is, forces agreement wherever both MGFs are defined.
+적률생성함수는 유한한 곳이면 어디서나 해석함수이다. 두 해석함수가 어떤 열린구간에서 일치하면, 공통 정의역 전체에서 일치한다. 그러므로 $\delta$ 가 아무리 작더라도 $(-\delta, \delta)$ 에서의 일치는 두 적률생성함수가 정의된 모든 곳에서의 일치를 강제한다.
 
-## When the MGF Does Not Exist
+## 적률생성함수가 존재하지 않을 때
 
-Not every distribution has an MGF. The expectation $E[e^{tX}]$ may diverge for all $t \neq 0$.
+모든 분포가 적률생성함수를 갖는 것은 아니다. 기댓값 $E[e^{tX}]$ 이 $t \neq 0$ 인 모든 곳에서 발산할 수도 있다.
 
-???+ example "Cauchy distribution"
-    If $X$ has the standard Cauchy distribution with PDF $f(x) = \frac{1}{\pi(1 + x^2)}$, then $E[e^{tX}] = \infty$ for every $t \neq 0$. The Cauchy distribution has no MGF.
+???+ example "코시분포"
+    $X$ 가 확률밀도함수 $f(x) = \frac{1}{\pi(1 + x^2)}$ 를 갖는 표준 코시분포를 따르면, $t \neq 0$ 인 모든 $t$ 에 대해 $E[e^{tX}] = \infty$ 이다. 코시분포는 적률생성함수를 갖지 않는다.
 
-    The heavy tails of the Cauchy make $e^{tX}$ grow too fast for the integral to converge.
+    코시분포의 두꺼운 꼬리 때문에 $e^{tX}$ 가 너무 빠르게 커져서 적분이 수렴하지 못한다.
 
-???+ example "Log-normal distribution"
-    If $X \sim \text{Lognormal}(\mu, \sigma^2)$, then $M_X(t) = \infty$ for all $t > 0$. The MGF exists only at $t \leq 0$, so it is not finite on any open interval around $0$.
+???+ example "로그정규분포"
+    $X \sim \text{Lognormal}(\mu, \sigma^2)$ 이면 모든 $t > 0$ 에 대해 $M_X(t) = \infty$ 이다. 적률생성함수는 $t \leq 0$ 에서만 존재하므로, $0$ 을 둘러싼 어떤 열린구간에서도 유한하지 않다.
 
-When the MGF does not exist, alternative tools such as the **characteristic function** $\varphi_X(t) = E[e^{itX}]$ (which always exists) can be used instead.
+적률생성함수가 존재하지 않을 때는 언제나 존재하는 **특성함수** $\varphi_X(t) = E[e^{itX}]$ 같은 다른 도구를 대신 쓸 수 있다.
 
-## Connection to the Moment Problem
+## 적률 문제와의 관계
 
-Two distinct distributions can share all moments $E[X^n]$ for $n = 1, 2, 3, \ldots$ without being identical. This is the **Hamburger moment problem**.
+서로 다른 두 분포가 $n = 1, 2, 3, \ldots$ 에 대한 모든 적률 $E[X^n]$ 을 똑같이 가지면서도 같은 분포가 아닐 수 있다. 이것이 **함부르거 적률 문제**이다.
 
-!!! warning "Moments Alone Do Not Determine a Distribution"
-    There exist pairs of distinct distributions that have the same moments of all orders. The classic example is the log-normal: the distribution of $X \sim \text{Lognormal}(0, 1)$ is not uniquely determined by its moments.
+!!! warning "적률만으로는 분포가 결정되지 않는다"
+    모든 차수의 적률이 같으면서도 서로 다른 분포의 쌍이 실제로 존재한다. 대표적인 예가 로그정규분포이다. $X \sim \text{Lognormal}(0, 1)$ 의 분포는 그 적률만으로는 유일하게 결정되지 않는다.
 
-The MGF, when it exists, resolves this ambiguity. Existence of $M_X(t)$ in a neighborhood of $0$ implies that the moment sequence $\{E[X^n]\}$ grows slowly enough to uniquely determine the distribution. Specifically, the Taylor series $\sum E[X^n]\,t^n / n!$ converges, and this convergent generating function pins down the distribution.
+적률생성함수는 존재하기만 하면 이 모호함을 없애 준다. $0$ 의 근방에서 $M_X(t)$ 가 존재한다는 것은 적률의 수열 $\{E[X^n]\}$ 이 충분히 느리게 커져서 분포를 유일하게 결정한다는 뜻이다. 구체적으로는 테일러급수 $\sum E[X^n]\,t^n / n!$ 이 수렴하고, 이렇게 수렴하는 생성함수가 분포를 못 박아 준다.
 
-## Convergence Theorem
+## 수렴 정리
 
-The uniqueness theorem has a companion result for sequences of random variables.
+유일성 정리에는 확률변수의 수열에 대한 짝이 되는 결과가 있다.
 
-!!! info "MGF Convergence Theorem"
-    If $M_{X_n}(t) \to M_X(t)$ for all $t$ in a neighborhood of $0$, and $M_X(t)$ is the MGF of a random variable $X$ (finite in that neighborhood), then:
+!!! info "적률생성함수의 수렴 정리"
+    $0$ 의 어떤 근방에 있는 모든 $t$ 에 대해 $M_{X_n}(t) \to M_X(t)$ 이고 $M_X(t)$ 가 어떤 확률변수 $X$ 의 적률생성함수(그 근방에서 유한)이면, 다음이 성립한다.
 
     $$X_n \xrightarrow{d} X$$
 
-This theorem is the MGF route to proving the **Central Limit Theorem**: show that the MGF of the standardized sum converges pointwise to $e^{t^2/2}$, the MGF of $N(0, 1)$.
+이 정리는 **중심극한정리**를 적률생성함수로 증명하는 길이 된다. 표준화한 합의 적률생성함수가 $N(0, 1)$ 의 적률생성함수인 $e^{t^2/2}$ 로 각 점에서 수렴함을 보이면 된다.
 
-## Summary of Applicability
+## 쓸 수 있는 범위 요약
 
-| Tool | Exists for | Uniqueness |
+| 도구 | 존재하는 범위 | 유일성 |
 |:---|:---|:---|
-| MGF $M_X(t) = E[e^{tX}]$ | Some distributions | Yes, when it exists in a neighborhood of $0$ |
-| CF $\varphi_X(t) = E[e^{itX}]$ | All distributions | Always |
+| 적률생성함수 $M_X(t) = E[e^{tX}]$ | 일부 분포 | 그렇다. $0$ 의 근방에서 존재할 때 |
+| 특성함수 $\varphi_X(t) = E[e^{itX}]$ | 모든 분포 | 언제나 그렇다 |
 
-When the MGF exists, it is often the more convenient tool because it avoids complex arithmetic. When it does not exist, the characteristic function is the universal alternative.
-=======
->>>>>>> Stashed changes
+적률생성함수가 존재할 때는 복소수 계산을 피할 수 있어 대체로 더 편한 도구이다. 존재하지 않을 때는 특성함수가 언제나 쓸 수 있는 대안이다.
+
+## 연습문제
+
+**연습문제 1.**
+$X$ 의 적률생성함수가 $M_X(t) = e^{5(e^t - 1)}$ 이라고 하자.
+
+**(a)** $X$ 의 분포를 알아내어라.
+
+**(b)** 도함수를 전혀 계산하지 말고 $P(X = 0)$, $E[X]$, $\text{Var}(X)$ 를 구하여라.
+
+??? success "연습문제 1 풀이"
+
+    **(a)** $M_{\text{Po}(\lambda)}(t) = e^{\lambda(e^t - 1)}$ 이므로, 이것은 $\lambda = 5$ 인 $\text{Po}(5)$ 의 적률생성함수이다.
+
+    **(b)** 유일성에 따라 $X \sim \text{Po}(5)$ 이므로 $P(X = 0) = e^{-5} \approx 0.0067$, $E[X] = 5$, $\text{Var}(X) = 5$ 이다.
+
+---
+
+**연습문제 2.**
+**(a)** 코시분포가 왜 적률생성함수를 갖지 않는지 설명하여라.
+
+**(b)** 로그정규분포 $X \sim \text{Lognormal}(0,1)$ 의 적률은 $E[X^n] = e^{n^2/2}$ 이다. 적률 급수 $\sum \frac{E[X^n]}{n!}t^n$ 이 $t \neq 0$ 인 모든 곳에서 발산함을 보여라.
+
+**(c)** 그렇다면 로그정규분포는 유일하게 결정되지 않는다는 뜻인가? 설명하여라.
+
+??? success "연습문제 2 풀이"
+
+    **(a)** 코시분포의 확률밀도함수 $f(x) = \frac{1}{\pi(1+x^2)}$ 는 꼬리가 너무 두꺼워 $E[|X|] = \infty$ 이다. 큰 $x$ 에 대해 $e^{tx} \geq |tx|$ 이므로, $t \neq 0$ 인 모든 $t$ 에 대해 $E[e^{tX}] = \infty$ 이다.
+
+    **(b)** $\frac{E[X^n]}{n!}|t|^n = \frac{e^{n^2/2}}{n!}|t|^n$ 이다. 비판정법을 쓰면 $\frac{a_{n+1}}{a_n} = \frac{e^{(n+1)^2/2}}{e^{n^2/2}} \cdot \frac{1}{n+1}|t| = \frac{e^{n+1/2}}{n+1}|t| \to \infty$ 이다. 따라서 급수는 발산한다.
+
+    **(c)** 로그정규분포는 언제나 존재하는 특성함수로는 결정되지만, 적률의 수열만으로는 분포가 유일하게 결정되지 않는 예이다. 이것이 함부르거 적률 문제이다.
