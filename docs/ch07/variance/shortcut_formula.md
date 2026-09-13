@@ -1,44 +1,57 @@
-# Var(X) = E[X²] − (E[X])² Formula
+# Var(X) = E[X²] − (E[X])² 공식
 
-## The Shortcut Formula
+정의 $\text{Var}(X) = E[(X - \mu)^2]$ 를 그대로 쓰려면 제곱편차를 구하기 전에 먼저 $\mu$ 를 알아야 한다. 곧 분포를 두 번 훑어야 한다. 이 절에서 다루는 항등식은 분산을 $E[X]$ 와 $E[X^2]$ 만으로 다시 쓰므로 대개 한 번만 훑으면 된다. 또한 이 항등식은 분산을 $X$ 의 **원적률과 중심적률**의 말로 바꾸어 놓는데, 이것이 고차의 흩어짐을 다룰 때 쓰는 표준 언어가 된다.
+
+## 간편식
 
 $$
 \text{Var}(X) = E[X^2] - (E[X])^2
 $$
 
-This is often easier to compute than the definition $E[(X - \mu)^2]$ because it avoids subtracting the mean inside the squared term.
+제곱 안에서 평균을 빼는 일을 피할 수 있으므로 정의 $E[(X - \mu)^2]$ 보다 계산하기 쉬운 경우가 많다.
+
+!!! info "용어: 원적률과 중심적률"
+    $X$ 의 $k$ 차 **원적률**은 $E[X^k]$ 이고, $k$ 차 **중심적률**은 $E[(X - \mu)^k]$ 이다. 이 말로 바꾸어 보면 다음과 같다.
+
+    - 평균 $E[X]$ 는 1차 원적률이고,
+    - 분산 $\text{Var}(X) = E[(X - \mu)^2]$ 는 **2차 중심적률**이며,
+    - $E[X^2]$ 는 **2차 원적률**이다.
+
+    그러므로 간편식은 "2차 중심적률 = 2차 원적률 − 1차 원적률의 제곱"이라는 항등식이다. 더 높은 차수의 중심적률(왜도, 첨도)도 같은 꼴을 따르지만 이 장에서는 쓰지 않는다.
 
 ---
 
-## Proof
+## 증명
+
+제곱을 전개하고 기댓값의 선형성을 쓰자. $\mu = E[X]$ 가 상수이므로 $E[\mu X] = \mu E[X] = \mu^2$ 임에 주의한다.
 
 $$
-\text{Var}(X) = E[(X - \mu)^2] = E[X^2 - 2\mu X + \mu^2] = E[X^2] - 2\mu E[X] + \mu^2 = E[X^2] - \mu^2
+\text{Var}(X) = E[(X - \mu)^2] = E[X^2 - 2\mu X + \mu^2] = E[X^2] - 2\mu E[X] + \mu^2 = E[X^2] - 2\mu^2 + \mu^2 = E[X^2] - \mu^2
 $$
 
 ---
 
-## Examples
+## 예제
 
-### Bernoulli
+### 베르누이분포
 
-$E[X] = p$, $E[X^2] = 0^2(1-p) + 1^2 p = p$
+$E[X] = p$, $E[X^2] = 0^2(1-p) + 1^2 p = p$ 이므로 다음을 얻는다.
 
 $$
 \text{Var}(X) = p - p^2 = p(1-p) = pq
 $$
 
-### Geometric
+### 기하분포
 
-If $X \sim \text{Geo}(p)$, we can show $E[X] = 1/p$ and $E[X^2] = (2-p)/p^2$, giving
+$X \sim \text{Geo}(p)$ 이면 $E[X] = 1/p$ 와 $E[X^2] = (2-p)/p^2$ 임을 보일 수 있고, 따라서 다음을 얻는다.
 
 $$
 \text{Var}(X) = \frac{2-p}{p^2} - \frac{1}{p^2} = \frac{1-p}{p^2} = \frac{q}{p^2}
 $$
 
-### Poisson
+### 푸아송분포
 
-If $X \sim \text{Poisson}(\lambda)$, then $E[X] = \lambda$ and $E[X(X-1)] = \lambda^2$, so $E[X^2] = \lambda^2 + \lambda$, giving
+$X \sim \text{Poisson}(\lambda)$ 이면 $E[X] = \lambda$ 이고 $E[X(X-1)] = \lambda^2$ 이므로 $E[X^2] = \lambda^2 + \lambda$ 이다. 따라서 다음을 얻는다.
 
 $$
 \text{Var}(X) = \lambda^2 + \lambda - \lambda^2 = \lambda
@@ -46,19 +59,19 @@ $$
 
 ---
 
-## Important Warning
+## 중요한 주의
 
-!!! warning "Numerical Instability"
-    While $E[X^2] - (E[X])^2$ is algebraically convenient, it can suffer from **catastrophic cancellation** in numerical computations when $E[X^2]$ and $(E[X])^2$ are both large and close in value. For numerical computation, use the definition form or a numerically stable algorithm.
+!!! warning "수치적 불안정성"
+    $E[X^2] - (E[X])^2$ 는 대수적으로는 편리하지만, $E[X^2]$ 와 $(E[X])^2$ 가 둘 다 크고 값이 비슷할 때 수치계산에서 **치명적 자리수 손실**이 일어날 수 있다. 그래서 실제 표본분산 계산 루틴은 수치적으로 안정한 알고리즘을 쓴다. 가장 널리 쓰이는 것이 **웰퍼드 온라인 알고리즘**으로, 큰 값이 되는 $\sum x_i^2$ 항을 아예 만들지 않고 표본분산을 조금씩 갱신해 나간다. NumPy의 `np.var` 도 내부에서 이런 안정한 방법을 쓴다.
 
 ---
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 import numpy as np
 
-# Shortcut formula for fair die
+# 공정한 주사위에 간편식 적용
 values = np.arange(1, 7)
 probs = np.ones(6) / 6
 
@@ -70,11 +83,11 @@ print(f"E[X] = {E_X}")
 print(f"E[X²] = {E_X2:.4f}")
 print(f"Var(X) = E[X²] - (E[X])² = {E_X2:.4f} - {E_X**2:.4f} = {var_shortcut:.4f}")
 
-# Verify with definition
+# 정의로 확인
 var_def = np.sum((values - E_X)**2 * probs)
 print(f"Var(X) via definition = {var_def:.4f}")
 
-# Poisson example
+# 푸아송분포 예
 lam = 5.0
 np.random.seed(42)
 samples = np.random.poisson(lam, 1_000_000)
@@ -82,3 +95,43 @@ print(f"\nPoisson(λ={lam}):")
 print(f"Theoretical Var = {lam}")
 print(f"MC Var = {np.var(samples):.4f}")
 ```
+
+## 연습문제
+
+**연습문제 1.** $X$ 의 평균이 3이고 $E[X^2] = 13$ 일 때 $\text{Var}(X)$ 를 구하여라.
+
+??? success "연습문제 1 풀이"
+    간편식에 따라 다음을 얻는다.
+
+    $$
+    \text{Var}(X) = E[X^2] - (E[X])^2 = 13 - 9 = 4
+    $$
+
+---
+
+**연습문제 2. (도전 문제.)** $X_1, X_2, X_3$ 를 서로 독립인 표준정규확률변수라 하고 다음과 같이 두자.
+
+$$
+Y = \frac{(X_1, X_2, X_3)}{\sqrt{X_1^2 + X_2^2 + X_3^2}}
+$$
+
+그러면 $Y = (Y_1, Y_2, Y_3)$ 는 단위구면 위에 균등하게 퍼져 있다. 각 좌표 $Y_i$ 의 분산을 구하여라.
+
+??? success "연습문제 2 풀이"
+    $Y$ 가 단위구면 위에 있으므로 $Y_1^2 + Y_2^2 + Y_3^2 = 1$ 이다. 양변에 기댓값을 취하면 다음과 같다.
+
+    $$
+    E[Y_1^2] + E[Y_2^2] + E[Y_3^2] = 1
+    $$
+
+    대칭성에 따라 세 좌표의 분포가 모두 같으므로 $E[Y_1^2] = E[Y_2^2] = E[Y_3^2]$ 이다. 그러므로 다음을 얻는다.
+
+    $$
+    3\,E[Y_1^2] = 1 \quad \Longrightarrow \quad E[Y_1^2] = \frac{1}{3}
+    $$
+
+    또한 대칭성에 따라 $E[Y_1] = 0$ 이다($Y_1$ 의 분포가 0을 중심으로 대칭이기 때문이다). 간편식을 적용하면 다음을 얻는다.
+
+    $$
+    \text{Var}(Y_1) = E[Y_1^2] - (E[Y_1])^2 = \frac{1}{3} - 0 = \frac{1}{3}
+    $$

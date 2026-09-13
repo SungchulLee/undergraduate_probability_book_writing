@@ -1,20 +1,20 @@
-# Mean and Variance of Sums of Random Variables
+# 확률변수 합의 평균과 분산
 
-## Mean of Sums
+## 합의 평균
 
-### General Case
+### 일반적인 경우
 
-For **any** random variables $X_1, X_2, \ldots, X_n$ (not necessarily independent):
+**임의의** 확률변수 $X_1, X_2, \ldots, X_n$ 에 대하여(서로 독립일 필요가 없다) 다음이 성립한다.
 
 $$
 E\left[\sum_{i=1}^n X_i\right] = \sum_{i=1}^n E[X_i]
 $$
 
-This follows directly from **linearity of expectation**.
+이는 **기댓값의 선형성**에서 곧바로 따라 나온다.
 
-### iid Case
+### i.i.d. 인 경우
 
-If $X_1, \ldots, X_n$ are iid (independent and identically distributed):
+$X_1, \ldots, X_n$ 이 i.i.d.(독립이고 같은 분포를 따른다)이면 다음이 성립한다.
 
 $$
 E\left[\sum_{i=1}^n X_i\right] = n \, E[X_1]
@@ -22,26 +22,26 @@ $$
 
 ---
 
-## Variance of Sums
+## 합의 분산
 
-### General Case
+### 일반적인 경우
 
 $$
 \text{Var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i) + \sum_{i \neq j} \text{Cov}(X_i, X_j)
 = \sum_{i=1}^n \text{Var}(X_i) + 2\sum_{1 \leq i < j \leq n} \text{Cov}(X_i, X_j)
 $$
 
-### Independent Case
+### 독립인 경우
 
-If $X_1, \ldots, X_n$ are **independent**:
+$X_1, \ldots, X_n$ 이 **독립**이면 다음이 성립한다.
 
 $$
 \text{Var}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i)
 $$
 
-### iid Case
+### i.i.d. 인 경우
 
-If $X_1, \ldots, X_n$ are **iid**:
+$X_1, \ldots, X_n$ 이 **i.i.d.** 이면 다음이 성립한다.
 
 $$
 \text{Var}\left(\sum_{i=1}^n X_i\right) = n \, \text{Var}(X_1)
@@ -49,11 +49,11 @@ $$
 
 ---
 
-## Weighted Sums
+## 가중합
 
-### General Case
+### 일반적인 경우
 
-For constants $a_1, a_2, \ldots, a_n$:
+상수 $a_1, a_2, \ldots, a_n$ 에 대하여 다음이 성립한다.
 
 $$
 E\left[\sum_{i=1}^n a_i X_i\right] = \sum_{i=1}^n a_i E[X_i]
@@ -63,13 +63,13 @@ $$
 \text{Var}\left(\sum_{i=1}^n a_i X_i\right) = \sum_{i=1}^n a_i^2 \, \text{Var}(X_i) + 2\sum_{1 \leq i < j \leq n} a_i a_j \, \text{Cov}(X_i, X_j)
 $$
 
-### Independent Case
+### 독립인 경우
 
 $$
 \text{Var}\left(\sum_{i=1}^n a_i X_i\right) = \sum_{i=1}^n a_i^2 \, \text{Var}(X_i)
 $$
 
-### iid Case
+### i.i.d. 인 경우
 
 $$
 E\left[\sum_{i=1}^n a_i X_i\right] = \left(\sum_{i=1}^n a_i\right) E[X_1]
@@ -81,37 +81,37 @@ $$
 
 ---
 
-## Matrix Form
+## 행렬로 나타내기
 
-Let $S = \sum_{i=1}^n a_i X_i = \mathbf{a}^T \mathbf{X}$ where $\mathbf{a} = (a_1, \ldots, a_n)^T$ and $\mathbf{X} = (X_1, \ldots, X_n)^T$.
+$\mathbf{a} = (a_1, \ldots, a_n)^T$ 와 $\mathbf{X} = (X_1, \ldots, X_n)^T$ 에 대하여 $S = \sum_{i=1}^n a_i X_i = \mathbf{a}^T \mathbf{X}$ 라 하자.
 
-Define:
+다음과 같이 두자.
 
-- $\mu_i = E[X_i]$: mean of $X_i$
-- $\sigma_i^2 = \text{Var}(X_i)$: variance of $X_i$
-- $\sigma_{ij} = \text{Cov}(X_i, X_j)$: covariance between $X_i$ and $X_j$
-- $\rho_{ij}$: correlation between $X_i$ and $X_j$
+- $\mu_i = E[X_i]$: $X_i$ 의 평균
+- $\sigma_i^2 = \text{Var}(X_i)$: $X_i$ 의 분산
+- $\sigma_{ij} = \text{Cov}(X_i, X_j)$: $X_i$ 와 $X_j$ 의 공분산
+- $\rho_{ij}$: $X_i$ 와 $X_j$ 의 상관계수
 
-**Mean**:
+**평균**:
 
 $$
 E[S] = \sum_{i=1}^n a_i \mu_i = \mathbf{a}^T \boldsymbol{\mu}
 $$
 
-**Variance**:
+**분산**:
 
 $$
 \text{Var}(S) = \sum_{i=1}^n a_i^2 \sigma_i^2 + 2\sum_{1 \leq i < j \leq n} a_i a_j \sigma_{ij}
 = \sum_{i=1}^n a_i^2 \sigma_i^2 + 2\sum_{1 \leq i < j \leq n} a_i a_j \rho_{ij} \sigma_i \sigma_j
 $$
 
-In matrix form:
+행렬로 쓰면 다음과 같다.
 
 $$
 \text{Var}(S) = \mathbf{a}^T \boldsymbol{\Sigma} \, \mathbf{a}
 $$
 
-where the **covariance matrix** is
+여기서 **공분산행렬**은 다음과 같다.
 
 $$
 \boldsymbol{\Sigma} = \begin{pmatrix}
@@ -124,11 +124,11 @@ $$
 
 ---
 
-## Decomposition Examples
+## 분해의 예
 
-### Example 1: Binomial via Bernoulli
+### 예제 1: 베르누이로 보는 이항분포
 
-Flip a $p$-coin $n$ times independently. Let $\mathbf{1}_{A_i} \stackrel{iid}{\sim} \text{Bernoulli}(p)$.
+앞면이 나올 확률이 $p$ 인 동전을 서로 독립으로 $n$ 번 던진다. $\mathbf{1}_{A_i} \stackrel{iid}{\sim} \text{Bernoulli}(p)$ 라 하자.
 
 $$
 S = \sum_{i=1}^n \mathbf{1}_{A_i} \sim \text{Binomial}(n, p)
@@ -142,9 +142,9 @@ $$
 \text{Var}(S) = \sum_{i=1}^n \text{Var}(\mathbf{1}_{A_i}) = npq
 $$
 
-### Example 2: Negative Binomial via Geometric
+### 예제 2: 기하분포로 보는 음이항분포
 
-Flip a $p$-coin until the $r$-th head. Let $X_i \stackrel{iid}{\sim} \text{Geo}(p)$ be the number of flips from the $(i-1)$-th to the $i$-th head.
+앞면이 나올 확률이 $p$ 인 동전을 $r$ 번째 앞면이 나올 때까지 던진다. $X_i \stackrel{iid}{\sim} \text{Geo}(p)$ 를 $(i-1)$ 번째 앞면 다음부터 $i$ 번째 앞면이 나올 때까지 던진 횟수라 하자.
 
 $$
 S = \sum_{i=1}^r X_i \sim \text{NB}(r, p)
@@ -158,16 +158,16 @@ $$
 \text{Var}(S) = \sum_{i=1}^r \text{Var}(X_i) = \frac{rq}{p^2}
 $$
 
-### Example 3: Roll the Dice 1000 Times
+### 예제 3: 주사위를 1000번 던지기
 
-Roll a die 1000 times. Gain the face value on odd rolls, lose the face value on even rolls. With a $+0.5$ bonus per game:
+주사위를 1000번 던진다. 홀수 눈이 나오면 그 눈만큼 얻고, 짝수 눈이 나오면 그 눈만큼 잃는다. 게임마다 $+0.5$ 의 덤을 얹으면 다음과 같다.
 
 $$
-D_i = \begin{cases} +1 & \text{w.p. } 1/6 \\ -2 & \text{w.p. } 1/6 \\ +3 & \text{w.p. } 1/6 \\ -4 & \text{w.p. } 1/6 \\ +5 & \text{w.p. } 1/6 \\ -6 & \text{w.p. } 1/6 \end{cases}
+D_i = \begin{cases} +1 & \text{확률 } 1/6 \\ -2 & \text{확률 } 1/6 \\ +3 & \text{확률 } 1/6 \\ -4 & \text{확률 } 1/6 \\ +5 & \text{확률 } 1/6 \\ -6 & \text{확률 } 1/6 \end{cases}
 \qquad X_i = D_i + 0.5 \stackrel{iid}{\sim}
 $$
 
-Computing moments of $D_i$:
+$D_i$ 의 적률을 구하면 다음과 같다.
 
 $$
 E[D_i] = \frac{1 - 2 + 3 - 4 + 5 - 6}{6} = \frac{-3}{6} = -0.5
@@ -181,9 +181,9 @@ $$
 \text{Var}(D_i) = E[D_i^2] - (E[D_i])^2 = 15.1667 - 0.25 = 14.9167
 $$
 
-Since $X_i = D_i + 0.5$: $E[X_i] = 0$ and $\text{Var}(X_i) = 14.9167$.
+$X_i = D_i + 0.5$ 이므로 $E[X_i] = 0$ 이고 $\text{Var}(X_i) = 14.9167$ 이다.
 
-The total P\&L $S = \sum_{i=1}^{1000} X_i$:
+전체 손익 $S = \sum_{i=1}^{1000} X_i$ 에 대해서는 다음과 같다.
 
 $$
 E[S] = 1000 \times 0 = 0
@@ -193,9 +193,9 @@ $$
 \text{Var}(S) = 1000 \times 14.9167 = 14916.7, \quad \text{SD}(S) \approx 122.1
 $$
 
-### Example 4: Coupon Collector Problem
+### 예제 4: 쿠폰 모으기 문제
 
-To collect all $n$ types of toys, let $\tau_i \sim \text{Geo}\left(\frac{n-(i-1)}{n}\right)$ independently. Then $T_n = \sum_{i=1}^n \tau_i$:
+$n$ 가지 장난감을 모두 모으는 데 걸리는 시간을 보자. $\tau_i \sim \text{Geo}\left(\frac{n-(i-1)}{n}\right)$ 가 서로 독립이라 하고 $T_n = \sum_{i=1}^n \tau_i$ 라 하면 다음을 얻는다.
 
 $$
 E[T_n] = \sum_{i=1}^n \frac{n}{n - (i-1)} = n\left(1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}\right) = nH_n \sim n\log n
@@ -207,30 +207,30 @@ $$
 
 ---
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 
 # ============================================================
-# Example: Roll the dice 1000 times
+# 예: 주사위를 1000번 던지기
 # ============================================================
 np.random.seed(42)
 NumSimu = 10000
 NumRolling = 1000
 
-# Generate dice rolls
+# 주사위 던지기 생성
 rolls = np.random.randint(1, 7, size=(NumRolling, NumSimu))
 
-# Map to P&L: odd face -> +value, even face -> -value
+# 손익으로 바꾸기: 홀수 눈 -> +값, 짝수 눈 -> -값
 increment = np.where(rolls % 2 == 1, rolls, -rolls).astype(float)
-increment += 0.5  # bonus
+increment += 0.5  # 덤
 
-# Cumulative P&L
+# 누적 손익
 Sn = np.cumsum(increment, axis=0)
 
-# Theoretical values
+# 이론값
 E_D = (-3) / 6
 Var_D = 91/6 - 0.25
 print(f"E[D_i] = {E_D:.4f}")
@@ -241,12 +241,12 @@ print(f"E[S] = {1000 * (E_D + 0.5):.4f}")
 print(f"Var(S) = {1000 * Var_D:.4f}")
 print(f"SD(S) = {np.sqrt(1000 * Var_D):.4f}")
 
-# Simulation verification
+# 모의실험으로 확인
 total_pnl = Sn[-1, :]
 print(f"\nSimulated E[S] = {np.mean(total_pnl):.4f}")
 print(f"Simulated SD(S) = {np.std(total_pnl):.4f}")
 
-# Plot
+# 그림
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
 axes[0].hist(total_pnl, bins=50, edgecolor='black')
@@ -265,7 +265,7 @@ plt.savefig('dice_1000_pnl.png', dpi=150, bbox_inches='tight')
 plt.show()
 
 # ============================================================
-# Coupon Collector
+# 쿠폰 모으기
 # ============================================================
 n_toys = 50
 harmonic = sum(1/k for k in range(1, n_toys + 1))
@@ -276,16 +276,16 @@ print(f"E[T_n] = {E_Tn:.2f}")
 print(f"SD(T_n) = {np.sqrt(Var_Tn):.2f}")
 
 # ============================================================
-# Matrix form example
+# 행렬 표현의 예
 # ============================================================
-# Portfolio variance with 3 assets
-a = np.array([0.4, 0.35, 0.25])  # weights
-sigma = np.array([0.20, 0.15, 0.25])  # asset SDs
+# 자산 3개로 이루어진 포트폴리오의 분산
+a = np.array([0.4, 0.35, 0.25])  # 비중
+sigma = np.array([0.20, 0.15, 0.25])  # 각 자산의 표준편차
 rho = np.array([[1.0, 0.3, 0.1],
                 [0.3, 1.0, 0.5],
-                [0.1, 0.5, 1.0]])  # correlation matrix
+                [0.1, 0.5, 1.0]])  # 상관행렬
 
-# Build covariance matrix
+# 공분산행렬 만들기
 Sigma = np.outer(sigma, sigma) * rho
 portfolio_var = a @ Sigma @ a
 print(f"\nPortfolio Example:")
@@ -294,3 +294,77 @@ print(f"Asset SDs: {sigma}")
 print(f"Portfolio Var = a'Σa = {portfolio_var:.6f}")
 print(f"Portfolio SD = {np.sqrt(portfolio_var):.4f}")
 ```
+
+## 연습문제
+
+**연습문제 1.** $X_1, \ldots, X_{100}$ 을 $E[X_i] = 2$, $\text{Var}(X_i) = 9$ 인 i.i.d. 확률변수라 하자. $E[\sum X_i]$ 와 $\text{Var}(\sum X_i)$ 를 구하여라.
+
+??? success "연습문제 1 풀이"
+    선형성에 따라 다음을 얻는다.
+
+    $$
+    E\!\left[\sum_{i=1}^{100} X_i\right] = 100 \cdot 2 = 200
+    $$
+
+    독립성에 따라 다음을 얻는다.
+
+    $$
+    \text{Var}\!\left(\sum_{i=1}^{100} X_i\right) = 100 \cdot 9 = 900
+    $$
+
+---
+
+**연습문제 2.** $X_1, X_2, X_3$ 가 서로 독립이고 평균이 각각 $1, 2, 3$, 분산이 각각 $4, 1, 9$ 일 때 $S = 3 X_1 - 2 X_2 + X_3$ 의 $E[S]$ 와 $\text{Var}(S)$ 를 구하여라.
+
+??? success "연습문제 2 풀이"
+    $$
+    E[S] = 3(1) - 2(2) + 1(3) = 3 - 4 + 3 = 2
+    $$
+
+    $$
+    \text{Var}(S) = 3^2 \cdot 4 + (-2)^2 \cdot 1 + 1^2 \cdot 9 = 36 + 4 + 9 = 49
+    $$
+
+    (독립성에 따라 교차항은 사라진다. $a < 0$ 일 때도 $\text{Var}(aX) = a^2 \text{Var}(X)$ 임에 주의하자.)
+
+---
+
+**연습문제 3.** 어떤 포트폴리오의 비중이 $a = (0.5, 0.3, 0.2)$ 이고 자산의 공분산행렬이 다음과 같다.
+
+$$
+\Sigma = \begin{pmatrix} 0.04 & 0.01 & 0.02 \\ 0.01 & 0.09 & 0.03 \\ 0.02 & 0.03 & 0.16 \end{pmatrix}
+$$
+
+포트폴리오의 분산 $\mathbf{a}^T \Sigma \mathbf{a}$ 를 구하여라.
+
+??? success "연습문제 3 풀이"
+    먼저 $\Sigma \mathbf{a}$ 를 구하자.
+
+    $$
+    \Sigma \mathbf{a} = \begin{pmatrix} 0.04 \cdot 0.5 + 0.01 \cdot 0.3 + 0.02 \cdot 0.2 \\ 0.01 \cdot 0.5 + 0.09 \cdot 0.3 + 0.03 \cdot 0.2 \\ 0.02 \cdot 0.5 + 0.03 \cdot 0.3 + 0.16 \cdot 0.2 \end{pmatrix} = \begin{pmatrix} 0.027 \\ 0.038 \\ 0.051 \end{pmatrix}
+    $$
+
+    그러면 다음을 얻는다.
+
+    $$
+    \mathbf{a}^T \Sigma \mathbf{a} = 0.5(0.027) + 0.3(0.038) + 0.2(0.051) = 0.0135 + 0.0114 + 0.0102 = 0.0351
+    $$
+
+    포트폴리오의 표준편차는 $\approx \sqrt{0.0351} \approx 0.1873$ 이다.
+
+---
+
+**연습문제 4.** 공정한 정육면체 주사위 두 개를 던질 때 나온 눈의 합의 기댓값은 얼마인가?
+
+??? success "연습문제 4 풀이"
+    $X_1$ 과 $X_2$ 를 두 주사위의 눈이라 하자. 각 주사위의 기댓값은 다음과 같다.
+
+    $$
+    E[X_1] = E[X_2] = \frac{1 + 2 + 3 + 4 + 5 + 6}{6} = 3.5
+    $$
+
+    기댓값의 선형성에 따라 다음을 얻는다.
+
+    $$
+    E[X_1 + X_2] = E[X_1] + E[X_2] = 3.5 + 3.5 = 7
+    $$

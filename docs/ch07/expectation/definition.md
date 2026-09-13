@@ -1,38 +1,38 @@
-# Definition of Expectation (Discrete and Continuous)
+# 기댓값의 정의(이산과 연속)
 
-## Motivation
+## 왜 필요한가
 
-The **expectation** (or **expected value**, **mean**) of a random variable is the long-run average value it takes over many independent repetitions. It is the single most important summary of a probability distribution.
+확률변수의 **기댓값**(**기대값**, **평균**이라고도 한다)은 독립적인 시행을 여러 번 되풀이했을 때 그 값이 길게 보아 어느 값 근처로 모이는가를 나타낸다. 확률분포를 하나의 수로 요약하는 가장 중요한 값이다.
 
 ---
 
-## Definition: Discrete Case
+## 정의: 이산인 경우
 
-If $X$ is a discrete random variable with PMF $p(x) = P(X = x)$, the **expected value** of $X$ is
+$X$ 가 확률질량함수 $p(x) = P(X = x)$ 를 갖는 이산확률변수일 때, $X$ 의 **기댓값**은 다음과 같다.
 
 $$
 E[X] = \sum_{x} x \, p(x)
 $$
 
-where the sum is over all possible values of $X$, provided the sum converges absolutely:
+여기서 합은 $X$ 가 가질 수 있는 모든 값에 걸쳐 취하며, 다음과 같이 절대수렴한다는 조건이 붙는다.
 
 $$
 \sum_{x} |x| \, p(x) < \infty
 $$
 
-If the sum does not converge absolutely, we say $E[X]$ **does not exist**.
+이 합이 절대수렴하지 않으면 $E[X]$ 는 **존재하지 않는다**고 말한다.
 
 ---
 
-## Definition: Continuous Case
+## 정의: 연속인 경우
 
-If $X$ is a continuous random variable with PDF $f(x)$, the **expected value** of $X$ is
+$X$ 가 확률밀도함수 $f(x)$ 를 갖는 연속확률변수일 때, $X$ 의 **기댓값**은 다음과 같다.
 
 $$
 E[X] = \int_{-\infty}^{\infty} x \, f(x) \, dx
 $$
 
-provided the integral converges absolutely:
+단, 다음과 같이 적분이 절대수렴해야 한다.
 
 $$
 \int_{-\infty}^{\infty} |x| \, f(x) \, dx < \infty
@@ -40,37 +40,37 @@ $$
 
 ---
 
-## Basic Examples
+## 기본 예제
 
-### Example 1: Fair Die
+### 예제 1: 공정한 주사위
 
-Let $X$ be the face value of a fair die. Then
+$X$ 를 공정한 주사위의 눈이라 하자. 그러면 다음을 얻는다.
 
 $$
 E[X] = \sum_{k=1}^{6} k \cdot \frac{1}{6} = \frac{1+2+3+4+5+6}{6} = \frac{21}{6} = 3.5
 $$
 
-Note that $E[X] = 3.5$ is not even a possible outcome — the expectation need not be a value the random variable can take.
+$E[X] = 3.5$ 는 주사위에서 아예 나올 수 없는 값임에 주목하자. 기댓값이 반드시 확률변수가 가질 수 있는 값일 필요는 없다.
 
-### Example 2: Bernoulli Random Variable
+### 예제 2: 베르누이 확률변수
 
-If $X \sim \text{Bernoulli}(p)$, then
+$X \sim \text{Bernoulli}(p)$ 이면 다음을 얻는다.
 
 $$
 E[X] = 0 \cdot (1-p) + 1 \cdot p = p
 $$
 
-### Example 3: Continuous Uniform
+### 예제 3: 연속균등분포
 
-If $X \sim \text{Uniform}(a, b)$ with PDF $f(x) = \frac{1}{b-a}$ for $a \leq x \leq b$, then
+$X \sim \text{Uniform}(a, b)$ 이고 $a \leq x \leq b$ 에서 확률밀도함수가 $f(x) = \frac{1}{b-a}$ 이면 다음을 얻는다.
 
 $$
 E[X] = \int_a^b x \cdot \frac{1}{b-a} \, dx = \frac{a+b}{2}
 $$
 
-### Example 4: Standard Normal
+### 예제 4: 표준정규분포
 
-If $Z \sim N(0,1)$, then by symmetry of the PDF about zero,
+$Z \sim N(0,1)$ 이면 확률밀도함수가 0을 중심으로 대칭이므로 다음을 얻는다.
 
 $$
 E[Z] = \int_{-\infty}^{\infty} z \cdot \frac{1}{\sqrt{2\pi}} e^{-z^2/2} \, dz = 0
@@ -78,77 +78,213 @@ $$
 
 ---
 
-## Properties of Expectation
+## 기댓값의 성질
 
-1. **Constants**: $E[c] = c$ for any constant $c$
+1. **상수**: 임의의 상수 $c$ 에 대하여 $E[c] = c$
 
-2. **Scaling**: $E[cX] = cE[X]$
+2. **상수배**: $E[cX] = cE[X]$
 
-3. **Shift**: $E[X + c] = E[X] + c$
+3. **평행이동**: $E[X + c] = E[X] + c$
 
-4. **Non-negativity**: If $X \geq 0$, then $E[X] \geq 0$
+4. **비음성**: $X \geq 0$ 이면 $E[X] \geq 0$
 
-5. **Monotonicity**: If $X \leq Y$, then $E[X] \leq E[Y]$
+5. **단조성**: $X \leq Y$ 이면 $E[X] \leq E[Y]$
 
 ---
 
-## When Expectation Does Not Exist
+## 기댓값이 존재하지 않는 경우
 
-### Example: Cauchy Distribution
+### 예: 코시분포
 
-The Cauchy distribution with PDF
+확률밀도함수가 다음과 같은 코시분포를 보자.
 
 $$
 f(x) = \frac{1}{\pi(1 + x^2)}, \quad -\infty < x < \infty
 $$
 
-has no expectation because $\int_{-\infty}^{\infty} |x| \cdot \frac{1}{\pi(1+x^2)} dx = \infty$.
+$\int_{-\infty}^{\infty} |x| \cdot \frac{1}{\pi(1+x^2)} dx = \infty$ 이므로 이 분포에는 기댓값이 없다.
 
 ---
 
-## Interpretation
+## 뜻풀이
 
-The expected value $E[X]$ can be interpreted as:
+기댓값 $E[X]$ 는 다음과 같이 여러 갈래로 읽을 수 있다.
 
-- **Long-run average**: By the Law of Large Numbers, $\bar{X}_n \to E[X]$ as $n \to \infty$
-- **Center of mass**: $E[X]$ is the balance point (center of gravity) of the probability distribution
-- **Fair price**: In a gambling context, $E[X]$ is the fair price to pay for a game with random payoff $X$
+- **길게 보았을 때의 평균**: 큰수의 법칙에 따라 $n \to \infty$ 일 때 $\bar{X}_n \to E[X]$ 이다
+- **질량중심**: $E[X]$ 는 확률분포가 평형을 이루는 점(무게중심)이다
+- **공정한 값**: 도박에 빗대면, 임의의 보수 $X$ 를 주는 게임에 치르기에 공정한 값이 $E[X]$ 이다
 
 ---
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 import numpy as np
 from scipy import stats
 
-# Discrete: Fair die
+# 이산: 공정한 주사위
 die_values = np.arange(1, 7)
 die_probs = np.ones(6) / 6
 E_die = np.sum(die_values * die_probs)
 print(f"E[fair die] = {E_die}")  # 3.5
 
-# Bernoulli
+# 베르누이
 p = 0.3
 E_bernoulli = p
 print(f"E[Bernoulli({p})] = {E_bernoulli}")  # 0.3
 
-# Continuous Uniform
+# 연속균등분포
 a, b = 2, 8
 E_uniform = (a + b) / 2
 print(f"E[Uniform({a},{b})] = {E_uniform}")  # 5.0
 
-# Verify with scipy
+# scipy로 확인
 print(f"Scipy Uniform mean = {stats.uniform(loc=a, scale=b-a).mean()}")  # 5.0
 
-# Normal
+# 정규분포
 mu, sigma = 5, 2
 E_normal = mu
 print(f"E[N({mu},{sigma}²)] = {E_normal}")  # 5
 
-# Monte Carlo verification
+# 몬테카를로로 확인
 np.random.seed(42)
 N = 1_000_000
 samples = np.random.normal(mu, sigma, N)
 print(f"Monte Carlo estimate = {np.mean(samples):.4f}")
 ```
+
+## 연습문제
+
+**연습문제 1.** $X$ 를 공정한 주사위에 나타난 눈이라 하자. $E[X]$, $E[X^2]$, $E[2X + 3]$ 을 구하여라.
+
+??? success "연습문제 1 풀이"
+    $$
+    E[X] = \frac{1 + 2 + \cdots + 6}{6} = \frac{21}{6} = 3.5
+    $$
+
+    $$
+    E[X^2] = \frac{1 + 4 + 9 + 16 + 25 + 36}{6} = \frac{91}{6} \approx 15.17
+    $$
+
+    선형성에 따라 $E[2X + 3] = 2 E[X] + 3 = 7 + 3 = 10$ 이다.
+
+---
+
+**연습문제 2.** $X$ 의 확률질량함수가 $P(X = -1) = 0.3$, $P(X = 0) = 0.4$, $P(X = 2) = 0.3$ 이라 하자. $E[X]$ 와 $E[X^2]$ 를 구하여라.
+
+??? success "연습문제 2 풀이"
+    $$
+    E[X] = (-1)(0.3) + 0(0.4) + 2(0.3) = -0.3 + 0.6 = 0.3
+    $$
+
+    $$
+    E[X^2] = 1(0.3) + 0(0.4) + 4(0.3) = 0.3 + 1.2 = 1.5
+    $$
+    
+---
+
+**연습문제 3.** 공정한 정육면체 주사위를 한 번 던질 때 나온 눈의 세제곱의 기댓값을 구하여라.
+
+
+??? success "연습문제 3 풀이"
+    공정한 정육면체 주사위에서는 각 결과 $\{1,2,3,4,5,6\}$ 이 확률 $1/6$ 로 나온다. 따라서 세제곱의 기댓값은 다음과 같다.
+
+    $$
+    E[X^3] = \sum_{k=1}^{6} k^3 \cdot \frac{1}{6} = \frac{1 + 8 + 27 + 64 + 125 + 216}{6} = \frac{441}{6} = 73.5
+    $$
+
+---
+
+**연습문제 4.** 공정한 동전을 되풀이해 던지되 앞면이 3번 나오거나 뒷면이 3번 나오는 순간 멈춘다. 던지는 횟수의 최솟값, 최댓값, 그리고 기댓값을 구하여라.
+
+??? success "연습문제 4 풀이"
+    **최솟값.** 같은 면이 내리 세 번 나오는 경우($HHH$ 또는 $TTT$)가 가장 빠르므로 최솟값은 $3$ 이다.
+
+    **최댓값.** 5번 던지면 앞면의 수와 뒷면의 수의 합이 5이므로 비둘기집 원리에 따라 $\max(H, T) \geq 3$ 이 되어 이미 멈추었어야 한다. $HTHTH$ 처럼 번갈아 나오는 경우에 이 값에 도달한다. 따라서 최댓값은 $5$ 이다.
+
+    **기댓값.** 앞면이 $h$ 번, 뒷면이 $t$ 번 나온 상태($h, t \leq 2$)에서 앞으로 더 던져야 할 횟수의 기댓값을 $E(h, t)$ 라 하자. 멈추는 상태에서는 $E(3, t) = E(h, 3) = 0$ 이다. 멈추지 않는 상태에서는 다음이 성립한다.
+
+    $$
+    E(h, t) = 1 + \tfrac{1}{2}\,E(h+1, t) + \tfrac{1}{2}\,E(h, t+1)
+    $$
+
+    멈추는 상태에서 거꾸로 풀어 나가면 다음을 얻는다.
+
+    | 상태 | 값 |
+    |:-----:|------:|
+    | $E(2,2)$ | $1$ |
+    | $E(2,1) = E(1,2)$ | $1.5$ |
+    | $E(2,0) = E(0,2)$ | $1.75$ |
+    | $E(1,1)$ | $2.5$ |
+    | $E(1,0) = E(0,1)$ | $3.125$ |
+    | $E(0,0)$ | $4.125$ |
+
+    예를 들어 $E(2,1) = 1 + \frac{1}{2}(0) + \frac{1}{2}(1) = 1.5$ 이고 $E(0,0) = 1 + \frac{1}{2}(3.125) + \frac{1}{2}(3.125) = 4.125$ 이다.
+
+    던지는 횟수의 기댓값은 다음과 같다.
+
+    $$
+    E(0,0) = \frac{33}{8} = 4.125
+    $$
+
+---
+
+**연습문제 5.** 어떤 땅에 확률 0.10으로 석유가(가치 \$1,000,000), 확률 0.30으로 석탄이(가치 \$500,000) 묻혀 있고, 확률 0.60으로 아무것도 없다(가치 \$200,000). 이 땅의 가치의 기댓값은 얼마인가?
+
+??? success "연습문제 5 풀이"
+    $X$ 를 땅의 가치라 하자. 그러면 다음을 얻는다.
+
+    $$
+    E[X] = 0.10 \times 1{,}000{,}000 + 0.30 \times 500{,}000 + 0.60 \times 200{,}000
+    $$
+
+    $$
+    = 100{,}000 + 150{,}000 + 120{,}000 = 370{,}000
+    $$
+
+    따라서 이 땅의 가치의 기댓값은 \$370,000 이다.
+
+---
+
+**연습문제 6.** 단위원 위에서 두 점을 서로 독립으로 균등하게 무작위로 고른다. 두 점 사이의 직선거리의 기댓값은 얼마인가?
+
+??? success "연습문제 6 풀이"
+    회전대칭성에 따라 한 점을 $(1, 0)$ 에 고정해도 좋다. 다른 점을 $(\cos\theta, \sin\theta)$ 라 하면 $\theta \sim \text{Uniform}(0, 2\pi)$ 이다. 거리의 제곱은 다음과 같다.
+
+    $$
+    (1 - \cos\theta)^2 + \sin^2\theta = 2 - 2\cos\theta = 4\sin^2\!\left(\frac{\theta}{2}\right)
+    $$
+
+    따라서 거리는 $d = 2\sin(\theta/2)$ 이다($\theta \in [0, 2\pi]$ 에서 $\sin(\theta/2) \geq 0$ 이므로). $d(\theta) = d(2\pi - \theta)$ 라는 대칭성을 쓰면 밀도 $1/\pi$ 로 $[0, \pi]$ 위에서 적분하면 된다.
+
+    $$
+    E[d] = \frac{1}{\pi}\int_0^{\pi} 2\sin\!\left(\frac{\theta}{2}\right) d\theta = \frac{1}{\pi}\!\left[-4\cos\!\left(\frac{\theta}{2}\right)\right]_0^{\pi} = \frac{4}{\pi}
+    $$
+
+---
+
+**연습문제 7.** 표준적인 52장짜리 카드 한 벌에서 카드 한 장을 균등하게 무작위로 뽑는다. 값을 A=1, 2=2, $\ldots$, 10=10, J=11, Q=12, K=13 으로 매긴다.
+
+(a) 뽑은 카드 값의 기댓값은 얼마인가?
+
+(b) 하트 카드의 값을 모두 두 배로 할 때 기댓값은 얼마인가?
+
+??? success "연습문제 7 풀이"
+    **(a)** 각 끗수 $1, 2, \ldots, 13$ 은 52장 가운데 정확히 4번씩 나타나므로 모든 끗수가 같은 정도로 일어난다. 따라서 기댓값은 다음과 같다.
+
+    $$
+    E[X] = \frac{1 + 2 + \cdots + 13}{13} = \frac{13 \cdot 14/2}{13} = 7
+    $$
+
+    **(b)** 52장 가운데 하트는 13장이다. 하트의 값을 두 배로 하는 것은 원래 값을 한 번 더 더하는 것과 같다. 이렇게 더해지는 몫의 기댓값은 다음과 같다.
+
+    $$
+    \frac{13}{52} \cdot 7 = \frac{7}{4}
+    $$
+
+    무작위로 뽑은 카드가 하트일 확률이 $1/4$ 이고 하트 값의 평균이 $7$ 이기 때문이다. 그러므로 다음을 얻는다.
+
+    $$
+    E[X_{\text{doubled}}] = 7 + \frac{7}{4} = \frac{35}{4} = 8.75
+    $$
+
