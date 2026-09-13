@@ -1,34 +1,80 @@
-# Counting Methods in Probability
+# 확률에서 쓰는 세기 방법
 
-## Overview
+## 개요
 
-Under the equally likely model, $P(A) = |A|/|\Omega|$. Computing probabilities therefore reduces to **counting**. This section applies the counting techniques from Chapter 1 to probability problems.
+같은 정도로 일어나는 모형에서는 $P(A) = |A|/|\Omega|$ 이다. 따라서 확률을 구하는 일은 **세기**로 귀착된다. 이 절에서는 1장에서 익힌 세기 기법을 확률 문제에 적용하고, 수열·조합·중복집합·제약이 있는 배열 같은 짜임새 있는 뽑기로까지 넓혀 본다.
 
-## Strategy for Counting Problems
+## 세기 문제를 푸는 요령
 
-1. **Define the sample space** $\Omega$ and determine $|\Omega|$
-2. **Define the event** $A$ of interest
-3. **Count** $|A|$ using appropriate techniques (multiplication rule, permutations, combinations)
-4. **Compute** $P(A) = |A|/|\Omega|$
+1. **표본공간** $\Omega$ 를 정하고 $|\Omega|$ 를 구한다
+2. 관심 있는 **사건** $A$ 를 정한다
+3. 알맞은 기법(곱셈 법칙, 순열, 조합)으로 $|A|$ 를 **센다**
+4. $P(A) = |A|/|\Omega|$ 를 **계산한다**
 
-!!! tip "Complement Counting"
-    When $A$ is hard to count directly, use:
+!!! tip "여집합 세기"
+    $A$ 를 곧바로 세기 어려울 때는 다음을 쓴다.
 
     $$P(A) = 1 - P(A^c)$$
 
-    Often $|A^c|$ (the "bad" outcomes) is much easier to count than $|A|$.
+    "나쁜" 결과인 $|A^c|$ 를 세는 편이 $|A|$ 를 세는 것보다 훨씬 쉬운 경우가 많다.
 
-## Newton–Pepys Problem (1693)
+## 중복조합 (막대와 별)
 
-Samuel Pepys posed this question to Isaac Newton: which of the following has the greatest chance of success?
+위의 세기 방법들은 **비복원** 뽑기를 다룬다. 중복이 허용되고 순서를 따지지 않을 때는 다른 도구가 필요하다.
 
-- **A:** Six fair dice are tossed and at least one "6" appears
-- **B:** Twelve fair dice are tossed and at least two "6"s appear
-- **C:** Eighteen fair dice are tossed and at least three "6"s appear
+$n$ 가지 종류에서 뽑은 크기 $k$ 의 **중복집합**이란 같은 종류를 여러 번 골라도 되고 고른 순서는 따지지 않는 뽑기를 말한다. 이런 중복집합의 개수는 막대와 별 공식으로 주어진다.
 
-Pepys thought **C** was most likely. Newton showed that **A** has the highest probability.
+$$
+\binom{n + k - 1}{k}
+$$
 
-### Computing $P(A)$
+이 공식은 $x_1 + x_2 + \cdots + x_n = k$ 의 음이 아닌 정수해의 개수를 세는 것이다. 여기서 $x_i$ 는 $i$ 번째 종류를 몇 번 골랐는지를 나타낸다. 해마다 별 $k$ 개(고르기)와 막대 $n - 1$ 개(칸막이)를 늘어놓은 것으로 나타낸 뒤, 그 배열의 수를 세면 된다.
+
+!!! example "중복을 허용해 수 고르기"
+    $\{1, 2, \ldots, 20\}$ 에서 중복을 허용해 수 3개를 고르는 방법은 몇 가지인가?
+
+    $$
+    \binom{20 + 3 - 1}{3} = \binom{22}{3} = 1540
+    $$
+
+    견주어 보면, 중복을 허용하지 **않을** 때는 $\binom{20}{3} = 1140$ 가지뿐이다.
+
+!!! example "작은 예로 확인하기"
+    $\{1, 2, 3\}$ 에서 중복을 허용해 수 2개를 고른다. 중복집합을 모두 적어 보면 다음과 같다.
+
+    $$
+    \{1,1\},\; \{1,2\},\; \{1,3\},\; \{2,2\},\; \{2,3\},\; \{3,3\}
+    $$
+
+    공식으로도 확인된다. $\binom{3 + 2 - 1}{2} = \binom{4}{2} = 6$.
+
+## 세기 방법 요약
+
+네 가지 기본 세기 모형은 두 가지 물음으로 갈린다. 순서를 따지는가, 그리고 중복을 허용하는가이다.
+
+| 짜임새 | 순서 | 중복 | 공식 |
+|-----------|:-----:|:----------:|---------|
+| 수열 | 따짐 | 허용 | $n^k$ |
+| 순열 | 따짐 | 안 됨 | $n!/(n-k)!$ |
+| 조합 | 안 따짐 | 안 됨 | $\binom{n}{k}$ |
+| 중복집합 | 안 따짐 | 허용 | $\binom{n+k-1}{k}$ |
+
+!!! tip "고르는 길잡이"
+
+    1. **순서를 따지는가?** 따진다면 → 수열 또는 순열. 따지지 않는다면 → 조합 또는 중복집합.
+    2. **중복을 허용하는가?** 허용한다면 → 수열 또는 중복집합. 허용하지 않는다면 → 순열 또는 조합.
+
+## 뉴턴–피프스 문제 (1693)
+
+새뮤얼 피프스가 아이작 뉴턴에게 던진 물음이다. 다음 가운데 성공할 가능성이 가장 큰 것은 무엇인가?
+
+- **A:** 공정한 주사위 6개를 던져 "6"이 적어도 한 번 나온다
+- **B:** 공정한 주사위 12개를 던져 "6"이 적어도 두 번 나온다
+- **C:** 공정한 주사위 18개를 던져 "6"이 적어도 세 번 나온다
+
+피프스는 **C**가 가장 그럴듯하다고 생각했다. 뉴턴은 **A**의 확률이 가장 크다는 것을 보였다.
+
+### P(A) 구하기
 
 $$
 |\Omega_A| = 6^6, \qquad |A^c| = 5^6
@@ -38,88 +84,88 @@ $$
 P(A) = 1 - P(A^c) = 1 - \left(\frac{5}{6}\right)^6 = 0.6651
 $$
 
-### Computing $P(B)$
+### P(B) 구하기
 
 $$
 |\Omega_B| = 6^{12}
 $$
 
-The complement $B^c$ includes zero or one "6":
+여사건 $B^c$ 는 "6"이 없거나 한 번 나오는 경우이다.
 
-- No "6": $|B_0| = 5^{12}$
-- Exactly one "6": $|B_1| = \binom{12}{1} \times 1 \times 5^{11}$
+- "6"이 없음: $|B_0| = 5^{12}$
+- "6"이 정확히 한 번: $|B_1| = \binom{12}{1} \times 1 \times 5^{11}$
 
 $$
 P(B) = 1 - \frac{5^{12}}{6^{12}} - \frac{\binom{12}{1} \cdot 5^{11}}{6^{12}} = 0.6187
 $$
 
-### Computing $P(C)$
+### P(C) 구하기
 
 $$
 |\Omega_C| = 6^{18}
 $$
 
-The complement $C^c$ includes zero, one, or two "6"s:
+여사건 $C^c$ 는 "6"이 없거나 한 번 또는 두 번 나오는 경우이다.
 
-- No "6": $|C_0| = 5^{18}$
-- Exactly one "6": $|C_1| = \binom{18}{1} \cdot 5^{17}$
-- Exactly two "6"s: $|C_2| = \binom{18}{2} \cdot 5^{16}$
+- "6"이 없음: $|C_0| = 5^{18}$
+- "6"이 정확히 한 번: $|C_1| = \binom{18}{1} \cdot 5^{17}$
+- "6"이 정확히 두 번: $|C_2| = \binom{18}{2} \cdot 5^{16}$
 
 $$
 P(C) = 1 - \frac{5^{18}}{6^{18}} - \frac{\binom{18}{1} \cdot 5^{17}}{6^{18}} - \frac{\binom{18}{2} \cdot 5^{16}}{6^{18}} = 0.5973
 $$
 
-### Conclusion
+### 결론
 
 $$
 P(A) = 0.6651 > P(B) = 0.6187 > P(C) = 0.5973
 $$
 
-!!! note "Intuition"
-    This result may seem surprising because each scenario has the same expected number of 6's (namely 1, 2, and 3 respectively). The key insight is that the **variance** also increases with more dice, making it more likely to fall short of the target.
+!!! note "직관"
+    세 경우 모두 6이 나오는 횟수의 기댓값은 눈금에 맞추어 각각 1, 2, 3으로 똑같기 때문에 이 결과가 뜻밖으로 보일 수 있다. 핵심은 주사위가 많아질수록 **분산**도 함께 커져서 목표에 못 미칠 가능성이 커진다는 데 있다.
 
-## Bertrand's Ballot Theorem (1887)
+## 베르트랑의 투표 정리 (1887)
 
-**Problem:** Candidate A receives $a$ votes and candidate B receives $b$ votes, with $a > b$. If votes are counted in random order, the probability that A is **strictly ahead** of B throughout the entire count is:
+**문제:** 후보 A가 $a$ 표, 후보 B가 $b$ 표를 얻었고 $a > b$ 라 하자. 표를 무작위 순서로 개표할 때, 개표가 끝날 때까지 줄곧 A가 B보다 **엄격히 앞설** 확률은 다음과 같다.
 
 $$
-P(\text{A strictly ahead throughout}) = \frac{a - b}{a + b}
+P(\text{줄곧 A가 엄격히 앞섬}) = \frac{a - b}{a + b}
 $$
 
-### Count Pattern as a Lattice Path
+### 개표 과정을 격자경로로 보기
 
-Represent the counting process as a path from $(0, 0)$ to $(b, a)$ on a grid:
+개표 과정을 격자 위에서 $(0, 0)$ 에서 $(b, a)$ 로 가는 경로로 나타내자.
 
-- Each vote for A → move one unit **up** (U)
-- Each vote for B → move one unit **right** (R)
+- A에게 간 표 한 장 → **위로** 한 칸 (U)
+- B에게 간 표 한 장 → **오른쪽으로** 한 칸 (R)
 
-For example, with votes AABABBABAAABAAA:
+예를 들어 AABABBABAAABAAA 라는 개표 순서는 다음과 같다.
 
 $$
 AABABBABAAABAAA \iff UURURRURUUURUUU
 $$
 
-### Proof via the Reflection Principle
+### 반사 원리를 쓴 증명
 
-The total number of paths:
+경로의 총 개수는 다음과 같다.
 
 $$
 |\Omega| = \binom{a+b}{b}
 $$
 
-**Paths starting with B** (first vote goes to B): these immediately fail the "strictly ahead" condition.
+**B로 시작하는 경로**(첫 표가 B에게 간 경우): 이런 경로는 곧바로 "엄격히 앞섬" 조건을 어긴다.
 
 $$
 |B_1| = \binom{a+b-1}{b-1}
 $$
 
-**Paths starting with A but touching the diagonal** at some point: by the **reflection principle**, these are in one-to-one correspondence with paths starting with B.
+**A로 시작하지만 어느 시점에 대각선에 닿는 경로**: **반사 원리**에 따라 이런 경로는 B로 시작하는 경로와 일대일로 대응된다.
 
 $$
 |B_2| = |B_1| = \binom{a+b-1}{b-1}
 $$
 
-The number of "good" paths (A strictly ahead throughout):
+"좋은" 경로(줄곧 A가 엄격히 앞서는 경로)의 개수는 다음과 같다.
 
 $$
 |A| = |\Omega| - |B_1| - |B_2|
@@ -129,26 +175,26 @@ $$
 P(A) = 1 - \frac{\binom{a+b-1}{b-1}}{\binom{a+b}{b}} - \frac{\binom{a+b-1}{b-1}}{\binom{a+b}{b}} = \frac{a-b}{a+b}
 $$
 
-## Python Example
+## 파이썬 예제
 
 ```python
 from math import comb
 from scipy.stats import binom
 
 # ========================================
-# Newton-Pepys Problem
+# 뉴턴-피프스 문제
 # ========================================
 print("=== Newton-Pepys Problem ===\n")
 
-# P(A): at least one 6 in 6 dice
+# P(A): 주사위 6개에서 6이 적어도 한 번
 P_A = 1 - (5/6)**6
 print(f"P(A) = 1 - (5/6)^6 = {P_A:.4f}")
 
-# P(B): at least two 6s in 12 dice
+# P(B): 주사위 12개에서 6이 적어도 두 번
 P_B = 1 - binom.cdf(1, 12, 1/6)
 print(f"P(B) = 1 - P(X≤1) where X~Bin(12,1/6) = {P_B:.4f}")
 
-# P(C): at least three 6s in 18 dice
+# P(C): 주사위 18개에서 6이 적어도 세 번
 P_C = 1 - binom.cdf(2, 18, 1/6)
 print(f"P(C) = 1 - P(X≤2) where X~Bin(18,1/6) = {P_C:.4f}")
 
@@ -156,18 +202,18 @@ print(f"\nP(A) > P(B) > P(C): {P_A > P_B > P_C}")
 print(f"Newton was right!")
 
 # ========================================
-# Bertrand's Ballot Theorem
+# 베르트랑의 투표 정리
 # ========================================
 print("\n=== Bertrand's Ballot Theorem ===\n")
 
 def ballot_probability(a, b):
-    """Exact probability A is strictly ahead throughout."""
+    """줄곧 A가 엄격히 앞설 정확한 확률."""
     if a <= b:
         return 0.0
     return (a - b) / (a + b)
 
 def ballot_simulation(a, b, n_sim=100_000):
-    """Simulate the ballot counting process."""
+    """개표 과정을 모의실험한다."""
     import numpy as np
     np.random.seed(42)
 
@@ -189,14 +235,14 @@ def ballot_simulation(a, b, n_sim=100_000):
             count += 1
     return count / n_sim
 
-# Test cases
+# 시험해 볼 경우들
 for a, b in [(10, 5), (7, 3), (15, 8)]:
     exact = ballot_probability(a, b)
     sim = ballot_simulation(a, b)
     print(f"a={a}, b={b}: P = (a-b)/(a+b) = {a-b}/{a+b} = {exact:.4f}, simulated = {sim:.4f}")
 ```
 
-**Output:**
+**실행 결과:**
 ```
 === Newton-Pepys Problem ===
 
@@ -213,3 +259,226 @@ a=10, b=5: P = (a-b)/(a+b) = 5/15 = 0.3333, simulated = 0.3337
 a=7, b=3: P = (a-b)/(a+b) = 4/10 = 0.4000, simulated = 0.4005
 a=15, b=8: P = (a-b)/(a+b) = 7/23 = 0.3043, simulated = 0.3031
 ```
+
+## 연습문제
+
+**연습문제 1.** 표준 52장 카드 한 벌에서 **비복원**으로 카드 3장을 뽑는다. 다음 확률을 구하여라.
+
+**(a)** 세 장이 모두 하트이다.
+
+**(b)** 세 장이 모두 같은 무늬이다.
+
+**(c)** 어느 두 장도 무늬가 같지 않다.
+
+??? success "연습문제 1 풀이"
+    3장짜리 패의 총 개수는 $\binom{52}{3} = 22{,}100$ 이다.
+
+    **(a)** 모두 하트인 패의 개수는 $\binom{13}{3} = 286$ 이다. 따라서 $P = 286/22{,}100 \approx 0.01294$ 이다.
+
+    **(b)** 네 무늬 어느 것으로든 같은 무늬 패가 $\binom{13}{3}$ 개씩 나오므로 $4 \times 286 = 1144$ 이다. 따라서 $P = 1144/22{,}100 \approx 0.05176$ 이다.
+
+    **(c)** 네 무늬 가운데 서로 다른 3개를 고른다: $\binom{4}{3} = 4$. 고른 무늬마다 13장 가운데 한 장을 고른다: $13^3 = 2197$. 모두 합하면 $4 \times 2197 = 8788$ 이다. 따라서 $P = 8788/22{,}100 \approx 0.3976$ 이다.
+
+---
+
+**연습문제 2 (포커 패).** 표준 52장 카드 한 벌에서 5장을 나누어 준다. 다음 확률을 구하여라.
+
+**(a)** 포카드
+
+**(b)** 플러시(5장이 모두 같은 무늬이지만 스트레이트 플러시는 아님)
+
+**(c)** 투 페어(단, 풀하우스는 아님)
+
+??? success "연습문제 2 풀이"
+    $|\Omega| = \binom{52}{5} = 2{,}598{,}960$
+
+    **(a)** **포카드:** 끗수를 고르고(13), 무늬 4개를 모두 고르고 $\binom{4}{4}=1$, 남은 48장에서 나머지 한 장을 고른다: $|A| = 13 \times 1 \times 48 = 624$. $P = 624/2{,}598{,}960 \approx 0.000240$.
+
+    **(b)** **플러시(스트레이트 플러시 제외):** 무늬를 고르고(4), 그 무늬 13장 가운데 5장을 고른 뒤 $\binom{13}{5}$, 무늬마다 스트레이트 플러시 10개를 뺀다: $|A| = 4 \times (\binom{13}{5} - 10) = 4 \times 1277 = 5108$. $P = 5108/2{,}598{,}960 \approx 0.001965$.
+
+    **(c)** **투 페어:** 13가지 끗수 가운데 페어가 될 끗수 2개를 고르고 $\binom{13}{2}$, 각각 무늬 2개씩 고르고 $\binom{4}{2}^2$, 남은 11가지 끗수 가운데 나머지 한 장의 끗수를 고른 뒤 무늬 1개를 고른다 $\binom{4}{1}$: $|A| = \binom{13}{2} \times \binom{4}{2}^2 \times 11 \times 4 = 78 \times 36 \times 44 = 123{,}552$. $P = 123{,}552/2{,}598{,}960 \approx 0.04754$.
+
+---
+
+**연습문제 3 (뉴턴–피프스 변형).** 다음을 구하여라.
+
+**(a)** 여사건을 써서 $P(\text{주사위 12개에서 6이 적어도 2번})$ 을 구하여라.
+
+**(b)** 일반화하여라. 주사위가 $6k$ 개일 때 $P(6 \text{ 이 적어도 } k \text{ 번})$ 의 공식을 적고 $k = 1, 2, 3, 4, 5$ 에 대해 계산하여라. 어떤 흐름이 보이는가?
+
+??? success "연습문제 3 풀이"
+    $X$ 를 $6k$ 번 굴렸을 때 6이 나온 횟수라 하자. 그러면 $X \sim \text{Binomial}(6k, 1/6)$ 이다.
+
+    **(a)** $k = 2$ 일 때(곧 $n = 12$ 번 굴릴 때) 다음과 같다.
+
+    $$
+    P(X \geq 2) = 1 - P(X = 0) - P(X = 1) = 1 - (5/6)^{12} - 12 (1/6)(5/6)^{11} \approx 0.6187
+    $$
+
+    **(b)** 일반적으로 다음이 성립한다.
+
+    $$
+    P(X \geq k) = \sum_{j=k}^{6k} \binom{6k}{j} (1/6)^{j} (5/6)^{6k-j}
+    $$
+
+    수치로 구하면 $P_1 \approx 0.6651$, $P_2 \approx 0.6187$, $P_3 \approx 0.5973$, $P_4 \approx 0.5841$, $P_5 \approx 0.5751$ 이다. $k$ 가 커질수록 확률은 $1/2$ 쪽으로 **줄어든다**. 이것이 바로 뉴턴이 피프스에게 준 그 유명한 답이다. "주사위 6개에서 6이 적어도 1번"이 "주사위 12개에서 6이 적어도 2번"보다 더 그럴듯하고, 그 뒤도 마찬가지이다.
+
+---
+
+**연습문제 4 (베르트랑의 투표 정리).** 어떤 선거에서 후보 A가 8표, 후보 B가 3표를 얻었다.
+
+**(a)** 베르트랑의 투표 정리를 써서 개표가 끝날 때까지 줄곧 A가 엄격히 앞설 확률을 구하여라.
+
+**(b)** $\binom{11}{3}$ 과 "좋은" 개표 순서의 개수를 구해 답을 확인하여라.
+
+??? success "연습문제 4 풀이"
+    **(a)** $P = \dfrac{a-b}{a+b} = \dfrac{8-3}{8+3} = \dfrac{5}{11} \approx 0.4545$
+
+    **(b)** 전체 순서(A 표 8장과 B 표 3장으로 이루어진 +/- 경로)의 개수는 $\binom{11}{3} = 165$ 이다. 반사 원리에 따라 "나쁜" 순서(줄곧 A가 엄격히 앞서지 못하는 경우)의 개수는 $2 \binom{10}{2} = 2 \times 45 = 90$ 이다. 좋은 경로는 $165 - 90 = 75$ 개이다. 따라서 $P = 75/165 = 5/11$ 이다. $\checkmark$
+
+---
+
+**연습문제 5 (막대와 별).** 주머니에 4가지 사탕이 얼마든지 들어 있다. 여기에서 6개를 고른다(순서는 따지지 않고 중복은 허용한다).
+
+**(a)** 서로 다른 뽑기는 몇 가지인가?
+
+**(b)** 뽑기마다 같은 정도로 일어난다면 네 가지를 모두 적어도 하나씩 고를 확률은 얼마인가?
+
+??? success "연습문제 5 풀이"
+    **(a)** $n = 4$ 가지에서 뽑은 크기 $k = 6$ 의 중복집합이다.
+
+    $$
+    \binom{4 + 6 - 1}{6} = \binom{9}{6} = 84
+    $$
+
+    **(b)** 모든 종류를 적어도 하나씩 고르려면 $y_i = x_i - 1$ 로 바꾸어 $y_i \geq 0$ 이고 $y_1 + y_2 + y_3 + y_4 = 2$ 가 되게 하면 된다.
+
+    $$
+    \binom{4 + 2 - 1}{2} = \binom{5}{2} = 10
+    $$
+
+    $$
+    P(\text{네 가지를 모두 적어도 하나씩}) = \frac{10}{84} = \frac{5}{42} \approx 0.1190
+    $$
+
+---
+
+**연습문제 6.** $\{1,2,\ldots,20\}$ 에서 수 3개를 고른다. 다음 각 경우에 고른 수들이 등차수열을 이룰 확률(곧 세 수 가운데 하나가 나머지 둘의 평균이 될 확률)을 구하여라.
+
+**(a)** $\{1,2,\ldots,20\}$ 에서 서로 다른 세 수를 무작위로 고른다.
+
+**(b)** $\{1,2,\ldots,20\}$ 에서 한 번에 하나씩 세 번 고르되, 고를 때마다 되돌려 놓는다.
+
+??? success "연습문제 6 풀이"
+    **(a)** $\{1,\dots,20\}$ 에서 서로 다른 세 수를 고르는 방법의 총 개수는 다음과 같다.
+
+    $$
+    \binom{20}{3} = 1140.
+    $$
+
+    세 수가 등차수열을 이루면 다음과 같이 쓸 수 있다.
+
+    $$
+    a,\; a+d,\; a+2d,
+    $$
+
+    여기서 $d \ge 1$ 이고 $a + 2d \le 20$ 이다.
+
+    $d$ 를 고정하면 첫 항 $a$ 는 $1$ 부터 $20 - 2d$ 까지의 정수 어느 것이나 될 수 있으므로 $20 - 2d$ 가지이다.  
+    $a \ge 1$ 이어야 하므로 $d \le 9$ 이다.
+
+    따라서 이런 세 수 조합의 총 개수는 다음과 같다.
+
+    $$
+    \sum_{d=1}^{9} (20 - 2d) = 18 + 16 + 14 + 12 + 10 + 8 + 6 + 4 + 2 = 90.
+    $$
+
+    그러므로 다음을 얻는다.
+
+    $$
+    P = \frac{90}{1140} = \frac{3}{38} \approx 0.0789.
+    $$
+
+    ---
+
+    **(b)** 이번에는 한 번에 하나씩 고르되 되돌려 놓으므로 결과는 순서 있는 세 쌍 $(x_1,x_2,x_3)$ 이다. 결과의 총 개수는 다음과 같다.
+
+    $$
+    20^3 = 8000.
+    $$
+
+    등차수열을 이루는 순서 있는 세 쌍이 몇 개인지 세어 보자.
+
+    먼저 순서를 따지지 않은 등차수열을 센다.
+
+    - 모두 같음: $(a,a,a)$ → 20가지  
+    - 모두 다름: $d \ge 1$ 인 $(a,a+d,a+2d)$ → 90가지  
+
+    이제 순서를 헤아린다.
+
+    - 세 수가 모두 같으면 순서는 하나뿐이다 → $20$
+    - 세 수가 모두 다르면 순서는 $3! = 6$ 가지이다 → $90 \times 6 = 540$
+
+    따라서 바라는 순서 있는 세 쌍의 총 개수는 다음과 같다.
+
+    $$
+    20 + 540 = 560.
+    $$
+
+    그러므로 다음을 얻는다.
+
+    $$
+    P = \frac{560}{8000} = \frac{7}{100} = 0.07.
+    $$
+
+    ---
+
+    **요약**
+
+    | 경우 | 전체 결과 | 바라는 결과 | 확률 |
+    |------|--------------:|----------:|-------------|
+    | (a) 비복원 | $1140$ | $90$ | $3/38 \approx 0.0789$ |
+    | (b) 복원    | $8000$ | $560$ | $7/100 = 0.07$ |
+
+---
+
+**연습문제 7.** 나이가 모두 다른 $n$ 명이 무작위 순서로 앉는다. 다음 각 상황에서 나이가 엄격히 커지는 순서 또는 엄격히 작아지는 순서로 놓일 확률을 구하여라.
+
+**(a)** 한 줄로 앉는 경우.
+
+**(b)** 원탁에 둘러앉는 경우(돌려서 겹치는 것은 같다고 본다).
+
+??? success "연습문제 7 풀이"
+    **(a)** 같은 정도로 일어나는 순열이 $n!$ 가지 있다. 커지는 순서가 정확히 하나, 작아지는 순서가 정확히 하나이므로 다음을 얻는다.
+
+    $$
+    P = \frac{2}{n!}
+    $$
+
+    **(b)** 원형 배열에서는 회전이 같은 것으로 취급되므로 서로 다른 자리 배치는 $(n-1)!$ 가지이다. 회전 대칭성을 없애려고 가장 어린 사람의 자리를 고정한다. 나머지 $n - 1$ 명을 늘어놓는 방법은 $(n-1)!$ 가지이고, 그 가운데 시계 방향으로 커지는 것이 정확히 하나, 시계 방향으로 작아지는 것이 정확히 하나이다. 그러므로 다음을 얻는다.
+
+    $$
+    P = \frac{2}{(n-1)!}
+    $$
+
+    원형일 때의 확률이 일렬일 때보다 $n$ 배 크다. 회전을 나누어 없애면서 표본공간이 $n$ 분의 1로 줄어드는데 바라는 배열의 수는 그대로 2이기 때문이다.
+
+    | 상황 | 전체 배열 | 바라는 배열 | 확률 |
+    |---------|-------------------:|----------:|-------------|
+    | 일렬 | $n!$ | $2$ | $2/n!$ |
+    | 원형 | $(n-1)!$ | $2$ | $2/(n-1)!$ |
+
+    예를 들어 $n = 5$ 이면 일렬일 때는 $2/120 = 1/60$, 원형일 때는 $2/24 = 1/12$ 이다.
+
+---
+
+**연습문제 8.** 공정한 정육면체 주사위를 되풀이해서 굴린다. 홀수(1, 3, 5)가 하나라도 나오기 전에 세 짝수(2, 4, 6)가 모두 적어도 한 번씩 나올 확률은 얼마인가?
+
+??? success "연습문제 8 풀이"
+    여섯 눈이 **처음 나타나는** 순서를 생각하자. 대칭성에 따라 처음 나타나는 순서 $6!$ 가지는 모두 같은 정도로 일어난다.
+
+    이 사건이 일어나려면 짝수 세 눈(2, 4, 6)이 앞의 세 자리를 차지하고($3!$ 가지 순서 가운데 아무것이나) 홀수 세 눈(1, 3, 5)이 뒤의 세 자리를 차지해야 한다($3!$ 가지 순서 가운데 아무것이나). 그러므로 다음을 얻는다.
+
+    $$
+    P = \frac{3! \cdot 3!}{6!} = \frac{36}{720} = \frac{1}{20}
+    $$

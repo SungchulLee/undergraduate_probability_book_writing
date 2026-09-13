@@ -1,94 +1,96 @@
-# Sample Spaces and Outcomes
+# 표본공간과 근원사건
 
-## Overview
+## 개요
 
-The foundation of probability theory begins with the concept of an **experiment** — any procedure that produces observable outcomes. Before we can assign probabilities, we must carefully describe what outcomes are possible.
+확률론의 출발점은 **실험**이라는 개념이다. 실험이란 눈으로 확인할 수 있는 결과를 내놓는 모든 절차를 말한다. 확률을 매기기에 앞서, 어떤 결과들이 일어날 수 있는지를 먼저 꼼꼼히 적어 두어야 한다.
 
-## Sample
+## 표본
 
-A **sample** (or **outcome**) is a possible result of an experiment. We denote an individual outcome by $\omega$.
+**표본**(또는 **결과**)은 실험에서 일어날 수 있는 하나의 결과이다. 개별 결과는 $\omega$ 로 나타낸다.
 
-!!! example "Examples of Samples"
-    - Flipping a coin: $\omega = H$ or $\omega = T$
-    - Rolling a die: $\omega \in \{1, 2, 3, 4, 5, 6\}$
-    - Measuring a stock return: $\omega \in \mathbb{R}$
+!!! example "표본의 예"
 
-## Sample Space
+    - 동전 던지기: $\omega = H$ 또는 $\omega = T$
+    - 주사위 굴리기: $\omega \in \{1, 2, 3, 4, 5, 6\}$
+    - 주식 수익률 재기: $\omega \in \mathbb{R}$
 
-The **sample space** $\Omega$ is the set of all possible outcomes of an experiment.
+## 표본공간
+
+**표본공간** $\Omega$ 는 실험에서 일어날 수 있는 모든 결과를 모아 놓은 집합이다.
 
 $$
-\Omega = \{\text{all possible outcomes } \omega\}
+\Omega = \{\text{일어날 수 있는 모든 결과 } \omega\}
 $$
 
-!!! example "Examples of Sample Spaces"
-    - **Coin flip:** $\Omega = \{H, T\}$
-    - **Rolling a die:** $\Omega = \{1, 2, 3, 4, 5, 6\}$
-    - **Flipping a fair coin three times:**
+!!! example "표본공간의 예"
+
+    - **동전 한 번 던지기:** $\Omega = \{H, T\}$
+    - **주사위 굴리기:** $\Omega = \{1, 2, 3, 4, 5, 6\}$
+    - **공정한 동전을 세 번 던지기:**
 
     $$
     \Omega = \{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}
     $$
 
-    Here $|\Omega| = 8$.
+    이때 $|\Omega| = 8$ 이다.
 
-    - **Measuring a stock price:** $\Omega = [0, \infty)$
+    - **주가 재기:** $\Omega = [0, \infty)$
 
-## Finite vs. Infinite Sample Spaces
+## 유한한 표본공간과 무한한 표본공간
 
-Sample spaces can be classified by their size:
+표본공간은 그 크기에 따라 다음과 같이 나눌 수 있다.
 
-- **Finite:** $\Omega$ contains finitely many outcomes (e.g., rolling a die)
-- **Countably infinite:** $\Omega$ can be put in one-to-one correspondence with the natural numbers (e.g., counting the number of trades until a profit)
-- **Uncountable:** $\Omega$ has the cardinality of the continuum (e.g., measuring a continuous quantity like a stock return)
+- **유한:** $\Omega$ 가 유한개의 결과를 담고 있는 경우(예: 주사위 굴리기)
+- **가산무한:** $\Omega$ 를 자연수와 일대일로 대응시킬 수 있는 경우(예: 이익이 날 때까지 거래한 횟수 세기)
+- **비가산:** $\Omega$ 의 크기가 연속체의 크기와 같은 경우(예: 주식 수익률처럼 연속적인 양을 재는 경우)
 
-The mathematical treatment of probability differs depending on whether $\Omega$ is discrete (finite or countably infinite) or continuous (uncountable).
+확률을 수학적으로 다루는 방식은 $\Omega$ 가 이산(유한 또는 가산무한)인지 연속(비가산)인지에 따라 달라진다.
 
-## Probability Measure
+## 확률측도
 
-For each outcome $\omega$ in $\Omega$, we attach a "weight" — think of it as a brick placed on that outcome. Each brick may have a different weight, but the total weight of all bricks is 1. This weight distribution over the sample space $\Omega$ is a **probability measure**.
-
-$$
-P(\omega) = \text{Weight of the brick attached to } \omega
-$$
-
-For any event $A \subseteq \Omega$:
+$\Omega$ 안의 결과 $\omega$ 마다 "무게"를 하나씩 달아 준다. 그 결과 위에 벽돌을 하나 올려놓는다고 생각하면 된다. 벽돌마다 무게는 다를 수 있지만, 모든 벽돌의 무게를 합하면 1이 된다. 표본공간 $\Omega$ 위에 이렇게 무게를 나누어 놓은 것이 바로 **확률측도**이다.
 
 $$
-P(A) = \sum_{\omega \in A} P(\omega) = \text{Total weight of the bricks attached to } A
+P(\omega) = \omega \text{ 에 올려놓은 벽돌의 무게}
 $$
 
-!!! note "The Brick Analogy"
-    The brick analogy provides powerful intuition:
+임의의 사건 $A \subseteq \Omega$ 에 대해서는 다음과 같다.
 
-    - Every outcome gets exactly one brick
-    - Bricks can have different weights (but all non-negative)
-    - The total weight of all bricks equals 1
-    - The probability of an event is the total weight of bricks in that event
+$$
+P(A) = \sum_{\omega \in A} P(\omega) = A \text{ 에 올려놓은 벽돌의 무게의 합}
+$$
 
-## Python Example
+!!! note "벽돌 비유"
+    벽돌 비유는 꽤 쓸모 있는 직관을 준다.
+
+    - 결과마다 벽돌이 정확히 하나씩 놓인다
+    - 벽돌의 무게는 서로 다를 수 있다(다만 모두 음이 아니다)
+    - 모든 벽돌의 무게를 합하면 1이다
+    - 사건의 확률은 그 사건 안에 있는 벽돌의 무게의 합이다
+
+## 파이썬 예제
 
 ```python
 import numpy as np
 
-# Sample space for flipping a fair coin three times
+# 공정한 동전을 세 번 던질 때의 표본공간
 omega = ['HHH', 'HHT', 'HTH', 'HTT', 'THH', 'THT', 'TTH', 'TTT']
 
-# Equally likely probability measure
+# 모든 결과가 같은 정도로 일어나는 확률측도
 prob = {outcome: 1/len(omega) for outcome in omega}
 
 print("Sample space:", omega)
 print(f"|Ω| = {len(omega)}")
 print(f"\nProbability of each outcome: {1/len(omega):.4f}")
 
-# Event A: at least two heads
+# 사건 A: 앞면이 적어도 두 번 나온다
 A = [w for w in omega if w.count('H') >= 2]
 P_A = sum(prob[w] for w in A)
 print(f"\nEvent A (at least 2 heads): {A}")
 print(f"P(A) = {len(A)}/{len(omega)} = {P_A:.4f}")
 ```
 
-**Output:**
+**실행 결과:**
 ```
 Sample space: ['HHH', 'HHT', 'HTH', 'HTT', 'THH', 'THT', 'TTH', 'TTT']
 |Ω| = 8
@@ -97,3 +99,24 @@ Probability of each outcome: 0.1250
 Event A (at least 2 heads): ['HHH', 'HHT', 'HTH', 'THH']
 P(A) = 4/8 = 0.5000
 ```
+
+## 연습문제
+
+**연습문제 1.** 서로 구별되는 공정한 주사위 두 개를 굴리는 실험을 생각하자.
+
+**(a)** 표본공간 $\Omega$ 를 적고 $|\Omega|$ 를 구하여라.
+
+**(b)** $A$ 를 두 눈의 합이 7인 사건이라 하자. $|A|$ 와 $P(A)$ 를 구하여라.
+
+**(c)** $B$ 를 두 주사위의 눈이 같은 사건이라 하자. $P(B)$ 를 구하여라.
+
+**(d)** $A$ 와 $B$ 는 배반인가? 까닭을 밝혀라.
+
+??? success "연습문제 1 풀이"
+    **(a)** $\Omega = \{(i,j) : 1 \leq i, j \leq 6\}$ 이므로 $|\Omega| = 36$ 이다.
+
+    **(b)** $A = \{(1,6),(2,5),(3,4),(4,3),(5,2),(6,1)\}$ 이므로 $|A| = 6$ 이고 $P(A) = 6/36 = 1/6$ 이다.
+
+    **(c)** $B = \{(1,1),(2,2),(3,3),(4,4),(5,5),(6,6)\}$ 이므로 $P(B) = 6/36 = 1/6$ 이다.
+
+    **(d)** 그렇다. 어떤 쌍 $(i,i)$ 도 합이 7이 될 수 없으므로($2i = 7$ 이어야 하는데 그런 정수는 없다) $A \cap B = \emptyset$ 이다.

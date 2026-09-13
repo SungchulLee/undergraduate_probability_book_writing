@@ -1,130 +1,130 @@
-# Properties Derived from Axioms
+# 공리에서 이끌어 낸 성질
 
-## Overview
+## 개요
 
-Starting from the three Kolmogorov axioms, we can derive a rich collection of properties. These properties are the everyday tools of probability computation.
+콜모고로프의 세 공리에서 출발하면 쓸모 있는 성질들을 여럿 이끌어 낼 수 있다. 이 성질들이야말로 확률을 계산할 때 날마다 쓰는 연장이다.
 
-## Property 4: Finite Additivity
+## 성질 4: 유한가법성
 
-For any **pairwise disjoint** events $A_1, A_2, \ldots, A_n$:
+**쌍마다 서로소**인 사건 $A_1, A_2, \ldots, A_n$ 에 대해 다음이 성립한다.
 
 $$
 P\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i)
 $$
 
-This follows from Axiom 3 by setting $A_{n+1} = A_{n+2} = \cdots = \emptyset$.
+공리 3에서 $A_{n+1} = A_{n+2} = \cdots = \emptyset$ 로 두면 곧바로 따라 나온다.
 
-## Property 5: Monotonicity
+## 성질 5: 단조성
 
-If $A \subseteq B$, then:
+$A \subseteq B$ 이면 다음이 성립한다.
 
 $$
 P(A) \leq P(B)
 $$
 
-**Proof:** Write $B = A \cup (B \setminus A)$ where $A$ and $B \setminus A$ are disjoint. By finite additivity:
+**증명:** $B = A \cup (B \setminus A)$ 로 쓰면 $A$ 와 $B \setminus A$ 는 서로소이다. 유한가법성에 따라 다음을 얻는다.
 
 $$
 P(B) = P(A) + P(B \setminus A) \geq P(A)
 $$
 
-since $P(B \setminus A) \geq 0$.
+$P(B \setminus A) \geq 0$ 이기 때문이다.
 
-## Property 6: Complement Rule
+## 성질 6: 여사건 법칙
 
 $$
 P(A) = 1 - P(A^c)
 $$
 
-**Proof:** Since $A$ and $A^c$ are disjoint and $A \cup A^c = \Omega$:
+**증명:** $A$ 와 $A^c$ 는 서로소이고 $A \cup A^c = \Omega$ 이므로 다음을 얻는다.
 
 $$
 1 = P(\Omega) = P(A \cup A^c) = P(A) + P(A^c)
 $$
 
-!!! tip "Practical Importance"
-    The complement rule is one of the most frequently used tools in probability. It is often easier to compute $P(A^c)$ (the probability that $A$ does **not** happen) than $P(A)$ directly.
+!!! tip "실전에서의 쓸모"
+    여사건 법칙은 확률에서 가장 자주 쓰는 도구 가운데 하나이다. $P(A)$ 를 곧바로 구하기보다 $A$ 가 일어나지 **않을** 확률 $P(A^c)$ 를 구하는 편이 쉬운 경우가 많다.
 
-    The strategy: **$P(\text{at least one}) = 1 - P(\text{none})$**
+    요령은 이것이다. **$P(\text{적어도 하나}) = 1 - P(\text{하나도 없음})$**
 
-## Additional Useful Properties
+## 그 밖에 쓸모 있는 성질
 
-### Difference Rule
+### 차사건 법칙
 
-For any events $A$ and $B$:
+임의의 사건 $A$ 와 $B$ 에 대해 다음이 성립한다.
 
 $$
 P(A \setminus B) = P(A) - P(A \cap B)
 $$
 
-**Proof:** $A = (A \setminus B) \cup (A \cap B)$ is a disjoint union, so $P(A) = P(A \setminus B) + P(A \cap B)$.
+**증명:** $A = (A \setminus B) \cup (A \cap B)$ 는 서로소인 합집합이므로 $P(A) = P(A \setminus B) + P(A \cap B)$ 이다.
 
-### Probability of a Union (General)
+### 합집합의 확률 (일반)
 
-For any two events (not necessarily disjoint):
+서로소가 아니어도 되는 임의의 두 사건에 대해 다음이 성립한다.
 
 $$
 P(A \cup B) = P(A) + P(B) - P(A \cap B)
 $$
 
-This is the simplest case of the inclusion-exclusion principle (covered in the next section).
+이는 포함배제 원리의 가장 단순한 경우이다(다음 절에서 다룬다).
 
-### Subadditivity (Union Bound)
+### 열가법성 (합집합 경계)
 
-For any events $A_1, A_2, \ldots, A_n$ (not necessarily disjoint):
+서로소가 아니어도 되는 임의의 사건 $A_1, A_2, \ldots, A_n$ 에 대해 다음이 성립한다.
 
 $$
 P\left(\bigcup_{i=1}^{n} A_i\right) \leq \sum_{i=1}^{n} P(A_i)
 $$
 
-This is **Boole's inequality**, and it provides a useful upper bound.
+이것이 **불의 부등식**이며, 쓸모 있는 상계를 준다.
 
-## Summary Table
+## 요약 표
 
-| # | Property | Statement |
+| # | 성질 | 내용 |
 |---|----------|-----------|
-| 4 | Finite additivity | $P(\cup_{i=1}^n A_i) = \sum_{i=1}^n P(A_i)$ for disjoint $A_i$ |
-| 5 | Monotonicity | $A \subseteq B \Rightarrow P(A) \leq P(B)$ |
-| 6 | Complement rule | $P(A) = 1 - P(A^c)$ |
+| 4 | 유한가법성 | 서로소인 $A_i$ 에 대해 $P(\cup_{i=1}^n A_i) = \sum_{i=1}^n P(A_i)$ |
+| 5 | 단조성 | $A \subseteq B \Rightarrow P(A) \leq P(B)$ |
+| 6 | 여사건 법칙 | $P(A) = 1 - P(A^c)$ |
 
-## Python Example
+## 파이썬 예제
 
 ```python
 import numpy as np
 
-# Demonstrate properties with a fair die
+# 공정한 주사위로 성질들을 확인한다
 omega = {1, 2, 3, 4, 5, 6}
 P = lambda event: len(event) / len(omega)
 
-A = {1, 2, 3}    # ≤ 3
-B = {2, 3, 4, 5}  # between 2 and 5
+A = {1, 2, 3}    # 3 이하
+B = {2, 3, 4, 5}  # 2 이상 5 이하
 
-# Property 5: Monotonicity
+# 성질 5: 단조성
 C = {2, 3}  # C ⊂ A
 print(f"Monotonicity: P(C) = {P(C):.4f} ≤ P(A) = {P(A):.4f}: {P(C) <= P(A)}")
 
-# Property 6: Complement rule
+# 성질 6: 여사건 법칙
 print(f"\nComplement rule:")
 print(f"P(A) = {P(A):.4f}")
 print(f"P(A^c) = {P(omega - A):.4f}")
 print(f"P(A) + P(A^c) = {P(A) + P(omega - A):.4f}")
 
-# Difference rule
+# 차사건 법칙
 print(f"\nDifference rule:")
 print(f"P(A \\ B) = {P(A - B):.4f}")
 print(f"P(A) - P(A ∩ B) = {P(A) - P(A & B):.4f}")
 
-# Union formula
+# 합집합 공식
 print(f"\nUnion formula:")
 print(f"P(A ∪ B) = {P(A | B):.4f}")
 print(f"P(A) + P(B) - P(A ∩ B) = {P(A) + P(B) - P(A & B):.4f}")
 
-# Boole's inequality
+# 불의 부등식
 print(f"\nBoole's inequality:")
 print(f"P(A ∪ B) = {P(A | B):.4f} ≤ P(A) + P(B) = {P(A) + P(B):.4f}")
 ```
 
-**Output:**
+**실행 결과:**
 ```
 Monotonicity: P(C) = 0.3333 ≤ P(A) = 0.5000: True
 
@@ -144,3 +144,79 @@ P(A) + P(B) - P(A ∩ B) = 0.8333
 Boole's inequality:
 P(A ∪ B) = 0.8333 ≤ P(A) + P(B) = 1.1667
 ```
+
+## 연습문제
+
+**연습문제 1.** $P(A) = 0.6$, $P(B) = 0.4$, $P(A \cap B) = 0.2$ 라 하자. 다음을 구하여라.
+
+**(a)** $P(A \cup B)$
+
+**(b)** $P(A^c)$
+
+**(c)** $P(A \cap B^c)$
+
+**(d)** $P(A^c \cap B^c)$
+
+??? success "연습문제 1 풀이"
+    **(a)** $P(A \cup B) = 0.6 + 0.4 - 0.2 = 0.8$
+
+    **(b)** $P(A^c) = 1 - 0.6 = 0.4$
+
+    **(c)** $P(A \cap B^c) = P(A) - P(A \cap B) = 0.6 - 0.2 = 0.4$
+
+    **(d)** $P(A^c \cap B^c) = P((A \cup B)^c) = 1 - P(A \cup B) = 1 - 0.8 = 0.2$
+
+---
+
+**연습문제 2.** $P(A) = 0.5$, $P(B) = 0.4$, $P(C) = 0.3$ 이라 하자. $A$, $B$, $C$ 가 쌍마다 서로소라면 $P(A \cup B \cup C)$ 와 $P((A \cup B \cup C)^c)$ 를 구하여라.
+
+??? success "연습문제 2 풀이"
+    서로소인 사건에 대한 유한가법성에 따라 다음을 얻는다.
+
+    $$
+    P(A \cup B \cup C) = P(A) + P(B) + P(C) = 0.5 + 0.4 + 0.3 = 1.2
+    $$
+
+    이 값은 1을 넘으므로 확률로서는 있을 수 없다. 따라서 이 세 값을 가지면서 동시에 쌍마다 서로소인 **확률측도는 존재하지 않는다**. 이 문제는 중요한 일관성 조건을 보여 준다. 서로소인 사건들의 확률의 합은 아무리 커도 1을 넘을 수 없다는 것이다. 만약 $P(C) = 0.1$ 로 고쳐 잡으면 $P(A \cup B \cup C) = 1.0$ 이고 $P((A \cup B \cup C)^c) = 0$ 이 된다.
+
+---
+
+**연습문제 3 (불의 부등식).** $A_1, A_2, \ldots, A_n$ 을 임의의 사건이라 하자. 다음을 귀납법으로 증명하여라.
+
+$$
+P\left(\bigcup_{i=1}^{n} A_i\right) \leq \sum_{i=1}^{n} P(A_i)
+$$
+
+??? success "연습문제 3 풀이"
+    **첫 단계** ($n = 1$): $P(A_1) \leq P(A_1)$ 은 자명하다.
+
+    **귀납 단계.** 부등식이 $n$ 에 대해 성립한다고 하자. 사건이 $n+1$ 개일 때 $B = \bigcup_{i=1}^{n} A_i$ 라 두면 다음이 성립한다.
+
+    $$
+    P\left(\bigcup_{i=1}^{n+1} A_i\right) = P(B \cup A_{n+1}) = P(B) + P(A_{n+1}) - P(B \cap A_{n+1})
+    $$
+
+    $P(B \cap A_{n+1}) \geq 0$ 이므로 다음을 얻는다.
+
+    $$
+    P(B \cup A_{n+1}) \leq P(B) + P(A_{n+1}) \leq \sum_{i=1}^{n} P(A_i) + P(A_{n+1}) = \sum_{i=1}^{n+1} P(A_i)
+    $$
+
+    두 번째 부등식에서 귀납 가정을 썼다. $\square$
+
+---
+
+**연습문제 4.** $1$ 부터 $1{,}000{,}000$ 까지의 정수 가운데 하나를 균등하게 무작위로 고른다. 그 수의 십진 표기에 숫자 $7$ 이 적어도 한 번 나올 확률은 얼마인가?
+
+??? success "연습문제 4 풀이"
+    여사건을 쓰자. $0$ 부터 $999{,}999$ 까지의 정수를 앞자리를 0으로 채운 6자리 문자열($000000, 000001, \ldots, 999999$)로 적어 생각한다. 이런 문자열은 모두 $10^6$ 개이다.
+
+    문자열에 숫자 $7$ 이 **하나도** 없으려면 6개의 자리마다 9가지($0,1,2,3,4,5,6,8,9$)씩 고를 수 있으므로, $7$ 이 없는 문자열은 $9^6$ 개이다.
+
+    그러므로 다음을 얻는다.
+
+    $$
+    P(7 \text{ 이 적어도 한 번}) = 1 - \frac{9^6}{10^6} = 1 - \frac{531{,}441}{1{,}000{,}000} = 0.468559
+    $$
+
+    확률은 대략 $46.86\%$ 이다.
