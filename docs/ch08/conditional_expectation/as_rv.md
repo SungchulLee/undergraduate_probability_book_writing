@@ -1,50 +1,50 @@
-# $E(X \mid Y)$ as a Random Variable
+# 확률변수로서의 E[Y|X]
 
-## The Local Average Interpretation
+## 국소평균으로 읽기
 
-$E(X \mid Y)$ can be understood as a **local average** of $X$. For each value $y$ that $Y$ takes, $E(X \mid Y = y)$ averages $X$ over only those outcomes where $Y = y$. As $Y$ varies across its range, these local averages trace out a random variable.
+$E(X \mid Y)$ 는 $X$ 의 **국소평균**으로 이해할 수 있다. $Y$ 가 갖는 값 $y$ 마다 $E(X \mid Y = y)$ 는 $Y = y$ 인 결과들만 모아 $X$ 의 평균을 낸 것이다. $Y$ 가 자기 범위를 훑고 지나가면 이 국소평균들이 하나의 확률변수를 그려 낸다.
 
-## Coin Flip Example
+## 동전 던지기의 예
 
-Consider three fair coin flips. Let $X$ be the total number of heads and $Y$ be the indicator of getting a head on the first flip ($Y = 1$ if the first flip is H, $Y = 0$ otherwise).
+공정한 동전을 세 번 던진다고 하자. $X$ 를 앞면의 총수라 하고 $Y$ 를 첫 번째에 앞면이 나왔는지를 나타내는 지시확률변수라 하자(첫 번째가 H 이면 $Y = 1$, 아니면 $Y = 0$).
 
-The sample space is $\{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}$, each with probability $1/8$.
+표본공간은 $\{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}$ 이고 각각의 확률은 $1/8$ 이다.
 
-**Values of $X$** (number of heads) for each outcome:
+각 결과에 대한 **$X$ 의 값**(앞면의 수)은 다음과 같다.
 
-| Outcome | HHH | HHT | HTH | HTT | THH | THT | TTH | TTT |
+| 결과 | HHH | HHT | HTH | HTT | THH | THT | TTH | TTT |
 |:--------|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | $X$     |  3  |  2  |  2  |  1  |  2  |  1  |  1  |  0  |
 
-**Computing $E(X \mid Y)$:**
+**$E(X \mid Y)$ 계산하기:**
 
-When $Y = 1$ (first flip is H): the outcomes are $\{HHH, HHT, HTH, HTT\}$, so $E(X \mid Y = 1) = \frac{3 + 2 + 2 + 1}{4} = 2$.
+$Y = 1$ 일 때(첫 번째가 H) 해당하는 결과는 $\{HHH, HHT, HTH, HTT\}$ 이므로 $E(X \mid Y = 1) = \frac{3 + 2 + 2 + 1}{4} = 2$ 이다.
 
-When $Y = 0$ (first flip is T): the outcomes are $\{THH, THT, TTH, TTT\}$, so $E(X \mid Y = 0) = \frac{2 + 1 + 1 + 0}{4} = 1$.
+$Y = 0$ 일 때(첫 번째가 T) 해당하는 결과는 $\{THH, THT, TTH, TTT\}$ 이므로 $E(X \mid Y = 0) = \frac{2 + 1 + 1 + 0}{4} = 1$ 이다.
 
-Therefore:
-
-$$
-E(X \mid Y) = \begin{cases} 2 & \text{with probability } 1/2 \\ 1 & \text{with probability } 1/2 \end{cases}
-$$
-
-The red bars in the figure show $E(X \mid Y)$ for each outcome — outcomes with the same $Y$ value get the same conditional expectation. This is the "local average" at work: $E(X \mid Y)$ smooths out $X$ within each group defined by $Y$.
-
-## Properties as a Random Variable
-
-Since $E(X \mid Y)$ is a random variable, it has its own expectation and variance:
+그러므로 다음과 같다.
 
 $$
-E\bigl[E(X \mid Y)\bigr] = E(X) \qquad \text{(Law of Total Expectation)}
+E(X \mid Y) = \begin{cases} 2 & \text{확률 } 1/2 \\ 1 & \text{확률 } 1/2 \end{cases}
+$$
+
+그림의 빨간 막대는 각 결과에 대한 $E(X \mid Y)$ 를 나타낸다. $Y$ 값이 같은 결과들은 같은 조건부기댓값을 갖는다. 이것이 바로 "국소평균"이 하는 일이다. $E(X \mid Y)$ 는 $Y$ 가 나누어 놓은 각 무리 안에서 $X$ 를 고르게 펴 준다.
+
+## 확률변수로서의 성질
+
+$E(X \mid Y)$ 는 확률변수이므로 그 자체의 기댓값과 분산을 갖는다.
+
+$$
+E\bigl[E(X \mid Y)\bigr] = E(X) \qquad \text{(전기댓값 법칙)}
 $$
 
 $$
-\text{Var}\bigl(E(X \mid Y)\bigr) \leq \text{Var}(X) \qquad \text{(Conditioning reduces variance)}
+\text{Var}\bigl(E(X \mid Y)\bigr) \leq \text{Var}(X) \qquad \text{(조건을 주면 분산이 줄어든다)}
 $$
 
-These are explored in detail in the next sections.
+이들은 다음 절에서 자세히 다룬다.
 
-## Python Simulation
+## 파이썬 모의실험
 
 ```python
 import numpy as np
@@ -52,21 +52,87 @@ import numpy as np
 np.random.seed(42)
 n_sim = 100_000
 
-# Three fair coin flips
+# 공정한 동전 세 번 던지기
 flips = np.random.randint(0, 2, size=(n_sim, 3))
-X = flips.sum(axis=1)          # total heads
-Y = flips[:, 0]                # first flip indicator
+X = flips.sum(axis=1)          # 앞면의 총수
+Y = flips[:, 0]                # 첫 번째 던지기의 지시확률변수
 
-# Conditional expectations
+# 조건부기댓값
 E_X_given_Y1 = X[Y == 1].mean()
 E_X_given_Y0 = X[Y == 0].mean()
 
 print(f"E(X | Y=1) = {E_X_given_Y1:.4f}  (theory: 2.0)")
 print(f"E(X | Y=0) = {E_X_given_Y0:.4f}  (theory: 1.0)")
 
-# Verify law of total expectation
+# 전기댓값 법칙 확인
 E_X = X.mean()
 E_EXY = 0.5 * E_X_given_Y1 + 0.5 * E_X_given_Y0
 print(f"\nE(X) = {E_X:.4f}")
 print(f"E[E(X|Y)] = {E_EXY:.4f}  (should match E(X))")
 ```
+
+## 연습문제
+
+**연습문제 1.** $E(X \mid Y = y)$ (수)와 $E(X \mid Y)$ (확률변수)의 차이를 설명하고 각각의 예를 들어라.
+
+??? success "연습문제 1 풀이"
+    $E(X \mid Y = y)$ 는 **수**이다. 구체적인 사건 $\{Y = y\}$ 가 주어졌을 때 $X$ 의 조건부분포로 계산한 기댓값이다.
+
+    $E(X \mid Y)$ 는 **확률변수**이다. $E(X \mid Y = y)$ 를 무작위한 값 $Y$ 에서 값매김하여 얻은 $Y$ 의 함수이다.
+
+    *예.* 공정한 동전을 두 번 던지고 $Y$ 를 첫 번째 던지기에서 나온 앞면의 수, $X$ 를 앞면의 총수라 하자. 그러면 $E(X \mid Y = 0) = 0.5$ 이고 $E(X \mid Y = 1) = 1.5$ 이다. 확률변수 $E(X \mid Y)$ 는 $Y = 0$ 일 때 $0.5$, $Y = 1$ 일 때 $1.5$ 의 값을 가지므로 $E(X \mid Y) = 0.5 + Y$ 이다.
+
+---
+
+**연습문제 2.** 공정한 동전 세 개를 던진다. $X$ 를 앞면의 총수, $Y$ 를 첫 번째가 앞면임을 나타내는 지시확률변수라 하자. 확률변수 $E(X \mid Y)$ 의 분포를 구하고 탑 성질 $E[E(X \mid Y)] = E(X)$ 를 확인하여라.
+
+??? success "연습문제 2 풀이"
+    $Y = 1$ (첫 번째가 앞면)이 주어지면 남은 두 번의 던지기가 Binomial(2, 0.5) 만큼 보태므로 $E(X \mid Y = 1) = 1 + 1 = 2$ 이다. $Y = 0$ 이 주어지면 $E(X \mid Y = 0) = 0 + 1 = 1$ 이다.
+
+    그러므로 $E(X \mid Y)$ 는 $\{1, 2\}$ 의 값을 각각 확률 $1/2$ 로 갖는다.
+
+    $$
+    E[E(X \mid Y)] = 0.5 \cdot 2 + 0.5 \cdot 1 = 1.5
+    $$
+
+    그리고 $E[X] = 3 \cdot 0.5 = 1.5$ 이다. $\checkmark$
+
+---
+
+**연습문제 3.** 확률변수 $X$ 와 $Y$ 가 $E(X \mid Y) = 3Y + 2$ 를 만족한다고 하자.
+
+**(a)** $E(Y) = 4$ 일 때 $E(X)$ 를 구하여라.
+
+**(b)** 성질 $E(g(Y) \cdot X \mid Y) = g(Y) \cdot E(X \mid Y)$ 를 써서 $E(XY) = 3 E(Y^2) + 2 E(Y)$ 임을 보여라.
+
+??? success "연습문제 3 풀이"
+    **(a)** 탑 성질에 따라 다음을 얻는다.
+
+    $$
+    E[X] = E[E(X \mid Y)] = E[3Y + 2] = 3 E[Y] + 2 = 14
+    $$
+
+    **(b)** $g(Y) = Y$ 로 두고 끄집어내기 성질을 쓰면 다음과 같다.
+
+    $$
+    E(XY \mid Y) = Y \cdot E(X \mid Y) = Y(3Y + 2) = 3 Y^2 + 2Y
+    $$
+
+    양변에 기댓값을 취하면(탑 성질) 다음을 얻는다.
+
+    $$
+    E[XY] = E[3 Y^2 + 2Y] = 3 E[Y^2] + 2 E[Y]
+    $$
+
+---
+
+**연습문제 4.** $X$ 와 $Y$ 가 독립이면 임의의 함수 $g$ 에 대하여 $E(g(X) \mid Y) = E(g(X))$ 임을 증명하여라.
+
+??? success "연습문제 4 풀이"
+    독립성에 따라 모든 $y$ 에 대하여 $Y = y$ 가 주어졌을 때 $X$ 의 조건부분포는 $X$ 의 주변분포와 같다. 그러므로 다음을 얻는다.
+
+    $$
+    E(g(X) \mid Y = y) = \int g(x) f_{X \mid Y}(x \mid y) \, dx = \int g(x) f_X(x) \, dx = E[g(X)]
+    $$
+
+    (이산인 경우에는 적분 대신 합을 쓴다.) 우변이 $y$ 에 기대지 않으므로 확률변수 $E(g(X) \mid Y) = E[g(X)]$ 는 상수이다. $\square$

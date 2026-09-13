@@ -1,44 +1,44 @@
-# Conditional Expectation Given an Event
+# 사건이 주어졌을 때의 조건부기댓값
 
-## Definition
+## 정의
 
-The **conditional expectation of $X$ given the event $Y = y$** is a number obtained by computing the expectation of $X$ using the conditional distribution of $X$ given $Y = y$.
+**사건 $Y = y$ 가 주어졌을 때 $X$ 의 조건부기댓값**은 $Y = y$ 가 주어졌을 때 $X$ 의 조건부분포로 $X$ 의 기댓값을 계산해 얻는 수이다.
 
-### Discrete Case
+### 이산인 경우
 
 $$
 E(X \mid Y = y) = \sum_{x_i} x_i \, P(X = x_i \mid Y = y)
 $$
 
-This mirrors the unconditional expectation $E(X) = \sum_{x_i} x_i \, P(X = x_i)$, but with conditional probabilities replacing unconditional ones.
+이는 조건 없는 기댓값 $E(X) = \sum_{x_i} x_i \, P(X = x_i)$ 와 꼭 같은 꼴이되, 조건 없는 확률 자리에 조건부확률이 들어간 것이다.
 
-### Continuous Case
+### 연속인 경우
 
 $$
 E(X \mid Y = y) = \int_{-\infty}^{\infty} x \, f_{X|Y}(x \mid y) \, dx
 $$
 
-Again, this mirrors $E(X) = \int_{-\infty}^{\infty} x \, f_X(x) \, dx$, with the conditional density $f_{X|Y}(x \mid y)$ replacing the marginal density $f_X(x)$.
+이 역시 $E(X) = \int_{-\infty}^{\infty} x \, f_X(x) \, dx$ 와 같은 꼴이되, 주변밀도 $f_X(x)$ 자리에 조건부밀도 $f_{X|Y}(x \mid y)$ 가 들어간 것이다.
 
-## Key Point
+## 핵심
 
-$E(X \mid Y = y)$ is a **number**, not a random variable. For each specific value $y$, we get a specific numerical answer. Different values of $y$ generally produce different numbers.
+$E(X \mid Y = y)$ 는 확률변수가 아니라 하나의 **수**이다. $y$ 값을 하나 정할 때마다 구체적인 수 하나가 나온다. $y$ 가 달라지면 대개 그 수도 달라진다.
 
-## Example: Joint PDF
+## 예: 결합확률밀도함수
 
-Consider random variables $X$ and $Y$ with joint PDF:
+결합확률밀도함수가 다음과 같은 확률변수 $X$ 와 $Y$ 를 보자.
 
 $$
 f(x, y) = \frac{e^{-x/y} \, e^{-y}}{y}, \quad 0 < x < \infty, \quad 0 < y < \infty
 $$
 
-To find $E(X \mid Y = y)$, first identify the conditional distribution. The conditional density of $X$ given $Y = y$ is:
+$E(X \mid Y = y)$ 를 구하려면 먼저 조건부분포를 알아내야 한다. $Y = y$ 가 주어졌을 때 $X$ 의 조건부밀도는 다음과 같다.
 
 $$
 f_{X|Y}(x \mid y) \propto \frac{e^{-x/y} \, e^{-y}}{y} \propto \frac{1}{y} e^{-x/y}
 $$
 
-This is the density of an $\text{Exp}(\lambda)$ distribution with rate $\lambda = 1/y$. Therefore:
+이것은 비율이 $\lambda = 1/y$ 인 $\text{Exp}(\lambda)$ 분포의 밀도이다. 그러므로 다음을 얻는다.
 
 $$
 E(X \mid Y = y) = \frac{1}{\lambda} = y
@@ -48,14 +48,79 @@ $$
 \text{Var}(X \mid Y = y) = \frac{1}{\lambda^2} = y^2
 $$
 
-## Conditional Expectation of Functions
+## 함수의 조건부기댓값
 
-By analogy with LOTUS, for any function $g$:
-
-$$
-E(g(X) \mid Y = y) = \sum_{x_i} g(x_i) \, P(X = x_i \mid Y = y) \quad \text{(discrete)}
-$$
+LOTUS와 마찬가지로, 임의의 함수 $g$ 에 대하여 다음이 성립한다.
 
 $$
-E(g(X) \mid Y = y) = \int_{-\infty}^{\infty} g(x) \, f_{X|Y}(x \mid y) \, dx \quad \text{(continuous)}
+E(g(X) \mid Y = y) = \sum_{x_i} g(x_i) \, P(X = x_i \mid Y = y) \quad \text{(이산)}
 $$
+
+$$
+E(g(X) \mid Y = y) = \int_{-\infty}^{\infty} g(x) \, f_{X|Y}(x \mid y) \, dx \quad \text{(연속)}
+$$
+
+## 연습문제
+
+**연습문제 1.** 공정한 주사위를 한 번 던진다. 나온 눈이 짝수라는 조건이 주어졌을 때 눈의 조건부기댓값을 구하여라.
+
+??? success "연습문제 1 풀이"
+    짝수라는 조건이 주어지면 $x \in \{2, 4, 6\}$ 에 대하여 조건부 확률질량함수는 $P(X = x \mid \text{짝수}) = 1/3$ 이다.
+
+    $$
+    E[X \mid \text{짝수}] = \frac{2 + 4 + 6}{3} = 4
+    $$
+
+---
+
+**연습문제 2.** $X$ 와 $Y$ 의 결합확률질량함수가 $(i,j) \in \{(1,1),(1,2),(2,1),(2,2),(2,3),(3,3)\}$ 에 대하여 $P(X=i, Y=j) = 1/6$ 이라 하자. $E[X \mid Y = 2]$ 를 구하여라.
+
+??? success "연습문제 2 풀이"
+    $Y = 2$ 인 짝은 $(1,2)$ 와 $(2,2)$ 이고 각각 확률이 $1/6$ 이다.
+
+    $P(Y=2) = 2/6 = 1/3$ 이다.
+
+    $P(X=1 \mid Y=2) = (1/6)/(1/3) = 1/2$, $P(X=2 \mid Y=2) = 1/2$ 이다.
+
+    $$
+    E[X \mid Y = 2] = 1 \times \frac{1}{2} + 2 \times \frac{1}{2} = \frac{3}{2}
+    $$
+
+---
+
+**연습문제 3.** $(X, Y)$ 가 $\{(x,y) : 0 < y < x < 1\}$ 위에 균등하게 퍼져 있어 $f(x,y) = 2$ 라 하자. $E[X \mid Y = y]$ 를 구하여라.
+
+??? success "연습문제 3 풀이"
+    $Y$ 의 주변밀도는 $0 < y < 1$ 에서 $f_Y(y) = \int_y^1 2\,dx = 2(1-y)$ 이다.
+
+    $$
+    f_{X|Y}(x \mid y) = \frac{2}{2(1-y)} = \frac{1}{1-y}, \quad y < x < 1
+    $$
+
+    이것은 $\text{Uniform}(y, 1)$ 이므로 다음을 얻는다.
+
+    $$
+    E[X \mid Y = y] = \frac{y + 1}{2}
+    $$
+
+---
+
+**연습문제 4.** $X \sim \text{Exp}(\lambda)$ 이고 $Y = X + Z$ 이며 $Z \sim N(0, 1)$ 은 $X$ 와 독립이라 하자. $E[X^2 \mid Y = y]$ 를 조건부밀도 $f_{X|Y}$ 로 나타내어라.
+
+??? success "연습문제 4 풀이"
+    조건부 LOTUS에 따라 다음과 같다.
+
+    $$
+    E[X^2 \mid Y = y] = \int_0^{\infty} x^2 \, f_{X|Y}(x \mid y)\,dx
+    $$
+
+    여기서 밀도에 대한 베이즈 법칙에 따라 $f_{X|Y}(x \mid y) = \frac{f_X(x)\,f_Z(y - x)}{f_Y(y)}$ 이다. 이 적분은 대개 수치적인 방법으로 구해야 한다.
+
+---
+
+**연습문제 5.** $E[X \mid Y = y]$ 는 (확률변수가 아니라) 수인 반면 $E[X \mid Y]$ 는 확률변수인 까닭을 설명하여라. 둘은 어떤 관계인가?
+
+??? success "연습문제 5 풀이"
+    $E[X \mid Y = y]$ 는 구체적인 값 $y$ 를 넣고 조건부분포로 가중평균을 구한 것이다. 그 결과는 $y$ 에 따라 정해지는 확정된 수이다.
+
+    $E[X \mid Y]$ 는 $y$ 자리에 확률변수 $Y$ 를 넣어 얻은 확률변수이다. 곧 $h(y) = E[X \mid Y = y]$ 라 할 때 $h(Y)$ 이다. $Y$ 를 관측하기 전에는 $Y$ 가 무작위이므로 $E[X \mid Y]$ 도 무작위이다. $Y = y$ 를 관측하고 나면 $E[X \mid Y = y]$ 라는 수로 실현된다.
