@@ -1,24 +1,24 @@
-# Chi-Squared Distribution: Properties, Mean, and Variance
+# 성질, 평균, 분산
 
-## MGF of the Chi-Squared Distribution
+## 카이제곱분포의 적률생성함수
 
-Since $\chi^2_d \sim \Gamma(d/2, 1/2)$, we can compute the MGF directly. With the substitution $\lambda = 1/2 - t$:
+$\chi^2_d \sim \Gamma(d/2, 1/2)$ 이므로 적률생성함수를 직접 계산할 수 있다. $\lambda = 1/2 - t$ 로 치환하면 다음과 같다.
 
 $$\varphi_{\chi^2_d}(t) = E[e^{tX}] = \int_0^{\infty} e^{tx} \frac{(1/2)^{d/2}}{\Gamma(d/2)} x^{d/2 - 1} e^{-x/2}\, dx$$
 
 $$= \int_0^{\infty} \frac{(1/2)^{d/2}}{\Gamma(d/2)} x^{d/2 - 1} e^{-(1/2 - t)x}\, dx$$
 
-$$= \left(\frac{1}{\sqrt{1 - 2t}}\right)^d \int_0^{\infty} \underbrace{\frac{\lambda (\lambda x)^{d/2 - 1} e^{-\lambda x}}{\Gamma(d/2)}}_{\text{PDF of } \Gamma(d/2, \lambda)}\, dx = \left(\frac{1}{\sqrt{1 - 2t}}\right)^d$$
+$$= \left(\frac{1}{\sqrt{1 - 2t}}\right)^d \int_0^{\infty} \underbrace{\frac{\lambda (\lambda x)^{d/2 - 1} e^{-\lambda x}}{\Gamma(d/2)}}_{\Gamma(d/2, \lambda) \text{ 의 밀도함수}}\, dx = \left(\frac{1}{\sqrt{1 - 2t}}\right)^d$$
 
-Therefore:
+따라서 다음을 얻는다.
 
 $$\varphi_{\chi^2_d}(t) = (1 - 2t)^{-d/2}, \quad t < \frac{1}{2}$$
 
-## Mean and Variance
+## 평균과 분산
 
-Since $\chi^2_d \sim \Gamma(d/2, 1/2)$, the mean and variance follow from the Gamma distribution:
+$\chi^2_d \sim \Gamma(d/2, 1/2)$ 이므로 평균과 분산은 감마분포에서 그대로 따라 나온다.
 
-| Distribution | Mean | Variance |
+| 분포 | 평균 | 분산 |
 |-------------|------|----------|
 | $\text{Geo}(p)$ | $1/p$ | $q/p^2$ |
 | $\frac{1}{n}\text{Geo}(p)$ | $1/(np)$ | $q/(np)^2$ |
@@ -28,26 +28,38 @@ Since $\chi^2_d \sim \Gamma(d/2, 1/2)$, the mean and variance follow from the Ga
 | $\chi^2_1 = \Gamma(1/2, 1/2)$ | $\frac{1/2}{1/2} = 1$ | $\frac{1/2}{(1/2)^2} = 2$ |
 | $\chi^2_d = \Gamma(d/2, 1/2)$ | $d$ | $2d$ |
 
-### Direct Verification
+### 직접 확인하기
 
-**Mean:** Each $Z_i^2$ has $E[Z_i^2] = \text{Var}(Z_i) + (E[Z_i])^2 = 1 + 0 = 1$. By linearity:
+**평균:** 각 $Z_i^2$ 에 대하여 $E[Z_i^2] = \text{Var}(Z_i) + (E[Z_i])^2 = 1 + 0 = 1$ 이다. 기댓값의 선형성에 따라
 
 $$E[\chi^2_d] = \sum_{i=1}^d E[Z_i^2] = d$$
 
-**Variance:** Each $Z_i^2$ has $\text{Var}(Z_i^2) = E[Z_i^4] - (E[Z_i^2])^2 = 3 - 1 = 2$ (since $E[Z^4] = 3$ for standard normal). By independence:
+이다.
+
+**분산:** 표준정규분포에서 $E[Z^4] = 3$ 이므로 각 $Z_i^2$ 에 대하여 $\text{Var}(Z_i^2) = E[Z_i^4] - (E[Z_i^2])^2 = 3 - 1 = 2$ 이다. 독립성에 따라
 
 $$\text{Var}(\chi^2_d) = \sum_{i=1}^d \text{Var}(Z_i^2) = 2d$$
 
-## Summary of Properties
+이다.
 
-| Property | Value |
+## 성질 요약
+
+| 성질 | 값 |
 |----------|-------|
-| PDF | $\frac{(1/2)^{d/2}}{\Gamma(d/2)} x^{d/2-1} e^{-x/2}$ for $x > 0$ |
-| MGF | $(1 - 2t)^{-d/2}$ for $t < 1/2$ |
-| Mean | $d$ |
-| Variance | $2d$ |
-| Mode | $\max(d - 2, \, 0)$ |
-| Skewness | $\sqrt{8/d}$ |
+| 밀도함수 | $x > 0$ 일 때 $\frac{(1/2)^{d/2}}{\Gamma(d/2)} x^{d/2-1} e^{-x/2}$ |
+| 적률생성함수 | $t < 1/2$ 일 때 $(1 - 2t)^{-d/2}$ |
+| 평균 | $d$ |
+| 분산 | $2d$ |
+| 최빈값 | $\max(d - 2, \, 0)$ |
+| 왜도 | $\sqrt{8/d}$ |
 
-!!! note "Shape of the Chi-Squared Distribution"
-    For small $d$, the distribution is heavily right-skewed. As $d$ increases, the skewness decreases (proportional to $1/\sqrt{d}$) and the distribution approaches a normal distribution by the CLT, since $\chi^2_d$ is a sum of $d$ iid random variables.
+!!! note "카이제곱분포의 모양"
+    $d$ 가 작으면 분포가 오른쪽으로 크게 치우친다. $d$ 가 커질수록 왜도가 $1/\sqrt{d}$ 에 비례하여 줄어들고, $\chi^2_d$ 가 i.i.d. 확률변수 $d$ 개의 합이므로 중심극한정리에 따라 분포가 정규분포에 가까워진다.
+
+## 연습문제
+
+**연습문제 1.**
+확률변수 $W$ 의 적률생성함수가 $\varphi_W(t) = (1 - 2t)^{-5}$ 이다. 이 분포가 무엇인지 밝혀라.
+
+??? success "연습문제 1 풀이"
+    $(1 - 2t)^{-5} = (1 - 2t)^{-d/2}$ 에서 $d = 10$ 이다. 따라서 $W \sim \chi^2_{10}$ 이다.

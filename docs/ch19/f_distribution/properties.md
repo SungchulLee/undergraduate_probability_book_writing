@@ -1,49 +1,49 @@
-# $F$ Distribution: Properties
+# 성질
 
-## Mean and Variance
+## 평균과 분산
 
-| Property | Value | Condition |
+| 성질 | 값 | 조건 |
 |----------|-------|-----------|
-| Mean | $\frac{d_2}{d_2 - 2}$ | $d_2 > 2$ |
-| Variance | $\frac{2d_2^2(d_1 + d_2 - 2)}{d_1(d_2 - 2)^2(d_2 - 4)}$ | $d_2 > 4$ |
-| Mode | $\frac{d_1 - 2}{d_1} \cdot \frac{d_2}{d_2 + 2}$ | $d_1 > 2$ |
+| 평균 | $\frac{d_2}{d_2 - 2}$ | $d_2 > 2$ |
+| 분산 | $\frac{2d_2^2(d_1 + d_2 - 2)}{d_1(d_2 - 2)^2(d_2 - 4)}$ | $d_2 > 4$ |
+| 최빈값 | $\frac{d_1 - 2}{d_1} \cdot \frac{d_2}{d_2 + 2}$ | $d_1 > 2$ |
 
 !!! note
-    The mean depends **only** on $d_2$, not on $d_1$. For small $d_2$, the mean can be substantially greater than 1.
+    평균은 $d_1$ 과는 상관없이 **오직** $d_2$ 에만 달려 있다. $d_2$ 가 작으면 평균이 $1$ 보다 꽤 클 수 있다.
 
-## Key Properties
+## 주요 성질
 
-### Support and Shape
+### 받침과 모양
 
-The $F$ distribution is supported on $(0, \infty)$ and is **right-skewed**. The skewness decreases as both $d_1$ and $d_2$ increase.
+F분포의 받침은 $(0, \infty)$ 이고 **오른쪽으로 치우쳐** 있다. $d_1$ 과 $d_2$ 가 모두 커질수록 왜도는 줄어든다.
 
-### Reciprocal Property
+### 역수 성질
 
-If $F \sim F_{d_1, d_2}$, then:
+$F \sim F_{d_1, d_2}$ 이면 다음이 성립한다.
 
 $$\frac{1}{F} \sim F_{d_2, d_1}$$
 
-This follows directly from the definition: swapping numerator and denominator swaps the degrees of freedom.
+이는 정의에서 바로 따라 나온다. 분자와 분모를 맞바꾸면 자유도도 맞바뀐다.
 
-## Relationship to the $t$ Distribution
+## t분포와의 관계
 
-If $T \sim t_d$, then:
+$T \sim t_d$ 이면 다음이 성립한다.
 
 $$T^2 \sim F_{1, d}$$
 
-**Proof.** Write $T = Z / \sqrt{V/d}$ where $Z \sim N(0,1)$ and $V \sim \chi^2_d$ are independent. Then:
+**증명.** 독립인 $Z \sim N(0,1)$ 과 $V \sim \chi^2_d$ 에 대하여 $T = Z / \sqrt{V/d}$ 로 쓰면 다음과 같다.
 
 $$T^2 = \frac{Z^2}{V/d} = \frac{Z^2 / 1}{V / d} = \frac{\chi^2_1 / 1}{\chi^2_d / d} \sim F_{1, d}$$
 
-This connection means that a two-sided $t$-test with $d$ degrees of freedom is equivalent to an $F$-test with $(1, d)$ degrees of freedom.
+이 관계는 자유도가 $d$ 인 양쪽꼬리 $t$ 검정이 자유도가 $(1, d)$ 인 $F$ 검정과 같음을 뜻한다.
 
-## Relationship to the Beta Distribution
+## 베타분포와의 관계
 
-If $F \sim F_{d_1, d_2}$, then:
+$F \sim F_{d_1, d_2}$ 이면 다음이 성립한다.
 
 $$\frac{d_1 F / d_2}{1 + d_1 F / d_2} \sim \text{Beta}\!\left(\frac{d_1}{2}, \frac{d_2}{2}\right)$$
 
-## Python Exploration
+## 파이썬으로 살펴보기
 
 ```python
 import numpy as np
@@ -54,7 +54,7 @@ x = np.linspace(0.01, 5, 500)
 
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-# Varying d1
+# d1 을 바꾸어 가며 그리기
 ax = axes[0]
 d2 = 10
 for d1 in [1, 2, 5, 10, 30]:
@@ -63,7 +63,7 @@ ax.set_title(f'Varying $d_1$ (fixed $d_2 = {d2}$)')
 ax.set_xlabel('$x$'); ax.set_ylabel('Density')
 ax.legend()
 
-# Varying d2
+# d2 를 바꾸어 가며 그리기
 ax = axes[1]
 d1 = 5
 for d2 in [3, 5, 10, 30, 100]:
@@ -75,3 +75,25 @@ ax.legend()
 plt.tight_layout()
 plt.show()
 ```
+
+## 연습문제
+
+**연습문제 1.**
+$F \sim F_{5, 10}$ 일 때 $E[F]$ 를 구하고 역수 성질을 모의실험으로 확인하여라.
+
+??? success "연습문제 1 풀이"
+    $E[F] = \frac{d_2}{d_2 - 2} = \frac{10}{8} = 1.25$ 이다.
+
+    ```python
+    import numpy as np
+    from scipy import stats
+
+    np.random.seed(42)
+    f_samples = np.random.f(5, 10, 100_000)
+    print(f"Simulated mean of F(5,10): {f_samples.mean():.4f}  (theory: 1.25)")
+
+    # 역수 성질
+    recip = 1.0 / f_samples
+    ks_stat, pval = stats.kstest(recip, 'f', args=(10, 5))
+    print(f"KS test 1/F(5,10) ~ F(10,5): p = {pval:.4f}")
+    ```

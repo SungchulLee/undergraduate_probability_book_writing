@@ -1,85 +1,128 @@
-# Why Chi-Squared, $t$, and $F$ Arise Naturally
+# 카이제곱분포, t분포, F분포는 왜 자연스럽게 나타나는가
 
-## The Central Question
+## 핵심 물음
 
-When working with a normal population $N(\mu, \sigma^2)$, inference requires knowing the **sampling distributions** of $\bar{X}$ and $S^2$. Three distributions emerge naturally from this setup.
+정규모집단 $N(\mu, \sigma^2)$ 을 다룰 때 추론을 하려면 $\bar{X}$ 과 $S^2$ 의 **표집분포**를 알아야 한다. 이 얼개에서 세 가지 분포가 자연스럽게 모습을 드러낸다.
 
-## From Samples to Sampling Distributions
+## 표본에서 표집분포로
 
-For $X_1, \ldots, X_n$ iid from $N(\mu, \sigma^2)$:
+$X_1, \ldots, X_n$ 이 $N(\mu, \sigma^2)$ 에서 뽑은 i.i.d. 표본이라고 하자.
 
-**When $\sigma$ is known**, the standardized sample mean is:
+**$\sigma$ 를 아는 경우** 표준화한 표본평균은 다음과 같다.
 
 $$\frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N(0, 1)$$
 
-This is straightforward — a linear combination of normals is normal.
+정규확률변수들의 일차결합은 다시 정규분포를 따르므로 이는 어렵지 않다.
 
-**When $\sigma$ is unknown**, we must replace $\sigma$ with $S$:
+**$\sigma$ 를 모르는 경우** $\sigma$ 자리에 $S$ 를 넣어야 한다.
 
 $$\frac{\bar{X} - \mu}{S / \sqrt{n}} \sim \; ?$$
 
-This is **not** normal, because $S$ is random and depends on the same data. To determine its distribution, we need to understand $S^2$, which leads to the chi-squared distribution.
+이것은 정규분포가 **아니다**. $S$ 자체가 확률변수이고 같은 자료에 의존하기 때문이다. 그 분포를 알아내려면 먼저 $S^2$ 을 이해해야 하며, 여기에서 카이제곱분포가 나온다.
 
-## The Three Distributions and Their Roles
+## 세 분포와 그 구실
 
-### Chi-Squared: Distribution of $S^2$
+### 카이제곱분포: S² 의 분포
 
 $$\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$$
 
-The chi-squared distribution captures the variability in the sample variance. It arises because the sum of squared deviations from the mean is a sum of squared normal quantities (with a rank reduction from estimating $\mu$ by $\bar{X}$).
+카이제곱분포는 표본분산이 얼마나 흔들리는지를 담아낸다. 평균으로부터의 편차를 제곱하여 더한 것이 곧 정규확률변수의 제곱합이기 때문에 이 분포가 나타나며, $\mu$ 를 $\bar{X}$ 으로 추정한 탓에 계수가 하나 줄어든다.
 
-### Student's $t$: When $\sigma$ Is Unknown
+### 스튜던트 t분포: σ 를 모를 때
 
 $$\frac{\bar{X} - \mu}{S/\sqrt{n}} = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \Big/ \sqrt{\frac{(n-1)S^2/\sigma^2}{n-1}} = \frac{N(0,1)}{\sqrt{\chi^2_{n-1}/(n-1)}} \sim t_{n-1}$$
 
-The $t$ distribution arises as the ratio of a standard normal to the square root of an independent chi-squared divided by its degrees of freedom.
+t분포는 표준정규확률변수를, 그와 독립인 카이제곱확률변수를 자유도로 나눈 것의 제곱근으로 나눈 비로서 나타난다.
 
-### $F$: Comparing Two Variances
+### F분포: 두 분산을 견줄 때
 
 $$\frac{S_1^2 / \sigma_1^2}{S_2^2 / \sigma_2^2} = \frac{\chi^2_{n_1 - 1} / (n_1 - 1)}{\chi^2_{n_2 - 1} / (n_2 - 1)} \sim F_{n_1 - 1, \, n_2 - 1}$$
 
-The $F$ distribution arises when comparing variability from two independent normal samples.
+F분포는 서로 독립인 두 정규표본의 퍼짐을 견줄 때 나타난다.
 
-## The Logical Chain
+## 이어지는 고리
 
-$$\boxed{N(\mu, \sigma^2)} \;\xrightarrow{\text{square}}\; \boxed{\chi^2} \;\xrightarrow{N/\sqrt{\chi^2/d}}\; \boxed{t} \;\xrightarrow{\chi^2/\chi^2}\; \boxed{F}$$
+$$\boxed{N(\mu, \sigma^2)} \;\xrightarrow{\text{제곱}}\; \boxed{\chi^2} \;\xrightarrow{N/\sqrt{\chi^2/d}}\; \boxed{t} \;\xrightarrow{\chi^2/\chi^2}\; \boxed{F}$$
 
-Each distribution builds on the previous one, all originating from the normal distribution.
+각 분포는 앞의 분포 위에 세워지며, 모두 정규분포에서 비롯한다.
 
-## Prerequisite: How to Find PDFs
+## 미리 갖출 것: 밀도함수를 구하는 방법
 
-The derivations in this chapter rely on two techniques for finding the PDF of a transformed random variable.
+이 장의 유도에는 변환된 확률변수의 밀도함수를 구하는 두 가지 방법이 쓰인다.
 
-### Method 1: CDF Method
+### 방법 1: 분포함수를 이용하는 방법
 
-Compute the CDF of $Y = g(X)$, then differentiate:
+$Y = g(X)$ 의 누적분포함수를 구한 다음 미분한다.
 
 $$P(Y \leq y) = P(X \leq g^{-1}(y)) \quad \Rightarrow \quad f_Y(y) = \frac{d}{dy} F_Y(y)$$
 
-### Method 2: Jacobian Method
+### 방법 2: 야코비안을 이용하는 방법
 
-For a one-to-one transformation $Y = g(X)$ with inverse $x = g^{-1}(y)$:
+역함수가 $x = g^{-1}(y)$ 인 일대일 변환 $Y = g(X)$ 에 대하여 다음이 성립한다.
 
 $$f_Y(y) = f_X(x) \left|\frac{dx}{dy}\right|$$
 
-For multivariate transformations $(X_1, \ldots, X_n) \to (Y_1, \ldots, Y_n)$:
+다변량 변환 $(X_1, \ldots, X_n) \to (Y_1, \ldots, Y_n)$ 에 대해서는 다음과 같다.
 
 $$f_{Y_1, \ldots, Y_n}(y_1, \ldots, y_n) = f_{X_1, \ldots, X_n}(x_1, \ldots, x_n) \left|\frac{\partial(x_1, \ldots, x_n)}{\partial(y_1, \ldots, y_n)}\right|$$
 
-where the Jacobian determinant satisfies:
+여기에서 야코비안 행렬식은 다음을 만족한다.
 
 $$\left|\frac{\partial(x_1, \ldots, x_n)}{\partial(y_1, \ldots, y_n)}\right| = \frac{1}{\left|\frac{\partial(y_1, \ldots, y_n)}{\partial(x_1, \ldots, x_n)}\right|}$$
 
-### Example: PDF of $Y = X^3$ Where $X \sim U(0,1)$
+### 예: X ~ U(0,1) 일 때 Y = X³ 의 밀도함수
 
-**CDF method.** For $0 < y < 1$:
+**분포함수를 이용하는 방법.** $0 < y < 1$ 에 대하여
 
 $$P(Y \leq y) = P(X^3 \leq y) = P(X \leq y^{1/3}) = y^{1/3}$$
 
-$$\Rightarrow \quad f_Y(y) = \frac{1}{3} y^{-2/3} \quad \text{for } 0 < y < 1$$
+$$\Rightarrow \quad f_Y(y) = \frac{1}{3} y^{-2/3} \quad 0 < y < 1 \text{ 일 때}$$
 
-**Jacobian method.** With $y = x^3$:
+**야코비안을 이용하는 방법.** $y = x^3$ 이므로
 
 $$\frac{dy}{dx} = 3x^2 = 3y^{2/3} \quad \Rightarrow \quad \left|\frac{dx}{dy}\right| = \frac{1}{3} y^{-2/3}$$
 
-$$f_Y(y) = f_X(x) \left|\frac{dx}{dy}\right| = 1 \cdot \frac{1}{3} y^{-2/3} = \frac{1}{3} y^{-2/3} \quad \text{for } 0 < y < 1$$
+$$f_Y(y) = f_X(x) \left|\frac{dx}{dy}\right| = 1 \cdot \frac{1}{3} y^{-2/3} = \frac{1}{3} y^{-2/3} \quad 0 < y < 1 \text{ 일 때}$$
+
+## 연습문제
+
+**연습문제 1.** $N(\mu, \sigma^2)$ 에서 뽑은 확률표본에 대하여 $\frac{\bar{X} - \mu}{S/\sqrt{n}}$ 의 분포를 말하여라. $S$ 대신 $\sigma$ 를 안다면 분포는 무엇이 되는가?
+
+??? success "연습문제 1 풀이"
+    $S$ 를 쓸 때($\sigma$ 를 모를 때): $\frac{\bar{X} - \mu}{S/\sqrt{n}} \sim t_{n-1}$.
+
+    $\sigma$ 를 알 때: $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim N(0,1)$.
+
+    t분포는 $\sigma$ 를 $S$ 로 추정하면서 더해진 불확실성을 반영한다.
+
+---
+
+**연습문제 2.** $S^2$ 을 다룰 때 카이제곱분포의 자유도가 왜 $n$ 이 아니라 $n - 1$ 인가?
+
+??? success "연습문제 2 풀이"
+    합 $\sum_{i=1}^n (X_i - \bar{X})^2$ 에는 제곱항이 $n$ 개 들어 있지만 이들은 일차 제약 $\sum(X_i - \bar{X}) = 0$ 을 만족한다. 그래서 실제로 자유로운 항의 개수가 $n$ 에서 $n - 1$ 로 줄어든다. 대수적으로 말하면 $n$ 차원 편차벡터 $(X_i - \bar{X})$ 가 벡터 $(1, \ldots, 1)$ 에 직교하는 $(n-1)$ 차원 부분공간 안에 놓인다.
+
+---
+
+**연습문제 3.** $N(\mu, \sigma^2)$ 에서 뽑은 표본에 대하여 다음 각 일에 어떤 분포(카이제곱분포, $t$ 분포, $F$ 분포)가 쓰이는지 말하여라. (a) $\sigma^2 = \sigma_0^2$ 검정, (b) $\sigma$ 를 모를 때 $\mu = \mu_0$ 검정, (c) 두 모분산 견주기.
+
+??? success "연습문제 3 풀이"
+    **(a)** 카이제곱분포: $(n-1)S^2/\sigma_0^2 \sim \chi^2_{n-1}$.
+
+    **(b)** $t$ 분포: $(\bar{X} - \mu_0)/(S/\sqrt{n}) \sim t_{n-1}$.
+
+    **(c)** $F$ 분포: $H_0: \sigma_1^2 = \sigma_2^2$ 아래에서 $S_1^2/S_2^2 \sim F_{n_1-1, n_2-1}$.
+
+---
+
+**연습문제 4.** $Z_1, Z_2, \ldots, Z_n$ 이 i.i.d. $N(0,1)$ 이면 $\sum_{i=1}^n Z_i^2$ 의 분포는 무엇인가? 그 평균과 분산은 얼마인가?
+
+??? success "연습문제 4 풀이"
+    $\sum Z_i^2 \sim \chi^2_n$ 이다. 평균은 $n$ 이고 분산은 $2n$ 이다.
+
+---
+
+**연습문제 5.** 세 분포(카이제곱분포, $t$ 분포, $F$ 분포)가 모집단이 정규분포일 때에만 필요한 까닭을 설명하여라. 정규분포가 아닌 모집단에서 $n$ 이 크면 어떻게 되는가?
+
+??? success "연습문제 5 풀이"
+    이 정확한 분포 결과들은 $X_i$ 의 정규성에 기대고 있다. 정규분포가 아닌 모집단이라도 $n$ 이 크면 (1) 중심극한정리에 따라 $\bar{X}$ 이 대략 정규분포를 따르고, (2) 큰수의 법칙에 따라 $S^2 \xrightarrow{p} \sigma^2$ 이므로 슬루츠키 정리에 따라 $(\bar{X} - \mu)/(S/\sqrt{n})$ 이 대략 $N(0,1)$ 을 따른다. 따라서 $t$ 분포, $\chi^2$ 분포, $F$ 분포는 정규모집단에서 뽑은 **작은 표본**을 다룰 때 가장 요긴하다.

@@ -1,53 +1,100 @@
-# Sample Mean and Sample Variance
+# 표본평균과 표본분산
 
-## Setup
+## 문제 설정
 
-Let $X_1, X_2, \ldots, X_n$ be **iid** random variables from $N(\mu, \sigma^2)$. The two fundamental summary statistics are:
+$X_1, X_2, \ldots, X_n$ 을 $N(\mu, \sigma^2)$ 에서 뽑은 **i.i.d.** 확률변수라고 하자. 가장 기본이 되는 두 요약통계량은 다음과 같다.
 
-**Sample Mean:**
+**표본평균:**
 
 $$\bar{X} = \frac{\sum_{i=1}^n X_i}{n}$$
 
-**Sample Variance:**
+**표본분산:**
 
 $$S^2 = \frac{\sum_{i=1}^n (X_i - \bar{X})^2}{n - 1}$$
 
-## Distributional Properties
+## 분포의 성질
 
-### Distribution of the Sample Mean
+### 표본평균의 분포
 
-Since $X_i \sim N(\mu, \sigma^2)$ are independent, the sample mean is a linear combination of normals:
+$X_i \sim N(\mu, \sigma^2)$ 가 서로 독립이므로 표본평균은 정규확률변수들의 일차결합이다.
 
 $$\bar{X} \sim N\!\left(\mu, \frac{\sigma^2}{n}\right)$$
 
-Standardizing:
+표준화하면 다음과 같다.
 
 $$\frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \sim N(0, 1)$$
 
-### Distribution of the Sample Variance
+### 표본분산의 분포
 
-The scaled sample variance follows a chi-squared distribution:
+표본분산에 알맞은 상수를 곱한 것은 카이제곱분포를 따른다.
 
 $$\frac{(n-1)S^2}{\sigma^2} = \sum_{i=1}^n \left(\frac{X_i - \bar{X}}{\sigma}\right)^2 \sim \chi^2_{n-1}$$
 
-The proof of this result is the central topic of Section 19.2.
+이 결과의 증명이 19.2절의 중심 주제이다.
 
-## Independence of $\bar{X}$ and $S^2$
+## X̅ 과 S² 의 독립성
 
-A remarkable and non-obvious fact: **$\bar{X}$ and $S^2$ are independent**. This is specific to normal populations and is crucial for deriving the Student's $t$ distribution.
+놀랍고도 얼른 와닿지 않는 사실이 하나 있다. **$\bar{X}$ 과 $S^2$ 은 독립이다**. 이는 모집단이 정규분포일 때에만 성립하는 성질이며, 스튜던트 t분포를 이끌어 내는 데 결정적인 구실을 한다.
 
-The proof uses the multivariate normal structure — see Section 19.2 for the full derivation.
+증명에는 다변량정규분포의 구조가 쓰인다. 자세한 유도는 19.2절을 보라.
 
-## Summary of Key Results
+## 주요 결과 정리
 
-For $X_1, \ldots, X_n$ iid $N(\mu, \sigma^2)$:
+$X_1, \ldots, X_n$ 이 i.i.d. $N(\mu, \sigma^2)$ 일 때 다음이 성립한다.
 
-| Statistic | Distribution |
+| 통계량 | 분포 |
 |-----------|-------------|
 | $\bar{X}$ | $N(\mu, \sigma^2/n)$ |
 | $\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}$ | $N(0, 1)$ |
 | $\frac{(n-1)S^2}{\sigma^2}$ | $\chi^2_{n-1}$ |
-| $\bar{X}$ and $S^2$ | Independent |
+| $\bar{X}$ 과 $S^2$ | 독립 |
 | $\frac{\bar{X} - \mu}{S/\sqrt{n}}$ | $t_{n-1}$ |
 
-These four results form the foundation for classical statistical inference about normal populations.
+이 네 가지 결과가 정규모집단에 대한 고전적 통계추론의 바탕을 이룬다.
+
+## 연습문제
+
+**연습문제 1.** $X_1, \ldots, X_{16}$ 이 i.i.d. $N(50, 25)$ 라고 하자. $P(\bar{X} > 52)$ 를 구하여라.
+
+??? success "연습문제 1 풀이"
+    $\bar{X} \sim N(50, 25/16) = N(50, 1.5625)$ 이다.
+
+    $$
+    P(\bar{X} > 52) = P\!\left(Z > \frac{52 - 50}{1.25}\right) = P(Z > 1.6) = 1 - \mathcal{N}(1.6) \approx 0.0548
+    $$
+
+---
+
+**연습문제 2.** 같은 표본에 대하여 $P(S^2 > 40)$ 을 구하여라.
+
+??? success "연습문제 2 풀이"
+    $\frac{15 S^2}{25} \sim \chi^2_{15}$ 이므로 $P(S^2 > 40) = P\!\left(\chi^2_{15} > \frac{15 \times 40}{25}\right) = P(\chi^2_{15} > 24)$ 이다.
+
+    카이제곱분포표에서 $P(\chi^2_{15} > 24.996) = 0.05$ 이므로 $P(\chi^2_{15} > 24) \approx 0.065$ 이다.
+
+---
+
+**연습문제 3.** $E[S^2] = \sigma^2$ 임을 증명하여라(표본분산이 불편추정량임을 보이는 것이다).
+
+??? success "연습문제 3 풀이"
+    $\frac{(n-1)S^2}{\sigma^2} \sim \chi^2_{n-1}$ 이고 $E[\chi^2_{n-1}] = n-1$ 이므로
+
+    $$
+    E\!\left[\frac{(n-1)S^2}{\sigma^2}\right] = n - 1 \implies E[S^2] = \sigma^2
+    $$
+
+    이다. $\square$
+
+---
+
+**연습문제 4.** 표본분산 공식에서 $n$ 이 아니라 $n - 1$ 로 나누는 까닭을 설명하여라.
+
+??? success "연습문제 4 풀이"
+    $n$ 으로 나누면 $E[\hat{\sigma}^2] = \frac{n-1}{n}\sigma^2 < \sigma^2$ 이 되어 편향된 추정량이 된다. $n-1$ 로 나누는 것은 $\bar{X}$ 를 자료에서 추정하느라 자유도를 하나 "써 버린" 것을 바로잡는 일이다. $n$ 개의 편차 $X_i - \bar{X}$ 는 $\sum(X_i - \bar{X}) = 0$ 을 만족하므로 자유로운 것은 $n-1$ 개뿐이다. 이를 베셀 보정이라고 한다.
+
+---
+
+**연습문제 5.** 정규모집단에서 $\bar{X}$ 과 $S^2$ 이 독립임을 보여라(핵심 결과만 서술하면 되며 온전한 증명은 필요하지 않다).
+
+??? success "연습문제 5 풀이"
+    **코크란 정리**에 따르면 i.i.d. $N(\mu, \sigma^2)$ 표본에서 $\bar{X}$ 과 $S^2$ 은 독립이다. 핵심은 $\bar{X}$ 이 자료에 $\sum X_i$ 를 통해 의존하고 $S^2$ 은 $\sum(X_i - \bar{X})^2$ 를 통해 의존하는데, 이 두 이차형식이 자료벡터 $(X_1, \ldots, X_n)$ 을 서로 여집합인 부분공간에 직교사영한 것들의 함수라는 데 있다. 다변량정규확률벡터에서는 직교사영들의 함수가 서로 독립이다.

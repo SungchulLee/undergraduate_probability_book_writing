@@ -1,103 +1,71 @@
-# Additivity of Chi-Squared
+# 카이제곱분포의 가법성
 
-<<<<<<< Updated upstream
-## Motivation
+## 왜 필요한가
 
-The chi-squared distribution arises as a sum of squared standard normals. A natural question is: what happens when we add two independent chi-squared random variables? Additivity -- the fact that degrees of freedom simply add -- is the key property that makes Cochran's decomposition and analysis of variance work.
+카이제곱분포는 표준정규확률변수의 제곱합으로 나타난다. 그렇다면 독립인 두 카이제곱확률변수를 더하면 어떻게 될지 궁금해진다. 자유도가 그대로 더해진다는 가법성은 코크란 분해와 분산분석이 굴러가게 해 주는 핵심 성질이다.
 
-## Statement
+## 정리의 서술
 
-!!! info "Additivity"
-    If $V_1 \sim \chi^2_{d_1}$ and $V_2 \sim \chi^2_{d_2}$ are **independent**, then
+!!! info "가법성"
+    $V_1 \sim \chi^2_{d_1}$ 과 $V_2 \sim \chi^2_{d_2}$ 가 **독립**이면 다음이 성립한다.
 
     $$V_1 + V_2 \sim \chi^2_{d_1 + d_2}$$
 
-## Proof via Gamma Additivity
+## 감마분포의 가법성을 이용한 증명
 
-Since $\chi^2_{d} \sim \Gamma(d/2, 1/2)$, and independent Gamma random variables with the **same rate** are additive:
+$\chi^2_{d} \sim \Gamma(d/2, 1/2)$ 이고, **비율이 같은** 독립인 감마확률변수들은 가법성을 지니므로 다음이 성립한다.
 
 $$
 V_1 + V_2 \sim \Gamma\!\left(\frac{d_1}{2}, \frac{1}{2}\right) + \Gamma\!\left(\frac{d_2}{2}, \frac{1}{2}\right) = \Gamma\!\left(\frac{d_1 + d_2}{2}, \frac{1}{2}\right) \sim \chi^2_{d_1 + d_2}
 $$
 
-where the addition denotes convolution of independent random variables (Chapter 16).
+여기에서 더하기는 독립인 확률변수들의 합성곱을 뜻한다(16장).
 
-## Proof via MGFs
+## 적률생성함수를 이용한 증명
 
-By independence, $M_{V_1+V_2}(t) = M_{V_1}(t) \cdot M_{V_2}(t)$. Using the chi-squared MGF:
+독립이므로 $M_{V_1+V_2}(t) = M_{V_1}(t) \cdot M_{V_2}(t)$ 이다. 카이제곱분포의 적률생성함수를 넣으면
 
 $$
 M_{V_1+V_2}(t) = (1-2t)^{-d_1/2} \cdot (1-2t)^{-d_2/2} = (1-2t)^{-(d_1+d_2)/2}
 $$
 
-This is the MGF of $\chi^2_{d_1+d_2}$. By the uniqueness theorem, $V_1 + V_2 \sim \chi^2_{d_1+d_2}$.
+이다. 이것은 $\chi^2_{d_1+d_2}$ 의 적률생성함수이므로 유일성 정리에 따라 $V_1 + V_2 \sim \chi^2_{d_1+d_2}$ 이다.
 
-## General Case
+## 일반적인 경우
 
-For mutually independent $V_i \sim \chi^2_{d_i}$, $i = 1, \ldots, k$:
+$i = 1, \ldots, k$ 에 대하여 $V_i \sim \chi^2_{d_i}$ 가 상호독립이면 다음이 성립한다.
 
 $$
 \sum_{i=1}^k V_i \sim \chi^2_{d_1 + d_2 + \cdots + d_k}
 $$
 
-This is consistent with the definition: each $V_i$ is a sum of $d_i$ independent squared standard normals, so the total is a sum of $d_1 + \cdots + d_k$ independent squared standard normals.
+이는 정의와도 들어맞는다. 각 $V_i$ 가 독립인 표준정규확률변수 제곱 $d_i$ 개의 합이므로 전체는 독립인 표준정규확률변수 제곱 $d_1 + \cdots + d_k$ 개의 합이기 때문이다.
 
-??? example "Numerical Example"
-    Let $V_1 \sim \chi^2_3$ and $V_2 \sim \chi^2_7$ be independent. Then $V_1 + V_2 \sim \chi^2_{10}$.
+??? example "수치 예제"
+    $V_1 \sim \chi^2_3$ 과 $V_2 \sim \chi^2_7$ 이 독립이라고 하자. 그러면 $V_1 + V_2 \sim \chi^2_{10}$ 이다.
 
     - $E[V_1 + V_2] = 3 + 7 = 10$
     - $\text{Var}(V_1 + V_2) = 2(3) + 2(7) = 20$
 
-    These match the chi-squared formulas: $E[\chi^2_d] = d$ and $\text{Var}(\chi^2_d) = 2d$.
+    이는 카이제곱분포의 공식 $E[\chi^2_d] = d$ 와 $\text{Var}(\chi^2_d) = 2d$ 와 들어맞는다.
 
-## Application: Cochran's Decomposition
+## 응용: 코크란 분해
 
-A key application uses additivity **in reverse**. For $X_1, \ldots, X_n$ iid $N(\mu, \sigma^2)$:
+중요한 응용 하나는 가법성을 **거꾸로** 쓰는 것이다. $X_1, \ldots, X_n$ 이 i.i.d. $N(\mu, \sigma^2)$ 이면 다음이 성립한다.
 
 $$
 \underbrace{\sum_{i=1}^n \left(\frac{X_i - \mu}{\sigma}\right)^2}_{\chi^2_n} = \underbrace{\sum_{i=1}^n \left(\frac{X_i - \bar{X}}{\sigma}\right)^2}_{?} + \underbrace{\left(\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}\right)^2}_{\chi^2_1}
 $$
 
-The left side has $n$ degrees of freedom and the last term has 1. If the two right-hand terms are independent, then by the MGF factorization, the first term must be $\chi^2_{n-1}$. This is proved in the section on the distribution of the sample variance.
+왼쪽 변의 자유도는 $n$ 이고 오른쪽 마지막 항의 자유도는 $1$ 이다. 오른쪽의 두 항이 독립이라면 적률생성함수의 인수분해에 따라 첫 항은 반드시 $\chi^2_{n-1}$ 이어야 한다. 이는 표본분산의 분포를 다루는 절에서 증명한다.
 
-!!! warning "Independence Is Essential"
-    Additivity requires independence. If $V_1$ and $V_2$ are dependent chi-squared random variables, then $V_1 + V_2$ is generally **not** chi-squared.
-=======
-## Statement
+!!! warning "독립성이 꼭 필요하다"
+    가법성은 독립일 때에만 성립한다. $V_1$ 과 $V_2$ 가 종속인 카이제곱확률변수이면 $V_1 + V_2$ 는 일반적으로 카이제곱분포를 따르지 **않는다**.
 
-If $V_1 \sim \chi^2_{d_1}$ and $V_2 \sim \chi^2_{d_2}$ are **independent**, then:
+## 연습문제
 
-$$V_1 + V_2 \sim \chi^2_{d_1 + d_2}$$
+**연습문제 1.**
+$V_1 \sim \chi^2_3$ 과 $V_2 \sim \chi^2_7$ 이 독립이면 $V_1 + V_2$ 의 분포는 무엇인가?
 
-## Proof
-
-This follows directly from the additivity of the Gamma distribution. Since $\chi^2_{d_i} \stackrel{d}{=} \Gamma(d_i/2, 1/2)$:
-
-$$V_1 + V_2 \sim \Gamma\!\left(\frac{d_1}{2}, \frac{1}{2}\right) * \Gamma\!\left(\frac{d_2}{2}, \frac{1}{2}\right) = \Gamma\!\left(\frac{d_1 + d_2}{2}, \frac{1}{2}\right) \stackrel{d}{=} \chi^2_{d_1 + d_2}$$
-
-### Proof via MGFs
-
-Alternatively, using MGFs and independence:
-
-$$\varphi_{V_1 + V_2}(t) = \varphi_{V_1}(t) \cdot \varphi_{V_2}(t) = (1 - 2t)^{-d_1/2} \cdot (1 - 2t)^{-d_2/2} = (1 - 2t)^{-(d_1 + d_2)/2}$$
-
-which is the MGF of $\chi^2_{d_1 + d_2}$. By the uniqueness theorem, $V_1 + V_2 \sim \chi^2_{d_1 + d_2}$.
-
-## General Case
-
-For independent $V_i \sim \chi^2_{d_i}$, $i = 1, \ldots, k$:
-
-$$\sum_{i=1}^k V_i \sim \chi^2_{d_1 + d_2 + \cdots + d_k}$$
-
-This is consistent with the definition: if $V_i = \sum_{j=1}^{d_i} Z_{ij}^2$ where all $Z_{ij}$ are iid $N(0,1)$, then $\sum_i V_i$ is a sum of $d_1 + \cdots + d_k$ independent squared standard normals.
-
-## Application: Cochran's Decomposition
-
-A key application of additivity (used in reverse) appears in the decomposition:
-
-$$\sum_{i=1}^n \left(\frac{X_i - \mu}{\sigma}\right)^2 = \sum_{i=1}^n \left(\frac{X_i - \bar{X}}{\sigma}\right)^2 + \left(\frac{\bar{X} - \mu}{\sigma/\sqrt{n}}\right)^2$$
-
-$$\chi^2_n = \chi^2_{n-1} + \chi^2_1$$
-
-The left side is a sum of $n$ independent squared standard normals. The last term is $\chi^2_1$. If we can show independence between the two right-hand terms, then by the MGF factorization, the first term must be $\chi^2_{n-1}$.
->>>>>>> Stashed changes
+??? success "연습문제 1 풀이"
+    $V_1 + V_2 \sim \chi^2_{3+7} = \chi^2_{10}$ 이다.
