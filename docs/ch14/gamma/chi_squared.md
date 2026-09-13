@@ -1,70 +1,70 @@
-# Relationship to the Chi-Squared Distribution
+# 카이제곱분포와의 관계
 
-## Chi-Squared as a Special Case of Gamma
+## 감마분포의 특별한 경우인 카이제곱분포
 
-!!! info "Chi-Squared–Gamma Connection"
-    The **Chi-squared distribution** with $d$ degrees of freedom is a special case of the Gamma distribution:
+!!! info "카이제곱분포와 감마분포의 연결"
+    자유도가 $d$ 인 **카이제곱분포**는 감마분포의 특별한 경우이다.
 
     $$\chi^2_d \stackrel{d}{=} \Gamma\!\left(\frac{d}{2}, \frac{1}{2}\right)$$
 
-    In particular:
+    특히 다음이 성립한다.
 
     $$\chi^2_1 \stackrel{d}{=} \Gamma\!\left(\frac{1}{2}, \frac{1}{2}\right)$$
 
-## Derivation: $Z^2 \sim \chi^2_1$
+## 유도: Z² ~ χ²₁
 
-If $Z \sim N(0, 1)$, then $X = Z^2 \sim \chi^2_1 = \Gamma(1/2, 1/2)$.
+$Z \sim N(0, 1)$ 이면 $X = Z^2 \sim \chi^2_1 = \Gamma(1/2, 1/2)$ 이다.
 
-Using the CDF method: for $x > 0$,
+누적분포함수 방법을 쓰면 $x > 0$ 에 대하여 다음이 성립한다.
 
-$$P(X \leq x) = P(Z^2 \leq x) = P(-\sqrt{x} \leq Z \leq \sqrt{x}) = 2\Phi(\sqrt{x}) - 1$$
+$$P(X \leq x) = P(Z^2 \leq x) = P(-\sqrt{x} \leq Z \leq \sqrt{x}) = 2\mathcal{N}(\sqrt{x}) - 1$$
 
-Differentiating:
+미분하면 다음을 얻는다.
 
 $$f_X(x) = 2\phi(\sqrt{x}) \cdot \frac{1}{2\sqrt{x}} = \frac{1}{\sqrt{2\pi}} x^{-1/2} e^{-x/2}$$
 
-This can be rewritten as:
+이것은 다음과 같이 고쳐 쓸 수 있다.
 
 $$f_X(x) = \frac{(x/2)^{1/2 - 1} e^{-x/2}}{2 \, \Gamma(1/2)} \cdot \frac{1}{1} = \frac{\frac{1}{2}\left(\frac{1}{2}x\right)^{1/2-1} e^{-x/2}}{\Gamma(1/2)}$$
 
-which is the PDF of $\Gamma(1/2, 1/2)$, confirming $\chi^2_1 = \Gamma(1/2, 1/2)$.
+이것이 바로 $\Gamma(1/2, 1/2)$ 의 확률밀도함수이므로 $\chi^2_1 = \Gamma(1/2, 1/2)$ 임이 확인된다.
 
-## Sum of Squared Normals
+## 정규확률변수 제곱의 합
 
-If $Z_1, Z_2, \ldots, Z_d$ are iid $N(0,1)$, then by the additivity of the Gamma distribution:
+$Z_1, Z_2, \ldots, Z_d$ 가 i.i.d. $N(0,1)$ 이면 감마분포의 덧셈 성질에 따라 다음이 성립한다.
 
 $$Z_1^2 + Z_2^2 + \cdots + Z_d^2 \sim \Gamma\!\left(\frac{1}{2}, \frac{1}{2}\right) * \cdots * \Gamma\!\left(\frac{1}{2}, \frac{1}{2}\right) = \Gamma\!\left(\frac{d}{2}, \frac{1}{2}\right) = \chi^2_d$$
 
-## Moments from the Gamma
+## 감마분포에서 얻는 적률
 
-Since $\chi^2_d = \Gamma(d/2, 1/2)$, the moments follow directly from the Gamma formulas:
+$\chi^2_d = \Gamma(d/2, 1/2)$ 이므로 적률은 감마분포의 공식에서 바로 나온다.
 
 $$E[\chi^2_d] = \frac{d/2}{1/2} = d$$
 
 $$\text{Var}(\chi^2_d) = \frac{d/2}{(1/2)^2} = 2d$$
 
-## Additivity of Chi-Squared
+## 카이제곱분포의 덧셈 성질
 
-Since the Chi-squared is a Gamma with rate $\lambda = 1/2$, the Gamma additivity property gives:
+카이제곱분포는 비율이 $\lambda = 1/2$ 인 감마분포이므로, 감마분포의 덧셈 성질에서 다음을 얻는다.
 
 $$\chi^2_{d_1} + \chi^2_{d_2} \sim \chi^2_{d_1 + d_2}$$
 
-when the two Chi-squared random variables are independent.
+단, 두 카이제곱확률변수가 독립일 때이다.
 
-## Summary of Special Cases
+## 특별한 경우 요약
 
-| Distribution | Gamma Parameters | Shape $\alpha$ | Rate $\lambda$ |
+| 분포 | 감마분포의 모수 | 모양 $\alpha$ | 비율 $\lambda$ |
 |:---:|:---:|:---:|:---:|
 | $\text{Exp}(\lambda)$ | $\Gamma(1, \lambda)$ | $1$ | $\lambda$ |
-| Erlang$(k, \lambda)$ | $\Gamma(k, \lambda)$ | $k$ (integer) | $\lambda$ |
+| 얼랑$(k, \lambda)$ | $\Gamma(k, \lambda)$ | $k$ (정수) | $\lambda$ |
 | $\chi^2_1$ | $\Gamma(1/2, 1/2)$ | $1/2$ | $1/2$ |
 | $\chi^2_d$ | $\Gamma(d/2, 1/2)$ | $d/2$ | $1/2$ |
 
-## Inverse Gamma Distribution
+## 역감마분포
 
-The **Inverse Gamma distribution** $\text{IG}(\alpha, \lambda)$ is the distribution of $1/X$ when $X \sim \Gamma(\alpha, \lambda)$. It arises as a conjugate prior in Bayesian statistics for variance parameters.
+**역감마분포** $\text{IG}(\alpha, \lambda)$ 는 $X \sim \Gamma(\alpha, \lambda)$ 일 때 $1/X$ 의 분포이다. 베이즈 통계에서 분산모수의 켤레사전분포로 쓰인다.
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 import numpy as np
@@ -76,7 +76,7 @@ n_sim = 100000
 
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-# Verify chi-squared = Gamma(d/2, 1/2)
+# 카이제곱분포 = Gamma(d/2, 1/2) 확인
 x = np.linspace(0, 20, 300)
 for d in [1, 2, 5, 10]:
     chi2_pdf = stats.chi2.pdf(x, df=d)
@@ -91,7 +91,7 @@ axes[0].legend()
 axes[0].grid(True, alpha=0.3)
 axes[0].set_ylim(0, 0.5)
 
-# Demonstrate Z^2 ~ χ²_1
+# Z^2 ~ χ²_1 보이기
 Z = np.random.standard_normal(n_sim)
 X = Z ** 2
 
@@ -110,7 +110,7 @@ plt.tight_layout()
 plt.savefig('chi_squared_gamma.png', dpi=150, bbox_inches='tight')
 plt.show()
 
-# Verify additivity
+# 덧셈 성질 확인
 print("=== Chi-Squared Additivity ===")
 for d1, d2 in [(3, 5), (2, 8), (1, 1)]:
     X1 = np.random.chisquare(d1, n_sim)
@@ -119,3 +119,13 @@ for d1, d2 in [(3, 5), (2, 8), (1, 1)]:
     print(f"χ²({d1}) + χ²({d2}): mean={np.mean(S):.3f} "
           f"(theory {d1+d2}), var={np.var(S):.3f} (theory {2*(d1+d2)})")
 ```
+
+## 연습문제
+
+**연습문제 1.**
+$Z_1, Z_2, \ldots, Z_8$ 이 i.i.d. $N(0,1)$ 일 때 $W = Z_1^2 + Z_2^2 + \cdots + Z_8^2$ 의 분포와 평균, 분산을 구하여라.
+
+??? success "연습문제 1 풀이"
+    $W \sim \chi^2_8 = \Gamma(4, 1/2)$ 이다.
+
+    $E[W] = 8$, $\text{Var}(W) = 16$ 이다.
