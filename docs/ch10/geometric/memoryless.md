@@ -1,77 +1,142 @@
-# Memoryless Property
-<<<<<<< Updated upstream
+# 무기억성
 
-## Intuition
+## 직관
 
-Imagine you have been rolling a die for 20 rolls without seeing a six. Does the fact that you have already waited 20 rolls make a six more likely on the next roll? With independent trials the answer is no -- the die has no memory. The probability of needing $t$ more rolls is exactly the same as if you were starting fresh. This "fresh start" property is called **memorylessness**, and among discrete distributions it characterizes the Geometric.
+주사위를 20번 굴렸는데 아직 6이 나오지 않았다고 하자. 이미 20번을 기다렸다는 사실 때문에 다음 굴리기에서 6이 더 잘 나올까? 시행들이 서로 독립이라면 답은 "아니오"이다. 주사위에는 기억이 없다. 앞으로 $t$ 번 더 굴려야 할 확률은 방금 시작했을 때와 똑같다. 이렇게 "새로 시작하는" 성질을 **무기억성**이라 하며, 이산분포 가운데 이 성질을 지닌 것은 기하분포뿐이다.
 
-## Statement
+## 정리의 서술
 
-!!! info "Memoryless Property"
-    A random variable $X \sim \text{Geo}(p)$ satisfies: for all $s, t \ge 1$,
+!!! info "무기억성"
+    확률변수 $X \sim \text{Geo}(p)$ 는 모든 $s, t \ge 1$ 에 대하여 다음을 만족한다.
 
     $$P(X > s + t \mid X > s) = P(X > t)$$
 
-    Equivalently, given that the first $s$ trials were all failures, the **remaining** waiting time has the same Geometric distribution as the original.
+    같은 말로, 분포의 꼴로 적으면 다음과 같다.
+
+    $$(X - s \mid X > s) \stackrel{d}{=} X$$
+
+    처음 $s$ 번의 시행이 모두 실패였을 때 **남은** 기다리는 시간은 원래와 같은 기하분포를 따른다.
 
 ---
 
-## Proof
+## 증명
 
-Using the tail probability $P(X > k) = q^k$ from the Geometric distribution:
+기하분포의 꼬리확률 $P(X > k) = q^k$ 를 쓰면 다음과 같다.
 
 $$
 P(X > s + t \mid X > s) = \frac{P(X > s + t)}{P(X > s)} = \frac{q^{s+t}}{q^s} = q^t = P(X > t)
 $$
 
-The key step is that the exponential form $q^k$ factorizes: $q^{s+t} = q^s \cdot q^t$. This factorization is what makes the property work.
+열쇠가 되는 걸음은 지수 꼴 $q^k$ 가 $q^{s+t} = q^s \cdot q^t$ 로 분해된다는 것이다. 이 성질이 무기억성을 만들어 낸다.
 
 ---
 
-## Uniqueness: Only Discrete Memoryless Distribution
+## 유일성: 무기억성을 지닌 유일한 이산분포
 
-The Geometric distribution is the **only** discrete distribution on $\{1, 2, 3, \ldots\}$ that is memoryless.
+기하분포는 $\{1, 2, 3, \ldots\}$ 위의 이산분포 가운데 무기억성을 지닌 **유일한** 분포이다.
 
-??? note "Proof Sketch"
-    Suppose $X$ is a positive-integer-valued random variable with $P(X > s + t \mid X > s) = P(X > t)$ for all $s, t \ge 1$. Let $g(k) = P(X > k)$. Then the memoryless property gives
+??? note "증명의 얼개"
+    $X$ 를 양의 정수 값을 갖는 확률변수로서 모든 $s, t \ge 1$ 에 대하여 $P(X > s + t \mid X > s) = P(X > t)$ 를 만족한다고 하자. $g(k) = P(X > k)$ 라 두면 무기억성으로부터 모든 양의 정수 $s, t$ 에 대하여 다음이 성립한다.
 
     $$g(s + t) = g(s) \cdot g(t)$$
 
-    for all positive integers $s, t$. The only solution with $g(0) = 1$ and $0 < g(1) < 1$ is $g(k) = q^k$ for some $q \in (0, 1)$. Setting $p = 1 - q$, we recover $P(X > k) = (1-p)^k$, which is the Geometric tail probability.
+    $q = g(1) = P(X > 1)$ 로 두고 이 곱셈 항등식을 되풀이하여 적용하면 다음을 얻는다.
+
+    $$g(2) = g(1)g(1) = q^2, \quad g(3) = g(2)g(1) = q^3, \quad \ldots, \quad g(n) = q^n$$
+
+    좀 더 격식을 갖추면 귀납 단계는 $g(n+1) = g(n) \cdot g(1) = q^n \cdot q = q^{n+1}$ 이다. $X \geq 1$ 이므로 $g(0) = 1$ 이고, 따라서 유일한 해는 $g(k) = q^k$ 이다. $p = 1 - q$ 로 두면 $P(X > k) = (1-p)^k$ 를 얻는데, 이는 바로 기하분포의 꼬리확률이다.
 
 ---
 
-## Conditional Distribution Interpretation
+## 조건부분포로 읽기
 
-Another way to state the memoryless property: given that we have waited $s$ trials without success, the number of **additional** trials needed is again $\text{Geo}(p)$. Formally, if $X \sim \text{Geo}(p)$, then
+무기억성을 달리 말하면 이렇다. 성공 없이 $s$ 번을 기다렸을 때 **더** 필요한 시행 횟수는 다시 $\text{Geo}(p)$ 를 따른다. 격식을 갖추어 적으면, $X \sim \text{Geo}(p)$ 일 때 다음이 성립한다.
 
 $$
 (X - s \mid X > s) \sim \text{Geo}(p)
 $$
 
-The conditional distribution is identical to the original distribution. The process "restarts" after every failure.
+조건부분포가 원래 분포와 똑같다. 실패할 때마다 과정이 "처음부터 다시" 시작되는 것이다.
 
 ---
 
-## Continuous Counterpart
+## 연속인 대응물
 
-The Exponential distribution is the continuous analog of the Geometric and is the **only** continuous memoryless distribution. If $T \sim \text{Exp}(\lambda)$, then
+지수분포는 기하분포의 연속인 대응물이며, 무기억성을 지닌 **유일한** 연속분포이다. $T \sim \text{Exp}(\lambda)$ 이면 다음이 성립한다.
 
 $$
 P(T > s + t \mid T > s) = P(T > t)
 $$
 
-This parallel is not a coincidence: as $n \to \infty$ with $p = \lambda / n$, the rescaled Geometric converges to the Exponential.
+이 나란함은 우연이 아니다. $p = \lambda / n$ 으로 두고 $n \to \infty$ 로 보내면 척도를 바꾼 기하분포가 지수분포로 수렴한다.
 
 ---
 
-## Examples
+## 예제
 
-**Coin flips.** You have flipped a fair coin 100 times without seeing heads. The probability of needing at least 5 more flips is $P(X > 5) = (1/2)^5 = 1/32$, the same as at the start.
+**동전 던지기.** 공정한 동전을 100번 던졌는데 앞면이 나오지 않았다. 앞으로 적어도 5번 더 던져야 할 확률은 $P(X > 5) = (1/2)^5 = 1/32$ 로, 처음 시작할 때와 같다.
 
-**Equipment failure.** A machine component fails on each day independently with probability 0.01. Given that it has survived 200 days, the probability it lasts at least 30 more days is $(0.99)^{30} \approx 0.740$, regardless of how long it has already been running.
+**장비의 고장.** 어떤 기계 부품이 날마다 독립적으로 확률 0.01로 고장 난다. 200일을 견뎠다고 할 때 적어도 30일을 더 버틸 확률은 $(0.99)^{30} \approx 0.740$ 으로, 이미 얼마나 오래 돌아갔든 상관이 없다.
 
-!!! warning "Gambler's Fallacy"
-    The memoryless property is the mathematical reason behind the **Gambler's Fallacy**: past failures do not make future success "due." If each trial is independent with the same probability, the system truly has no memory.
-=======
->>>>>>> Stashed changes
+!!! warning "도박꾼의 오류"
+    무기억성은 **도박꾼의 오류**를 수학적으로 설명해 준다. 지나간 실패가 앞으로의 성공을 "빚처럼" 만들어 주지 않는다. 시행마다 확률이 같고 서로 독립이라면 그 체계에는 정말로 기억이 없다.
+
+## 연습문제
+
+**연습문제 1.** $X$ 를 양의 정수 값을 갖는 확률변수로서 모든 $s, t \ge 1$ 에 대하여 $P(X > s + t \mid X > s) = P(X > t)$ 를 만족한다고 하자. 어떤 $q \in (0, 1)$ 에 대하여 $P(X > k) = q^k$ 임을 보임으로써 $X$ 가 반드시 기하분포를 따름을 증명하여라.
+
+??? success "연습문제 1 풀이"
+    $g(k) = P(X > k)$ 라 두자. $X \geq 1$ 이므로 $g(0) = P(X > 0) = 1$ 이다. 무기억성으로부터 $P(X > s+t) = P(X > s) \cdot P(X > t)$, 곧 다음이 성립한다.
+
+    $$
+    g(s + t) = g(s)\,g(t) \quad \text{모든 } s, t \geq 1 \text{ 에 대하여}
+    $$
+
+    귀납법에 따라 모든 $k \geq 1$ 에 대하여 $g(k) = g(1)^k$ 이다. $q = g(1) = P(X > 1)$ 로 두자. $X$ 가 퇴화되어 있지 않으므로 $0 < q < 1$ 이다. 그러면 $P(X > k) = q^k$ 이고 다음을 얻는다.
+
+    $$
+    P(X = k) = P(X > k-1) - P(X > k) = q^{k-1} - q^k = q^{k-1}(1 - q)
+    $$
+
+    이는 $p = 1 - q$ 인 $\text{Geo}(p)$ 의 확률질량함수이다. $\square$
+
+---
+
+**연습문제 2.** 공정한 동전을 되풀이하여 던진다. 처음 5번이 모두 뒷면이었을 때 첫 앞면이 8번째 이후에 나올 확률을 구하여라.
+
+??? success "연습문제 2 풀이"
+    $X \sim \text{Geo}(1/2)$ 라 하자. 구해야 할 것은 $P(X \geq 8 \mid X > 5) = P(X > 7 \mid X > 5)$ 이다. 무기억성에 따라 다음을 얻는다.
+
+    $$
+    P(X > 7 \mid X > 5) = P(X > 2) = (1/2)^2 = \frac{1}{4}
+    $$
+
+    같은 말로, 뒷면이 5번 나온 뒤 남은 기다림은 새로운 $\text{Geo}(1/2)$ 이고 적어도 3번을 더 던져야 한다는 뜻이다.
+
+---
+
+**연습문제 3.** 이항분포가 무기억성을 지니지 **않음**을 보여라. 구체적으로 $X \sim \text{Bin}(3, 1/2)$ 일 때 $P(X > 2 \mid X > 1) \neq P(X > 1)$ 임을 확인하여라.
+
+??? success "연습문제 3 풀이"
+    $P(X > 1) = P(X = 2) + P(X = 3) = \binom{3}{2}(1/2)^3 + \binom{3}{3}(1/2)^3 = 3/8 + 1/8 = 1/2$ 이다.
+
+    $P(X > 2) = P(X = 3) = 1/8$ 이다.
+
+    $$
+    P(X > 2 \mid X > 1) = \frac{P(X > 2)}{P(X > 1)} = \frac{1/8}{1/2} = \frac{1}{4}
+    $$
+
+    $P(X > 2 \mid X > 1) = 1/4 \neq 1/2 = P(X > 1)$ 이므로 이항분포는 무기억성을 지니지 않는다.
+
+---
+
+**연습문제 4.** $X \sim \text{Geo}(p)$ 라 하자. 무기억성을 써서 $X > s$ 라는 조건 아래 $X - s$ 의 조건부분포가 다시 $\text{Geo}(p)$ 임을 보여라.
+
+??? success "연습문제 4 풀이"
+    $Y = X - s$ 라 두자. $k = 1, 2, \ldots$ 에 대하여 $P(Y = k \mid X > s) = (1-p)^{k-1}p$ 임을 보이면 된다. $\{Y = k\} \cap \{X > s\} = \{X = s + k\}$ 이므로 다음과 같다.
+
+    $$
+    P(Y = k \mid X > s) = \frac{P(X = s + k)}{P(X > s)} = \frac{q^{s+k-1}p}{q^s} = q^{k-1}p
+    $$
+
+    이는 바로 $\text{Geo}(p)$ 의 확률질량함수이다. 실패할 때마다 과정이 처음부터 다시 시작되는 것이다. $\square$

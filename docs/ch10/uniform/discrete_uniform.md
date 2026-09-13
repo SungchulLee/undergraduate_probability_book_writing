@@ -1,52 +1,51 @@
-# Discrete Uniform Distribution
-<<<<<<< Updated upstream
+# 이산균등분포
 
-## Motivation
+## 왜 필요한가
 
-When all outcomes are equally likely -- rolling a fair die, picking a random integer, selecting a lottery number -- we have a **discrete uniform distribution**. This is the mathematical formalization of the classical "equally likely outcomes" model from Chapter 2. Despite its simplicity, it appears throughout probability as a building block and a benchmark.
+공정한 주사위 굴리기, 정수 하나를 무작위로 고르기, 복권 번호 뽑기처럼 모든 결과가 같은 정도로 일어날 때 우리는 **이산균등분포**를 만난다. 이는 2장에서 다룬 고전적인 "같은 정도로 일어나는 결과" 모형을 수학적으로 다듬은 것이다. 단순해 보이지만 확률론 곳곳에서 벽돌로도, 기준점으로도 쓰인다.
 
-## Definition
+## 정의
 
-A random variable $X$ has a **Discrete Uniform distribution** on $\{a, a+1, \ldots, b\}$, written $X \sim \text{DiscreteUniform}(a, b)$, if each value is equally likely:
+확률변수 $X$ 가 $\{a, a+1, \ldots, b\}$ 위에서 각 값을 같은 확률로 가지면, 곧
 
 $$
 P(X = k) = \frac{1}{n}, \quad k = a, a+1, \ldots, b
 $$
 
-where $n = b - a + 1$ is the number of possible values.
+이면 $X$ 는 **이산균등분포**를 따른다고 하고 $X \sim \text{DiscreteUniform}(a, b)$ 로 적는다. 여기서 $n = b - a + 1$ 은 가질 수 있는 값의 개수이다.
 
-!!! info "Discrete Uniform PMF"
-    The PMF is flat: every outcome has the same probability $1/n$. This is the defining feature that distinguishes the uniform from all other distributions.
+!!! info "이산균등분포의 확률질량함수"
+    확률질량함수가 평평하다. 모든 결과가 같은 확률 $1/n$ 을 갖는다. 이것이 균등분포를 다른 모든 분포와 갈라놓는 규정적인 특징이다.
 
 ---
 
-## Mean
+## 평균
 
-By symmetry, the distribution is centered at the midpoint of its support:
+대칭성에 따라 이 분포는 받침의 한가운데에 중심을 둔다.
 
 $$
 E[X] = \frac{1}{n}\sum_{k=a}^{b} k = \frac{a + b}{2}
 $$
 
-This can also be seen by noting that the PMF is symmetric about $(a+b)/2$.
+확률질량함수가 $(a+b)/2$ 를 축으로 대칭이라는 점에서도 이를 알 수 있다.
 
 ---
 
-## CDF
+## 누적분포함수
 
-The CDF increases in equal steps of $1/n$:
+누적분포함수는 $1/n$ 씩 같은 크기로 올라간다.
 
 $$
 F(x) = \frac{\lfloor x \rfloor - a + 1}{n}, \quad a \le x \le b
 $$
 
-with $F(x) = 0$ for $x < a$ and $F(x) = 1$ for $x \ge b$.
+$x < a$ 이면 $F(x) = 0$ 이고 $x \ge b$ 이면 $F(x) = 1$ 이다.
 
 ---
 
-## Variance and Further Properties
+## 분산과 그 밖의 성질
 
-The variance, moment generating function, and sum of independent discrete uniforms are developed on the [Properties](properties.md) page:
+분산, 적률생성함수, 그리고 서로 독립인 이산균등분포의 합은 [성질](properties.md) 페이지에서 다룬다.
 
 $$
 \text{Var}(X) = \frac{n^2 - 1}{12}
@@ -54,32 +53,34 @@ $$
 
 ---
 
-## Examples
+## 예제
 
-**Fair die.** Let $X$ be the outcome of rolling a standard die: $X \sim \text{DiscreteUniform}(1, 6)$.
+**공정한 주사위.** $X$ 를 표준적인 주사위를 굴려 나온 눈이라 하면 $X \sim \text{DiscreteUniform}(1, 6)$ 이다.
 
-- $n = 6$ values, each with probability $1/6$.
-- $E[X] = (1 + 6)/2 = 3.5$.
-- $\text{Var}(X) = (36 - 1)/12 = 35/12 \approx 2.917$.
-- $P(X \le 4) = 4/6 = 2/3$.
+- 값이 $n = 6$ 가지이고 각각의 확률이 $1/6$ 이다.
+- $E[X] = (1 + 6)/2 = 3.5$ 이다.
+- $\text{Var}(X) = (36 - 1)/12 = 35/12 \approx 2.917$ 이다.
+- $P(X \le 4) = 4/6 = 2/3$ 이다.
 
-**Random digit.** Select a digit uniformly at random from $\{0, 1, \ldots, 9\}$: $X \sim \text{DiscreteUniform}(0, 9)$.
+**무작위 숫자.** $\{0, 1, \ldots, 9\}$ 에서 숫자 하나를 균등하게 무작위로 고르면 $X \sim \text{DiscreteUniform}(0, 9)$ 이다.
 
-- $E[X] = 4.5$.
-- $\text{Var}(X) = (100 - 1)/12 = 99/12 = 8.25$.
+- $E[X] = 4.5$ 이다.
+- $\text{Var}(X) = (100 - 1)/12 = 99/12 = 8.25$ 이다.
 
-**Lottery draw.** Pick a number from $\{1, 2, \ldots, 49\}$ uniformly at random: $E[X] = 25$ and $\text{Var}(X) = (49^2 - 1)/12 = 200$.
+**복권 추첨.** $\{1, 2, \ldots, 49\}$ 에서 번호 하나를 균등하게 무작위로 고르면 $E[X] = 25$ 이고 $\text{Var}(X) = (49^2 - 1)/12 = 200$ 이다.
 
 ---
 
-## Connection to Classical Probability
+## 고전적 확률과의 관계
 
-Any experiment with $n$ equally likely outcomes and a numerical labeling produces a discrete uniform random variable. The probability of an event $A$ in the classical model is
+같은 정도로 일어나는 결과가 $n$ 개 있고 그것들에 수를 매긴 실험이라면 무엇이든 이산균등 확률변수를 낳는다. 고전적 모형에서 사건 $A$ 의 확률은 다음과 같다.
 
 $$
 P(A) = \frac{|A|}{n}
 $$
 
-which is simply $P(X \in A)$ when $X \sim \text{DiscreteUniform}(1, n)$. The discrete uniform distribution is where counting methods from Chapter 1 meet the formal probability framework of Chapter 2.
-=======
->>>>>>> Stashed changes
+이는 $X \sim \text{DiscreteUniform}(1, n)$ 일 때의 $P(X \in A)$ 와 다름없다. 이산균등분포는 1장의 세기 방법과 2장의 격식 있는 확률 틀이 만나는 자리이다.
+
+## 연습문제
+
+**연습문제 1.** $X \sim \text{DiscreteUniform}(1, n)$ 이라 하자. 항등식 $\sum_{k=1}^{n} k^2 = \frac{n(n+1)(2n+1)}{6}$ 을 써서 $\text{Var}(X) = \frac{n^2 - 1}{12}$ 을 유도하여라.

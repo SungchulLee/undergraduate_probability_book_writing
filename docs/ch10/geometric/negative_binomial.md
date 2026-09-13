@@ -1,80 +1,169 @@
-# Negative Binomial Distribution
-<<<<<<< Updated upstream
+# 음이항분포
 
-## Motivation
+## 왜 필요한가
 
-The Geometric distribution counts trials until the **first** success. What if we want the number of trials until the **r-th** success? For example, how many times must a salesperson make calls until closing 5 deals? This is the **Negative Binomial distribution**, which generalizes the Geometric in the same way that the Binomial generalizes the Bernoulli.
+기하분포는 **첫** 성공까지의 시행 횟수를 센다. 그렇다면 **$r$ 번째** 성공까지의 시행 횟수는 어떨까? 예를 들어 영업사원이 계약 5건을 따내기까지 전화를 몇 번이나 걸어야 할까? 이것이 **음이항분포**이며, 이항분포가 베르누이분포를 일반화하는 것과 꼭 같은 방식으로 기하분포를 일반화한다.
 
-## Definition
+## 정의
 
-A random variable $X$ has a **Negative Binomial distribution** with parameters $r \in \{1, 2, \ldots\}$ and $p \in (0, 1]$, written $X \sim \text{NB}(r, p)$, if its PMF is
+확률변수 $X$ 의 확률질량함수가 다음과 같으면, $X$ 는 모수가 $r \in \{1, 2, \ldots\}$ 과 $p \in (0, 1]$ 인 **음이항분포**를 따른다고 하고 $X \sim \text{NB}(r, p)$ 로 적는다.
 
 $$
 P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}, \quad k = r, r+1, r+2, \ldots
 $$
 
-Here $k$ is the trial on which the $r$-th success occurs. The binomial coefficient $\binom{k-1}{r-1}$ counts the number of ways to place $r - 1$ successes among the first $k - 1$ trials (the $k$-th trial must be a success).
+여기서 $k$ 는 $r$ 번째 성공이 나온 시행 번호이다. 열쇠가 되는 제약은 **$k$ 번째 시행 자체가 반드시 성공이어야 한다**는 것이다. 바로 이것이 "$r$ 번째 성공이 $k$ 번째 시행 또는 그 이전에 나온다"가 아니라 "$X = k$"를 못 박아 준다. 이 제약 때문에 남은 $r - 1$ 번의 성공은 처음 $k - 1$ 번의 시행 어딘가에 놓여야 하고, 이항계수 $\binom{k-1}{r-1}$ 이 그 배치의 가짓수를 센다. 인수 $p^r$ 은 $r$ 번의 성공확률을, $(1-p)^{k-r}$ 은 $k - r$ 번의 실패를 나타낸다.
 
-!!! info "Special Case"
-    When $r = 1$, the Negative Binomial reduces to the Geometric: $\text{NB}(1, p) = \text{Geo}(p)$.
+!!! info "특별한 경우"
+    $r = 1$ 이면 음이항분포는 기하분포로 줄어든다. 곧 $\text{NB}(1, p) = \text{Geo}(p)$ 이다.
 
 ---
 
-## Decomposition as a Sum of Geometrics
+## 기하분포의 합으로 쪼개기
 
-The $r$-th success can be reached by waiting for the 1st success, then the 2nd, and so on. Let $Y_i$ be the number of trials between the $(i-1)$-th and $i$-th success. By the memoryless property of Bernoulli trials, each $Y_i \sim \text{Geo}(p)$ independently, and
+$r$ 번째 성공에 이르는 길은 첫 성공을 기다리고, 그다음 두 번째를 기다리고, … 하는 식으로 갈 수 있다. $Y_i$ 를 $(i-1)$ 번째 성공과 $i$ 번째 성공 사이의 시행 횟수라 하자. 베르누이 시행의 무기억성에 따라 각 $Y_i$ 는 서로 독립으로 $\text{Geo}(p)$ 를 따르며 다음이 성립한다.
 
 $$
 X = Y_1 + Y_2 + \cdots + Y_r
 $$
 
-This decomposition is the most natural way to derive the mean and variance.
+이 분해가 평균과 분산을 구하는 가장 자연스러운 길이다.
 
 ---
 
-## Mean and Variance
+## 평균과 분산
 
-Using $X = Y_1 + \cdots + Y_r$ with independent $Y_i \sim \text{Geo}(p)$:
+서로 독립인 $Y_i \sim \text{Geo}(p)$ 에 대하여 $X = Y_1 + \cdots + Y_r$ 을 쓰면 다음과 같다.
 
-**Mean:**
+**평균:**
 
 $$
 E[X] = r \cdot E[Y_1] = \frac{r}{p}
 $$
 
-**Variance:**
+**분산:**
 
 $$
 \text{Var}(X) = r \cdot \text{Var}(Y_1) = \frac{rq}{p^2}
 $$
 
-where $q = 1 - p$.
+여기서 $q = 1 - p$ 이다.
 
-!!! info "Negative Binomial Moments"
-    If $X \sim \text{NB}(r, p)$, then
+!!! info "음이항분포의 적률"
+    $X \sim \text{NB}(r, p)$ 이면 다음이 성립한다.
 
     $$E[X] = \frac{r}{p}, \qquad \text{Var}(X) = \frac{rq}{p^2}$$
 
 ---
 
-## Verification: PMF Sums to 1
+## 확인: 확률질량함수의 합은 1이다
 
-Using the **negative binomial series** $(1 - q)^{-r} = \sum_{j=0}^{\infty} \binom{r+j-1}{j} q^j$, substituting $k = r + j$:
+확인에는 **음이항급수 항등식**이 쓰인다. 이는 이항정리를 음의 정수 지수로 넓힌 것으로, $(1-q)^{-r}$ 을 $q = 0$ 둘레에서 테일러 전개하여 얻는다.
+
+$$
+(1 - q)^{-r} = \sum_{j=0}^{\infty} \binom{r+j-1}{j} q^j, \qquad |q| < 1
+$$
+
+이 항등식에서 이 분포의 이름이 나왔다. 확률질량함수의 합에 $k = r + j$ 를 넣으면 다음과 같다.
 
 $$
 \sum_{k=r}^{\infty} \binom{k-1}{r-1} p^r q^{k-r} = p^r \sum_{j=0}^{\infty} \binom{r+j-1}{j} q^j = p^r \cdot \frac{1}{(1-q)^r} = p^r \cdot \frac{1}{p^r} = 1
 $$
 
-This connection to the negative binomial series is the origin of the distribution's name.
+---
+
+## 예제
+
+**영업 전화.** 어떤 영업사원이 전화마다 독립적으로 확률 $p = 0.2$ 로 계약을 딴다. 계약 5건까지 걸린 전화 횟수는 $X \sim \text{NB}(5, 0.2)$ 이고 $E[X] = 25$, $\text{Var}(X) = 100$ 이다.
+
+**야구 안타.** 어떤 타자의 타율이 0.300이다. 안타 3개를 칠 때까지의 타석 수는 $X \sim \text{NB}(3, 0.3)$ 이고 $E[X] = 10$, $\text{SD}(X) = \sqrt{3 \cdot 0.7 / 0.09} \approx 4.83$ 이다.
+
+**이항분포와의 관계.** 이항분포는 시행 횟수를 고정하고 성공 횟수를 센다. 음이항분포는 성공 횟수를 고정하고 시행 횟수를 센다. 같은 베르누이 과정을 서로 "맞은편"에서 바라본 셈이다.
+
+## 연습문제
+
+**연습문제 1.** 어떤 농구 선수가 자유투를 독립적으로 확률 0.75로 성공시킨다. $X$ 를 자유투 4개를 넣기까지 던진 횟수라 하자.
+
+**(a)** $X$ 의 분포의 이름을 말하고 모수를 밝혀라.
+
+**(b)** $E[X]$ 와 $\text{SD}(X)$ 를 구하여라.
+
+**(c)** $P(X = 6)$ 을 구하여라.
+
+??? success "연습문제 1 풀이"
+    **(a)** $X \sim \text{NB}(r = 4,\; p = 0.75)$ 이다.
+
+    **(b)** $q = 0.25$ 이므로 다음과 같다.
+
+    $$
+    E[X] = \frac{r}{p} = \frac{4}{0.75} = \frac{16}{3} \approx 5.33
+    $$
+
+    $$
+    \text{Var}(X) = \frac{rq}{p^2} = \frac{4 \times 0.25}{0.5625} = \frac{16}{9} \approx 1.78, \qquad \text{SD}(X) = \frac{4}{3} \approx 1.33
+    $$
+
+    **(c)** 4번째 성공이 6번째 시행에서 나온다는 것은 처음 5번 가운데 3번이 성공이고 6번째가 성공이라는 뜻이다.
+
+    $$
+    P(X = 6) = \binom{5}{3}(0.75)^4(0.25)^2 = 10 \times 0.3164 \times 0.0625 \approx 0.1977
+    $$
 
 ---
 
-## Examples
+**연습문제 2.** 합을 음이항급수로 적어서 $\text{NB}(r, p)$ 의 확률질량함수의 합이 1임을 확인하여라.
 
-**Sales calls.** A salesperson closes each call independently with probability $p = 0.2$. The number of calls until 5 deals is $X \sim \text{NB}(5, 0.2)$ with $E[X] = 25$ and $\text{Var}(X) = 100$.
+??? success "연습문제 2 풀이"
+    $$
+    \sum_{k=r}^{\infty} \binom{k-1}{r-1} p^r q^{k-r} = p^r \sum_{j=0}^{\infty} \binom{r+j-1}{j} q^j
+    $$
 
-**Baseball hits.** A batter has a 0.300 batting average. The number of at-bats until 3 hits is $X \sim \text{NB}(3, 0.3)$ with $E[X] = 10$ and $\text{SD}(X) = \sqrt{3 \cdot 0.7 / 0.09} \approx 4.83$.
+    음이항급수에 따라 $|q| < 1$ 일 때 $\sum_{j=0}^{\infty} \binom{r+j-1}{j} q^j = (1-q)^{-r}$ 이다. 그러므로 다음을 얻는다.
 
-**Relation to Binomial.** The Binomial fixes the number of trials and counts successes. The Negative Binomial fixes the number of successes and counts trials. They are "complementary" views of the same Bernoulli process.
-=======
->>>>>>> Stashed changes
+    $$
+    p^r \cdot \frac{1}{(1-q)^r} = p^r \cdot \frac{1}{p^r} = 1
+    $$
+
+    $\square$
+
+---
+
+**연습문제 3.** $X \sim \text{NB}(r, p)$ 일 때 **분산 대 평균의 비**가 다음과 같음을 보여라.
+
+$$
+\frac{\operatorname{Var}(X)}{E[X]} = \frac{1-p}{p}
+$$
+
+그리고 $\text{NB}(r, p)$ 가 같은 평균을 갖는 푸아송분포에 견주어 **과산포**인 것, 곧 $\operatorname{Var}(X) > \operatorname{Var}(\text{평균이 } E[X] \text{ 인 푸아송})$ 인 것이 정확히 $p < 1/2$ 일 때임을 이끌어 내어라.
+
+??? success "연습문제 3 풀이"
+    $q = 1 - p$ 에 대한 적률 공식 $E[X] = r/p$ 와 $\operatorname{Var}(X) = rq/p^2$ 로부터 다음을 얻는다.
+
+    $$
+    \frac{\operatorname{Var}(X)}{E[X]} = \frac{rq/p^2}{r/p} = \frac{q}{p} = \frac{1-p}{p}
+    $$
+
+    평균이 $\mu = E[X] = r/p$ 인 푸아송분포는 분산도 $\mu$ 이므로 분산 대 평균의 비가 $1$ 이다. 음이항분포의 비 $(1-p)/p$ 가 $1$ 을 넘을 필요충분조건은 $1 - p > p$, 곧 $p < 1/2$ 이다. 그러므로 다음과 같다.
+
+    - $p < 1/2$: 음이항분포가 과산포이다(평균을 맞춘 푸아송보다 분산이 크다).
+    - $p = 1/2$: 음이항분포와 평균을 맞춘 푸아송의 분산이 같다.
+    - $p > 1/2$: 음이항분포가 *과소산포*이다(평균을 맞춘 푸아송보다 분산이 작다).
+
+    직관은 이렇다. 서로 독립인 기하분포 기다림들이 여러 단계에 걸쳐 변동을 쌓아 간다. 성공이 드물면($p < 1/2$) 단계마다의 변동 $q/p^2$ 이 전체를 좌우하여 총분산이 푸아송을 넘어선다. 성공이 흔하면($p > 1/2$) 각 단계가 바싹 모여 있어 총분산이 푸아송이라는 기준선 아래로 내려간다. $\square$
+
+---
+
+**연습문제 4.** 어떤 품질 검사원이 불량품 3개를 찾을 때까지 물건을 검사한다. 각 물건은 독립적으로 확률 $0.05$ 로 불량이다. $E[X]$, $\text{SD}(X)$, $P(X = 3)$ 을 구하여라.
+
+??? success "연습문제 4 풀이"
+    $X \sim \text{NB}(3, 0.05)$ 이고 $q = 0.95$ 이다.
+
+    $$
+    E[X] = \frac{3}{0.05} = 60, \qquad \text{Var}(X) = \frac{3 \times 0.95}{0.0025} = 1140, \qquad \text{SD}(X) = \sqrt{1140} \approx 33.76
+    $$
+
+    $P(X = 3)$ 은 처음 3개가 모두 불량일 확률이다.
+
+    $$
+    P(X = 3) = \binom{2}{2}(0.05)^3(0.95)^0 = (0.05)^3 = 0.000125
+    $$

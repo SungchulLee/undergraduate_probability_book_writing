@@ -1,61 +1,60 @@
-# Comparison with Binomial
-<<<<<<< Updated upstream
+# 이항분포와의 비교
 
-## The Core Question
+## 핵심이 되는 물음
 
-The Binomial models sampling **with** replacement; the Hypergeometric models sampling **without** replacement. When the population is large relative to the sample, removing a few items barely changes the population composition, so the two distributions should be nearly identical. This page makes that intuition precise.
+이항분포는 **복원**추출을, 초기하분포는 **비복원**추출을 나타내는 모형이다. 모집단이 표본에 견주어 아주 크면 몇 개를 덜어 내어도 모집단의 구성이 거의 달라지지 않으므로, 두 분포는 거의 같아야 한다. 이 페이지에서는 그 직관을 또렷하게 다듬는다.
 
-## Side-by-Side Summary
+## 나란히 놓고 보기
 
-|  | Binomial $\text{Bin}(n, p)$ | Hypergeometric $\text{HGeom}(N, K, n)$ |
+|  | 이항분포 $\text{Bin}(n, p)$ | 초기하분포 $\text{HGeom}(N, K, n)$ |
 |:---|:---:|:---:|
-| Sampling | With replacement | Without replacement |
-| Independence | Draws are independent | Draws are dependent |
-| Mean | $np$ | $n \cdot K/N$ |
-| Variance | $npq$ | $npq \cdot \dfrac{N-n}{N-1}$ |
-| Parameter link | $p = K/N$ | $p = K/N$ |
+| 추출 방식 | 복원추출 | 비복원추출 |
+| 독립성 | 뽑기들이 서로 독립 | 뽑기들이 서로 종속 |
+| 평균 | $np$ | $n \cdot K/N$ |
+| 분산 | $npq$ | $npq \cdot \dfrac{N-n}{N-1}$ |
+| 모수의 대응 | $p = K/N$ | $p = K/N$ |
 
-With $p = K/N$ and $q = 1 - p$, the means are **identical**. The variances differ only by the finite population correction factor.
+$p = K/N$ 과 $q = 1 - p$ 로 두면 두 평균은 **똑같다**. 분산은 유한모집단 보정 인수만큼만 다르다.
 
 ---
 
-## Finite Population Correction
+## 유한모집단 보정
 
-!!! info "Finite Population Correction"
-    The ratio of the Hypergeometric variance to the Binomial variance is
+!!! info "유한모집단 보정"
+    초기하분포의 분산과 이항분포의 분산의 비는 다음과 같다.
 
     $$\frac{\text{Var}_{\text{HGeom}}}{\text{Var}_{\text{Bin}}} = \frac{N - n}{N - 1}$$
 
-    This factor is always $\le 1$. Sampling without replacement reduces variability because the draws are negatively correlated.
+    이 인수는 언제나 $\le 1$ 이다. 비복원추출은 뽑기들이 음의 상관을 갖게 하므로 변동을 줄인다.
 
-When $n = 1$, the correction factor is $\frac{N-1}{N-1} = 1$ and both distributions agree exactly. When $n = N$, the correction is $0$: you draw the entire population, so there is no randomness left.
+$n = 1$ 이면 보정 인수가 $\frac{N-1}{N-1} = 1$ 이 되어 두 분포가 정확히 일치한다. $n = N$ 이면 보정 인수가 $0$ 이다. 모집단 전체를 뽑는 셈이므로 남은 우연이 없다.
 
-**Rule of thumb.** When the sampling fraction $n/N$ is less than 5%, the finite population correction is at least $0.95$, and the Binomial approximation is excellent.
+**어림 기준.** 표집 비율 $n/N$ 이 5% 미만이면 유한모집단 보정이 적어도 $0.95$ 가 되어 이항근사가 아주 훌륭하다.
 
 ---
 
-## Formal Limit
+## 극한으로 보기
 
-Fix $n$ and $k$, and let $N, K \to \infty$ with $K/N \to p$. Then each Hypergeometric probability converges to the corresponding Binomial probability:
+$n$ 과 $k$ 를 고정하고 $K/N \to p$ 인 채로 $N, K \to \infty$ 로 보내자. 그러면 초기하분포의 각 확률은 그에 대응하는 이항분포의 확률로 수렴한다.
 
 $$
 \frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}} \to \binom{n}{k} p^k (1-p)^{n-k}
 $$
 
-??? note "Proof Sketch"
-    Write $\binom{K}{k} = \frac{K!}{k!(K-k)!} = \frac{K(K-1)\cdots(K-k+1)}{k!}$ and similarly for the other terms. Then
+??? note "증명의 얼개"
+    $\binom{K}{k} = \frac{K!}{k!(K-k)!} = \frac{K(K-1)\cdots(K-k+1)}{k!}$ 로 적고 다른 항들도 마찬가지로 적자. 그러면 다음과 같다.
 
     $$\frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}} = \binom{n}{k} \cdot \frac{K(K-1)\cdots(K-k+1)}{N(N-1)\cdots(N-k+1)} \cdot \frac{(N-K)(N-K-1)\cdots(N-K-n+k+1)}{(N-k)(N-k-1)\cdots(N-n+1)}$$
 
-    As $N \to \infty$ with $K/N \to p$, the first ratio converges to $p^k$ and the second to $(1-p)^{n-k}$.
+    $K/N \to p$ 인 채로 $N \to \infty$ 로 보내면 첫 번째 비는 $p^k$ 으로, 두 번째 비는 $(1-p)^{n-k}$ 으로 수렴한다.
 
 ---
 
-## Numerical Comparison
+## 수치로 견주어 보기
 
-Consider $N = 1000$, $K = 200$ (so $p = 0.2$), and draw $n = 10$ items.
+$N = 1000$, $K = 200$ (곧 $p = 0.2$)이고 $n = 10$ 개를 뽑는 경우를 보자.
 
-| $k$ | $P_{\text{HGeom}}$ | $P_{\text{Bin}}$ | Relative error |
+| $k$ | $P_{\text{HGeom}}$ | $P_{\text{Bin}}$ | 상대오차 |
 |:---:|:---:|:---:|:---:|
 | 0 | 0.1044 | 0.1074 | 2.8% |
 | 1 | 0.2687 | 0.2684 | 0.1% |
@@ -63,14 +62,89 @@ Consider $N = 1000$, $K = 200$ (so $p = 0.2$), and draw $n = 10$ items.
 | 3 | 0.1969 | 0.2013 | 2.2% |
 | 4 | 0.0831 | 0.0881 | 5.7% |
 
-The probabilities are very close. With $n/N = 0.01$, the Binomial is an excellent approximation.
+두 확률이 매우 가깝다. $n/N = 0.01$ 이므로 이항근사가 훌륭하다.
 
 ---
 
-## When to Use Which
+## 어느 것을 쓸 것인가
 
-- **Use Hypergeometric** when sampling without replacement from a finite, known population (e.g., quality inspection of a batch, card games, committee selection).
-- **Use Binomial** when sampling with replacement, or when the population is so large that the sampling fraction $n/N$ is negligible.
-- **Practical guideline**: if $n/N < 0.05$, use the Binomial for simplicity. If $n/N \ge 0.05$, the Hypergeometric is more accurate.
-=======
->>>>>>> Stashed changes
+- **초기하분포를 쓸 때**: 크기를 아는 유한한 모집단에서 비복원으로 뽑을 때(예를 들어 한 묶음의 품질 검사, 카드 놀이, 위원회 뽑기).
+- **이항분포를 쓸 때**: 복원으로 뽑을 때, 또는 모집단이 너무 커서 표집 비율 $n/N$ 을 무시할 수 있을 때.
+- **실용적인 지침**: $n/N < 0.05$ 이면 간편하게 이항분포를 쓴다. $n/N \ge 0.05$ 이면 초기하분포가 더 정확하다.
+
+## 연습문제
+
+**연습문제 1.** 물건 200개짜리 묶음에 불량품이 30개 들어 있다. 비복원으로 10개를 뽑는다. 초기하분포와 이항근사를 모두 써서 $P(X = 2)$ 를 구하여라.
+
+??? success "연습문제 1 풀이"
+    초기하분포: $N = 200$, $K = 30$, $n = 10$, $p = 0.15$ 이다.
+
+    $$
+    P_{\text{HGeom}}(X=2) = \frac{\binom{30}{2}\binom{170}{8}}{\binom{200}{10}} \approx 0.2816
+    $$
+
+    이항분포: $P_{\text{Bin}}(X=2) = \binom{10}{2}(0.15)^2(0.85)^8 \approx 0.2759$ 이다.
+
+    상대오차는 약 2% 이다.
+
+---
+
+**연습문제 2.** 유한모집단 보정 인수 $\frac{N-n}{N-1}$ 이 언제나 $\leq 1$ 이고 $n = 1$ 일 때에만 1이 됨을 보여라.
+
+??? success "연습문제 2 풀이"
+    $n \geq 1$ 이고 $N \geq n$ 이므로 다음이 성립한다.
+
+    $$
+    \frac{N-n}{N-1} \leq 1 \iff N - n \leq N - 1 \iff n \geq 1
+    $$
+
+    이는 언제나 참이다. 등호가 성립하려면 $n = 1$ 이어야 한다. $n \geq 2$ 이면 $N - n < N - 1$ 이므로 보정 인수는 1보다 엄밀히 작다. $\square$
+
+---
+
+**연습문제 3.** 카드 52장 가운데 하트가 13장이다. 5장을 뽑는다. 하트가 정확히 2장 나올 확률을 초기하분포로 정확히 구한 값과 $p = 1/4$ 를 쓴 이항근사 값을 견주어 보아라.
+
+??? success "연습문제 3 풀이"
+    초기하분포:
+
+    $$
+    P(X=2) = \frac{\binom{13}{2}\binom{39}{3}}{\binom{52}{5}} = \frac{78 \times 9139}{2598960} = \frac{712842}{2598960} \approx 0.2743
+    $$
+
+    이항분포:
+
+    $$
+    P(X=2) = \binom{5}{2}(0.25)^2(0.75)^3 = 10 \times 0.0625 \times 0.421875 \approx 0.2637
+    $$
+
+    상대오차는 약 3.9% 이다. $n/N = 5/52 \approx 0.096 > 0.05$ 이므로 이항근사는 거친 어림이다.
+
+---
+
+**연습문제 4.** 어떤 창고에 물건이 500개 있고 그 가운데 50개가 깨지기 쉬운 것이다. 무작위로 20개를 뽑는다. 여기에서 이항근사가 알맞은 까닭을 밝히고 $P(X \geq 3)$ 을 구하여라.
+
+??? success "연습문제 4 풀이"
+    $n/N = 20/500 = 0.04 < 0.05$ 이므로 이항근사가 알맞다. $p = 50/500 = 0.1$ 로 두면 다음과 같다.
+
+    $$
+    P(X \geq 3) = 1 - P(X \leq 2) = 1 - \sum_{k=0}^{2}\binom{20}{k}(0.1)^k(0.9)^{20-k}
+    $$
+
+    $$
+    = 1 - [0.1216 + 0.2702 + 0.2852] = 1 - 0.6769 = 0.3231
+    $$
+
+---
+
+**연습문제 5.** $A_i$ 를 "$i$ 번째 뽑기가 성공이다"라는 사건이라 하고 지시확률변수 분해 $X = \sum_{i=1}^n \mathbf{1}_{A_i}$ 를 써서 $\text{Var}_{\text{HGeom}} = npq \cdot \frac{N-n}{N-1}$ 임을 증명하여라.
+
+??? success "연습문제 5 풀이"
+    각각에 대하여 $P(A_i) = K/N = p$ 이고 $\text{Var}(\mathbf{1}_{A_i}) = pq$ 이다.
+
+    $i \neq j$ 이면 $P(A_i \cap A_j) = \frac{K}{N} \cdot \frac{K-1}{N-1}$ 이므로 $\text{Cov}(\mathbf{1}_{A_i}, \mathbf{1}_{A_j}) = \frac{K(K-1)}{N(N-1)} - p^2 = \frac{-pq}{N-1}$ 이다.
+
+    $$
+    \text{Var}(X) = npq + 2\binom{n}{2}\left(\frac{-pq}{N-1}\right) = npq\left(1 - \frac{n-1}{N-1}\right) = npq \cdot \frac{N-n}{N-1}
+    $$
+
+    $\square$

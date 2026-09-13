@@ -1,80 +1,79 @@
-# Coupon Collector Problem
-<<<<<<< Updated upstream
+# 쿠폰 모으기 문제
 
-## The Problem
+## 문제
 
-A cereal company places one of $n$ different coupons in each box, uniformly at random and independently. You want to collect all $n$ distinct coupons. How many boxes must you buy?
+어떤 시리얼 회사가 상자마다 $n$ 가지 쿠폰 가운데 하나를 균등하게 무작위로, 서로 독립적으로 넣는다. $n$ 가지 쿠폰을 모두 모으려면 상자를 몇 개나 사야 할까?
 
-This classic problem appears in many guises: collecting all Monopoly game pieces at a fast food restaurant, seeing every face of a die, or covering all states in a random survey. The solution is a beautiful application of the Geometric distribution.
+이 고전적인 문제는 여러 모습으로 나타난다. 패스트푸드점에서 모노폴리 조각을 모두 모으는 일, 주사위의 모든 눈을 한 번씩 보는 일, 무작위 조사에서 모든 주를 다 덮는 일이 그렇다. 그 풀이는 기하분포의 아름다운 응용이다.
 
-## Setup and Decomposition
+## 문제 설정과 분해
 
-Let $T$ be the total number of boxes needed. We decompose the collection process into **phases**.
+$T$ 를 필요한 상자의 총 개수라 하자. 모으는 과정을 여러 **단계**로 나눈다.
 
-- **Phase 1**: You have 0 distinct coupons. Each box gives a new coupon with probability $n/n = 1$. So $T_1 = 1$ (deterministic).
-- **Phase 2**: You have 1 distinct coupon. Each box gives a new coupon with probability $(n-1)/n$. So $T_2 \sim \text{Geo}\!\left(\frac{n-1}{n}\right)$.
-- **Phase $i$**: You have $i - 1$ distinct coupons. Each box gives a new coupon with probability $\frac{n - (i-1)}{n}$. So $T_i \sim \text{Geo}\!\left(\frac{n-i+1}{n}\right)$.
+- **1단계**: 서로 다른 쿠폰을 0가지 갖고 있다. 상자 하나에서 새 쿠폰이 나올 확률은 $n/n = 1$ 이다. 그러므로 $T_1 = 1$ (결정적이다).
+- **2단계**: 서로 다른 쿠폰을 1가지 갖고 있다. 상자 하나에서 새 쿠폰이 나올 확률은 $(n-1)/n$ 이다. 그러므로 $T_2 \sim \text{Geo}\!\left(\frac{n-1}{n}\right)$ 이다.
+- **$i$ 단계**: 서로 다른 쿠폰을 $i - 1$ 가지 갖고 있다. 상자 하나에서 새 쿠폰이 나올 확률은 $\frac{n - (i-1)}{n}$ 이다. 그러므로 $T_i \sim \text{Geo}\!\left(\frac{n-i+1}{n}\right)$ 이다.
 
-The total number of boxes is
+상자의 총 개수는 다음과 같다.
 
 $$
 T = T_1 + T_2 + \cdots + T_n
 $$
 
-where the $T_i$ are **independent** Geometric random variables.
+여기서 $T_i$ 들은 서로 **독립**인 기하분포 확률변수이다. 독립성이 성립하는 까닭은 이렇다. 새 쿠폰을 하나 얻어 $i+1$ 단계로 들어서고 나면 앞으로의 시행은 여전히 i.i.d.이다. 베르누이 시행의 무기억성에 따라, 지나간 단계의 내력은 이미 어떤 쿠폰을 갖고 있는지에만 영향을 줄 뿐 다음 새 쿠폰을 기다리는 시간에는 영향을 주지 않는다. 각 $T_i$ 는 자기 단계가 시작될 때 새로 켜지는 "새" 기하 시계이다.
 
 ---
 
-## Expected Value
+## 기댓값
 
-By linearity of expectation:
+기댓값의 선형성에 따라 다음을 얻는다.
 
 $$
 E[T] = \sum_{i=1}^{n} E[T_i] = \sum_{i=1}^{n} \frac{n}{n - i + 1} = n \sum_{j=1}^{n} \frac{1}{j} = n H_n
 $$
 
-where $H_n = 1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}$ is the **$n$-th harmonic number**.
+여기서 $H_n = 1 + \frac{1}{2} + \frac{1}{3} + \cdots + \frac{1}{n}$ 은 **$n$ 번째 조화수**이다.
 
-!!! info "Coupon Collector Expected Time"
-    The expected number of boxes to collect all $n$ coupons is
+!!! info "쿠폰 모으기의 기대 시간"
+    $n$ 가지 쿠폰을 모두 모으는 데 필요한 상자 개수의 기댓값은 다음과 같다.
 
     $$E[T] = n H_n = n\ln n + \gamma n + O(1)$$
 
-    where $\gamma \approx 0.5772$ is the Euler--Mascheroni constant and $H_n \approx \ln n + \gamma$ for large $n$.
+    여기서 $\gamma \approx 0.5772$ 는 오일러–마스케로니 상수이고, $n$ 이 크면 $H_n \approx \ln n + \gamma$ 이다.
 
 ---
 
-## Variance
+## 분산
 
-Since the phases are independent:
+단계들이 서로 독립이므로 다음이 성립한다.
 
 $$
 \text{Var}(T) = \sum_{i=1}^{n} \text{Var}(T_i) = \sum_{i=1}^{n} \frac{1 - \frac{n-i+1}{n}}{\left(\frac{n-i+1}{n}\right)^2} = n^2 \sum_{j=1}^{n} \frac{1}{j^2} - n \sum_{j=1}^{n} \frac{1}{j}
 $$
 
-Using $\sum_{j=1}^{\infty} \frac{1}{j^2} = \frac{\pi^2}{6}$, for large $n$:
+$\sum_{j=1}^{\infty} \frac{1}{j^2} = \frac{\pi^2}{6}$ 을 쓰면 $n$ 이 클 때 다음을 얻는다.
 
 $$
 \text{Var}(T) \approx \frac{\pi^2}{6} n^2
 $$
 
-The standard deviation grows as $\Theta(n)$, which is smaller order than the mean $\Theta(n \ln n)$, so the relative variability decreases as $n$ grows.
+표준편차는 $\Theta(n)$ 으로 늘어나는데, 이는 평균 $\Theta(n \ln n)$ 보다 낮은 차수이다. 그러므로 $n$ 이 커질수록 상대적인 변동은 줄어든다.
 
 ---
 
-## Example: Dice Faces
+## 예: 주사위의 눈
 
-Collect all 6 faces of a fair die by rolling repeatedly. With $n = 6$:
+공정한 주사위를 되풀이하여 굴려 6가지 눈을 모두 모은다고 하자. $n = 6$ 이면 다음과 같다.
 
 $$
 E[T] = 6 \left(1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \frac{1}{5} + \frac{1}{6}\right) = 6 \cdot \frac{49}{20} = 14.7
 $$
 
-On average, you need about 14.7 rolls to see all six faces.
+평균적으로 여섯 눈을 모두 보려면 약 14.7번 굴려야 한다.
 
-The breakdown by phase:
+단계별로 쪼개어 보면 다음과 같다.
 
-| Phase $i$ | Coupons held | $P(\text{new})$ | $E[T_i]$ |
+| 단계 $i$ | 갖고 있는 쿠폰 수 | $P(\text{새 쿠폰})$ | $E[T_i]$ |
 |:---------:|:------------:|:----------------:|:---------:|
 | 1 | 0 | $6/6$ | 1.00 |
 | 2 | 1 | $5/6$ | 1.20 |
@@ -83,18 +82,88 @@ The breakdown by phase:
 | 5 | 4 | $2/6$ | 3.00 |
 | 6 | 5 | $1/6$ | 6.00 |
 
-The last phase -- waiting for the final coupon -- dominates and alone contributes $n/1 = n$ to the expected total.
+마지막 단계, 곧 마지막 쿠폰을 기다리는 몫이 전체를 좌우하며 그것만으로 기대 총합에 $n/1 = n$ 을 보탠다.
 
 ---
 
-## Asymptotic Behavior
+## 점근적인 모습
 
-For large $n$, the coupon collector time concentrates around its mean. One can show that
+$n$ 이 크면 쿠폰 모으기 시간은 평균 $n H_n \approx n \ln n$ 둘레로 몰리고, 그 흔들림은 $n$ 차수, 곧 앞에서 구한 표준편차와 같은 크기이다. 그 흔들림의 모양은 더 정확히 밝힐 수 있지만, 그 논법에는 이 장을 넘어서는 도구가 필요하다.
 
-$$
-P\!\left(T > n \ln n + cn\right) \to 1 - e^{-e^{-c}} \quad \text{as } n \to \infty
-$$
+!!! note "심화: 굼벨 극한"
+    아래 결과는 훨씬 깊은 내용이며 눈길을 넓히려고 실었을 뿐 **이 책의 다른 곳에서는 쓰지 않는다**. 임의의 상수 $c$ 에 대하여 다음이 성립한다.
 
-for any constant $c$. This is a **Gumbel distribution** limit, indicating that the fluctuations around $n \ln n$ are of order $n$.
-=======
->>>>>>> Stashed changes
+    $$
+    P\!\left(T > n \ln n + cn\right) \to 1 - e^{-e^{-c}} \quad n \to \infty \text{ 일 때}
+    $$
+
+    오른쪽 변은 **굼벨분포**의 꼬리이다. 굼벨분포는 여럿 가운데 최댓값이 점근적인 모습을 좌우할 때면 언제나 나타나는 표준적인 극단값 법칙이다. 여기서는 "마지막 단계", 곧 마지막 쿠폰을 기다리는 몫이 극단값처럼 움직이고, 굼벨 극한이 그것을 붙잡는다. 증명에는 모으는 과정을 시간 거꾸로 뒤집어 푸아송 근사를 쓰는 방법이 있다. 극단값 이론에 관한 표준 교재를 보라.
+
+## 연습문제
+
+**연습문제 1.** 서로 다른 장난감이 5가지 있고 시리얼 상자마다 하나씩 무작위로 들어 있다. 5가지를 모두 모으는 데 필요한 상자 개수의 기댓값을 정확히 구하여라.
+
+??? success "연습문제 1 풀이"
+    $n = 5$ 이면 다음과 같다.
+
+    $$
+    E[T] = 5\left(1 + \frac{1}{2} + \frac{1}{3} + \frac{1}{4} + \frac{1}{5}\right) = 5 \cdot \frac{60 + 30 + 20 + 15 + 12}{60} = 5 \cdot \frac{137}{60} = \frac{137}{12} \approx 11.42
+    $$
+
+    평균적으로 약 11.4개의 상자가 필요하다.
+
+---
+
+**연습문제 2.** 쿠폰이 $n$ 가지인 쿠폰 모으기 문제에서 모든 $n$ 에 대하여 $\text{Var}(T) < \frac{\pi^2}{6} n^2$ 임을 보여라.
+
+??? success "연습문제 2 풀이"
+    단계들 $T_i$ 가 서로 독립이고 $T_i \sim \text{Geo}\!\left(\frac{n-i+1}{n}\right)$ 이므로 다음과 같다.
+
+    $$
+    \text{Var}(T) = \sum_{i=1}^{n} \text{Var}(T_i) = \sum_{j=1}^{n} \frac{n^2(1 - j/n)}{j^2} = n^2 \sum_{j=1}^{n} \frac{1}{j^2} - n \sum_{j=1}^{n} \frac{1}{j}
+    $$
+
+    $\sum_{j=1}^{n} \frac{1}{j} > 0$ 이므로 둘째 항은 양수이고, 따라서 다음을 얻는다.
+
+    $$
+    \text{Var}(T) < n^2 \sum_{j=1}^{n} \frac{1}{j^2} < n^2 \sum_{j=1}^{\infty} \frac{1}{j^2} = \frac{\pi^2}{6}\,n^2
+    $$
+
+    $\square$
+
+---
+
+**연습문제 3.** $n = 6$ 일 때(공정한 주사위의 모든 눈 모으기) $\text{Var}(T)$ 를 정확히 구하여라.
+
+??? success "연습문제 3 풀이"
+    각 단계는 $T_i \sim \text{Geo}\!\left(\frac{7-i}{6}\right)$ 이므로 $p_i = (7-i)/6$ 에 대하여 $\text{Var}(T_i) = \frac{q_i}{p_i^2}$ 이다.
+
+    | 단계 $i$ | $p_i$ | $\text{Var}(T_i)$ |
+    |:---------:|:------:|:------------------:|
+    | 1 | $1$ | $0$ |
+    | 2 | $5/6$ | $\frac{1/6}{25/36} = \frac{6}{25}$ |
+    | 3 | $4/6$ | $\frac{2/6}{16/36} = \frac{3}{4}$ |
+    | 4 | $3/6$ | $\frac{3/6}{9/36} = 2$ |
+    | 5 | $2/6$ | $\frac{4/6}{4/36} = 6$ |
+    | 6 | $1/6$ | $\frac{5/6}{1/36} = 30$ |
+
+    $$
+    \text{Var}(T) = 0 + \frac{6}{25} + \frac{3}{4} + 2 + 6 + 30 = \frac{24 + 75 + 200 + 600 + 3000}{100} = \frac{3899}{100} = 38.99
+    $$
+
+    그러므로 $\text{SD}(T) \approx 6.24$ 이며, 이는 $E[T] = 14.7$ 과 견줄 만한 크기이다.
+
+---
+
+**연습문제 4.** 어떤 카드 묶음이 $n = 50$ 장으로 이루어져 있다. 점근 공식을 써서 $E[T]$ 를 어림하고 $T$ 의 대략적인 95% 범위를 구하여라.
+
+??? success "연습문제 4 풀이"
+    $\gamma \approx 0.5772$ 에 대하여 $H_n \approx \ln n + \gamma$ 를 쓰면 다음과 같다.
+
+    $$
+    E[T] \approx 50(\ln 50 + 0.5772) \approx 50(3.912 + 0.577) = 50 \times 4.489 \approx 224.5
+    $$
+
+    표준편차를 보면 $\text{Var}(T) \lesssim \frac{\pi^2}{6} n^2 \approx 1.645 \times 2500 = 4112$ 이므로 $\text{SD}(T) \lesssim 64$ 이다.
+
+    대략적인 95% 범위는 $E[T] \pm 2\,\text{SD}(T) \approx 224 \pm 128$, 곧 대충 $96$ 개에서 $353$ 개 사이이다. 실제로는 분포가 오른쪽으로 치우쳐 있으므로 위쪽 꼬리가 더 길게 뻗는다.

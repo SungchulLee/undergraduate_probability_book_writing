@@ -1,44 +1,43 @@
-# Geometric Distribution
-<<<<<<< Updated upstream
+# 기하분포
 
-## Motivation
+## 왜 필요한가
 
-How many times must you roll a die before you see the first six? How many components must you test before finding the first defective one? The **Geometric distribution** models the number of independent Bernoulli trials needed to obtain the first success.
+주사위를 몇 번이나 굴려야 첫 6이 나올까? 부품을 몇 개나 검사해야 첫 불량품을 찾을까? **기하분포**는 첫 성공을 얻기까지 필요한 독립인 베르누이 시행의 횟수를 나타내는 모형이다.
 
-## Definition
+## 정의
 
-A random variable $X$ has a **Geometric distribution** with parameter $p \in (0, 1]$, written $X \sim \text{Geo}(p)$, if its PMF is
+확률변수 $X$ 의 확률질량함수가 다음과 같으면, $X$ 는 모수가 $p \in (0, 1]$ 인 **기하분포**를 따른다고 하고 $X \sim \text{Geo}(p)$ 로 적는다.
 
 $$
 P(X = k) = (1-p)^{k-1} p, \quad k = 1, 2, 3, \ldots
 $$
 
-Here $k$ is the **trial number** of the first success: the first $k - 1$ trials are failures (each with probability $q = 1-p$) and the $k$-th trial is a success (probability $p$).
+여기서 $k$ 는 첫 성공이 나온 **시행 번호**이다. 처음 $k - 1$ 번은 실패이고(각각 확률 $q = 1-p$) $k$ 번째가 성공이다(확률 $p$). 이 책에서는 "첫 성공이 나온 시행 번호"와 "기다리는 시간"이라는 말을 같은 뜻으로 섞어 쓴다. 둘 다 같은 양 $X$ 를 가리킨다.
 
-!!! warning "Convention"
-    Some texts define the Geometric as the number of **failures before** the first success, supported on $\{0, 1, 2, \ldots\}$ with PMF $P(Y = k) = q^k p$. We use the "number of trials" convention throughout. The two are related by $Y = X - 1$.
+!!! warning "약속"
+    어떤 책에서는 기하분포를 첫 성공이 나오기 **전까지의 실패 횟수**로 정의하여 받침을 $\{0, 1, 2, \ldots\}$ 로 두고 확률질량함수를 $P(Y = k) = q^k p$ 로 적기도 한다. 이 책에서는 "시행 횟수" 약속을 계속 쓴다. 두 정의는 $Y = X - 1$ 로 이어져 있다.
 
 ---
 
-## Verification: PMF Sums to 1
+## 확인: 확률질량함수의 합은 1이다
 
 $$
 \sum_{k=1}^{\infty} q^{k-1} p = p \sum_{j=0}^{\infty} q^{j} = p \cdot \frac{1}{1-q} = p \cdot \frac{1}{p} = 1
 $$
 
-This uses the geometric series formula $\sum_{j=0}^{\infty} r^j = \frac{1}{1-r}$ for $|r| < 1$.
+여기에는 $|r| < 1$ 일 때의 등비급수 공식 $\sum_{j=0}^{\infty} r^j = \frac{1}{1-r}$ 이 쓰였다.
 
 ---
 
-## CDF and Tail Probability
+## 누적분포함수와 꼬리확률
 
-The tail probability has a particularly clean form. The event $\{X > k\}$ means the first $k$ trials are all failures:
+꼬리확률은 특히 깔끔한 꼴을 갖는다. 사건 $\{X > k\}$ 는 처음 $k$ 번이 모두 실패라는 뜻이다.
 
 $$
 P(X > k) = q^k, \quad k = 0, 1, 2, \ldots
 $$
 
-The CDF follows immediately:
+누적분포함수는 곧바로 따라 나온다.
 
 $$
 F(k) = P(X \le k) = 1 - q^k, \quad k = 1, 2, 3, \ldots
@@ -46,48 +45,217 @@ $$
 
 ---
 
-## Mean
+## 평균
 
-We derive $E[X]$ using the **tail-sum formula** for non-negative integer-valued random variables. Since $X \ge 1$:
+음이 아닌 정수 값을 갖는 확률변수에 대한 **꼬리합 공식**을 써서 $E[X]$ 를 유도한다. $X \ge 1$ 이므로 다음과 같다.
 
 $$
 E[X] = \sum_{k=0}^{\infty} P(X > k) = \sum_{k=0}^{\infty} q^k = \frac{1}{1-q} = \frac{1}{p}
 $$
 
-!!! info "Mean of Geometric"
-    If $X \sim \text{Geo}(p)$, then $E[X] = \dfrac{1}{p}$.
+!!! info "기하분포의 평균"
+    $X \sim \text{Geo}(p)$ 이면 $E[X] = \dfrac{1}{p}$ 이다.
 
-    On average, you need $1/p$ trials to see the first success. For a fair die ($p = 1/6$), you need 6 rolls on average.
+    평균적으로 첫 성공을 보려면 $1/p$ 번의 시행이 필요하다. 공정한 주사위($p = 1/6$)라면 평균 6번 굴려야 한다.
 
 ---
 
-## Variance
+## 분산
 
-To find $\text{Var}(X)$, we compute $E[X^2]$ using $E[X(X-1)]$:
+$\text{Var}(X)$ 를 구하기 위해 계승적률 $E[X(X-1)]$ 을 거쳐 $E[X^2]$ 을 계산한다. 열쇠가 되는 도구는 **등비급수를 두 번 미분한 식**이다. $|r|<1$ 일 때의 $\sum_{k=0}^{\infty} r^k = \frac{1}{1-r}$ 에서 출발하여 $r$ 에 대해 두 번 미분하면 다음을 얻는다.
+
+$$
+\sum_{k=2}^{\infty} k(k-1)\, r^{k-2} = \frac{d^2}{dr^2}\!\left(\frac{1}{1-r}\right) = \frac{2}{(1-r)^3}
+$$
+
+$r = q$ 로 두고 적용하면 다음과 같다.
 
 $$
 E[X(X-1)] = \sum_{k=2}^{\infty} k(k-1) q^{k-1} p = pq \sum_{k=2}^{\infty} k(k-1) q^{k-2} = pq \cdot \frac{2}{(1-q)^3} = \frac{2q}{p^2}
 $$
 
-Then $E[X^2] = E[X(X-1)] + E[X] = \frac{2q}{p^2} + \frac{1}{p} = \frac{2q + p}{p^2} = \frac{1+q}{p^2}$, so
+그러면 $E[X^2] = E[X(X-1)] + E[X] = \frac{2q}{p^2} + \frac{1}{p} = \frac{2q + p}{p^2} = \frac{1+q}{p^2}$ 이므로 다음을 얻는다.
 
 $$
 \text{Var}(X) = E[X^2] - (E[X])^2 = \frac{1+q}{p^2} - \frac{1}{p^2} = \frac{q}{p^2}
 $$
 
-!!! info "Variance of Geometric"
-    If $X \sim \text{Geo}(p)$, then $\text{Var}(X) = \dfrac{q}{p^2} = \dfrac{1-p}{p^2}$.
+!!! info "기하분포의 분산"
+    $X \sim \text{Geo}(p)$ 이면 $\text{Var}(X) = \dfrac{q}{p^2} = \dfrac{1-p}{p^2}$ 이다.
 
 ---
 
-## Examples
+## 예제
 
-**Rolling a die.** Let $X$ be the number of rolls until the first six appears, so $X \sim \text{Geo}(1/6)$.
+**주사위 굴리기.** $X$ 를 첫 6이 나올 때까지 굴린 횟수라 하면 $X \sim \text{Geo}(1/6)$ 이다.
 
-- $E[X] = 6$ rolls on average.
-- $\text{Var}(X) = \frac{5/6}{1/36} = 30$, so $\text{SD}(X) = \sqrt{30} \approx 5.48$.
-- $P(X > 10) = (5/6)^{10} \approx 0.162$.
+- $E[X] = 6$ 으로 평균 6번 굴려야 한다.
+- $\text{Var}(X) = \frac{5/6}{1/36} = 30$ 이므로 $\text{SD}(X) = \sqrt{30} \approx 5.48$ 이다.
+- $P(X > 10) = (5/6)^{10} \approx 0.162$ 이다.
 
-**Network packet.** A packet is transmitted with success probability $p = 0.9$. The number of attempts until the first successful transmission is $X \sim \text{Geo}(0.9)$ with $E[X] = 1/0.9 \approx 1.11$ and $P(X > 3) = (0.1)^3 = 0.001$.
-=======
->>>>>>> Stashed changes
+**네트워크 패킷.** 어떤 패킷이 성공확률 $p = 0.9$ 로 전송된다. 첫 전송 성공까지의 시도 횟수는 $X \sim \text{Geo}(0.9)$ 이고 $E[X] = 1/0.9 \approx 1.11$, $P(X > 3) = (0.1)^3 = 0.001$ 이다.
+
+## 연습문제
+
+**연습문제 1.** 공정한 주사위를 되풀이하여 굴린다. $X$ 를 첫 6이 나올 때까지 굴린 횟수라 하자.
+
+**(a)** $P(X = 4)$ 를 구하여라.
+
+**(b)** $P(X > 10)$ 을 구하여라.
+
+**(c)** 처음 10번에서 6이 나오지 않았다고 할 때, 무기억성을 써서 $P(X > 15 \mid X > 10)$ 을 구하여라.
+
+**(d)** 공식 $E[X] = 1/p$ 를 쓰지 말고 첫걸음 분석으로 $E[X]$ 를 구하여라.
+
+??? success "연습문제 1 풀이"
+    여기서 $X$ 는 첫 6이 나올 때까지 굴린 횟수이므로 $X \sim \text{Geo}(1/6)$ 이고 다음과 같다.
+
+    $$
+    p = \frac{1}{6}, \qquad q = 1 - p = \frac{5}{6}
+    $$
+
+    **(a)** 사건 $X = 4$ 는 처음 세 번은 6이 아니고 네 번째가 6이라는 뜻이다.
+
+    $$
+    X = 4 \quad\Longleftrightarrow\quad \text{6이 아님, 6이 아님, 6이 아님, 6}
+    $$
+
+    그러므로 다음을 얻는다.
+
+    $$
+    P(X = 4) = \left(\frac{5}{6}\right)^3 \left(\frac{1}{6}\right) = \frac{125}{1296} \approx 0.0965
+    $$
+
+    **(b)** 사건 $X > 10$ 은 처음 10번에서 6이 한 번도 나오지 않는다는 뜻이다.
+
+    $$
+    X > 10 \quad\Longleftrightarrow\quad \text{처음 10번이 모두 6이 아님}
+    $$
+
+    한 번 굴려 6이 아닐 확률이 $5/6$ 이므로 다음과 같다.
+
+    $$
+    P(X > 10) = \left(\frac{5}{6}\right)^{10} \approx 0.1615
+    $$
+
+    **(c)** 사건 $\{X > 15 \mid X > 10\}$ 은 이렇게 묻는 것이다. 처음 10번에서 6이 나오지 않았을 때 다음 5번에서도 6이 나오지 않을 확률은 얼마인가? 주사위 굴리기는 서로 독립이므로 지나간 10번의 실패는 앞으로의 굴리기에 대한 확률을 바꾸지 않는다. 그러므로 다음을 얻는다.
+
+    $$
+    P(X > 15 \mid X > 10) = \left(\frac{5}{6}\right)^5 \approx 0.4019
+    $$
+
+    이것이 무기억성이다. 곧 $P(X > m + n \mid X > m) = P(X > n)$ 이다.
+
+    **(d)** $E = E[X]$ 라 하자. 첫 번째 굴리기를 살펴보자.
+
+    - 확률 $1/6$ 로 첫 굴리기가 6이고, 이때는 1번 만에 멈춘다.
+    - 확률 $5/6$ 로 첫 굴리기가 6이 아니다. 이미 1번을 썼고, 과정이 처음부터 다시 시작되므로 앞으로 더 굴려야 하는 횟수의 기댓값은 다시 $E$ 이다.
+
+    그러므로 다음이 성립한다.
+
+    $$
+    E = \frac{1}{6}(1) + \frac{5}{6}(1 + E) = 1 + \frac{5}{6}E
+    $$
+
+    따라서 $\frac{1}{6}E = 1$ 이고 $E = 6$ 이다.
+
+---
+
+**연습문제 2.** $X \sim \text{Geo}(p)$ 에 대하여 $\sum_{k=1}^{\infty} k q^{k-1} p$ 를 직접 계산하여 $E[X]$ 를 유도하여라. *(도움말: 등비급수를 미분하라.)*
+
+??? success "연습문제 2 풀이"
+    정의에 따라 $E[X]$ 는 각 시행 번호 $k$ 에 첫 성공이 $k$ 번째에 나올 확률을 가중치로 곱해 더한 값이다.
+
+    $$
+    E[X] = \sum_{k=1}^{\infty} k\, q^{k-1} p
+    $$
+
+    이를 구하기 위해 미분하는 재주를 쓴다. $|r| < 1$ 일 때의 등비급수 $\sum_{k=0}^{\infty} r^k = \frac{1}{1-r}$ 에서 출발하여 양변을 $r$ 에 대해 미분하면 다음을 얻는다.
+
+    $$
+    \sum_{k=1}^{\infty} k\, r^{k-1} = \frac{1}{(1-r)^2}
+    $$
+
+    $r = q = 1 - p$ 로 두면 다음과 같다.
+
+    $$
+    E[X] = p \sum_{k=1}^{\infty} k\, q^{k-1} = p \cdot \frac{1}{(1-q)^2} = p \cdot \frac{1}{p^2} = \frac{1}{p}
+    $$
+
+---
+
+**연습문제 3.** 기하분포의 무기억성, 곧 모든 $m, n \geq 0$ 에 대하여 다음이 성립함을 증명하여라.
+
+$$
+P(X > m + n \mid X > m) = P(X > n)
+$$
+
+??? success "연습문제 3 풀이"
+    사건 $\{X > m + n\}$ 은 처음 $m + n$ 번의 시행에서 성공이 없다는 뜻이고, 사건 $\{X > m\}$ 은 처음 $m$ 번의 시행에서 성공이 없다는 뜻이다. 그러므로 이 조건부확률은 이렇게 묻는 것이다. 처음 $m$ 번이 모두 실패였을 때 다음 $n$ 번도 모두 실패일 확률은 얼마인가?
+
+    꼬리확률 $P(X > k) = q^k$ 를 쓰면 다음과 같다.
+
+    $$
+    P(X > m + n \mid X > m) = \frac{P(X > m + n)}{P(X > m)} = \frac{q^{m+n}}{q^m} = q^n = P(X > n)
+    $$
+
+    열쇠가 되는 걸음은 $q^{m+n} = q^m \cdot q^n$ 으로 분해된다는 것이다. 그래서 처음 $m$ 번의 실패로 조건을 건 몫이 완전히 지워진다. $\square$
+
+---
+
+**연습문제 4.** $X \sim \text{Geo}(p)$ 라 하자. $X$ 가 짝수일 확률을 구하여라.
+
+??? success "연습문제 4 풀이"
+    "$X$ 가 짝수"라는 사건은 첫 성공이 2번째, 4번째, 6번째 등에 나온다는 뜻이다. 예를 들어 $X = 2$ 는 "실패, 성공"이라는 결과에, $X = 4$ 는 "실패, 실패, 실패, 성공"이라는 결과에 해당한다. 모든 짝수 값에 대해 더하면 다음과 같다.
+
+    $$
+    P(X \text{ 가 짝수}) = \sum_{j=1}^{\infty} P(X = 2j) = \sum_{j=1}^{\infty} q^{2j-1} p = \frac{p}{q} \sum_{j=1}^{\infty} (q^2)^j = \frac{p}{q} \cdot \frac{q^2}{1 - q^2}
+    $$
+
+    $1 - q^2 = (1-q)(1+q) = p(1+q)$ 이므로 이는 다음과 같이 간단해진다.
+
+    $$
+    P(X \text{ 가 짝수}) = \frac{p}{q} \cdot \frac{q^2}{p(1+q)} = \frac{q}{1+q}
+    $$
+
+    옳은지 살펴보자. 공정한 동전($p = q = 1/2$)이면 $P(X \text{ 가 짝수}) = \frac{1/2}{3/2} = 1/3$ 이다. 실제로 $P(X=2) = 1/4$, $P(X=4) = 1/16$, $\ldots$ 이고 등비급수를 더하면 $\frac{1/4}{1 - 1/4} = 1/3$ 이므로 맞다.
+
+---
+
+**연습문제 5.** $P(\text{앞면}) = p$ 인 치우친 동전을 되풀이하여 던진다. $X$ 를 첫 앞면이 나올 때까지 던진 횟수, $Y$ 를 두 번째 앞면이 나올 때까지 던진 횟수라 하자. $E[Y]$ 와 $\text{Var}(Y)$ 를 구하여라.
+
+??? success "연습문제 5 풀이"
+    $X$ 는 첫 앞면까지의 던진 횟수를, $Y$ 는 두 번째 앞면까지의 던진 횟수를 센다. $X$ 번째에 첫 앞면이 나온 뒤로는 동전에 기억이 없으므로 앞으로의 던지기는 지나간 일과 독립이다. 그러므로 두 번째 앞면까지 더 던져야 하는 횟수는 $X$ 와 독립인 새로운 $\text{Geo}(p)$ 확률변수 $W$ 이다.
+
+    따라서 $Y = X + W$ 로 적을 수 있고, 여기서 $X$ 와 $W$ 는 i.i.d. $\text{Geo}(p)$ 이다. 기댓값의 선형성에 따라 다음을 얻는다.
+
+    $$
+    E[Y] = E[X] + E[W] = \frac{1}{p} + \frac{1}{p} = \frac{2}{p}
+    $$
+
+    $X$ 와 $W$ 가 독립이므로 분산은 더해진다.
+
+    $$
+    \text{Var}(Y) = \text{Var}(X) + \text{Var}(W) = \frac{q}{p^2} + \frac{q}{p^2} = \frac{2q}{p^2}
+    $$
+
+    더 일반적으로, $r$ 번째 성공까지의 시행 횟수는 평균이 $r/p$ 이고 분산이 $rq/p^2$ 인 **음이항분포**를 따른다.
+
+---
+
+**연습문제 6.** 공정한 정육면체 주사위를 되풀이하여 굴린다. 홀수가 나오기까지 평균 몇 번 굴려야 하는가?
+
+??? success "연습문제 6 풀이"
+    홀수(1, 3, 5)가 나올 확률은 다음과 같다.
+
+    $$
+    p = \frac{3}{6} = \frac{1}{2}
+    $$
+
+    첫 홀수가 나올 때까지 굴린 횟수는 $N \sim \text{Geo}(1/2)$ 이다. 그러므로 다음을 얻는다.
+
+    $$
+    E[N] = \frac{1}{p} = \frac{1}{1/2} = 2
+    $$
+
+    평균적으로 홀수가 나오기까지 **2번** 굴려야 한다.

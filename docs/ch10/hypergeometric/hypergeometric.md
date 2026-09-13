@@ -1,84 +1,84 @@
-# Hypergeometric Distribution
-<<<<<<< Updated upstream
+# 초기하분포
 
-## Motivation
+## 왜 필요한가
 
-A deck has 52 cards, 4 of which are aces. You draw 5 cards **without replacement**. What is the probability of getting exactly 2 aces? Since cards are drawn without replacement, the draws are **dependent** -- each draw changes the composition of the remaining deck. The **Hypergeometric distribution** handles this setting.
+카드 한 벌은 52장이고 그 가운데 4장이 에이스이다. **비복원**으로 5장을 뽑는다. 에이스가 정확히 2장 나올 확률은 얼마인가? 비복원으로 뽑으므로 뽑기들은 서로 **종속**이다. 한 번 뽑을 때마다 남은 카드의 구성이 달라지기 때문이다. **초기하분포**가 바로 이런 상황을 다룬다.
 
-## Setup
+## 문제 설정
 
-Consider a population of $N$ items, of which $K$ are "successes" and $N - K$ are "failures." We draw $n$ items **without replacement**. Let $X$ be the number of successes in the sample.
+$N$ 개의 물건으로 이루어진 모집단이 있고 그 가운데 $K$ 개가 "성공", $N - K$ 개가 "실패"라고 하자. 여기에서 **비복원**으로 $n$ 개를 뽑는다. $X$ 를 표본 안의 성공 개수라 하자.
 
-## Definition
+## 정의
 
-!!! info "Hypergeometric PMF"
-    $X \sim \text{HGeom}(N, K, n)$ has PMF
+!!! info "초기하분포의 확률질량함수"
+    $X \sim \text{HGeom}(N, K, n)$ 의 확률질량함수는 다음과 같다.
 
     $$P(X = k) = \frac{\dbinom{K}{k}\dbinom{N-K}{n-k}}{\dbinom{N}{n}}$$
 
-    for $k = \max(0, n - N + K), \ldots, \min(n, K)$.
+    여기서 $k = \max(0, n - N + K), \ldots, \min(n, K)$ 이다.
 
-**Reading the formula.** The denominator $\binom{N}{n}$ counts all ways to choose $n$ items from $N$. The numerator counts favorable outcomes: choose $k$ of the $K$ successes and $n - k$ of the $N - K$ failures.
+**공식 읽기.** 분모 $\binom{N}{n}$ 은 $N$ 개에서 $n$ 개를 고르는 모든 경우의 수이다. 분자는 원하는 결과의 수를 센다. $K$ 개의 성공 가운데 $k$ 개를, $N - K$ 개의 실패 가운데 $n - k$ 개를 고르는 것이다.
 
 ---
 
-## Mean
+## 평균
 
-The mean can be derived elegantly using indicator variables. Let $X_i = 1$ if the $i$-th drawn item is a success. Then $X = X_1 + \cdots + X_n$, and by symmetry each item in the sample is equally likely to be any of the $N$ items, so
+평균은 지시확률변수를 쓰면 우아하게 유도된다. $i$ 번째로 뽑은 물건이 성공이면 $X_i = 1$ 이라 하자. 그러면 $X = X_1 + \cdots + X_n$ 이고, 대칭성에 따라 표본 안의 각 자리에는 $N$ 개의 물건 어느 것이든 같은 정도로 올 수 있으므로 다음이 성립한다.
 
 $$
 E[X_i] = \frac{K}{N}
 $$
 
-By linearity of expectation (which does **not** require independence):
+기댓값의 선형성(독립성을 요구하지 **않는다**)에 따라 다음을 얻는다.
 
 $$
 E[X] = n \cdot \frac{K}{N}
 $$
 
-This is the same as the Binomial mean $np$ with $p = K/N$. The mean is unaffected by whether we sample with or without replacement.
+이는 $p = K/N$ 인 이항분포의 평균 $np$ 와 같다. 평균은 복원추출이든 비복원추출이든 달라지지 않는다.
 
 ---
 
-## Variance
+## 분산
 
-The variance requires more care because the $X_i$ are **not** independent. Using the formula $\text{Var}(X) = \sum_i \text{Var}(X_i) + 2\sum_{i < j} \text{Cov}(X_i, X_j)$:
+$X_i$ 들이 서로 독립이 **아니므로** 분산은 좀 더 조심해서 다뤄야 한다. 공식 $\text{Var}(X) = \sum_i \text{Var}(X_i) + 2\sum_{i < j} \text{Cov}(X_i, X_j)$ 를 쓰자.
 
-Each $X_i$ is Bernoulli with $p = K/N$, so $\text{Var}(X_i) = p(1-p)$.
+각 $X_i$ 는 $p = K/N$ 인 베르누이분포를 따르므로 $\text{Var}(X_i) = p(1-p)$ 이다.
 
-For the covariance, $E[X_i X_j] = P(\text{items } i \text{ and } j \text{ both successes}) = \frac{K(K-1)}{N(N-1)}$, so
+공분산을 보면 $E[X_i X_j] = P(i \text{ 번째와 } j \text{ 번째가 모두 성공}) = \frac{K(K-1)}{N(N-1)}$ 이므로 다음과 같다.
 
 $$
 \text{Cov}(X_i, X_j) = \frac{K(K-1)}{N(N-1)} - \frac{K^2}{N^2} = -\frac{K(N-K)}{N^2(N-1)}
 $$
 
-Combining $n$ variance terms and $\binom{n}{2}$ covariance terms:
+$n$ 개의 분산 항과 $\binom{n}{2}$ 개의 공분산 항을 합치면 다음을 얻는다.
 
 $$
 \text{Var}(X) = n \cdot \frac{K}{N} \cdot \frac{N-K}{N} \cdot \frac{N-n}{N-1}
 $$
 
-!!! info "Hypergeometric Variance"
+!!! info "초기하분포의 분산"
+
     $$\text{Var}(X) = n \cdot \frac{K}{N} \cdot \frac{N-K}{N} \cdot \frac{N-n}{N-1}$$
 
-    The factor $\dfrac{N-n}{N-1}$ is the **finite population correction**. It is always $\le 1$, so the Hypergeometric variance is always at most the corresponding Binomial variance $npq$.
+    인수 $\dfrac{N-n}{N-1}$ 을 **유한모집단 보정**이라고 한다. 이 값은 언제나 $\le 1$ 이므로 초기하분포의 분산은 늘 그에 대응하는 이항분포의 분산 $npq$ 이하이다.
 
 ---
 
-## Support
+## 받침
 
-The support of $X$ is not simply $\{0, 1, \ldots, n\}$. We need both:
+$X$ 의 받침은 단순히 $\{0, 1, \ldots, n\}$ 이 아니다. 다음 두 가지가 모두 필요하다.
 
-- at least $k$ successes available: $k \le K$
-- at least $n - k$ failures available: $n - k \le N - K$
+- 성공이 적어도 $k$ 개는 있어야 한다: $k \le K$
+- 실패가 적어도 $n - k$ 개는 있어야 한다: $n - k \le N - K$
 
-So $k$ ranges from $\max(0, n - N + K)$ to $\min(n, K)$.
+그러므로 $k$ 는 $\max(0, n - N + K)$ 부터 $\min(n, K)$ 까지의 값을 갖는다.
 
 ---
 
-## Examples
+## 예제
 
-**Card draw.** Draw $n = 5$ cards from a standard deck ($N = 52$) containing $K = 4$ aces. The number of aces $X \sim \text{HGeom}(52, 4, 5)$ has
+**카드 뽑기.** 에이스가 $K = 4$ 장 들어 있는 표준적인 카드 한 벌($N = 52$)에서 $n = 5$ 장을 뽑는다. 에이스의 개수 $X \sim \text{HGeom}(52, 4, 5)$ 에 대하여 다음이 성립한다.
 
 $$
 P(X = 2) = \frac{\binom{4}{2}\binom{48}{3}}{\binom{52}{5}} = \frac{6 \times 17296}{2598960} \approx 0.0399
@@ -88,10 +88,26 @@ $$
 E[X] = 5 \cdot \frac{4}{52} \approx 0.385, \qquad \text{Var}(X) \approx 0.341
 $$
 
-**Quality inspection.** A shipment of $N = 100$ items contains $K = 8$ defectives. An inspector draws $n = 10$ items without replacement. The expected number of defectives found is $E[X] = 10 \cdot 8/100 = 0.8$. The probability of finding no defectives is
+**품질 검사.** $N = 100$ 개짜리 물건 한 짐에 불량품이 $K = 8$ 개 들어 있다. 검사원이 비복원으로 $n = 10$ 개를 뽑는다. 찾아낸 불량품 개수의 기댓값은 $E[X] = 10 \cdot 8/100 = 0.8$ 이다. 불량품을 하나도 찾지 못할 확률은 다음과 같다.
 
 $$
 P(X = 0) = \frac{\binom{8}{0}\binom{92}{10}}{\binom{100}{10}} \approx 0.410
 $$
-=======
->>>>>>> Stashed changes
+
+## 연습문제
+
+**연습문제 1.** 남자 8명과 여자 6명으로 이루어진 모임에서 5명을 무작위로 뽑아 위원회를 만든다.
+
+(a) 위원회에 들어가는 여자 수의 분포는 무엇인가?
+
+(b) 여자가 정확히 2명일 확률을 구하여라.
+
+(c) 지시확률변수를 써서 여자 수의 기댓값을 구하여라.
+
+---
+
+**연습문제 2.** $N = 50$ 개짜리 물건 한 묶음에 불량품이 $K = 5$ 개 들어 있다. 검사원이 비복원으로 $n = 10$ 개를 뽑는다. 표본에 불량품이 적어도 하나 들어 있을 확률을 구하여라.
+
+---
+
+**연습문제 3.** $X \sim \text{HGeom}(N, K, n)$ 에 대하여 지시확률변수를 쓰는 유도가 $i \neq j$ 일 때 $\text{Cov}(X_i, X_j) = -\frac{K(N - K)}{N^2(N-1)}$ 을 준다는 것을 확인하고, 이를 써서 분산 공식을 유도하여라.
