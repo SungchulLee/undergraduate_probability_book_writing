@@ -1,4 +1,4 @@
-site_name: Probability with Python
+site_name: 파이썬으로 배우는 확률론
 theme:
     name: material
     favicon: assets/favicon.ico
@@ -6,6 +6,8 @@ theme:
 markdown_extensions:
     - admonition
     - pymdownx.details
+    - attr_list
+    - md_in_html
     - toc:
         permalink: true
     - pymdownx.superfences:
@@ -19,439 +21,424 @@ markdown_extensions:
 extra_javascript:
     - javascripts/mathjax.js
     - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+    # Load Mermaid AFTER everything
+    - https://unpkg.com/mermaid@11/dist/mermaid.min.js
+    - javascripts/mermaid-init.js
+
+extra_css:
+    - stylesheets/extra.css
 
 nav:
-    - Home: index.md
+    - 첫머리: index.md
 
-    - 1 Counting:
-        - 1.1 Basic Counting Principles:
-            - Multiplication Rule: ch01/basic/multiplication_rule.md
-            - Addition Rule: ch01/basic/addition_rule.md
-            - Inclusion-Exclusion Principle: ch01/basic/inclusion_exclusion.md
-        - 1.2 Permutations:
-            - Permutations of Distinct Objects: ch01/permutations/distinct.md
-            - Permutations with Repetition: ch01/permutations/repetition.md
-            - Circular Permutations: ch01/permutations/circular.md
-        - 1.3 Combinations:
-            - Combinations and Binomial Coefficients: ch01/combinations/binomial_coefficients.md
-            - Combinations with Repetition (Stars and Bars): ch01/combinations/stars_and_bars.md
-            - Multinomial Coefficients: ch01/combinations/multinomial.md
-        - 1.4 Combinatorial Identities:
-            - Pascal's Rule and Vandermonde's Identity: ch01/identities/pascal_vandermonde.md
-            - Binomial Theorem: ch01/identities/binomial_theorem.md
-        - 1.5 Classic Counting Problems:
-            - Matching Problem and Derangements: ch01/classic/derangements.md
-            - Derangement Simulation: ch01/classic/derangements.py
-            - Pigeonhole Principle: ch01/classic/pigeonhole.md
-            - Lattice Paths and the Ballot Problem: ch01/classic/lattice_paths.md
-            - Partition Problems and the Twelvefold Way: ch01/classic/partitions.md
-        - 1.6 Exercises: ch01/exercises/exercises.md
+    - 1 경우의 수 세기:
+        - 1.1 세기의 기본 원리:
+            - 곱셈 법칙: ch01/basic/multiplication_rule.md
+            - 덧셈 법칙: ch01/basic/addition_rule.md
+            - 포함배제 원리: ch01/basic/inclusion_exclusion.md
+        - 1.2 순열:
+            - 서로 다른 대상의 순열: ch01/permutations/distinct.md
+            - 중복이 있는 순열: ch01/permutations/repetition.md
+            - 원순열: ch01/permutations/circular.md
+        - 1.3 조합:
+            - 조합과 이항계수: ch01/combinations/binomial_coefficients.md
+            - 중복조합(막대와 별): ch01/combinations/stars_and_bars.md
+            - 다항계수: ch01/combinations/multinomial.md
+        - 1.4 조합 항등식:
+            - 파스칼 법칙과 반데르몽드 항등식: ch01/identities/pascal_vandermonde.md
+            - 이항정리: ch01/identities/binomial_theorem.md
+        - 1.5 고전적인 세기 문제:
+            - 짝맞추기 문제와 완전순열: ch01/classic/derangements.md
+            - 완전순열 모의실험: ch01/classic/derangements_simulation.md
+            - 비둘기집 원리: ch01/classic/pigeonhole.md
+            - 격자경로와 투표 문제: ch01/classic/lattice_paths.md
+            - 분할 문제와 열두 가지 길: ch01/classic/partitions.md
 
-    - 2 Probability:
-        - 2.1 Sample Spaces and Events:
-            - Sample Spaces and Outcomes: ch02/sample_space/sample_spaces.md
-            - Events and Set Operations: ch02/sample_space/events_sets.md
-            - De Morgan's Laws: ch02/sample_space/de_morgan.md
-        - 2.2 Axioms of Probability:
-            - Kolmogorov Axioms: ch02/axioms/kolmogorov.md
-            - Properties Derived from Axioms: ch02/axioms/properties.md
-            - Inclusion-Exclusion for Probabilities: ch02/axioms/inclusion_exclusion.md
-        - 2.3 Equally Likely Outcomes:
-            - Classical Probability: ch02/classical/classical_probability.md
-            - Counting Methods in Probability: ch02/classical/counting_methods.md
-            - Birthday Problem: ch02/classical/birthday_problem.md
-            - Birthday Problem (Simulation): ch02/classical/birthday_problem.py
-            - Dice Roll Sum (Simulation): ch02/classical/dice_roll_sum.py
-        - 2.4 Exercises: ch02/exercises/exercises.md
+    - 2 확률:
+        - 2.1 표본공간과 사건:
+            - 표본공간과 근원사건: ch02/sample_space/sample_spaces.md
+            - 사건과 집합 연산: ch02/sample_space/events_sets.md
+            - 드 모르간 법칙: ch02/sample_space/de_morgan.md
+        - 2.2 확률의 공리:
+            - 콜모고로프 공리: ch02/axioms/kolmogorov.md
+            - 공리에서 이끌어 낸 성질: ch02/axioms/properties.md
+            - 확률의 포함배제 공식: ch02/axioms/inclusion_exclusion.md
+        - 2.3 같은 정도로 일어나는 경우:
+            - 고전적 확률: ch02/classical/classical_probability.md
+            - 확률에서 쓰는 세기 방법: ch02/classical/counting_methods.md
+            - 생일 문제: ch02/classical/birthday_problem.md
+            - 주사위 굴리기: ch02/classical/dice_roll.md
 
-    - 3 Conditional Probability:
-        - 3.1 Definition and Interpretation:
-            - Conditional Probability Definition: ch03/definition/conditional_definition.md
-            - Multiplication Rule for Probabilities: ch03/definition/multiplication_rule.md
-        - 3.2 Law of Total Probability:
-            - Partitions and Total Probability: ch03/total_probability/total_probability.md
-            - Tree Diagrams: ch03/total_probability/tree_diagrams.md
-        - 3.3 Bayes' Theorem:
-            - Bayes' Theorem and Prior–Posterior Updating: ch03/bayes/bayes_theorem.md
-            - Applications of Bayes' Theorem: ch03/bayes/applications.md
-            - Monty Hall Simulation: ch03/bayes/monty_hall.py
-        - 3.4 Independence:
-            - Independence of Two Events: ch03/independence/two_events.md
-            - Mutual Independence: ch03/independence/mutual_independence.md
-            - Conditional Independence: ch03/independence/conditional_independence.md
-        - 3.5 Gambler's Ruin:
-            - Gambler's Ruin Problem: ch03/gamblers_ruin/gamblers_ruin.md
-            - Simulation of Gambler's Ruin: ch03/gamblers_ruin/simulation.md
-            - Gambler's Ruin Simulation (Code): ch03/gamblers_ruin/simulation.py
-            - Ruin Probability (Analytical): ch03/gamblers_ruin/ruin_probability.py
-            - First Step Analysis: ch03/gamblers_ruin/first_step_analysis.md
-            - 'Linear Recurrence Solution (q > 1/2)': ch03/gamblers_ruin/q_greater_half.md
-            - Linear Recurrence Solution (q = 1/2): ch03/gamblers_ruin/q_equal_half.md
-        - 3.6 Simpson's Paradox:
-            - Simpson's Paradox: ch03/simpsons_paradox/simpsons_paradox.md
-        - 3.7 Computing Intersection and Union Probabilities:
-            - Computing P(∩Ai): ch03/intersection_union/intersection.md
-            - Computing P(∪Ai): ch03/intersection_union/union.md
-        - 3.8 Exercises: ch03/exercises/exercises.md
+    - 3 조건부확률:
+        - 3.1 정의와 뜻:
+            - 조건부확률의 정의: ch03/definition/conditional_definition.md
+            - 확률의 곱셈 법칙: ch03/definition/multiplication_rule.md
+        - 3.2 전확률 법칙:
+            - 분할과 전확률: ch03/total_probability/total_probability.md
+            - 나무 그림: ch03/total_probability/tree_diagrams.md
+        - 3.3 베이즈 정리:
+            - 베이즈 정리와 사전–사후 갱신: ch03/bayes/bayes_theorem.md
+            - 베이즈 정리의 응용: ch03/bayes/applications.md
+            - 몬티 홀 모의실험: ch03/bayes/monty_hall.md
+        - 3.4 독립:
+            - 두 사건의 독립: ch03/independence/two_events.md
+            - 상호독립: ch03/independence/mutual_independence.md
+            - 조건부독립: ch03/independence/conditional_independence.md
+        - 3.5 도박꾼의 파산:
+            - 도박꾼의 파산 문제: ch03/gamblers_ruin/gamblers_ruin.md
+            - 도박꾼의 파산 모의실험: ch03/gamblers_ruin/simulation.md
+            - 도박꾼의 파산 모의실험 코드: ch03/gamblers_ruin/simulation_code.md
+            - 파산 확률(해석적 풀이): ch03/gamblers_ruin/ruin_probability.md
+            - 첫걸음 분석: ch03/gamblers_ruin/first_step_analysis.md
+            - '선형 점화식 풀이 (q > 1/2)': ch03/gamblers_ruin/q_greater_half.md
+            - 선형 점화식 풀이 (q = 1/2): ch03/gamblers_ruin/q_equal_half.md
+        - 3.6 심프슨의 역설:
+            - 심프슨의 역설: ch03/simpsons_paradox/simpsons_paradox.md
+        - 3.7 교집합과 합집합의 확률 구하기:
+            - P(∩Ai) 구하기: ch03/intersection_union/intersection.md
+            - P(∪Ai) 구하기: ch03/intersection_union/union.md
 
-    - 4 Random Variables and Their Distributions:
-        - 4.1 Random Variables:
-            - Definition and Examples: ch04/rv/definition.md
-            - Discrete vs Continuous Random Variables: ch04/rv/discrete_vs_continuous.md
-        - 4.2 Probability Mass Function (PMF):
-            - Probability Mass Function Definition and Properties: ch04/pmf/definition.md
-            - Examples of Probability Mass Functions: ch04/pmf/examples.md
-            - Probability Mass Function Sampling (Simulation): ch04/pmf/pmf_sampling.py
-        - 4.3 Cumulative Distribution Function (CDF):
-            - Cumulative Distribution Function Definition and Properties: ch04/cdf/definition.md
-            - Cumulative Distribution Function for Discrete Random Variables: ch04/cdf/discrete_cdf.md
-            - Cumulative Distribution Function for Continuous Random Variables: ch04/cdf/continuous_cdf.md
-        - 4.4 Probability Density Function (PDF):
-            - Probability Density Function Definition and Properties: ch04/pdf/definition.md
-            - Relationship Between Density and Distribution Functions: ch04/pdf/pdf_cdf_relationship.md
-        - 4.5 Functions of a Random Variable:
-            - Distribution of g(X): ch04/functions/function_of_rv.md
-            - Functions of Discrete Random Variables: ch04/functions/discrete_functions.md
-            - Functions of Continuous Random Variables: ch04/functions/continuous_functions.md
-        - 4.6 Exercises: ch04/exercises/exercises.md
+    - 4 확률변수와 그 분포:
+        - 4.1 확률변수:
+            - 정의와 예: ch04/rv/definition.md
+            - 이산확률변수와 연속확률변수: ch04/rv/discrete_vs_continuous.md
+        - 4.2 확률질량함수(PMF):
+            - 확률질량함수의 정의와 성질: ch04/pmf/definition.md
+            - 확률질량함수의 예: ch04/pmf/examples.md
+            - 확률질량함수 표집 모의실험: ch04/pmf/pmf_sampling.md
+        - 4.3 누적분포함수(CDF):
+            - 누적분포함수의 정의와 성질: ch04/cdf/definition.md
+            - 이산확률변수의 누적분포함수: ch04/cdf/discrete_cdf.md
+            - 연속확률변수의 누적분포함수: ch04/cdf/continuous_cdf.md
+        - 4.4 확률밀도함수(PDF):
+            - 확률밀도함수의 정의와 성질: ch04/pdf/definition.md
+            - 밀도함수와 분포함수의 관계: ch04/pdf/pdf_cdf_relationship.md
+        - 4.5 확률변수의 함수:
+            - g(X)의 분포: ch04/functions/function_of_rv.md
+            - 이산확률변수의 함수: ch04/functions/discrete_functions.md
+            - 연속확률변수의 함수: ch04/functions/continuous_functions.md
 
-    - 5 Random Variables and Their Joint Distributions:
-        - 5.1 Joint Distributions for Discrete Random Variables:
-            - Joint Probability Mass Function: ch05/joint_discrete/joint_pmf.md
-            - Joint Mass Function Tables and Visualization: ch05/joint_discrete/joint_pmf_tables.md
-            - Categorical and Multinomial Distributions: ch05/joint_discrete/categorical_multinomial.md
-        - 5.2 Joint Distributions for Continuous Random Variables:
-            - Joint Probability Density Function: ch05/joint_continuous/joint_pdf.md
-            - Joint Cumulative Distribution Function: ch05/joint_continuous/joint_cdf.md
-        - 5.3 Independent Random Variables:
-            - Definition of Independence for Random Variables: ch05/independence/definition.md
-            - Verifying Independence via Factorization: ch05/independence/factorization.md
-            - Sum of Independent Binomials: ch05/independence/sum_independent_binomials.md
-        - 5.4 Exercises: ch05/exercises/exercises.md
+    - 5 확률변수와 결합분포:
+        - 5.1 이산확률변수의 결합분포:
+            - 결합확률질량함수: ch05/joint_discrete/joint_pmf.md
+            - 결합질량함수의 표와 그림: ch05/joint_discrete/joint_pmf_tables.md
+            - 범주분포와 다항분포: ch05/joint_discrete/categorical_multinomial.md
+        - 5.2 연속확률변수의 결합분포:
+            - 결합확률밀도함수: ch05/joint_continuous/joint_pdf.md
+            - 결합누적분포함수: ch05/joint_continuous/joint_cdf.md
+        - 5.3 독립확률변수:
+            - 확률변수의 독립의 정의: ch05/independence/definition.md
+            - 인수분해로 독립 확인하기: ch05/independence/factorization.md
+            - 독립인 이항분포의 합: ch05/independence/sum_independent_binomials.md
 
-    - 6 Joint, Marginal, and Conditional Distributions:
-        - 6.1 Marginal Distributions:
-            - Marginal Mass Function from Joint Mass Function: ch06/marginal/marginal_pmf.md
-            - Marginal Density Function from Joint Density Function: ch06/marginal/marginal_pdf.md
-        - 6.2 Conditional Distributions:
-            - Conditional Probability Mass Function: ch06/conditional/conditional_pmf.md
-            - Conditional Probability Density Function: ch06/conditional/conditional_pdf.md
-        - 6.3 Joint, Marginal, and Conditional Relationships:
-            - From Joint to Marginal and Conditional: ch06/relationships/joint_to_marginal_conditional.md
-            - Recovering Joint from Conditional and Marginal: ch06/relationships/recovering_joint.md
-        - 6.4 Exercises: ch06/exercises/exercises.md
+    - 6 결합분포, 주변분포, 조건부분포:
+        - 6.1 주변분포:
+            - 결합질량함수에서 주변질량함수 구하기: ch06/marginal/marginal_pmf.md
+            - 결합밀도함수에서 주변밀도함수 구하기: ch06/marginal/marginal_pdf.md
+        - 6.2 조건부분포:
+            - 조건부확률질량함수: ch06/conditional/conditional_pmf.md
+            - 조건부확률밀도함수: ch06/conditional/conditional_pdf.md
+        - 6.3 결합, 주변, 조건부의 관계:
+            - 결합분포에서 주변분포와 조건부분포로: ch06/relationships/joint_to_marginal_conditional.md
+            - 조건부분포와 주변분포에서 결합분포 되찾기: ch06/relationships/recovering_joint.md
 
-    - 7 Expectation and Variance:
-        - 7.1 Expectation:
-            - Definition of Expectation (Discrete and Continuous): ch07/expectation/definition.md
-            - Law of the Unconscious Statistician (LOTUS): ch07/expectation/lotus.md
-            - Linearity of Expectation: ch07/expectation/linearity.md
-            - Tail Sum Formula for Expectation: ch07/expectation/tail_sum.md
-        - 7.2 Indicator Random Variables:
-            - Definition and Properties: ch07/indicators/definition.md
-            - Expectation via Indicators: ch07/indicators/expectation_via_indicators.md
-            - Classic Examples (Matching, Birthday, Empty Bins, Elevator): ch07/indicators/classic_examples.md
-        - 7.3 Variance:
-            - Definition and Computation: ch07/variance/definition.md
-            - 'Var(X) = E[X²] − (E[X])² Formula': ch07/variance/shortcut_formula.md
-            - Standard Deviation: ch07/variance/standard_deviation.md
-        - 7.4 Properties and Inequalities:
-            - Variance Under Linear Transformations: ch07/properties/linear_transformations.md
-            - Markov's Inequality: ch07/properties/markov.md
-            - Chebyshev's Inequality: ch07/properties/chebyshev.md
-            - Jensen's Inequality: ch07/properties/jensen.md
-        - 7.5 Mean and Variance of Sums:
-            - Mean and Variance of Sums of Random Variables: ch07/sums/mean_variance_sums.md
-        - 7.6 Decomposition of a Random Variable:
-            - Decomposition Examples (Binomial, Negative Binomial, Dice, Coupon Collector): ch07/decomposition/decomposition.md
-        - 7.7 Unbiased Estimation of Mean and Variance:
-            - Unbiased Estimators (Sample Mean and Sample Variance): ch07/unbiased_estimation/unbiased_estimation.md
-            - Estimation Simulation (Biased vs Unbiased): ch07/unbiased_estimation/estimation_simulation.py
-        - 7.8 Higher Moments:
-            - Skewness and Kurtosis: ch07/moments/skewness_kurtosis.md
-            - Heavy Tails and the Moment Problem: ch07/moments/heavy_tails.md
-        - 7.9 Standardization:
-            - Standardization and Reverse Standardization: ch07/standardization/standardization.md
-        - 7.10 Applications:
-            - Maximization of Expected Profit (Newsboy Problem): ch07/applications/newsboy_problem.md
-        - 7.11 Exercises: ch07/exercises/exercises.md
+    - 7 기댓값과 분산:
+        - 7.1 기댓값:
+            - 기댓값의 정의(이산과 연속): ch07/expectation/definition.md
+            - 무의식적 통계학자의 법칙(LOTUS): ch07/expectation/lotus.md
+            - 기댓값의 선형성: ch07/expectation/linearity.md
+            - 기댓값의 꼬리합 공식: ch07/expectation/tail_sum.md
+        - 7.2 지시확률변수:
+            - 정의와 성질: ch07/indicators/definition.md
+            - 지시확률변수로 기댓값 구하기: ch07/indicators/expectation_via_indicators.md
+            - 고전적인 예(짝맞추기, 생일, 빈 상자, 엘리베이터): ch07/indicators/classic_examples.md
+        - 7.3 분산:
+            - 정의와 계산: ch07/variance/definition.md
+            - 'Var(X) = E[X²] − (E[X])² 공식': ch07/variance/shortcut_formula.md
+            - 표준편차: ch07/variance/standard_deviation.md
+        - 7.4 성질과 부등식:
+            - 선형변환에서의 분산: ch07/properties/linear_transformations.md
+            - 마르코프 부등식: ch07/properties/markov.md
+            - 체비쇼프 부등식: ch07/properties/chebyshev.md
+            - 옌센 부등식: ch07/properties/jensen.md
+        - 7.5 합의 평균과 분산:
+            - 확률변수 합의 평균과 분산: ch07/sums/mean_variance_sums.md
+        - 7.6 확률변수의 분해:
+            - 분해의 예(이항, 음이항, 주사위, 쿠폰 모으기): ch07/decomposition/decomposition.md
+        - 7.7 평균과 분산의 불편추정:
+            - 불편추정량(표본평균과 표본분산): ch07/unbiased_estimation/unbiased_estimation.md
+            - "추정 모의실험: 편향추정량과 불편추정량": ch07/unbiased_estimation/estimation_simulation.md
+        - 7.8 고차적률:
+            - 왜도와 첨도: ch07/moments/skewness_kurtosis.md
+            - 두꺼운 꼬리와 적률 문제: ch07/moments/heavy_tails.md
+        - 7.9 표준화:
+            - 표준화와 역표준화: ch07/standardization/standardization.md
+        - 7.10 응용:
+            - 기대이익의 최대화(신문팔이 문제): ch07/applications/newsboy_problem.md
 
-    - 8 Conditional Expectation and Conditional Variance:
-        - 8.1 Conditional Expectation:
-            - Conditional Expectation Given an Event: ch08/conditional_expectation/given_event.md
-            - Conditional Expectation Given a Random Variable: ch08/conditional_expectation/given_rv.md
-            - 'E[Y|X] as a Random Variable': ch08/conditional_expectation/as_rv.md
-        - 8.2 Law of Total Expectation:
-            - Law of Iterated Expectations (Tower Property): ch08/total_expectation/tower_property.md
-            - Applications: ch08/total_expectation/applications.md
-        - 8.3 Conditional Variance:
-            - Conditional Variance Definition: ch08/conditional_variance/definition.md
-            - Law of Total Variance (Eve's Law): ch08/conditional_variance/total_variance.md
-        - 8.4 Exercises: ch08/exercises/exercises.md
+    - 8 조건부기댓값과 조건부분산:
+        - 8.1 조건부기댓값:
+            - 사건이 주어졌을 때의 조건부기댓값: ch08/conditional_expectation/given_event.md
+            - 확률변수가 주어졌을 때의 조건부기댓값: ch08/conditional_expectation/given_rv.md
+            - '확률변수로서의 E[Y|X]': ch08/conditional_expectation/as_rv.md
+        - 8.2 전기댓값 법칙:
+            - 반복 기댓값의 법칙(탑 성질): ch08/total_expectation/tower_property.md
+            - 응용: ch08/total_expectation/applications.md
+        - 8.3 조건부분산:
+            - 조건부분산의 정의: ch08/conditional_variance/definition.md
+            - 전분산 법칙(이브의 법칙): ch08/conditional_variance/total_variance.md
 
-    - 9 Expectation and Variance of Sums of Random Variables:
-        - 9.1 Covariance and Correlation:
-            - Covariance Definition and Properties: ch09/covariance/definition.md
-            - Correlation Coefficient: ch09/covariance/correlation.md
-            - Correlation Simulation: ch09/covariance/correlation_simulation.py
-            - Independence Implies Zero Covariance: ch09/covariance/independence_covariance.md
-            - Cauchy–Schwarz Inequality: ch09/covariance/cauchy_schwarz.md
-        - 9.2 Expectation of Sums:
-            - Linearity of Expectation for Sums: ch09/sums/linearity.md
-            - Expectation of Products (Independent Case): ch09/sums/products.md
-        - 9.3 Variance of Sums:
-            - Variance of a Sum (General Formula): ch09/sums/variance_sum_general.md
-            - Variance of a Sum (Independent Case): ch09/sums/variance_sum_independent.md
-            - Variance-Covariance Matrix: ch09/sums/variance_covariance_matrix.md
-        - 9.4 Exercises: ch09/exercises/exercises.md
+    - 9 확률변수 합의 기댓값과 분산:
+        - 9.1 공분산과 상관계수:
+            - 공분산의 정의와 성질: ch09/covariance/definition.md
+            - 상관계수: ch09/covariance/correlation.md
+            - 상관계수 모의실험: ch09/covariance/correlation_simulation.md
+            - 독립이면 공분산은 0이다: ch09/covariance/independence_covariance.md
+            - 코시–슈바르츠 부등식: ch09/covariance/cauchy_schwarz.md
+            - 상관관계는 인과관계를 뜻하지 않는다: ch09/covariance/correlation_causation.md
+        - 9.2 합의 기댓값:
+            - 합에 대한 기댓값의 선형성: ch09/sums/linearity.md
+            - 곱의 기댓값(독립인 경우): ch09/sums/products.md
+        - 9.3 합의 분산:
+            - 합의 분산(일반 공식): ch09/sums/variance_sum_general.md
+            - 합의 분산(독립인 경우): ch09/sums/variance_sum_independent.md
+            - 분산–공분산 행렬: ch09/sums/variance_covariance_matrix.md
 
-    - 10 Discrete Distributions:
-        - 10.1 Bernoulli and Binomial:
-            - Bernoulli Distribution: ch10/bernoulli_binomial/bernoulli.md
-            - Binomial Distribution: ch10/bernoulli_binomial/binomial.md
-            - From Bernoulli to Binomial (Simulation): ch10/bernoulli_binomial/from_bernoulli_to_binomial.py
-        - 10.2 Geometric and Negative Binomial:
-            - Geometric Distribution: ch10/geometric/geometric.md
-            - Memoryless Property: ch10/geometric/memoryless.md
-            - Negative Binomial Distribution: ch10/geometric/negative_binomial.md
-            - Coupon Collector Problem: ch10/geometric/coupon_collector.md
-        - 10.3 Hypergeometric Distribution:
-            - Hypergeometric Distribution: ch10/hypergeometric/hypergeometric.md
-            - Comparison with Binomial: ch10/hypergeometric/comparison_binomial.md
-        - 10.4 Discrete Uniform Distribution:
-            - Discrete Uniform Distribution: ch10/uniform/discrete_uniform.md
-            - Properties and Sum of Discrete Uniforms: ch10/uniform/properties.md
-        - 10.5 Exercises: ch10/exercises/exercises.md
+    - 10 이산분포:
+        - 10.1 베르누이분포와 이항분포:
+            - 베르누이분포: ch10/bernoulli_binomial/bernoulli.md
+            - 이항분포: ch10/bernoulli_binomial/binomial.md
+            - "베르누이에서 이항분포로: 모의실험": ch10/bernoulli_binomial/from_bernoulli_to_binomial.md
+        - 10.2 기하분포와 음이항분포:
+            - 기하분포: ch10/geometric/geometric.md
+            - 무기억성: ch10/geometric/memoryless.md
+            - 음이항분포: ch10/geometric/negative_binomial.md
+            - 쿠폰 모으기 문제: ch10/geometric/coupon_collector.md
+        - 10.3 초기하분포:
+            - 초기하분포: ch10/hypergeometric/hypergeometric.md
+            - 이항분포와의 비교: ch10/hypergeometric/comparison_binomial.md
+        - 10.4 이산균등분포:
+            - 이산균등분포: ch10/uniform/discrete_uniform.md
+            - 성질과 이산균등분포의 합: ch10/uniform/properties.md
 
-    - 11 Moment Generating Functions and Characteristic Functions:
-        - 11.1 Moment Generating Functions:
-            - Moment-Generating Function Definition and Properties: ch11/mgf/definition.md
-            - Finding Moments from the Moment-Generating Function: ch11/mgf/finding_moments.md
-            - Uniqueness Theorem: ch11/mgf/uniqueness.md
-        - 11.2 Moment-Generating Functions of Common Distributions:
-            - Moment-Generating Function of Bernoulli and Binomial: ch11/mgf_examples/bernoulli_binomial.md
-            - Moment-Generating Function of Geometric and Negative Binomial: ch11/mgf_examples/geometric_negative_binomial.md
-            - Moment-Generating Function of Poisson: ch11/mgf_examples/poisson.md
-            - Moment-Generating Function of Exponential and Gamma: ch11/mgf_examples/exponential_gamma.md
-            - Moment-Generating Function of Normal: ch11/mgf_examples/normal.md
-        - 11.3 Moment-Generating Function Techniques:
-            - Moment-Generating Function of Sums of Independent Random Variables: ch11/mgf_techniques/sums.md
-            - Identifying Distributions via Moment-Generating Functions: ch11/mgf_techniques/identification.md
-        - 11.4 Probability Generating Functions (Supplementary):
-            - Probability Generating Function Definition and Properties: ch11/pgf/definition.md
-            - Probability Generating Function of Common Discrete Distributions: ch11/pgf/common_distributions.md
-            - Random Sums and Compound Distributions: ch11/pgf/random_sums.md
-        - 11.5 Characteristic Functions (Supplementary):
-            - Definition, Existence, and Relationship to Moment-Generating Function: ch11/cf/definition.md
-            - Properties, Inversion, and Lévy Continuity: ch11/cf/properties.md
-        - 11.6 Exercises: ch11/exercises/exercises.md
+    - 11 적률생성함수와 특성함수:
+        - 11.1 적률생성함수:
+            - 적률생성함수의 정의와 성질: ch11/mgf/definition.md
+            - 적률생성함수로 적률 구하기: ch11/mgf/finding_moments.md
+            - 유일성 정리: ch11/mgf/uniqueness.md
+        - 11.2 주요 분포의 적률생성함수:
+            - 베르누이분포와 이항분포의 적률생성함수: ch11/mgf_examples/bernoulli_binomial.md
+            - 기하분포와 음이항분포의 적률생성함수: ch11/mgf_examples/geometric_negative_binomial.md
+            - 푸아송분포의 적률생성함수: ch11/mgf_examples/poisson.md
+            - 지수분포와 감마분포의 적률생성함수: ch11/mgf_examples/exponential_gamma.md
+            - 정규분포의 적률생성함수: ch11/mgf_examples/normal.md
+        - 11.3 적률생성함수를 쓰는 기법:
+            - 독립확률변수 합의 적률생성함수: ch11/mgf_techniques/sums.md
+            - 적률생성함수로 분포 알아내기: ch11/mgf_techniques/identification.md
+        - 11.4 확률생성함수(보충):
+            - 확률생성함수의 정의와 성질: ch11/pgf/definition.md
+            - 주요 이산분포의 확률생성함수: ch11/pgf/common_distributions.md
+            - 확률적 개수의 합과 복합분포: ch11/pgf/random_sums.md
+        - 11.5 특성함수(보충):
+            - 정의, 존재성, 적률생성함수와의 관계: ch11/cf/definition.md
+            - 성질, 역변환, 레비 연속성 정리: ch11/cf/properties.md
 
-    - 12 Poisson Approximation:
-        - 12.1 Poisson Distribution:
-            - Poisson Distribution Definition and Properties: ch12/poisson/definition.md
-            - Mean and Variance of the Poisson: ch12/poisson/mean_variance.md
-        - 12.2 Poisson as Limit of Binomial:
-            - Poisson Limit Theorem: ch12/approximation/poisson_limit.md
-            - When to Use the Poisson Approximation: ch12/approximation/when_to_use.md
-            - Numerical Comparison (Binomial vs Poisson): ch12/approximation/numerical_comparison.md
-            - Poisson Approximation of Binomial (Simulation): ch12/approximation/poisson_approx_binomial.py
-            - Birthday Couples (Simulation): ch12/approximation/birthday_couples.py
-            - Poisson Approximation of Indicators Sum (Simulation): ch12/approximation/poisson_approx_indicators.py
-        - 12.3 Sums of Independent Poissons:
-            - Additivity of Independent Poisson Random Variables: ch12/sums/additivity.md
-        - 12.4 Exercises: ch12/exercises/exercises.md
+    - 12 푸아송 근사:
+        - 12.1 푸아송분포:
+            - 푸아송분포의 정의와 성질: ch12/poisson/definition.md
+            - 푸아송분포의 평균과 분산: ch12/poisson/mean_variance.md
+        - 12.2 이항분포의 극한으로서의 푸아송분포:
+            - 푸아송 극한정리: ch12/approximation/poisson_limit.md
+            - 푸아송 근사를 언제 쓰는가: ch12/approximation/when_to_use.md
+            - 수치 비교(이항분포와 푸아송분포): ch12/approximation/numerical_comparison.md
+            - "이항분포의 푸아송 근사: 모의실험": ch12/approximation/poisson_approx_binomial.md
+            - 생일이 같은 짝 모의실험: ch12/approximation/birthday_couples.md
+            - "지시확률변수의 합으로 보는 푸아송 근사: 모의실험": ch12/approximation/poisson_approx_indicators.md
+        - 12.3 독립인 푸아송분포의 합:
+            - 독립인 푸아송확률변수의 가법성: ch12/sums/additivity.md
 
-    - 13 Poisson Point Process:
-        - 13.1 Definition and Construction:
-            - From Counting to the Poisson Process: ch13/definition/counting_to_process.md
-            - Definition and Axioms: ch13/definition/axioms.md
-            - Rate Parameter and Intensity: ch13/definition/rate_intensity.md
-            - Poisson Process Simulation (Coin vs Exponential): ch13/definition/poisson_process_simulation.py
-        - 13.2 Properties:
-            - Number of Events in an Interval: ch13/properties/events_in_interval.md
-            - Independent Increments: ch13/properties/independent_increments.md
-            - Stationary Increments: ch13/properties/stationary_increments.md
-            - Merging and Splitting of Poisson Processes: ch13/properties/merging_splitting.md
-        - 13.3 Conditional Distribution of Arrival Times:
-            - Uniform Distribution of Arrivals (Given N(t) = n): ch13/conditional/uniform_arrivals.md
-        - 13.4 Exercises: ch13/exercises/exercises.md
+    - 13 푸아송 점과정:
+        - 13.1 정의와 구성:
+            - 세기에서 푸아송 과정으로: ch13/definition/counting_to_process.md
+            - 정의와 공리: ch13/definition/axioms.md
+            - 비율 모수와 강도: ch13/definition/rate_intensity.md
+            - 푸아송 과정 모의실험: ch13/definition/poisson_process_simulation.md
+        - 13.2 성질:
+            - 구간 안에서 일어난 사건의 개수: ch13/properties/events_in_interval.md
+            - 독립증분: ch13/properties/independent_increments.md
+            - 정상증분: ch13/properties/stationary_increments.md
+            - 푸아송 과정의 합침과 쪼갬: ch13/properties/merging_splitting.md
+        - 13.3 도착시각의 조건부분포:
+            - 도착시각의 균등분포 (N(t) = n이 주어졌을 때): ch13/conditional/uniform_arrivals.md
 
-    - 14 Distributions Related to the Poisson Process:
-        - 14.1 Exponential Distribution:
-            - Exponential Distribution from Interarrival Times: ch14/exponential/definition.md
-            - Memoryless Property: ch14/exponential/memoryless.md
-            - Mean and Variance: ch14/exponential/mean_variance.md
-            - Geometric to Exponential Convergence: ch14/exponential/geometric_to_exponential.py
-        - 14.2 Gamma Distribution:
-            - Gamma Distribution as Sum of Exponentials: ch14/gamma/definition.md
-            - Gamma Function: ch14/gamma/gamma_function.md
-            - Mean and Variance: ch14/gamma/mean_variance.md
-            - Relationship to Chi-Squared Distribution: ch14/gamma/chi_squared.md
-        - 14.3 Erlang Distribution:
-            - Erlang as a Special Case of Gamma: ch14/erlang/erlang.md
-            - Waiting Time for the k-th Arrival: ch14/erlang/kth_arrival.md
-        - 14.4 Exercises: ch14/exercises/exercises.md
+    - 14 푸아송 과정과 관련된 분포:
+        - 14.1 지수분포:
+            - 도착간격에서 얻는 지수분포: ch14/exponential/definition.md
+            - 무기억성: ch14/exponential/memoryless.md
+            - 평균과 분산: ch14/exponential/mean_variance.md
+            - 기하분포에서 지수분포로의 수렴: ch14/exponential/geometric_to_exponential.md
+        - 14.2 감마분포:
+            - 지수분포의 합으로서의 감마분포: ch14/gamma/definition.md
+            - 감마함수: ch14/gamma/gamma_function.md
+            - 평균과 분산: ch14/gamma/mean_variance.md
+            - 카이제곱분포와의 관계: ch14/gamma/chi_squared.md
+        - 14.3 얼랑분포:
+            - 감마분포의 특별한 경우로서의 얼랑분포: ch14/erlang/erlang.md
+            - k번째 도착까지의 대기시간: ch14/erlang/kth_arrival.md
 
-    - 15 Continuous Distributions:
-        - 15.1 Uniform Distribution:
-            - Continuous Uniform Distribution: ch15/uniform/definition.md
-            - Properties and Applications: ch15/uniform/properties.md
-        - 15.2 Normal Distribution:
-            - Normal Distribution Definition: ch15/normal/definition.md
-            - Standard Normal and Z-Scores: ch15/normal/standard_normal.md
-            - Normal Probability Calculations: ch15/normal/calculations.md
-            - Sum of Independent Normals: ch15/normal/sum_normals.md
-            - Linear Combinations of Normals: ch15/normal/linear_combinations.md
-        - 15.3 Beta Distribution:
-            - Beta Distribution Definition: ch15/beta/definition.md
-            - Properties and Shape Analysis: ch15/beta/properties.md
-            - Bayesian Applications: ch15/beta/bayesian_applications.md
-        - 15.4 Log-Normal Distribution:
-            - Log-Normal Distribution: ch15/lognormal/definition.md
-            - Properties and Moments: ch15/lognormal/properties.md
-            - Log-Normal in Finance: ch15/lognormal/finance.md
-            - LogNormal from Normal (Simulation): ch15/lognormal/lognormal_from_normal.py
-            - Log of LogNormal is Normal (Simulation): ch15/lognormal/log_of_lognormal.py
-        - 15.5 Order Statistics:
-            - Definition and Notation: ch15/order_statistics/definition.md
-            - Distribution of the Minimum and Maximum: ch15/order_statistics/min_max.md
-            - Density of the k-th Order Statistic: ch15/order_statistics/kth_order_statistic.md
-            - Joint Distribution of Order Statistics: ch15/order_statistics/joint_distribution.md
-            - Order Statistics of the Uniform and the Beta Connection: ch15/order_statistics/uniform_beta.md
-        - 15.6 Transformations of Continuous Random Variables:
-            - Change of Variables (Single Variable): ch15/transformations/change_of_variables.md
-            - Jacobian Method for Joint Transformations: ch15/transformations/jacobian.md
-            - Probability Integral Transform: ch15/transformations/probability_integral_transform.md
-            - Box-Muller Transform: ch15/transformations/box_muller.md
-        - 15.7 Exercises: ch15/exercises/exercises.md
+    - 15 연속분포:
+        - 15.1 균등분포:
+            - 연속균등분포: ch15/uniform/definition.md
+            - 성질과 응용: ch15/uniform/properties.md
+        - 15.2 정규분포:
+            - 정규분포의 정의: ch15/normal/definition.md
+            - 표준정규분포와 Z-점수: ch15/normal/standard_normal.md
+            - 정규분포의 확률 계산: ch15/normal/calculations.md
+            - 독립인 정규확률변수의 합: ch15/normal/sum_normals.md
+            - 정규확률변수의 일차결합: ch15/normal/linear_combinations.md
+        - 15.3 베타분포:
+            - 베타분포의 정의: ch15/beta/definition.md
+            - 성질과 모양 분석: ch15/beta/properties.md
+            - 베이즈 통계에서의 응용: ch15/beta/bayesian_applications.md
+        - 15.4 로그정규분포:
+            - 로그정규분포: ch15/lognormal/definition.md
+            - 성질과 적률: ch15/lognormal/properties.md
+            - 금융에서의 로그정규분포: ch15/lognormal/finance.md
+            - "정규분포에서 로그정규분포로: 모의실험": ch15/lognormal/lognormal_from_normal.md
+            - "로그정규분포의 로그는 정규분포이다: 모의실험": ch15/lognormal/log_of_lognormal.md
+        - 15.5 순서통계량:
+            - 정의와 기호: ch15/order_statistics/definition.md
+            - 최솟값과 최댓값의 분포: ch15/order_statistics/min_max.md
+            - k번째 순서통계량의 밀도함수: ch15/order_statistics/kth_order_statistic.md
+            - 순서통계량의 결합분포: ch15/order_statistics/joint_distribution.md
+            - 균등분포의 순서통계량과 베타분포의 관계: ch15/order_statistics/uniform_beta.md
+        - 15.6 연속확률변수의 변환:
+            - 변수변환(한 변수): ch15/transformations/change_of_variables.md
+            - 결합변환의 야코비 방법: ch15/transformations/jacobian.md
+            - 확률적분변환: ch15/transformations/probability_integral_transform.md
+            - 박스–뮐러 변환: ch15/transformations/box_muller.md
 
-    - 16 Convolutions and Distributions of Sums:
-        - 16.1 Convolution Formula:
-            - Convolution for Discrete Random Variables: ch16/convolution/discrete_convolution.md
-            - Convolution for Continuous Random Variables: ch16/convolution/continuous_convolution.md
-        - 16.2 Convolution Examples:
-            - Sum of Independent Uniforms: ch16/examples/sum_uniforms.md
-            - Sum of Independent Exponentials: ch16/examples/sum_exponentials.md
-            - Sum of Independent Normals (via Convolution): ch16/examples/sum_normals.md
-            - Sum of Independent Poissons (via Convolution): ch16/examples/sum_poissons.md
-        - 16.3 An Empirical Observation — Why Do Sums Always Look Normal?:
-            - Sums of Bernoulli/Binomial: ch16/observation/bernoulli_binomial.py
-            - Sums of Uniform: ch16/observation/uniform.py
-            - Sums of Exponential: ch16/observation/exponential.py
-            - Sums of Poisson: ch16/observation/poisson.py
-            - Sums of Geometric: ch16/observation/geometric.py
-            - Sums of Chi-Squared: ch16/observation/chi_squared.py
-            - Sums of Beta: ch16/observation/beta.py
-            - Sums of Log-Normal: ch16/observation/lognormal.py
-            - Sums of Discrete Uniform: ch16/observation/discrete_uniform.py
-            - Side-by-Side Dashboard (All Distributions): ch16/observation/clt_dashboard.py
-        - 16.4 Exercises: ch16/exercises/exercises.md
+    - 16 합성곱과 합의 분포:
+        - 16.1 합성곱 공식:
+            - 이산확률변수의 합성곱: ch16/convolution/discrete_convolution.md
+            - 연속확률변수의 합성곱: ch16/convolution/continuous_convolution.md
+        - 16.2 합성곱의 예:
+            - 독립인 균등확률변수의 합: ch16/examples/sum_uniforms.md
+            - 독립인 지수확률변수의 합: ch16/examples/sum_exponentials.md
+            - 독립인 정규확률변수의 합(합성곱으로): ch16/examples/sum_normals.md
+            - 독립인 푸아송확률변수의 합(합성곱으로): ch16/examples/sum_poissons.md
+        - 16.3 관찰 하나 — 합은 왜 늘 정규분포를 닮는가:
+            - 베르누이확률변수와 이항확률변수의 합: ch16/observation/bernoulli_binomial.md
+            - 균등확률변수의 합: ch16/observation/uniform.md
+            - 지수확률변수의 합: ch16/observation/exponential.md
+            - 푸아송확률변수의 합: ch16/observation/poisson.md
+            - 기하확률변수의 합: ch16/observation/geometric.md
+            - 카이제곱확률변수의 합: ch16/observation/chi_squared.md
+            - 베타확률변수의 합: ch16/observation/beta.md
+            - 로그정규확률변수의 합: ch16/observation/lognormal.md
+            - 이산균등확률변수의 합: ch16/observation/discrete_uniform.md
+            - "나란히 놓고 보기: 모든 분포": ch16/observation/clt_dashboard.md
 
-    - 17 Central Limit Theorem:
-        - 17.1 Convergence in Distribution:
-            - Definition and Examples: ch17/convergence/definition.md
-            - Convergence in Distribution vs Other Modes (Preview): ch17/convergence/comparison_preview.md
-        - 17.2 Statement and Interpretation:
-            - Central Limit Theorem (Statement): ch17/statement/clt_statement.md
-            - Standardization: ch17/statement/standardization.md
-            - Continuity Correction: ch17/statement/continuity_correction.md
-        - 17.3 Proof:
-            - Central Limit Theorem Proof via Moment-Generating Functions: ch17/proof/clt_proof_mgf.md
-        - 17.4 Applications:
-            - Normal Approximation to the Binomial: ch17/applications/normal_approx_binomial.md
-            - Approximating Poisson Probabilities: ch17/applications/poisson_approximation.md
-            - Approximating Sums of Random Variables: ch17/applications/sums_approximation.md
-            - Central Limit Theorem for Coin Flips (Simulation): ch17/applications/clt_coin_flips.py
-            - Confidence Intervals Preview: ch17/applications/confidence_intervals_preview.md
-        - 17.5 Exercises: ch17/exercises/exercises.md
+    - 17 중심극한정리:
+        - 17.1 분포수렴:
+            - 정의와 예: ch17/convergence/definition.md
+            - 분포수렴과 다른 수렴(미리보기): ch17/convergence/comparison_preview.md
+        - 17.2 정리의 서술과 뜻:
+            - 중심극한정리(서술): ch17/statement/clt_statement.md
+            - 표준화: ch17/statement/standardization.md
+            - 연속성 보정: ch17/statement/continuity_correction.md
+        - 17.3 증명:
+            - 적률생성함수를 쓴 중심극한정리 증명: ch17/proof/clt_proof_mgf.md
+        - 17.4 응용:
+            - 이항분포의 정규근사: ch17/applications/normal_approx_binomial.md
+            - 푸아송 확률의 근사: ch17/applications/poisson_approximation.md
+            - 확률변수 합의 근사: ch17/applications/sums_approximation.md
+            - "동전 던지기의 중심극한정리: 모의실험": ch17/applications/clt_coin_flips.md
+            - 신뢰구간 미리보기: ch17/applications/confidence_intervals_preview.md
 
-    - 18 Multivariate Normal Distribution:
-        - 18.1 Bivariate Normal Distribution:
-            - Joint Density of the Bivariate Normal: ch18/bivariate/joint_pdf.md
-            - Contours and Geometric Interpretation: ch18/bivariate/contours.md
-            - Marginal and Conditional Distributions: ch18/bivariate/marginal_conditional.md
-            - Bivariate Normal Density (3D Plot): ch18/bivariate/bivariate_normal_pdf.py
-            - Uncorrelated Implies Independent (Normal Case): ch18/bivariate/uncorrelated_independent.md
-        - 18.2 Multivariate Normal Distribution:
-            - Definition via Mean Vector and Covariance Matrix: ch18/multivariate/definition.md
-            - Properties and Linear Transformations: ch18/multivariate/properties.md
-            - Generating Random Samples via Cholesky: ch18/multivariate/generating_samples.md
-            - Bivariate Normal Samples (Scatter Plot): ch18/multivariate/bivariate_normal_samples.py
-            - Conditional Distributions in the Multivariate Case: ch18/multivariate/conditional.md
-        - 18.3 Exercises: ch18/exercises/exercises.md
+    - 18 다변량정규분포:
+        - 18.1 이변량정규분포:
+            - 이변량정규분포의 결합밀도함수: ch18/bivariate/joint_pdf.md
+            - 등고선과 기하적 해석: ch18/bivariate/contours.md
+            - 주변분포와 조건부분포: ch18/bivariate/marginal_conditional.md
+            - "이변량정규분포의 밀도함수: 3차원 그림": ch18/bivariate/bivariate_normal_pdf.md
+            - 무상관이면 독립이다(정규분포의 경우): ch18/bivariate/uncorrelated_independent.md
+        - 18.2 다변량정규분포:
+            - 평균벡터와 공분산행렬로 정의하기: ch18/multivariate/definition.md
+            - 성질과 일차변환: ch18/multivariate/properties.md
+            - 촐레스키 분해로 확률표본 만들기: ch18/multivariate/generating_samples.md
+            - "이변량정규분포의 표본: 산점도": ch18/multivariate/bivariate_normal_samples.md
+            - 다변량에서의 조건부분포: ch18/multivariate/conditional.md
 
-    - 19 Distributions Related to the Normal:
-        - 19.1 From Random Samples to Sampling Distributions:
-            - Sample Mean and Sample Variance: ch19/motivation/sample_mean_variance.md
-            - Why Chi-Squared, t, and F Arise Naturally: ch19/motivation/why_these_distributions.md
-        - 19.2 Chi-Squared Distribution:
-            - Definition as Sum of Squared Standard Normals: ch19/chi_squared/definition.md
-            - Properties, Mean, and Variance: ch19/chi_squared/properties.md
-            - Additivity of Chi-Squared: ch19/chi_squared/additivity.md
-            - Distribution of Sample Variance: ch19/chi_squared/sample_variance.md
-            - Chi-Squared from Sum of Squared Normals (Simulation): ch19/chi_squared/chi_squared_from_normal.py
-        - 19.3 Student's t Distribution:
-            - Definition and Derivation: ch19/student_t/definition.md
-            - Properties and Comparison to Normal: ch19/student_t/properties.md
-            - Convergence to Normal as Degrees of Freedom → ∞: ch19/student_t/convergence.md
-            - Distribution of Studentized Sample Mean: ch19/student_t/studentized_mean.md
-            - Why the t-Distribution (Simulation): ch19/student_t/why_t_distribution.py
-            - t-Distribution vs Standard Normal: ch19/student_t/t_vs_normal.py
-        - 19.4 F Distribution:
-            - Definition as Ratio of Chi-Squareds: ch19/f_distribution/definition.md
-            - Properties: ch19/f_distribution/properties.md
-            - F Distribution Density and Distribution Function: ch19/f_distribution/f_pdf_cdf.py
-            - Relationship to t Distribution: ch19/f_distribution/relationship_to_t.md
-        - 19.5 Exercises: ch19/exercises/exercises.md
+    - 19 정규분포와 관련된 분포:
+        - 19.1 확률표본에서 표집분포로:
+            - 표본평균과 표본분산: ch19/motivation/sample_mean_variance.md
+            - 카이제곱분포, t분포, F분포는 왜 자연스럽게 나타나는가: ch19/motivation/why_these_distributions.md
+        - 19.2 카이제곱분포:
+            - 표준정규확률변수의 제곱합으로서의 정의: ch19/chi_squared/definition.md
+            - 성질, 평균, 분산: ch19/chi_squared/properties.md
+            - 카이제곱분포의 가법성: ch19/chi_squared/additivity.md
+            - 표본분산의 분포: ch19/chi_squared/sample_variance.md
+            - "정규확률변수의 제곱합에서 얻는 카이제곱분포: 모의실험": ch19/chi_squared/chi_squared_from_normal.md
+        - 19.3 스튜던트 t분포:
+            - 정의와 유도: ch19/student_t/definition.md
+            - 성질과 정규분포와의 비교: ch19/student_t/properties.md
+            - 자유도가 무한대로 갈 때 정규분포로의 수렴: ch19/student_t/convergence.md
+            - 스튜던트화한 표본평균의 분포: ch19/student_t/studentized_mean.md
+            - "t분포는 왜 필요한가: 모의실험": ch19/student_t/why_t_distribution.md
+            - t분포와 표준정규분포: ch19/student_t/t_vs_normal.md
+        - 19.4 F분포:
+            - 카이제곱분포의 비로서의 정의: ch19/f_distribution/definition.md
+            - 성질: ch19/f_distribution/properties.md
+            - F분포의 밀도함수와 분포함수: ch19/f_distribution/f_pdf_cdf.md
+            - t분포와의 관계: ch19/f_distribution/relationship_to_t.md
 
-    - 20 Law of Large Numbers:
-        - 20.1 Tail Bounds:
-            - Markov and Chebyshev Inequalities: ch20/tail_bounds/markov_chebyshev.md
-            - One-Sided Chebyshev's Inequality: ch20/tail_bounds/one_sided_chebyshev.md
-            - Chernoff's Bound: ch20/tail_bounds/chernoff.md
-        - 20.2 Modes of Convergence:
-            - Convergence in Distribution (Review from Chapter 17): ch20/convergence/convergence_in_distribution.md
-            - Convergence in Probability: ch20/convergence/convergence_in_probability.md
-            - Almost Sure Convergence: ch20/convergence/almost_sure_convergence.md
-            - Relationships Between Modes of Convergence: ch20/convergence/relationships.md
-        - 20.3 Weak Law of Large Numbers:
-            - Statement and Proof via Chebyshev: ch20/weak_law/statement_proof.md
-            - Examples, Extensions, and Failure Cases: ch20/weak_law/examples.md
-            - Weak Law for Coin Flips (Simulation): ch20/weak_law/wlln_coin_flips.py
-        - 20.4 Strong Law of Large Numbers:
-            - Statement and Proof Sketch: ch20/strong_law/statement_proof.md
-            - Intuition, Borel-Cantelli, and the Law of the Iterated Logarithm: ch20/strong_law/intuition.md
-            - Strong Law for Coin Flips (Simulation): ch20/strong_law/slln_coin_flips.py
-        - 20.5 Applications and Interpretation:
-            - Coupon Collector Problem: ch20/applications/coupon_collector.md
-            - Monte Carlo Simulation: ch20/applications/monte_carlo.md
-            - Monte Carlo Estimation of π (Simulation): ch20/applications/monte_carlo_pi.py
-            - Buffon's Needle: ch20/applications/buffon_needle.md
-            - Buffon's Needle (Simulation): ch20/applications/buffon_needle.py
-            - Frequentist Interpretation of Probability: ch20/applications/frequentist_interpretation.md
-            - Gambler's Fallacy: ch20/applications/gamblers_fallacy.md
-        - 20.6 Relationship Between Central Limit Theorem and Law of Large Numbers:
-            - Central Limit Theorem vs Law of Large Numbers: ch20/comparison/clt_vs_lln.md
-        - 20.7 Exercises: ch20/exercises/exercises.md
+    - 20 큰수의 법칙:
+        - 20.1 꼬리 경계:
+            - 마르코프 부등식과 체비쇼프 부등식: ch20/tail_bounds/markov_chebyshev.md
+            - 한쪽 체비쇼프 부등식: ch20/tail_bounds/one_sided_chebyshev.md
+            - 체르노프 경계: ch20/tail_bounds/chernoff.md
+        - 20.2 수렴의 여러 뜻:
+            - 분포수렴(17장 복습): ch20/convergence/convergence_in_distribution.md
+            - 확률수렴: ch20/convergence/convergence_in_probability.md
+            - 거의 확실한 수렴: ch20/convergence/almost_sure_convergence.md
+            - 수렴들 사이의 관계: ch20/convergence/relationships.md
+        - 20.3 큰수의 약법칙:
+            - 서술과 체비쇼프를 쓴 증명: ch20/weak_law/statement_proof.md
+            - 예, 확장, 성립하지 않는 경우: ch20/weak_law/examples.md
+            - "동전 던지기의 약법칙: 모의실험": ch20/weak_law/wlln_coin_flips.md
+        - 20.4 큰수의 강법칙:
+            - 서술과 증명의 얼개: ch20/strong_law/statement_proof.md
+            - 직관, 보렐–칸텔리, 반복로그 법칙: ch20/strong_law/intuition.md
+            - "동전 던지기의 강법칙: 모의실험": ch20/strong_law/slln_coin_flips.md
+        - 20.5 응용과 해석:
+            - 쿠폰 모으기 문제: ch20/applications/coupon_collector.md
+            - 몬테카를로 모의실험: ch20/applications/monte_carlo.md
+            - "몬테카를로로 원주율 구하기: 모의실험": ch20/applications/monte_carlo_pi.md
+            - 뷔퐁의 바늘: ch20/applications/buffon_needle.md
+            - 뷔퐁의 바늘 모의실험: ch20/applications/buffon_needle_simulation.md
+            - 확률의 빈도주의적 해석: ch20/applications/frequentist_interpretation.md
+            - 도박꾼의 오류: ch20/applications/gamblers_fallacy.md
+        - 20.6 중심극한정리와 큰수의 법칙의 관계:
+            - 중심극한정리와 큰수의 법칙: ch20/comparison/clt_vs_lln.md
 
-    - 21 Simulation:
-        - 21.1 Generating Random Samples:
-            - How to Generate Random Samples: ch21/random_samples/generating_random_samples.md
-            - Inverse Transform Sampling (Simulation): ch21/random_samples/inverse_transform_sampling.py
-        - 21.2 Basic Simulation Examples:
-            - Coin Flip Using Uniform Samples: ch21/examples/coin_flip.md
-            - Random Points and the Unit Circle: ch21/examples/random_points_unit_circle.md
-        - 21.3 Random Walks:
-            - 2D Simple Random Walk: ch21/random_walk/random_walk_2d.md
-            - 2D Random Walk (Simulation): ch21/random_walk/random_walk_2d.py
-        - 21.4 Sampling from Normal Distributions:
-            - Samples from Two Different Normals: ch21/normal_samples/mixture_normals.md
-        - 21.5 Longest Run:
-            - Longest Run in Coin Flips: ch21/longest_run/longest_run.md
-        - 21.6 Arcsine Laws:
-            - Last Visit Time: ch21/arcsine_law/last_visit_time.md
-            - Number of Positive Sticks: ch21/arcsine_law/positive_sticks.md
-        - 21.7 Exercises: ch21/exercises/exercises.md
+    - 21 모의실험:
+        - 21.1 확률표본 만들기:
+            - 확률표본을 어떻게 만드는가: ch21/random_samples/generating_random_samples.md
+            - "역변환 표집: 모의실험": ch21/random_samples/inverse_transform_sampling.md
+        - 21.2 기본 모의실험 예제:
+            - 균등표본으로 동전 던지기: ch21/examples/coin_flip.md
+            - 임의의 점과 단위원: ch21/examples/random_points_unit_circle.md
+        - 21.3 확률보행:
+            - 2차원 단순확률보행: ch21/random_walk/random_walk_2d.md
+            - 2차원 확률보행 모의실험: ch21/random_walk/random_walk_2d_simulation.md
+        - 21.4 정규분포에서 표본 뽑기:
+            - 서로 다른 두 정규분포에서 뽑은 표본: ch21/normal_samples/mixture_normals.md
+        - 21.5 최장 연속:
+            - 동전 던지기에서의 최장 연속: ch21/longest_run/longest_run.md
+        - 21.6 아크사인 법칙:
+            - 마지막 방문 시각: ch21/arcsine_law/last_visit_time.md
+            - 양수 구간의 개수: ch21/arcsine_law/positive_sticks.md
 
 plugins:
     - search
