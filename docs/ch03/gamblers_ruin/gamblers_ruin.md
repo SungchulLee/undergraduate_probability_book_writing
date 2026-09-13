@@ -1,56 +1,114 @@
-# Gambler's Ruin Problem
+# 도박꾼의 파산 문제
 
-## Problem Statement
+## 문제
 
-Suppose you have \$$i$ in initial capital. Each round you bet \$$1$ on a game where you win \$$1$ with probability $p \le 1/2$ and lose \$$1$ with probability $q := 1 - p$. If you lose all your money, you are **ruined**. If you reach \$$N$, you happily quit.
+처음에 밑천 \$$i$ 를 가지고 있다고 하자. 매 판 \$$1$ 을 걸고 확률 $p \le 1/2$ 로 \$$1$ 을 따고 확률 $q := 1 - p$ 로 \$$1$ 을 잃는 게임을 한다. 가진 돈을 모두 잃으면 **파산**한다. \$$N$ 에 이르면 기분 좋게 그만둔다.
 
-### Notation
+### 기호
 
-| Symbol | Meaning |
+| 기호 | 뜻 |
 |--------|---------|
-| $R$ | Ruin event |
-| $I$ | Initial capital |
-| $Q(i) = P(R \mid I = i)$ | Ruin probability starting with initial capital \$$i$ |
-| $p$ | Probability of winning a single bet |
-| $q = 1 - p$ | Probability of losing a single bet |
-| $N$ | Goal amount (quit if reached) |
+| $R$ | 파산 사건 |
+| $I$ | 처음 밑천 |
+| $Q(i) = P(R \mid I = i)$ | 처음 밑천 \$$i$ 로 시작할 때의 파산 확률 |
+| $p$ | 한 판을 이길 확률 |
+| $q = 1 - p$ | 한 판을 질 확률 |
+| $N$ | 목표 금액(이르면 그만둔다) |
 
-**Goal:** Calculate $Q(i)$ for $0 \le i \le N$.
+**목표:** $0 \le i \le N$ 에 대해 $Q(i)$ 를 구하는 것이다.
 
-### Boundary Conditions
-
-$$
-Q(0) = 1 \quad \text{(starting with nothing means certain ruin)}
-$$
+### 경계 조건
 
 $$
-Q(N) = 0 \quad \text{(reaching the goal means no ruin)}
+Q(0) = 1 \quad \text{(가진 것이 없으면 파산은 확실하다)}
 $$
 
-## Summary of Solutions
+$$
+Q(N) = 0 \quad \text{(목표에 이르면 파산하지 않는다)}
+$$
 
-### Case 1: $q > 1/2$ (unfair game, equivalently $q/p > 1$)
+## 풀이 요약
+
+### 경우 1: q > 1/2 (불공정한 게임, 곧 q/p > 1)
 
 $$
 Q(i) = \frac{(q/p)^N - (q/p)^i}{(q/p)^N - 1}
 $$
 
-Since $q/p > 1$, we have $(q/p)^N \gg 1$ for large $N$, and hence
+$q/p > 1$ 이므로 $N$ 이 크면 $(q/p)^N \gg 1$ 이고, 따라서 다음을 얻는다.
 
 $$
 Q(i) \approx 1 - \left(\frac{q}{p}\right)^{-(N-i)} = 1 - e^{-(N-i)\ln(q/p)}
 $$
 
-The ruin probability approaches 1 **exponentially fast** as the initial capital $i$ decreases from $N$.
+처음 밑천 $i$ 가 $N$ 에서 줄어들수록 파산 확률은 **지수적으로 빠르게** 1에 다가간다.
 
-### Case 2: $q = 1/2$ (fair game)
+### 경우 2: q = 1/2 (공정한 게임)
 
 $$
 Q(i) = \frac{N - i}{N}
 $$
 
-The ruin probability approaches 1 **linearly** as the initial capital decreases.
+처음 밑천이 줄어들수록 파산 확률은 **선형으로** 1에 다가간다.
 
-### Why "Gambler's Ruin"?
+### 왜 "도박꾼의 파산"인가
 
-Even with a nearly fair game (e.g., $p = 0.49$), the ruin probability is devastatingly high. For example, with initial capital $i = 100$ and goal $N = 200$, the ruin probability exceeds 95%. The house edge, no matter how small, compounds over the many rounds needed to double one's money, making ruin nearly certain.
+거의 공정한 게임(예를 들어 $p = 0.49$)에서도 파산 확률은 참담할 만큼 높다. 예컨대 처음 밑천이 $i = 100$ 이고 목표가 $N = 200$ 이면 파산 확률이 95%를 넘는다. 판돈을 두 배로 불리려면 여러 판을 거쳐야 하는데, 그 사이에 아무리 작은 하우스 우위라도 차곡차곡 쌓여 파산을 거의 확실하게 만든다.
+
+## 연습문제
+
+**연습문제 1.** 어떤 도박꾼이 \$50으로 시작해 이길 확률이 $p = 0.49$ 인 게임에 매 판 \$1을 건다. 이 도박꾼의 목표는 \$100이다. 다음 공식에 $i = 50$ 과 $N = 100$ 을 넣어 정확한 파산 확률을 구하여라.
+
+$$
+Q(i) = \frac{(q/p)^N - (q/p)^i}{(q/p)^N - 1}
+$$
+
+??? success "연습문제 1 풀이"
+    $p = 0.49$, $q = 0.51$ 이므로 $r := q/p = 0.51/0.49 \approx 1.0408$ 이다.
+
+    $$
+    r^{100} \approx e^{100 \ln(1.0408)} \approx e^{4.001} \approx 54.60
+    $$
+
+    $$
+    r^{50} \approx e^{50 \ln(1.0408)} \approx e^{2.000} \approx 7.389
+    $$
+
+    그러므로 다음을 얻는다.
+
+    $$
+    Q(50) = \frac{54.60 - 7.389}{54.60 - 1} \approx \frac{47.21}{53.60} \approx 0.8807
+    $$
+
+    게임이 거의 공정한데도($p = 0.49$) \$50으로 시작해 \$100을 목표로 할 때 파산할 확률은 약 88%이다.
+
+---
+
+**연습문제 2.** 당신은 \$1로 시작하고 상대는 \$2로 시작하므로 합은 $N = 3$ 이다. 매 판 공정한 동전을 던져 뒷면이면 상대에게서 \$1을 얻고 앞면이면 상대가 당신에게서 \$1을 얻는다. 한 사람이 \$3을 모두 가지면 게임이 끝난다. 당신이 이길(곧 \$3에 이를) 확률은 얼마인가?
+
+??? success "연습문제 2 풀이"
+    지금 \$$i$ 를 가지고 있을 때 당신이 이길 확률을 $p_i$ 라 하자. 경계 조건은 다음과 같다.
+
+    $$
+    p_0 = 0, \qquad p_3 = 1
+    $$
+
+    상태 $i$ 에서 확률 $1/2$ 로 $i+1$ 로, 확률 $1/2$ 로 $i-1$ 로 옮겨 가므로 다음이 성립한다.
+
+    $$
+    p_i = \frac{1}{2}\,p_{i+1} + \frac{1}{2}\,p_{i-1}
+    $$
+
+    공정한 게임($p = q = 1/2$)에서는 이길 확률이 처음 밑천에 비례한다.
+
+    $$
+    p_i = \frac{i}{N}
+    $$
+
+    그러므로 다음을 얻는다.
+
+    $$
+    p_1 = \frac{1}{3}
+    $$
+
+    합이 \$3인 가운데 \$1로 시작하면 확률 $1/3$ 로 이긴다.

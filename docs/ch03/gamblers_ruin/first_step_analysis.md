@@ -1,12 +1,12 @@
-# First Step Analysis
+# 첫걸음 분석
 
-## Idea
+## 생각의 실마리
 
-**First step analysis** is a technique for solving problems about random processes by conditioning on the outcome of the first step. For the gambler's ruin, we decompose the ruin event $R$ according to whether the gambler wins or loses the first bet.
+**첫걸음 분석**은 첫 단계의 결과에 조건을 걸어 확률과정에 관한 문제를 푸는 기법이다. 도박꾼의 파산에서는 첫 판을 이겼는지 졌는지에 따라 파산 사건 $R$ 을 쪼갠다.
 
-## Derivation of the Recurrence Relation
+## 점화식 유도
 
-Let $W$ be the event that the gambler wins the first game. By the law of total probability:
+$W$ 를 도박꾼이 첫 판을 이기는 사건이라 하자. 전확률 법칙에 따라 다음과 같다.
 
 $$
 Q(i) = P(R \mid I = i)
@@ -20,49 +20,49 @@ $$
 = P(W \mid I = i)\,P(R \mid I = i, W) + P(W^c \mid I = i)\,P(R \mid I = i, W^c)
 $$
 
-After winning the first bet, the gambler has $i + 1$ dollars and faces the same problem from that new starting point. After losing, the gambler has $i - 1$ dollars. Therefore:
+첫 판을 이기면 도박꾼의 돈은 $i + 1$ 달러가 되고, 그 새로운 출발점에서 똑같은 문제를 마주하게 된다. 지면 $i - 1$ 달러가 된다. 그러므로 다음이 성립한다.
 
 $$
 P(R \mid I = i, W) = Q(i + 1), \qquad P(R \mid I = i, W^c) = Q(i - 1)
 $$
 
-Substituting:
+이를 대입하면 다음을 얻는다.
 
 $$
 Q(i) = p\,Q(i + 1) + q\,Q(i - 1)
 $$
 
-## The Complete Problem
+## 문제 전체의 모습
 
-**Recurrence relation:**
+**점화식:**
 
 $$
 Q(i) = p\,Q(i + 1) + q\,Q(i - 1), \quad i = 1, 2, \ldots, N - 1
 $$
 
-**Boundary conditions:**
+**경계 조건:**
 
 $$
 Q(0) = 1, \qquad Q(N) = 0
 $$
 
-This is a **second-order linear recurrence relation** with constant coefficients. It can be solved via the characteristic equation method (see subsequent sections) or numerically as a tridiagonal linear system.
+이것은 계수가 상수인 **2계 선형 점화식**이다. 특성방정식을 쓰는 방법으로 풀 수도 있고(뒤의 절을 보아라) 삼중대각 선형계로 보고 수치적으로 풀 수도 있다.
 
-## Characteristic Equation
+## 특성방정식
 
-To solve the recurrence, we guess a solution of the form $Q(i) = \lambda^i$. Substituting:
+점화식을 풀기 위해 $Q(i) = \lambda^i$ 꼴의 해를 짐작해 보자. 대입하면 다음과 같다.
 
 $$
 p\lambda^{i+1} + q\lambda^{i-1} = \lambda^i
 $$
 
-Dividing by $\lambda^{i-1}$:
+$\lambda^{i-1}$ 로 나누면 다음을 얻는다.
 
 $$
 p\lambda^2 - \lambda + q = 0
 $$
 
-This is the **characteristic equation**. Since $q = 1 - p$:
+이것이 **특성방정식**이다. $q = 1 - p$ 이므로 다음과 같이 쓸 수 있다.
 
 $$
 p\lambda^2 - \lambda + (1 - p) = 0
@@ -72,15 +72,15 @@ $$
 p(\lambda + 1)(\lambda - 1) + 1 - \lambda = (\lambda - 1)[p(\lambda + 1) - 1] = 0
 $$
 
-The **characteristic roots** are:
+**특성근**은 다음과 같다.
 
 $$
-\lambda = 1 \qquad \text{and} \qquad \lambda = \frac{q}{p}
+\lambda = 1 \qquad \text{그리고} \qquad \lambda = \frac{q}{p}
 $$
 
-## Linearity of Solutions
+## 해의 선형성
 
-If $Q_1(i)$ and $Q_2(i)$ are both solutions to the recurrence, then any linear combination $Q(i) = \alpha\,Q_1(i) + \beta\,Q_2(i)$ is also a solution:
+$Q_1(i)$ 와 $Q_2(i)$ 가 모두 점화식의 해라면 그 일차결합 $Q(i) = \alpha\,Q_1(i) + \beta\,Q_2(i)$ 도 해이다.
 
 $$
 p\,Q(i+1) + q\,Q(i-1) = \alpha\bigl[p\,Q_1(i+1) + q\,Q_1(i-1)\bigr] + \beta\bigl[p\,Q_2(i+1) + q\,Q_2(i-1)\bigr]
@@ -90,4 +90,103 @@ $$
 = \alpha\,Q_1(i) + \beta\,Q_2(i) = Q(i)
 $$
 
-This superposition principle allows us to construct the general solution from the two characteristic roots and then determine the constants $\alpha$ and $\beta$ using the boundary conditions.
+이 중첩 원리 덕분에 두 특성근으로 일반해를 만들고, 경계 조건으로 상수 $\alpha$ 와 $\beta$ 를 정할 수 있다.
+
+## 연습문제
+
+**연습문제 1.** 어떤 도박꾼이 \$3으로 시작해 \$0(파산)이나 \$5에 이르면 멈춘다. 매 판 확률 $p = 0.4$ 로 \$1을 따고 확률 $q = 0.6$ 으로 \$1을 잃는다. $Q(i) = P(\text{파산} \mid i \text{ 로 시작})$ 에 대한 점화식과 경계 조건을 적어라.
+
+??? success "연습문제 1 풀이"
+    점화식: $i = 1, 2, 3, 4$ 에 대해 $Q(i) = 0.4\,Q(i+1) + 0.6\,Q(i-1)$.
+
+    경계 조건: $Q(0) = 1$, $Q(5) = 0$.
+
+---
+
+**연습문제 2.** $p \neq q$ 일 때 $Q(i) = \alpha + \beta (q/p)^i$ 가 점화식 $Q(i) = p\,Q(i+1) + q\,Q(i-1)$ 을 만족함을 확인하여라.
+
+??? success "연습문제 2 풀이"
+    $Q(i) = \alpha + \beta (q/p)^i$ 를 $p\,Q(i+1) + q\,Q(i-1)$ 에 대입한다.
+
+    $$
+    p\!\left[\alpha + \beta\!\left(\frac{q}{p}\right)^{i+1}\right] + q\!\left[\alpha + \beta\!\left(\frac{q}{p}\right)^{i-1}\right]
+    $$
+
+    $$
+    = \alpha(p + q) + \beta\!\left[p \cdot \frac{q}{p}\!\left(\frac{q}{p}\right)^i + q \cdot \frac{p}{q}\!\left(\frac{q}{p}\right)^i\right]
+    $$
+
+    $$
+    = \alpha + \beta\!\left(\frac{q}{p}\right)^i\!(q + p) = \alpha + \beta\!\left(\frac{q}{p}\right)^i = Q(i)
+    $$
+
+    $\square$
+
+---
+
+**연습문제 3.** 술 취한 사람이 정수 직선 $\{0, 1, 2, 3, 4\}$ 의 위치 2에서 출발한다. 한 걸음마다 같은 확률로 왼쪽이나 오른쪽으로 움직인다. 0이나 4에 닿으면 멈춘다. 0에 이를 확률은 얼마인가?
+
+??? success "연습문제 3 풀이"
+    이것은 $N = 4$ 인 대칭 도박꾼의 파산($p = q = 1/2$)이다. 대칭인 경우에는 $Q(i) = 1 - i/N$ 이므로 다음을 얻는다.
+
+    $$
+    Q(2) = 1 - \frac{2}{4} = \frac{1}{2}
+    $$
+
+---
+
+**연습문제 4.** 특성방정식 $p\lambda^2 - \lambda + q = 0$ 이 $p$ 의 값과 상관없이 언제나 $\lambda = 1$ 을 근으로 가짐을 증명하여라.
+
+??? success "연습문제 4 풀이"
+    $\lambda = 1$ 을 대입한다.
+
+    $$
+    p(1)^2 - 1 + q = p + q - 1 = 1 - 1 = 0
+    $$
+
+    $p + q = 1$ 이기 때문이다. $\square$
+
+---
+
+**연습문제 5.** 도박꾼이 \$1로 시작해 \$3을 목표로 하고 $p = 0.5$, $q = 0.5$ 인 도박꾼의 파산 문제를 생각하자. 일반 공식을 쓰지 말고 첫걸음 분석으로 파산 확률을 곧바로 구하여라.
+
+??? success "연습문제 5 풀이"
+    점화식에서 $Q(1) = 0.5\,Q(2) + 0.5\,Q(0) = 0.5\,Q(2) + 0.5$ 이고 $Q(2) = 0.5\,Q(3) + 0.5\,Q(1) = 0.5\,Q(1)$ 이다.
+
+    $Q(2) = 0.5\,Q(1)$ 을 첫 식에 대입하면 다음과 같다.
+
+    $$
+    Q(1) = 0.5(0.5\,Q(1)) + 0.5 = 0.25\,Q(1) + 0.5
+    $$
+
+    $$
+    0.75\,Q(1) = 0.5 \implies Q(1) = \frac{2}{3}
+    $$
+
+    공식 $Q(i) = 1 - i/N = 1 - 1/3 = 2/3$ 과 들어맞는다.
+
+---
+
+**연습문제 6.** 길이가 $n$ 인 이진 문자열을 만드는데, 각 비트를 0과 1 가운데 같은 확률로 독립적으로 고른다. 이 문자열에 1이 두 번 잇달아 나오는 곳이 적어도 한 군데 있을 확률을 구하여라.
+
+??? success "연습문제 6 풀이"
+    $a_n$ 을 길이가 $n$ 이고 1이 잇달아 나오지 **않는** 이진 문자열의 개수라 하자. 첫 비트에 조건을 걸어 첫걸음 분석을 쓴다.
+
+    - 첫 비트가 0이면 나머지 $n - 1$ 비트는 조건을 만족하는 어떤 문자열이어도 되므로 $a_{n-1}$ 가지이다.
+    - 첫 비트가 1이면 (1이 잇달지 않도록) 둘째 비트는 0이어야 하고, 나머지 $n - 2$ 비트는 조건을 만족하는 어떤 문자열이어도 되므로 $a_{n-2}$ 가지이다.
+
+    이로부터 다음 점화식을 얻는다.
+
+    $$
+    a_n = a_{n-1} + a_{n-2}
+    $$
+
+    처음 값은 $a_1 = 2$ (문자열: 0, 1)와 $a_2 = 3$ (문자열: 00, 01, 10)이다. 이는 피보나치 수로서 $a_n = F_{n+2}$ 이다.
+
+    길이가 $n$ 인 이진 문자열은 모두 $2^n$ 개이므로 1이 잇달아 나오지 **않을** 확률은 $F_{n+2}/2^n$ 이고, 따라서 다음을 얻는다.
+
+    $$
+    P(1 \text{ 이 잇달아 나오는 곳이 적어도 하나}) = 1 - \frac{F_{n+2}}{2^n}
+    $$
+
+    **간단히 확인해 보기** ($n = 3$): 1이 잇달지 않는 문자열은 000, 001, 010, 100, 101이므로 $a_3 = 5 = F_5$ 이다. 따라서 $P = 1 - 5/8 = 3/8$ 이다.

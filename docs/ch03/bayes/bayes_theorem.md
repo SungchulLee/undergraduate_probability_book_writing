@@ -1,68 +1,98 @@
-# Bayes' Theorem and Prior–Posterior Updating
+# 베이즈 정리와 사전–사후 갱신
 
-## Bayes' Rule
+## 베이즈 법칙
 
-**Bayes' theorem** provides a way to "reverse" a conditional probability — computing $P(B \mid A)$ from $P(A \mid B)$:
+**베이즈 정리**는 조건부확률을 "뒤집는" 방법, 곧 $P(A \mid B)$ 로부터 $P(B \mid A)$ 를 구하는 방법을 알려 준다.
 
 $$
 P(B \mid A) = \frac{P(A \mid B)\,P(B)}{P(A)}
 $$
 
-### Derivation
+### 유도
 
-From the definition of conditional probability and the chain rule:
+조건부확률의 정의와 연쇄 법칙에서 다음을 얻는다.
 
 $$
 P(AB) = P(A)\,P(B \mid A) = P(B)\,P(A \mid B)
 $$
 
-Solving for $P(B \mid A)$:
+$P(B \mid A)$ 에 대해 풀면 다음과 같다.
 
 $$
 P(B \mid A) = \frac{P(B)\,P(A \mid B)}{P(A)}
 $$
 
-## Bayes' Rule with Total Probability
+## 전확률과 함께 쓰는 베이즈 법칙
 
-When the sample space is partitioned as $\Omega = \bigcup_{k=1}^{n} B_k$ (disjointly), Bayes' rule becomes:
+표본공간이 $\Omega = \bigcup_{k=1}^{n} B_k$ 로(서로소로) 분할되어 있으면 베이즈 법칙은 다음과 같이 된다.
 
 $$
 P(B_1 \mid A) = \frac{P(B_1)\,P(A \mid B_1)}{\displaystyle\sum_{k=1}^{n} P(B_k)\,P(A \mid B_k)}
 $$
 
-More generally, for any $B_j$ in the partition:
+더 일반적으로, 분할에 속한 임의의 $B_j$ 에 대해 다음이 성립한다.
 
 $$
 P(B_j \mid A) = \frac{P(B_j)\,P(A \mid B_j)}{\displaystyle\sum_{k=1}^{n} P(B_k)\,P(A \mid B_k)}
 $$
 
-## Prior–Posterior Interpretation
+## 사전–사후로 읽기
 
-Bayes' theorem is the foundation of **Bayesian inference**, which updates beliefs in light of evidence:
+베이즈 정리는 증거에 비추어 믿음을 고쳐 나가는 **베이즈 추론**의 바탕이다.
 
-| Term | Expression | Interpretation |
+| 이름 | 식 | 뜻 |
 |------|-----------|----------------|
-| **Prior** | $P(B_j)$ | Initial belief about $B_j$ before observing data |
-| **Likelihood** | $P(A \mid B_j)$ | How likely the observed data $A$ is under hypothesis $B_j$ |
-| **Evidence** (marginal likelihood) | $P(A) = \sum_k P(B_k)\,P(A \mid B_k)$ | Total probability of observing $A$ |
-| **Posterior** | $P(B_j \mid A)$ | Updated belief about $B_j$ after observing data $A$ |
+| **사전확률** | $P(B_j)$ | 자료를 보기 전에 $B_j$ 에 대해 가지고 있던 믿음 |
+| **가능도** | $P(A \mid B_j)$ | 가설 $B_j$ 아래에서 관측된 자료 $A$ 가 얼마나 그럴듯한가 |
+| **증거**(주변가능도) | $P(A) = \sum_k P(B_k)\,P(A \mid B_k)$ | $A$ 를 관측할 전확률 |
+| **사후확률** | $P(B_j \mid A)$ | 자료 $A$ 를 관측한 뒤에 고쳐 잡은 $B_j$ 에 대한 믿음 |
 
-The updating formula can be summarized as:
+갱신 공식은 다음과 같이 간추릴 수 있다.
 
 $$
-\text{Posterior} = \frac{\text{Likelihood} \times \text{Prior}}{\text{Evidence}}
+\text{사후확률} = \frac{\text{가능도} \times \text{사전확률}}{\text{증거}}
 $$
 
-## Odds Form of Bayes' Rule
+## 베이즈 법칙의 승산 꼴
 
-For two competing hypotheses $B_1$ and $B_2$, the **posterior odds** equal the **prior odds** times the **likelihood ratio** (also called the Bayes factor):
+서로 겨루는 두 가설 $B_1$ 과 $B_2$ 에 대해, **사후 승산**은 **사전 승산**에 **가능도비**(베이즈 인자라고도 한다)를 곱한 것과 같다.
 
 $$
 \frac{P(B_1 \mid A)}{P(B_2 \mid A)} = \frac{P(B_1)}{P(B_2)} \cdot \frac{P(A \mid B_1)}{P(A \mid B_2)}
 $$
 
 $$
-\text{Posterior odds} = \text{Prior odds} \times \text{Bayes factor}
+\text{사후 승산} = \text{사전 승산} \times \text{베이즈 인자}
 $$
 
-This form is useful because the normalizing constant $P(A)$ cancels out.
+정규화 상수 $P(A)$ 가 약분되어 사라지기 때문에 이 꼴이 쓸모 있다.
+
+## 연습문제
+
+**연습문제 1.** 어떤 공장에 기계 $M_1$, $M_2$, $M_3$ 이 있어 전체 생산량의 30%, 45%, 25%를 각각 만든다. 불량률은 $M_1$, $M_2$, $M_3$ 에 대해 각각 2%, 3%, 2%이다. 무작위로 고른 제품이 불량이라면 그것이 $M_2$ 에서 만들어졌을 확률은 얼마인가?
+
+??? success "연습문제 1 풀이"
+    $D$ 를 "불량"이라 하자. 전확률 법칙에 따라 다음을 얻는다.
+
+    $$
+    P(D) = 0.30 \cdot 0.02 + 0.45 \cdot 0.03 + 0.25 \cdot 0.02 = 0.006 + 0.0135 + 0.005 = 0.0245
+    $$
+
+    베이즈 정리에 따라 다음을 얻는다.
+
+    $$
+    P(M_2 \mid D) = \frac{P(D \mid M_2) P(M_2)}{P(D)} = \frac{0.0135}{0.0245} \approx 0.5510
+    $$
+
+---
+
+**연습문제 2.** 어떤 학생이 문항마다 선택지가 4개인 객관식 시험을 본다. 이 학생은 답을 알고 있거나(확률 $p$) 무작위로 찍는다. 학생이 정답을 맞혔다면 실제로 답을 알고 있었을 확률은 얼마인가? $p$ 로 나타내어라.
+
+??? success "연습문제 2 풀이"
+    $K$ = "답을 안다", $C$ = "정답을 맞힌다"라 하자. 그러면 $P(C \mid K) = 1$ 이고 $P(C \mid K^c) = 1/4$ 이다. 베이즈 정리에 따라 다음을 얻는다.
+
+    $$
+    P(K \mid C) = \frac{P(C \mid K) P(K)}{P(C \mid K) P(K) + P(C \mid K^c) P(K^c)} = \frac{p}{p + \tfrac{1}{4}(1 - p)} = \frac{4p}{3p + 1}
+    $$
+
+    예를 들어 $p = 0.5$ 이면 $P(K \mid C) = 2/2.5 = 0.8$ 이다.

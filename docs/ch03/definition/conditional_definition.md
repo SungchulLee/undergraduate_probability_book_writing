@@ -1,64 +1,64 @@
-# Conditional Probability Definition
+# 조건부확률의 정의
 
-## Definition
+## 정의
 
-The **conditional probability** of event $B$ given event $A$ is defined as
+사건 $A$ 가 주어졌을 때 사건 $B$ 의 **조건부확률**은 다음과 같이 정의한다.
 
 $$
 P(B \mid A) = \frac{P(AB)}{P(A)}, \quad P(A) > 0
 $$
 
-This measures the probability that $B$ occurs, given that we know $A$ has occurred. Here $P(AB) = P(A \cap B)$ denotes the probability of both $A$ and $B$ occurring.
+이는 $A$ 가 일어났음을 아는 상태에서 $B$ 가 일어날 확률을 재는 것이다. 여기서 $P(AB) = P(A \cap B)$ 는 $A$ 와 $B$ 가 모두 일어날 확률을 뜻한다.
 
-## Intuition
+## 직관
 
-Conditioning on $A$ effectively **restricts the sample space** from $\Omega$ to $A$. Within this reduced sample space, the conditional probability asks: what fraction of $A$ also belongs to $B$?
+$A$ 로 조건을 걸면 사실상 **표본공간이 $\Omega$ 에서 $A$ 로 좁아진다**. 이렇게 줄어든 표본공간 안에서 조건부확률은 다음을 묻는다. $A$ 가운데 $B$ 에도 속하는 부분은 얼마만큼인가?
 
-If we think of probability as a measure of the "size" of events, then $P(B \mid A)$ is the ratio of the size of $AB$ to the size of $A$.
+확률을 사건의 "크기"를 재는 것으로 본다면, $P(B \mid A)$ 는 $AB$ 의 크기와 $A$ 의 크기의 비이다.
 
-## Conditional Probability as a Probability Measure
+## 확률측도로서의 조건부확률
 
-A crucial fact is that $P(\cdot \mid B)$ is itself a valid probability measure. It satisfies all the axioms and properties that the usual probability measure $P(\cdot)$ satisfies. To convert any probability identity or inequality into its conditional version, you simply **add $\mid B$ before the closing parenthesis**.
+아주 중요한 사실은 $P(\cdot \mid B)$ 자체가 올바른 확률측도라는 것이다. 보통의 확률측도 $P(\cdot)$ 가 만족하는 공리와 성질을 모두 만족한다. 확률에 관한 어떤 항등식이나 부등식이든 조건부 버전으로 바꾸려면 **닫는 괄호 앞에 $\mid B$ 를 붙이기만 하면 된다**.
 
-Specifically, $P(\cdot \mid B)$ satisfies:
+구체적으로 $P(\cdot \mid B)$ 는 다음을 만족한다.
 
-**(1) Normalization:**
+**(1) 정규화:**
 
 $$
 P(\Omega \mid B) = 1, \quad P(\emptyset \mid B) = 0
 $$
 
-**(2) Bounded:**
+**(2) 유계성:**
 
 $$
-0 \le P(A \mid B) \le 1 \quad \text{for any event } A
+0 \le P(A \mid B) \le 1 \quad \text{임의의 사건 } A \text{ 에 대해}
 $$
 
-**(3) Countable additivity:**
+**(3) 가산가법성:**
 
 $$
-P\!\left(\bigcup_{i=1}^{\infty} A_i \;\middle|\; B\right) = \sum_{i=1}^{\infty} P(A_i \mid B) \quad \text{for disjoint } A_i
+P\!\left(\bigcup_{i=1}^{\infty} A_i \;\middle|\; B\right) = \sum_{i=1}^{\infty} P(A_i \mid B) \quad \text{서로소인 } A_i \text{ 에 대해}
 $$
 
-**(4) Finite additivity:**
+**(4) 유한가법성:**
 
 $$
-P\!\left(\bigcup_{i=1}^{n} A_i \;\middle|\; B\right) = \sum_{i=1}^{n} P(A_i \mid B) \quad \text{for disjoint } A_i
+P\!\left(\bigcup_{i=1}^{n} A_i \;\middle|\; B\right) = \sum_{i=1}^{n} P(A_i \mid B) \quad \text{서로소인 } A_i \text{ 에 대해}
 $$
 
-**(5) Monotonicity:**
+**(5) 단조성:**
 
 $$
-P(A_1 \mid B) \le P(A_2 \mid B) \quad \text{for } A_1 \subset A_2
+P(A_1 \mid B) \le P(A_2 \mid B) \quad A_1 \subset A_2 \text{ 일 때}
 $$
 
-**(6) Complement rule:**
+**(6) 여사건 법칙:**
 
 $$
 P(A^c \mid B) = 1 - P(A \mid B)
 $$
 
-**(7) Inclusion–exclusion (all forms):**
+**(7) 포함배제 (모든 형태):**
 
 $$
 P\!\left(\bigcup_{i=1}^{n} A_i \;\middle|\; B\right) \le \sum_{i=1}^{n} P(A_i \mid B)
@@ -72,39 +72,112 @@ $$
 P\!\left(\bigcup_{i=1}^{n} A_i \;\middle|\; B\right) = \sum_{i=1}^{n} P(A_i \mid B) - \sum_{1 \le i < j \le n} P(A_i A_j \mid B) + \cdots + (-1)^{n+1} P(A_1 A_2 \cdots A_n \mid B)
 $$
 
-## Example — Double Ace
+## 예제 — 에이스 두 장
 
-We choose two cards from an ordinary 52-card deck. Define:
+보통의 52장 카드 한 벌에서 카드 두 장을 고른다. 다음과 같이 정의하자.
 
-| Event | Description |
+| 사건 | 설명 |
 |-------|-------------|
-| $A$ | An ace is chosen (at least one ace among the two cards) |
-| $A_1$ | The spade ace is chosen |
-| $B$ | Both cards are aces |
+| $A$ | 에이스가 뽑힌다(두 장 가운데 적어도 한 장이 에이스) |
+| $A_1$ | 스페이드 에이스가 뽑힌다 |
+| $B$ | 두 장이 모두 에이스이다 |
 
-**Calculate $P(B \mid A_1)$ and $P(B \mid A)$.**
+**$P(B \mid A_1)$ 과 $P(B \mid A)$ 를 구하여라.**
 
-### Computing $P(B \mid A_1)$
+### P(B A₁) 구하기
 
-Suppose the spade ace is chosen. Then there are 51 cards remaining, and to have both cards be aces we must choose the diamond, heart, or club ace. So
+스페이드 에이스가 뽑혔다고 하자. 그러면 카드가 51장 남고, 두 장이 모두 에이스이려면 다이아몬드·하트·클로버 에이스 가운데 하나를 뽑아야 한다. 그러므로 다음을 얻는다.
 
 $$
 P(B \mid A_1) = \frac{3}{51} = 0.0588
 $$
 
-### Computing $P(B \mid A)$
+### P(B A) 구하기
 
-Since $B \subset A$ (both aces implies at least one ace), we have $P(AB) = P(B)$:
+$B \subset A$ 이므로(두 장이 모두 에이스이면 적어도 한 장이 에이스이다) $P(AB) = P(B)$ 이다.
 
 $$
 P(B \mid A) = \frac{P(AB)}{P(A)} = \frac{P(B)}{P(A)} = \frac{P(B)}{1 - P(A^c)}
 $$
 
-The probability that no ace is chosen is $P(A^c) = \binom{48}{2}/\binom{52}{2}$, and $P(B) = \binom{4}{2}/\binom{52}{2}$, so
+에이스가 하나도 뽑히지 않을 확률은 $P(A^c) = \binom{48}{2}/\binom{52}{2}$ 이고 $P(B) = \binom{4}{2}/\binom{52}{2}$ 이므로 다음을 얻는다.
 
 $$
 P(B \mid A) = \frac{\binom{4}{2}/\binom{52}{2}}{1 - \binom{48}{2}/\binom{52}{2}} = 0.0303
 $$
 
-!!! note "Observation"
-    Knowing a *specific* ace (the spade ace) was chosen gives a higher probability of both aces ($0.0588$) than merely knowing *some* ace was chosen ($0.0303$). This is because the event $A_1$ is more specific (and smaller) than $A$, concentrating the conditional probability on outcomes where a second ace is more likely.
+!!! note "관찰"
+    *특정한* 에이스(스페이드 에이스)가 뽑혔다는 것을 알 때 두 장 모두 에이스일 확률($0.0588$)이 단지 *어떤* 에이스가 뽑혔다는 것만 알 때의 확률($0.0303$)보다 크다. 사건 $A_1$ 이 $A$ 보다 더 구체적이고(따라서 더 작고) 두 번째 에이스가 나올 법한 결과 쪽으로 조건부확률을 몰아 주기 때문이다.
+
+## 연습문제
+
+**연습문제 1.** 상자에 빨간 공 5개와 파란 공 3개가 들어 있다. 공 두 개를 비복원으로 뽑는다. 첫 번째 공이 빨강일 때 두 번째 공도 빨강일 확률은 얼마인가?
+
+??? success "연습문제 1 풀이"
+    첫 번째 공이 빨강이면 공이 7개 남고 그 가운데 4개가 빨강이다. 그러므로 다음을 얻는다.
+
+    $$
+    P(R_2 \mid R_1) = \frac{4}{7} \approx 0.5714
+    $$
+
+---
+
+**연습문제 2.** 보통의 52장 카드 한 벌에서 카드 두 장을 고른다. $A$ = "적어도 한 장이 에이스", $A_1$ = "스페이드 에이스가 뽑힘", $B$ = "두 장이 모두 에이스"라 하자. $P(B \mid A_1) > P(B \mid A)$ 임을 확인하고 그 까닭을 직관적으로 설명하여라.
+
+??? success "연습문제 2 풀이"
+    앞 절에서 $P(B \mid A_1) = 3/51 \approx 0.0588$ 이고 $P(B \mid A) \approx 0.0303$ 이었다. $A_1 \subset A$ 이지만 $A_1$ 은 더 작고 더 구체적인 사건이므로, $A_1$ 로 조건을 걸면 두 번째 에이스가 나올 법한 결과 쪽으로 확률이 몰린다. 직관적으로 말하면, *어떤* 에이스가 뽑혔다는 것만 아는 것보다 *어느* 에이스가 뽑혔는지를 아는 편이 정보가 더 많다.
+
+---
+
+**연습문제 3.** 학생이 30명인 학급에서 적어도 두 학생의 생일이 같을 확률은 얼마인가? 정확한 값과 지수 근삿값을 모두 구하여라.
+
+??? success "연습문제 3 풀이"
+    정확한 값:
+
+    $$
+    P(\text{겹침}) = 1 - \prod_{k=0}^{29}\left(1 - \frac{k}{365}\right) \approx 0.7063
+    $$
+
+    지수 근사($n(n-1)/(2d) = 30 \cdot 29 / 730$ 을 쓴다):
+
+    $$
+    P(\text{겹침}) \approx 1 - e^{-30 \cdot 29 / 730} \approx 1 - e^{-1.1918} \approx 0.6964
+    $$
+
+    두 값은 1% 안팎으로 일치한다.
+
+---
+
+**연습문제 4.** 생일 문제를 일반화하여라. 학생이 $n$ 명인 학급에서 생일이 $d$ 일 가운데 아무 날에나 같은 정도로 떨어진다고 할 때, 적어도 한 쌍이 겹칠 확률이 50%를 넘는 가장 작은 $n$ 을 $d = 365$, $d = 100$, $d = 1000$ 각각에 대해 구하여라.
+
+??? success "연습문제 4 풀이"
+    $1 - \prod_{k=0}^{n-1}(1 - k/d) \geq 0.5$ 를 수치적으로 푼다(또는 지수 근사에서 얻은 $n \approx 1.1774\sqrt{d}$ 를 쓴다).
+
+    - $d = 365$: $n = 23$ ($n = 23$ 에서 $P \approx 0.5073$, $n = 22$ 에서 $P \approx 0.4757$).
+    - $d = 100$: $n = 12$ ($n = 12$ 에서 $P \approx 0.5001$).
+    - $d = 1000$: $n = 38$ ($n = 38$ 에서 $P \approx 0.5116$).
+
+---
+
+**연습문제 5.** 사건 $A$ 와 $B$ 에 대해 $P(A) = 0.6$, $P(B) = 0.4$, $P(A \mid B) = 0.5$ 라 하자. $P(B \mid A)$ 와 $P(A \cup B)$ 를 구하고 $A$ 와 $B$ 가 독립인지 판정하여라.
+
+??? success "연습문제 5 풀이"
+    $P(A \mid B) = P(A \cap B) / P(B)$ 에서 다음을 얻는다.
+
+    $$
+    P(A \cap B) = 0.5 \times 0.4 = 0.2
+    $$
+
+    그러면 다음과 같다.
+
+    $$
+    P(B \mid A) = \frac{P(A \cap B)}{P(A)} = \frac{0.2}{0.6} = \frac{1}{3}
+    $$
+
+    또한 다음을 얻는다.
+
+    $$
+    P(A \cup B) = 0.6 + 0.4 - 0.2 = 0.8
+    $$
+
+    독립이려면 $P(A \cap B) = P(A)P(B) = 0.24$ 이어야 한다. $0.2 \neq 0.24$ 이므로 $A$ 와 $B$ 는 독립이 **아니다**.

@@ -1,78 +1,112 @@
-# Independence of Two Events
+# 두 사건의 독립
 
-## Definition
+## 정의
 
-Events $A$ and $B$ are **independent** if
+두 사건 $A$ 와 $B$ 가 다음을 만족하면 **독립**이라고 한다.
 
 $$
 P(AB) = P(A)\,P(B)
 $$
 
-Equivalently (when $P(A) > 0$ and $P(B) > 0$):
+$P(A) > 0$ 이고 $P(B) > 0$ 일 때 이는 다음과 같다.
 
 $$
-P(B \mid A) = P(B) \quad \text{and} \quad P(A \mid B) = P(A)
+P(B \mid A) = P(B) \quad \text{그리고} \quad P(A \mid B) = P(A)
 $$
 
-Independence means that knowing $A$ occurred gives no information about whether $B$ occurs, and vice versa.
+독립이라는 것은 $A$ 가 일어났음을 알아도 $B$ 가 일어나는지에 대해 아무 정보도 얻지 못하고, 그 반대도 마찬가지라는 뜻이다.
 
-## Key Properties
+## 주요 성질
 
-**Complements:** If $A$ and $B$ are independent, then so are:
+**여사건:** $A$ 와 $B$ 가 독립이면 다음도 독립이다.
 
-- $A$ and $B^c$
-- $A^c$ and $B$
-- $A^c$ and $B^c$
+- $A$ 와 $B^c$
+- $A^c$ 와 $B$
+- $A^c$ 와 $B^c$
 
-**Proof for $A$ and $B^c$:**
+**$A$ 와 $B^c$ 에 대한 증명:**
 
 $$
 P(AB^c) = P(A) - P(AB) = P(A) - P(A)\,P(B) = P(A)\,(1 - P(B)) = P(A)\,P(B^c)
 $$
 
-## Independence vs. Disjointness
+## 독립과 배반의 차이
 
-Independence and disjointness are very different concepts:
+독립과 배반은 전혀 다른 개념이다.
 
-- **Disjoint events** ($A \cap B = \emptyset$) **cannot** be independent (unless one has probability 0), because $P(AB) = 0 \ne P(A)\,P(B)$ when both have positive probability.
-- **Independent events** with positive probabilities must have nonempty intersection.
+- **배반인 사건**($A \cap B = \emptyset$)은 독립일 수 **없다**(둘 가운데 하나의 확률이 0인 경우는 빼고). 둘 다 확률이 양수이면 $P(AB) = 0 \ne P(A)\,P(B)$ 이기 때문이다.
+- 확률이 양수인 **독립인 사건**은 교집합이 공집합이 아니어야 한다.
 
-Intuitively: if $A$ and $B$ are disjoint, then knowing $A$ occurred tells you $B$ did **not** occur — they are maximally dependent (negatively).
+직관적으로 보면, $A$ 와 $B$ 가 배반이면 $A$ 가 일어났다는 것을 아는 순간 $B$ 는 일어나지 **않았음**을 알게 된다. 곧 (음의 방향으로) 최대한 종속인 셈이다.
 
-## Computing Intersection and Union Probabilities
+## 교집합과 합집합의 확률 구하기
 
-### Intersection: $P\!\left(\bigcap_{i=1}^{n} A_i\right)$
+### 교집합: P(capᵢ=₁ⁿ Aᵢ)
 
-**Independent events:**
+**독립인 사건:**
 
 $$
 P(A_1 A_2 \cdots A_n) = P(A_1)\,P(A_2) \cdots P(A_n)
 $$
 
-**Dependent events (chain rule):**
+**종속인 사건 (연쇄 법칙):**
 
 $$
 P(A_1 A_2 \cdots A_n) = P(A_1)\,P(A_2 \mid A_1)\,P(A_3 \mid A_1 A_2) \cdots P(A_n \mid A_1 \cdots A_{n-1})
 $$
 
-### Union: $P\!\left(\bigcup_{i=1}^{n} A_i\right)$
+### 합집합: P(cupᵢ=₁ⁿ Aᵢ)
 
-**Disjoint events:**
+**배반인 사건:**
 
 $$
 P\!\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i)
 $$
 
-**Non-disjoint events (inclusion–exclusion):**
+**배반이 아닌 사건 (포함배제):**
 
 $$
 P\!\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i) - \sum_{1 \le i < j \le n} P(A_i A_j) + \cdots + (-1)^{n+1} P(A_1 A_2 \cdots A_n)
 $$
 
-**Complement method:**
+**여사건을 쓰는 방법:**
 
 $$
 P\!\left(\bigcup_{i=1}^{n} A_i\right) = 1 - P\!\left(\bigcap_{i=1}^{n} A_i^c\right)
 $$
 
-This is often the most efficient approach when the $A_i$ are independent, since then $P\!\left(\bigcap_{i=1}^{n} A_i^c\right) = \prod_{i=1}^{n} P(A_i^c)$.
+$A_i$ 가 독립일 때는 $P\!\left(\bigcap_{i=1}^{n} A_i^c\right) = \prod_{i=1}^{n} P(A_i^c)$ 이 되므로 이 방법이 대개 가장 효율적이다.
+
+## 연습문제
+
+**연습문제 1.** $A$ 와 $B$ 가 독립이고 $P(A) = 0.3$, $P(B) = 0.4$ 라 하자. $P(A \cup B)$, $P(A^c \cap B)$, $P(A^c \cup B^c)$ 를 구하여라.
+
+??? success "연습문제 1 풀이"
+    독립이므로 $P(A \cap B) = 0.3 \cdot 0.4 = 0.12$ 이다.
+
+    $$
+    P(A \cup B) = 0.3 + 0.4 - 0.12 = 0.58
+    $$
+
+    $$
+    P(A^c \cap B) = P(B) - P(A \cap B) = 0.4 - 0.12 = 0.28
+    $$
+
+    드 모르간 법칙에 따라 다음을 얻는다.
+
+    $$
+    P(A^c \cup B^c) = 1 - P(A \cap B) = 1 - 0.12 = 0.88
+    $$
+
+---
+
+**연습문제 2.** $A$ 와 $B$ 가 독립이면 $A$ 와 $B^c$ 도 독립임을 증명하여라.
+
+??? success "연습문제 2 풀이"
+    $A$ 를 서로소인 합집합 $A = (A \cap B) \cup (A \cap B^c)$ 로 쓰면 다음을 얻는다.
+
+    $$
+    P(A \cap B^c) = P(A) - P(A \cap B) = P(A) - P(A) P(B) = P(A)(1 - P(B)) = P(A) P(B^c)
+    $$
+
+    그러므로 $A$ 와 $B^c$ 는 곱으로 갈라지는 조건을 만족하고 따라서 독립이다. $\square$

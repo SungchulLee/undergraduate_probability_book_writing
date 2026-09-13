@@ -1,60 +1,62 @@
-# Linear Recurrence Solution ($q = 1/2$)
+# 선형 점화식 풀이 (q = 1/2)
 
-## Double Root Case
+## 중근인 경우
 
-When $p = q = 1/2$, the characteristic equation becomes:
+$p = q = 1/2$ 일 때 특성방정식은 다음과 같이 된다.
 
 $$
 \frac{1}{2}\lambda^2 - \lambda + \frac{1}{2} = 0 \implies (\lambda - 1)^2 = 0
 $$
 
-There is a **double root** $\lambda = 1$, yielding only one solution from the standard approach: $Q_1(i) = 1$.
+$\lambda = 1$ 이 **중근**이므로 표준적인 방법으로는 해가 하나밖에 나오지 않는다. 곧 $Q_1(i) = 1$ 이다.
 
-## Finding the Second Solution
+## 두 번째 해 찾기
 
-For a second-order recurrence with a double characteristic root $\lambda$, a second linearly independent solution is:
+특성근이 중근 $\lambda$ 인 2계 점화식에서 두 번째 일차독립인 해는 다음과 같다.
 
 $$
 Q_2(i) = i \cdot Q_1(i) = i
 $$
 
-One can verify directly: $Q_2(i) = i$ satisfies the recurrence $Q(i) = \frac{1}{2}Q(i+1) + \frac{1}{2}Q(i-1)$ since
+곧바로 확인할 수 있다. $Q_2(i) = i$ 는 점화식 $Q(i) = \frac{1}{2}Q(i+1) + \frac{1}{2}Q(i-1)$ 을 만족하는데,
 
 $$
 \frac{1}{2}(i+1) + \frac{1}{2}(i-1) = i \quad \checkmark
 $$
 
-## General Solution
+이기 때문이다.
+
+## 일반해
 
 $$
 Q(i) = \alpha + \beta\,i
 $$
 
-## Applying Boundary Conditions
+## 경계 조건 적용하기
 
-**From $Q(0) = 1$:**
+**$Q(0) = 1$ 에서:**
 
 $$
 \alpha = 1
 $$
 
-**From $Q(N) = 0$:**
+**$Q(N) = 0$ 에서:**
 
 $$
 1 + \beta\,N = 0 \implies \beta = -\frac{1}{N}
 $$
 
-## Solution
+## 해
 
 $$
 \boxed{Q(i) = 1 - \frac{i}{N} = \frac{N - i}{N}}
 $$
 
-## Interpretation
+## 뜻풀이
 
-In a fair game, the ruin probability decreases **linearly** with initial capital. Starting halfway to the goal ($i = N/2$) gives a ruin probability of exactly $1/2$.
+공정한 게임에서는 파산 확률이 처음 밑천에 따라 **선형으로** 줄어든다. 목표의 절반에서 시작하면($i = N/2$) 파산 확률이 정확히 $1/2$ 이다.
 
-| Initial Capital $i$ | $Q(i)$ |
+| 처음 밑천 $i$ | $Q(i)$ |
 |---------------------|---------|
 | $0$ | $1$ |
 | $N/4$ | $3/4$ |
@@ -62,13 +64,34 @@ In a fair game, the ruin probability decreases **linearly** with initial capital
 | $3N/4$ | $1/4$ |
 | $N$ | $0$ |
 
-## Comparison of the Two Cases
+## 두 경우 견주어 보기
 
-| Property | $q > 1/2$ (Unfair) | $q = 1/2$ (Fair) |
+| 성질 | $q > 1/2$ (불공정) | $q = 1/2$ (공정) |
 |----------|---------------------|-------------------|
-| Characteristic roots | $1$ and $q/p > 1$ | $1$ (double root) |
-| Solution | $\dfrac{(q/p)^N - (q/p)^i}{(q/p)^N - 1}$ | $\dfrac{N - i}{N}$ |
-| Convergence to 1 as $i \downarrow 0$ | Exponential | Linear |
-| $Q(N/2)$ for large $N$ | $\approx 1$ | $= 1/2$ |
+| 특성근 | $1$ 과 $q/p > 1$ | $1$ (중근) |
+| 해 | $\dfrac{(q/p)^N - (q/p)^i}{(q/p)^N - 1}$ | $\dfrac{N - i}{N}$ |
+| $i \downarrow 0$ 일 때 1로의 수렴 | 지수적 | 선형 |
+| $N$ 이 클 때의 $Q(N/2)$ | $\approx 1$ | $= 1/2$ |
 
-Even in a perfectly fair game, the gambler who starts with less than the goal has a significant probability of ruin. In the unfair case, ruin is nearly certain unless the gambler starts very close to the goal.
+완벽하게 공정한 게임에서조차 목표보다 적은 돈으로 시작한 도박꾼은 파산할 확률이 만만치 않다. 불공정한 경우에는 목표에 아주 가까이에서 시작하지 않는 한 파산이 거의 확실하다.
+
+## 연습문제
+
+**연습문제 1.** 공정한 게임인 경우($p = q = 1/2$), 처음 밑천 $i$ 와 목표 $N$ 에 대한 파산 확률이 $Q(i) = (N - i)/N$ 임을 보여라. 경계 조건 $Q(0) = 1$, $Q(N) = 0$ 아래에서 점화식 $Q(i) = \tfrac{1}{2} Q(i+1) + \tfrac{1}{2} Q(i-1)$ 로부터 유도하여라.
+
+??? success "연습문제 1 풀이"
+    점화식을 옮겨 쓰면 다음과 같다.
+
+    $$
+    Q(i+1) - Q(i) = Q(i) - Q(i-1)
+    $$
+
+    이웃한 차 $Q(i) - Q(i-1)$ 이 일정하다. 그 공통값을 $d$ 라 하자. 그러면 $Q(i) = Q(0) + i d = 1 + i d$ 이다.
+
+    경계 조건 $Q(N) = 0$ 을 적용하면 $1 + N d = 0$ 이므로 $d = -1/N$ 이다. 그러므로 다음을 얻는다.
+
+    $$
+    Q(i) = 1 - \frac{i}{N} = \frac{N - i}{N}
+    $$
+
+    $\square$

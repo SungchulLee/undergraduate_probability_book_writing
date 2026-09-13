@@ -1,64 +1,91 @@
-# Mutual Independence
+# 상호독립
 
-## Definition
+## 정의
 
-Events $A_1, A_2, \ldots, A_n$ are **(mutually) independent** if for **every** subcollection $A_{i_1}, A_{i_2}, \ldots, A_{i_m}$ (with $2 \le m \le n$):
+사건 $A_1, A_2, \ldots, A_n$ 이 **모든** 부분모임 $A_{i_1}, A_{i_2}, \ldots, A_{i_m}$ ($2 \le m \le n$)에 대해 다음을 만족하면 **(상호)독립**이라고 한다.
 
 $$
 P(A_{i_1} A_{i_2} \cdots A_{i_m}) = P(A_{i_1})\,P(A_{i_2}) \cdots P(A_{i_m})
 $$
 
-This requires the product rule to hold for **all** subsets of size 2, 3, ..., up to $n$. For $n$ events, there are $\binom{n}{2} + \binom{n}{3} + \cdots + \binom{n}{n} = 2^n - n - 1$ conditions to verify.
+크기가 2, 3, ..., $n$ 인 **모든** 부분집합에 대해 곱의 법칙이 성립해야 한다는 뜻이다. 사건이 $n$ 개면 확인해야 할 조건이 $\binom{n}{2} + \binom{n}{3} + \cdots + \binom{n}{n} = 2^n - n - 1$ 개나 된다.
 
-## Pairwise Independence
+## 쌍마다 독립
 
-Events $A_1, A_2, \ldots, A_n$ are **pairwise independent** if for **every pair** $A_i, A_j$ (with $i \ne j$):
+사건 $A_1, A_2, \ldots, A_n$ 이 **모든 쌍** $A_i, A_j$ ($i \ne j$)에 대해 다음을 만족하면 **쌍마다 독립**이라고 한다.
 
 $$
 P(A_i A_j) = P(A_i)\,P(A_j)
 $$
 
-This only requires $\binom{n}{2}$ conditions — the product rule for every pair.
+이때 확인할 조건은 $\binom{n}{2}$ 개, 곧 쌍마다의 곱의 법칙뿐이다.
 
-## Mutual Independence Implies Pairwise Independence
+## 상호독립이면 쌍마다 독립이다
 
-Mutual independence implies pairwise independence (take $m = 2$ in the definition). However, the converse is **false**: pairwise independence does **not** imply mutual independence.
+상호독립이면 쌍마다 독립이다(정의에서 $m = 2$ 로 두면 된다). 그러나 그 역은 **거짓**이다. 쌍마다 독립이라고 해서 상호독립인 것은 **아니다**.
 
-## Example — Pairwise Independent but Not Independent
+## 예제 — 쌍마다 독립이지만 독립은 아닌 경우
 
-Consider $n$ people in a class, each choosing a birthday independently and uniformly over 365 days. For each pair $i$ and $j$, let $A_{ij}$ be the event that persons $i$ and $j$ share the same birthday.
+학급에 $n$ 명이 있고 저마다 365일 가운데 하나를 독립적이고 균등하게 생일로 고른다고 하자. 각 쌍 $i$ 와 $j$ 에 대해 $A_{ij}$ 를 $i$ 번째 사람과 $j$ 번째 사람의 생일이 같은 사건이라 하자.
 
-### $A_{ij}$ Are Not Independent
+### Aᵢⱼ 는 독립이 아니다
 
-Consider persons 1, 2, and 3. If we know $A_{12}$ (persons 1 and 2 share a birthday) and $A_{13}$ (persons 1 and 3 share a birthday), then persons 2 and 3 must also share that same birthday:
+1번, 2번, 3번 사람을 생각하자. $A_{12}$ (1번과 2번의 생일이 같다)와 $A_{13}$ (1번과 3번의 생일이 같다)을 알고 있다면 2번과 3번도 반드시 그 같은 날에 생일이 있어야 한다.
 
 $$
 P(A_{23} \mid A_{12}, A_{13}) = 1 \ne P(A_{23}) = \frac{1}{365}
 $$
 
-Knowing $A_{12}$ and $A_{13}$ gives complete information about $A_{23}$, so these events are not mutually independent.
+$A_{12}$ 와 $A_{13}$ 을 알면 $A_{23}$ 에 대한 정보를 완전히 얻게 되므로 이 사건들은 상호독립이 아니다.
 
-### $A_{ij}$ Are Pairwise Independent
+### Aᵢⱼ 는 쌍마다 독립이다
 
-For any two events $A_{12}$ and $A_{13}$:
+두 사건 $A_{12}$ 와 $A_{13}$ 을 보자.
 
 $$
 P(A_{13} \mid A_{12}) = \frac{P(A_{12} \cap A_{13})}{P(A_{12})}
 $$
 
-The event $A_{12} \cap A_{13}$ means all three of persons 1, 2, 3 share the same birthday. Person 1 picks any day ($365/365$), person 2 matches ($1/365$), person 3 matches ($1/365$):
+사건 $A_{12} \cap A_{13}$ 은 1번, 2번, 3번 세 사람의 생일이 모두 같다는 뜻이다. 1번은 아무 날이나 고르고($365/365$), 2번이 거기에 맞고($1/365$), 3번도 거기에 맞아야 한다($1/365$).
 
 $$
 P(A_{12} \cap A_{13}) = \frac{1}{365^2}
 $$
 
-Therefore:
+그러므로 다음을 얻는다.
 
 $$
 P(A_{13} \mid A_{12}) = \frac{1/365^2}{1/365} = \frac{1}{365} = P(A_{13})
 $$
 
-So $A_{12}$ and $A_{13}$ are independent. The same argument applies to any pair $A_{ij}$ and $A_{kl}$ that share exactly one index, and to pairs that share no index at all. Hence the events are pairwise independent.
+따라서 $A_{12}$ 와 $A_{13}$ 은 독립이다. 첨자를 정확히 하나만 공유하는 어떤 쌍 $A_{ij}$ 와 $A_{kl}$ 에 대해서도, 그리고 첨자를 전혀 공유하지 않는 쌍에 대해서도 같은 논증이 통한다. 그러므로 이 사건들은 쌍마다 독립이다.
 
-!!! note "Why the Distinction Matters"
-    The gap between pairwise and mutual independence has important consequences. For example, the variance of a sum $\text{Var}(X_1 + \cdots + X_n)$ equals $\sum \text{Var}(X_i)$ under pairwise independence (pairwise uncorrelatedness suffices), but the MGF of a sum factors only under mutual independence. Many probabilistic arguments require the stronger condition.
+!!! note "이 구별이 왜 중요한가"
+    쌍마다 독립과 상호독립 사이의 틈은 중요한 결과를 낳는다. 예를 들어 합의 분산 $\text{Var}(X_1 + \cdots + X_n)$ 은 쌍마다 독립이기만 하면(사실 쌍마다 무상관이기만 해도) $\sum \text{Var}(X_i)$ 가 되지만, 합의 적률생성함수가 곱으로 갈라지려면 상호독립이어야 한다. 확률에서 쓰는 여러 논증은 이 더 강한 조건을 필요로 한다.
+
+## 연습문제
+
+**연습문제 1.** 공정한 주사위를 한 번 굴린다. $A$ = "나온 수가 짝수", $B$ = "나온 수가 4보다 작음", $C$ = "나온 수가 1 또는 2"라 하자. 어느 쌍이 독립인지 판정하여라. $A$, $B$, $C$ 는 상호독립인가?
+
+??? success "연습문제 1 풀이"
+    $A = \{2, 4, 6\}$, $B = \{1, 2, 3\}$, $C = \{1, 2\}$ 이고 결과마다 확률은 $1/6$ 이다.
+
+    - $P(A) = 1/2$, $P(B) = 1/2$, $P(C) = 1/3$.
+    - $A \cap B = \{2\}$ 이므로 $P(AB) = 1/6 = P(A)P(B)$: **독립**이다.
+    - $A \cap C = \{2\}$ 이므로 $P(AC) = 1/6$ 이고 $P(A)P(C) = 1/6$: **독립**이다.
+    - $B \cap C = \{1, 2\}$ 이므로 $P(BC) = 1/3$ 이고 $P(B)P(C) = 1/6$: **독립이 아니다**.
+
+    상호독립이려면 $P(A \cap B \cap C) = P(A)P(B)P(C)$ 도 성립해야 한다. $A \cap B \cap C = \{2\}$ 이므로 좌변은 $1/6$ 인데 $P(A)P(B)P(C) = 1/12$ 이다. 그러므로 세 사건은 **상호독립이 아니다**(게다가 $B, C$ 에서 이미 쌍마다 독립도 깨진다).
+
+---
+
+**연습문제 2.** 쌍마다 독립이지만 상호독립은 아닌 세 사건 $A$, $B$, $C$ 의 예를 들어라. 모든 조건을 하나하나 확인하여라.
+
+??? success "연습문제 2 풀이"
+    공정한 동전 두 개를 던진다. $A$ = "첫 번째 동전이 앞면", $B$ = "두 번째 동전이 앞면", $C$ = "두 동전이 같은 면"이라 하자. 그러면 $P(A) = P(B) = P(C) = 1/2$ 이다.
+
+    - $A \cap B = \{HH\}$ 이므로 $P(AB) = 1/4 = P(A)P(B)$. $\checkmark$
+    - $A \cap C = \{HH\}$ 이므로 $P(AC) = 1/4 = P(A)P(C)$. $\checkmark$
+    - $B \cap C = \{HH\}$ 이므로 $P(BC) = 1/4 = P(B)P(C)$. $\checkmark$
+
+    그러므로 이 사건들은 쌍마다 독립이다. 그런데 $A \cap B \cap C = \{HH\}$ 이므로 $P(ABC) = 1/4$ 인데 $P(A)P(B)P(C) = 1/8$ 이다. 따라서 **상호독립은 아니다**.

@@ -1,56 +1,56 @@
-# Linear Recurrence Solution ($q > 1/2$)
+# 선형 점화식 풀이 (q > 1/2)
 
-## Two Distinct Characteristic Roots
+## 서로 다른 두 특성근
 
-When $p \ne q$ (i.e., $p \ne 1/2$), the characteristic equation $p\lambda^2 - \lambda + q = 0$ has two distinct roots:
+$p \ne q$ 일 때(곧 $p \ne 1/2$ 일 때) 특성방정식 $p\lambda^2 - \lambda + q = 0$ 은 서로 다른 두 근을 가진다.
 
 $$
 \lambda_1 = 1, \qquad \lambda_2 = \frac{q}{p}
 $$
 
-The two corresponding linearly independent solutions are:
+이에 대응하는 일차독립인 두 해는 다음과 같다.
 
 $$
 Q_1(i) = 1, \qquad Q_2(i) = \left(\frac{q}{p}\right)^i
 $$
 
-## General Solution
+## 일반해
 
-The general solution is:
+일반해는 다음과 같다.
 
 $$
 Q(i) = \alpha + \beta \left(\frac{q}{p}\right)^i
 $$
 
-## Applying Boundary Conditions
+## 경계 조건 적용하기
 
-**From $Q(0) = 1$:**
+**$Q(0) = 1$ 에서:**
 
 $$
 \alpha + \beta = 1
 $$
 
-**From $Q(N) = 0$:**
+**$Q(N) = 0$ 에서:**
 
 $$
 \alpha + \beta \left(\frac{q}{p}\right)^N = 0
 $$
 
-Solving this system:
+이 연립방정식을 풀면 다음을 얻는다.
 
 $$
 \alpha = \frac{(q/p)^N}{(q/p)^N - 1}, \qquad \beta = \frac{-1}{(q/p)^N - 1}
 $$
 
-## Solution
+## 해
 
 $$
 \boxed{Q(i) = \frac{(q/p)^N - (q/p)^i}{(q/p)^N - 1}}
 $$
 
-## Why Gambler's Ruin?
+## 왜 도박꾼의 파산인가
 
-Since $q/p > 1$, we have $(q/p)^N \gg 1$ for large $N$, so:
+$q/p > 1$ 이므로 $N$ 이 크면 $(q/p)^N \gg 1$ 이고, 따라서 다음과 같다.
 
 $$
 Q(i) \approx \frac{(q/p)^N - (q/p)^i}{(q/p)^N} = 1 - \left(\frac{q}{p}\right)^{i - N} = 1 - \left(\frac{q}{p}\right)^{-(N - i)}
@@ -60,23 +60,23 @@ $$
 = 1 - e^{-(N-i)\ln(q/p)}
 $$
 
-Since $q/p > 1$, we have $\ln(q/p) > 0$, and as $i$ decreases from $N$ (i.e., the gambler loses money):
+$q/p > 1$ 이므로 $\ln(q/p) > 0$ 이고, $i$ 가 $N$ 에서 줄어들면(곧 도박꾼이 돈을 잃으면) 다음과 같이 된다.
 
 $$
-e^{-(N-i)\ln(q/p)} \to 0 \quad \text{exponentially fast}
+e^{-(N-i)\ln(q/p)} \to 0 \quad \text{지수적으로 빠르게}
 $$
 
 $$
-Q(i) \to 1 \quad \text{exponentially fast}
+Q(i) \to 1 \quad \text{지수적으로 빠르게}
 $$
 
-Even a slight disadvantage ($p = 0.49$) leads to near-certain ruin. The exponential convergence means that losing even a small amount of capital dramatically increases the ruin probability.
+아주 조금만 불리해도($p = 0.49$) 파산은 거의 확실해진다. 지수적으로 수렴한다는 것은 밑천을 조금만 잃어도 파산 확률이 극적으로 치솟는다는 뜻이다.
 
-## Numerical Example
+## 수치 예
 
-With $p = 0.49$, $q = 0.51$, and $N = 200$:
+$p = 0.49$, $q = 0.51$, $N = 200$ 일 때는 다음과 같다.
 
-| Initial Capital $i$ | $Q(i)$ |
+| 처음 밑천 $i$ | $Q(i)$ |
 |---------------------|---------|
 | 200 | 0.0000 |
 | 190 | 0.3309 |
@@ -84,4 +84,29 @@ With $p = 0.49$, $q = 0.51$, and $N = 200$:
 | 100 | 0.9998 |
 | 50 | $\approx 1$ |
 
-Even starting with \$100 out of a \$200 goal (halfway there), the ruin probability exceeds 99.98%.
+목표 \$200 가운데 절반인 \$100으로 시작하더라도 파산 확률이 99.98%를 넘는다.
+
+## 연습문제
+
+**연습문제 1.** $p < 1/2$ 인 도박꾼의 파산 문제에서, 처음 밑천 $i$ 가 $N$ 에서 줄어들 때 파산 확률이 왜 지수적으로 빠르게 1에 다가가는지 설명하여라. 지수적 수렴의 비율은 얼마인가?
+
+??? success "연습문제 1 풀이"
+    $p < 1/2$ 이면 $r := q/p > 1$ 이다. 파산 공식
+
+    $$
+    Q(i) = \frac{r^N - r^i}{r^N - 1}
+    $$
+
+    을 다음과 같이 고쳐 쓸 수 있다.
+
+    $$
+    1 - Q(i) = \frac{r^i - 1}{r^N - 1} = \frac{r^i(1 - r^{-i})}{r^N - 1}
+    $$
+
+    $i$ 가 $N$ 에서 멀면($r^i \ll r^N$) $1 - Q(i) \approx r^{i - N}$ 이므로 다음과 같다.
+
+    $$
+    1 - Q(i) \sim r^{-(N - i)} = e^{-(N-i) \ln r}
+    $$
+
+    그러므로 살아남을 확률 $1 - Q(i)$ 는 $N - i$ 에 대해 비율 $\ln r = \ln(q/p)$ 로 지수적으로 줄어든다. 같은 말로, $i$ 가 $N$ 에서 줄어들 때 $Q(i) \to 1$ 이 지수적으로 빠르게 일어나며, 잃은 밑천 한 단위마다 비율이 $\ln(q/p)$ 이다.

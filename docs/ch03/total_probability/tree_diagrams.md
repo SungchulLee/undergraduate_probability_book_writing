@@ -1,109 +1,109 @@
-# Tree Diagrams
+# 나무 그림
 
-## Overview
+## 개요
 
-A **tree diagram** is a visual tool for organizing and computing probabilities involving sequential events. Each branch represents a possible outcome at a stage, and the probability of a complete path is the product of the probabilities along its branches (by the chain rule).
+**나무 그림**은 차례로 일어나는 사건이 얽힌 확률을 정리하고 계산하는 데 쓰는 그림 도구이다. 가지 하나하나가 어떤 단계에서 일어날 수 있는 결과를 나타내고, 한 경로 전체의 확률은 (연쇄 법칙에 따라) 그 경로를 이루는 가지들의 확률을 모두 곱한 값이다.
 
-## Structure of a Tree Diagram
+## 나무 그림의 짜임새
 
-A tree diagram has the following components:
+나무 그림은 다음과 같은 부분으로 이루어진다.
 
-- **Root node:** The starting point representing the initial state.
-- **Branches:** Each branch from a node represents one possible outcome at that stage, labeled with its (conditional) probability.
-- **Leaf nodes:** The endpoints representing complete outcomes.
-- **Path probability:** The probability of reaching a leaf is the product of all branch probabilities along the path from root to leaf.
+- **뿌리 마디:** 처음 상태를 나타내는 출발점이다.
+- **가지:** 어떤 마디에서 뻗어 나온 가지 하나하나는 그 단계에서 일어날 수 있는 결과 하나를 나타내며, 그 (조건부) 확률이 적힌다.
+- **잎 마디:** 완결된 결과를 나타내는 끝점이다.
+- **경로 확률:** 어떤 잎에 이를 확률은 뿌리에서 그 잎까지 가는 경로에 놓인 모든 가지의 확률을 곱한 값이다.
 
-## Connection to the Chain Rule
+## 연쇄 법칙과의 관계
 
-For a two-stage experiment with first outcome $A_i$ and second outcome $B_j$:
+첫 번째 결과가 $A_i$ 이고 두 번째 결과가 $B_j$ 인 두 단계 실험에서는 다음이 성립한다.
 
 $$
 P(A_i \cap B_j) = P(A_i) \cdot P(B_j \mid A_i)
 $$
 
-The first-level branches carry $P(A_i)$, and the second-level branches carry $P(B_j \mid A_i)$.
+첫째 층의 가지에는 $P(A_i)$ 가, 둘째 층의 가지에는 $P(B_j \mid A_i)$ 가 붙는다.
 
-## Connection to Total Probability
+## 전확률과의 관계
 
-The total probability of an event $B_j$ is obtained by **summing over all paths** that lead to $B_j$:
+사건 $B_j$ 의 전확률은 $B_j$ 에 이르는 **모든 경로를 더해** 얻는다.
 
 $$
 P(B_j) = \sum_{i} P(A_i)\,P(B_j \mid A_i)
 $$
 
-This is precisely the law of total probability, visualized as collecting all leaf nodes corresponding to $B_j$.
+이것이 바로 전확률 법칙이며, $B_j$ 에 해당하는 잎 마디를 모두 그러모으는 그림으로 나타난다.
 
-## Example — Dependent Events (Drawing Without Replacement)
+## 예제 — 종속인 사건 (비복원으로 뽑기)
 
-A bag contains 2 green marbles and 1 purple marble. Draw two marbles without replacement.
+주머니에 초록 구슬 2개와 보라 구슬 1개가 들어 있다. 구슬 두 개를 비복원으로 뽑는다.
 
-**Tree structure:**
+**나무의 짜임새:**
 
-- **First draw:** $P(\text{Green}) = 2/3$, $\;P(\text{Purple}) = 1/3$
-- **Second draw (given first was Green):** $P(\text{Green}) = 1/2$, $\;P(\text{Purple}) = 1/2$
-- **Second draw (given first was Purple):** $P(\text{Green}) = 2/2 = 1$, $\;P(\text{Purple}) = 0$
+- **첫 번째 뽑기:** $P(\text{초록}) = 2/3$, $\;P(\text{보라}) = 1/3$
+- **두 번째 뽑기(첫 번째가 초록이었을 때):** $P(\text{초록}) = 1/2$, $\;P(\text{보라}) = 1/2$
+- **두 번째 뽑기(첫 번째가 보라였을 때):** $P(\text{초록}) = 2/2 = 1$, $\;P(\text{보라}) = 0$
 
-**Path probabilities:**
+**경로 확률:**
 
-| Path | Probability |
+| 경로 | 확률 |
 |------|-------------|
-| Green, Green | $(2/3)(1/2) = 1/3$ |
-| Green, Purple | $(2/3)(1/2) = 1/3$ |
-| Purple, Green | $(1/3)(1) = 1/3$ |
+| 초록, 초록 | $(2/3)(1/2) = 1/3$ |
+| 초록, 보라 | $(2/3)(1/2) = 1/3$ |
+| 보라, 초록 | $(1/3)(1) = 1/3$ |
 
-The probability of getting a green marble on the second draw **depends** on the first draw — this is a dependent experiment.
+두 번째 뽑기에서 초록 구슬이 나올 확률은 첫 번째 뽑기에 **달려 있다**. 종속인 실험이다.
 
-## Example — Independent Events (Drawing With Replacement)
+## 예제 — 독립인 사건 (복원으로 뽑기)
 
-Same bag (2 green, 1 purple), but now replace the first marble before drawing the second.
+같은 주머니(초록 2개, 보라 1개)이지만, 이번에는 첫 번째 구슬을 되돌려 놓은 뒤 두 번째를 뽑는다.
 
-**Tree structure:**
+**나무의 짜임새:**
 
-- **First draw:** $P(\text{Green}) = 2/3$, $\;P(\text{Purple}) = 1/3$
-- **Second draw (regardless of first):** $P(\text{Green}) = 2/3$, $\;P(\text{Purple}) = 1/3$
+- **첫 번째 뽑기:** $P(\text{초록}) = 2/3$, $\;P(\text{보라}) = 1/3$
+- **두 번째 뽑기(첫 번째와 무관하게):** $P(\text{초록}) = 2/3$, $\;P(\text{보라}) = 1/3$
 
-**Path probabilities:**
+**경로 확률:**
 
-| Path | Probability |
+| 경로 | 확률 |
 |------|-------------|
-| Green, Green | $(2/3)(2/3) = 4/9$ |
-| Green, Purple | $(2/3)(1/3) = 2/9$ |
-| Purple, Green | $(1/3)(2/3) = 2/9$ |
-| Purple, Purple | $(1/3)(1/3) = 1/9$ |
+| 초록, 초록 | $(2/3)(2/3) = 4/9$ |
+| 초록, 보라 | $(2/3)(1/3) = 2/9$ |
+| 보라, 초록 | $(1/3)(2/3) = 2/9$ |
+| 보라, 보라 | $(1/3)(1/3) = 1/9$ |
 
-The probability of getting a green marble on the second draw does **not** depend on the first draw — the draws are independent.
+두 번째 뽑기에서 초록 구슬이 나올 확률은 첫 번째 뽑기에 달려 있지 **않다**. 두 뽑기는 독립이다.
 
-## Example — False Positive (Medical Testing)
+## 예제 — 거짓 양성 (질병 검사)
 
-A blood test is 95% effective in detecting a certain disease when present. The test yields a false positive for 1% of healthy persons. If 0.01% of the population has the disease, what is $P(D \mid d)$?
+어떤 혈액 검사는 병이 있는 사람을 95% 확률로 찾아낸다. 건강한 사람 가운데 1%에게는 거짓 양성이 나온다. 인구의 0.01%가 그 병을 앓고 있다면 $P(D \mid d)$ 는 얼마인가?
 
-### Events
+### 사건
 
-| Event | Description |
+| 사건 | 설명 |
 |-------|-------------|
-| $H$ | Person is healthy |
-| $D$ | Person has the disease |
-| $h$ | Test reports healthy |
-| $d$ | Test reports disease (positive) |
+| $H$ | 건강하다 |
+| $D$ | 병이 있다 |
+| $h$ | 검사 결과가 건강으로 나온다 |
+| $d$ | 검사 결과가 병으로 나온다(양성) |
 
-### Given Information
+### 주어진 정보
 
-| Probability | Value | Meaning |
+| 확률 | 값 | 뜻 |
 |-------------|-------|---------|
-| $P(d \mid D)$ | $0.95$ | Test sensitivity (true positive rate) |
-| $P(h \mid D)$ | $0.05$ | False negative rate |
-| $P(d \mid H)$ | $0.01$ | False positive rate |
-| $P(h \mid H)$ | $0.99$ | True negative rate |
-| $P(D)$ | $0.0001$ | Disease prevalence |
-| $P(H)$ | $0.9999$ | Proportion healthy |
+| $P(d \mid D)$ | $0.95$ | 검사의 민감도(참 양성률) |
+| $P(h \mid D)$ | $0.05$ | 거짓 음성률 |
+| $P(d \mid H)$ | $0.01$ | 거짓 양성률 |
+| $P(h \mid H)$ | $0.99$ | 참 음성률 |
+| $P(D)$ | $0.0001$ | 병의 유병률 |
+| $P(H)$ | $0.9999$ | 건강한 사람의 비율 |
 
-### Tree Diagram Computation
+### 나무 그림으로 계산하기
 
-**Level 1 (Health status):** Branch into $D$ and $H$ with probabilities $0.0001$ and $0.9999$.
+**1층 (건강 상태):** 확률 $0.0001$ 과 $0.9999$ 로 $D$ 와 $H$ 로 갈라진다.
 
-**Level 2 (Test result):** From each health status, branch into $d$ and $h$.
+**2층 (검사 결과):** 각 건강 상태에서 $d$ 와 $h$ 로 갈라진다.
 
-**Paths leading to positive test result $d$:**
+**양성 결과 $d$ 에 이르는 경로:**
 
 $$
 P(D \cap d) = P(D)\,P(d \mid D) = (0.0001)(0.95) = 0.000095
@@ -113,11 +113,54 @@ $$
 P(H \cap d) = P(H)\,P(d \mid H) = (0.9999)(0.01) = 0.009999
 $$
 
-### Applying Bayes' Rule with Total Probability
+### 전확률과 함께 베이즈 법칙 적용하기
 
 $$
 P(D \mid d) = \frac{P(D)\,P(d \mid D)}{P(D)\,P(d \mid D) + P(H)\,P(d \mid H)} = \frac{(0.0001)(0.95)}{(0.0001)(0.95) + (0.9999)(0.01)} = 0.0094
 $$
 
-!!! warning "Surprising Result"
-    Even with a 95% accurate test, a positive result only means a **0.94% chance** of actually having the disease. The overwhelming number of healthy people (99.99% of the population) generates far more false positives than the tiny number of sick people generates true positives. This is why rare-disease screening often requires confirmatory testing.
+!!! warning "뜻밖의 결과"
+    정확도가 95%인 검사라 하더라도 양성이 나왔을 때 실제로 병이 있을 가능성은 **0.94%**밖에 되지 않는다. 건강한 사람이 압도적으로 많기 때문에(인구의 99.99%) 이들에게서 나오는 거짓 양성이, 병을 앓는 아주 적은 사람들에게서 나오는 참 양성보다 훨씬 많아지는 것이다. 드문 병을 선별 검사할 때 확진 검사를 다시 하는 까닭이 여기에 있다.
+
+## 연습문제
+
+**연습문제 1.** 위의 거짓 양성 질병 검사 예제에 대해 나무 그림을 빠짐없이 그려라. 모든 가지에 확률을, 모든 잎에 결합확률을 적어라. 잎의 확률을 모두 더하면 1이 됨을 확인하여라.
+
+??? success "연습문제 1 풀이"
+    나무는 두 층으로 되어 있다. 먼저 질병 상태($D$ 또는 $H$), 그다음 검사 결과($+$ 또는 $-$)이다. 가지와 잎의 확률은 다음과 같다.
+
+    | 질병 가지 | 검사 가지 | 결합 잎 |
+    |---|---|---|
+    | $P(D) = 0.0001$ | $P(+\mid D) = 0.95$ | $P(D, +) = 0.000095$ |
+    | $P(D) = 0.0001$ | $P(-\mid D) = 0.05$ | $P(D, -) = 0.000005$ |
+    | $P(H) = 0.9999$ | $P(+\mid H) = 0.01$ | $P(H, +) = 0.009999$ |
+    | $P(H) = 0.9999$ | $P(-\mid H) = 0.99$ | $P(H, -) = 0.989901$ |
+
+    잎의 합: $0.000095 + 0.000005 + 0.009999 + 0.989901 = 1.000000$. $\checkmark$
+
+    양성 검사 쪽을 더하면 $P(+) = 0.010094$ 이고, 베이즈 법칙에 따라 $P(D \mid +) = 0.000095 / 0.010094 \approx 0.0094$ 를 얻는다.
+
+---
+
+**연습문제 2.** 공정한 동전을 되풀이해서 던진다. 이어진 두 번의 던지기에서 **HT** 또는 **TT** 가운데 하나가 나타나는 순간 멈춘다. TT보다 HT가 먼저 나올 확률은 얼마인가?
+
+??? success "연습문제 2 풀이"
+    가장 최근에 나온 면으로 상태를 정하자. 마지막이 H였을 때 TT보다 HT가 먼저 나올 확률을 $P_H$, 마지막이 T였을 때의 같은 확률을 $P_T$ 라 하자.
+
+    **상태 H에서**(마지막이 앞면): 다음이 T면 HT가 완성되어 성공이고, H면 그대로 상태 H에 머문다. H가 나올 때마다 같은 상태로 돌아올 뿐이므로, 언젠가 처음 나오는 T가 TT보다 먼저 HT를 완성한다. 그러므로 다음을 얻는다.
+
+    $$
+    P_H = 1
+    $$
+
+    **상태 T에서**(마지막이 뒷면): 다음이 T면 TT가 완성되어 실패이고(HT가 이길 확률은 0), H면 상태 H로 옮겨 간다. 그러므로 다음을 얻는다.
+
+    $$
+    P_T = \tfrac{1}{2} \cdot 0 + \tfrac{1}{2} \cdot P_H = \tfrac{1}{2}
+    $$
+
+    **처음 시작할 때**(아직 아무것도 던지지 않았을 때): 첫 번째가 H이거나 T일 확률이 같으므로 다음을 얻는다.
+
+    $$
+    P = \tfrac{1}{2}\,P_H + \tfrac{1}{2}\,P_T = \tfrac{1}{2}(1) + \tfrac{1}{2}\!\left(\tfrac{1}{2}\right) = \frac{3}{4}
+    $$

@@ -1,47 +1,47 @@
-# Simpson's Paradox
+# 심프슨의 역설
 
-## Definition
+## 정의
 
-**Simpson's paradox** occurs when a trend that appears in each of several groups of data **reverses** when the groups are combined. The aggregate data shows the opposite conclusion from the stratified data.
+**심프슨의 역설**이란 여러 집단마다 나타나던 경향이 집단을 합치는 순간 **뒤집히는** 현상을 말한다. 합쳐 놓은 자료가 나누어 본 자료와 정반대의 결론을 보여 준다.
 
-## Example — Good Doctor vs. Bad Doctor
+## 예제 — 좋은 의사와 나쁜 의사
 
-| Doctor A | Successes | Fails | Success Rate |
+| 의사 A | 성공 | 실패 | 성공률 |
 |----------|-----------|-------|-------------|
-| Easy operation | 10 | 0 | **100%** |
-| Hard operation | 75 | 15 | **83%** |
-| **Total** | **85** | **15** | **85%** |
+| 쉬운 수술 | 10 | 0 | **100%** |
+| 어려운 수술 | 75 | 15 | **83%** |
+| **합계** | **85** | **15** | **85%** |
 
-| Doctor B | Successes | Fails | Success Rate |
+| 의사 B | 성공 | 실패 | 성공률 |
 |----------|-----------|-------|-------------|
-| Easy operation | 85 | 5 | 94% |
-| Hard operation | 1 | 9 | 10% |
-| **Total** | **86** | **14** | **86%** |
+| 쉬운 수술 | 85 | 5 | 94% |
+| 어려운 수술 | 1 | 9 | 10% |
+| **합계** | **86** | **14** | **86%** |
 
-Doctor A has a higher success rate **in both categories** (100% vs. 94% for easy operations; 83% vs. 10% for hard operations), yet Doctor B has a higher **overall** success rate (86% vs. 85%).
+의사 A는 **두 갈래 모두에서** 성공률이 더 높은데도(쉬운 수술 100% 대 94%, 어려운 수술 83% 대 10%) **전체** 성공률은 의사 B가 더 높다(86% 대 85%).
 
-### Explanation
+### 설명
 
-The paradox arises because the two doctors have very different **case mixes**. Doctor A predominantly performs hard operations (90 out of 100), while Doctor B predominantly performs easy operations (90 out of 100). The aggregate rate is dominated by the type of operation each doctor performs most, masking the within-category advantage of Doctor A.
+이 역설은 두 의사가 맡는 **사례 구성**이 크게 다르기 때문에 생긴다. 의사 A는 주로 어려운 수술을 한다(100건 가운데 90건). 의사 B는 주로 쉬운 수술을 한다(100건 가운데 90건). 합쳐 놓은 성공률은 각 의사가 가장 많이 하는 수술 종류에 휘둘리므로, 갈래 안에서 의사 A가 앞선다는 사실이 가려져 버린다.
 
-## Example — Berkeley Gender Bias Case
+## 예제 — 버클리 성차별 소송 사례
 
-One of the best-known real-life examples of Simpson's paradox occurred at the University of California, Berkeley, which was sued for bias against women in graduate admissions for fall 1973.
+심프슨의 역설이 현실에서 나타난 가장 잘 알려진 사례 가운데 하나는 캘리포니아 대학교 버클리 캠퍼스에서 일어났다. 이 학교는 1973년 가을 대학원 입학에서 여성을 차별했다는 이유로 소송을 당했다.
 
-### Aggregate Data
+### 합쳐 놓은 자료
 
-| | Applicants | Admitted Rate |
+| | 지원자 | 합격률 |
 |---|-----------|-------------|
-| Men | 8,442 | 44% |
-| Women | 4,321 | 35% |
+| 남성 | 8,442 | 44% |
+| 여성 | 4,321 | 35% |
 
-The difference was large enough to appear statistically significant.
+차이가 충분히 커서 통계적으로 유의해 보였다.
 
-### Department-Level Data
+### 학과별 자료
 
-When examining the six largest departments individually, no department showed significant bias against women. In fact, most showed a small but statistically significant bias **in favor of women**:
+가장 큰 여섯 학과를 하나하나 들여다보니 어느 학과에서도 여성에게 불리한 뚜렷한 차별은 없었다. 오히려 대부분의 학과는 작지만 통계적으로 유의하게 **여성에게 유리**했다.
 
-| Dept | Male Applicants (Admitted) | Female Applicants (Admitted) |
+| 학과 | 남성 지원자 (합격률) | 여성 지원자 (합격률) |
 |------|---------------------------|------------------------------|
 | A | 825 (62%) | 108 (82%) |
 | B | 560 (63%) | 25 (68%) |
@@ -50,31 +50,63 @@ When examining the six largest departments individually, no department showed si
 | E | 191 (28%) | 393 (24%) |
 | F | 272 (6%) | 341 (7%) |
 
-### Resolution
+### 풀이
 
-Women tended to apply to more competitive departments (C, D, E, F) with lower overall admission rates, while men applied more to less competitive departments (A, B) with higher acceptance rates. The aggregate statistic confounded the effect of gender with the choice of department.
+여성은 전체 합격률이 낮은 경쟁이 심한 학과(C, D, E, F)에 더 많이 지원했고, 남성은 합격률이 높은 덜 경쟁적인 학과(A, B)에 더 많이 지원했다. 합쳐 놓은 통계는 성별의 효과와 학과 선택의 효과를 뒤섞어 버렸다.
 
-## Connection to Conditional Probability
+## 조건부확률과의 관계
 
-Simpson's paradox is fundamentally about the difference between conditional and marginal probabilities. Let $S$ = success, $G$ = group (e.g., gender), and $C$ = category (e.g., department). It is possible that:
+심프슨의 역설은 근본적으로 조건부확률과 주변확률의 차이에 관한 이야기이다. $S$ = 성공, $G$ = 집단(예: 성별), $C$ = 갈래(예: 학과)라 하자. 다음이 성립하면서도,
 
 $$
-P(S \mid G = A,\; C = c) > P(S \mid G = B,\; C = c) \quad \text{for all } c
+P(S \mid G = A,\; C = c) > P(S \mid G = B,\; C = c) \quad \text{모든 } c \text{ 에 대해}
 $$
 
-yet
+다음이 성립하는 일이 얼마든지 있을 수 있다.
 
 $$
 P(S \mid G = A) < P(S \mid G = B)
 $$
 
-The marginal relationship reverses the conditional relationships because the **lurking variable** $C$ has different distributions across groups. Formally, the marginal success rate is:
+**숨은 변수** $C$ 가 집단마다 다른 분포를 가지기 때문에 주변 관계가 조건부 관계를 뒤집는 것이다. 형식을 갖추어 쓰면 주변 성공률은 다음과 같다.
 
 $$
 P(S \mid G = g) = \sum_{c} P(S \mid G = g, C = c)\,P(C = c \mid G = g)
 $$
 
-Even if every term $P(S \mid G = A, C = c) > P(S \mid G = B, C = c)$, the weighted average can reverse if the weights $P(C = c \mid G = g)$ are sufficiently different.
+모든 항에서 $P(S \mid G = A, C = c) > P(S \mid G = B, C = c)$ 이더라도, 가중치 $P(C = c \mid G = g)$ 가 충분히 다르면 가중평균은 뒤집힐 수 있다.
 
-!!! warning "Practical Lesson"
-    Always consider whether a lurking variable (confounding factor) could be driving an apparent trend. Aggregate statistics can be misleading when subgroups have different compositions. This insight is central to causal inference, observational studies, and experimental design.
+!!! warning "실전에서 새겨 둘 점"
+    겉으로 드러난 경향을 숨은 변수(교란요인)가 만들어 내고 있는 것은 아닌지 언제나 따져 보아야 한다. 부분집단의 구성이 서로 다르면 합쳐 놓은 통계는 사람을 오도할 수 있다. 이 통찰은 인과추론, 관찰연구, 실험설계의 핵심에 놓여 있다.
+
+## 연습문제
+
+**연습문제 1.** 두 가지 치료법($A$ 와 $B$)과 두 환자 집단(가벼운 환자와 위중한 환자)을 써서 심프슨의 역설이 나타나는 수치 예를 만들어라. 치료법 $A$ 는 두 집단 모두에서 성공률이 더 높지만 전체 성공률은 치료법 $B$ 가 더 높아야 한다.
+
+??? success "연습문제 1 풀이"
+    | | 가벼움 (성공 / 전체) | 위중 (성공 / 전체) | 전체 |
+    |---|---|---|---|
+    | 치료법 A | 81/90 = 90% | 3/10 = 30% | 84/100 = 84% |
+    | 치료법 B | 18/20 = 90% | 50/80 = 62.5% | 68/100 = 68% |
+
+    잠깐 — 이것은 뒤집힘을 보여 주지 못한다. $A$ 가 주로 위중한 환자를, $B$ 가 주로 가벼운 환자를 맡도록 다시 짜 보자.
+
+    | | 가벼움 (성공 / 전체) | 위중 (성공 / 전체) | 전체 |
+    |---|---|---|---|
+    | 치료법 A | 19/20 = 95% | 24/80 = 30% | 43/100 = 43% |
+    | 치료법 B | 80/90 = 88.9% | 2/10 = 20% | 82/100 = 82% |
+
+    집단 안에서는 $A$ 의 성공률이 더 높다(가벼운 환자 95% > 88.9%, 위중한 환자 30% > 20%). 그러나 전체로 보면 $B$ 의 성공률(82%)이 $A$ 의 성공률(43%)을 앞선다. $A$ 가 더 어려운(위중한) 사례를 유난히 많이 맡았기 때문이다. 이것이 심프슨의 역설이다.
+
+---
+
+**연습문제 2.** 버클리 입학 사례에서, 학과마다 여성의 합격률이 더 높은데도 합쳐 놓은 여성의 합격률이 남성보다 낮을 수 있는 까닭을 조건부확률 기호로 설명하여라.
+
+??? success "연습문제 2 풀이"
+    $A$ = "합격", $G$ = 성별, $D$ = 학과라 하자. 합쳐 놓은 합격률은 전확률 법칙으로 다음과 같이 쪼개진다.
+
+    $$
+    P(A \mid G = g) = \sum_{d} P(A \mid G = g, D = d) \, P(D = d \mid G = g)
+    $$
+
+    모든 학과 $d$ 에서 $P(A \mid G = F, D = d) > P(A \mid G = M, D = d)$ 이더라도 섞이는 가중치 $P(D = d \mid G = g)$ 는 체계적으로 다를 수 있다. 여성은 합격률이 낮은 학과(예: 인문계열)에 유난히 많이 지원했고, 남성은 합격률이 높은 학과(예: 공학계열)에 지원했다. 그러면 가중평균에서 여성 쪽은 $P(A \mid D)$ 가 낮은 학과에 더 많은 무게가 실려, 학과마다 앞섰는데도 합쳐 놓은 합격률 $P(A \mid G = F)$ 가 $P(A \mid G = M)$ 아래로 끌려 내려간다.

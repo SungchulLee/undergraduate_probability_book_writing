@@ -1,30 +1,30 @@
-# Applications of Bayes' Theorem
+# 베이즈 정리의 응용
 
-## Application 1 — False Positive (Medical Testing)
+## 응용 1 — 거짓 양성 (질병 검사)
 
-### Problem
+### 문제
 
-A laboratory blood test is 95% effective in detecting a certain disease when it is, in fact, present. However, the test also yields a "false positive" result for 1% of healthy persons tested. If 0.01% of the population actually has the disease, what is the probability that a person has the disease given that the test result is positive?
+어떤 실험실 혈액 검사는 병이 실제로 있을 때 그것을 95% 확률로 찾아낸다. 그러나 검사를 받은 건강한 사람 가운데 1%에게는 "거짓 양성"이 나온다. 인구의 0.01%가 실제로 그 병을 앓고 있다면, 검사 결과가 양성인 사람이 실제로 병을 앓고 있을 확률은 얼마인가?
 
-### Events and Given Information
+### 사건과 주어진 정보
 
-| Event | Description |
+| 사건 | 설명 |
 |-------|-------------|
-| $H$ | Person is healthy |
-| $D$ | Person has the disease |
-| $h$ | Test reports healthy (negative) |
-| $d$ | Test reports disease (positive) |
+| $H$ | 건강하다 |
+| $D$ | 병이 있다 |
+| $h$ | 검사 결과가 건강으로 나온다(음성) |
+| $d$ | 검사 결과가 병으로 나온다(양성) |
 
-| Probability | Value | Meaning |
+| 확률 | 값 | 뜻 |
 |-------------|-------|---------|
-| $P(d \mid D) = 0.95$ | Sensitivity | True positive rate |
-| $P(h \mid D) = 0.05$ | | False negative rate |
-| $P(d \mid H) = 0.01$ | | False positive rate |
-| $P(h \mid H) = 0.99$ | Specificity | True negative rate |
-| $P(D) = 0.0001$ | Prevalence | Disease rate in population |
-| $P(H) = 0.9999$ | | Healthy rate |
+| $P(d \mid D) = 0.95$ | 민감도 | 참 양성률 |
+| $P(h \mid D) = 0.05$ | | 거짓 음성률 |
+| $P(d \mid H) = 0.01$ | | 거짓 양성률 |
+| $P(h \mid H) = 0.99$ | 특이도 | 참 음성률 |
+| $P(D) = 0.0001$ | 유병률 | 인구에서 병을 앓는 비율 |
+| $P(H) = 0.9999$ | | 건강한 사람의 비율 |
 
-### Solution via Bayes' Rule + Total Probability
+### 베이즈 법칙 + 전확률을 쓴 풀이
 
 $$
 P(D \mid d) = \frac{P(D)\,P(d \mid D)}{P(D)\,P(d \mid D) + P(H)\,P(d \mid H)}
@@ -34,38 +34,38 @@ $$
 = \frac{(0.0001)(0.95)}{(0.0001)(0.95) + (0.9999)(0.01)} = \frac{0.000095}{0.000095 + 0.009999} = 0.0094
 $$
 
-### Interpretation
+### 뜻풀이
 
-Despite the test being 95% accurate, a positive result corresponds to only a **0.94% probability** of actually having the disease. The key insight: when the disease is very rare ($0.01\%$ prevalence), the vast majority of the population is healthy. Even a small false positive rate (1%) applied to this enormous healthy population produces many more false positives than the true positives from the tiny diseased population.
+검사가 95% 정확한데도 양성 결과가 뜻하는 것은 실제로 병을 앓을 확률이 **0.94%**밖에 되지 않는다는 것이다. 핵심은 이것이다. 병이 아주 드물면($0.01\%$ 유병률) 인구의 거의 전부가 건강한 사람이다. 그러면 거짓 양성률이 아무리 작아도(1%) 이 엄청나게 많은 건강한 사람에게 적용되는 순간, 극히 적은 환자들에게서 나오는 참 양성보다 거짓 양성이 훨씬 많아진다.
 
-**Breakdown of positive test results per 1,000,000 people:**
+**인구 1,000,000명당 양성 결과의 내역:**
 
-| Group | Population | Positive tests | Rate |
+| 무리 | 인원 | 양성 판정 | 종류 |
 |-------|-----------|---------------|------|
-| Diseased | 100 | 95 | True positives |
-| Healthy | 999,900 | 9,999 | False positives |
-| **Total positive** | | **10,094** | |
+| 병이 있음 | 100 | 95 | 참 양성 |
+| 건강함 | 999,900 | 9,999 | 거짓 양성 |
+| **양성 합계** | | **10,094** | |
 
-Of the 10,094 positive tests, only 95 are true positives: $95/10{,}094 \approx 0.94\%$.
+양성 판정 10,094건 가운데 참 양성은 95건뿐이다. 곧 $95/10{,}094 \approx 0.94\%$ 이다.
 
-### Python Implementation
+### 파이썬 구현
 
 ```python
 import numpy as np
 
-# Given
-P_D = 0.0001       # prevalence
+# 주어진 값
+P_D = 0.0001       # 유병률
 P_H = 1 - P_D
-P_d_given_D = 0.95  # sensitivity
-P_d_given_H = 0.01  # false positive rate
+P_d_given_D = 0.95  # 민감도
+P_d_given_H = 0.01  # 거짓 양성률
 
-# Bayes' rule
+# 베이즈 법칙
 P_D_given_d = (P_D * P_d_given_D) / (P_D * P_d_given_D + P_H * P_d_given_H)
 
 print(f"P(D|d) = {P_D_given_d:.4f}")
 # Output: P(D|d) = 0.0094
 
-# Breakdown per million
+# 백만 명당 내역
 pop = 1_000_000
 diseased = pop * P_D
 healthy = pop * P_H
@@ -80,44 +80,44 @@ print(f"  Total positive:  {total_pos:.0f}")
 print(f"  P(D|d) = {true_pos/total_pos:.4f}")
 ```
 
-## Application 2 — Simpson's Paradox
+## 응용 2 — 심프슨의 역설
 
-### The Paradox
+### 역설
 
-**Simpson's paradox** occurs when a trend present in each subgroup of data **reverses** when the subgroups are combined.
+**심프슨의 역설**이란 자료의 부분집단마다 나타나던 경향이 부분집단을 합치는 순간 **뒤집히는** 현상을 말한다.
 
-### Example — Good Doctor vs. Bad Doctor
+### 예 — 좋은 의사와 나쁜 의사
 
-| Doctor A | Successes | Fails | Success Rate |
+| 의사 A | 성공 | 실패 | 성공률 |
 |----------|-----------|-------|-------------|
-| Easy operation | 10 | 0 | 100% |
-| Hard operation | 75 | 15 | 83% |
-| **Total** | **85** | **15** | **85%** |
+| 쉬운 수술 | 10 | 0 | 100% |
+| 어려운 수술 | 75 | 15 | 83% |
+| **합계** | **85** | **15** | **85%** |
 
-| Doctor B | Successes | Fails | Success Rate |
+| 의사 B | 성공 | 실패 | 성공률 |
 |----------|-----------|-------|-------------|
-| Easy operation | 85 | 5 | 94% |
-| Hard operation | 1 | 9 | 10% |
-| **Total** | **86** | **14** | **86%** |
+| 쉬운 수술 | 85 | 5 | 94% |
+| 어려운 수술 | 1 | 9 | 10% |
+| **합계** | **86** | **14** | **86%** |
 
-Doctor A has a **higher success rate in both categories** (100% vs. 94% for easy; 83% vs. 10% for hard), yet Doctor B has a higher **overall** success rate (86% vs. 85%).
+의사 A는 **두 갈래 모두에서 성공률이 더 높은데도**(쉬운 수술 100% 대 94%, 어려운 수술 83% 대 10%) **전체** 성공률은 의사 B가 더 높다(86% 대 85%).
 
-The resolution: Doctor A takes on mostly hard operations, while Doctor B takes on mostly easy ones. The aggregate comparison is misleading because the composition of cases differs between doctors.
+풀이는 이렇다. 의사 A는 주로 어려운 수술을 맡고 의사 B는 주로 쉬운 수술을 맡는다. 의사마다 맡은 사례의 구성이 다르기 때문에 합쳐서 견주는 것은 사람을 오도한다.
 
-### Berkeley Gender Bias Case
+### 버클리 성차별 소송 사례
 
-One of the best-known real-life examples: the University of California, Berkeley was sued for bias against women in graduate admissions (fall 1973).
+가장 잘 알려진 현실의 예 가운데 하나이다. 캘리포니아 대학교 버클리 캠퍼스는 1973년 가을 대학원 입학에서 여성을 차별했다는 이유로 소송을 당했다.
 
-**Aggregate data:**
+**합쳐 놓은 자료:**
 
-| | Applicants | Admitted Rate |
+| | 지원자 | 합격률 |
 |---|-----------|-------------|
-| Men | 8,442 | 44% |
-| Women | 4,321 | 35% |
+| 남성 | 8,442 | 44% |
+| 여성 | 4,321 | 35% |
 
-But examining individual departments revealed no significant bias against women — most departments had a small bias **in favor of women**:
+그런데 학과별로 들여다보니 여성에게 불리한 뚜렷한 차별은 없었다. 대부분의 학과는 오히려 **여성에게 조금 유리**했다.
 
-| Dept | Male Applicants (Admitted) | Female Applicants (Admitted) |
+| 학과 | 남성 지원자 (합격률) | 여성 지원자 (합격률) |
 |------|---------------------------|------------------------------|
 | A | 825 (62%) | 108 (82%) |
 | B | 560 (63%) | 25 (68%) |
@@ -126,20 +126,110 @@ But examining individual departments revealed no significant bias against women 
 | E | 191 (28%) | 393 (24%) |
 | F | 272 (6%) | 341 (7%) |
 
-The explanation: women tended to apply to more competitive departments (C, D, E, F) with lower overall admission rates, while men applied more to less competitive departments (A, B) with higher rates. The aggregate statistic confounds the effect of gender with the choice of department.
+설명은 이렇다. 여성은 전체 합격률이 낮은 경쟁이 심한 학과(C, D, E, F)에 더 많이 지원했고, 남성은 합격률이 높은 덜 경쟁적인 학과(A, B)에 더 많이 지원했다. 합쳐 놓은 통계는 성별의 효과와 학과 선택의 효과를 뒤섞어 버린다.
 
-### Connection to Conditional Probability
+### 조건부확률과의 관계
 
-Simpson's paradox illustrates the importance of proper conditioning. Let $S$ = success, $G$ = group (doctor or gender), and $C$ = category (operation type or department):
+심프슨의 역설은 조건을 제대로 거는 일이 얼마나 중요한지 보여 준다. $S$ = 성공, $G$ = 집단(의사 또는 성별), $C$ = 갈래(수술 종류 또는 학과)라 하자. 그러면 다음이 성립한다고 해서,
 
 $$
-P(S \mid G = A, C = c) > P(S \mid G = B, C = c) \quad \text{for all } c
+P(S \mid G = A, C = c) > P(S \mid G = B, C = c) \quad \text{모든 } c \text{ 에 대해}
 $$
 
-does **not** imply
+다음이 따라 나오지는 **않는다**.
 
 $$
 P(S \mid G = A) > P(S \mid G = B)
 $$
 
-The marginal relationship can reverse the conditional relationships when the groups have different distributions over categories.
+집단마다 갈래에 걸친 분포가 다르면 주변 관계가 조건부 관계를 뒤집을 수 있다.
+
+## 연습문제
+
+**연습문제 1.** 몬티 홀 문제에서 10,000번의 시행 동안 바꾸기 전략이 대략 3분의 2의 확률로 이긴다는 것을 모의실험으로 확인하여라. 파이썬 모의실험을 작성하여라.
+
+??? success "연습문제 1 풀이"
+    ```python
+    """몬티 홀 모의실험: 그대로 두기 전략과 바꾸기 전략을 견준다."""
+    import random
+
+    # === 한 번의 시행 ===
+    def monty_hall_trial(switch: bool) -> bool:
+        """참가자가 이기면 True, 아니면 False를 돌려준다."""
+        car = random.randint(0, 2)
+        choice = random.randint(0, 2)
+        # 진행자는 참가자가 고른 문도 아니고 자동차가 있는 문도 아닌 문을 연다
+        host_options = [d for d in range(3) if d != choice and d != car]
+        host = random.choice(host_options)
+        if switch:
+            choice = next(d for d in range(3) if d != choice and d != host)
+        return choice == car
+
+    # === 실험 돌리기 ===
+    if __name__ == "__main__":
+        n = 10_000
+        stay_wins = sum(monty_hall_trial(switch=False) for _ in range(n))
+        switch_wins = sum(monty_hall_trial(switch=True) for _ in range(n))
+        print(f"Stay:   {stay_wins}/{n} = {stay_wins/n:.4f}")
+        print(f"Switch: {switch_wins}/{n} = {switch_wins/n:.4f}")
+    ```
+
+    대개 그대로 두기는 $\approx 0.333$, 바꾸기는 $\approx 0.667$ 이 나와 이론값 $1/3$ 과 $2/3$ 에 들어맞는다.
+
+---
+
+**연습문제 2.** 어떤 병이 10,000명 가운데 1명꼴로 나타난다. 검사의 민감도와 특이도가 모두 99%이다. $P(\text{병} \mid \text{양성})$ 을 구하여라. 유병률이 100명 가운데 1명꼴로 올라가면 이 값은 어떻게 달라지는가?
+
+??? success "연습문제 2 풀이"
+    $D$ = 병, $+$ = 양성이라 하자. 유병률을 $\pi = P(D)$ 라 하고 민감도 = 특이도 = 0.99 라 하면 다음이 성립한다.
+
+    $$
+    P(D \mid +) = \frac{0.99 \pi}{0.99 \pi + 0.01 (1 - \pi)}
+    $$
+
+    - $\pi = 10^{-4}$: $P(D \mid +) = 0.000099 / (0.000099 + 0.009999) \approx 0.00980$ (1%보다 작다).
+    - $\pi = 10^{-2}$: $P(D \mid +) = 0.0099 / (0.0099 + 0.0099) = 0.5$.
+
+    유병률이 100배 오르면 사후확률이 약 1%에서 50%로 올라간다. 진단 결과를 읽을 때는 기저율이 결정적이다.
+
+---
+
+**연습문제 3.** 표준 카드 한 벌에서 카드 두 장을 받았다. 적어도 한 장이 에이스라고 할 때 두 장이 모두 에이스일 확률은 얼마인가? 그리고 그 가운데 한 장이 콕 집어 스페이드 에이스라고 할 때의 확률과 견주어 보아라.
+
+??? success "연습문제 3 풀이"
+    $B$ = "두 장이 모두 에이스", $A$ = "적어도 한 장이 에이스", $A_1$ = "패에 스페이드 에이스가 들어 있다"라 하자.
+
+    전체 패는 $\binom{52}{2} = 1326$ 가지이다.
+
+    - 두 장이 모두 에이스인 패: $\binom{4}{2} = 6$ 이므로 $P(B) = 6/1326$ 이다.
+    - 에이스가 하나도 없는 패: $\binom{48}{2} = 1128$ 이므로 $P(A) = 1 - 1128/1326 = 198/1326$ 이다.
+    - 스페이드 에이스가 들어 있는 패: $51$ 가지이므로 $P(A_1) = 51/1326$ 이다.
+
+    그러므로 다음을 얻는다.
+
+    $$
+    P(B \mid A) = \frac{6/1326}{198/1326} = \frac{6}{198} = \frac{1}{33} \approx 0.0303
+    $$
+
+    $$
+    P(B \mid A_1) = \frac{3/1326}{51/1326} = \frac{3}{51} = \frac{1}{17} \approx 0.0588
+    $$
+
+    *특정한* 에이스(스페이드 에이스)로 조건을 걸면 단지 "어떤 에이스"로 조건을 걸 때보다 확률이 더 커진다. $A_1$ 이 더 작고 정보가 더 많은 사건이기 때문이다.
+
+---
+
+**연습문제 4.** 어떤 인구가 비흡연자 50%, 가벼운 흡연자 20%, 심한 흡연자 30%로 이루어져 있다. 가벼운 흡연자는 (주어진 기간에) 비흡연자보다 죽을 가능성이 두 배이고, 심한 흡연자는 가벼운 흡연자보다 두 배이다. 무작위로 고른 사람이 죽었다고 할 때 그 사람이 심한 흡연자였을 확률은 얼마인가?
+
+??? success "연습문제 4 풀이"
+    비흡연자가 죽을 확률을 $p$ 라 하자. 그러면 $P(D \mid N) = p$, $P(D \mid L) = 2p$, $P(D \mid H) = 4p$ 이다. 베이즈 정리에 따라 다음을 얻는다.
+
+    $$
+    P(H \mid D) = \frac{P(D \mid H)\,P(H)}{P(D \mid N)\,P(N) + P(D \mid L)\,P(L) + P(D \mid H)\,P(H)}
+    $$
+
+    $$
+    = \frac{4p \cdot 0.3}{p \cdot 0.5 + 2p \cdot 0.2 + 4p \cdot 0.3} = \frac{1.2p}{0.5p + 0.4p + 1.2p} = \frac{1.2}{2.1} = \frac{4}{7} \approx 0.5714
+    $$
+
+    기저율 $p$ 는 약분되어 사라진다. 심한 흡연자가 인구의 30%밖에 되지 않는데도 사망률이 네 배나 높기 때문에 전체 사망자의 $4/7 \approx 57\%$ 를 차지하게 된다.

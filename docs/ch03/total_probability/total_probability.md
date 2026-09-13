@@ -1,92 +1,111 @@
-# Partitions and Total Probability
+# 분할과 전확률
 
-## Total Probability Law — Divide and Conquer
+## 전확률 법칙 — 나누어 정복하기
 
-The **law of total probability** provides a systematic way to compute $P(A)$ by breaking the problem into simpler conditional pieces.
+**전확률 법칙**은 문제를 더 단순한 조건부 조각으로 쪼개어 $P(A)$ 를 구하는 짜임새 있는 방법을 알려 준다.
 
-### Setup
+### 문제 설정
 
-Suppose $\Omega$ can be divided into $n$ disjoint events $B_1, B_2, \ldots, B_n$ such that
-
-$$
-\Omega = \bigcup_{k=1}^{n} B_k \quad \text{(disjointly)}
-$$
-
-This is called a **partition** of the sample space. Equivalently, event $A$ can be divided into $n$ disjoint pieces:
+$\Omega$ 를 서로소인 $n$ 개의 사건 $B_1, B_2, \ldots, B_n$ 으로 쪼갤 수 있다고 하자.
 
 $$
-A = \bigcup_{k=1}^{n} (A \cap B_k) \quad \text{(disjointly)}
+\Omega = \bigcup_{k=1}^{n} B_k \quad \text{(서로소)}
 $$
 
-### The Algorithm
+이것을 표본공간의 **분할**이라 한다. 마찬가지로 사건 $A$ 도 서로소인 $n$ 개의 조각으로 쪼갤 수 있다.
 
-**Step 1 (Divide):** Divide $A$ into $n$ disjoint events $AB_1, AB_2, \ldots, AB_n$.
+$$
+A = \bigcup_{k=1}^{n} (A \cap B_k) \quad \text{(서로소)}
+$$
 
-**Step 2 (Conquer):** Compute each $P(AB_k)$ using the chain rule: $P(AB_k) = P(B_k)\,P(A \mid B_k)$.
+### 절차
 
-### Statement
+**1단계 (나누기):** $A$ 를 서로소인 $n$ 개의 사건 $AB_1, AB_2, \ldots, AB_n$ 으로 나눈다.
+
+**2단계 (정복하기):** 연쇄 법칙으로 $P(AB_k) = P(B_k)\,P(A \mid B_k)$ 를 각각 구한다.
+
+### 정리의 서술
 
 $$
 P(A) = \sum_{k=1}^{n} P(AB_k) = \sum_{k=1}^{n} P(B_k)\,P(A \mid B_k)
 $$
 
-The law of total probability decomposes a potentially complicated probability into a weighted sum of conditional probabilities, where the weights are the prior probabilities $P(B_k)$.
+전확률 법칙은 복잡할 수 있는 확률을 조건부확률의 가중합으로 쪼개어 준다. 이때 가중치는 사전확률 $P(B_k)$ 이다.
 
-## Bayes' Rule Combined with Total Probability
+## 베이즈 법칙과 전확률을 함께 쓰기
 
-When the partition $\Omega = \bigcup_{k=1}^{n} B_k$ is used, Bayes' rule becomes:
+분할 $\Omega = \bigcup_{k=1}^{n} B_k$ 를 쓰면 베이즈 법칙은 다음과 같이 된다.
 
 $$
 P(B_1 \mid A) \;\stackrel{\text{Bayes}}{=}\; \frac{P(A \mid B_1)\,P(B_1)}{P(A)} \;\stackrel{\text{TPL}}{=}\; \frac{P(B_1)\,P(A \mid B_1)}{\displaystyle\sum_{k=1}^{n} P(B_k)\,P(A \mid B_k)}
 $$
 
-This combined formula is one of the most widely used results in probability and statistics.
+이렇게 합친 공식은 확률과 통계에서 가장 널리 쓰이는 결과 가운데 하나이다.
 
-## Example — Monty Hall Problem
+## 예제 — 몬티 홀 문제
 
-**Problem:** You are on a game show with three doors. Behind one door is a car; behind the others are goats. You pick door \#1, and the host (who knows what's behind the doors) opens door \#3, revealing a goat. He asks: "Do you want to switch to door \#2?" Is it to your advantage to switch?
+**문제:** 문이 세 개인 게임쇼에 나와 있다. 한 문 뒤에는 자동차가 있고 나머지 뒤에는 염소가 있다. 당신이 \#1번 문을 고르자, 문 뒤에 무엇이 있는지 아는 진행자가 \#3번 문을 열어 염소를 보여 준다. 그러고는 묻는다. "\#2번 문으로 바꾸시겠습니까?" 바꾸는 것이 유리한가?
 
-### Analysis Using Total Probability (Change Strategy)
+### 전확률을 쓴 분석 (바꾸기 전략)
 
-Define:
+다음과 같이 정의하자.
 
-| Event | Description |
+| 사건 | 설명 |
 |-------|-------------|
-| $C$ | Car door is chosen in the first round |
-| $G$ | Goat door is chosen in the first round |
-| $W$ | Win the prize (under the **change** strategy) |
+| $C$ | 첫 번째 고를 때 자동차가 있는 문을 고른다 |
+| $G$ | 첫 번째 고를 때 염소가 있는 문을 고른다 |
+| $W$ | 상품을 탄다(**바꾸기** 전략을 쓸 때) |
 
-Under the **change strategy**, you always switch after the host reveals a goat.
+**바꾸기 전략**에서는 진행자가 염소를 보여 준 뒤 언제나 문을 바꾼다.
 
-**Step 1 (Divide):** Using the first-round choice, divide $W$ into disjoint events:
+**1단계 (나누기):** 첫 번째 고른 문을 기준으로 $W$ 를 서로소인 사건으로 나눈다.
 
 $$
-W = (W \cap C) \cup (W \cap G) \quad \text{(disjointly)}
+W = (W \cap C) \cup (W \cap G) \quad \text{(서로소)}
 $$
 
-**Step 2 (Conquer):** Compute each piece using the chain rule:
+**2단계 (정복하기):** 연쇄 법칙으로 조각마다 구한다.
 
 $$
 P(WC) = P(C)\,P(W \mid C) = \frac{1}{3} \times 0 = 0
 $$
 
-If you initially chose the car door and then switch, you lose.
+처음에 자동차가 있는 문을 골랐다가 바꾸면 진다.
 
 $$
 P(WG) = P(G)\,P(W \mid G) = \frac{2}{3} \times 1 = \frac{2}{3}
 $$
 
-If you initially chose a goat door and then switch, the host reveals the other goat, so you must switch to the car.
+처음에 염소가 있는 문을 골랐다면 진행자가 다른 염소를 보여 주므로, 바꾸면 반드시 자동차가 있는 문으로 가게 된다.
 
-**Conclusion:**
+**결론:**
 
 $$
 P(W) = P(WC) + P(WG) = 0 + \frac{2}{3} = \frac{2}{3}
 $$
 
-| Strategy | Winning Probability |
+| 전략 | 이길 확률 |
 |----------|-------------------|
-| No change (stay) | $1/3$ |
-| Change (switch) | $2/3$ |
+| 바꾸지 않기(그대로 두기) | $1/3$ |
+| 바꾸기 | $2/3$ |
 
-**Switching doubles your chance of winning.**
+**바꾸면 이길 가능성이 두 배가 된다.**
+
+## 연습문제
+
+**연습문제 1 (폴리아 항아리).** 항아리에 빨간 공 3개와 파란 공 7개가 들어 있다. 공을 하나 꺼내 색을 확인한 뒤, 그 공과 같은 색의 공 2개를 더해 항아리에 도로 넣는다. 그런 다음 두 번째 공을 꺼낸다. 두 번째 공이 빨강일 확률은 얼마인가?
+
+??? success "연습문제 1 풀이"
+    $R_i$ 를 $i$ 번째 공이 빨강인 사건이라 하자. 전확률 법칙으로 첫 번째 뽑기에 조건을 건다.
+
+    $$
+    P(R_2) = P(R_2 \mid R_1) P(R_1) + P(R_2 \mid R_1^c) P(R_1^c)
+    $$
+
+    처음에 빨강을 뽑았다면 항아리에는 빨강 5개와 파랑 7개(모두 12개)가 들어 있다. 처음에 파랑을 뽑았다면 빨강 3개와 파랑 9개(모두 12개)가 들어 있다. 따라서 다음을 얻는다.
+
+    $$
+    P(R_2) = \frac{5}{12} \cdot \frac{3}{10} + \frac{3}{12} \cdot \frac{7}{10} = \frac{15}{120} + \frac{21}{120} = \frac{36}{120} = \frac{3}{10}
+    $$
+
+    이 값은 $P(R_1) = 3/10$ 과 같다. 실제로 폴리아 항아리에서는 뽑을 때마다 빨강이 나올 주변확률이 처음 비율 그대로 유지된다. 교환가능한 수열의 특징이다.

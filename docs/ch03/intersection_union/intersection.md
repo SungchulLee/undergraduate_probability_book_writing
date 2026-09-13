@@ -1,14 +1,14 @@
-# Computing $P\!\left(\bigcap_{i=1}^{n} A_i\right)$
+# P(∩Ai) 구하기
 
-## Independent Events
+## 독립인 사건
 
-When $A_1, A_2, \ldots, A_n$ are independent, the intersection probability factors into a product:
+$A_1, A_2, \ldots, A_n$ 이 독립이면 교집합의 확률이 곱으로 갈라진다.
 
 $$
 P(A_1 A_2 \cdots A_n) = P(A_1)\,P(A_2)\,P(A_3) \cdots P(A_n)
 $$
 
-Written out for small cases:
+작은 경우를 풀어 쓰면 다음과 같다.
 
 $$
 P(AB) = P(A)\,P(B)
@@ -22,9 +22,9 @@ $$
 P(ABCD) = P(A)\,P(B)\,P(C)\,P(D)
 $$
 
-## Dependent Events — Chain Rule
+## 종속인 사건 — 연쇄 법칙
 
-When the events are **not** independent, we use the **chain rule** (multiplication rule):
+사건들이 독립이 **아니면** **연쇄 법칙**(곱셈 법칙)을 쓴다.
 
 $$
 P(AB) = P(A)\,P(B \mid A)
@@ -38,21 +38,87 @@ $$
 P(ABCD) = P(A)\,P(B \mid A)\,P(C \mid AB)\,P(D \mid ABC)
 $$
 
-In general:
+일반적으로는 다음과 같다.
 
 $$
 P(A_1 A_2 \cdots A_n) = P(A_1)\,P(A_2 \mid A_1)\,P(A_3 \mid A_1 A_2) \cdots P(A_n \mid A_1 A_2 \cdots A_{n-1})
 $$
 
-Each factor conditions on **all** preceding events.
+인수마다 그 앞의 **모든** 사건에 조건을 건다.
 
-## When to Use Which
+## 어느 것을 언제 쓸 것인가
 
-| Scenario | Method | Formula |
+| 상황 | 방법 | 공식 |
 |----------|--------|---------|
-| Events are independent | Product rule | $\prod_{i=1}^{n} P(A_i)$ |
-| Events are dependent | Chain rule | $P(A_1) \prod_{k=2}^{n} P(A_k \mid A_1 \cdots A_{k-1})$ |
-| Joint probability table available | Direct lookup | Read $P(A_i \cap B_j)$ from table |
+| 사건이 독립일 때 | 곱의 법칙 | $\prod_{i=1}^{n} P(A_i)$ |
+| 사건이 종속일 때 | 연쇄 법칙 | $P(A_1) \prod_{k=2}^{n} P(A_k \mid A_1 \cdots A_{k-1})$ |
+| 결합확률 표가 있을 때 | 표에서 곧바로 읽기 | 표에서 $P(A_i \cap B_j)$ 를 읽는다 |
 
-!!! note "Connection"
-    The chain rule is always valid (for both dependent and independent events). For independent events, $P(A_k \mid A_1 \cdots A_{k-1}) = P(A_k)$, so the chain rule simplifies to the product rule.
+!!! note "둘 사이의 관계"
+    연쇄 법칙은 (종속이든 독립이든) 언제나 성립한다. 독립인 사건에서는 $P(A_k \mid A_1 \cdots A_{k-1}) = P(A_k)$ 이므로 연쇄 법칙이 곱의 법칙으로 간단해진다.
+
+## 연습문제
+
+**연습문제 1.** 상자에 빨간 공 4개와 파란 공 6개가 들어 있다. 공 두 개를 비복원으로 뽑는다. 둘 다 빨강일 확률은 얼마인가? 연쇄 법칙을 써라.
+
+??? success "연습문제 1 풀이"
+    $A$ = "첫 번째 공이 빨강", $B$ = "두 번째 공이 빨강"이라 하자.
+
+    $$
+    P(AB) = P(A)\,P(B \mid A) = \frac{4}{10} \cdot \frac{3}{9} = \frac{12}{90} = \frac{2}{15} \approx 0.1333
+    $$
+
+---
+
+**연습문제 2.** 독립인 경보기 세 대가 있고 저마다 작동 신호를 받았을 때 울릴 확률이 0.95이다. 세 대가 모두 울릴 확률은 얼마인가?
+
+??? success "연습문제 2 풀이"
+    독립이므로 다음과 같다.
+
+    $$
+    P(A_1 A_2 A_3) = (0.95)^3 = 0.857375
+    $$
+
+---
+
+**연습문제 3.** 어떤 장치가 부품 4개를 직렬로 이어 놓은 것이다(장치가 돌아가려면 모든 부품이 작동해야 한다). 부품 1과 2는 독립이고 신뢰도가 각각 $0.9$ 와 $0.8$ 이다. 부품 3은 부품 1과 2가 작동할 때 신뢰도가 $0.95$ 이다. 부품 4는 앞의 부품이 모두 작동할 때 신뢰도가 $0.99$ 이다. 이 장치의 신뢰도는 얼마인가?
+
+??? success "연습문제 3 풀이"
+    연쇄 법칙을 쓰면 다음과 같다.
+
+    $$
+    P(A_1 A_2 A_3 A_4) = P(A_1)\,P(A_2)\,P(A_3 \mid A_1 A_2)\,P(A_4 \mid A_1 A_2 A_3)
+    $$
+
+    $$
+    = 0.9 \times 0.8 \times 0.95 \times 0.99 = 0.67716
+    $$
+
+---
+
+**연습문제 4.** 52장 카드 한 벌을 네 사람에게 13장씩 나누어 준다. 네 사람이 저마다 에이스를 정확히 한 장씩 받을 확률은 얼마인가?
+
+??? success "연습문제 4 풀이"
+    $A_i$ = "$i$ 번째 에이스가 서로 다른 사람에게 간다"라 하자. 연쇄 법칙을 쓰면 다음과 같다.
+
+    - $P(A_1) = 1$ (첫 번째 에이스는 누구에게 가도 좋다).
+    - $P(A_2 \mid A_1)$: 남은 51개 자리 가운데 39개가 다른 사람들의 자리이므로 $39/51$ 이다.
+    - $P(A_3 \mid A_1 A_2)$: 남은 50개 자리 가운데 26개가 남은 두 사람의 자리이므로 $26/50$ 이다.
+    - $P(A_4 \mid A_1 A_2 A_3)$: 남은 49개 자리 가운데 13개이므로 $13/49$ 이다.
+
+    $$
+    P = 1 \cdot \frac{39}{51} \cdot \frac{26}{50} \cdot \frac{13}{49} = \frac{39 \times 26 \times 13}{51 \times 50 \times 49} \approx 0.1055
+    $$
+
+---
+
+**연습문제 5.** 사건 $A$, $B$, $C$ 가 $P(A) = 0.5$, $P(B \mid A) = 0.6$, $P(C \mid AB) = 0.8$ 을 만족한다. $P(ABC)$ 를 구하여라. 이 사건들은 독립인가?
+
+??? success "연습문제 5 풀이"
+    연쇄 법칙에 따라 다음을 얻는다.
+
+    $$
+    P(ABC) = P(A)\,P(B \mid A)\,P(C \mid AB) = 0.5 \times 0.6 \times 0.8 = 0.24
+    $$
+
+    상호독립이려면 $P(ABC) = P(A)\,P(B)\,P(C)$ 이어야 한다. 그런데 주어진 정보만으로는 주변확률 $P(B)$ 와 $P(C)$ 를 알 수 없다. 정보가 더 없으면 독립인지 판정할 수 없다. 예를 들어 $P(B) = 0.6$ 이고 $P(C) = 0.8$ 이라면 $P(A)\,P(B)\,P(C) = 0.24 = P(ABC)$ 가 되지만, 그래도 쌍마다의 조건을 모두 확인해야 한다. 일반적으로 $A$ 와 $B$ 가 독립이 아닌 한 $P(B \mid A) \neq P(B)$ 이므로, 문제에 주어진 정보만으로는 독립이라고 결론지을 수 없다.

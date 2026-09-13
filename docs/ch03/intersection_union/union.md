@@ -1,77 +1,138 @@
-# Computing $P\!\left(\bigcup_{i=1}^{n} A_i\right)$
+# P(∪Ai) 구하기
 
-## Disjoint Events
+## 배반인 사건
 
-When $A_1, A_2, \ldots$ are **mutually disjoint** ($A_i \cap A_j = \emptyset$ for $i \ne j$), the union probability is simply the sum:
-
-$$
-P\!\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i) \quad \text{(countable additivity)}
-$$
+$A_1, A_2, \ldots$ 가 **서로 배반**이면($i \ne j$ 일 때 $A_i \cap A_j = \emptyset$) 합집합의 확률은 그저 합이다.
 
 $$
-P\!\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i) \quad \text{(finite additivity)}
+P\!\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i) \quad \text{(가산가법성)}
 $$
 
-## Non-Disjoint Events — Inclusion-Exclusion Principle
+$$
+P\!\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i) \quad \text{(유한가법성)}
+$$
 
-When the events are **not** disjoint, we must account for overlaps using the **inclusion-exclusion principle**.
+## 배반이 아닌 사건 — 포함배제 원리
 
-### Bonferroni Inequalities (Truncated Forms)
+사건들이 배반이 **아니면** **포함배제 원리**로 겹치는 부분을 헤아려야 한다.
 
-The inclusion-exclusion alternating sum can be truncated at any level to obtain bounds:
+### 본페로니 부등식 (잘라 쓴 꼴)
 
-**First-order bound (union bound):**
+포함배제의 교대합은 어느 단계에서든 잘라서 경계로 쓸 수 있다.
+
+**1차 경계 (합집합 경계):**
 
 $$
 P\!\left(\bigcup_{i=1}^{n} A_i\right) \le \sum_{i=1}^{n} P(A_i)
 $$
 
-**Second-order bound:**
+**2차 경계:**
 
 $$
 P\!\left(\bigcup_{i=1}^{n} A_i\right) \ge \sum_{i=1}^{n} P(A_i) - \sum_{1 \le i < j \le n} P(A_i A_j)
 $$
 
-**Third-order bound:**
+**3차 경계:**
 
 $$
 P\!\left(\bigcup_{i=1}^{n} A_i\right) \le \sum_{i=1}^{n} P(A_i) - \sum_{1 \le i < j \le n} P(A_i A_j) + \sum_{1 \le i < j < k \le n} P(A_i A_j A_k)
 $$
 
-The pattern alternates: truncating after an odd number of terms gives an **upper bound**, and truncating after an even number gives a **lower bound**.
+이 규칙은 번갈아 나타난다. 홀수 개의 항에서 끊으면 **상계**가 되고, 짝수 개의 항에서 끊으면 **하계**가 된다.
 
-### Exact Formula
+### 정확한 공식
 
 $$
 P\!\left(\bigcup_{i=1}^{n} A_i\right) = \sum_{i=1}^{n} P(A_i) - \sum_{1 \le i < j \le n} P(A_i A_j) + \sum_{1 \le i < j < k \le n} P(A_i A_j A_k) - \cdots + (-1)^{n+1} P(A_1 A_2 \cdots A_n)
 $$
 
-## Complement Method
+## 여사건을 쓰는 방법
 
-An alternative approach uses De Morgan's law:
+드 모르간 법칙을 쓰는 다른 방법도 있다.
 
 $$
 P\!\left(\bigcup_{i=1}^{n} A_i\right) = 1 - P\!\left(\bigcap_{i=1}^{n} A_i^c\right)
 $$
 
-This is particularly useful when the complements $A_i^c$ are **independent**, because then:
+여사건 $A_i^c$ 가 **독립**일 때 특히 쓸모 있다. 그럴 때는 다음이 성립하기 때문이다.
 
 $$
 P\!\left(\bigcap_{i=1}^{n} A_i^c\right) = \prod_{i=1}^{n} P(A_i^c) = \prod_{i=1}^{n} \bigl(1 - P(A_i)\bigr)
 $$
 
-So:
+따라서 다음을 얻는다.
 
 $$
 P\!\left(\bigcup_{i=1}^{n} A_i\right) = 1 - \prod_{i=1}^{n} \bigl(1 - P(A_i)\bigr)
 $$
 
-## Summary — Which Method to Use
+## 정리하며 — 어느 방법을 쓸 것인가
 
-| Scenario | Best Method |
+| 상황 | 가장 좋은 방법 |
 |----------|-------------|
-| Disjoint events | Direct sum: $\sum P(A_i)$ |
-| Independent events | Complement: $1 - \prod(1 - P(A_i))$ |
-| Few events, overlaps known | Inclusion-exclusion |
-| Many events, need a bound | Union bound or Bonferroni |
-| General dependent events | Inclusion-exclusion (exact) or complement + chain rule |
+| 배반인 사건 | 그대로 더하기: $\sum P(A_i)$ |
+| 독립인 사건 | 여사건: $1 - \prod(1 - P(A_i))$ |
+| 사건이 적고 겹치는 부분을 알 때 | 포함배제 |
+| 사건이 많고 경계만 있으면 될 때 | 합집합 경계 또는 본페로니 |
+| 일반적인 종속 사건 | 포함배제(정확한 값) 또는 여사건 + 연쇄 법칙 |
+
+## 연습문제
+
+**연습문제 1.** 독립인 감지기 세 대가 신호를 각각 확률 $0.9$, $0.8$, $0.7$ 로 잡아낸다. 적어도 한 대가 신호를 잡아낼 확률은 얼마인가?
+
+??? success "연습문제 1 풀이"
+    감지기가 독립이므로 여사건을 쓰면 다음과 같다.
+
+    $$
+    P(\text{적어도 한 대}) = 1 - (1 - 0.9)(1 - 0.8)(1 - 0.7) = 1 - 0.1 \times 0.2 \times 0.3 = 1 - 0.006 = 0.994
+    $$
+
+---
+
+**연습문제 2.** 사건 $A$, $B$, $C$ 에 대해 $P(A) = 0.4$, $P(B) = 0.5$, $P(C) = 0.3$, $P(AB) = 0.2$, $P(AC) = 0.1$, $P(BC) = 0.15$, $P(ABC) = 0.05$ 이다. $P(A \cup B \cup C)$ 를 구하여라.
+
+??? success "연습문제 2 풀이"
+    포함배제에 따라 다음을 얻는다.
+
+    $$
+    P(A \cup B \cup C) = 0.4 + 0.5 + 0.3 - 0.2 - 0.1 - 0.15 + 0.05 = 0.8
+    $$
+
+---
+
+**연습문제 3.** 연습문제 2의 $P(A \cup B \cup C)$ 에 합집합 경계(본페로니 1차)를 적용하여 경계를 구하여라. 이 경계는 얼마나 촘촘한가?
+
+??? success "연습문제 3 풀이"
+    합집합 경계는 다음을 준다.
+
+    $$
+    P(A \cup B \cup C) \leq P(A) + P(B) + P(C) = 0.4 + 0.5 + 0.3 = 1.2
+    $$
+
+    확률은 1을 넘을 수 없으므로 실제로 쓸모 있는 경계는 $\min(1.2, 1) = 1$ 이다. 정확한 값이 0.8이므로 경계가 0.2만큼 헐겁다. 사건들이 상당히 많이 겹치기 때문에 여기서 합집합 경계는 느슨하다.
+
+---
+
+**연습문제 4.** 공정한 주사위 다섯 개를 굴린다. 적어도 한 개가 6을 보일 확률은 얼마인가?
+
+??? success "연습문제 4 풀이"
+    $A_i$ = "$i$ 번째 주사위가 6을 보인다"라 하자. 이 사건들은 독립이고 $P(A_i) = 1/6$ 이다.
+
+    $$
+    P\!\left(\bigcup_{i=1}^{5} A_i\right) = 1 - \prod_{i=1}^{5}(1 - 1/6) = 1 - \left(\frac{5}{6}\right)^5 = 1 - \frac{3125}{7776} = \frac{4651}{7776} \approx 0.5981
+    $$
+
+---
+
+**연습문제 5.** 2차 본페로니 부등식을 증명하여라. 곧 임의의 사건 $A_1, \ldots, A_n$ 에 대해 다음이 성립함을 보여라.
+
+$$
+P\!\left(\bigcup_{i=1}^{n} A_i\right) \geq \sum_{i=1}^{n} P(A_i) - \sum_{1 \leq i < j \leq n} P(A_i A_j)
+$$
+
+??? success "연습문제 5 풀이"
+    포함배제에 따라 $P\!\left(\bigcup A_i\right)$ 는 교대합 $S_1 - S_2 + S_3 - \cdots + (-1)^{n+1} S_n$ 과 같다. 여기서 $S_k = \sum P(A_{i_1} \cdots A_{i_k})$ 이다.
+
+    보여야 할 것은 $S_1 - S_2 + S_3 - S_4 + \cdots \geq S_1 - S_2$, 곧 $S_3 - S_4 + S_5 - \cdots \geq 0$ 이다.
+
+    이는 일반적인 본페로니 원리에서 따라 나온다. 이어지는 항들을 둘씩 묶으면 $(S_3 - S_4) + (S_5 - S_6) + \cdots \geq 0$ 이 되고, 각 묶음 $S_{2k+1} - S_{2k+2} \geq 0$ 은 지시함수를 쓰는 논증으로 확인할 수 있다. 구체적으로 각 결과 $\omega$ 에 대해 $\bigcup A_i$ 의 지시함수를 $\omega$ 에서 따져 보면, 이항계수의 잘라 쓴 교대합에 관한 대수적 항등식에 의해 이 부등식이 성립한다. $\square$

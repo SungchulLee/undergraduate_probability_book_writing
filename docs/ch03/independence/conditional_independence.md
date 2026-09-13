@@ -1,88 +1,119 @@
-# Conditional Independence
+# 조건부독립
 
-## Definition
+## 정의
 
-Events $A_1, A_2, \ldots, A_n$ are **conditionally independent given $B$** if for every subcollection $A_{i_1}, A_{i_2}, \ldots, A_{i_m}$ (with $2 \le m \le n$):
+사건 $A_1, A_2, \ldots, A_n$ 이 모든 부분모임 $A_{i_1}, A_{i_2}, \ldots, A_{i_m}$ ($2 \le m \le n$)에 대해 다음을 만족하면 **$B$ 가 주어졌을 때 조건부독립**이라고 한다.
 
 $$
 P(A_{i_1} A_{i_2} \cdots A_{i_m} \mid B) = P(A_{i_1} \mid B)\,P(A_{i_2} \mid B) \cdots P(A_{i_m} \mid B)
 $$
 
-In other words, once we condition on $B$, the events behave as if they are independent within the reduced probability space defined by $B$.
+달리 말하면, $B$ 로 조건을 걸고 나면 $B$ 가 정해 주는 줄어든 확률공간 안에서 이 사건들이 마치 독립인 것처럼 움직인다는 뜻이다.
 
-## For Two Events
+## 두 사건일 때
 
-$A$ and $C$ are conditionally independent given $B$ if:
+$A$ 와 $C$ 가 다음을 만족하면 $B$ 가 주어졌을 때 조건부독립이다.
 
 $$
 P(AC \mid B) = P(A \mid B)\,P(C \mid B)
 $$
 
-Equivalently (when $P(C \cap B) > 0$):
+$P(C \cap B) > 0$ 일 때 이는 다음과 같다.
 
 $$
 P(A \mid B, C) = P(A \mid B)
 $$
 
-Once $B$ is known, additional knowledge of $C$ provides no further information about $A$.
+$B$ 를 알고 나면 $C$ 를 더 알아도 $A$ 에 대해 더 얻을 정보가 없다는 뜻이다.
 
-## Independence $\not\Leftrightarrow$ Conditional Independence
+## 독립 ⇔ 조건부독립
 
-A crucial point: **independence and conditional independence are different properties**. Neither implies the other.
+아주 중요한 점이 있다. **독립과 조건부독립은 서로 다른 성질이다.** 어느 쪽도 다른 쪽을 함의하지 않는다.
 
-### Independent but Not Conditionally Independent
+### 독립이지만 조건부독립은 아닌 경우
 
-**Example:** Toss a fair coin twice. Let $A$ = "first toss is heads," $C$ = "second toss is heads," and $B$ = "exactly one head." Then $A$ and $C$ are independent, but given $B$ (exactly one head), knowing $A$ occurred means $C$ did not — so $A$ and $C$ are not conditionally independent given $B$.
+**예:** 공정한 동전을 두 번 던진다. $A$ = "첫 번째가 앞면", $C$ = "두 번째가 앞면", $B$ = "앞면이 정확히 한 번"이라 하자. 그러면 $A$ 와 $C$ 는 독립이다. 그러나 $B$ (앞면이 정확히 한 번)가 주어지면 $A$ 가 일어났다는 것을 아는 순간 $C$ 는 일어나지 않았음을 알게 된다. 따라서 $A$ 와 $C$ 는 $B$ 가 주어졌을 때 조건부독립이 아니다.
 
-### Conditionally Independent but Not Independent
+### 조건부독립이지만 독립은 아닌 경우
 
-**Example:** Suppose a bag is chosen at random: Bag 1 has 2 red and 1 blue ball; Bag 2 has 1 red and 2 blue balls. Two draws are made with replacement from the chosen bag. Let $A_1$ = "first draw is red" and $A_2$ = "second draw is red." Given which bag was chosen ($B$), the draws are conditionally independent. However, $A_1$ and $A_2$ are not (marginally) independent, because observing $A_1$ = red makes it more likely Bag 1 was chosen, which in turn makes $A_2$ = red more likely.
+**예:** 주머니를 무작위로 하나 고른다고 하자. 1번 주머니에는 빨간 공 2개와 파란 공 1개가, 2번 주머니에는 빨간 공 1개와 파란 공 2개가 들어 있다. 고른 주머니에서 복원으로 두 번 뽑는다. $A_1$ = "첫 번째가 빨강", $A_2$ = "두 번째가 빨강"이라 하자. 어느 주머니를 골랐는지($B$)가 주어지면 두 뽑기는 조건부독립이다. 그러나 $A_1$ 과 $A_2$ 는 (주변적으로) 독립이 아니다. $A_1$ = 빨강을 관찰하면 1번 주머니를 골랐을 가능성이 커지고, 그러면 $A_2$ = 빨강일 가능성도 함께 커지기 때문이다.
 
-## Conditional Independence in Practice
+## 실제로 쓰이는 곳
 
-Conditional independence is a foundational concept in:
+조건부독립은 다음과 같은 곳에서 바탕이 되는 개념이다.
 
-- **Bayesian networks:** Nodes are conditionally independent of their non-descendants given their parents.
-- **Naive Bayes classifier:** Features are assumed conditionally independent given the class label.
-- **Markov chains:** The future state is conditionally independent of the past given the present state.
-- **Hidden Markov models:** Observations are conditionally independent given the hidden states.
+- **베이즈망:** 어떤 마디는 부모가 주어지면 자기 후손이 아닌 마디들과 조건부독립이다.
+- **나이브 베이즈 분류기:** 특징들이 부류 표지가 주어졌을 때 조건부독립이라고 가정한다.
+- **마르코프 연쇄:** 현재 상태가 주어지면 미래 상태는 과거와 조건부독립이다.
+- **은닉 마르코프 모형:** 은닉 상태가 주어지면 관측값들이 조건부독립이다.
 
-## Joint, Marginal, and Conditional Probabilities
+## 결합확률, 주변확률, 조건부확률
 
-When the sample space $\Omega$ is decomposed two different ways:
+표본공간 $\Omega$ 를 서로 다른 두 방식으로 쪼개면,
 
 $$
-\Omega = \bigcup_{i=1}^{m} A_i \quad \text{(disjointly)} \qquad \text{and} \qquad \Omega = \bigcup_{j=1}^{n} B_j \quad \text{(disjointly)}
+\Omega = \bigcup_{i=1}^{m} A_i \quad \text{(서로소)} \qquad \text{그리고} \qquad \Omega = \bigcup_{j=1}^{n} B_j \quad \text{(서로소)}
 $$
 
-we can organize probabilities into a table:
+확률을 표로 정리할 수 있다.
 
-### Three Types of Probabilities
+### 세 가지 확률
 
-| Type | Notation | Description |
+| 종류 | 기호 | 설명 |
 |------|----------|-------------|
-| **Joint** | $P(A_i B_j)$ | Probability of both $A_i$ and $B_j$ |
-| **Marginal** | $P(A_i)$, $P(B_j)$ | Row/column sums of the joint table |
-| **Conditional** | $P(B_j \mid A_i)$ | Probability of $B_j$ given $A_i$ |
+| **결합확률** | $P(A_i B_j)$ | $A_i$ 와 $B_j$ 가 모두 일어날 확률 |
+| **주변확률** | $P(A_i)$, $P(B_j)$ | 결합확률 표의 행별·열별 합 |
+| **조건부확률** | $P(B_j \mid A_i)$ | $A_i$ 가 주어졌을 때 $B_j$ 의 확률 |
 
-### Relationships (How to Obtain One from the Other Two)
+### 셋 사이의 관계 (둘로 나머지 하나 구하기)
 
-Given any two of {joint, marginal, conditional}, you can recover the third:
+{결합, 주변, 조건부} 가운데 둘을 알면 나머지 하나를 되찾을 수 있다.
 
-**Chain rule (joint from marginal + conditional):**
+**연쇄 법칙 (주변 + 조건부 → 결합):**
 
 $$
 P(A_i B_j) = P(A_i)\,P(B_j \mid A_i)
 $$
 
-**Marginalization (marginal from joint):**
+**주변화 (결합 → 주변):**
 
 $$
 P(A_i) = \sum_{j} P(A_i B_j)
 $$
 
-**Conditioning (conditional from joint + marginal):**
+**조건 걸기 (결합 + 주변 → 조건부):**
 
 $$
 P(B_j \mid A_i) = \frac{P(A_i B_j)}{P(A_i)}
 $$
+
+## 연습문제
+
+**연습문제 1.** $A$ 와 $B$ 가 $C$ 가 주어졌을 때는 조건부독립이지만 (조건 없이는) 독립이 아닌 예를 만들어라. 계산으로 확인하여라.
+
+??? success "연습문제 1 풀이"
+    동전이 두 개 있는데 하나는 공정하고($C$) 다른 하나는 $P(H) = 0.9$ 로 치우쳐 있다($C^c$). 동전 하나를 균등하게 무작위로 고른 뒤 두 번 던진다. $A$ = "첫 번째가 앞면", $B$ = "두 번째가 앞면"이라 하자.
+
+    **조건부독립.** 어느 동전을 골랐는지가 주어지면 두 던지기는 독립이다.
+
+    $$
+    P(A \cap B \mid C) = 0.5 \cdot 0.5 = 0.25 = P(A \mid C) P(B \mid C)
+    $$
+
+    $$
+    P(A \cap B \mid C^c) = 0.9 \cdot 0.9 = 0.81 = P(A \mid C^c) P(B \mid C^c)
+    $$
+
+    그러므로 $A$ 와 $B$ 는 $C$ 가 주어졌을 때(그리고 $C^c$ 가 주어졌을 때) 조건부독립이다.
+
+    **조건 없이는 종속.** 전확률 법칙에 따라 다음을 얻는다.
+
+    $$
+    P(A) = P(B) = 0.5 \cdot 0.5 + 0.5 \cdot 0.9 = 0.70
+    $$
+
+    $$
+    P(A \cap B) = 0.5 \cdot 0.25 + 0.5 \cdot 0.81 = 0.53
+    $$
+
+    그런데 $P(A) P(B) = 0.49 \neq 0.53$ 이므로 $A$ 와 $B$ 는 조건 없이는 독립이 **아니다**. 직관적으로 보면, 첫 번째 던지기를 보는 것만으로 어느 동전을 골랐는지에 대한 증거가 생기고 그것이 다시 두 번째 던지기를 예측하게 해 주기 때문이다.
