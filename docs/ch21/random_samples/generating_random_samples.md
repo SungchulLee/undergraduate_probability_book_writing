@@ -105,3 +105,63 @@ perm = np.random.permutation(N)  # 또는 rng.permutation(N)
 **(b)** 표본 $10{,}000$ 개를 만들어 모의실험으로 평균과 분산을 확인하여라. $E[X]$ 와 $\text{Var}(X)$ 를 수치로 구하여라.
 
 **(c)** 히스토그램을 참확률밀도함수 $f(x) = 2xe^{-x^2}$ 과 함께 그려라.
+
+??? success "연습문제 2 풀이"
+    $U \sim U(0,1)$ 일 때 $X = F^{-1}(U)$ 가 누적분포함수 $F$ 를 따른다는 것이 역변환 표집의 뼈대이다. 여기에서는 $u = 1 - e^{-x^2}$ 을 $x$ 에 대하여 풀면 된다.
+
+    $$
+    e^{-x^2} = 1 - u \quad \Longrightarrow \quad x^2 = -\ln(1-u) \quad \Longrightarrow \quad F^{-1}(u) = \sqrt{-\ln(1-u)}
+    $$
+
+    이 분포는 $\sigma = 1/\sqrt{2}$ 인 레일리분포이다. 밀도는 $f(x) = F'(x) = 2xe^{-x^2}$ 이고, 적률은 $t = x^2$ 로 바꾸면 감마함수로 바로 나온다.
+
+    $$
+    E[X] = \int_0^\infty 2x^2 e^{-x^2}\,dx = \frac{\sqrt{\pi}}{2} \approx 0.8862, \qquad E[X^2] = \int_0^\infty 2x^3 e^{-x^2}\,dx = 1
+    $$
+
+    따라서 $\text{Var}(X) = 1 - \pi/4 \approx 0.2146$ 이다.
+
+    ```python
+    import numpy as np
+
+    np.random.seed(42)
+
+    # (a) F(x) = 1 - exp(-x^2) 의 역함수: F^{-1}(u) = sqrt(-ln(1-u))
+    def inverse_cdf_sample(n_samples=10000):
+        u = np.random.uniform(size=n_samples)
+        return np.sqrt(-np.log(1 - u))
+
+    # (b) 표본 10,000 개로 평균과 분산을 확인한다
+    samples = inverse_cdf_sample(10000)
+    mean_exact = np.sqrt(np.pi) / 2          # E[X] = sqrt(pi)/2
+    var_exact = 1 - np.pi / 4                # Var(X) = 1 - pi/4
+    print(f"Sample mean     = {samples.mean():.4f}   (exact {mean_exact:.4f})")
+    print(f"Sample variance = {samples.var(ddof=1):.4f}   (exact {var_exact:.4f})")
+
+    # 수치적분으로 E[X], E[X^2] 를 다시 확인한다
+    from scipy.integrate import quad
+    m1, _ = quad(lambda x: x * 2 * x * np.exp(-x**2), 0, np.inf)
+    m2, _ = quad(lambda x: x**2 * 2 * x * np.exp(-x**2), 0, np.inf)
+    print(f"Numerical E[X]  = {m1:.4f},  E[X^2] = {m2:.4f},  Var = {m2 - m1**2:.4f}")
+
+    # (c) 히스토그램과 참밀도 f(x) = 2x exp(-x^2)
+    import matplotlib.pyplot as plt
+    xs = np.linspace(0, 3, 300)
+    plt.figure(figsize=(7, 5))
+    plt.hist(samples, bins=50, density=True, edgecolor='black', alpha=0.7,
+             label='Samples')
+    plt.plot(xs, 2 * xs * np.exp(-xs**2), '-r', linewidth=2, label='True pdf')
+    plt.xlabel('x'); plt.ylabel('density'); plt.legend(); plt.grid(True)
+    plt.show()
+    ```
+
+    **실행 결과:**
+    ```
+    Sample mean     = 0.8763   (exact 0.8862)
+    Sample variance = 0.2097   (exact 0.2146)
+    Numerical E[X]  = 0.8862,  E[X^2] = 1.0000,  Var = 0.2146
+    ```
+
+    표본평균 $0.8763$ 은 참값 $\sqrt{\pi}/2 = 0.8862$ 와, 표본분산 $0.2097$ 은 참값 $1 - \pi/4 = 0.2146$ 과 잘 맞는다. 표본평균의 표준오차가 $\sqrt{0.2146/10000} \approx 0.0046$ 이므로 $0.01$ 정도의 차이는 표집오차의 범위 안에 있다. 수치적분으로 얻은 $E[X] = 0.8862$, $E[X^2] = 1.0000$ 은 위에서 손으로 구한 값과 소수점 네 자리까지 일치한다.
+
+    히스토그램은 $x = 1/\sqrt{2} \approx 0.707$ 에서 봉우리를 이루고 오른쪽으로 꼬리를 끄는 모양이 되며, 빨간 곡선으로 겹쳐 그린 참밀도 $f(x) = 2xe^{-x^2}$ 와 거의 포개진다. 균등난수 하나만 있으면 이렇게 꼬리가 있는 분포도 닫힌 꼴의 역함수 한 줄로 만들어 낼 수 있다. $\square$
