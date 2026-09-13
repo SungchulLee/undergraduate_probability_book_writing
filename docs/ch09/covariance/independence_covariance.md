@@ -1,35 +1,43 @@
-# Independence Implies Zero Covariance
-<<<<<<< Updated upstream
+# 독립이면 공분산은 0이다
 
-## The Forward Direction
+## 한쪽 방향
 
-!!! info "Theorem"
-    If $X$ and $Y$ are independent, then $\text{Cov}(X, Y) = 0$ (equivalently, $\rho(X, Y) = 0$).
+!!! info "정리"
+    $X$ 와 $Y$ 가 독립이면 $\text{Cov}(X, Y) = 0$ 이다(같은 말로 $\rho(X, Y) = 0$ 이다).
 
-**Proof.** Independence implies $E[XY] = E[X]\,E[Y]$ (proved in the next section on products). Therefore:
+**증명.** $X$ 와 $Y$ 가 독립이면 결합밀도가 $f(x,y) = f_X(x)\,f_Y(y)$ 이므로(이산인 경우에는 결합 확률질량함수가 $p(x,y) = p_X(x)\,p_Y(y)$ 이므로) 곱의 기댓값이 분해된다.
+
+$$
+E[XY] = \iint xy\,f_X(x)\,f_Y(y)\,dx\,dy = \left(\int x\,f_X(x)\,dx\right)\!\left(\int y\,f_Y(y)\,dy\right) = E[X]\,E[Y]
+$$
+
+(이산인 경우에는 적분을 합으로 바꾸면 된다.) 그러므로 다음을 얻는다.
 
 $$
 \text{Cov}(X, Y) = E[XY] - E[X]\,E[Y] = 0
 $$
 
-$\blacksquare$
+$\square$
 
-This gives a quick check: if two random variables are independent, you can immediately conclude they are uncorrelated.
+여기에서 빠른 판정법이 나온다. 두 확률변수가 독립이면 곧바로 무상관이라고 말할 수 있다.
+
+!!! tip "$L^2$ 에서의 직교성"
+    공분산은 중심화된 확률변수들 위의 내적이므로 "무상관"은 곧 "$L^2$ 에서 직교"와 같은 말이다. 즉 중심화한 $X - \mu_X$ 와 $Y - \mu_Y$ 가 $\langle X - \mu_X, Y - \mu_Y\rangle = 0$ 을 만족한다는 뜻이다. 이 말투는 이 책의 뒤에서 사영, 회귀, 마팅게일 증분, 직교전개를 다룰 때 되풀이해 나온다.
 
 ---
 
-## The Converse Is False
+## 그 역은 거짓이다
 
-!!! warning "Uncorrelated Does Not Imply Independent"
-    There exist random variables with $\text{Cov}(X, Y) = 0$ that are **not** independent. Zero covariance means no **linear** association, but a nonlinear dependence can still be present.
+!!! warning "무상관이라고 해서 독립인 것은 아니다"
+    $\text{Cov}(X, Y) = 0$ 이지만 독립이 **아닌** 확률변수들이 있다. 공분산이 0이라는 것은 **선형** 연관이 없다는 뜻일 뿐이고, 비선형 종속은 여전히 있을 수 있다.
 
-### Classic Counterexample
+### 고전적인 반례
 
-Let $X$ be uniform on $\{-1, 0, 1\}$ (each with probability $1/3$), and let $Y = X^2$.
+$X$ 를 $\{-1, 0, 1\}$ 위의 균등분포(각각 확률 $1/3$)를 따르는 확률변수라 하고 $Y = X^2$ 이라 하자.
 
-**Step 1.** $Y$ is completely determined by $X$, so $X$ and $Y$ are clearly dependent.
+**1단계.** $Y$ 는 $X$ 에 의해 완전히 정해지므로 $X$ 와 $Y$ 는 분명히 종속이다.
 
-**Step 2.** Compute the covariance:
+**2단계.** 공분산을 구한다.
 
 $$
 E[X] = \frac{1}{3}(-1 + 0 + 1) = 0
@@ -43,41 +51,41 @@ $$
 \text{Cov}(X, Y) = E[XY] - E[X]\,E[Y] = 0 - 0 \cdot E[Y] = 0
 $$
 
-So $\text{Cov}(X, Y) = 0$ even though $Y$ is a deterministic function of $X$.
+그러므로 $Y$ 가 $X$ 의 결정적 함수인데도 $\text{Cov}(X, Y) = 0$ 이다.
 
-**Why does this happen?** The relationship $Y = X^2$ is symmetric about $X = 0$. The positive and negative linear contributions cancel perfectly, leaving zero covariance despite complete dependence.
-
----
-
-## Logical Relationships
-
-The following diagram summarizes the implications:
-
-$$
-\text{Independent} \implies \text{Uncorrelated (Cov = 0)} \implies E[XY] = E[X]\,E[Y]
-$$
-
-None of the reverse arrows hold in general.
-
-!!! tip "Special Case: Joint Normality"
-    For **jointly normal** random variables, uncorrelated **does** imply independent. This is one of the remarkable properties of the multivariate normal distribution (Chapter 18). Outside of this special case, zero correlation is strictly weaker than independence.
+**왜 이런 일이 생기는가?** $Y = X^2$ 이라는 관계는 $X = 0$ 을 축으로 대칭이다. 양의 선형 몫과 음의 선형 몫이 정확히 상쇄되어, 완전히 종속인데도 공분산이 0으로 남는다.
 
 ---
 
-## Another Counterexample
+## 논리적 관계
 
-??? example "Dependent but Uncorrelated: Continuous Case"
-    Let $X \sim \text{Uniform}(-1, 1)$ and $Y = X^2$. Then $E[X] = 0$, so
+다음 그림은 함의 관계를 정리한 것이다. $X$ 와 $Y$ 의 평균과 이차적률이 유한하다고 가정한다.
+
+$$
+\text{독립} \implies \text{무상관 (Cov = 0)} \iff E[XY] = E[X]\,E[Y]
+$$
+
+두 번째 화살표는 한쪽 함의가 아니라 *동치*이다. 정의상 $\text{Cov}(X,Y) = E[XY] - E[X]\,E[Y]$ 이므로 한쪽을 0으로 놓는 것과 다른 쪽을 0으로 놓는 것은 같은 말이기 때문이다. 한쪽으로만 성립하는 것은 첫 번째 화살표뿐이며, 아래 반례들이 보여 주듯 그 역은 성립하지 않는다.
+
+!!! tip "특별한 경우: 결합정규성"
+    **결합정규**인 확률변수들에 대해서는 무상관이면 독립이 **된다**. 이는 다변량정규분포가 지닌 놀라운 성질 가운데 하나이다(18장). 이 특별한 경우를 벗어나면 상관계수가 0이라는 것은 독립보다 엄밀히 약한 조건이다.
+
+---
+
+## 또 다른 반례
+
+??? example "종속이지만 무상관: 연속인 경우"
+    $X \sim \text{Uniform}(-1, 1)$ 이고 $Y = X^2$ 이라 하자. 그러면 $E[X] = 0$ 이므로 다음과 같다.
 
     $$
     \text{Cov}(X, Y) = E[XY] - E[X]\,E[Y] = E[X^3] - 0 = \int_{-1}^{1} \frac{x^3}{2}\,dx = 0
     $$
 
-    by the symmetry of $x^3$ on $[-1, 1]$. Yet $Y$ is completely determined by $X$.
+    $[-1, 1]$ 위에서 $x^3$ 이 대칭이기 때문이다. 그런데도 $Y$ 는 $X$ 에 의해 완전히 정해진다.
 
 ---
 
-## Python Verification
+## 파이썬으로 확인하기
 
 ```python
 import numpy as np
@@ -85,7 +93,7 @@ import numpy as np
 np.random.seed(42)
 N = 1_000_000
 
-# Discrete counterexample: X uniform on {-1, 0, 1}, Y = X^2
+# 이산 반례: X 는 {-1, 0, 1} 위의 균등분포, Y = X^2
 X = np.random.choice([-1, 0, 1], size=N)
 Y = X**2
 
@@ -98,5 +106,98 @@ independent = np.allclose(
 print(f"Cov(X, Y) = {cov:.4f}")      # ≈ 0
 print(f"Independent? {independent}")   # False
 ```
-=======
->>>>>>> Stashed changes
+
+## 연습문제
+
+**연습문제 1.** $X$ 를 $\{-2, -1, 0, 1, 2\}$ 위의 균등분포를 따르는 확률변수라 하고 $Y = X^2$ 이라 하자. $\text{Cov}(X, Y) = 0$ 이지만 $X$ 와 $Y$ 는 독립이 아님을 보여라.
+
+??? success "연습문제 1 풀이"
+    대칭성에 따라 $E[X] = 0$ 이다. $E[XY] = E[X^3]$ 을 보면, 함수 $x^3$ 은 기함수이고 분포는 0을 축으로 대칭이므로 다음과 같다.
+
+    $$
+    E[X^3] = \tfrac{1}{5}(-8 - 1 + 0 + 1 + 8) = 0
+    $$
+
+    그러므로 $\text{Cov}(X, Y) = E[XY] - E[X] E[Y] = 0 - 0 = 0$ 이다.
+
+    그런데 $Y = X^2$ 은 $X$ 의 결정적 함수이므로 $X$ 와 $Y$ 는 독립이 *아니다*. 예를 들어 $P(X = 1, Y = 0) = 0$ 이지만 $P(X = 1) P(Y = 0) = (1/5)(1/5) > 0$ 이다.
+
+    **교훈.** 공분산이 0이라는 것은 *선형* 종속이 없음을 붙잡을 뿐, *비선형* 종속을 막아 주지는 않는다.
+
+---
+
+**연습문제 2.** *연속인 반례.* $X \sim \text{Uniform}(-1, 1)$ 이고 $Y = |X|$ 라 하자. $\text{Cov}(X, Y) = 0$ 이지만 $X$ 와 $Y$ 는 독립이 아님을 보여라.
+
+??? success "연습문제 2 풀이"
+    균등분포가 0을 축으로 대칭이므로 $E[X] = 0$ 이다. 다음을 구해 보자.
+
+    $$
+    E[XY] = E[X \, |X|] = \int_{-1}^{1} \frac{x \, |x|}{2}\,dx = 0
+    $$
+
+    피적분함수 $x|x|$ 가 대칭인 구간 위의 기함수이기 때문이다. 그러므로 다음을 얻는다.
+
+    $$
+    \text{Cov}(X, Y) = E[XY] - E[X]\,E[Y] = 0
+    $$
+
+    그런데 $Y$ 는 $X$ 의 결정적 함수이므로 $X$ 와 $Y$ 는 분명히 독립이 아니다. 예를 들어 $Y = 0.5$ 라는 조건 아래에서 $X$ 는 $[-1, 1]$ 전체가 아니라 $\{-0.5, 0.5\}$ 에만 몰려 있다.
+
+    이산인 연습문제 1($Y = X^2$)과 함께 보면, "무상관이지만 종속"이라는 현상은 $X$ 의 평균을 축으로 대칭성이 있을 때면 이산분포와 연속분포 어디에서나 흔히 나타남을 알 수 있다. $\square$
+
+---
+
+**연습문제 3.** *독립성과 함수.* $X$ 와 $Y$ 가 독립이고 $g, h$ 가 유계인 가측함수이면 $g(X)$ 와 $h(Y)$ 도 독립이고, 특히 $\text{Cov}(g(X), h(Y)) = 0$ 임을 증명하여라.
+
+??? success "연습문제 3 풀이"
+    독립의 정의에 따라 다음이 성립한다.
+
+    $$
+    P(X \in A,\, Y \in B) = P(X \in A)\,P(Y \in B) \quad \text{모든 가측인 } A, B \text{ 에 대하여}
+    $$
+
+    집합 $C, D$ 에 대하여 사건 $\{g(X) \in C\} = \{X \in g^{-1}(C)\}$ 와 $\{h(Y) \in D\} = \{Y \in h^{-1}(D)\}$ 는 각각 $X$ 만, $Y$ 만 관계하므로 다음과 같다.
+
+    $$
+    P(g(X) \in C,\, h(Y) \in D) = P(X \in g^{-1}(C),\, Y \in h^{-1}(D)) = P(X \in g^{-1}(C))\,P(Y \in h^{-1}(D))
+    $$
+
+    이는 $P(g(X) \in C)\,P(h(Y) \in D)$ 로 분해된다. 그러므로 $g(X)$ 와 $h(Y)$ 는 독립이고, (이차적률이 존재하면) $E[g(X)h(Y)] = E[g(X)]\,E[h(Y)]$ 이므로 $\text{Cov}(g(X), h(Y)) = 0$ 이다.
+
+    **응용.** $X, Y$ 가 독립이면 $X^2$ 과 $Y$, $\sin X$ 와 $e^Y$ 등도 독립이다. 독립 관계는 임의의 가측 변환을 타고 그대로 옮겨 간다. $\square$
+
+---
+
+**연습문제 4.** *독립일 때 합의 분산.* 연습문제 3의 결과를 쓰거나 독립성을 바로 써서, $X_1, \ldots, X_n$ 이 두 개씩 독립이고 분산이 유한하면 다음이 성립함을 증명하여라.
+
+$$
+\text{Var}\!\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i)
+$$
+
+??? success "연습문제 4 풀이"
+    정의 페이지의 연습문제 5에 따라 다음이 성립한다.
+
+    $$
+    \text{Var}\!\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i) + 2\sum_{i < j} \text{Cov}(X_i, X_j)
+    $$
+
+    두 개씩 독립이면 (이 페이지의 정리에서 한쪽 방향에 따라) $i \neq j$ 에 대하여 $\text{Cov}(X_i, X_j) = 0$ 이므로 교차합이 사라지고 다음을 얻는다.
+
+    $$
+    \text{Var}\!\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i)
+    $$
+
+    상호독립보다 약한 조건인 *두 개씩의* 독립만으로도 분산이 더하기로 갈라지기에 충분하다는 점에 유의하자. 이는 확률론에서 가장 쓸모 있는 사실 가운데 하나로, 큰수의 법칙, 오차의 전파, 신뢰구간 계산을 모두 떠받친다. $\square$
+
+---
+
+**연습문제 5.** *개념 문제.* "무상관"은 수 하나가 0이라는 뜻이고 "독립"은 무한히 많은 분해가 모두 성립한다는 뜻이다. $L^2$ 내적 그림으로 보아, 등식 하나 $\langle X - \mu_X,\, Y - \mu_Y\rangle = 0$ 이 일반적으로 독립성을 붙잡을 수 없는 까닭을 설명하여라.
+
+??? success "연습문제 5 풀이"
+    $X$ 와 $Y$ 가 독립이라는 것은 *모든* 유계 가측함수 짝 $f, g$ 에 대하여 $E[f(X)g(Y)] = E[f(X)]\,E[g(Y)]$ 가 성립한다는 것과 같다. 함수 짝마다 하나씩, 무한히 많은 조건이 붙는 셈이다.
+
+    무상관은 그 가운데 *단 하나*의 선택, 곧 $f(X) = X$, $g(Y) = Y$ 인 경우에 해당한다. $L^2$ 의 말로 하면 이는 중심화된 1차 좌표 $X - \mu_X$ 와 $Y - \mu_Y$ 가 직교한다는 뜻일 뿐이며, $(X - \mu_X)^2$ 과 $(Y - \mu_Y)^2$, 또는 $(X - \mu_X)^3$ 과 $Y - \mu_Y$ 같은 고차 좌표의 직교성까지 말해 주지는 않는다.
+
+    고전적인 반례들($Y = X^2$, $Y = |X|$)은 바로 이 틈을 파고든다. $X$ 와 $Y$ 의 선형 좌표는 직교하지만, $Y$ 에 관한 모든 정보를 지니고 있는 $X$ 의 *이차* 좌표는 $Y$ 와 완전히 상관되어 있다. 공분산은 이러한 고차 직교성의 깨짐을 보지 못하므로 일반적인 종속성을 알아챌 수 없다.
+
+    예외는 이변량정규분포이다. 이 경우 결합분포가 1차와 2차 적률만으로 *완전히 정해지기* 때문에, 선형 좌표의 직교성만으로 모든 좌표의 직교성이 보장되고, 따라서 무상관이면 독립이 된다. $\square$

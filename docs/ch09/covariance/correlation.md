@@ -1,122 +1,311 @@
-# Correlation Coefficient
-<<<<<<< Updated upstream
+# 상관계수
 
-## Motivation
+## 왜 필요한가
 
-Covariance tells us the direction of a linear relationship, but its magnitude depends on the units of $X$ and $Y$. Doubling all values of $X$ would double the covariance, even though the relationship has not changed. The **correlation coefficient** solves this by normalizing covariance to a dimensionless quantity between $-1$ and $1$.
+공분산은 선형 관계의 방향을 알려 주지만 그 크기는 $X$ 와 $Y$ 의 단위에 따라 달라진다. $X$ 의 값을 모두 두 배로 하면 관계 자체는 그대로인데도 공분산은 두 배가 된다. **상관계수**는 공분산을 표준화하여 $-1$ 과 $1$ 사이의 단위 없는 값으로 만들어 이 문제를 푼다.
 
 ---
 
-## Definition
+## 정의
 
-!!! info "Correlation Coefficient"
-    For random variables $X$ and $Y$ with positive standard deviations $\sigma_X$ and $\sigma_Y$, the **(Pearson) correlation coefficient** is
+!!! info "상관계수"
+    표준편차 $\sigma_X$ 와 $\sigma_Y$ 가 양수인 확률변수 $X$ 와 $Y$ 에 대하여 **(피어슨) 상관계수**는 다음과 같이 정의한다.
 
     $$
     \rho(X, Y) = \frac{\text{Cov}(X, Y)}{\sigma_X \, \sigma_Y}
     $$
 
-Equivalently, $\rho(X, Y) = \text{Cov}\!\left(\frac{X - \mu_X}{\sigma_X},\; \frac{Y - \mu_Y}{\sigma_Y}\right)$, so correlation is the covariance of the standardized variables.
+같은 말로 $\rho(X, Y) = \text{Cov}\!\left(\frac{X - \mu_X}{\sigma_X},\; \frac{Y - \mu_Y}{\sigma_Y}\right)$ 이므로, 상관계수는 표준화한 변수들의 공분산이다.
 
 ---
 
-## Range of Correlation
+## 아핀 변환에 대한 불변성
+
+$\rho$ 가 지닌 가장 중요한 성질이자 $\rho$ 가 단위를 갖지 않는 까닭은 아핀 변환에 대한 불변성이다.
+
+$$
+\rho(aX + b,\; cY + d) = \text{sign}(ac)\,\rho(X, Y) \qquad (ac \neq 0)
+$$
+
+$X$ 를 두 배로 하든, 단위를 바꾸든, 상수만큼 옮기든 $\rho$ 는 그대로이다. 오직 $a$ 와 $c$ 의 *부호*만이 문제가 되며, 부호가 음수이면 $\rho$ 의 부호가 뒤집힌다.
+
+**증명.** $\text{Cov}(aX+b,\,cY+d) = ac\,\text{Cov}(X,Y)$ 와 $\sigma_{aX+b} = |a|\,\sigma_X$ 로부터 다음을 얻는다.
+
+$$
+\rho(aX+b,\,cY+d) = \frac{ac\,\text{Cov}(X,Y)}{|a|\sigma_X \cdot |c|\sigma_Y} = \frac{ac}{|ac|}\,\rho(X,Y) = \text{sign}(ac)\,\rho(X,Y)
+$$
+
+$\square$
+
+---
+
+## 기하적인 뜻풀이
+
+중심화된 확률변수들 위에서 공분산이 내적이라는 사실을 떠올리자(정의 페이지를 보라). $\tilde X = X - \mu_X$, $\tilde Y = Y - \mu_Y$ 로 적으면 $\langle \tilde X, \tilde Y\rangle = \text{Cov}(X,Y)$ 이고 $\|\tilde X\| = \sigma_X$ 이다. 그러므로 다음이 성립한다.
+
+$$
+\rho(X, Y) = \frac{\langle \tilde X, \tilde Y\rangle}{\|\tilde X\|\,\|\tilde Y\|} = \cos\theta
+$$
+
+여기서 $\theta$ 는 $L^2$ 안에서 중심화된 확률변수 $\tilde X$ 와 $\tilde Y$ 가 이루는 각이다. 이것이 상관계수에 대한 가장 깊은 뜻풀이이다.
+
+- $\rho = \pm 1$: $\tilde X$ 와 $\tilde Y$ 가 평행하다(완전한 선형 종속).
+- $\rho = 0$: $\tilde X$ 와 $\tilde Y$ 가 직교한다(무상관).
+- $|\rho| < 1$: 두 변수가 어떤 각을 이룬다.
+
+이 관점에서는 코시–슈바르츠 경계 $|\rho| \leq 1$ 이 곧 $|\cos\theta| \leq 1$ 로 바로 설명되며, 나아가 사영, 최소제곱 회귀, 주성분으로 이어지는 길이 미리 보인다.
+
+---
+
+## 상관계수가 가질 수 있는 값의 범위
 
 $$
 -1 \leq \rho(X, Y) \leq 1
 $$
 
-This follows from the **Cauchy--Schwarz inequality** $|\text{Cov}(X,Y)| \leq \sigma_X \sigma_Y$, which is proved in the next section.
+이는 다음 절에서 증명할 **코시–슈바르츠 부등식** $|\text{Cov}(X,Y)| \leq \sigma_X \sigma_Y$ 로부터 얻어진다.
 
 ---
 
-## Equality Cases
+## 등호가 성립하는 경우
 
-!!! info "Perfect Linear Relationship"
-    $\rho(X, Y) = 1$ if and only if $Y = aX + b$ for some constants with $a > 0$.
+!!! info "완전한 선형 관계"
+    $\rho(X, Y) = 1$ 일 필요충분조건은 $a > 0$ 인 상수에 대하여 $Y = aX + b$ 인 것이다.
 
-    $\rho(X, Y) = -1$ if and only if $Y = aX + b$ for some constants with $a < 0$.
+    $\rho(X, Y) = -1$ 일 필요충분조건은 $a < 0$ 인 상수에 대하여 $Y = aX + b$ 인 것이다.
 
-**Proof sketch.** If $Y = aX + b$ with $a > 0$, then $\text{Cov}(X, Y) = a\,\text{Var}(X)$, $\sigma_Y = a\sigma_X$, so $\rho = a\,\text{Var}(X)/(a\sigma_X^2) = 1$. The converse follows from the equality condition of Cauchy--Schwarz.
+**증명의 얼개.** $a > 0$ 이고 $Y = aX + b$ 이면 $\text{Cov}(X, Y) = a\,\text{Var}(X)$ 이고 $\sigma_Y = a\,\sigma_X$ 이므로 $\rho = a\,\text{Var}(X)/(a\sigma_X^2) = 1$ 이다. ($a<0$ 인 경우에는 $\sigma_Y = |a|\sigma_X$ 로 바뀌지만 $\text{Cov}(X,Y) = a\,\text{Var}(X) < 0$ 이므로 $\rho = -1$ 이 된다.)
+
+역방향은 코시–슈바르츠의 등호 조건(다음 절에서 증명한다)에서 나온다. 그 조건에 따르면 $|\text{Cov}(X,Y)| = \sigma_X\sigma_Y$ 이면 확률 1로 $Y - \mu_Y$ 가 $X - \mu_X$ 의 상수배가 되어야 한다. 곧 거의 확실하게 $Y = aX + b$ 이며, $\rho$ 의 부호는 $a$ 의 부호와 같다.
 
 ---
 
-## Interpretation
+## 뜻풀이
 
-| Range of $\rho$ | Interpretation |
+| $\rho$ 의 범위 | 뜻풀이 |
 |:---:|:---|
-| $\rho = 1$ | Perfect positive linear relationship |
-| $0.7 \leq \rho < 1$ | Strong positive linear association |
-| $0.3 \leq \rho < 0.7$ | Moderate positive linear association |
-| $0 < \rho < 0.3$ | Weak positive linear association |
-| $\rho = 0$ | No linear association (uncorrelated) |
-| $\rho < 0$ | Negative linear association (same scale) |
+| $\rho = 1$ | 완전한 양의 선형 관계 |
+| $0.7 \leq \rho < 1$ | 강한 양의 선형 연관 |
+| $0.3 \leq \rho < 0.7$ | 보통 수준의 양의 선형 연관 |
+| $0 < \rho < 0.3$ | 약한 양의 선형 연관 |
+| $\rho = 0$ | 선형 연관 없음(무상관) |
+| $\rho < 0$ | 음의 선형 연관(같은 잣대로 읽는다) |
 
-!!! warning "Correlation Is Not Causation"
-    A high correlation between $X$ and $Y$ does not imply that changes in $X$ cause changes in $Y$. They may both be driven by a third variable, or the relationship may be coincidental.
+!!! warning "기준선은 분야마다 다르다"
+    위의 말붙임은 편리하기는 하지만 어디에나 통하는 것은 아니다. 정밀한 물리 실험에서는 $\rho = 0.7$ 이 측정 실패를 뜻할 수도 있고, 사회과학에서는 $\rho = 0.3$ 이 강한 효과일 수도 있다. 이 구분선을 고정된 기준으로 삼지 말고, 그 분야에서 흔한 값과 표본 크기에 비추어 $\rho$ 를 읽어야 한다.
 
-!!! tip "Correlation Measures Linear Association Only"
-    Two variables can have a strong nonlinear relationship yet $\rho = 0$. For instance, if $X \sim \text{Uniform}(-1, 1)$ and $Y = X^2$, then $\rho(X, Y) = 0$ even though $Y$ is completely determined by $X$.
+!!! warning "상관관계는 인과관계가 아니다"
+    $X$ 와 $Y$ 의 상관이 높다고 해서 $X$ 의 변화가 $Y$ 의 변화를 일으킨다고 말할 수는 없다. 둘 다 제3의 변수에 끌려 움직이고 있을 수도 있고, 그 관계가 우연일 수도 있다.
+
+!!! tip "상관계수는 선형 연관만을 잰다"
+    두 변수 사이에 강한 비선형 관계가 있어도 $\rho = 0$ 일 수 있다. 예를 들어 $X \sim \text{Uniform}(-1, 1)$ 이고 $Y = X^2$ 이면 $Y$ 가 $X$ 에 의해 완전히 정해지는데도 $\rho(X, Y) = 0$ 이다.
 
 ---
 
-## Properties
+## 그 밖의 성질
+
+아핀 불변성에 더하여 다음이 성립한다.
 
 1. $\rho(X, Y) = \rho(Y, X)$
 
-2. $\rho(aX + b,\; cY + d) = \text{sign}(ac)\,\rho(X, Y)$ for $ac \neq 0$
+2. $\rho(X, X) = 1$
 
-3. $\rho(X, X) = 1$
-
-4. If $X$ and $Y$ are independent, then $\rho(X, Y) = 0$ (converse is false in general)
+3. $X$ 와 $Y$ 가 독립이면 $\rho(X, Y) = 0$ 이다(일반적으로 그 역은 거짓이다)
 
 ---
 
-## Example
+## 예제
 
-??? example "Computing Correlation from a Joint PMF"
-    Using the joint PMF from the covariance section:
+??? example "결합 확률질량함수에서 상관계수 구하기"
+    공분산 절에서 쓴 결합 확률질량함수를 다시 보자.
 
-    |  | $Y = 0$ | $Y = 1$ |
-    |:---:|:---:|:---:|
-    | $X = 1$ | 0.2 | 0.3 |
-    | $X = 2$ | 0.4 | 0.1 |
+    |  | $Y = 0$ | $Y = 1$ | $Y = 2$ |
+    |:---:|:---:|:---:|:---:|
+    | $X = 0$ | 0.15 | 0.10 | 0.05 |
+    | $X = 1$ | 0.10 | 0.20 | 0.10 |
+    | $X = 2$ | 0.05 | 0.10 | 0.15 |
 
-    We found $\text{Cov}(X, Y) = -0.1$, $E[X] = 1.5$, $E[Y] = 0.4$.
+    앞에서 $\text{Cov}(X, Y) = 0.20$, $E[X] = 1.00$, $E[Y] = 1.00$ 을 얻었다.
 
-    **Compute variances:**
-
-    $$
-    E[X^2] = 1^2(0.5) + 2^2(0.5) = 2.5, \quad \text{Var}(X) = 2.5 - 1.5^2 = 0.25
-    $$
+    **분산을 구한다.** 주변분포 $P(X = 0, 1, 2) = (0.30,\,0.40,\,0.30)$ 을 쓰고 $Y$ 에 대해서도 똑같이 하면 다음과 같다.
 
     $$
-    E[Y^2] = 0^2(0.6) + 1^2(0.4) = 0.4, \quad \text{Var}(Y) = 0.4 - 0.4^2 = 0.24
+    E[X^2] = 0^2(0.30) + 1^2(0.40) + 2^2(0.30) = 1.60, \quad \text{Var}(X) = 1.60 - 1^2 = 0.60
     $$
 
-    **Correlation:**
-
     $$
-    \rho(X, Y) = \frac{-0.1}{\sqrt{0.25}\sqrt{0.24}} = \frac{-0.1}{0.5 \times 0.4899} \approx -0.408
+    E[Y^2] = 1.60, \quad \text{Var}(Y) = 0.60
     $$
 
-    The moderate negative correlation is consistent with the pattern in the PMF table: higher $X$ values are associated with lower $Y$ values.
+    **상관계수:**
+
+    $$
+    \rho(X, Y) = \frac{0.20}{\sqrt{0.60}\,\sqrt{0.60}} = \frac{0.20}{0.60} = \frac{1}{3} \approx 0.333
+    $$
+
+    보통 수준의 양의 상관은 확률질량함수 표의 대각선 무늬와 잘 들어맞는다. $X$ 가 클수록 $Y$ 도 큰 값과 짝을 이룬다.
 
 ---
 
-## Visualizing Correlation
+## 표본상관계수 구하기
 
-The companion script `correlation_simulation.py` generates scatter plots of bivariate normal samples at $\rho = -0.8, 0, 0.5, 0.95$, showing how the shape of the point cloud tightens around a line as $|\rho| \to 1$.
+짝지어진 관측값 $(x_i, y_i)$ 가 주어졌을 때 **표본상관계수**는 다음과 같다.
+
+$$
+r = \frac{\sum_{i=1}^n (x_i - \bar x)(y_i - \bar y)}{\sqrt{\sum_{i=1}^n (x_i - \bar x)^2 \, \sum_{i=1}^n (y_i - \bar y)^2}}
+$$
+
+이것이 $\rho$ 의 대입추정값이다. NumPy의 `np.corrcoef` 가 이 값을 돌려준다.
 
 ```python
 import numpy as np
 
-# Compute sample correlation
 x = np.array([1, 2, 3, 4, 5])
 y = np.array([2, 4, 5, 4, 5])
 
-rho = np.corrcoef(x, y)[0, 1]
-print(f"Sample correlation: {rho:.4f}")  # 0.7746
+r = np.corrcoef(x, y)[0, 1]
+print(f"Sample correlation: {r:.4f}")  # 0.7746
 ```
-=======
->>>>>>> Stashed changes
+
+이에 대응하는 *그림*, 곧 여러 $\rho$ 값에서 이변량정규 표본의 산점도를 그려 $|\rho| \to 1$ 일수록 점구름이 직선 둘레로 조여드는 모습을 보려면 [상관계수 모의실험](correlation_simulation.md)을 참고하라.
+
+## 연습문제
+
+**연습문제 1.** $(X, Y)$ 의 결합 확률질량함수가 다음과 같다고 하자.
+
+|  | $Y = 0$ | $Y = 1$ | $Y = 2$ |
+|:---:|:---:|:---:|:---:|
+| $X = 0$ | 0.10 | 0.20 | 0.10 |
+| $X = 1$ | 0.15 | 0.25 | 0.20 |
+
+$\text{Cov}(X, Y)$ 와 $\rho(X, Y)$ 를 구하여라.
+
+??? success "연습문제 1 풀이"
+    주변분포를 보면 $P(X = 1) = 0.60$ 이므로 $E[X] = 0.60$ 이고, $P(Y = 0, 1, 2) = (0.25, 0.45, 0.30)$ 이므로 $E[Y] = 0.45 + 0.60 = 1.05$ 이다.
+
+    $E[XY] = \sum xy \cdot p(x, y) = 1 \cdot 1 \cdot 0.25 + 1 \cdot 2 \cdot 0.20 = 0.65$ 이다.
+
+    $$
+    \text{Cov}(X, Y) = E[XY] - E[X] E[Y] = 0.65 - 0.60 \cdot 1.05 = 0.02
+    $$
+
+    $E[X^2] = P(X = 1) = 0.60$ 이므로 $\text{Var}(X) = 0.60 - 0.36 = 0.24$ 이다.
+
+    $E[Y^2] = 0 + 0.45 + 4 \cdot 0.30 = 1.65$ 이므로 $\text{Var}(Y) = 1.65 - 1.1025 = 0.5475$ 이다.
+
+    $$
+    \rho = \frac{0.02}{\sqrt{0.24 \cdot 0.5475}} \approx \frac{0.02}{0.3624} \approx 0.0552
+    $$
+
+---
+
+**연습문제 2.** $\text{Var}(X) = 5$, $\text{Var}(Y) = 3$, $\text{Var}(X + Y) = 12$ 일 때 상관계수 $\rho(X, Y)$ 를 구하여라.
+
+??? success "연습문제 2 풀이"
+    $\text{Var}(X + Y) = \text{Var}(X) + \text{Var}(Y) + 2 \text{Cov}(X, Y)$ 를 쓰면 다음과 같다.
+
+    $$
+    12 = 5 + 3 + 2 \text{Cov}(X, Y) \implies \text{Cov}(X, Y) = 2
+    $$
+
+    그러므로 다음을 얻는다.
+
+    $$
+    \rho(X, Y) = \frac{\text{Cov}(X, Y)}{\sqrt{\text{Var}(X) \text{Var}(Y)}} = \frac{2}{\sqrt{15}} \approx 0.5164
+    $$
+
+---
+
+**연습문제 3.** 분포가 모두 같은 확률변수 $n$ 개가 있고 서로 다른 두 변수의 상관계수가 모두 $\rho$ 로 같다고 하자. $\rho$ 는 어떤 값을 가질 수 있는가?
+
+??? success "연습문제 3 풀이"
+    일반성을 잃지 않고 각 변수를 표준화하여 분산을 1로 두자. 그러면 상관행렬은 다음과 같은 $n \times n$ **등상관행렬**이다.
+
+    $$
+    \Sigma =
+    \begin{pmatrix}
+    1 & \rho & \cdots & \rho \\
+    \rho & 1 & \cdots & \rho \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \rho & \rho & \cdots & 1
+    \end{pmatrix}
+    $$
+
+    이 행렬은 $\Sigma = (1 - \rho)\,I + \rho\,J$ 로 쪼갤 수 있다. 여기서 $I$ 는 단위행렬이고 $J$ 는 모든 성분이 1인 행렬이다.
+
+    모든 성분이 1인 행렬 $J$ 는 고윳값 $n$ (고유벡터 $\mathbf{1} = (1,\ldots,1)$)과 중복도 $n - 1$ 인 고윳값 $0$ (성분의 합이 0인 모든 벡터)을 갖는다. 그러므로 $\Sigma$ 의 고윳값은 다음과 같다.
+
+    - $1 + (n-1)\rho$ (한 개)
+    - $1 - \rho$ (중복도 $n - 1$)
+
+    쓸 수 있는 상관행렬이 되려면 양의 준정부호여야 하므로 모든 고윳값이 음이 아니어야 한다.
+
+    $$
+    1 - \rho \geq 0 \implies \rho \leq 1
+    $$
+
+    $$
+    1 + (n-1)\rho \geq 0 \implies \rho \geq -\frac{1}{n-1}
+    $$
+
+    그러므로 다음을 얻는다.
+
+    $$
+    -\frac{1}{n-1} \leq \rho \leq 1
+    $$
+
+    아래쪽 경계는 $n$ 이 커질수록 두 변수씩의 상관이 크게 음수일 수 없음을 말해 준다. 변수가 많아지면 모든 짝이 음의 상관을 가질 "자리"가 모자라기 때문이다. 극단인 $\rho = -1/(n-1)$ 에서는 변수들이 최대한 퍼져 있고 그 합의 분산은 0이 된다.
+
+---
+
+**연습문제 4.** *사슬처럼 이어진 상관.* $\rho(X, Y) = 0.8$ 이고 $\rho(Y, Z) = 0.8$ 이라 하자. $L^2$ 의 기하적 뜻풀이 $\rho = \cos\theta$ 를 써서 $\rho(X, Z)$ 가 놓일 수 있는 가장 좁은 구간을 구하여라.
+
+??? success "연습문제 4 풀이"
+    $L^2$ 안에서 중심화된 확률변수 $\tilde X, \tilde Y, \tilde Z$ 를 각자의 표준편차로 나누면 단위벡터가 된다. 각들은 다음을 만족한다.
+
+    $$
+    \cos\theta_{XY} = \cos\theta_{YZ} = 0.8 \quad\Rightarrow\quad \theta_{XY} = \theta_{YZ} = \arccos(0.8) \approx 36.87^\circ
+    $$
+
+    각 $\theta_{XZ}$ 는 $\tilde X$ 와 $\tilde Z$ 사이의 각이다. 구면 위의 삼각부등식(구면 법칙)에 따라 다음이 성립한다.
+
+    $$
+    |\theta_{XY} - \theta_{YZ}| \leq \theta_{XZ} \leq \theta_{XY} + \theta_{YZ}
+    $$
+
+    여기에 값을 넣으면 $0 \leq \theta_{XZ} \leq 2\arccos(0.8) \approx 73.74^\circ$ 이므로 다음을 얻는다.
+
+    $$
+    \cos(73.74^\circ) \leq \rho(X, Z) \leq 1, \qquad \text{즉} \quad 0.28 \leq \rho(X, Z) \leq 1
+    $$
+
+    수치로는 $\cos(2\arccos(0.8)) = 2(0.8)^2 - 1 = 0.28$ 이다. 아래쪽 경계는 $\tilde X$ 와 $\tilde Z$ 가 $\tilde Y$ 를 사이에 두고 반대편에 놓일 때, 위쪽 경계는 둘이 겹칠 때 이루어진다. 그러므로 강한 상관은 이행적이지 *않다*. $X$ 와 $Z$ 가 둘 다 $Y$ 와 강하게 상관되어 있어도 서로는 약하게만 상관될 수 있다. $\square$
+
+---
+
+**연습문제 5.** *개념 문제: 아핀 불변성 시험해 보기.* $X$ 를 분산이 유한하고 양수인 아무 분포나 따르는 확률변수라 하고 $Y = 5 - 3X$ 로 두자. 적률을 하나도 구하지 말고 $\rho(X, Y)$ 를 예측하여라. 그런 다음 직접 계산하여 확인하여라.
+
+??? success "연습문제 5 풀이"
+    **불변성에서 예측하기.** 변환 $Y = 5 - 3X$ 는 $a = -3$ 인 아핀 꼴이다($Y$ 를 $X$ 의 아핀 함수로 본 것이다). 불변성 성질에 따라 다음을 얻는다.
+
+    $$
+    \rho(X,\, -3X + 5) = \text{sign}(1 \cdot (-3))\,\rho(X, X) = -1 \cdot 1 = -1
+    $$
+
+    $Y$ 가 $X$ 의 (감소하는) 선형함수 바로 그것이므로 $\rho$ 는 $-1$ 이어야 한다.
+
+    **직접 확인하기.** $\sigma_X^2 = \text{Var}(X)$ 라 두면 다음과 같다.
+
+    $$
+    \text{Cov}(X, 5 - 3X) = -3\,\text{Var}(X) = -3\sigma_X^2
+    $$
+
+    $$
+    \sigma_Y = |{-3}|\,\sigma_X = 3\sigma_X
+    $$
+
+    $$
+    \rho(X, Y) = \frac{-3\sigma_X^2}{\sigma_X \cdot 3\sigma_X} = -1
+    $$
+
+    이 답은 *$X$ 의 분포와 아무 상관이 없다*. 오직 선형 관계만이 문제가 된다. 이것이 바로 불변성 성질이 말하는 바이며, 상관계수가 단위를 갖지 않는 까닭이기도 하다. $\square$

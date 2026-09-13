@@ -1,145 +1,290 @@
-# Covariance Definition and Properties
-<<<<<<< Updated upstream
+# 공분산의 정의와 성질
 
-## Motivation
+## 왜 필요한가
 
-Variance measures how a single random variable deviates from its mean. But when we have two random variables, we often want to know whether they tend to deviate **together**. Covariance captures exactly this: it quantifies the degree to which $X$ and $Y$ move in the same direction.
+분산은 확률변수 하나가 자기 평균에서 얼마나 벗어나는지를 재는 값이다. 그런데 확률변수가 둘이면 이 둘이 **함께** 벗어나는 경향이 있는지를 알고 싶을 때가 많다. 공분산이 바로 이것을 붙잡아 준다. $X$ 와 $Y$ 가 같은 방향으로 움직이는 정도를 수로 나타내는 것이다.
 
 ---
 
-## Definition
+## 정의
 
-!!! info "Covariance"
-    For random variables $X$ and $Y$ with finite second moments, the **covariance** of $X$ and $Y$ is
+!!! info "공분산"
+    이차적률이 유한한 확률변수 $X$ 와 $Y$ 에 대하여 $X$ 와 $Y$ 의 **공분산**은 다음과 같이 정의한다.
 
     $$
     \text{Cov}(X, Y) = E\bigl[(X - \mu_X)(Y - \mu_Y)\bigr]
     $$
 
-    where $\mu_X = E[X]$ and $\mu_Y = E[Y]$.
+    여기서 $\mu_X = E[X]$, $\mu_Y = E[Y]$ 이다.
 
-**Interpretation.** When $X$ is above its mean and $Y$ is above its mean simultaneously, the product $(X - \mu_X)(Y - \mu_Y)$ is positive. When they deviate in opposite directions, the product is negative. The covariance averages these products:
+**뜻풀이.** $X$ 가 자기 평균보다 크고 동시에 $Y$ 도 자기 평균보다 크면 곱 $(X - \mu_X)(Y - \mu_Y)$ 는 양수가 된다. 둘이 서로 반대 방향으로 벗어나면 이 곱은 음수가 된다. 공분산은 이런 곱들을 평균낸 값이다.
 
-- $\text{Cov}(X, Y) > 0$: $X$ and $Y$ tend to increase together
-- $\text{Cov}(X, Y) < 0$: when one increases, the other tends to decrease
-- $\text{Cov}(X, Y) = 0$: no linear association (the variables are **uncorrelated**)
+- $\text{Cov}(X, Y) > 0$: $X$ 와 $Y$ 가 함께 커지는 경향이 있다
+- $\text{Cov}(X, Y) < 0$: 하나가 커지면 다른 하나는 작아지는 경향이 있다
+- $\text{Cov}(X, Y) = 0$: 기댓값 수준에서 선형적인 경향이 없다(두 변수는 **무상관**이다)
+
+셋째 경우는 미묘하다. 공분산이 0이라는 것은 교차적률 $E[XY]$ 로 알아챌 수 있는 *선형* 연관이 없다는 뜻일 뿐이다. 비선형 종속은 여전히 있을 수 있으며, 이는 독립과 공분산 0을 다루는 절에서 보게 된다.
 
 ---
 
-## Computational Shortcut
+## 계산을 줄여 주는 식
 
-Expanding the definition gives a formula that is usually easier to compute.
+정의를 펼쳐 보면 대개 계산하기 더 쉬운 공식을 얻는다.
 
 $$
 \text{Cov}(X, Y) = E[XY] - E[X]\,E[Y]
 $$
 
-**Derivation.**
+**유도.**
 
 $$
 \text{Cov}(X, Y) = E\bigl[(X - \mu_X)(Y - \mu_Y)\bigr] = E[XY - \mu_Y X - \mu_X Y + \mu_X \mu_Y]
 $$
 
-By linearity of expectation:
+기댓값의 선형성에 따라 다음을 얻는다.
 
 $$
 = E[XY] - \mu_Y E[X] - \mu_X E[Y] + \mu_X \mu_Y = E[XY] - \mu_X \mu_Y
 $$
 
-!!! tip "Analogy with Variance"
-    Setting $Y = X$ in the shortcut gives $\text{Cov}(X, X) = E[X^2] - (E[X])^2 = \text{Var}(X)$, which is the familiar shortcut formula for variance.
+!!! tip "분산과의 대응"
+    이 간편식에서 $Y = X$ 로 두면 $\text{Cov}(X, X) = E[X^2] - (E[X])^2 = \text{Var}(X)$ 가 되는데, 이는 익숙한 분산의 간편식이다.
 
 ---
 
-## Properties
+## 성질
 
-1. **Symmetry**: $\text{Cov}(X, Y) = \text{Cov}(Y, X)$
+아래 성질들은 자연스럽게 세 갈래로 나뉜다. **대수적 성질**(선형결합과 어떻게 어울리는가), **기하적 성질**(아핀 변환 아래에서 어떻게 움직이는가), **확률적 성질**(분산과 어떻게 이어지는가)이다.
 
-2. **Covariance with itself**: $\text{Cov}(X, X) = \text{Var}(X)$
+**대수적 성질.**
 
-3. **Covariance with a constant**: $\text{Cov}(X, c) = 0$ for any constant $c$
+1. **대칭성**: $\text{Cov}(X, Y) = \text{Cov}(Y, X)$
 
-4. **Scaling and shifting**: $\text{Cov}(aX + b,\; cY + d) = ac \cdot \text{Cov}(X, Y)$
-
-5. **Bilinearity**: For constants $a_1, a_2, b_1, b_2$:
+2. **겹선형성**: 상수 $a_1, a_2$ 에 대하여 다음이 성립한다.
 
 $$
 \text{Cov}(a_1 X_1 + a_2 X_2,\; Y) = a_1 \text{Cov}(X_1, Y) + a_2 \text{Cov}(X_2, Y)
 $$
 
-More generally:
+더 일반적으로 다음이 성립한다.
 
 $$
 \text{Cov}\!\left(\sum_{i=1}^m a_i X_i,\; \sum_{j=1}^n b_j Y_j\right) = \sum_{i=1}^m \sum_{j=1}^n a_i b_j \,\text{Cov}(X_i, Y_j)
 $$
 
-**Proof of Property 4.** Using the shortcut:
+**기하적 성질.**
 
-$$
-\text{Cov}(aX+b,\; cY+d) = E[(aX+b)(cY+d)] - E[aX+b]\,E[cY+d]
-$$
+3. **상수와의 공분산**: 임의의 상수 $c$ 에 대하여 $\text{Cov}(X, c) = 0$
 
-$$
-= ac\,E[XY] + ad\,E[X] + bc\,E[Y] + bd - (a\,E[X]+b)(c\,E[Y]+d)
-$$
+4. **늘이기와 옮기기**: $\text{Cov}(aX + b,\; cY + d) = ac \cdot \text{Cov}(X, Y)$
 
-$$
-= ac\,E[XY] - ac\,E[X]\,E[Y] = ac\,\text{Cov}(X,Y)
-$$
+**확률적 성질.**
 
----
+5. **자기 자신과의 공분산**: $\text{Cov}(X, X) = \text{Var}(X)$
 
-## Example: Joint PMF Table
+**성질 4의 증명.** 간편식을 쓰면 다음과 같다.
 
-??? example "Worked Example"
-    Let $(X, Y)$ have the joint PMF:
-
-    |  | $Y = 0$ | $Y = 1$ |
-    |:---:|:---:|:---:|
-    | $X = 1$ | 0.2 | 0.3 |
-    | $X = 2$ | 0.4 | 0.1 |
-
-    **Step 1.** Compute marginal means.
-
-    $$
-    E[X] = 1(0.5) + 2(0.5) = 1.5, \qquad E[Y] = 0(0.6) + 1(0.4) = 0.4
-    $$
-
-    **Step 2.** Compute $E[XY]$.
-
-    $$
-    E[XY] = (1)(0)(0.2) + (1)(1)(0.3) + (2)(0)(0.4) + (2)(1)(0.1) = 0.5
-    $$
-
-    **Step 3.** Apply the shortcut.
-
-    $$
-    \text{Cov}(X, Y) = E[XY] - E[X]\,E[Y] = 0.5 - (1.5)(0.4) = -0.1
-    $$
-
-    The negative covariance indicates that larger values of $X$ tend to occur with smaller values of $Y$ in this distribution.
+$$\begin{array}{lll}
+\text{Cov}(aX+b,\; cY+d) 
+&=&\displaystyle E[(aX+b)(cY+d)] - E[aX+b]\,E[cY+d]\\
+&=&\displaystyle ac\,E[XY] + ad\,E[X] + bc\,E[Y] + bd - (a\,E[X]+b)(c\,E[Y]+d)\\
+&=&\displaystyle ac\,E[XY] - ac\,E[X]\,E[Y] = ac\,\text{Cov}(X,Y)
+\end{array}$$
 
 ---
 
-## Python Verification
+## 내적으로 본 공분산
 
-```python
-import numpy as np
+겹선형성, 대칭성, 그리고 $\text{Var}(X) = \text{Cov}(X,X)$ 가 음이 아니라는 성질은 곧 **내적**을 규정하는 성질들이다. 분산이 유한하고 중심화된 확률변수들의 공간 위에서 다음 대응은
 
-# Joint PMF from the example
-x_vals = np.array([1, 1, 2, 2])
-y_vals = np.array([0, 1, 0, 1])
-probs  = np.array([0.2, 0.3, 0.4, 0.1])
+$$
+\langle X, Y\rangle = E\bigl[(X - \mu_X)(Y - \mu_Y)\bigr] = \text{Cov}(X, Y)
+$$
 
-E_X  = np.sum(x_vals * probs)        # 1.5
-E_Y  = np.sum(y_vals * probs)        # 0.4
-E_XY = np.sum(x_vals * y_vals * probs)  # 0.5
+진짜 내적이 된다. 다만 한 가지 기술적인 단서가 붙는다. $\|X\| = 0$ 은 $X$ 가 언제나 $\mu_X$ 라는 뜻이 아니라 거의 확실하게 $\mu_X$ 라는 뜻이므로, 확률 1로 일치하는 확률변수들을 같은 것으로 보기로 하면 양정치성이 되살아난다. 이 약속 아래에서 얻어지는 공간, 곧 $L^2$ 의 중심화된 부분공간은 힐베르트 공간이 된다.
 
-cov_XY = E_XY - E_X * E_Y
-print(f"E[X]  = {E_X}")
-print(f"E[Y]  = {E_Y}")
-print(f"E[XY] = {E_XY}")
-print(f"Cov(X,Y) = {cov_XY}")  # -0.1
-```
-=======
->>>>>>> Stashed changes
+이 한 가지 관찰이 뒤에 이어질 여러 생각을 하나로 묶어 준다.
+
+- **노름**: $\|X\| = \sqrt{\text{Var}(X)} = \sigma_X$ 이므로 분산은 길이의 제곱이다.
+- **직교성**: $X$ 와 $Y$ 가 *무상관*이라는 것은 이 내적에서 둘이 직교한다는 것과 똑같다.
+- **각**: 상관계수 $\rho(X,Y)$ 는 $X$ 와 $Y$ 사이 각의 코사인이 된다.
+- **사영**: $Y$ 로부터 $X$ 를 가장 잘 맞히는 선형 예측은 $X$ 를 $\text{span}(Y)$ 위로 직교사영한 것이며, 그 계수가 바로 회귀 기울기 $\text{Cov}(X,Y)/\text{Var}(Y)$ 이다.
+- **코시–슈바르츠**: $|\langle X, Y\rangle| \leq \|X\|\,\|Y\|$ 는 $|\text{Cov}(X, Y)| \leq \sigma_X\,\sigma_Y$ 가 되며, 이 장의 뒤에서 증명한다.
+
+공분산에 관한 어떤 항등식이 알쏭달쏭할 때에는 이 기하적인 말로 옮겨 보면 대개 훤해진다.
+
+---
+
+## 예: 결합 확률질량함수 표
+
+??? example "풀이 예제"
+    $(X, Y)$ 의 결합 확률질량함수가 다음과 같다고 하자.
+
+    |  | $Y = 0$ | $Y = 1$ | $Y = 2$ |
+    |:---:|:---:|:---:|:---:|
+    | $X = 0$ | 0.15 | 0.10 | 0.05 |
+    | $X = 1$ | 0.10 | 0.20 | 0.10 |
+    | $X = 2$ | 0.05 | 0.10 | 0.15 |
+
+    확률이 대각선 $y = x$ 근처에 몰려 있으므로 공분산은 *양수*일 것이라고 짐작할 수 있다. $X$ 가 크면 $Y$ 도 큰 경향이 있기 때문이다.
+
+    **1단계.** 주변분포와 평균을 구한다. 행과 열을 각각 더하면 다음과 같다.
+
+    $$
+    P(X = 0, 1, 2) = (0.30,\,0.40,\,0.30), \qquad P(Y = 0, 1, 2) = (0.30,\,0.40,\,0.30)
+    $$
+
+    $$
+    E[X] = 0(0.30) + 1(0.40) + 2(0.30) = 1.00, \qquad E[Y] = 1.00
+    $$
+
+    **2단계.** $E[XY]$ 를 구한다. $xy \neq 0$ 인 항만 보태진다.
+
+    $$
+    E[XY] = (1)(1)(0.20) + (1)(2)(0.10) + (2)(1)(0.10) + (2)(2)(0.15) = 1.20
+    $$
+
+    **3단계.** 간편식을 쓴다.
+
+    $$
+    \text{Cov}(X, Y) = E[XY] - E[X]\,E[Y] = 1.20 - (1.00)(1.00) = 0.20
+    $$
+
+    공분산이 양수라는 것은 대각선 무늬를 그대로 확인해 준다. 곧 $X$ 와 $Y$ 는 각자의 평균에서 같은 방향으로 벗어나는 경향이 있다. 여기서 결합 확률질량함수는 주변분포의 곱이 *아님*에 유의하자. 예를 들어 $P(X = 0, Y = 0) = 0.15$ 이지만 $P(X = 0)\,P(Y = 0) = 0.09$ 이다. 따라서 $X$ 와 $Y$ 는 종속이고, 0이 아닌 공분산은 그 종속성을 드러낸다.
+
+    **파이썬으로 확인하기.**
+
+    ```python
+    import numpy as np
+
+    # 예제의 결합 확률질량함수 (3 x 3 격자)
+    x_vals = np.array([0, 0, 0, 1, 1, 1, 2, 2, 2])
+    y_vals = np.array([0, 1, 2, 0, 1, 2, 0, 1, 2])
+    probs  = np.array([0.15, 0.10, 0.05,
+                       0.10, 0.20, 0.10,
+                       0.05, 0.10, 0.15])
+
+    E_X  = np.sum(x_vals * probs)            # 1.0
+    E_Y  = np.sum(y_vals * probs)            # 1.0
+    E_XY = np.sum(x_vals * y_vals * probs)   # 1.2
+
+    cov_XY = E_XY - E_X * E_Y
+    print(f"E[X]  = {E_X}")
+    print(f"E[Y]  = {E_Y}")
+    print(f"E[XY] = {E_XY}")
+    print(f"Cov(X,Y) = {cov_XY}")  # 0.2
+    ```
+
+---
+
+## 연습문제
+
+**연습문제 1.** $(X, Y)$ 의 결합 확률질량함수가 다음과 같다고 하자.
+
+|  | $Y = 0$ | $Y = 1$ | $Y = 2$ |
+|:---:|:---:|:---:|:---:|
+| $X = 0$ | 0.10 | 0.20 | 0.10 |
+| $X = 1$ | 0.15 | 0.25 | 0.20 |
+
+$\text{Cov}(X, Y)$ 를 구하여라.
+
+??? success "연습문제 1 풀이"
+    주변분포를 보면 $P(X = 1) = 0.60$ 이므로 $E[X] = 0.60$ 이고, $P(Y = 0, 1, 2) = (0.25, 0.45, 0.30)$ 이므로 $E[Y] = 0.45 + 0.60 = 1.05$ 이다.
+
+    $E[XY] = \sum xy \cdot p(x, y) = 1 \cdot 1 \cdot 0.25 + 1 \cdot 2 \cdot 0.20 = 0.65$ 이다.
+
+    $$
+    \text{Cov}(X, Y) = E[XY] - E[X] E[Y] = 0.65 - 0.60 \cdot 1.05 = 0.02
+    $$
+
+---
+
+**연습문제 2.** 임의의 확률변수 $X$ 와 $Y$ 에 대하여 $\text{Cov}(X + Y, X - Y) = \text{Var}(X) - \text{Var}(Y)$ 임을 보여라.
+
+??? success "연습문제 2 풀이"
+    공분산의 겹선형성에 따라 다음을 얻는다.
+
+    $$
+    \text{Cov}(X + Y, X - Y) = \text{Cov}(X, X) - \text{Cov}(X, Y) + \text{Cov}(Y, X) - \text{Cov}(Y, Y)
+    $$
+
+    $$
+    = \text{Var}(X) - \text{Cov}(X, Y) + \text{Cov}(X, Y) - \text{Var}(Y) = \text{Var}(X) - \text{Var}(Y)
+    $$
+
+    $\square$
+
+---
+
+**연습문제 3.** 확률변수 $X$ 와 $Y$ 가 $\text{Var}(X) = \text{Var}(Y) = \sigma^2$ 이고 상관계수가 $\rho$ 라 하자. $\text{Var}(X - cY)$ 를 가장 작게 만드는 $c$ 의 값을 구하여라.
+
+??? success "연습문제 3 풀이"
+    겹선형성을 쓰면 다음과 같다.
+
+    $$
+    \text{Var}(X - cY) = \text{Var}(X) - 2c \, \text{Cov}(X, Y) + c^2 \text{Var}(Y) = \sigma^2(1 - 2 c \rho + c^2)
+    $$
+
+    $c$ 에 대한 도함수를 0으로 놓으면 $\sigma^2(-2 \rho + 2 c) = 0$ 이므로 $c = \rho$ 이다. 이때의 최솟값은 $\sigma^2 (1 - \rho^2)$ 이다.
+
+    **기하적인 뜻풀이.** 앞에서 소개한 $L^2$ 내적 그림에서 $cY$ 는 $Y$ 방향으로 놓인 벡터이고 $X - cY$ 는 그 잔차이다. $c = \rho$ 로 고르면 잔차가 $Y$ 와 직교하게 되는데, 곧 $\text{Cov}(X - \rho Y,\, Y) = 0$ 이다. 그러므로 $\rho Y$ 는 $X$ 를 $\text{span}(Y)$ 위로 직교사영한 것이다. 잔차 분산의 최솟값 $\sigma^2(1 - \rho^2)$ 은 $X$ 에서 그 생성공간까지의 거리의 제곱이며, 다음 항등식은
+
+    $$
+    \underbrace{\text{Var}(X)}_{\sigma^2} = \underbrace{\rho^2 \sigma^2}_{Y \text{ 로 설명되는 몫}} + \underbrace{\sigma^2(1 - \rho^2)}_{\text{잔차}}
+    $$
+
+    선형회귀와 $R^2$ 를 떠받치는 피타고라스 분해이다.
+
+---
+
+**연습문제 4.** $A$ 와 $B$ 를 사건이라 하고 그 지시확률변수를 $X = \mathbf{1}_A$, $Y = \mathbf{1}_B$ 라 하자. 다음이 성립함을 보이고
+
+$$
+\text{Cov}(X, Y) = P(A \cap B) - P(A)\,P(B)
+$$
+
+$\text{Cov}(\mathbf{1}_A, \mathbf{1}_B) = 0$ 일 때 그리고 오직 그때만 두 사건 $A$ 와 $B$ 가 독립임을 이끌어 내어라.
+
+??? success "연습문제 4 풀이"
+    $X$ 와 $Y$ 는 $0$ 또는 $1$ 의 값만 가지므로 $XY = \mathbf{1}_{A \cap B}$ 이고, 따라서 다음과 같다.
+
+    $$
+    E[XY] = P(A \cap B), \qquad E[X] = P(A), \qquad E[Y] = P(B)
+    $$
+
+    간편식을 적용하면 다음을 얻는다.
+
+    $$
+    \text{Cov}(X, Y) = E[XY] - E[X]\,E[Y] = P(A \cap B) - P(A)\,P(B)
+    $$
+
+    이 값이 0일 필요충분조건은 $P(A \cap B) = P(A)\,P(B)$ 인데, 이것이 바로 사건의 독립의 정의이다. 그러므로 지시확률변수에서는 무상관과 독립이 *같은 말*이 된다. 두 개념 사이의 틈이 사라지는 특별한 경우이다. $\square$
+
+---
+
+**연습문제 5.** $X_1, \ldots, X_n$ 을 분산이 유한한 확률변수라 하자. 겹선형성을 써서 다음 **합의 분산 항등식**을 증명하여라.
+
+$$
+\text{Var}\!\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \text{Var}(X_i) + 2\sum_{1 \leq i < j \leq n} \text{Cov}(X_i, X_j)
+$$
+
+??? success "연습문제 5 풀이"
+    $S = \sum_i X_i$ 에 대하여 $\text{Var}(S) = \text{Cov}(S, S)$ 이므로 겹선형성으로 펼치면 다음과 같다.
+
+    $$
+    \text{Cov}\!\left(\sum_i X_i,\; \sum_j X_j\right) = \sum_{i=1}^n \sum_{j=1}^n \text{Cov}(X_i, X_j)
+    $$
+
+    이 이중합을 $i = j$ 인 부분과 $i \neq j$ 인 부분으로 가르면 다음을 얻는다.
+
+    $$
+    = \sum_{i=1}^n \text{Cov}(X_i, X_i) + \sum_{i \neq j} \text{Cov}(X_i, X_j) = \sum_{i=1}^n \text{Var}(X_i) + \sum_{i \neq j} \text{Cov}(X_i, X_j)
+    $$
+
+    대칭성에 따라 $\text{Cov}(X_i, X_j) = \text{Cov}(X_j, X_i)$ 이므로 $i \neq j$ 인 순서를 따지지 않는 짝 $\{i, j\}$ 하나가 두 번씩 보태진다.
+
+    $$
+    \sum_{i \neq j} \text{Cov}(X_i, X_j) = 2 \sum_{1 \leq i < j \leq n} \text{Cov}(X_i, X_j)
+    $$
+
+    이를 합치면 주어진 항등식을 얻는다. $X_i$ 들이 두 개씩 무상관이면 교차항이 사라지고 분산은 더하기로 갈라지는데, 이것이 익숙한 학부 공식이다. $\square$
