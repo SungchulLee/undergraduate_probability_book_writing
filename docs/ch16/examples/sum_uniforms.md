@@ -1,45 +1,45 @@
-# Sum of Independent Uniforms
+# 독립인 균등확률변수의 합
 
-## Convolution of Two Uniforms
+## 균등확률변수 두 개의 합성곱
 
-!!! info "Sum of Two iid U(-1/2, 1/2)"
-    If $X$ and $Y$ are independent $U(-1/2, 1/2)$, then $X + Y$ has the **triangular distribution**:
+!!! info "i.i.d. U(-1/2, 1/2) 두 개의 합"
+    $X$ 와 $Y$ 가 독립이고 둘 다 $U(-1/2, 1/2)$ 를 따르면, $X + Y$ 는 **삼각분포**를 따른다.
 
     $$f_{X+Y}(a) = (1 - |a|)^+, \quad -1 \leq a \leq 1$$
 
-    where $(x)^+ = \max(x, 0)$.
+    여기에서 $(x)^+ = \max(x, 0)$ 이다.
 
-### Derivation (for $0 \leq a \leq 1$)
+### 유도 (0 ≤ a ≤ 1 인 경우)
 
-By symmetry, it suffices to compute the convolution for $0 \leq a \leq 1$:
+대칭성이 있으므로 $0 \leq a \leq 1$ 인 경우에 대해서만 합성곱을 계산하면 충분하다.
 
 $$f_{X+Y}(a) = \int_{-\infty}^{\infty} f_X(b) \, f_Y(a - b) \, db$$
 
-**Determining the limits:** Both densities equal 1 on $(-1/2, 1/2)$ and 0 elsewhere. So we need:
+**적분 구간 정하기:** 두 밀도함수 모두 $(-1/2, 1/2)$ 위에서 $1$ 이고 그 밖에서는 $0$ 이다. 따라서 다음이 성립해야 한다.
 
-$$-\frac{1}{2} \leq b \leq \frac{1}{2} \quad \text{and} \quad -\frac{1}{2} \leq a - b \leq \frac{1}{2}$$
+$$-\frac{1}{2} \leq b \leq \frac{1}{2} \quad \text{이고} \quad -\frac{1}{2} \leq a - b \leq \frac{1}{2}$$
 
-The second constraint gives $a - \frac{1}{2} \leq b \leq a + \frac{1}{2}$.
+둘째 조건에서 $a - \frac{1}{2} \leq b \leq a + \frac{1}{2}$ 을 얻는다.
 
-For $0 \leq a \leq 1$: the intersection is $a - \frac{1}{2} \leq b \leq \frac{1}{2}$.
+$0 \leq a \leq 1$ 일 때 두 구간의 교집합은 $a - \frac{1}{2} \leq b \leq \frac{1}{2}$ 이다.
 
 $$f_{X+Y}(a) = \int_{a - 1/2}^{1/2} 1 \, db = \frac{1}{2} - \left(a - \frac{1}{2}\right) = 1 - a$$
 
-By symmetry, $f_{X+Y}(a) = 1 + a$ for $-1 \leq a \leq 0$. Combining: $f_{X+Y}(a) = 1 - |a|$.
+대칭성에 따라 $-1 \leq a \leq 0$ 일 때에는 $f_{X+Y}(a) = 1 + a$ 이다. 둘을 합치면 $f_{X+Y}(a) = 1 - |a|$ 이다.
 
-## General Case: Sum of Two iid $U(0, 1)$
+## 일반적인 경우: i.i.d. U(0, 1) 두 개의 합
 
-If $X, Y$ are iid $U(0, 1)$, then $X + Y$ has the **triangular distribution** on $(0, 2)$:
+$X, Y$ 가 i.i.d. $U(0, 1)$ 이면 $X + Y$ 는 $(0, 2)$ 위의 **삼각분포**를 따른다.
 
 $$f_{X+Y}(a) = \begin{cases} a & 0 \leq a \leq 1 \\ 2 - a & 1 < a \leq 2 \end{cases}$$
 
-This is a shift of the $U(-1/2, 1/2)$ result: if $X' = X - 1/2 \sim U(-1/2, 1/2)$, then $X + Y = (X' + Y') + 1$.
+이는 $U(-1/2, 1/2)$ 에서 얻은 결과를 옮겨 놓은 것일 뿐이다. $X' = X - 1/2 \sim U(-1/2, 1/2)$ 로 놓으면 $X + Y = (X' + Y') + 1$ 이기 때문이다.
 
-## Sum of $n$ iid Uniforms
+## 균등확률변수 n 개의 합
 
-As $n$ increases, the distribution of $S_n = X_1 + \cdots + X_n$ approaches a Normal distribution by the Central Limit Theorem. The convolution $U * U$ gives a triangle, $U * U * U$ gives a piecewise quadratic, and so on. In general, the $n$-fold convolution of $U(0,1)$ is called the **Irwin-Hall distribution** and consists of piecewise polynomials of degree $n-1$.
+$n$ 이 커지면 중심극한정리에 따라 $S_n = X_1 + \cdots + X_n$ 의 분포가 정규분포에 가까워진다. 합성곱 $U * U$ 는 삼각형을 주고, $U * U * U$ 는 구간마다 이차식인 함수를 주며, 이런 식으로 이어진다. 일반적으로 $U(0,1)$ 을 $n$ 번 합성곱한 분포를 **어윈–홀 분포**라 하며, 이는 구간마다 $n-1$ 차 다항식으로 주어진다.
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 import numpy as np
@@ -51,7 +51,7 @@ n_sim = 100000
 
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-# Sum of two iid U(-1/2, 1/2)
+# i.i.d. U(-1/2, 1/2) 두 개의 합
 X = np.random.uniform(-0.5, 0.5, n_sim)
 Y = np.random.uniform(-0.5, 0.5, n_sim)
 S = X + Y
@@ -68,7 +68,7 @@ axes[0].set_ylabel('Density')
 axes[0].legend()
 axes[0].grid(True, alpha=0.3)
 
-# Sum of n iid U(-1/2, 1/2) for increasing n
+# n 을 키워 가며 본 i.i.d. U(-1/2, 1/2) n 개의 합
 colors = ['blue', 'red', 'green', 'orange', 'purple']
 for i, n in enumerate([2, 3, 5, 10, 30]):
     samples = np.random.uniform(-0.5, 0.5, (n_sim, n))
@@ -76,7 +76,7 @@ for i, n in enumerate([2, 3, 5, 10, 30]):
     axes[1].hist(sums, bins=80, density=True, alpha=0.3,
                  color=colors[i % len(colors)], label=f'n={n}')
 
-# Overlay Normal for n=30
+# n=30 에 대한 정규분포를 겹쳐 그린다
 x_norm = np.linspace(-4, 4, 200)
 axes[1].plot(x_norm, stats.norm.pdf(x_norm, loc=0, scale=np.sqrt(30/12)),
              'k-', lw=2, label='Normal approx (n=30)')
@@ -89,3 +89,10 @@ plt.tight_layout()
 plt.savefig('sum_uniforms.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
+
+## 연습문제
+
+**연습문제 1.**
+$X \sim U(0, 1)$ 과 $Y \sim U(0, 2)$ 가 독립이라고 하자. 모든 $a \geq 0$ 에 대하여 $f_{X+Y}(a)$ 를 구하여라.
+
+*힌트: 받침 $0 \leq b \leq 1$ 과 $0 \leq a - b \leq 2$ 의 교집합을 잡아 적분 구간을 정한다. $0 \leq a \leq 1$, $1 < a \leq 2$, $2 < a \leq 3$ 의 세 경우로 나누어 생각한다.*

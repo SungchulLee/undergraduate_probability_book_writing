@@ -1,59 +1,59 @@
-# Sum of Independent Poissons (via Convolution)
+# 독립인 푸아송확률변수의 합(합성곱으로)
 
-## Result
+## 결과
 
-!!! info "Convolution of Poisson Distributions"
-    If $X \sim \text{Po}(\lambda_1)$ and $Y \sim \text{Po}(\lambda_2)$ are independent, then:
+!!! info "푸아송분포의 합성곱"
+    $X \sim \text{Po}(\lambda_1)$ 과 $Y \sim \text{Po}(\lambda_2)$ 가 독립이면 다음이 성립한다.
 
     $$X + Y \sim \text{Po}(\lambda_1 + \lambda_2)$$
 
-    In convolution notation: $\text{Po}(\lambda_1) * \text{Po}(\lambda_2) = \text{Po}(\lambda_1 + \lambda_2)$
+    합성곱 기호로 적으면 $\text{Po}(\lambda_1) * \text{Po}(\lambda_2) = \text{Po}(\lambda_1 + \lambda_2)$ 이다.
 
-## Proof via Convolution
+## 합성곱을 쓴 증명
 
-For a non-negative integer $a$:
+음이 아닌 정수 $a$ 에 대하여 다음이 성립한다.
 
 $$p_{X+Y}(a) = \sum_b p_X(b) \, p_Y(a - b)$$
 
-The sum runs over $b \geq 0$ and $a - b \geq 0$, i.e., $0 \leq b \leq a$ (integers):
+합은 $b \geq 0$ 이고 $a - b \geq 0$ 인 범위, 곧 정수 $0 \leq b \leq a$ 에 대하여 취한다.
 
 $$p_{X+Y}(a) = \sum_{b=0}^{a} \frac{\lambda_1^b}{b!} e^{-\lambda_1} \cdot \frac{\lambda_2^{a-b}}{(a-b)!} e^{-\lambda_2}$$
 
-Factor out $e^{-(\lambda_1 + \lambda_2)}$:
+$e^{-(\lambda_1 + \lambda_2)}$ 를 밖으로 빼내면 다음을 얻는다.
 
 $$= e^{-(\lambda_1 + \lambda_2)} \sum_{b=0}^{a} \frac{\lambda_1^b}{b!} \cdot \frac{\lambda_2^{a-b}}{(a-b)!}$$
 
-Multiply and divide by $a!$:
+$a!$ 를 곱하고 나누면 다음과 같다.
 
 $$= \frac{e^{-(\lambda_1 + \lambda_2)}}{a!} \sum_{b=0}^{a} \frac{a!}{b!(a-b)!} \lambda_1^b \lambda_2^{a-b}$$
 
-Recognize the **Binomial Theorem**: $\sum_{b=0}^{a} \binom{a}{b} \lambda_1^b \lambda_2^{a-b} = (\lambda_1 + \lambda_2)^a$:
+여기에서 **이항정리** $\sum_{b=0}^{a} \binom{a}{b} \lambda_1^b \lambda_2^{a-b} = (\lambda_1 + \lambda_2)^a$ 을 알아보면 다음을 얻는다.
 
 $$= \frac{(\lambda_1 + \lambda_2)^a}{a!} e^{-(\lambda_1 + \lambda_2)}$$
 
-This is the PMF of $\text{Po}(\lambda_1 + \lambda_2)$. $\square$
+이것은 $\text{Po}(\lambda_1 + \lambda_2)$ 의 확률질량함수이다. $\square$
 
-## Alternative Proof via MGFs
+## 적률생성함수를 쓴 다른 증명
 
-The MGF approach is more concise:
+적률생성함수를 쓰면 더 간결하다.
 
 $$M_{X+Y}(t) = M_X(t) \cdot M_Y(t) = e^{\lambda_1(e^t - 1)} \cdot e^{\lambda_2(e^t - 1)} = e^{(\lambda_1 + \lambda_2)(e^t - 1)}$$
 
-which is the MGF of $\text{Po}(\lambda_1 + \lambda_2)$. By uniqueness of MGFs, $X + Y \sim \text{Po}(\lambda_1 + \lambda_2)$.
+이것은 $\text{Po}(\lambda_1 + \lambda_2)$ 의 적률생성함수이다. 적률생성함수의 유일성에 따라 $X + Y \sim \text{Po}(\lambda_1 + \lambda_2)$ 이다.
 
-## General Sum
+## 일반적인 합
 
-By induction (or associativity of convolution):
+수학적 귀납법으로(또는 합성곱의 결합법칙으로) 다음을 얻는다.
 
-If $X_1, X_2, \ldots, X_n$ are independent with $X_i \sim \text{Po}(\lambda_i)$, then:
+$X_1, X_2, \ldots, X_n$ 이 독립이고 $X_i \sim \text{Po}(\lambda_i)$ 이면 다음이 성립한다.
 
 $$X_1 + X_2 + \cdots + X_n \sim \text{Po}(\lambda_1 + \lambda_2 + \cdots + \lambda_n)$$
 
-## Connection to the Poisson Process
+## 푸아송 과정과의 관계
 
-This result follows naturally from the **merging property** of Poisson processes: if two independent Poisson processes with rates $\lambda_1$ and $\lambda_2$ are superimposed, the merged process is Poisson with rate $\lambda_1 + \lambda_2$.
+이 결과는 푸아송 과정의 **합침 성질**에서 자연스럽게 따라 나온다. 비율이 $\lambda_1$ 과 $\lambda_2$ 인 두 독립인 푸아송 과정을 포개면, 합쳐진 과정은 비율이 $\lambda_1 + \lambda_2$ 인 푸아송 과정이 된다.
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 import numpy as np
@@ -65,14 +65,14 @@ n_sim = 100000
 
 lambda1, lambda2 = 3.0, 5.0
 
-# Simulate
+# 모의실험
 X = np.random.poisson(lambda1, n_sim)
 Y = np.random.poisson(lambda2, n_sim)
 S = X + Y
 
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-# Compare simulation with theory
+# 모의실험 결과와 이론값을 견준다
 k_vals = np.arange(0, 25)
 pmf_theory = stats.poisson.pmf(k_vals, lambda1 + lambda2)
 
@@ -89,7 +89,7 @@ axes[0].set_ylabel('P(X+Y = k)')
 axes[0].legend()
 axes[0].grid(True, alpha=0.3)
 
-# Verify the convolution computation step by step
+# 합성곱 계산을 한 단계씩 확인한다
 pmf_x = stats.poisson.pmf(k_vals, lambda1)
 pmf_y = stats.poisson.pmf(k_vals, lambda2)
 pmf_conv = np.convolve(pmf_x, pmf_y)[:25]
@@ -111,3 +111,8 @@ plt.show()
 print(f"Simulation: mean={np.mean(S):.4f} (theory {lambda1+lambda2:.4f})")
 print(f"Simulation: var={np.var(S):.4f} (theory {lambda1+lambda2:.4f})")
 ```
+
+## 연습문제
+
+**연습문제 1.**
+$X \sim \text{Po}(2)$ 와 $Y \sim \text{Po}(3)$ 이 독립일 때 $P(X + Y = 4)$ 를 다음 두 가지 방법으로 구하여라. (a) 푸아송 확률질량함수를 직접 합성곱한다. (b) $X + Y \sim \text{Po}(5)$ 임을 알아본다.
