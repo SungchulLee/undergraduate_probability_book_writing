@@ -19,23 +19,23 @@ $$X \approx N(np, \, np(1-p))$$
     - **푸아송 근사**: $n$ 이 크고 $p$ 가 작으며 $np = \lambda$ 가 중간 정도 → $B(n,p) \approx \text{Po}(\lambda)$
     - **정규근사**: $n$ 이 크고 $p$ 가 지나치게 치우치지 않음 → $B(n,p) \approx N(np, np(1-p))$
 
-## 예: 심리학 강의 수강 신청
+## 예: 동전 100번 던지기
 
-어떤 심리학 강의에 수강 신청을 하는 학생 수가 평균이 $100$ 인 푸아송확률변수라고 하자. $120$ 명 이상이 신청하면 교수는 분반을 두 개 연다. 분반을 두 개 열게 될 확률은 얼마인가?
+공정한 동전을 $100$ 번 던진다. 앞면이 $60$ 번 이상 나올 확률은 얼마인가? 앞면의 횟수를 $X$ 라 하면 $X \sim B(100, 0.5)$ 이다.
 
-**정확한 값(푸아송):**
+**정확한 값(이항분포):**
 
-$$P(X \geq 120) = \sum_{k=120}^{\infty} \frac{100^k}{k!} e^{-100} = 0.0282$$
+$$P(X \geq 60) = \sum_{k=60}^{100} \binom{100}{k} \left(\tfrac{1}{2}\right)^{100} = 0.0284$$
 
 **연속성 보정을 한 정규근사:**
 
-i.i.d. 인 $Y_i \sim \text{Po}(1)$ 에 대하여 $X \sim \text{Po}(100)$ 을 $X = \sum_{i=1}^{100} Y_i$ 로 적을 수 있으므로 $\mu = 100$, $\sigma^2 = 100$ 이다.
+$np = 50 \geq 10$ 이고 $n(1-p) = 50 \geq 10$ 이므로 정규근사를 쓸 수 있다. $\mu = np = 50$, $\sigma = \sqrt{np(1-p)} = 5$ 이다.
 
-$$P(X \geq 120) = P(X \geq 119.5) = P\left(\frac{X - 100}{\sqrt{100}} \geq \frac{119.5 - 100}{\sqrt{100}}\right)$$
+$$P(X \geq 60) = P(X \geq 59.5) = P\left(\frac{X - 50}{5} \geq \frac{59.5 - 50}{5}\right)$$
 
-$$\approx 1 - \mathcal{N}(1.95) = 1 - 0.9744 = 0.0256$$
+$$\approx 1 - \mathcal{N}(1.90) = 1 - 0.9713 = 0.0287$$
 
-근사값 $0.0256$ 이 정확한 값 $0.0282$ 에 가깝다.
+근사값 $0.0287$ 이 정확한 값 $0.0284$ 에 매우 가깝다. 연속성 보정을 하지 않으면 $1 - \mathcal{N}(2.00) = 0.0228$ 이 되어 훨씬 어긋난다. 이산확률변수를 연속분포로 어림할 때 보정이 왜 필요한지 잘 보여 주는 대목이다.
 
 ## 파이썬 구현
 
@@ -43,26 +43,29 @@ $$\approx 1 - \mathcal{N}(1.95) = 1 - 0.9744 = 0.0256$$
 import numpy as np
 from scipy import stats
 
-# 정확한 푸아송 값
-lam = 100
-exact = 1 - stats.poisson.cdf(119, lam)
-print(f"Exact (Poisson): {exact:.4f}")
+# 정확한 이항분포 값
+n, p = 100, 0.5
+exact = 1 - stats.binom.cdf(59, n, p)
+print(f"Exact (Binomial): {exact:.4f}")
+
+mu = n * p
+sigma = np.sqrt(n * p * (1 - p))
 
 # 연속성 보정을 한 정규근사
-z = (119.5 - 100) / np.sqrt(100)
+z = (59.5 - mu) / sigma
 approx = 1 - stats.norm.cdf(z)
 print(f"Normal approx (with CC): {approx:.4f}")
 
 # 연속성 보정을 하지 않은 정규근사
-z_no_cc = (120 - 100) / np.sqrt(100)
+z_no_cc = (60 - mu) / sigma
 approx_no_cc = 1 - stats.norm.cdf(z_no_cc)
 print(f"Normal approx (without CC): {approx_no_cc:.4f}")
 ```
 
 **실행 결과:**
 ```
-Exact (Poisson): 0.0282
-Normal approx (with CC): 0.0256
+Exact (Binomial): 0.0284
+Normal approx (with CC): 0.0287
 Normal approx (without CC): 0.0228
 ```
 

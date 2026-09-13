@@ -99,8 +99,8 @@ from scipy import stats
 mu, sigma = 65, 3   # X ~ N(65, 9)
 
 # === 구간확률 ===
-p_interval = stats.norm.cdf(70, mu, sigma) - stats.norm.cdf(60, mu, sigma)
-print(f"P(60 < X < 70) approx {p_interval:.4f}")
+p_interval = stats.norm.cdf(68, mu, sigma) - stats.norm.cdf(60, mu, sigma)
+print(f"P(60 < X < 68) approx {p_interval:.4f}")
 
 # === 위쪽 꼬리확률 ===
 p_tail = 1 - stats.norm.cdf(70, mu, sigma)
@@ -119,7 +119,7 @@ for k in [1, 2, 3]:
 **실행 결과:**
 
 ```
-P(60 < X < 70) approx 0.8940
+P(60 < X < 68) approx 0.7936
 P(X > 70)      approx 0.0478
 Top 10% cutoff approx 68.84
 P(|Z| <= 1) approx 0.6827

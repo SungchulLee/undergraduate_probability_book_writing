@@ -25,7 +25,7 @@ $$f_X(x) = 2\phi(\sqrt{x}) \cdot \frac{1}{2\sqrt{x}} = \frac{1}{\sqrt{2\pi}} x^{
 
 이것은 다음과 같이 고쳐 쓸 수 있다.
 
-$$f_X(x) = \frac{(x/2)^{1/2 - 1} e^{-x/2}}{2 \, \Gamma(1/2)} \cdot \frac{1}{1} = \frac{\frac{1}{2}\left(\frac{1}{2}x\right)^{1/2-1} e^{-x/2}}{\Gamma(1/2)}$$
+$$f_X(x) = \frac{(x/2)^{1/2 - 1} e^{-x/2}}{2 \, \Gamma(1/2)} = \frac{\frac{1}{2}\left(\frac{1}{2}x\right)^{1/2-1} e^{-x/2}}{\Gamma(1/2)}$$
 
 이것이 바로 $\Gamma(1/2, 1/2)$ 의 확률밀도함수이므로 $\chi^2_1 = \Gamma(1/2, 1/2)$ 임이 확인된다.
 

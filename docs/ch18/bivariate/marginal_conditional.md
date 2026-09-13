@@ -141,8 +141,6 @@ fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 ax = axes[0]
 ax.scatter(samples[:, 0], samples[:, 1], s=2, alpha=0.3, label='Samples')
 ax.axhline(y=y_given, color='red', linestyle='--', label=f'Y = {y_given}')
-x_line = np.linspace(mu_x - 3*sigma_x, mu_x + 3*sigma_x, 100)
-regression_line = mu_x + rho * (sigma_x / sigma_y) * (x_line - mu_x)  # E[Y|X=x]
 # 회귀직선으로는 E[X|Y=y] 를 그린다
 y_range = np.linspace(mu_y - 3*sigma_y, mu_y + 3*sigma_y, 100)
 e_x_given_y = mu_x + rho * (sigma_x / sigma_y) * (y_range - mu_y)

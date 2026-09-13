@@ -81,8 +81,8 @@ def main():
     plt.savefig("dice_roll_sum.png", dpi=150, bbox_inches="tight")
     plt.show()
 
-    print(f"Example: P(sum={3*3+1} with {n_dice} dice)")
     k_example = 10
+    print(f"Example: P(sum={k_example} with {n_dice} dice)")
     print(f"  Exact:     {exact_probability(n_dice, k_example):.4f}")
     print(f"  Simulated: {simulated_probability(n_dice, k_example):.4f}")
 

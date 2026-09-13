@@ -91,18 +91,3 @@ $t < \tfrac{1}{2}$ 에 대해 $M_X(t) = \frac{1}{1 - 2t}$ 라고 하자.
     **(a)** $\frac{1}{1-2t} = \sum_{n=0}^{\infty}(2t)^n = \sum_{n=0}^{\infty} 2^n t^n$ 이다. $M_X(t) = \sum \frac{E[X^n]}{n!}t^n$ 이므로 $E[X^n] = 2^n \cdot n!$ 을 얻는다.
 
     **(b)** 이것은 $\text{Exp}(\tfrac{1}{2})$ 의 적률생성함수이다. 곧 $\lambda = \tfrac{1}{2}$ 일 때 $\frac{\lambda}{\lambda - t} = \frac{1/2}{1/2 - t} = \frac{1}{1-2t}$ 이다.
-
----
-
-**연습문제 2.**
-$t < \tfrac{1}{2}$ 에 대해 $M_X(t) = \frac{1}{1 - 2t}$ 라고 하자.
-
-**(a)** $M_X(t)$ 를 멱급수로 전개하여 일반적인 $n$ 에 대한 $E[X^n]$ 을 알아내어라.
-
-**(b)** $X$ 는 어떤 이름 있는 분포를 따르는가?
-
-??? success "연습문제 2 풀이"
-
-    **(a)** $\frac{1}{1-2t} = \sum_{n=0}^{\infty}(2t)^n = \sum_{n=0}^{\infty} 2^n t^n$ 이다. $M_X(t) = \sum \frac{E[X^n]}{n!}t^n$ 이므로 $E[X^n] = 2^n \cdot n!$ 을 얻는다.
-
-    **(b)** 이것은 $\text{Exp}(\tfrac{1}{2})$ 의 적률생성함수이다. 곧 $\lambda = \tfrac{1}{2}$ 일 때 $\frac{\lambda}{\lambda - t} = \frac{1/2}{1/2 - t} = \frac{1}{1-2t}$ 이다.

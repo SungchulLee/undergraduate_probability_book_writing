@@ -132,7 +132,7 @@ $\text{LogNormal}(0, \sigma^2)$ 의 왜도를 $\sigma$ 의 함수로 구하고 $
     (e^{\sigma^2} + 2)\sqrt{e^{\sigma^2} - 1} = 2.
     $$
 
-    $u = e^{\sigma^2}$ 로 놓으면 $(u + 2)\sqrt{u - 1} = 2$ 이다. 양변을 제곱하면 $(u+2)^2(u-1) = 4$ 이다. $u \approx 1.22$ (곧 $\sigma^2 \approx 0.20$, $\sigma \approx 0.45$)를 넣어 보면 $(3.22)^2(0.22) \approx 2.28$ 로 너무 크다. 수치적으로 풀면 $\sigma \approx 0.37$ 을 얻는다. 곧 $\text{LogNormal}(0, 0.14)$ 분포가 $\text{Exp}(1)$ 과 같은 왜도를 가진다.
+    $u = e^{\sigma^2}$ 로 놓으면 $(u + 2)\sqrt{u - 1} = 2$ 이다. 양변을 제곱하면 $(u+2)^2(u-1) = 4$ 이다. $u \approx 1.22$ (곧 $\sigma^2 \approx 0.20$, $\sigma \approx 0.45$)를 넣어 보면 $(3.22)^2(0.22) \approx 2.28$ 로 $4$ 에 못 미친다. 수치적으로 풀면 $u \approx 1.355$, 곧 $\sigma^2 \approx 0.304$, $\sigma \approx 0.55$ 를 얻는다. 곧 $\text{LogNormal}(0,\, 0.304)$ 분포가 $\text{Exp}(1)$ 과 같은 왜도 $2$ 를 가진다.
 
 ---
 

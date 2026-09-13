@@ -29,7 +29,7 @@ hist(x1)
 % N(mu2, si2) 에서 표본 n2 개
 n2 = 400;
 mu2 = 4; si2 = 1;
-x2 = mu2 + si1 * randn(1, n2);
+x2 = mu2 + si2 * randn(1, n2);
 subplot(132)
 hist(x2)
 

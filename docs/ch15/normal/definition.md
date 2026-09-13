@@ -201,7 +201,7 @@ $$\int_{-\infty}^{\infty} e^{-x^2 - 2x}\,dx$$
 ??? success "연습문제 3 풀이"
     완전제곱을 만들면 $-x^2 - 2x = -(x+1)^2 + 1$ 이다. 따라서 다음을 얻는다.
 
-    $$\int_{-\infty}^{\infty} e^{-x^2 - 2x}\,dx = e \int_{-\infty}^{\infty} e^{-(x+1)^2}\,du$$
+    $$\int_{-\infty}^{\infty} e^{-x^2 - 2x}\,dx = e \int_{-\infty}^{\infty} e^{-(x+1)^2}\,dx$$
 
     $u = x + 1$ 로 놓고 $\int_{-\infty}^{\infty} e^{-u^2}\,du = \sqrt{\pi}$ 를 쓰면 답은 $e\sqrt{\pi}$ 이다. $\square$
     

@@ -164,7 +164,7 @@ $$
 
 $$
 D_i = \begin{cases} +1 & \text{확률 } 1/6 \\ -2 & \text{확률 } 1/6 \\ +3 & \text{확률 } 1/6 \\ -4 & \text{확률 } 1/6 \\ +5 & \text{확률 } 1/6 \\ -6 & \text{확률 } 1/6 \end{cases}
-\qquad X_i = D_i + 0.5 \stackrel{iid}{\sim}
+\qquad X_i = D_i + 0.5
 $$
 
 $D_i$ 의 적률을 구하면 다음과 같다.

@@ -53,7 +53,7 @@ p = 0.49
 IC = 100
 Goal = 200
 n = 10000           # 모의실험 하나당 최대 걸음 수
-num_simu = 1000     # 모의실험 횟수
+num_simu = 100      # 모의실험 횟수
 
 # 모든 경로를 한꺼번에 만든다
 steps = 2 * np.random.binomial(1, p, size=(num_simu, n)) - 1

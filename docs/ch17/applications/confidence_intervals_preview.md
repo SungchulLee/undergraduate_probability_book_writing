@@ -32,7 +32,7 @@ $$\bar{X}_n \approx N\left(d, \frac{4}{n}\right)$$
 
 다음을 만족해야 한다.
 
-$$|\bar{X}_n - d| \leq 1.96 \sqrt{\frac{4}{n}} \leq 0.5 \quad \text{95% 신뢰수준으로}$$
+$$|\bar{X}_n - d| \leq 1.96 \sqrt{\frac{4}{n}} \leq 0.5 \quad \text{95\% 신뢰수준으로}$$
 
 풀면 다음을 얻는다.
 
