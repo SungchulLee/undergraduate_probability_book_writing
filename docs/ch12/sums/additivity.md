@@ -1,33 +1,33 @@
-# Additivity of Independent Poisson Random Variables
+# 독립인 푸아송확률변수의 가법성
 
-## Statement
+## 정리의 서술
 
-!!! info "Additivity of Poisson"
-    If $X \sim \text{Po}(\lambda_1)$ and $Y \sim \text{Po}(\lambda_2)$ are **independent**, then
+!!! info "푸아송분포의 가법성"
+    $X \sim \text{Po}(\lambda_1)$ 과 $Y \sim \text{Po}(\lambda_2)$ 가 **독립**이면 다음이 성립한다.
 
     $$
     X + Y \sim \text{Po}(\lambda_1 + \lambda_2)
     $$
 
-    More generally, if $X_1, X_2, \ldots, X_n$ are independent with $X_i \sim \text{Po}(\lambda_i)$, then
+    더 일반적으로 $X_1, X_2, \ldots, X_n$ 이 독립이고 $X_i \sim \text{Po}(\lambda_i)$ 이면 다음이 성립한다.
 
     $$
     \sum_{i=1}^{n} X_i \sim \text{Po}\!\left(\sum_{i=1}^{n} \lambda_i\right)
     $$
 
-This is a fundamental property that makes the Poisson distribution particularly convenient for modeling and computation.
+이것은 푸아송분포를 모형으로 삼거나 계산하는 데 특히 편리하게 만들어 주는 근본적인 성질이다.
 
 ---
 
-## Proof via Convolution
+## 합성곱을 쓴 증명
 
-For independent $X \sim \text{Po}(\lambda_1)$ and $Y \sim \text{Po}(\lambda_2)$, we compute the PMF of $Z = X + Y$ using the convolution formula:
+독립인 $X \sim \text{Po}(\lambda_1)$ 과 $Y \sim \text{Po}(\lambda_2)$ 에 대하여 합성곱 공식으로 $Z = X + Y$ 의 확률질량함수를 계산한다.
 
 $$
 P(Z = k) = \sum_{j=0}^{k} P(X = j) \, P(Y = k - j)
 $$
 
-Substituting the Poisson PMFs:
+푸아송분포의 확률질량함수를 대입하면 다음과 같다.
 
 $$
 P(Z = k) = \sum_{j=0}^{k} \frac{e^{-\lambda_1} \lambda_1^j}{j!} \cdot \frac{e^{-\lambda_2} \lambda_2^{k-j}}{(k-j)!}
@@ -41,45 +41,45 @@ $$
 = \frac{e^{-(\lambda_1 + \lambda_2)}}{k!} \sum_{j=0}^{k} \binom{k}{j} \lambda_1^j \lambda_2^{k-j}
 $$
 
-By the Binomial Theorem, $\sum_{j=0}^{k} \binom{k}{j} \lambda_1^j \lambda_2^{k-j} = (\lambda_1 + \lambda_2)^k$, so:
+이항정리에 따라 $\sum_{j=0}^{k} \binom{k}{j} \lambda_1^j \lambda_2^{k-j} = (\lambda_1 + \lambda_2)^k$ 이므로 다음을 얻는다.
 
 $$
 P(Z = k) = \frac{e^{-(\lambda_1 + \lambda_2)} (\lambda_1 + \lambda_2)^k}{k!}
 $$
 
-which is the PMF of $\text{Po}(\lambda_1 + \lambda_2)$.
+이것은 $\text{Po}(\lambda_1 + \lambda_2)$ 의 확률질량함수이다.
 
 ---
 
-## Proof via MGF
+## 적률생성함수를 쓴 증명
 
-The moment generating function of $X \sim \text{Po}(\lambda)$ is:
+$X \sim \text{Po}(\lambda)$ 의 적률생성함수는 다음과 같다.
 
 $$
 M_X(t) = E[e^{tX}] = e^{\lambda(e^t - 1)}
 $$
 
-For independent $X \sim \text{Po}(\lambda_1)$ and $Y \sim \text{Po}(\lambda_2)$:
+독립인 $X \sim \text{Po}(\lambda_1)$ 과 $Y \sim \text{Po}(\lambda_2)$ 에 대하여 다음이 성립한다.
 
 $$
 M_{X+Y}(t) = M_X(t) \cdot M_Y(t) = e^{\lambda_1(e^t - 1)} \cdot e^{\lambda_2(e^t - 1)} = e^{(\lambda_1 + \lambda_2)(e^t - 1)}
 $$
 
-By the uniqueness theorem for MGFs, $X + Y \sim \text{Po}(\lambda_1 + \lambda_2)$.
+적률생성함수의 유일성 정리에 따라 $X + Y \sim \text{Po}(\lambda_1 + \lambda_2)$ 이다.
 
 ---
 
-## Connection to Poisson Process: Merger
+## 푸아송 과정과의 관계: 합침
 
-The additivity property has a natural interpretation via **Poisson processes** (covered in Chapter 13).
+가법성은 **푸아송 과정**(13장에서 다룬다)으로 자연스럽게 풀이할 수 있다.
 
-If we have two independent Poisson processes with intensities $\lambda_1$ and $\lambda_2$, merging them produces a Poisson process with intensity $\lambda_1 + \lambda_2$. The count of events in any interval is the sum of counts from each process — exactly the additivity property.
+강도가 $\lambda_1$ 과 $\lambda_2$ 인 독립인 푸아송 과정 둘이 있을 때, 이 둘을 합치면 강도가 $\lambda_1 + \lambda_2$ 인 푸아송 과정이 된다. 어떤 구간에서 일어난 사건의 개수는 각 과정에서 일어난 개수의 합이며, 이것이 바로 가법성이다.
 
 ---
 
-## Important: Independence Is Required
+## 중요: 독립성이 반드시 필요하다
 
-Additivity requires independence. If $X$ and $Y$ are dependent Poisson random variables, their sum is generally **not** Poisson.
+가법성에는 독립성이 필요하다. $X$ 와 $Y$ 가 종속인 푸아송확률변수라면 그 합은 일반적으로 푸아송분포를 따르지 **않는다**.
 
 ```python
 import numpy as np
@@ -89,15 +89,15 @@ np.random.seed(42)
 n = 100_000
 la1, la2 = 3, 5
 
-# Independent case: sum IS Poisson
+# 독립인 경우: 합은 푸아송분포를 따른다
 X_ind = np.random.poisson(la1, n)
 Y_ind = np.random.poisson(la2, n)
 Z_ind = X_ind + Y_ind
 
-# Dependent case: sum is NOT Poisson
-# (e.g., Y = X + Poisson(2) makes them dependent)
+# 종속인 경우: 합은 푸아송분포를 따르지 않는다
+# (예: Y = X + Poisson(2)로 두면 서로 종속이 된다)
 X_dep = np.random.poisson(la1, n)
-Y_dep = X_dep + np.random.poisson(la2 - la1, n)  # Y depends on X
+Y_dep = X_dep + np.random.poisson(la2 - la1, n)  # Y가 X에 기대고 있다
 Z_dep = X_dep + Y_dep
 
 print("Independent case:")
@@ -111,7 +111,7 @@ print(f"  Note: var ≠ mean, so Z is NOT Poisson")
 
 ---
 
-## Numerical Verification
+## 수치로 확인하기
 
 ```python
 import numpy as np
@@ -123,19 +123,19 @@ la1, la2 = 3, 7
 la_sum = la1 + la2
 n_samples = 100_000
 
-# Simulate sum of independent Poissons
+# 독립인 푸아송확률변수의 합을 모의실험한다
 X = np.random.poisson(la1, n_samples)
 Y = np.random.poisson(la2, n_samples)
 Z = X + Y
 
-# Compare empirical distribution with Po(λ1 + λ2)
+# 경험적 분포를 Po(λ1 + λ2)와 견주어 본다
 k = np.arange(0, 30)
 empirical_pmf = np.array([(Z == ki).mean() for ki in k])
 theoretical_pmf = poisson.pmf(k, la_sum)
 
 fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
-# PMF comparison
+# 확률질량함수 비교
 axes[0].bar(k - 0.2, empirical_pmf, width=0.4, alpha=0.7,
             label=f'Empirical X+Y', color='steelblue')
 axes[0].bar(k + 0.2, theoretical_pmf, width=0.4, alpha=0.7,
@@ -146,7 +146,7 @@ axes[0].set_ylabel('P(Z = k)')
 axes[0].legend()
 axes[0].grid(True, alpha=0.3)
 
-# Difference plot
+# 차이 그림
 axes[1].bar(k, empirical_pmf - theoretical_pmf, color='gray', alpha=0.7)
 axes[1].axhline(y=0, color='black', linewidth=0.5)
 axes[1].set_title('Difference (Empirical − Theoretical)')
@@ -164,12 +164,59 @@ print(f"Sample var:   {Z.var(ddof=1):.3f}  (theoretical: {la_sum})")
 
 ---
 
-## Application: Combining Counts from Multiple Sources
+## 응용: 여러 원천에서 온 개수를 합치기
 
-In practice, if events from different independent sources follow Poisson distributions, the total count is also Poisson. For example:
+실제로 서로 독립인 여러 원천에서 오는 사건이 각각 푸아송분포를 따르면 전체 개수도 푸아송분포를 따른다. 예를 들면 다음과 같다.
 
-- **Call center**: Calls from region A arrive at rate $\lambda_1 = 5$/hr and from region B at rate $\lambda_2 = 3$/hr. Total calls per hour follow $\text{Po}(8)$.
+- **콜센터**: A 지역에서 시간당 $\lambda_1 = 5$ 의 비율로, B 지역에서 시간당 $\lambda_2 = 3$ 의 비율로 전화가 걸려 온다. 시간당 전체 전화 건수는 $\text{Po}(8)$ 을 따른다.
 
-- **Insurance**: Claims from auto policies ($\lambda_1$) and home policies ($\lambda_2$), if independent, have a total claim count following $\text{Po}(\lambda_1 + \lambda_2)$.
+- **보험**: 자동차 보험의 청구($\lambda_1$)와 주택 보험의 청구($\lambda_2$)가 독립이면, 전체 청구 건수는 $\text{Po}(\lambda_1 + \lambda_2)$ 를 따른다.
 
-- **Finance**: Default events in independent credit portfolios with rates $\lambda_1, \lambda_2, \ldots, \lambda_n$ produce a total default count following $\text{Po}(\sum \lambda_i)$.
+- **금융**: 비율이 $\lambda_1, \lambda_2, \ldots, \lambda_n$ 인 독립된 신용 포트폴리오들에서 일어나는 부도 사건의 전체 개수는 $\text{Po}(\sum \lambda_i)$ 를 따른다.
+
+
+## 연습문제
+
+**연습문제 1.**
+어떤 가게에 서로 독립인 세 가지 경로로 손님이 들어온다.
+
+- 걸어 들어오는 손님: 시간당 $X_1 \sim \text{Po}(8)$
+- 온라인으로 주문하고 찾아가는 손님: 시간당 $X_2 \sim \text{Po}(5)$
+- 전화로 주문하는 손님: 시간당 $X_3 \sim \text{Po}(2)$
+
+**(a)** 시간당 전체 손님 수의 분포는 무엇인가?
+
+**(b)** $P(\text{전체} > 20)$ 과 $P(\text{전체} = 15)$ 를 계산하여라.
+
+**(c)** 10,000시간을 모의실험하여 이론적인 분포를 확인하여라.
+
+??? success "연습문제 1 풀이"
+
+    **(a)** 가법성에 따라 $X_1 + X_2 + X_3 \sim \text{Po}(8 + 5 + 2) = \text{Po}(15)$ 이다.
+
+    **(b)**
+
+    ```python
+    from scipy.stats import poisson
+
+    la = 15
+    print(f"P(total > 20) = {1 - poisson.cdf(20, la):.6f}")
+    print(f"P(total = 15) = {poisson.pmf(15, la):.6f}")
+    ```
+
+    **(c)**
+
+    ```python
+    import numpy as np
+
+    np.random.seed(42)
+    n_sim = 10_000
+
+    X1 = np.random.poisson(8, n_sim)
+    X2 = np.random.poisson(5, n_sim)
+    X3 = np.random.poisson(2, n_sim)
+    total = X1 + X2 + X3
+
+    print(f"Sample mean: {total.mean():.3f} (theoretical: 15)")
+    print(f"Sample var:  {total.var(ddof=1):.3f} (theoretical: 15)")
+    ```

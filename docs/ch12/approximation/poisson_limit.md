@@ -1,87 +1,87 @@
-# Poisson Limit Theorem
+# 푸아송 극한정리
 
-## Statement
+## 정리의 서술
 
-!!! info "Poisson Limit Theorem"
-    Let $X_n \sim B(n, p_n)$ where $p_n = \lambda/n$ for a fixed $\lambda > 0$. Then for every non-negative integer $k$:
+!!! info "푸아송 극한정리"
+    고정된 $\lambda > 0$ 에 대해 $p_n = \lambda/n$ 이고 $X_n \sim B(n, p_n)$ 이라 하자. 그러면 음이 아닌 모든 정수 $k$ 에 대하여 다음이 성립한다.
 
     $$
     \lim_{n \to \infty} P(X_n = k) = \frac{e^{-\lambda} \lambda^k}{k!}
     $$
 
-    That is, $B(n, \lambda/n) \to \text{Po}(\lambda)$ in distribution as $n \to \infty$.
+    곧 $n \to \infty$ 일 때 $B(n, \lambda/n) \to \text{Po}(\lambda)$ 로 분포수렴한다.
 
 ---
 
-## Proof
+## 증명
 
-Starting from the Binomial PMF with $p = \lambda/n$:
+$p = \lambda/n$ 인 이항분포의 확률질량함수에서 출발하자.
 
 $$
 P(X_n = k) = \binom{n}{k} p^k (1-p)^{n-k}
 $$
 
-Substituting $p = \lambda/n$:
+$p = \lambda/n$ 을 대입하면 다음과 같다.
 
 $$
 P(X_n = k) = \frac{n(n-1)(n-2)\cdots(n-k+1)}{k!} \left(\frac{\lambda}{n}\right)^k \left(1 - \frac{\lambda}{n}\right)^{n-k}
 $$
 
-Rearranging:
+이를 다시 정리하면 다음과 같다.
 
 $$
 P(X_n = k) = \frac{1}{k!} \cdot \underbrace{\frac{n(n-1)(n-2)\cdots(n-k+1)}{n^k}}_{\to 1} \cdot \lambda^k \cdot \underbrace{\left(1 - \frac{\lambda}{n}\right)^n}_{\to e^{-\lambda}} \cdot \underbrace{\left(1 - \frac{\lambda}{n}\right)^{-k}}_{\to 1}
 $$
 
-Taking the limit as $n \to \infty$ with $k$ fixed:
+$k$ 를 고정하고 $n \to \infty$ 로 극한을 취하면 다음을 얻는다.
 
 $$
 P(X_n = k) \to \frac{1}{k!} \cdot 1 \cdot \lambda^k \cdot e^{-\lambda} \cdot 1 = \frac{e^{-\lambda} \lambda^k}{k!}
 $$
 
-**Details of each factor:**
+**각 인수에 대한 자세한 설명:**
 
-1. $\frac{n(n-1)\cdots(n-k+1)}{n^k} = 1 \cdot \left(1 - \frac{1}{n}\right) \cdot \left(1 - \frac{2}{n}\right) \cdots \left(1 - \frac{k-1}{n}\right) \to 1$ since $k$ is fixed.
+1. $k$ 가 고정되어 있으므로 $\frac{n(n-1)\cdots(n-k+1)}{n^k} = 1 \cdot \left(1 - \frac{1}{n}\right) \cdot \left(1 - \frac{2}{n}\right) \cdots \left(1 - \frac{k-1}{n}\right) \to 1$ 이다.
 
-2. $\left(1 - \frac{\lambda}{n}\right)^n \to e^{-\lambda}$ by the classical limit definition of $e$.
+2. $e$ 의 고전적인 극한 정의에 따라 $\left(1 - \frac{\lambda}{n}\right)^n \to e^{-\lambda}$ 이다.
 
-3. $\left(1 - \frac{\lambda}{n}\right)^{-k} \to 1$ since $k$ is fixed and $\lambda/n \to 0$.
+3. $k$ 가 고정되어 있고 $\lambda/n \to 0$ 이므로 $\left(1 - \frac{\lambda}{n}\right)^{-k} \to 1$ 이다.
 
 ---
 
-## Moment Convergence
+## 적률의 수렴
 
-The moments also converge correctly:
+적률도 올바르게 수렴한다.
 
-| | $B(n, p)$ with $p = \lambda/n$ | $\text{Po}(\lambda)$ |
+| | $p = \lambda/n$ 인 $B(n, p)$ | $\text{Po}(\lambda)$ |
 |:---|:---:|:---:|
-| Mean | $np = \lambda$ | $\lambda$ |
-| Variance | $npq = \lambda(1 - \lambda/n) \to \lambda$ | $\lambda$ |
+| 평균 | $np = \lambda$ | $\lambda$ |
+| 분산 | $npq = \lambda(1 - \lambda/n) \to \lambda$ | $\lambda$ |
 
-The mean matches exactly for all $n$. The variance converges: $\text{Var}(X_n) = \lambda(1 - \lambda/n) \to \lambda$ as $n \to \infty$.
+평균은 모든 $n$ 에서 정확히 일치한다. 분산은 $n \to \infty$ 일 때 $\text{Var}(X_n) = \lambda(1 - \lambda/n) \to \lambda$ 로 수렴한다.
 
 ---
 
-## Generalization: Sum of Independent Bernoullis with Different $p_i$
+## 일반화: pᵢ가 서로 다른 독립인 베르누이확률변수의 합
 
-The Poisson Limit Theorem extends beyond the case where all Bernoulli trials have the same probability. Let $A_1, A_2, \ldots, A_n$ be independent events with $p_i = P(A_i)$, and let
+푸아송 극한정리는 모든 베르누이 시행의 확률이 같은 경우를 넘어서까지 넓혀진다. $A_1, A_2, \ldots, A_n$ 을 독립인 사건이라 하고 $p_i = P(A_i)$ 라 한 뒤 다음과 같이 두자.
 
 $$
 X = \sum_{i=1}^{n} \mathbf{1}_{A_i}
 $$
 
-Note that $X$ is **not** $B(n, p)$ in general (since the $p_i$ may differ). Nevertheless, if $Y \sim \text{Po}(\lambda)$ with $\lambda = \sum_{i=1}^{n} p_i$, then for any set $A$:
+$p_i$ 가 서로 다를 수 있으므로 $X$ 는 일반적으로 $B(n, p)$ 가 **아니다**. 그럼에도 $\lambda = \sum_{i=1}^{n} p_i$ 인 $Y \sim \text{Po}(\lambda)$ 에 대하여 임의의 집합 $A$ 에서 다음이 성립한다.
 
 $$
 \left| P(X \in A) - P(Y \in A) \right| \leq \sum_{i=1}^{n} p_i^2 \leq \left(\max_{1 \leq i \leq n} p_i\right) \cdot \sum_{i=1}^{n} p_i = \left(\max_{1 \leq i \leq n} p_i\right) \cdot \lambda
 $$
 
-!!! note "Le Cam's Inequality"
-    This result, known as **Le Cam's inequality**, provides an explicit error bound for the Poisson approximation. The bound is small when $\max_i p_i$ is small — that is, when each individual event is rare.
+!!! note "르캉 부등식"
+    **르캉 부등식**이라 부르는 이 결과는 푸아송 근사의 오차에 대한 뚜렷한 경계를 준다. $\max_i p_i$ 가 작을 때, 곧 낱낱의 사건이 저마다 드물 때 이 경계는 작아진다.
 
 ---
 
-## Numerical Illustration
+## 수치로 보기
 
 ```python
 import numpy as np
@@ -89,7 +89,7 @@ from scipy.stats import binom, poisson
 from math import comb, factorial
 
 def poisson_limit_demo(n_values, la=10):
-    """Show convergence of B(n, λ/n) to Po(λ) for specific k values."""
+    """정해진 k 값들에서 B(n, λ/n)이 Po(λ)로 수렴함을 보인다."""
     k_values = [0, 5, 10, 15, 20]
     poisson_probs = {k: poisson.pmf(k, la) for k in k_values}
 
@@ -116,7 +116,7 @@ def poisson_limit_demo(n_values, la=10):
 poisson_limit_demo([20, 50, 100, 500, 1000, 10000])
 ```
 
-Expected output:
+예상되는 실행 결과는 다음과 같다.
 
 ```
 Convergence of B(n, 10/n) to Po(10)
@@ -133,7 +133,7 @@ Convergence of B(n, 10/n) to Po(10)
 
 ---
 
-## Visualization
+## 그림으로 보기
 
 ```python
 import numpy as np
@@ -175,3 +175,42 @@ plt.tight_layout()
 plt.savefig('poisson_limit_theorem.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
+
+
+## 연습문제
+
+**연습문제 1.**
+어떤 제조 공정에서 마이크로칩 한 개가 불량일 확률이 $p = 0.002$ 이다. 한 묶음에는 $n = 1000$ 개의 칩이 들어 있다.
+
+**(a)** $X$ 를 불량 칩의 개수라 하자. $X$ 의 정확한 분포는 무엇인가? 푸아송 근사는 무엇인가?
+
+**(b)** 정확한 이항분포와 푸아송 근사를 모두 써서 $P(X = 0)$, $P(X \leq 3)$, $P(X > 5)$ 를 계산하고 견주어 보아라.
+
+**(c)** 이 근사에 대한 르캉 오차 경계를 계산하여라.
+
+??? success "연습문제 1 풀이"
+
+    **(a)** 정확하게는 $X \sim B(1000, 0.002)$ 이다. 푸아송 근사는 $\lambda = np = 2$ 인 $X \approx \text{Po}(\lambda)$ 이다.
+
+    **(b)**
+
+    ```python
+    from scipy.stats import binom, poisson
+
+    n, p = 1000, 0.002
+    la = n * p
+
+    print(f"{'':>20} {'Binomial':>12} {'Poisson':>12} {'Diff':>12}")
+    print("-" * 58)
+
+    b0, p0 = binom.pmf(0, n, p), poisson.pmf(0, la)
+    print(f"{'P(X=0)':>20} {b0:>12.6f} {p0:>12.6f} {abs(b0-p0):>12.2e}")
+
+    b3, p3 = binom.cdf(3, n, p), poisson.cdf(3, la)
+    print(f"{'P(X≤3)':>20} {b3:>12.6f} {p3:>12.6f} {abs(b3-p3):>12.2e}")
+
+    b5, p5 = 1 - binom.cdf(5, n, p), 1 - poisson.cdf(5, la)
+    print(f"{'P(X>5)':>20} {b5:>12.6f} {p5:>12.6f} {abs(b5-p5):>12.2e}")
+    ```
+
+    **(c)** 르캉 경계는 $np^2 = 1000 \cdot (0.002)^2 = 0.004$ 이다.

@@ -1,48 +1,48 @@
-# Poisson Distribution: Definition and Properties
+# 푸아송분포의 정의와 성질
 
-## Definition
+## 정의
 
-A random variable $X$ has a **Poisson distribution** with parameter $\lambda > 0$, written $X \sim \text{Po}(\lambda)$, if its probability mass function (PMF) is
+확률변수 $X$ 의 확률질량함수가 다음과 같으면, $X$ 는 모수가 $\lambda > 0$ 인 **푸아송분포**를 따른다고 하고 $X \sim \text{Po}(\lambda)$ 로 적는다.
 
 $$
 P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \ldots
 $$
 
-The parameter $\lambda$ represents both the **mean** and the **variance** of the distribution.
+모수 $\lambda$ 는 이 분포의 **평균**이자 **분산**이기도 하다.
 
 ---
 
-## Verifying the PMF Sums to 1
+## 확률질량함수의 합이 1임을 확인하기
 
-To confirm this is a valid probability distribution, we check that the PMF sums to 1:
+이것이 올바른 확률분포인지 확인하기 위해 확률질량함수의 합이 1임을 살펴보자.
 
 $$
 \sum_{k=0}^{\infty} \frac{e^{-\lambda} \lambda^k}{k!} = e^{-\lambda} \sum_{k=0}^{\infty} \frac{\lambda^k}{k!} = e^{-\lambda} \cdot e^{\lambda} = 1
 $$
 
-This uses the Taylor series expansion $e^{\lambda} = \sum_{k=0}^{\infty} \frac{\lambda^k}{k!}$.
+여기에는 테일러급수 전개 $e^{\lambda} = \sum_{k=0}^{\infty} \frac{\lambda^k}{k!}$ 가 쓰였다.
 
 ---
 
-## Intuition: Where the Poisson Comes From
+## 직관: 푸아송분포는 어디에서 오는가
 
-The Poisson distribution arises naturally as an approximation to the Binomial distribution $B(n, p)$ when $n$ is large, $p$ is small, and $\lambda = np$ is held fixed.
+푸아송분포는 $n$ 이 크고 $p$ 가 작으며 $\lambda = np$ 가 고정되어 있을 때 이항분포 $B(n, p)$ 의 근사로서 자연스럽게 나타난다.
 
-| Distribution | Random Variable |
+| 분포 | 확률변수 |
 |:---|:---|
-| $B(p)$ | Flip a $p$-coin and check whether we have a head |
-| $B(n, p)$ | Flip a $p$-coin $n$ times and count the number of heads |
-| $\text{Po}(\lambda) \approx B(n, p)$ | Flip a $p$-coin $n$ times and count the number of heads, where $np = \lambda$ is fixed and $n \to \infty$ |
-| $\text{Geo}(p)$ | Flip a $p$-coin until first head and count the number of flips |
-| $\text{NB}(r, p)$ | Flip a $p$-coin until $r$-th head and count the number of flips |
+| $B(p)$ | $p$-동전을 한 번 던져 앞면이 나왔는지 살핀다 |
+| $B(n, p)$ | $p$-동전을 $n$ 번 던져 앞면의 개수를 센다 |
+| $\text{Po}(\lambda) \approx B(n, p)$ | $np = \lambda$ 를 고정하고 $n \to \infty$ 로 보내면서 $p$-동전을 $n$ 번 던져 앞면의 개수를 센다 |
+| $\text{Geo}(p)$ | 첫 앞면이 나올 때까지 $p$-동전을 던져 던진 횟수를 센다 |
+| $\text{NB}(r, p)$ | $r$ 번째 앞면이 나올 때까지 $p$-동전을 던져 던진 횟수를 센다 |
 
-The Poisson distribution can be thought of as counting the number of "rare events" that occur in a fixed period of time or region of space, where each individual event has a very small probability of occurring at any given instant, but there are many opportunities for it to happen.
+푸아송분포는 정해진 시간 동안이나 정해진 공간 안에서 일어나는 "드문 사건"의 개수를 세는 것으로 생각할 수 있다. 각 사건이 어느 한 순간에 일어날 확률은 매우 작지만, 일어날 기회는 아주 많은 상황이다.
 
 ---
 
-## Summary of Discrete Distribution Parameters
+## 이산분포의 모수 요약
 
-| Distribution | Expectation | Variance |
+| 분포 | 기댓값 | 분산 |
 |:---|:---:|:---:|
 | $B(p)$ | $p$ | $pq$ |
 | $B(n, p)$ | $np$ | $npq$ |
@@ -50,13 +50,13 @@ The Poisson distribution can be thought of as counting the number of "rare event
 | $\text{Geo}(p)$ | $\frac{1}{p}$ | $\frac{q}{p^2}$ |
 | $\text{NB}(r, p)$ | $\frac{r}{p}$ | $\frac{rq}{p^2}$ |
 
-A distinctive feature of the Poisson distribution is that its mean equals its variance ($\lambda = \lambda$). This property is often used as a diagnostic: if data has mean approximately equal to variance, a Poisson model may be appropriate.
+푸아송분포의 두드러진 특징은 평균과 분산이 같다는 것이다($\lambda = \lambda$). 이 성질은 흔히 진단 기준으로 쓰인다. 자료의 평균이 분산과 거의 같다면 푸아송 모형이 알맞을 수 있다.
 
 ---
 
-## PMF and CDF Visualization
+## 확률질량함수와 누적분포함수 그림으로 보기
 
-The PMF of $\text{Po}(\lambda)$ is a discrete distribution concentrated on the non-negative integers. As $\lambda$ increases, the distribution shifts to the right and becomes more spread out (and more symmetric, approaching a Normal shape by the CLT).
+$\text{Po}(\lambda)$ 의 확률질량함수는 음이 아닌 정수 위에 모여 있는 이산분포이다. $\lambda$ 가 커지면 분포는 오른쪽으로 옮겨 가고 더 넓게 퍼지며, 중심극한정리에 따라 정규분포의 모양에 가까워져 더 대칭이 된다.
 
 ```python
 import numpy as np
@@ -69,7 +69,7 @@ x = np.arange(0, m + 1)
 
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-# PMF
+# 확률질량함수
 pmf_vals = poisson.pmf(x, la)
 axes[0].bar(x, pmf_vals, color='steelblue', alpha=0.7, edgecolor='black')
 axes[0].set_title(f'PMF of Po({la})')
@@ -78,7 +78,7 @@ axes[0].set_ylabel('P(X = k)')
 axes[0].set_xlim(-0.5, m + 0.5)
 axes[0].grid(True, alpha=0.3)
 
-# CDF
+# 누적분포함수
 cdf_vals = poisson.cdf(x, la)
 axes[1].step(x, cdf_vals, where='mid', color='steelblue', linewidth=2)
 axes[1].set_title(f'CDF of Po({la})')
@@ -95,43 +95,100 @@ plt.show()
 
 ---
 
-## Key Properties
+## 주요 성질
 
-1. **Support**: $X$ takes values in $\{0, 1, 2, \ldots\}$ (the non-negative integers).
+1. **받침(support)**: $X$ 는 $\{0, 1, 2, \ldots\}$ 의 값(음이 아닌 정수)을 갖는다.
 
-2. **Mode**: The mode of $\text{Po}(\lambda)$ is $\lfloor \lambda \rfloor$ when $\lambda$ is not an integer, and both $\lambda - 1$ and $\lambda$ when $\lambda$ is a positive integer.
+2. **최빈값**: $\text{Po}(\lambda)$ 의 최빈값은 $\lambda$ 가 정수가 아닐 때는 $\lfloor \lambda \rfloor$ 이고, $\lambda$ 가 양의 정수일 때는 $\lambda - 1$ 과 $\lambda$ 둘 다이다.
 
-3. **Ratio of successive probabilities**: For $k \geq 1$,
+3. **이웃한 확률의 비**: $k \geq 1$ 에 대하여
+
    $$
    \frac{P(X = k)}{P(X = k-1)} = \frac{\lambda}{k}
    $$
-   This means probabilities increase when $k < \lambda$ and decrease when $k > \lambda$.
 
-4. **Tail behavior**: The Poisson PMF decreases super-exponentially for large $k$ (faster than any geometric distribution), since $k!$ grows faster than any exponential.
+   이다. 곧 $k < \lambda$ 일 때는 확률이 늘어나고 $k > \lambda$ 일 때는 줄어든다.
 
-5. **Mean equals variance**: $E[X] = \text{Var}(X) = \lambda$. This is a unique fingerprint of the Poisson among common distributions.
+4. **꼬리의 모습**: $k!$ 이 어떤 지수함수보다도 빠르게 커지므로, 푸아송분포의 확률질량함수는 큰 $k$ 에서 지수보다도 빠르게(어떤 기하분포보다도 빠르게) 줄어든다.
+
+5. **평균과 분산이 같다**: $E[X] = \text{Var}(X) = \lambda$ 이다. 이것은 흔히 쓰는 분포들 가운데 푸아송분포만이 갖는 지문과 같다.
 
 ---
 
-## Computing Poisson Probabilities in Python
+## 파이썬으로 푸아송확률 계산하기
 
 ```python
 from scipy.stats import poisson
 
 la = 10
 
-# Individual probabilities
+# 낱낱의 확률
 print(f"P(X = 5) = {poisson.pmf(5, la):.6f}")
 print(f"P(X = 10) = {poisson.pmf(10, la):.6f}")
 
-# Cumulative probabilities
+# 누적확률
 print(f"P(X <= 8) = {poisson.cdf(8, la):.6f}")
 print(f"P(X > 12) = {1 - poisson.cdf(12, la):.6f}")
 
-# Quantiles
+# 분위수
 print(f"Median = {poisson.median(la)}")
 print(f"95th percentile = {poisson.ppf(0.95, la)}")
 
-# Mean and variance
+# 평균과 분산
 print(f"Mean = {poisson.mean(la)}, Variance = {poisson.var(la)}")
 ```
+
+## 연습문제
+
+**연습문제 1.**
+$X \sim \text{Po}(6)$ 이라 하자.
+
+**(a)** $P(X = 0)$, $P(X = 3)$, $P(X = 6)$, $P(X = 10)$ 을 계산하여라.
+
+**(b)** $P(X \leq 4)$ 와 $P(X > 8)$ 을 계산하여라.
+
+**(c)** $X$ 의 최빈값을 구하여라.
+
+**(d)** $E[X] = \text{Var}(X) = 6$ 임을 수치적으로 확인하여라.
+
+??? success "연습문제 1 풀이"
+
+    **(a)**
+
+    $$
+    P(X = k) = \frac{e^{-6} \cdot 6^k}{k!}
+    $$
+
+    ```python
+    from scipy.stats import poisson
+
+    la = 6
+    for k in [0, 3, 6, 10]:
+        print(f"P(X = {k}) = {poisson.pmf(k, la):.6f}")
+    ```
+
+    - $P(X = 0) = e^{-6} \approx 0.002479$
+    - $P(X = 3) = \frac{e^{-6} \cdot 216}{6} \approx 0.089235$
+    - $P(X = 6) \approx 0.160623$
+    - $P(X = 10) \approx 0.041303$
+
+    **(b)**
+
+    ```python
+    print(f"P(X ≤ 4) = {poisson.cdf(4, la):.6f}")
+    print(f"P(X > 8) = {1 - poisson.cdf(8, la):.6f}")
+    ```
+
+    $P(X \leq 4) \approx 0.2851$ 이고 $P(X > 8) \approx 0.1528$ 이다.
+
+    **(c)** $\lambda = 6$ 이 정수이므로 최빈값은 $k = 5$ 와 $k = 6$ 둘 다이다.
+
+    **(d)**
+
+    ```python
+    import numpy as np
+    np.random.seed(42)
+    samples = np.random.poisson(6, 100_000)
+    print(f"Sample mean: {samples.mean():.4f}")
+    print(f"Sample var:  {samples.var(ddof=1):.4f}")
+    ```
