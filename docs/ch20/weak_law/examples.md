@@ -1,66 +1,66 @@
-# Weak Law of Large Numbers — Examples and Extensions
+# 예, 확장, 성립하지 않는 경우
 
-## Review of the Statement
+## 서술 복습
 
-!!! info "Weak Law of Large Numbers (WLLN)"
-    Let $X_1, X_2, \ldots$ be iid with $E[X_i] = \mu$ and $\text{Var}(X_i) = \sigma^2 < \infty$. Then for all $\varepsilon > 0$:
+!!! info "큰수의 약법칙(WLLN)"
+    $X_1, X_2, \ldots$ 가 $E[X_i] = \mu$, $\text{Var}(X_i) = \sigma^2 < \infty$ 인 i.i.d. 확률변수라고 하자. 그러면 모든 $\varepsilon > 0$ 에 대하여 다음이 성립한다.
 
-    $$P\!\left(\left|\bar{X}_n - \mu\right| \geq \varepsilon\right) \to 0 \quad \text{as } n \to \infty$$
+    $$P\!\left(\left|\bar{X}_n - \mu\right| \geq \varepsilon\right) \to 0 \quad n \to \infty \text{ 일 때}$$
 
-    Equivalently, $\bar{X}_n \xrightarrow{p} \mu$.
+    같은 말로 $\bar{X}_n \xrightarrow{p} \mu$ 이다.
 
-The standard proof uses Chebyshev's inequality (see Section 20.3, Statement and Proof).
+표준적인 증명은 체비쇼프 부등식을 쓴다(20.3절 서술과 증명을 보아라).
 
-## Alternative Proof: Truncation (Without Finite Variance)
+## 다른 증명: 잘라내기(분산이 유한하지 않아도 된다)
 
-The WLLN holds even **without the finite variance assumption** — only $E[|X|] < \infty$ is needed.
+큰수의 약법칙은 **분산이 유한하다는 가정 없이도** 성립한다. $E[|X|] < \infty$ 만 있으면 된다.
 
-!!! info "WLLN (Finite Mean Only)"
-    If $X_1, X_2, \ldots$ are iid with $E[X_i] = \mu$ (no variance assumption), then $\bar{X}_n \xrightarrow{p} \mu$.
+!!! info "큰수의 약법칙(평균만 유한한 경우)"
+    $X_1, X_2, \ldots$ 가 $E[X_i] = \mu$ 인 i.i.d. 확률변수이면(분산에 대한 가정은 없다) $\bar{X}_n \xrightarrow{p} \mu$ 이다.
 
-**Proof sketch (truncation method).** Define $Y_i = X_i \cdot \mathbf{1}(|X_i| \leq n)$ (truncated version). Then:
+**증명의 얼개(잘라내기 방법).** $Y_i = X_i \cdot \mathbf{1}(|X_i| \leq n)$ 으로 잘라낸 확률변수를 정의한다. 그러면 다음이 성립한다.
 
-1. $E[Y_i] \to \mu$ as $n \to \infty$ (dominated convergence)
-2. $\text{Var}(Y_i) \leq E[Y_i^2] \leq n \cdot E[|X|]$ (since $|Y_i| \leq n$)
-3. Apply Chebyshev to $\bar{Y}_n$: $P(|\bar{Y}_n - E[Y_1]| > \varepsilon/2) \leq \frac{n E[|X|]}{n^2 (\varepsilon/2)^2} \to 0$
-4. $P(\bar{X}_n \neq \bar{Y}_n) \leq \sum P(|X_i| > n) = n P(|X_1| > n) \to 0$
+1. $n \to \infty$ 일 때 $E[Y_i] \to \mu$ 이다(지배수렴정리).
+2. $|Y_i| \leq n$ 이므로 $\text{Var}(Y_i) \leq E[Y_i^2] \leq n \cdot E[|X|]$ 이다.
+3. $\bar{Y}_n$ 에 체비쇼프 부등식을 적용하면 $P(|\bar{Y}_n - E[Y_1]| > \varepsilon/2) \leq \frac{n E[|X|]}{n^2 (\varepsilon/2)^2} \to 0$ 이다.
+4. $P(\bar{X}_n \neq \bar{Y}_n) \leq \sum P(|X_i| > n) = n P(|X_1| > n) \to 0$ 이다.
 
-Combining steps 3 and 4 gives $P(|\bar{X}_n - \mu| > \varepsilon) \to 0$. $\square$
+3단계와 4단계를 합치면 $P(|\bar{X}_n - \mu| > \varepsilon) \to 0$ 을 얻는다. $\square$
 
-## Example: Sample Mean of Exponentials
+## 예: 지수분포의 표본평균
 
-Let $X_i \sim \text{Exp}(\lambda)$ with $\mu = 1/\lambda$. The WLLN says $\bar{X}_n \to 1/\lambda$ in probability.
+$X_i \sim \text{Exp}(\lambda)$ 이고 $\mu = 1/\lambda$ 라고 하자. 큰수의 약법칙은 $\bar{X}_n$ 이 $1/\lambda$ 로 확률수렴한다고 말한다.
 
-The rate of convergence can be quantified via Chebyshev:
+수렴이 얼마나 빠른지는 체비쇼프 부등식으로 셈할 수 있다.
 
 $$P\!\left(\left|\bar{X}_n - \frac{1}{\lambda}\right| \geq \varepsilon\right) \leq \frac{\text{Var}(\bar{X}_n)}{\varepsilon^2} = \frac{1}{n\lambda^2\varepsilon^2}$$
 
-For example, with $\lambda = 1$ and $\varepsilon = 0.1$: the bound is $\frac{100}{n}$, so $n \geq 10000$ guarantees this probability is at most 1%.
+이를테면 $\lambda = 1$, $\varepsilon = 0.1$ 이면 경계가 $\frac{100}{n}$ 이므로 $n \geq 10000$ 이면 이 확률이 1% 이하임이 보장된다.
 
-## Example: Estimating $\pi$
+## 예: 원주율 어림하기
 
-Consider the **Monte Carlo estimation** of $\pi$. Generate $(U_i, V_i) \sim \text{Uniform}([0,1]^2)$ iid and let $X_i = \mathbf{1}(U_i^2 + V_i^2 \leq 1)$. Then $\mu = E[X_i] = \pi/4$ and:
+$\pi$ 의 **몬테카를로 어림**을 생각해 보자. $(U_i, V_i) \sim \text{Uniform}([0,1]^2)$ 을 i.i.d. 로 만들고 $X_i = \mathbf{1}(U_i^2 + V_i^2 \leq 1)$ 로 두자. 그러면 $\mu = E[X_i] = \pi/4$ 이고 다음이 성립한다.
 
 $$\hat{\pi}_n = 4\bar{X}_n \xrightarrow{p} \pi$$
 
-## Convergence Rate: Chebyshev vs CLT
+## 수렴 속도: 체비쇼프와 중심극한정리
 
-Chebyshev gives a **polynomial** bound: $P(|\bar{X}_n - \mu| \geq \varepsilon) \leq \frac{\sigma^2}{n\varepsilon^2}$.
+체비쇼프 부등식은 **다항식** 꼴의 경계를 준다. 곧 $P(|\bar{X}_n - \mu| \geq \varepsilon) \leq \frac{\sigma^2}{n\varepsilon^2}$ 이다.
 
-The CLT gives a **sharper asymptotic** characterization:
+중심극한정리는 **더 날카로운 점근적** 표현을 준다.
 
-$$P\!\left(\left|\bar{X}_n - \mu\right| \geq \varepsilon\right) \approx 2\left(1 - \Phi\!\left(\frac{\varepsilon\sqrt{n}}{\sigma}\right)\right)$$
+$$P\!\left(\left|\bar{X}_n - \mu\right| \geq \varepsilon\right) \approx 2\left(1 - \mathcal{N}\!\left(\frac{\varepsilon\sqrt{n}}{\sigma}\right)\right)$$
 
-which decays **exponentially** in $n$, much faster than Chebyshev's polynomial bound.
+이 값은 $n$ 에 대하여 **지수적으로** 줄어들어 체비쇼프의 다항식 경계보다 훨씬 빠르다.
 
-## When WLLN Fails
+## 큰수의 약법칙이 성립하지 않는 경우
 
-!!! warning "No WLLN Without Finite Mean"
-    If $E[|X|] = \infty$, the WLLN may fail. The standard example is the **Cauchy distribution**.
+!!! warning "평균이 유한하지 않으면 약법칙도 없다"
+    $E[|X|] = \infty$ 이면 큰수의 약법칙은 성립하지 않을 수 있다. 대표적인 예가 **코시분포**이다.
 
-If $X_1, X_2, \ldots$ are iid $\text{Cauchy}(0, 1)$, then $\bar{X}_n$ has the **same** Cauchy(0,1) distribution for every $n$. The sample mean does not converge to any value.
+$X_1, X_2, \ldots$ 가 i.i.d. $\text{Cauchy}(0, 1)$ 이면 모든 $n$ 에 대하여 $\bar{X}_n$ 도 **똑같은** Cauchy(0,1) 분포를 따른다. 표본평균은 어떤 값으로도 수렴하지 않는다.
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 import numpy as np
@@ -70,19 +70,19 @@ from scipy import stats
 fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 np.random.seed(42)
 
-# --- Panel 1: WLLN convergence for different distributions ---
+# --- 그림 1: 여러 분포에 대한 큰수의 약법칙 수렴 ---
 n_max = 5000
 ns = np.arange(1, n_max + 1)
 
-# Exponential
+# 지수분포
 exp_samples = np.random.exponential(1, n_max)
 exp_means = np.cumsum(exp_samples) / ns
 
-# Bernoulli
+# 베르누이분포
 bern_samples = np.random.binomial(1, 0.3, n_max)
 bern_means = np.cumsum(bern_samples) / ns
 
-# Uniform
+# 균등분포
 unif_samples = np.random.uniform(0, 1, n_max)
 unif_means = np.cumsum(unif_samples) / ns
 
@@ -98,7 +98,7 @@ axes[0].set_ylabel('$\\bar{X}_n$')
 axes[0].legend()
 axes[0].grid(True, alpha=0.3)
 
-# --- Panel 2: Chebyshev bound vs actual probability ---
+# --- 그림 2: 체비쇼프 경계와 실제 확률 ---
 sigma = 1.0  # Exp(1)
 mu = 1.0
 eps_values = [0.1, 0.2, 0.5]
@@ -127,7 +127,7 @@ axes[1].set_yscale('log')
 axes[1].legend(fontsize=7, ncol=2)
 axes[1].grid(True, alpha=0.3)
 
-# --- Panel 3: Cauchy — WLLN fails ---
+# --- 그림 3: 코시분포 — 약법칙이 성립하지 않는다 ---
 cauchy_samples = np.random.standard_cauchy(n_max)
 cauchy_means = np.cumsum(cauchy_samples) / ns
 
@@ -150,3 +150,15 @@ plt.tight_layout()
 plt.savefig('wlln_examples.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
+
+## 연습문제
+
+**연습문제 1.**
+$X_1, X_2, \ldots$ 가 i.i.d. $\text{Uniform}(0, 1)$ 이라고 하자. $\frac{1}{n}\sum_{i=1}^n X_i^2 \xrightarrow{p} 1/3$ 임을 보여라.
+
+*힌트: $g(X_i) = X_i^2$ 에 큰수의 약법칙을 적용하여라.*
+
+---
+
+**연습문제 2.**
+$X_1, X_2, \ldots$ 가 독립이지만 같은 분포를 따르지는 않고, 모든 $i$ 에 대하여 $E[X_i] = \mu$ 이며 어떤 상수 $C$ 에 대하여 $\text{Var}(X_i) \leq C$ 라고 하자. 이때에도 큰수의 약법칙 $\bar{X}_n \xrightarrow{p} \mu$ 가 성립함을 증명하여라.

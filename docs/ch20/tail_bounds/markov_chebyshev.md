@@ -1,84 +1,94 @@
-# Tail Bounds: Markov and Chebyshev Inequalities
+# 마르코프 부등식과 체비쇼프 부등식
 
-Tail bounds provide **upper bounds** on the probability that a random variable deviates from its mean by a large amount. These are essential tools for proving the Law of Large Numbers.
+꼬리 경계는 확률변수가 평균에서 크게 벗어날 확률에 대한 **상계**를 준다. 큰수의 법칙을 증명할 때 없어서는 안 될 도구이다.
 
-## Markov's Inequality
+## 마르코프 부등식
 
-For any nonnegative random variable $|X|$ and $\varepsilon > 0$,
+음이 아닌 확률변수 $|X|$ 와 $\varepsilon > 0$ 에 대하여 다음이 성립한다.
 
 $$
 P(|X| \geq \varepsilon) \leq \frac{\mathbb{E}|X|}{\varepsilon}
 $$
 
-**Intuition**: If $X$ has a small expected value, then $X$ cannot be large too often. Markov's inequality makes this precise using only the first moment.
+**직관**: $X$ 의 기댓값이 작다면 $X$ 가 큰 값을 자주 가질 수는 없다. 마르코프 부등식은 이 사실을 오직 1차 적률만으로 정확하게 표현한 것이다.
 
-## Chebyshev's Inequality
+## 체비쇼프 부등식
 
-For any random variable $X$ with finite mean $\mu$ and variance $\sigma^2$, and for $\varepsilon > 0$,
+평균 $\mu$ 와 분산 $\sigma^2$ 이 유한한 확률변수 $X$ 와 $\varepsilon > 0$ 에 대하여 다음이 성립한다.
 
 $$
 P(|X - \mathbb{E}X| \geq \varepsilon) \leq \frac{Var(X)}{\varepsilon^2}
 $$
 
-**Proof**: Apply Markov's inequality to $(X - \mu)^2$:
+**증명**: $(X - \mu)^2$ 에 마르코프 부등식을 적용한다.
 
 $$
 P(|X - \mu| \geq \varepsilon) = P((X - \mu)^2 \geq \varepsilon^2) \leq \frac{\mathbb{E}(X - \mu)^2}{\varepsilon^2} = \frac{\sigma^2}{\varepsilon^2}
 $$
 
-**Intuition**: Chebyshev uses the variance (second moment) to give a tighter bound than Markov. If the variance is small, the random variable is concentrated around its mean.
+**직관**: 체비쇼프 부등식은 분산(2차 적률)을 써서 마르코프 부등식보다 더 촘촘한 경계를 준다. 분산이 작으면 확률변수는 평균 주위에 몰려 있다.
 
-## Geometric Interpretation
+## 기하학적 뜻풀이
 
-- **Markov**: The area under the curve of $f_{|X|}(x)$ to the right of $\varepsilon$ is bounded by the total area (expectation) divided by $\varepsilon$.
-- **Chebyshev**: The area under the curve of $f_{(X-\mu)^2}(x)$ to the right of $\varepsilon^2$ is bounded by the variance divided by $\varepsilon^2$.
+- **마르코프**: $f_{|X|}(x)$ 곡선 아래에서 $\varepsilon$ 오른쪽에 있는 넓이는 전체 넓이(기댓값)를 $\varepsilon$ 으로 나눈 값으로 눌린다.
+- **체비쇼프**: $f_{(X-\mu)^2}(x)$ 곡선 아래에서 $\varepsilon^2$ 오른쪽에 있는 넓이는 분산을 $\varepsilon^2$ 으로 나눈 값으로 눌린다.
 
-## Example: Binomial $X \sim B(1000, 0.01)$
+## 예: 이항분포 X ~ B(1000, 0.01)
 
-Here $\mathbb{E}X = np = 10$ and $Var(X) = npq = 9.9$.
+여기에서 $\mathbb{E}X = np = 10$ 이고 $Var(X) = npq = 9.9$ 이다.
 
-**Bound $P(X \geq 20)$:**
+**$P(X \geq 20)$ 의 경계:**
 
-**Markov:**
+**마르코프:**
 
 $$
 P(X \geq 20) \leq \frac{\mathbb{E}X}{20} = \frac{10}{20} = 0.5
 $$
 
-**Chebyshev:**
+**체비쇼프:**
 
 $$
 P(X \geq 20) \leq P(|X - 10| \geq 10) \leq \frac{9.9}{10^2} = 0.0990
 $$
 
-**Bound $P(X \geq 100)$:**
+**$P(X \geq 100)$ 의 경계:**
 
-**Markov:**
+**마르코프:**
 
 $$
 P(X \geq 100) \leq \frac{10}{100} = 0.1
 $$
 
-**Chebyshev:**
+**체비쇼프:**
 
 $$
 P(X \geq 100) \leq P(|X - 10| \geq 90) \leq \frac{9.9}{90^2} = 0.0012
 $$
 
-## Example: Poisson $X \sim Poi(100)$
+## 예: 푸아송분포 X ~ Poi(100)
 
-Here $\mathbb{E}X = \lambda = 100$ and $Var(X) = \lambda = 100$.
+여기에서 $\mathbb{E}X = \lambda = 100$ 이고 $Var(X) = \lambda = 100$ 이다.
 
-**Bound $P(X \geq 200)$:**
+**$P(X \geq 200)$ 의 경계:**
 
-**Markov:**
+**마르코프:**
 
 $$
 P(X \geq 200) \leq \frac{100}{200} = 0.5
 $$
 
-**Chebyshev:**
+**체비쇼프:**
 
 $$
 P(X \geq 200) \leq P(|X - 100| \geq 100) \leq \frac{100}{100^2} = 0.0100
 $$
+
+## 연습문제
+
+**연습문제 1.**
+$X \sim \text{Po}(50)$ 이라고 하자. 마르코프 부등식, 체비쇼프 부등식, 한쪽 체비쇼프 부등식, 체르노프 경계를 써서 $P(X \geq 75)$ 를 어림하여라. 정확한 값 및 중심극한정리 근사와 견주어 보아라.
+
+---
+
+**연습문제 2.**
+확률변수 $(X - \mu)^2$ 에 마르코프 부등식을 적용하면 체비쇼프 부등식이 따라 나옴을 증명하여라.

@@ -1,44 +1,52 @@
-# Almost Sure Convergence
+# 거의 확실한 수렴
 
-## Definition
+## 정의
 
-A sequence of random variables $X_1, X_2, \ldots$ **converges almost surely** (a.s.) to a random variable $X$ if
+확률변수열 $X_1, X_2, \ldots$ 가 다음을 만족하면 확률변수 $X$ 로 **거의 확실하게 수렴한다**(a.s.)고 한다.
 
 $$
 P\left(\lim_{n \to \infty} X_n = X\right) = 1
 $$
 
-We write
+이를 다음과 같이 적는다.
 
 $$
 X_n \xrightarrow{a.s.} X
 $$
 
-This is also called **convergence with probability 1**.
+이를 **확률 1로 수렴한다**고도 한다.
 
-## Interpretation
+## 뜻풀이
 
-Almost sure convergence means that the set of outcomes $\omega$ for which $X_n(\omega) \to X(\omega)$ has probability 1. For **almost every** realization of the random sequence, the values eventually settle down to the limit.
+거의 확실한 수렴은 $X_n(\omega) \to X(\omega)$ 가 성립하는 결과 $\omega$ 들의 모임이 확률 1을 가진다는 뜻이다. 확률적으로 뽑히는 수열의 **거의 모든** 실현에 대하여 그 값들이 결국 극한으로 자리를 잡는다.
 
-!!! note "Weak vs Strong"
-    - **Convergence in probability** (weak): For any fixed $\varepsilon$, the probability of a deviation $> \varepsilon$ goes to 0.
-    - **Almost sure convergence** (strong): With probability 1, the entire sample path converges.
+!!! note "약한 뜻과 강한 뜻"
 
-## Comparison with Convergence in Probability
+    - **확률수렴**(약한 뜻): 고정된 $\varepsilon$ 에 대하여 $\varepsilon$ 보다 크게 벗어날 확률이 0으로 간다.
+    - **거의 확실한 수렴**(강한 뜻): 확률 1로 표본경로 전체가 수렴한다.
 
-Almost sure convergence is **stronger** than convergence in probability:
+## 확률수렴과 견주어 보기
+
+거의 확실한 수렴은 확률수렴보다 **더 강하다**.
 
 $$
 X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{p} X
 $$
 
-The converse is not true in general.
+그 역은 일반적으로 성립하지 않는다.
 
-## Visual Intuition
+## 그림으로 보는 직관
 
-Consider flipping a fair coin many times and tracking the running sample mean:
+공정한 동전을 여러 번 던지면서 그때까지의 표본평균을 따라가 보자.
 
-- **Strong law** (a.s. convergence): A single sequence of flips. As the number of flips grows, the running average converges to 0.5. The plot of one sample path approaches the true mean.
-- **Weak law** (convergence in probability): Repeat the experiment many times (each time flipping $n$ coins and recording the average). As $n$ grows, the histogram of sample means concentrates around 0.5.
+- **강법칙**(거의 확실한 수렴): 동전 던지기 한 줄기를 생각한다. 던진 횟수가 늘어남에 따라 그때까지의 평균은 0.5로 수렴한다. 표본경로 하나를 그린 그림이 참평균에 다가간다.
+- **약법칙**(확률수렴): 실험 전체를 여러 번 되풀이한다(매번 동전을 $n$ 번 던져 평균을 기록한다). $n$ 이 커지면 표본평균들의 히스토그램이 0.5 주위로 몰린다.
 
-The left panel (single trajectory converging) illustrates the **strong** law, while the right panel (histogram concentrating) illustrates the **weak** law.
+왼쪽 그림(한 줄기가 수렴하는 모습)은 **강**법칙을, 오른쪽 그림(히스토그램이 몰리는 모습)은 **약**법칙을 나타낸다.
+
+## 연습문제
+
+**연습문제 1.**
+0으로 확률수렴하지만 0으로 거의 확실하게 수렴하지는 않는 수열 $X_n$ 의 예를 들어라.
+
+*힌트: 균등분포를 준 $[0,1]$ 위에서 길이가 줄어들며 자리를 옮겨 다니는 구간들의 지시함수를 생각해 보아라.*

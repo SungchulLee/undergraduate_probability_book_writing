@@ -1,75 +1,90 @@
-# Frequentist Interpretation of Probability
+# 확률의 빈도주의적 해석
 
-<<<<<<< Updated upstream
-## From the LLN to Long-Run Frequency
+## 큰수의 법칙에서 긴 눈으로 본 빈도로
 
-The Law of Large Numbers provides the mathematical foundation for the **frequentist interpretation** of probability. If we repeat an experiment independently many times, the relative frequency of an event converges to its probability.
+큰수의 법칙은 확률의 **빈도주의적 해석**에 수학적 바탕을 마련해 준다. 어떤 실험을 독립적으로 여러 번 되풀이하면 사건의 상대도수는 그 확률로 수렴한다.
 
-Let $\mathbf{1}_{A,i}$ denote the indicator of the event $A$ occurring on the $i$-th independent trial. Since each $\mathbf{1}_{A,i}$ is Bernoulli with parameter $P(A)$, the Strong Law of Large Numbers gives:
+$i$ 번째 독립 시행에서 사건 $A$ 가 일어나는 것을 나타내는 지시확률변수를 $\mathbf{1}_{A,i}$ 라고 하자. 각 $\mathbf{1}_{A,i}$ 는 모수가 $P(A)$ 인 베르누이확률변수이므로 큰수의 강법칙에서 다음을 얻는다.
 
 $$
 \frac{1}{n}\sum_{i=1}^n \mathbf{1}_{A,i} \xrightarrow{a.s.} E[\mathbf{1}_{A}] = P(A)
 $$
 
-The left side is the **relative frequency** of $A$ in $n$ trials. The SLLN guarantees that this ratio converges to $P(A)$ with probability 1.
+왼쪽은 $n$ 번의 시행에서 $A$ 의 **상대도수**이다. 강법칙은 이 비가 확률 1로 $P(A)$ 에 수렴함을 보장한다.
 
-The Weak Law gives the weaker but still useful statement:
+약법칙은 이보다 약하지만 여전히 쓸모 있는 다음 서술을 준다.
 
 $$
 \frac{1}{n}\sum_{i=1}^n \mathbf{1}_{A,i} \xrightarrow{p} P(A)
 $$
 
-## Interpretation
+## 뜻풀이
 
-Under the frequentist view, saying "the probability of heads is 0.5" means that if you flip the coin many, many times, the fraction of heads will converge to 0.5. Probability is **defined** as the long-run relative frequency.
+빈도주의적 관점에서 "앞면이 나올 확률이 0.5이다"라는 말은, 동전을 아주 여러 번 던지면 앞면의 비율이 0.5로 수렴한다는 뜻이다. 확률은 긴 눈으로 본 상대도수로 **정의된다**.
 
-The LLN makes this precise: it is not merely an empirical observation but a mathematical theorem.
+큰수의 법칙은 이를 엄밀하게 만든다. 이것은 단지 경험으로 관찰한 사실이 아니라 수학적인 정리이다.
 
-??? example "Concrete Example"
-    Suppose we roll a fair die $n$ times and count the number of sixes. The relative frequency of sixes satisfies
+??? example "구체적인 예"
+    공정한 주사위를 $n$ 번 굴려 6이 나온 횟수를 센다고 하자. 6의 상대도수는 다음을 만족한다.
 
-    $$\frac{\text{number of sixes}}{n} \xrightarrow{a.s.} \frac{1}{6} \approx 0.1667$$
+    $$\frac{\text{6이 나온 횟수}}{n} \xrightarrow{a.s.} \frac{1}{6} \approx 0.1667$$
 
-    After $n = 600$ rolls, the CLT tells us the relative frequency is approximately $N(1/6, \; 5/(36 \cdot 600))$, so it will typically be within about $\pm 0.015$ of $1/6$.
+    $n = 600$ 번 굴린 뒤라면 중심극한정리에 따라 상대도수는 대략 $N(1/6, \; 5/(36 \cdot 600))$ 을 따르므로, 보통 $1/6$ 에서 $\pm 0.015$ 안에 놓인다.
 
-## Rate of Convergence
+## 수렴 속도
 
-The CLT refines the frequentist picture by describing **how fast** the relative frequency converges. Since $\text{Var}(\mathbf{1}_A) = P(A)(1 - P(A))$:
+중심극한정리는 상대도수가 **얼마나 빨리** 수렴하는지를 말해 주어 빈도주의적 그림을 더 다듬는다. $\text{Var}(\mathbf{1}_A) = P(A)(1 - P(A))$ 이므로 다음이 성립한다.
 
 $$
 \frac{\hat{p}_n - P(A)}{\sqrt{P(A)(1-P(A))/n}} \xrightarrow{d} N(0,1)
 $$
 
-where $\hat{p}_n = \frac{1}{n}\sum_{i=1}^n \mathbf{1}_{A,i}$. The fluctuations around $P(A)$ are of order $1/\sqrt{n}$.
+여기에서 $\hat{p}_n = \frac{1}{n}\sum_{i=1}^n \mathbf{1}_{A,i}$ 이다. $P(A)$ 주위의 출렁임은 $1/\sqrt{n}$ 정도이다.
 
-## Limitations
+## 한계
 
-The frequentist interpretation requires the notion of **repeatable experiments**. For one-time events -- such as "the probability of rain tomorrow" or "the probability that a particular defendant is guilty" -- the frequentist framework is less natural, because there is no sequence of identical, independent trials to appeal to.
+빈도주의적 해석은 **되풀이할 수 있는 실험**이라는 개념을 필요로 한다. "내일 비가 올 확률"이나 "어떤 피고인이 유죄일 확률"처럼 단 한 번뿐인 사건에 대해서는, 같은 조건에서 독립적으로 되풀이되는 시행의 수열을 끌어올 수 없으므로 빈도주의의 틀이 덜 자연스럽다.
 
-!!! note "Bayesian Alternative"
-    This limitation is one motivation for the **Bayesian** interpretation, which treats probability as a measure of belief or uncertainty rather than long-run frequency. In the Bayesian view, $P(A) = 0.7$ means the observer assigns 70% credence to $A$, without requiring repeated trials.
-=======
-## The Connection
+!!! note "베이즈적 대안"
+    이러한 한계는 **베이즈적** 해석이 나온 하나의 까닭이다. 베이즈적 해석은 확률을 긴 눈으로 본 빈도가 아니라 믿음이나 불확실성의 척도로 다룬다. 베이즈적 관점에서 $P(A) = 0.7$ 은 관찰자가 $A$ 에 70%의 믿음을 부여한다는 뜻이며, 시행을 되풀이할 필요가 없다.
 
-The Law of Large Numbers provides the mathematical foundation for the **frequentist interpretation** of probability. If we repeat an experiment independently many times, the relative frequency of an event $A$ converges to its probability:
+## 연습문제
 
-$$
-\frac{\text{number of times } A \text{ occurs in } n \text{ trials}}{n} \xrightarrow{a.s.} P(A) \quad \text{as } n \to \infty
-$$
+**연습문제 1.** 공정한 동전을 $n$ 번 던진다. $\hat{p}_n$ 을 앞면의 비율이라고 하자. 큰수의 약법칙을 써서 $\hat{p}_n$ 이 무엇으로 어떤 뜻에서 수렴하는지 서술하여라.
 
-This follows directly from the Strong Law of Large Numbers applied to the indicator variables $\mathbf{1}_A$:
+??? success "연습문제 1 풀이"
+    $X_i \sim \text{Bernoulli}(0.5)$ 가 i.i.d. 일 때 큰수의 약법칙에 따라 $\hat{p}_n = \frac{1}{n}\sum_{i=1}^n X_i \xrightarrow{p} E[X_1] = 0.5$ 이다.
 
-$$
-\frac{1}{n}\sum_{i=1}^n \mathbf{1}_{A_i} \xrightarrow{a.s.} \mathbb{E}[\mathbf{1}_A] = P(A)
-$$
+    강법칙은 더 강한 결과 $\hat{p}_n \xrightarrow{a.s.} 0.5$ 를 준다.
 
-## Interpretation
+---
 
-Under the frequentist view, saying "the probability of heads is 0.5" means that if you flip the coin many times, the fraction of heads will converge to 0.5. Probability is defined as the long-run relative frequency.
+**연습문제 2.** 주사위를 6000번 굴려 6이 1050번 나왔다. 이 결과는 주사위가 공정하다는 가설을 뒷받침하는가?
 
-The LLN makes this precise: it is not merely an empirical observation but a mathematical theorem.
+??? success "연습문제 2 풀이"
+    공정하다고 하면 $E[\hat{p}] = 1/6 \approx 0.1667$ 이고 관측값은 $\hat{p} = 1050/6000 = 0.175$ 이다. 표준오차는 $\sqrt{(1/6)(5/6)/6000} \approx 0.00481$ 이다.
 
-## Limitations
+    $z = (0.175 - 0.1667)/0.00481 \approx 1.73$ 이고 $p$-값은 $2(1 - \mathcal{N}(1.73)) \approx 0.084$ 이다. 유의수준 5%에서는 유의하지 않으므로 이 결과는 공정한 주사위와 들어맞는다(다만 경계에 가깝다).
 
-The frequentist interpretation requires the notion of **repeatable experiments**. For one-time events (e.g., "the probability of rain tomorrow" or "the probability that a particular defendant is guilty"), the frequentist framework is less natural. This is one motivation for the **Bayesian** interpretation of probability.
->>>>>>> Stashed changes
+---
+
+**연습문제 3.** "다음 지진이 5년 안에 일어난다"와 같이 단 한 번뿐인 사건에 빈도주의적 해석이 확률을 곧바로 부여할 수 없는 까닭을 설명하여라.
+
+??? success "연습문제 3 풀이"
+    빈도주의적 해석은 확률을 같은 조건에서 독립적으로 되풀이되는 시행의 수열에서 긴 눈으로 본 상대도수로 정의한다. 단 한 번뿐인 사건은 같은 조건에서 되풀이할 수 없으므로 빈도를 정의할 시행의 수열이 없다. 빈도주의자는 되풀이할 수 있는 실험에만 확률을 부여할 수 있다. 단 한 번뿐인 사건에 대한 서술에는 베이즈적 해석(주관적 믿음)이나 비슷한 상황들의 가상적인 무한 모집단이 필요하다.
+
+---
+
+**연습문제 4.** 어떤 모의실험이 한 분포에서 확률표본 100,000개를 만들어 구간 $[a, b]$ 에 들어가는 비율을 셈한다. 큰수의 강법칙에 따라 이 비율은 무엇으로 수렴하는가?
+
+??? success "연습문제 4 풀이"
+    분포의 누적분포함수를 $F$ 라고 할 때 $P(a \leq X \leq b) = F(b) - F(a)$ 로 거의 확실하게 수렴한다. 이것이 확률을 몬테카를로로 어림하는 일의 이론적 바탕이다.
+
+---
+
+**연습문제 5.** 확률의 빈도주의적 해석이 가진 강점 하나와 한계 하나를 서술하여라.
+
+??? success "연습문제 5 풀이"
+    **강점:** 빈도주의적 해석은 객관적이어서 개인의 믿음에 기대지 않는다. 큰수의 법칙이 상대도수가 확률로 수렴함을 엄밀하게 보장해 주므로 이 해석은 단단한 바탕 위에 서 있다.
+
+    **한계:** 되풀이할 수 없는 사건(이를테면 "이 특정 환자가 회복할 확률")에는 쓸 수 없다. 또한 같은 조건에서 독립적으로 되풀이한다는 이상화된 개념을 필요로 하는데, 실제로는 그런 것이 없을 수도 있다.

@@ -1,57 +1,57 @@
-# Buffon's Needle
+# 뷔퐁의 바늘
 
-## Setup
+## 문제 설정
 
-On a sheet of paper, draw parallel horizontal lines **1 unit apart**. Drop a needle of **length 1** onto the paper at random. The needle's position is determined by:
+종이 위에 **1만큼 떨어진** 평행한 가로줄들을 긋는다. **길이가 1**인 바늘을 그 위에 무작위로 떨어뜨린다. 바늘의 위치는 다음 둘로 정해진다.
 
-- $Y$: the height of the lower end, uniformly distributed on $[0, 1]$.
-- $\Theta$: the angle of the needle relative to horizontal, uniformly distributed on $[0, \pi]$.
+- $Y$: 아래쪽 끝의 높이로 $[0, 1]$ 위에서 균등분포를 따른다.
+- $\Theta$: 바늘이 가로 방향과 이루는 각으로 $[0, \pi]$ 위에서 균등분포를 따른다.
 
-The height of the upper end is $Y + \sin\Theta$.
+위쪽 끝의 높이는 $Y + \sin\Theta$ 이다.
 
-The needle **crosses a line** (at $y = 1$) if and only if $Y + \sin\Theta \geq 1$.
+바늘이 ($y = 1$ 에 있는) **선을 가로지를** 필요충분조건은 $Y + \sin\Theta \geq 1$ 이다.
 
-## Crossing Probability
+## 가로지를 확률
 
-Define the indicator:
+다음 지시확률변수를 정의하자.
 
 $$
-R_i = \begin{cases} 1 & \text{if the needle crosses a line on the } i\text{-th drop} \\ 0 & \text{otherwise} \end{cases}
+R_i = \begin{cases} 1 & i\text{ 번째 떨어뜨림에서 바늘이 선을 가로지를 때} \\ 0 & \text{그 밖의 경우} \end{cases}
 $$
 
-Then $R_i \overset{iid}{\sim} \text{Bernoulli}(p)$ where:
+그러면 $R_i \overset{iid}{\sim} \text{Bernoulli}(p)$ 이고 여기에서 $p$ 는 다음과 같다.
 
 $$
 p = P(Y + \sin\Theta \geq 1)
 $$
 
-To compute $p$:
+$p$ 를 셈하면 다음과 같다.
 
 $$
 p = \int_0^{\pi} \int_0^1 \mathbf{1}(y + \sin\theta \geq 1)\, dy\, \frac{d\theta}{\pi}
 $$
 
-For a fixed $\theta$, the integral over $y$ gives $\min(\sin\theta, 1)$. For a unit-length needle on unit-spaced lines, this simplifies to:
+$\theta$ 를 고정하면 $y$ 에 대한 적분은 $\min(\sin\theta, 1)$ 이 된다. 간격이 1인 줄 위에 길이 1인 바늘을 떨어뜨리는 경우에는 이것이 다음과 같이 간단해진다.
 
 $$
 p = \frac{1}{\pi}\int_0^{\pi} \sin\theta\, d\theta = \frac{2}{\pi}
 $$
 
-## Estimating $\pi$
+## 원주율 어림하기
 
-By the Law of Large Numbers, after $n$ drops:
+큰수의 법칙에 따라 $n$ 번 떨어뜨린 뒤 다음이 성립한다.
 
 $$
 \frac{1}{n}\sum_{i=1}^n R_i \xrightarrow{a.s.} \frac{2}{\pi}
 $$
 
-Therefore:
+따라서 다음을 얻는다.
 
 $$
-\pi \approx \frac{2n}{\sum_{i=1}^n R_i} = \frac{2}{\text{proportion of crossings}}
+\pi \approx \frac{2n}{\sum_{i=1}^n R_i} = \frac{2}{\text{가로지른 비율}}
 $$
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 import numpy as np
@@ -60,27 +60,27 @@ import matplotlib.pyplot as plt
 np.random.seed(42)
 n = 5000
 
-# Random lower height Y ~ Uniform(0, 1) and angle Theta ~ Uniform(0, pi)
-y = np.random.rand(n)           # height of lower end
-theta = np.random.rand(n)       # angle / pi (so theta*pi is actual angle)
+# 아래쪽 끝 높이 Y ~ Uniform(0, 1) 과 각 Theta ~ Uniform(0, pi) 를 무작위로 만든다
+y = np.random.rand(n)           # 아래쪽 끝의 높이
+theta = np.random.rand(n)       # 각을 pi 로 나눈 값 (실제 각은 theta*pi)
 
-# Height of upper end
+# 위쪽 끝의 높이
 h = y + np.sin(np.pi * theta)
 
-# Does the needle cross the line at y = 1?
+# 바늘이 y = 1 에 있는 선을 가로지르는가?
 crosses = h >= 1
 
-# Estimate pi
+# 원주율을 어림한다
 estimated_pi = 2 * n / np.sum(crosses)
 print(f"Estimated pi: {estimated_pi:.4f}")
 
-# Running estimate
+# 그때까지의 어림값
 cumulative_crosses = np.cumsum(crosses)
 running_pi = 2 * np.arange(1, n + 1) / cumulative_crosses
 
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-# Running estimate
+# 그때까지의 어림값
 axes[0].plot(range(1, n + 1), running_pi, 'r-', alpha=0.7)
 axes[0].axhline(y=np.pi, color='k', linestyle='-', label='True π')
 axes[0].set_xlabel('Number of drops')
@@ -90,7 +90,7 @@ axes[0].set_title("Buffon's Needle: Running Estimate")
 axes[0].legend()
 axes[0].grid(True)
 
-# Histogram of repeated experiments
+# 실험을 되풀이한 결과의 히스토그램
 m = 1000
 n_each = 100
 estimates = []
@@ -115,6 +115,57 @@ plt.savefig('buffon_needle.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
 
-## Historical Significance
+## 역사적 뜻
 
-Buffon's needle problem, proposed by Georges-Louis Leclerc, Comte de Buffon in 1777, is one of the earliest problems in geometric probability. It provides a beautiful connection between geometry ($\pi$) and probability, and is a classic example of Monte Carlo estimation long before the term was coined.
+뷔퐁의 바늘 문제는 1777년 조르주루이 르클레르, 곧 뷔퐁 백작이 내놓은 것으로 기하학적 확률의 가장 이른 문제 가운데 하나이다. 이 문제는 기하($\pi$)와 확률을 아름답게 이어 주며, 몬테카를로라는 말이 생기기 훨씬 전에 나온 몬테카를로 어림의 고전적인 예이다.
+
+## 연습문제
+
+**연습문제 1.** 가로지를 확률 $P = 2/\pi$ 를 셈하고 $2/P \approx \pi$ 임을 수치로 확인하여라.
+
+??? success "연습문제 1 풀이"
+    $$
+    P = \frac{2}{\pi} \approx 0.6366
+    $$
+
+    $$
+    \frac{2}{P} = \frac{2}{2/\pi} = \pi \approx 3.14159
+    $$
+
+---
+
+**연습문제 2.** 줄 사이의 거리를 $d$ 라고 할 때 길이가 $\ell < d$ 인 바늘을 떨어뜨리면 가로지를 확률이 $2\ell/(\pi d)$ 임을 보여라.
+
+??? success "연습문제 2 풀이"
+    $Y \sim \text{Uniform}(0, d)$, $\Theta \sim \text{Uniform}(0, \pi)$ 일 때 바늘이 선을 가로지를 필요충분조건은 $Y + \ell \sin\Theta \geq d$ 이다. 가로지를 확률은 다음과 같다.
+
+    $$
+    P = \frac{1}{\pi d}\int_0^{\pi}\ell\sin\theta\,d\theta = \frac{\ell}{\pi d}\left[-\cos\theta\right]_0^{\pi} = \frac{2\ell}{\pi d}
+    $$
+
+    $\square$
+
+---
+
+**연습문제 3.** 바늘을 10,000번 떨어뜨려 6,380번 가로지르는 것을 보았다. 이 실험에서 $\pi$ 를 어림하여라.
+
+??? success "연습문제 3 풀이"
+    $\hat{P} = 6380/10000 = 0.638$ 이다. 따라서 $\hat{\pi} = 2/\hat{P} = 2/0.638 \approx 3.135$ 이다.
+
+---
+
+**연습문제 4.** 큰수의 법칙을 써서 뷔퐁의 바늘 추정량 $\hat{\pi}_n = 2n / (\sum R_i)$ 이 $\pi$ 에 대하여 일치추정량인 까닭을 설명하여라.
+
+??? success "연습문제 4 풀이"
+    강법칙에 따라 $\frac{1}{n}\sum R_i \xrightarrow{a.s.} E[R_i] = 2/\pi$ 이다. $\hat{\pi}_n = 2/(\frac{1}{n}\sum R_i)$ 이고 $g(x) = 2/x$ 가 $x = 2/\pi > 0$ 에서 연속이므로, 연속사상정리에 따라 $\hat{\pi}_n \xrightarrow{a.s.} 2/(2/\pi) = \pi$ 이다. $\square$
+
+---
+
+**연습문제 5.** $n$ 번 떨어뜨린 뒤 가로지를 확률 추정량의 표준오차는 $\sqrt{P(1-P)/n}$ 이다. $n = 10{,}000$ 일 때 $\pi$ 의 대략적인 95% 신뢰구간을 셈하여라.
+
+??? success "연습문제 5 풀이"
+    $\text{SE}(\hat{P}) = \sqrt{(2/\pi)(1-2/\pi)/10000} \approx \sqrt{0.6366 \times 0.3634/10000} \approx 0.00481$ 이다.
+
+    $P$ 의 95% 신뢰구간은 $0.6366 \pm 1.96 \times 0.00481 = (0.6272, 0.6460)$ 이다.
+
+    이를 $\pi = 2/P$ 로 옮기면 $(2/0.6460, 2/0.6272) = (3.096, 3.189)$ 이다. 참값 $\pi \approx 3.1416$ 이 이 구간 안에 들어 있다.

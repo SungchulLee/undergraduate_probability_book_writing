@@ -1,77 +1,53 @@
-# Gambler's Fallacy
+# 도박꾼의 오류
 
-## The Fallacy
+## 어떤 오류인가
 
-The **gambler's fallacy** is the mistaken belief that if a random event has occurred more frequently than expected in the past, it is less likely to occur in the future (or vice versa), as if the process has a "memory" and needs to "balance out."
+**도박꾼의 오류**는 어떤 확률적 사건이 지금까지 기대보다 자주 일어났다면 앞으로는 덜 일어날 것이라고(또는 그 반대라고) 잘못 믿는 것이다. 마치 그 과정이 "기억"을 가지고 있어서 "균형을 맞추어야" 한다는 듯이 여기는 것이다.
 
-<<<<<<< Updated upstream
-**Example.** After flipping 10 heads in a row, someone believes tails is "due." But if the coin is fair, $P(\text{heads}) = 0.5$ on the next flip regardless of history. The coin has no memory.
+**예.** 앞면이 열 번 잇달아 나온 뒤에 이제 뒷면이 "나올 차례"라고 믿는 사람이 있다. 그러나 동전이 공정하다면 지난 일이 어떻든 다음 던지기에서 $P(\text{앞면}) = 0.5$ 이다. 동전에는 기억이 없다.
 
-## What the LLN Actually Says
+## 큰수의 법칙이 실제로 말하는 것
 
-The Law of Large Numbers states that
+큰수의 법칙은 다음을 말한다.
 
 $$
 \bar{X}_n = \frac{S_n}{n} \xrightarrow{a.s.} \mu
-=======
-**Example**: After flipping 10 heads in a row, someone believes tails is "due." But if the coin is fair, $P(\text{heads}) = 0.5$ on the next flip regardless of history.
-
-## What the LLN Actually Says
-
-The Law of Large Numbers says:
-
-$$
-\frac{S_n}{n} \to \mu
->>>>>>> Stashed changes
 $$
 
-This convergence happens because **new observations dilute the effect of past deviations**, not because future outcomes compensate for past ones.
+이 수렴이 일어나는 까닭은 앞으로의 결과가 지난 일을 되갚아 주기 때문이 아니라 **새로운 관측이 지난 이탈의 영향을 묽게 만들기** 때문이다.
 
-<<<<<<< Updated upstream
-After 10 heads in a row ($S_{10} = 10$, so $\bar{X}_{10} = 1.0$), the SLLN predicts convergence to 0.5 through dilution:
+앞면이 열 번 잇달아 나온 뒤($S_{10} = 10$ 이므로 $\bar{X}_{10} = 1.0$), 강법칙은 묽어짐을 통해 0.5로 수렴하리라고 내다본다.
 
 $$
 \frac{S_{10} + S_{11:n}}{n} = \frac{10 + S_{11:n}}{n} \xrightarrow{a.s.} 0.5
 $$
 
-where $S_{11:n} = X_{11} + \cdots + X_n$ is the sum of **future** flips. The fixed excess of 10 becomes negligible as $n \to \infty$, but the future coins are still fair and independent.
+여기에서 $S_{11:n} = X_{11} + \cdots + X_n$ 은 **앞으로** 던질 결과들의 합이다. 처음의 10이라는 고정된 초과분은 $n \to \infty$ 일 때 하찮아지지만, 앞으로의 동전은 여전히 공정하고 독립이다.
 
-??? example "A Concrete Calculation"
-    After 10 heads in a row, the sample mean is $\bar{X}_{10} = 1.0$. After $n = 1{,}000$ additional fair flips, we expect about 500 heads and 500 tails among the new flips. The total is then approximately $510$ heads in $1{,}010$ flips, giving $\bar{X}_{1010} \approx 0.505$. After $n = 100{,}000$ additional flips, $\bar{X}_{100{,}010} \approx 0.50005$. The initial excess is swamped, with no compensation required.
+??? example "구체적인 셈"
+    앞면이 열 번 잇달아 나온 뒤 표본평균은 $\bar{X}_{10} = 1.0$ 이다. 공정한 동전을 $n = 1{,}000$ 번 더 던지면 새 던지기에서 앞면과 뒷면이 각각 약 500번씩 나오리라고 기대한다. 그러면 전체는 $1{,}010$ 번 가운데 앞면이 대략 $510$ 번이 되어 $\bar{X}_{1010} \approx 0.505$ 이다. $n = 100{,}000$ 번을 더 던지면 $\bar{X}_{100{,}010} \approx 0.50005$ 이다. 처음의 초과분은 아무런 되갚음 없이도 파묻힌다.
 
-## The Distinction
+## 갈리는 지점
 
-| | Gambler's Fallacy | Law of Large Numbers |
+| | 도박꾼의 오류 | 큰수의 법칙 |
 |---|---|---|
-| Mechanism | Future compensates for past | New data dilutes past deviations |
-| Independence | Falsely assumes dependence | Each trial is independent |
-| Prediction | Next flip more likely tails | Next flip is still 50-50 |
+| 작동 원리 | 앞날이 지난 일을 되갚는다 | 새 자료가 지난 이탈을 묽게 만든다 |
+| 독립성 | 종속성을 잘못 가정한다 | 각 시행은 독립이다 |
+| 예측 | 다음 던지기는 뒷면이 나올 확률이 더 높다 | 다음 던지기도 여전히 반반이다 |
 
-!!! warning "The Fallacy in Both Directions"
-    The gambler's fallacy works in reverse too. After a run of losses, a gambler may believe a win is "due," and after a run of wins, they may believe they are on a "hot streak." Both beliefs are incorrect for independent trials: past outcomes carry no information about future ones.
+!!! warning "양쪽으로 작동하는 오류"
+    도박꾼의 오류는 거꾸로도 작동한다. 잇달아 진 뒤에는 이제 이길 "차례"라고 믿을 수 있고, 잇달아 이긴 뒤에는 "흐름을 탔다"고 믿을 수 있다. 독립인 시행에서는 두 믿음 모두 잘못이다. 지난 결과는 앞날에 대한 정보를 전혀 담고 있지 않다.
 
-## Connection to the iid Assumption
+## i.i.d. 가정과의 관계
 
-The mathematical root of the fallacy lies in confusing two statements:
+이 오류의 수학적 뿌리는 다음 두 서술을 헷갈리는 데에 있다.
 
-1. **True**: $\bar{X}_n \to \mu$ as $n \to \infty$ (the LLN)
-2. **False**: Future outcomes adjust to correct past deviations
+1. **참**: $n \to \infty$ 일 때 $\bar{X}_n \to \mu$ 이다(큰수의 법칙).
+2. **거짓**: 앞으로의 결과가 지난 이탈을 바로잡도록 조절된다.
 
-Statement 1 holds because the ratio $S_n / n$ has the excess in the numerator but $n$ grows in the denominator. Statement 2 would require the future $X_i$ to depend on the past, violating the iid assumption.
-=======
-After 10 heads in a row ($S_{10} = 10$, so $\bar{X}_{10} = 1.0$), the LLN predicts convergence to 0.5 through dilution:
+1번이 성립하는 까닭은 비 $S_n / n$ 에서 초과분은 분자에 그대로 있지만 분모의 $n$ 이 자라기 때문이다. 2번이 성립하려면 앞으로의 $X_i$ 가 지난 일에 기대야 하는데, 이는 i.i.d. 가정을 어긴다.
 
-$$
-\frac{S_{10} + S_{11:n}}{n} = \frac{10 + S_{11:n}}{n} \to 0.5
-$$
+## 연습문제
 
-The fixed "excess" of 10 becomes negligible as $n \to \infty$, but the **future** coins are still fair and independent.
-
-## The Distinction
-
-| | Gambler's Fallacy | LLN |
-|---|---|---|
-| Mechanism | Future compensates for past | New data dilutes past deviations |
-| Independence | Violated (future depends on past) | Maintained (each trial is independent) |
-| Prediction | Next flip more likely tails | Next flip is still 50-50 |
->>>>>>> Stashed changes
+**연습문제 1.**
+도박꾼의 오류가 큰수의 법칙과 어긋나는 까닭을 설명하여라. 구체적으로, 공정한 동전에서 앞면이 스무 번 잇달아 나오는 것을 본 뒤 앞으로 1000번을 더 던졌을 때의 표본비율에 대하여 큰수의 법칙은 무엇을 내다보는가? 큰수의 법칙이 스물한 번째 던지기에 대하여 무엇인가 말해 주는가?

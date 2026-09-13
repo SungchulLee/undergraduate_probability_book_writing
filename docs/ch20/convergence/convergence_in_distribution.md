@@ -1,74 +1,93 @@
-# Convergence in Distribution (Review from Ch 17)
+# 분포수렴(17장 복습)
 
-## Definition
+## 정의
 
-A sequence of random variables $X_1, X_2, \ldots$ **converges in distribution** to a random variable $X$ if
+확률변수열 $X_1, X_2, \ldots$ 가 $F_X$ 의 모든 연속점 $x$ 에서 다음을 만족하면 확률변수 $X$ 로 **분포수렴한다**고 한다.
 
 $$
 \lim_{n \to \infty} F_{X_n}(x) = F_X(x)
 $$
 
-<<<<<<< Updated upstream
-at every point $x$ where $F_X$ is continuous. We write $X_n \xrightarrow{d} X$.
+이를 $X_n \xrightarrow{d} X$ 로 적는다.
 
-## Why Review This Here?
+## 여기에서 다시 짚는 까닭
 
-Convergence in distribution was introduced in Chapter 17 as the language for the Central Limit Theorem. In this chapter, we place it alongside two stronger notions -- convergence in probability and almost sure convergence -- to understand where the CLT and the Law of Large Numbers fit in the hierarchy.
+분포수렴은 17장에서 중심극한정리를 말하기 위한 언어로 처음 등장했다. 이 장에서는 이를 더 강한 두 가지 수렴 개념, 곧 확률수렴과 거의 확실한 수렴과 나란히 놓고, 중심극한정리와 큰수의 법칙이 이 층계에서 어디에 자리하는지를 살펴본다.
 
-## Key Properties
+## 주요 성질
 
-Convergence in distribution is the **weakest** of the three modes. It concerns only the **CDFs** of the random variables, not the random variables themselves. Two sequences can converge in distribution to the same limit even if they are defined on entirely different probability spaces.
+분포수렴은 세 가지 수렴 가운데 **가장 약하다**. 확률변수 자체가 아니라 오직 그 **누적분포함수**만 따지기 때문이다. 서로 전혀 다른 확률공간 위에 정의된 두 수열이라도 같은 극한으로 분포수렴할 수 있다.
 
-!!! info "Equivalent Characterization"
-    $X_n \xrightarrow{d} X$ if and only if $E[g(X_n)] \to E[g(X)]$ for every bounded continuous function $g$.
+!!! info "동치인 서술"
+    $X_n \xrightarrow{d} X$ 일 필요충분조건은 유계인 모든 연속함수 $g$ 에 대하여 $E[g(X_n)] \to E[g(X)]$ 인 것이다.
 
-## The CLT as an Example
+## 중심극한정리라는 예
 
-The Central Limit Theorem (Chapter 17) is the most important example of convergence in distribution:
-=======
-at every point $x$ where $F_X$ is continuous. We write
-
-$$
-X_n \xrightarrow{d} X
-$$
-
-## Recap
-
-Convergence in distribution is the weakest mode of convergence. It says that the **CDFs** of the sequence approach the CDF of the limit, but makes no statement about whether the random variables are "close" on the same probability space.
-
-The Central Limit Theorem (Ch 17) is the most important example:
->>>>>>> Stashed changes
+중심극한정리(17장)는 분포수렴의 가장 중요한 예이다.
 
 $$
 \frac{\bar{X}_n - \mu}{\sigma / \sqrt{n}} \xrightarrow{d} N(0,1)
 $$
 
-<<<<<<< Updated upstream
-This tells us the **shape** of the distribution of the standardized sample mean approaches the standard normal bell curve. It does not tell us that the sample mean converges to any particular value -- the limit $N(0,1)$ is not a constant.
+이는 표준화한 표본평균의 분포가 가지는 **모양**이 표준정규분포의 종 모양에 다가간다는 말이다. 표본평균이 어떤 특정한 값으로 수렴한다는 말은 아니다. 극한 $N(0,1)$ 은 상수가 아니기 때문이다.
 
-## Special Case: Convergence to a Constant
+## 특별한 경우: 상수로 수렴할 때
 
-When the limit is a **constant** $c$ (i.e., $F_X$ is a step function jumping from 0 to 1 at $x = c$), convergence in distribution becomes equivalent to convergence in probability:
+극한이 **상수** $c$ 일 때(곧 $F_X$ 가 $x = c$ 에서 0에서 1로 뛰어오르는 계단함수일 때), 분포수렴은 확률수렴과 동치가 된다.
 
 $$
 X_n \xrightarrow{d} c \iff X_n \xrightarrow{p} c
 $$
 
-This special case is crucial because the Law of Large Numbers states $\bar{X}_n \to \mu$, where $\mu$ is a constant. Thus there is no gap between the WLLN (convergence in probability) and saying the CDF of $\bar{X}_n$ collapses to a point mass at $\mu$.
+이 특별한 경우가 중요한 까닭은 큰수의 법칙이 $\bar{X}_n \to \mu$ 라고 말하는데 $\mu$ 가 상수이기 때문이다. 따라서 큰수의 약법칙(확률수렴)과 $\bar{X}_n$ 의 누적분포함수가 $\mu$ 에 놓인 점질량으로 무너져 내린다는 말 사이에는 틈이 없다.
 
-## Relationship to Other Modes
+## 다른 수렴들과의 관계
 
-Both convergence in probability and almost sure convergence imply convergence in distribution:
+확률수렴과 거의 확실한 수렴은 모두 분포수렴을 함의한다.
 
 $$
 X_n \xrightarrow{a.s.} X \implies X_n \xrightarrow{p} X \implies X_n \xrightarrow{d} X
 $$
 
-The reverse implications fail in general (see the section on relationships between modes of convergence).
-=======
-This tells us the **shape** of the distribution of the standardized sample mean approaches a standard normal, but it does not say that the sample mean itself converges to any single value.
+그 역들은 일반적으로 성립하지 않는다(수렴들 사이의 관계를 다루는 절을 보아라).
 
-## Key Point
+## 연습문제
 
-Convergence in distribution concerns only the **distribution functions**, not the random variables themselves. Two sequences can converge in distribution to the same limit even if they are defined on completely different probability spaces.
->>>>>>> Stashed changes
+**연습문제 1.** $X_n$ 이 확률 $1 - 1/n$ 로 $0$ 을, 확률 $1/n$ 로 $n$ 을 갖는다고 하자. $X_n \xrightarrow{d} 0$ 이지만 $E[X_n] \not\to 0$ 임을 보여라.
+
+??? success "연습문제 1 풀이"
+    $0 \leq x < n$ 이면 $F_{X_n}(x) = 1 - 1/n$ 이고 $x \geq n$ 이면 $F_{X_n}(x) = 1$ 이다. 고정된 $x > 0$ 에 대하여 $n$ 이 충분히 커서 $n > x$ 가 되면 $F_{X_n}(x) = 1 - 1/n \to 1 = F_0(x)$ 이다. $x < 0$ 이면 $F_{X_n}(x) = 0 \to 0 = F_0(x)$ 이다. 따라서 $X_n \xrightarrow{d} 0$ 이다.
+
+    그러나 모든 $n$ 에 대하여 $E[X_n] = n \cdot (1/n) = 1$ 인 반면 $E[0] = 0$ 이다.
+
+---
+
+**연습문제 2.** $X_n \sim \text{Exp}(n)$ 이라고 하자. $X_n \xrightarrow{d} 0$ 임을 보여라.
+
+??? success "연습문제 2 풀이"
+    $x > 0$ 이면 $F_{X_n}(x) = 1 - e^{-nx}$ 이다. 임의의 $x > 0$ 에 대하여 $\lim_{n\to\infty}(1 - e^{-nx}) = 1$ 이다. $x < 0$ 이면 $F_{X_n}(x) = 0 \to 0$ 이다.
+
+    따라서 $F_0$ 의 유일한 불연속점인 $0$ 을 뺀 모든 점 $x \neq 0$ 에서 $F_{X_n}(x) \to \mathbf{1}(x > 0) = F_0(x)$ 이다. $\square$
+
+---
+
+**연습문제 3.** 포트만토 보조정리는 유계인 모든 연속함수 $g$ 에 대하여 $E[g(X_n)] \to E[g(X)]$ 인 것이 $X_n \xrightarrow{d} X$ 일 필요충분조건이라고 말한다. 이를 써서 $X_n \xrightarrow{d} X$ 이면 $F_X$ 의 연속점에서 $P(X_n \leq x) \to P(X \leq x)$ 임을 보여라.
+
+??? success "연습문제 3 풀이"
+    연속점 $x$ 에서 지시함수 $g_\varepsilon(t) = \mathbf{1}(t \leq x)$ 는 $g_\varepsilon^- \leq \mathbf{1}(t \leq x) \leq g_\varepsilon^+$ 이고 $E[g_\varepsilon^+(X)] - E[g_\varepsilon^-(X)] < \varepsilon$ 인 유계 연속함수 $g_\varepsilon^-$ 와 $g_\varepsilon^+$ 로 근사할 수 있다. 두 근사 모두에 포트만토 조건을 적용하고 양쪽에서 조이면 $F_{X_n}(x) \to F_X(x)$ 를 얻는다. $\square$
+
+---
+
+**연습문제 4.** 모든 $n$ 에 대하여 $X_n \sim N(0, 1 + 1/n)$ 이라고 하자. $X_n$ 은 분포수렴의 뜻으로 무엇에 수렴하는가?
+
+??? success "연습문제 4 풀이"
+    모든 $x$ 에 대하여 $F_{X_n}(x) = \mathcal{N}(x/\sqrt{1 + 1/n}) \to \mathcal{N}(x/1) = \mathcal{N}(x)$ 이다.
+
+    따라서 $X_n \xrightarrow{d} Z \sim N(0, 1)$ 이다.
+
+---
+
+**연습문제 5.** 분포수렴은 독립성을 보존하는가? 곧 $X_n \xrightarrow{d} X$, $Y_n \xrightarrow{d} Y$ 이고 각 $n$ 마다 $X_n$ 과 $Y_n$ 이 독립이면 $X$ 와 $Y$ 도 독립인가?
+
+??? success "연습문제 5 풀이"
+    위와 같이 서술된 꼴로는 반드시 그렇다고 할 수 없다. $X$ 와 $Y$ 가 아예 같은 확률공간 위에 정의되어 있지 않을 수도 있기 때문이다. 다만 $(X_n, Y_n) \xrightarrow{d} (X, Y)$ 가 결합의 뜻으로 성립한다면(각 $n$ 마다 $X_n$ 과 $Y_n$ 이 독립일 때는 성분별 수렴에서 이것이 따라 나온다) $X$ 와 $Y$ 는 독립이다. 결합 누적분포함수가 $F_{X_n, Y_n}(x,y) = F_{X_n}(x) \cdot F_{Y_n}(y) \to F_X(x) \cdot F_Y(y)$ 이고 이것이 곧 곱측도의 누적분포함수이므로 독립성이 따라 나오기 때문이다.

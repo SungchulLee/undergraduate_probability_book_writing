@@ -1,84 +1,93 @@
-# Chernoff's Bound
+# 체르노프 경계
 
-## Statement
+## 정리의 서술
 
-For any random variable $X$ and $\varepsilon > 0$,
+임의의 확률변수 $X$ 와 $\varepsilon > 0$ 에 대하여 다음이 성립한다.
 
 $$
 P(X \geq \varepsilon) \leq \min_{t > 0} \frac{\mathbb{E}e^{tX}}{e^{t\varepsilon}}
 $$
 
-## Proof
+## 증명
 
-For any $t > 0$:
+임의의 $t > 0$ 에 대하여 다음이 성립한다.
 
 $$
 X \geq \varepsilon \iff tX \geq t\varepsilon \iff e^{tX} \geq e^{t\varepsilon}
 $$
 
-Since $e^{tX}$ is nonneg, apply Markov's inequality:
+$e^{tX}$ 는 음이 아니므로 마르코프 부등식을 적용할 수 있다.
 
 $$
 P(X \geq \varepsilon) = P(e^{tX} \geq e^{t\varepsilon}) \leq \frac{\mathbb{E}e^{tX}}{e^{t\varepsilon}}
 $$
 
-Since this holds for all $t > 0$, we take the minimum.
+이 식이 모든 $t > 0$ 에 대하여 성립하므로 오른쪽 값의 최솟값을 취한다.
 
-## Why Chernoff is Often the Tightest
+## 체르노프 경계가 가장 촘촘한 까닭
 
-Chernoff's bound uses the **moment generating function** $M_X(t) = \mathbb{E}e^{tX}$, which encodes information about all moments. By optimizing over $t$, the bound adapts to the full shape of the distribution, often giving exponentially decaying bounds.
+체르노프 경계는 **적률생성함수** $M_X(t) = \mathbb{E}e^{tX}$ 를 쓰는데, 이 함수는 모든 적률의 정보를 담고 있다. $t$ 에 대하여 최적화하면 경계가 분포의 모양 전체에 맞추어지고, 그래서 지수적으로 줄어드는 경계를 주는 경우가 많다.
 
-## Example: Binomial $X \sim B(1000, 0.01)$
+## 예: 이항분포 X ~ B(1000, 0.01)
 
-The MGF of a single $X_i \sim B(1, p)$ is $\mathbb{E}e^{tX_i} = 1 + p(e^t - 1)$. For $X = \sum_{i=1}^n X_i$:
+하나의 $X_i \sim B(1, p)$ 의 적률생성함수는 $\mathbb{E}e^{tX_i} = 1 + p(e^t - 1)$ 이다. $X = \sum_{i=1}^n X_i$ 에 대해서는 다음이 성립한다.
 
 $$
 \mathbb{E}e^{tX} = \left(1 + p(e^t - 1)\right)^n \leq e^{np(e^t - 1)}
 $$
 
-using the inequality $1 + x \leq e^x$.
+여기에서 부등식 $1 + x \leq e^x$ 를 썼다.
 
-With $n = 1000$, $p = 0.01$, so $np = 10$. Choosing $t$ such that $e^t = 2$ (i.e., $t = \log 2$):
+$n = 1000$, $p = 0.01$ 이므로 $np = 10$ 이다. $e^t = 2$ 가 되도록(곧 $t = \log 2$) $t$ 를 고르면 다음을 얻는다.
 
 $$
 P(X \geq 20) \leq \frac{e^{10(2-1)}}{e^{20\log 2}} = \frac{e^{10}}{2^{20}} = 0.0210
 $$
 
-This is much tighter than Markov ($0.5$), Chebyshev ($0.099$), or one-sided Chebyshev ($0.0901$).
+이는 마르코프($0.5$), 체비쇼프($0.099$), 한쪽 체비쇼프($0.0901$)보다 훨씬 촘촘하다.
 
-For $P(X \geq 100)$:
+$P(X \geq 100)$ 에 대해서는 다음과 같다.
 
 $$
 P(X \geq 100) \leq \frac{e^{10(2-1)}}{e^{100\log 2}} = \frac{e^{10}}{2^{100}} = 1.2204 \times 10^{-61}
 $$
 
-## Example: Poisson $X \sim Poi(100)$
+## 예: 푸아송분포 X ~ Poi(100)
 
-The MGF is $\mathbb{E}e^{tX} = e^{\lambda(e^t - 1)}$ with $\lambda = 100$. Choosing $e^t = 2$:
+적률생성함수는 $\lambda = 100$ 일 때 $\mathbb{E}e^{tX} = e^{\lambda(e^t - 1)}$ 이다. $e^t = 2$ 로 고르면 다음을 얻는다.
 
 $$
 P(X \geq 200) \leq \frac{e^{100(2-1)}}{e^{200\log 2}} = \frac{e^{100}}{2^{200}} = 1.6728 \times 10^{-17}
 $$
 
-## Comparison Table: $B(1000, 0.01)$
+## 견주어 보기: B(1000, 0.01)
 
-| Bound | $P(X \geq 20)$ | $P(X \geq 100)$ |
+| 경계 | $P(X \geq 20)$ | $P(X \geq 100)$ |
 |-------|-----------------|------------------|
-| Markov | $0.5$ | $0.1$ |
-| Chebyshev | $0.0990$ | $0.0012$ |
-| One-sided Chebyshev | $0.0901$ | $0.0012$ |
-| Chernoff | $0.0210$ | $1.22 \times 10^{-61}$ |
-| CLT approximation | $7.41 \times 10^{-4}$ | $\approx 0$ |
+| 마르코프 | $0.5$ | $0.1$ |
+| 체비쇼프 | $0.0990$ | $0.0012$ |
+| 한쪽 체비쇼프 | $0.0901$ | $0.0012$ |
+| 체르노프 | $0.0210$ | $1.22 \times 10^{-61}$ |
+| 중심극한정리 근사 | $7.41 \times 10^{-4}$ | $\approx 0$ |
 
-## Comparison Table: $Poi(100)$
+## 견주어 보기: Poi(100)
 
-| Bound | $P(X \geq 200)$ | $P(X \geq 110)$ |
+| 경계 | $P(X \geq 200)$ | $P(X \geq 110)$ |
 |-------|------------------|------------------|
-| Markov | $0.5$ | $0.9091$ |
-| Chebyshev | $0.0100$ | $1$ |
-| One-sided Chebyshev | $0.0099$ | $0.5$ |
-| Chernoff | $1.67 \times 10^{-17}$ | $0.6162$ |
-| CLT approximation | $7.62 \times 10^{-24}$ | $0.1587$ |
+| 마르코프 | $0.5$ | $0.9091$ |
+| 체비쇼프 | $0.0100$ | $1$ |
+| 한쪽 체비쇼프 | $0.0099$ | $0.5$ |
+| 체르노프 | $1.67 \times 10^{-17}$ | $0.6162$ |
+| 중심극한정리 근사 | $7.62 \times 10^{-24}$ | $0.1587$ |
 
 !!! note
-    Chernoff's bound excels for **large deviations** (far from the mean) due to its exponential decay, but can be loose for moderate deviations close to the mean.
+    체르노프 경계는 지수적으로 줄어들기 때문에 평균에서 멀리 떨어진 **큰 이탈**에서 특히 힘을 발휘하지만, 평균에 가까운 중간 정도의 이탈에서는 헐거울 수 있다.
+
+## 연습문제
+
+**연습문제 1.**
+$X_1, \ldots, X_n$ 이 평균 $\mu$, 분산 $\sigma^2$ 을 갖는 i.i.d. 확률변수라고 하자. 체르노프 경계를 써서 모든 $t > 0$ 에 대하여 다음이 성립함을 보여라.
+
+$$
+P(\bar{X}_n - \mu \geq \varepsilon) \leq e^{-n\varepsilon t} \prod_{i=1}^n M_{X_i - \mu}(t)
+$$
