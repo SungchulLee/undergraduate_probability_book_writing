@@ -1,118 +1,149 @@
-# Distribution of g(X)
+# g(X)의 분포
 
-<<<<<<< Updated upstream
-## Motivation
+## 왜 필요한가
 
-Once we know the distribution of a random variable $X$, we often need the
-distribution of a transformed variable $Y = g(X)$ for some function
-$g : \mathbb{R} \to \mathbb{R}$. For example, if $X$ is a temperature in
-Celsius, then $Y = 1.8X + 32$ is the same temperature in Fahrenheit. If $X$ is
-a stock return, then $Y = X^2$ measures squared deviation. The question is
-always the same: given the distribution of $X$ and the function $g$, what is
-the distribution of $Y$?
+확률변수 $X$ 의 분포를 알고 나면, 어떤 함수
+$g : \mathbb{R} \to \mathbb{R}$ 로 변환한 $Y = g(X)$ 의 분포가 필요해지는 일이 잦다.
+이를테면 $X$ 가 섭씨 온도라면 $Y = 1.8X + 32$ 는 같은 온도를 화씨로 나타낸 것이다.
+$X$ 가 주식 수익률이라면 $Y = X^2$ 은 편차의 제곱을 재는 것이다. 물음은 언제나
+같다. $X$ 의 분포와 함수 $g$ 가 주어졌을 때 $Y$ 의 분포는 무엇인가?
 
-## Functions of a Random Variable
+## 확률변수의 함수
 
-If $X$ is a random variable and $g : \mathbb{R} \to \mathbb{R}$ is a function,
-then $Y = g(X)$ is also a random variable. For every outcome $\omega$,
+$X$ 가 확률변수이고 $g : \mathbb{R} \to \mathbb{R}$ 가 함수이면 $Y = g(X)$ 도
+확률변수이다. 모든 근원사건 $\omega$ 에 대해 다음이 성립한다.
 
 $$
 Y(\omega) = g(X(\omega))
 $$
 
-The distribution of $Y$ is completely determined by the distribution of $X$ and
-the function $g$. No additional information about the sample space is needed.
+$Y$ 의 분포는 $X$ 의 분포와 함수 $g$ 만으로 완전히 결정된다. 표본공간에 관한
+다른 정보는 필요하지 않다.
 
-## Discrete Case
+## 이산인 경우
 
-When $X$ is discrete, the idea is simple: group all values of $X$ that map to
-the same value of $Y$ and sum their probabilities.
+$X$ 가 이산일 때는 발상이 간단하다. $Y$ 의 같은 값으로 옮겨 가는 $X$ 의 값들을
+한데 모아 그 확률을 더하면 된다.
 
-!!! info "PMF of g(X) --- Discrete Case"
-    If $X$ is discrete with PMF $p_X(x)$ and $Y = g(X)$, then
+!!! info "g(X)의 확률질량함수 — 이산인 경우"
+    $X$ 가 확률질량함수 $p_X(x)$ 를 갖는 이산확률변수이고 $Y = g(X)$ 이면 다음이 성립한다.
 
     $$
     P(Y = y) = \sum_{x :\, g(x) = y} P(X = x)
     $$
 
-    That is, collect all values of $X$ that map to $y$ under $g$ and add their
-    probabilities.
+    곧 $g$ 에 의해 $y$ 로 옮겨 가는 $X$ 의 값을 모두 모아 그 확률을 더한다.
 
-## Example: Generating a Symmetric Random Variable from Bernoulli
+## 예: 베르누이확률변수로 대칭인 확률변수 만들기
 
-Let $X \sim \text{B}(p)$ (Bernoulli) and define $Y = 2X - 1$. Then
-
-$$
-Y = \begin{cases} 1 & \text{with probability } p \\ -1 & \text{with probability } 1 - p \end{cases}
-$$
-
-When $p = 1/2$, this produces a symmetric $\pm 1$ random variable. If we flip a
-fair coin $n$ times independently, recording each flip as $X_i \in \{0, 1\}$,
-and set $Y_i = 2X_i - 1$, then
+$X \sim \text{B}(p)$ (베르누이분포)라 하고 $Y = 2X - 1$ 로 두자. 그러면 다음과 같다.
 
 $$
-Y_i \stackrel{\text{iid}}{\sim} \begin{cases} +1 & \text{prob } 0.5 \\ -1 & \text{prob } 0.5 \end{cases}
+Y = \begin{cases} 1 & \text{확률 } p \text{ 로} \\ -1 & \text{확률 } 1 - p \text{ 로} \end{cases}
 $$
 
-This transformation is fundamental in random walk models and financial
-applications.
+$p = 1/2$ 이면 $\pm 1$ 을 대칭으로 갖는 확률변수가 만들어진다. 공정한 동전을
+독립적으로 $n$ 번 던지면서 각 결과를 $X_i \in \{0, 1\}$ 로 적고
+$Y_i = 2X_i - 1$ 로 두면 다음이 성립한다.
 
-## Example: Squaring a Die Roll
+$$
+Y_i \stackrel{\text{iid}}{\sim} \begin{cases} +1 & \text{확률 } 0.5 \\ -1 & \text{확률 } 0.5 \end{cases}
+$$
 
-Roll a fair die and let $X$ be the outcome. Define $Y = (X - 3.5)^2$, the
-squared deviation from the mean. Since $X$ takes values $1, 2, \ldots, 6$ each
-with probability $1/6$:
+이 변환은 확률보행 모형과 금융 분야의 응용에서 근본이 되는 도구이다.
+
+## 예: 주사위 눈을 제곱하기
+
+공정한 주사위를 굴려 나온 눈을 $X$ 라 하자. 평균에서 벗어난 정도의 제곱인
+$Y = (X - 3.5)^2$ 을 생각한다. $X$ 는 $1, 2, \ldots, 6$ 을 각각 확률 $1/6$ 로
+가지므로 다음과 같다.
 
 | $x$ | 1 | 2 | 3 | 4 | 5 | 6 |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | $y = (x - 3.5)^2$ | 6.25 | 2.25 | 0.25 | 0.25 | 2.25 | 6.25 |
 
-Grouping by $y$ values:
+$y$ 의 값끼리 묶으면 다음과 같다.
 
 | $y$ | 0.25 | 2.25 | 6.25 |
 |:---:|:---:|:---:|:---:|
 | $P(Y = y)$ | $2/6$ | $2/6$ | $2/6$ |
 
-The function $g$ is not one-to-one, so six values of $X$ collapse into three
-values of $Y$.
+함수 $g$ 가 일대일이 아니므로 $X$ 의 여섯 값이 $Y$ 의 세 값으로 합쳐진다.
 
-## Continuous Case (Preview)
+## 연속인 경우(미리 보기)
 
-For continuous random variables, finding the distribution of $g(X)$ requires
-the **CDF method** or the **change-of-variables formula**, which involves the
-Jacobian of the transformation. These techniques are introduced in the following
-pages for simple cases and developed fully in Chapter 15.
+연속확률변수에서 $g(X)$ 의 분포를 구하려면 **누적분포함수 방법**이나
+변환의 야코비안이 들어가는 **변수변환 공식**이 필요하다. 이 기법들은 뒤따르는
+쪽들에서 간단한 경우에 한해 소개하고, 15장에서 온전히 다룬다.
 
-!!! tip "General Strategy"
-    Regardless of whether $X$ is discrete or continuous, the starting point is
-    always the same: express $\{Y \le y\}$ or $\{Y = y\}$ in terms of $X$ and
-    use the known distribution of $X$ to compute the probability.
-=======
-## Functions of a Random Variable
+!!! tip "일반적인 전략"
+    $X$ 가 이산이든 연속이든 출발점은 언제나 같다. $\{Y \le y\}$ 나 $\{Y = y\}$ 를
+    $X$ 로 나타낸 다음, 이미 알고 있는 $X$ 의 분포로 그 확률을 계산한다.
 
-If $X$ is a random variable and $g : \mathbb{R} \to \mathbb{R}$ is a function, then $Y = g(X)$ is also a random variable. The distribution of $Y$ is determined by the distribution of $X$ and the function $g$.
+## 연습문제
 
-## Discrete Case
+**연습문제 1.** 이산확률변수 $X$ 의 확률질량함수가 $P(X = -2) = 0.1$, $P(X = -1) = 0.2$, $P(X = 0) = 0.4$, $P(X = 1) = 0.2$, $P(X = 2) = 0.1$ 이라 하자. $Y = X^2$ 의 확률질량함수를 구하여라.
 
-If $X$ is discrete with PMF $p_X(x)$, then $Y = g(X)$ is discrete with:
+??? success "연습문제 1 풀이"
+    $Y$ 는 $0, 1, 4$ 의 값을 갖는다. 묶어 보면 다음과 같다.
 
-$$P(Y = y) = \sum_{x : g(x) = y} P(X = x)$$
+    - $P(Y = 0) = P(X = 0) = 0.4$
+    - $P(Y = 1) = P(X = -1) + P(X = 1) = 0.2 + 0.2 = 0.4$
+    - $P(Y = 4) = P(X = -2) + P(X = 2) = 0.1 + 0.1 = 0.2$
 
-That is, collect all values of $X$ that map to the same $y$ and sum their probabilities.
+---
 
-## Example: Generating $\pm 1$ from Bernoulli
+**연습문제 2.** $X \sim \text{Bernoulli}(p)$ 라 하자. $Y = (1-X)$ 의 분포를 구하여라.
 
-If $X \sim \text{B}(p)$, then $Y = 2X - 1$ has distribution:
+??? success "연습문제 2 풀이"
+    $X$ 는 값 0과 1을 갖는다. $Y = 1 - X$ 는 $0 \mapsto 1$, $1 \mapsto 0$ 으로 보낸다. 따라서 다음이 성립한다.
 
-$$Y = \begin{cases} 1 & \text{with probability } p \\ -1 & \text{with probability } 1 - p \end{cases}$$
+    $$
+    P(Y = 1) = P(X = 0) = 1 - p, \qquad P(Y = 0) = P(X = 1) = p
+    $$
 
-**Application to fair coin flips.** Suppose we flip a fair coin $n$ times independently and record each flip as $X_i \in \{0, 1\}$. Let $Y_i = 2X_i - 1$. Then:
+    그러므로 $Y \sim \text{Bernoulli}(1-p)$ 이다.
 
-$$X_i \stackrel{\text{iid}}{\sim} \begin{cases} 1 & \text{prob } 0.5 \\ 0 & \text{prob } 0.5 \end{cases} \implies Y_i \stackrel{\text{iid}}{\sim} \begin{cases} +1 & \text{prob } 0.5 \\ -1 & \text{prob } 0.5 \end{cases}$$
+---
 
-This transformation is widely used to convert Bernoulli random variables into symmetric $\pm 1$ random variables, which are fundamental in random walk models and financial applications.
+**연습문제 3.** 공정한 주사위를 굴린다. 나온 눈을 $X$ 라 하고 $Y = \min(X, 4)$ 라 하자. $Y$ 의 확률질량함수를 구하여라.
 
-## Continuous Case (Preview)
+??? success "연습문제 3 풀이"
+    $y = 1, 2, 3$ 일 때: $P(Y = y) = P(X = y) = 1/6$.
 
-For continuous random variables, finding the distribution of $g(X)$ requires the **change of variables** technique (covered in Chapter 15), which uses the Jacobian of the transformation.
->>>>>>> Stashed changes
+    $y = 4$ 일 때: $P(Y = 4) = P(X = 4) + P(X = 5) + P(X = 6) = 3/6 = 1/2$.
+
+    | $y$ | 1 | 2 | 3 | 4 |
+    |:---:|:---:|:---:|:---:|:---:|
+    | $P(Y = y)$ | $1/6$ | $1/6$ | $1/6$ | $1/2$ |
+
+---
+
+**연습문제 4.** $X$ 가 $\{-3, -2, -1, 0, 1, 2, 3\}$ 위에서 균등분포를 따른다고 하자. $Y = |X|$ 의 확률질량함수를 구하여라.
+
+??? success "연습문제 4 풀이"
+    $X$ 의 각 값은 확률 $1/7$ 을 갖는다. 따라서 다음과 같다.
+
+    - $P(Y = 0) = P(X = 0) = 1/7$
+    - $P(Y = 1) = P(X = -1) + P(X = 1) = 2/7$
+    - $P(Y = 2) = P(X = -2) + P(X = 2) = 2/7$
+    - $P(Y = 3) = P(X = -3) + P(X = 3) = 2/7$
+
+---
+
+**연습문제 5.** 연속확률변수 $X$ 의 누적분포함수가 $x \geq 0$ 에서 $F_X(x) = 1 - e^{-x}$ 라 하자. 누적분포함수 방법으로 $Y = X^2$ 의 누적분포함수와 확률밀도함수를 구하여라.
+
+??? success "연습문제 5 풀이"
+    $y > 0$ 일 때 다음이 성립한다.
+
+    $$
+    F_Y(y) = P(Y \leq y) = P(X^2 \leq y) = P(X \leq \sqrt{y}) = F_X(\sqrt{y}) = 1 - e^{-\sqrt{y}}
+    $$
+
+    ($X \geq 0$ 이므로 $X^2 \leq y \iff X \leq \sqrt{y}$ 임을 썼다.)
+
+    미분하면 다음을 얻는다.
+
+    $$
+    f_Y(y) = F_Y'(y) = \frac{1}{2\sqrt{y}}\,e^{-\sqrt{y}}, \quad y > 0
+    $$

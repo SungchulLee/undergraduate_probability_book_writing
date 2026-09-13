@@ -1,45 +1,95 @@
-# CDF for Discrete Random Variables
+# 이산확률변수의 누적분포함수
 
-## Formula
+## 공식
 
-For a discrete random variable $X$ with PMF $p_{x_i} = P(X = x_i)$, the CDF is:
+확률질량함수가 $p_{x_i} = P(X = x_i)$ 인 이산확률변수 $X$ 의 누적분포함수는 다음과 같다.
 
 $$F(x) = P(X \le x) = \sum_{x_i \le x} p_{x_i}$$
 
-This is a **step function** that jumps at each value $x_i$ by the amount $p_{x_i}$.
+이는 각 값 $x_i$ 에서 $p_{x_i}$ 만큼 뛰어오르는 **계단함수**이다.
 
-## Shape of Discrete CDFs
+## 이산 누적분포함수의 모양
 
-The CDF of a discrete random variable is a **right-continuous step function**:
+이산확률변수의 누적분포함수는 **오른쪽 연속인 계단함수**이다.
 
-- It is flat between consecutive values of $X$.
-- It jumps upward at each value $x_i$ by exactly $P(X = x_i)$.
-- It starts at 0 (for $x < \min\{x_i\}$) and approaches 1 as $x \to \infty$.
+- $X$ 가 가질 수 있는 이웃한 값들 사이에서는 평평하다.
+- 각 값 $x_i$ 에서 꼭 $P(X = x_i)$ 만큼 위로 뛴다.
+- $x < \min\{x_i\}$ 에서는 0에서 출발하고 $x \to \infty$ 일 때 1로 다가간다.
 
-## Examples
+## 예제
 
-### Bernoulli CDF
+### 베르누이분포의 누적분포함수
 
-For $X \sim \text{B}(p)$:
+$X \sim \text{B}(p)$ 일 때 다음이 성립한다.
 
 $$F(x) = \begin{cases} 0 & x < 0 \\ 1-p & 0 \le x < 1 \\ 1 & x \ge 1 \end{cases}$$
 
-### Binomial CDF
+### 이항분포의 누적분포함수
 
-For $X \sim \text{B}(n, p)$:
+$X \sim \text{B}(n, p)$ 일 때 다음이 성립한다.
 
 $$F(k) = \sum_{i=0}^{k} \binom{n}{i} p^i (1-p)^{n-i}, \quad k = 0, 1, \ldots, n$$
 
-### Geometric CDF
+### 기하분포의 누적분포함수
 
-For $X \sim \text{Geo}(p)$:
+$X \sim \text{Geo}(p)$ 일 때 다음이 성립한다.
 
 $$F(k) = 1 - (1-p)^k, \quad k = 1, 2, 3, \ldots$$
 
-## Recovering the PMF from the CDF
+## 누적분포함수에서 확률질량함수 되찾기
 
-Given the CDF, recover the PMF via:
+누적분포함수가 주어지면 다음과 같이 확률질량함수를 되찾을 수 있다.
 
 $$P(X = x_i) = F(x_i) - F(x_i^-)$$
 
-where $F(x_i^-)$ is the left-hand limit at $x_i$.
+여기서 $F(x_i^-)$ 는 $x_i$ 에서의 왼쪽 극한이다.
+
+## 연습문제
+
+**연습문제 1.** 확률변수 $X$ 의 이산 누적분포함수가 $x = 1, 3, 5, 7, 10$ 에서 차례로 $0.1, 0.2, 0.3, 0.15, 0.25$ 만큼 뛴다고 하자. $P(X = 5)$, $P(X \geq 7)$, $P(3 < X \leq 7)$, $P(X < 5)$ 를 구하여라.
+
+??? success "연습문제 1 풀이"
+    뛴 폭이 곧 각 점에서의 확률질량함수 값이다.
+
+    - $P(X = 5) = 0.3$.
+    - $P(X \geq 7) = P(X = 7) + P(X = 10) = 0.15 + 0.25 = 0.4$.
+    - $P(3 < X \leq 7) = P(X = 5) + P(X = 7) = 0.3 + 0.15 = 0.45$.
+    - $P(X < 5) = P(X = 1) + P(X = 3) = 0.1 + 0.2 = 0.3$.
+
+---
+
+**연습문제 2.** 공정한 동전을 3번 던졌을 때 앞면의 수를 $X$ 라 하자. 확률질량함수는 $p(0) = 1/8$, $p(1) = 3/8$, $p(2) = 3/8$, $p(3) = 1/8$ 이다. 누적분포함수 $F(x)$ 를 구간별로 나누어 적고 그 그래프를 그려라.
+
+??? success "연습문제 2 풀이"
+    차례로 더해 나가면 다음을 얻는다.
+
+    $$
+    F(x) = \begin{cases}
+    0 & x < 0 \\
+    1/8 & 0 \leq x < 1 \\
+    4/8 & 1 \leq x < 2 \\
+    7/8 & 2 \leq x < 3 \\
+    1 & x \geq 3
+    \end{cases}
+    $$
+
+    그래프는 $x = 0, 1, 2, 3$ 에서 각각 높이 $1/8, 3/8, 3/8, 1/8$ 만큼 뛰고 그 사이에서는 평평한, 오른쪽 연속인 계단함수이다.
+
+---
+
+**연습문제 3.** $X$ 의 확률질량함수가 $k = 1, 2, 3, \ldots$ 에 대해 $P(X = k) = (1-p)^{k-1} p$ 라 하자(기하분포). 양의 정수 $k$ 에 대해 누적분포함수가 $F(k) = 1 - (1-p)^k$ 임을 보이고, 이를 써서 임의의 양의 정수 $n$ 에 대해 $P(X > n)$ 을 구하여라.
+
+??? success "연습문제 3 풀이"
+    등비급수를 더하면 다음을 얻는다.
+
+    $$
+    F(k) = \sum_{j=1}^{k} (1-p)^{j-1} p = p \cdot \frac{1 - (1-p)^{k}}{1 - (1-p)} = 1 - (1-p)^k
+    $$
+
+    따라서 다음이 성립한다.
+
+    $$
+    P(X > n) = 1 - F(n) = (1-p)^n
+    $$
+
+    이는 "처음 $n$ 번의 시행에서 성공이 한 번도 없다"는 낯익은 사건이다.

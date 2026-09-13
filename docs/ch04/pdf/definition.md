@@ -1,128 +1,145 @@
-# PDF Definition and Properties
-<<<<<<< Updated upstream
+# 확률밀도함수의 정의와 성질
 
-## Motivation
+## 왜 필요한가
 
-For a discrete random variable, the PMF tells us the probability of each value
-directly: $P(X = x_i) = p_X(x_i)$. For a continuous random variable, however,
-$P(X = a) = 0$ for every individual point $a$. Instead of asking "what is the
-probability of this exact value?", we ask "how densely is probability packed
-near this point?" The answer is the **probability density function (PDF)**.
+이산확률변수에서는 확률질량함수가 각 값의 확률을 곧바로 알려 준다.
+$P(X = x_i) = p_X(x_i)$ 이다. 그러나 연속확률변수에서는 낱낱의 점 $a$ 마다
+$P(X = a) = 0$ 이다. 그래서 "바로 이 값이 나올 확률은 얼마인가?"라고 묻는 대신
+"이 점 근처에 확률이 얼마나 빽빽하게 몰려 있는가?"라고 묻는다.
+그 답이 **확률밀도함수(PDF)**이다.
 
-## Definition
+## 정의
 
-!!! info "Definition — Probability Density Function"
-    A continuous random variable $X$ has **probability density function (PDF)**
-    $f_X(x)$ if, for every subset $A \subseteq \mathbb{R}$,
+!!! info "정의 — 확률밀도함수"
+    연속확률변수 $X$ 가 모든 부분집합 $A \subseteq \mathbb{R}$ 에 대해
 
     $$
     P(X \in A) = \int_A f_X(x) \, dx
     $$
 
-The PDF describes the **density** of probability at each point, not the
-probability itself. Thinking in terms of the brick analogy, the bricks are now
-ground into a continuous layer of sand, and $f_X(x)$ measures how thickly the
-sand is spread at position $x$.
+    를 만족하면, $f_X(x)$ 를 $X$ 의 **확률밀도함수(PDF)**라 한다.
 
-## Properties
+확률밀도함수는 각 점에서 확률이 얼마나 **빽빽한가**를 말해 줄 뿐, 확률 그 자체는
+아니다. 벽돌 비유로 말하면, 이제 벽돌이 잘게 갈려 모래처럼 연속된 층을 이루고
+있으며 $f_X(x)$ 는 위치 $x$ 에서 모래가 얼마나 두껍게 깔려 있는지를 잰다.
 
-A valid PDF must satisfy two conditions:
+## 성질
 
-!!! info "PDF Properties"
-    1. **Non-negativity:** $f_X(x) \ge 0$ for all $x$
-    2. **Normalization:** $\displaystyle\int_{-\infty}^{\infty} f_X(x) \, dx = 1$
+올바른 확률밀도함수는 다음 두 조건을 만족해야 한다.
 
-These are the continuous analogues of the PMF properties (non-negativity and
-summation to 1).
+!!! info "확률밀도함수의 성질"
 
-!!! warning "A PDF Value Is Not a Probability"
-    The value $f_X(x)$ can exceed 1. For example, if
-    $X \sim \text{Uniform}(0, 1/2)$, then $f_X(x) = 2$ for $x \in [0, 1/2]$.
-    Only the **integral** of $f_X$ over an interval gives a probability, and
-    that integral is always at most 1.
+    1. **음이 아님:** 모든 $x$ 에 대해 $f_X(x) \ge 0$
+    2. **정규화:** $\displaystyle\int_{-\infty}^{\infty} f_X(x) \, dx = 1$
 
-## Probability from the PDF
+이는 확률질량함수의 성질(음이 아님, 합이 1)에 대응하는 연속판이다.
 
-For an interval $[a, b]$:
+!!! warning "확률밀도함수의 값은 확률이 아니다"
+    $f_X(x)$ 의 값은 1을 넘을 수 있다. 이를테면
+    $X \sim \text{Uniform}(0, 1/2)$ 이면 $x \in [0, 1/2]$ 에서 $f_X(x) = 2$ 이다.
+    구간 위에서 $f_X$ 를 **적분**한 값만이 확률이 되며, 그 적분값은 언제나
+    1 이하이다.
+
+## 확률밀도함수에서 확률 구하기
+
+구간 $[a, b]$ 에 대해 다음이 성립한다.
 
 $$
 P(a \le X \le b) = \int_a^b f_X(x) \, dx
 $$
-=======
 
-## Definition
 
-The **probability density function (PDF)** of a continuous random variable $X$ is a function $f(x)$ such that:
+기하학적으로 이는 $a$ 와 $b$ 사이에서 **확률밀도함수 곡선 아래의 넓이**이다.
 
-$$P(X \in A) = \int_A f(x) \, dx$$
+## 미소구간으로 보는 뜻
 
-Using the brick analogy:
-
-$$f(x) \, dx = \text{Weight of the bricks in } [x, x + dx]$$
-
-The PDF represents the **density** of probability at each point, not the probability itself.
-
-## Properties
->>>>>>> Stashed changes
-
-Geometrically, this is the **area under the PDF curve** between $a$ and $b$.
-
-<<<<<<< Updated upstream
-## Infinitesimal Interpretation
-
-For a small increment $\epsilon > 0$:
+작은 증분 $\epsilon > 0$ 에 대해 다음이 성립한다.
 
 $$
 P(x \le X \le x + \epsilon) \approx f_X(x) \cdot \epsilon
 $$
 
-The PDF gives the probability per unit length near the point $x$. This
-approximation becomes exact in the limit as $\epsilon \to 0$.
+확률밀도함수는 점 $x$ 근처에서 길이 한 단위당 확률을 알려 준다. 이 근사는
+$\epsilon \to 0$ 의 극한에서 정확해진다.
 
-## Examples
+## 예제
 
-**Example 1 (Uniform).** Let $X \sim \text{Uniform}(0, 1)$, so
-$f_X(x) = 1$ for $0 \le x \le 1$ and $f_X(x) = 0$ otherwise. Then
+**예 1 (균등분포).** $X \sim \text{Uniform}(0, 1)$ 이라 하자. 그러면
+$0 \le x \le 1$ 에서 $f_X(x) = 1$ 이고 그 밖에서는 $f_X(x) = 0$ 이다. 따라서 다음과 같다.
 
 $$
 P(0.3 \le X \le 0.7) = \int_{0.3}^{0.7} 1 \, dx = 0.4
 $$
 
-**Example 2 (Triangular density).** Let $f_X(x) = 2x$ for $0 \le x \le 1$ and $f_X(x) = 0$ otherwise.
+**예 2 (삼각형 모양의 밀도).** $0 \le x \le 1$ 에서 $f_X(x) = 2x$ 이고 그 밖에서는 $f_X(x) = 0$ 이라 하자.
 
-- Verification: $\int_0^1 2x \, dx = x^2 \big|_0^1 = 1$.
-- Probability computation:
+- 확인: $\int_0^1 2x \, dx = x^2 \big|_0^1 = 1$.
+- 확률 계산:
 
 $$
 P\!\left(X \le \frac{1}{2}\right) = \int_0^{1/2} 2x \, dx = x^2 \Big|_0^{1/2} = \frac{1}{4}
 $$
 
-Most of the probability is concentrated near $x = 1$ because the density is
-increasing.
+밀도가 증가하므로 확률의 대부분이 $x = 1$ 가까이에 몰려 있다.
 
-**Example 3 (Density exceeding 1).** Let $f_X(x) = 3$ for
-$0 \le x \le 1/3$ and $f_X(x) = 0$ otherwise. Here $f_X(x) = 3 > 1$ on the
-support, yet $\int_0^{1/3} 3 \, dx = 1$, confirming this is a valid PDF.
-=======
-1. **Non-negativity:** $f(x) \ge 0$ for all $x$.
-2. **Normalization:** $\displaystyle\int_{-\infty}^{\infty} f(x) \, dx = 1$.
+**예 3 (1을 넘는 밀도).** $0 \le x \le 1/3$ 에서 $f_X(x) = 3$ 이고 그 밖에서는
+$f_X(x) = 0$ 이라 하자. 받침 위에서 $f_X(x) = 3 > 1$ 이지만
+$\int_0^{1/3} 3 \, dx = 1$ 이므로 이것은 올바른 확률밀도함수이다.
 
-!!! warning "Important"
-    $f(x)$ is **not** a probability. It is a density, and $f(x)$ can exceed 1. For example, $X \sim \text{Uniform}(0, 1/2)$ has $f(x) = 2$ on $[0, 1/2]$.
+## 연습문제
 
-## Probability from the PDF
+**연습문제 1.** 연속확률변수의 확률밀도함수가 $0 \leq x \leq 1$ 에서 $f(x) = 3x^2$ 이다. 누적분포함수를 구하고 $P(0.5 \leq X \leq 0.8)$ 을 계산하여라.
 
-For an interval $[a, b]$:
+??? success "연습문제 1 풀이"
+    $0 \leq x \leq 1$ 에서 다음이 성립한다.
 
-$$P(a \le X \le b) = \int_a^b f(x) \, dx$$
+    $$
+    F(x) = \int_0^x 3 t^2 \, dt = x^3
+    $$
 
-This is the area under the PDF curve between $a$ and $b$.
+    또한 $x < 0$ 에서 $F(x) = 0$, $x > 1$ 에서 $F(x) = 1$ 이다. 따라서 다음을 얻는다.
 
-## Infinitesimal Interpretation
+    $$
+    P(0.5 \leq X \leq 0.8) = F(0.8) - F(0.5) = 0.512 - 0.125 = 0.387
+    $$
 
-For small $\epsilon > 0$:
+---
 
-$$P(x \le X \le x + \epsilon) \approx f(x) \cdot \epsilon$$
+**연습문제 2.** $f(x) = c(1 - x^2)$ 이 $[-1, 1]$ 위에서 올바른 확률밀도함수가 되도록 하는 $c$ 의 값을 구하여라. 그리고 $P(X > 0)$ 을 계산하여라.
 
-The PDF gives the probability per unit length near $x$.
->>>>>>> Stashed changes
+??? success "연습문제 2 풀이"
+    정규화 조건을 쓰면 다음과 같다.
+
+    $$
+    \int_{-1}^{1} c(1 - x^2) \, dx = c \left[ x - \frac{x^3}{3} \right]_{-1}^{1} = c \cdot \frac{4}{3} = 1 \implies c = \frac{3}{4}
+    $$
+
+    0을 중심으로 대칭이므로 $P(X > 0) = 1/2$ 이다.
+
+---
+
+**연습문제 3.** $\lambda > 0$ 일 때 $x \geq 0$ 에서 확률밀도함수가 $f(x) = \lambda e^{-\lambda x}$ 인 확률변수가 있다. $\int_0^{\infty} f(x) \, dx = 1$ 임을 확인하고 $P(X > 1/\lambda)$ 를 구하여라.
+
+??? success "연습문제 3 풀이"
+    적분하면 다음과 같다.
+
+    $$
+    \int_0^{\infty} \lambda e^{-\lambda x} \, dx = \left[ -e^{-\lambda x} \right]_0^{\infty} = 0 - (-1) = 1
+    $$
+
+    따라서 다음을 얻는다.
+
+    $$
+    P(X > 1/\lambda) = \int_{1/\lambda}^{\infty} \lambda e^{-\lambda x} \, dx = e^{-1} \approx 0.3679
+    $$
+
+---
+
+**연습문제 4.** $0 \leq x \leq 1/5$ 에서 $f(x) = 5$ 인 확률밀도함수가 $f(x) > 1$ 인데도 올바른 밀도인 까닭을 설명하고, $P(0.1 \leq X \leq 0.15)$ 를 계산하여라.
+
+??? success "연습문제 4 풀이"
+    밀도의 값은 확률이 아니라 *길이 한 단위당 확률의 비율*이다. 올바른 밀도가 되려면 $f \geq 0$ 과 $\int f = 1$ 만 성립하면 된다. 여기서 $\int_0^{1/5} 5 \, dx = 5 \cdot 0.2 = 1$ 이므로 $f$ 는 올바른 확률밀도함수이다. $f \leq 1$ 이라는 조건은 **필요하지 않다**.
+
+    $$
+    P(0.1 \leq X \leq 0.15) = \int_{0.1}^{0.15} 5 \, dx = 5 \cdot 0.05 = 0.25
+    $$

@@ -1,55 +1,130 @@
-# Examples of PMFs
+# 확률질량함수의 예
 
-## Bernoulli PMF
+## 베르누이분포의 확률질량함수
 
-For $X \sim \text{B}(p)$:
+$X \sim \text{B}(p)$ 일 때 다음이 성립한다.
 
 $$P(X = k) = \begin{cases} 1 - p & k = 0 \\ p & k = 1 \end{cases}$$
 
-This is the simplest non-trivial PMF: flip a $p$-coin and record 1 for heads, 0 for tails.
+이것이 가장 단순하면서 뜻이 있는 확률질량함수이다. $p$-동전을 한 번 던져 앞면이면 1, 뒷면이면 0을 적는다.
 
-## Binomial PMF
+## 이항분포의 확률질량함수
 
-For $X \sim \text{B}(n, p)$:
+$X \sim \text{B}(n, p)$ 일 때 다음이 성립한다.
 
 $$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n$$
 
-This counts the number of heads in $n$ independent flips of a $p$-coin.
+$p$-동전을 독립적으로 $n$ 번 던졌을 때 나온 앞면의 수를 센 것이다.
 
-## Geometric PMF
+## 기하분포의 확률질량함수
 
-For $X \sim \text{Geo}(p)$:
+$X \sim \text{Geo}(p)$ 일 때 다음이 성립한다.
 
 $$P(X = k) = p(1-p)^{k-1}, \quad k = 1, 2, 3, \ldots$$
 
-This counts the number of flips until the first head.
+첫 앞면이 나올 때까지 던진 횟수를 센 것이다.
 
-## Negative Binomial PMF
+## 음이항분포의 확률질량함수
 
-For $X \sim \text{NB}(r, p)$:
+$X \sim \text{NB}(r, p)$ 일 때 다음이 성립한다.
 
 $$P(X = k) = \binom{k-1}{r-1} p^r (1-p)^{k-r}, \quad k = r, r+1, r+2, \ldots$$
 
-This counts the number of flips until the $r$-th head.
+$r$ 번째 앞면이 나올 때까지 던진 횟수를 센 것이다.
 
-## Summary Table
+## 요약 표
 
-| Distribution | Expectation | Variance |
+| 분포 | 기댓값 | 분산 |
 |-------------|-------------|----------|
 | $\text{B}(p)$ | $p$ | $pq$ |
 | $\text{B}(n,p)$ | $np$ | $npq$ |
 | $\text{Geo}(p)$ | $1/p$ | $q/p^2$ |
 | $\text{NB}(r,p)$ | $r/p$ | $rq/p^2$ |
 
-where $q = 1 - p$.
+여기서 $q = 1 - p$ 이다.
 
-## Coin Flip Distributions Visualized
+## 동전 던지기에서 나오는 분포들 한눈에 보기
 
-The Bernoulli, Binomial, Geometric, and Negative Binomial distributions are all related to the same experiment — flipping a $p$-coin — but they count different things:
+베르누이분포, 이항분포, 기하분포, 음이항분포는 모두 $p$-동전을 던지는 같은 실험에서 나오지만, 무엇을 세느냐가 서로 다르다.
 
-| Distribution | Random Variable |
+| 분포 | 확률변수 |
 |---|---|
-| $\text{B}(p)$ | Flip a $p$-coin and check whether we have a head |
-| $\text{B}(n,p)$ | Flip a $p$-coin $n$ times and count the number of heads |
-| $\text{Geo}(p)$ | Flip a $p$-coin until first head and count the number of flips |
-| $\text{NB}(r,p)$ | Flip a $p$-coin until $r$-th head and count the number of flips |
+| $\text{B}(p)$ | $p$-동전을 한 번 던져 앞면인지 아닌지를 본다 |
+| $\text{B}(n,p)$ | $p$-동전을 $n$ 번 던져 앞면의 수를 센다 |
+| $\text{Geo}(p)$ | $p$-동전을 첫 앞면이 나올 때까지 던져 그 횟수를 센다 |
+| $\text{NB}(r,p)$ | $p$-동전을 $r$ 번째 앞면이 나올 때까지 던져 그 횟수를 센다 |
+
+## 연습문제
+
+**연습문제 1.** 공정한 동전을 3번 던졌을 때 앞면의 수를 $X$ 라 하자. $X$ 의 확률질량함수를 적고 그 합이 1임을 확인하여라.
+
+??? success "연습문제 1 풀이"
+    $X \sim \text{Binomial}(3, 1/2)$ 는 $\{0, 1, 2, 3\}$ 의 값을 가지며 다음이 성립한다.
+
+    $$
+    P(X = k) = \binom{3}{k} \left(\tfrac{1}{2}\right)^3
+    $$
+
+    | $k$ | 0 | 1 | 2 | 3 |
+    |---|---|---|---|---|
+    | $P(X = k)$ | $1/8$ | $3/8$ | $3/8$ | $1/8$ |
+
+    합: $1/8 + 3/8 + 3/8 + 1/8 = 8/8 = 1$. $\checkmark$
+
+---
+
+**연습문제 2.** 공정한 동전을 네 번 던진다. $X$ 를 앞면이 연달아 나온 가장 긴 길이라 하자. 16가지 근원사건을 모두 적고 각각의 $X(\omega)$ 를 구한 뒤, $X$ 의 확률질량함수를 적어라.
+
+??? success "연습문제 2 풀이"
+    $2^4 = 16$ 가지 근원사건과 H가 연달아 나온 가장 긴 길이를 모두 적으면 다음과 같다.
+
+    | 근원사건 | $X$ | 근원사건 | $X$ |
+    |---|---|---|---|
+    | TTTT | 0 | HTTT | 1 |
+    | TTTH | 1 | HTTH | 1 |
+    | TTHT | 1 | HTHT | 1 |
+    | TTHH | 2 | HTHH | 2 |
+    | THTT | 1 | HHTT | 2 |
+    | THTH | 1 | HHTH | 2 |
+    | THHT | 2 | HHHT | 3 |
+    | THHH | 3 | HHHH | 4 |
+
+    세어 보면 $X = 0$ 이 한 번, $X = 1$ 이 일곱 번, $X = 2$ 가 다섯 번, $X = 3$ 이 두 번, $X = 4$ 가 한 번이다. 따라서 확률질량함수는 다음과 같다.
+
+    | $k$ | 0 | 1 | 2 | 3 | 4 |
+    |---|---|---|---|---|---|
+    | $P(X = k)$ | $1/16$ | $7/16$ | $5/16$ | $2/16$ | $1/16$ |
+
+    합: $1 + 7 + 5 + 2 + 1 = 16$. $\checkmark$
+
+---
+
+**연습문제 3.** 공정한 주사위 두 개를 굴리는 모의실험을 하고 그 합 $S = X_1 + X_2$ 의 확률질량함수를 그리는 파이썬 프로그램을 작성하여라. 모의실험으로 얻은 확률질량함수를 모두 늘어놓아 구한 정확한 확률질량함수와 견주어 보아라.
+
+??? success "연습문제 3 풀이"
+    ```python
+    """공정한 주사위 두 개의 합의 확률질량함수를 모의실험한다."""
+    import random
+    from collections import Counter
+
+    # === 모의실험 ===
+    def simulate_sum(n_trials: int) -> dict[int, float]:
+        counts = Counter(
+            random.randint(1, 6) + random.randint(1, 6) for _ in range(n_trials)
+        )
+        return {s: counts[s] / n_trials for s in range(2, 13)}
+
+    # === 모두 늘어놓아 구한 정확한 확률질량함수 ===
+    def exact_sum_pmf() -> dict[int, float]:
+        counts = Counter(i + j for i in range(1, 7) for j in range(1, 7))
+        return {s: counts[s] / 36 for s in range(2, 13)}
+
+    if __name__ == "__main__":
+        sim = simulate_sum(100_000)
+        exact = exact_sum_pmf()
+        print(f"{'s':>3} {'exact':>8} {'sim':>8}")
+        for s in range(2, 13):
+            print(f"{s:>3} {exact[s]:>8.4f} {sim[s]:>8.4f}")
+    ```
+
+    정확한 확률질량함수는 $s = 2, \ldots, 12$ 에 대해 $P(S = s) = (6 - |7 - s|)/36$ 이라는 삼각형 모양을 이룬다. 시행 횟수를 늘리면 모의실험의 상대도수가 이 값으로 다가간다.

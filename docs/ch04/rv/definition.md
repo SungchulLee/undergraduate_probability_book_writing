@@ -1,117 +1,143 @@
-# Definition and Examples of Random Variables
+# 정의와 예
 
-<<<<<<< Updated upstream
-## Why Random Variables?
+## 확률변수는 왜 필요한가
 
-In Chapters 2 and 3 we worked with events --- subsets of a sample space $\Omega$.
-That framework is flexible, but many probability questions boil down to a single
-number: "How many heads?", "What is the total?", "How long until failure?"
-A **random variable** gives us a systematic way to attach a number to every
-outcome, translating probability problems from abstract sets into questions
-about numbers on the real line where we can use the full power of calculus and
-algebra.
+2장과 3장에서는 **사건**, 곧 표본공간 $\Omega$ 의 부분집합을 다루었다.
+이 틀은 쓰임새가 넓지만, 확률 문제의 상당수는 결국 하나의 수로 귀착된다.
+"앞면이 몇 번 나왔는가?", "합은 얼마인가?", "고장 날 때까지 얼마나 걸리는가?"
+**확률변수**는 모든 근원사건에 수를 붙이는 체계적인 방법을 제공한다.
+이렇게 하면 추상적인 집합에 관한 확률 문제가 실수 위의 수에 관한 문제로 바뀌고,
+미적분과 대수의 힘을 온전히 쓸 수 있게 된다.
 
-## Random Variable as a Function
+## 함수로서의 확률변수
 
-!!! info "Definition — Random Variable"
-    A **random variable** is a function
+!!! info "정의 — 확률변수"
+    **확률변수**란 함수
 
     $$
     X : \Omega \longrightarrow \mathbb{R}
     $$
 
-    that assigns a real number $X(\omega)$ to every outcome $\omega \in \Omega$.
+    로서, 모든 근원사건 $\omega \in \Omega$ 에 실수 $X(\omega)$ 를 대응시키는 것이다.
 
-The notation $X(\omega)$ emphasizes that a random variable is a function of the
-outcome, not a fixed number. Once the experiment is performed and the outcome
-$\omega$ is determined, $X(\omega)$ becomes a definite real number.
+$X(\omega)$ 라는 표기는 확률변수가 고정된 수가 아니라 근원사건의 함수임을 드러낸다.
+실험을 실제로 해서 근원사건 $\omega$ 가 정해지고 나면, 그때 비로소 $X(\omega)$ 는
+하나의 확정된 실수가 된다.
 
-## Distribution of a Random Variable
+## 확률변수의 분포
 
-The **distribution** of $X$ describes how probability mass is spread across the
-real line. A helpful mental picture is the "brick" analogy:
+$X$ 의 **분포**는 확률의 질량이 실수 위에 어떻게 흩뿌려져 있는지를 알려 준다.
+"벽돌" 비유가 머릿속에 그림을 그리는 데 도움이 된다.
 
-- Imagine a brick attached to each outcome $\omega \in \Omega$, with weight equal to $P(\{\omega\})$.
-- The function $X$ moves each brick from $\omega$ to the point $X(\omega)$ on $\mathbb{R}$.
-- After moving all bricks, the total weight on $\mathbb{R}$ is 1.
-- The resulting weight distribution over $\mathbb{R}$ is the **distribution of $X$**.
+- 각 근원사건 $\omega \in \Omega$ 마다 무게가 $P(\{\omega\})$ 인 벽돌이 하나씩 붙어 있다고 하자.
+- 함수 $X$ 는 각 벽돌을 $\omega$ 에서 $\mathbb{R}$ 위의 점 $X(\omega)$ 로 옮긴다.
+- 모든 벽돌을 옮기고 나면 $\mathbb{R}$ 위에 놓인 무게의 총합은 1이다.
+- 이렇게 해서 $\mathbb{R}$ 위에 생긴 무게의 분포가 바로 **$X$ 의 분포**이다.
 
-Using this picture:
-
-$$
-P(X = a) = \text{total weight of the bricks that land at } a
-$$
+이 그림을 쓰면 다음과 같이 쓸 수 있다.
 
 $$
-P(X \in A) = \text{total weight of the bricks that land in } A
+P(X = a) = \text{점 } a \text{ 에 떨어진 벽돌들의 무게의 합}
 $$
 
-where $A$ is any subset of $\mathbb{R}$.
+$$
+P(X \in A) = \text{집합 } A \text{ 안에 떨어진 벽돌들의 무게의 합}
+$$
 
-## Examples
+여기서 $A$ 는 $\mathbb{R}$ 의 임의의 부분집합이다.
 
-**Example 1 (Coin Flips).** Flip a fair coin three times. The sample space is
+## 예제
+
+**예 1 (동전 던지기).** 공정한 동전을 세 번 던진다. 표본공간은 다음과 같다.
 
 $$
 \Omega = \{HHH,\; HHT,\; HTH,\; HTT,\; THH,\; THT,\; TTH,\; TTT\}
 $$
 
-Let $X$ = number of heads in the first two flips and $Y$ = total number of heads.
-Then $X(HTH) = 1$ and $Y(HTH) = 2$. Both $X$ and $Y$ are random variables on the
-same sample space, but they assign different numbers to the same outcome.
+$X$ 를 처음 두 번 던졌을 때 나온 앞면의 수, $Y$ 를 전체 앞면의 수라 하자.
+그러면 $X(HTH) = 1$, $Y(HTH) = 2$ 이다. $X$ 와 $Y$ 는 같은 표본공간 위에서 정의된
+확률변수이지만, 같은 근원사건에 서로 다른 수를 대응시킨다.
 
-**Example 2 (Die Roll).** Roll a fair die once and let $X$ be the number shown.
-Then $X$ takes values in $\{1, 2, 3, 4, 5, 6\} \subset \mathbb{R}$ with
+**예 2 (주사위 굴리기).** 공정한 주사위를 한 번 굴려 나온 눈을 $X$ 라 하자.
+그러면 $X$ 는 $\{1, 2, 3, 4, 5, 6\} \subset \mathbb{R}$ 의 값을 가지며 다음이 성립한다.
 
 $$
 P(X = k) = \frac{1}{6}, \quad k = 1, 2, 3, 4, 5, 6
 $$
 
-From this we can compute, for instance,
+여기에서 이를테면 다음을 계산할 수 있다.
 
 $$
 P(X \geq 5) = P(X = 5) + P(X = 6) = \frac{1}{6} + \frac{1}{6} = \frac{1}{3}
 $$
 
-**Example 3 (Lifetime of a Component).** Let $X$ denote the time (in hours)
-until a light bulb fails. Here $X$ takes values in $[0, \infty)$ and is a
-continuous random variable --- no single point carries positive probability.
+**예 3 (부품의 수명).** 전구가 고장 날 때까지 걸리는 시간(시간 단위)을 $X$ 라 하자.
+이때 $X$ 는 $[0, \infty)$ 의 값을 가지며 연속확률변수이다. 어느 한 점도 양의 확률을
+갖지 않는다.
 
-!!! tip "Key Takeaway"
-    A random variable converts an abstract probability experiment into a numerical quantity. Everything we do in Chapters 4 through 9 --- PMFs, CDFs, PDFs, expectation, variance --- builds on this idea.
-=======
-## Random Variable as a Function
+!!! tip "핵심 정리"
+    확률변수는 추상적인 확률 실험을 수치로 바꾸어 준다. 4장부터 9장까지 다룰 모든 것 — 확률질량함수, 누적분포함수, 확률밀도함수, 기댓값, 분산 — 이 이 발상 위에 세워진다.
 
-A **random variable** is a function that maps outcomes from a sample space to the real numbers:
+## 연습문제
 
-$$X : \Omega \longrightarrow \mathbb{R}$$
+**연습문제 1.** 공정한 주사위 두 개를 굴린다. $X$ 를 두 눈의 합, $Y$ 를 두 눈의 차의 절댓값이라 하자. 근원사건 $\omega$ 를 세 개 들고, 그에 대응하는 $X(\omega)$ 와 $Y(\omega)$ 의 값을 구하여라.
 
-Each outcome $\omega \in \Omega$ is assigned a real number $X(\omega)$.
+??? success "연습문제 1 풀이"
+    표본공간은 $\Omega = \{(i,j) : 1 \leq i,j \leq 6\}$ 이다.
 
-## Distribution of a Random Variable
+    - $\omega = (3,5)$: $X(\omega) = 8$, $Y(\omega) = 2$.
+    - $\omega = (1,1)$: $X(\omega) = 2$, $Y(\omega) = 0$.
+    - $\omega = (6,2)$: $X(\omega) = 8$, $Y(\omega) = 4$.
 
-The **distribution** of $X$ describes how probability mass is spread across the real line. Using the "brick" analogy:
+    서로 다른 근원사건이 $X$ 의 같은 값을 줄 수 있음에 유의하자($(3,5)$ 와 $(6,2)$ 는 둘 다 $X = 8$ 을 준다). 반면 $Y$ 의 값은 서로 다르다.
 
-- Imagine a brick attached to each outcome $\omega \in \Omega$, with weight equal to $P(\{\omega\})$.
-- The function $X$ moves each brick from $\omega$ to the point $X(\omega)$ on the real line $\mathbb{R}$.
-- After moving all bricks, the total weight on $\mathbb{R}$ is 1.
-- This weight distribution over $\mathbb{R}$ is the **distribution of $X$**.
+---
 
-Formally:
+**연습문제 2.** 동전을 4번 던진다. $X$ 를 앞면의 수라 하자. $X$ 가 가질 수 있는 값은 무엇인가? $P(X = 2)$ 를 구하여라.
 
-$$P(X = a) = \text{Weight of the bricks at } a$$
+??? success "연습문제 2 풀이"
+    $X$ 는 $\{0, 1, 2, 3, 4\}$ 의 값을 갖는다. 공정한 동전이라면 $|\Omega| = 2^4 = 16$ 이다. 사건 $\{X = 2\}$ 는 앞면이 정확히 2번 나오는 근원사건들로 이루어지며, 그런 근원사건은 $\binom{4}{2} = 6$ 개이다.
 
-$$P(X \in A) = \text{Weight of the bricks in } A$$
+    $$
+    P(X = 2) = \frac{6}{16} = \frac{3}{8}
+    $$
 
-## Examples
+---
 
-**Example: Coin Flips.** Consider flipping a fair coin three times. Let $X$ denote the number of heads in the first two flips, and let $Y$ denote the total number of heads in all three flips. The sample space is $\Omega = \{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\}$, and for instance $X(HTH) = 1$ and $Y(HTH) = 2$.
+**연습문제 3.** $\Omega = \{a, b, c\}$ 이고 $P(\{a\}) = 0.5$, $P(\{b\}) = 0.3$, $P(\{c\}) = 0.2$ 라 하자. $X(a) = 1$, $X(b) = 1$, $X(c) = 2$ 로 정의할 때 $X$ 의 분포를 구하여라.
 
-**Example: Die Roll.** Roll a fair die once and let $X$ be the number shown. Then $X : \Omega \to \{1, 2, 3, 4, 5, 6\}$ with $P(X = k) = 1/6$ for each $k$.
+??? success "연습문제 3 풀이"
+    $X$ 는 값 1과 2를 갖는다.
 
-**Example: Lifetime of a Component.** Let $X$ denote the time until a light bulb fails. Here $X$ takes values in $[0, \infty)$ and is a continuous random variable.
+    $$
+    P(X = 1) = P(\{a, b\}) = 0.5 + 0.3 = 0.8
+    $$
 
-## Why Random Variables Matter
+    $$
+    P(X = 2) = P(\{c\}) = 0.2
+    $$
 
-Random variables allow us to translate probability problems from abstract sample spaces into questions about numbers on the real line, making it possible to use the full power of calculus and algebra.
->>>>>>> Stashed changes
+---
+
+**연습문제 4.** 표본공간 $\Omega = [-1, 1]$ (균등분포를 얹은 것) 위에서 정의된 함수 $X(\omega) = \omega^2$ 이 올바른 확률변수인 까닭을 설명하여라. $X$ 는 이산확률변수인가, 연속확률변수인가?
+
+??? success "연습문제 4 풀이"
+    $X(\omega) = \omega^2$ 은 각 근원사건 $\omega \in [-1, 1]$ 을 $[0, 1]$ 안의 실수로 보낸다. 이 함수는 가측이므로(임의의 구간의 역상이 구간들의 합집합이다) 올바른 확률변수이다.
+
+    $\Omega$ 는 비가산이고 균등분포는 각 근원사건에 확률 0을 주므로, $X$ 는 **연속**확률변수이다. 치역은 $[0, 1]$ 이고, $0 \leq x \leq 1$ 에 대해 다음이 성립한다.
+
+    $$
+    P(X \leq x) = P(\omega^2 \leq x) = P(-\sqrt{x} \leq \omega \leq \sqrt{x}) = \sqrt{x}
+    $$
+
+---
+
+**연습문제 5.** 같은 표본공간 위에서 정의된 서로 다른 두 확률변수가 같은 분포를 가질 수 있는가? 예를 들거나 증명하여라.
+
+??? success "연습문제 5 풀이"
+    가질 수 있다. $\Omega = \{H, T\}$ 이고 $P(\{H\}) = P(\{T\}) = 1/2$ 라 하자. 다음과 같이 정의한다.
+
+    - $X(H) = 1$, $X(T) = 0$
+    - $Y(H) = 0$, $Y(T) = 1$
+
+    그러면 $X$ 와 $Y$ 는 서로 다른 함수이지만($X(H) \neq Y(H)$), 분포는 같다. 둘 다 확률 $1/2$ 로 값 0을, 확률 $1/2$ 로 값 1을 갖기 때문이다. 분포는 각 값에 매겨진 확률에만 달려 있을 뿐, 어떤 근원사건이 그 값으로 옮겨 가는지에는 달려 있지 않다.

@@ -1,118 +1,113 @@
-# CDF for Continuous Random Variables
+# 연속확률변수의 누적분포함수
 
-<<<<<<< Updated upstream
-## Motivation
+## 왜 필요한가
 
-In Section 4.3, we defined the CDF $F(x) = P(X \le x)$ for any random variable
-and saw that a discrete CDF is a step function with jumps at each possible
-value. For a continuous random variable the situation is different: probability
-is spread smoothly across an interval, so the CDF has **no jumps** and is
-obtained by integrating the PDF.
+4.3절에서는 임의의 확률변수에 대해 누적분포함수 $F(x) = P(X \le x)$ 를 정의하고,
+이산확률변수의 누적분포함수가 가능한 값마다 뛰어오르는 계단함수임을 보았다.
+연속확률변수에서는 사정이 다르다. 확률이 구간 위에 매끄럽게 퍼져 있으므로
+누적분포함수는 **뛰는 데가 없고**, 확률밀도함수를 적분해서 얻는다.
 
-## CDF via Integration
+## 적분으로 얻는 누적분포함수
 
-!!! info "Continuous CDF"
-    If $X$ is a continuous random variable with PDF $f(x)$, then its CDF is
+!!! info "연속확률변수의 누적분포함수"
+    $X$ 가 확률밀도함수 $f(x)$ 를 갖는 연속확률변수이면 그 누적분포함수는 다음과 같다.
 
     $$
     F(x) = P(X \le x) = \int_{-\infty}^{x} f(s) \, ds
     $$
 
-The dummy variable $s$ is used inside the integral to avoid confusion with the
-upper limit $x$.
+적분 안에서 보조변수 $s$ 를 쓰는 것은 적분 위끝 $x$ 와 헷갈리지 않기 위해서이다.
 
-## Shape of Continuous CDFs
+## 연속 누적분포함수의 모양
 
-Because $F$ is defined as an integral of a non-negative function, every
-continuous CDF is a **continuous, non-decreasing** curve --- unlike the staircase
-pattern of a discrete CDF. In particular, there are no jumps, which means
+$F$ 는 음이 아닌 함수의 적분으로 정의되므로, 모든 연속 누적분포함수는
+**연속이면서 감소하지 않는** 곡선이다. 이산 누적분포함수의 계단 모양과는 다르다.
+특히 뛰는 데가 없으므로 모든 실수 $a$ 에 대해 다음이 성립한다.
 
 $$
 P(X = a) = F(a) - \lim_{x \to a^-} F(x) = 0
 $$
 
-for every real number $a$. No single point carries positive probability.
+어느 한 점도 양의 확률을 갖지 않는다.
 
-## Recovering the PDF
+## 확률밀도함수 되찾기
 
-By the Fundamental Theorem of Calculus, wherever $f$ is continuous we can
-recover the PDF from the CDF by differentiation:
+미적분학의 기본정리에 따라, $f$ 가 연속인 곳에서는 누적분포함수를 미분하여
+확률밀도함수를 되찾을 수 있다.
 
 $$
 f(x) = F'(x) = \frac{d}{dx} F(x)
 $$
 
-This is the continuous analogue of recovering the PMF from a discrete CDF via
-jump sizes.
+이는 이산 누적분포함수에서 뛴 폭으로 확률질량함수를 되찾는 것에 대응한다.
 
-## Computing Probabilities
+## 확률 구하기
 
-For continuous random variables, strict and non-strict inequalities give the
-same result because $P(X = a) = 0$:
+연속확률변수에서는 $P(X = a) = 0$ 이므로 부등호에 등호가 있든 없든 결과가 같다.
 
 $$
 P(a \le X \le b) = P(a < X < b) = F(b) - F(a) = \int_a^b f(x) \, dx
 $$
 
-!!! tip "Strict vs Non-Strict Inequalities"
-    For discrete random variables, $P(X \le b)$ and $P(X < b)$ can differ.
-    For continuous random variables, they are always equal.
+!!! tip "등호가 있는 부등호와 없는 부등호"
+    이산확률변수에서는 $P(X \le b)$ 와 $P(X < b)$ 가 다를 수 있다.
+    연속확률변수에서는 둘이 언제나 같다.
 
-## Example: Uniform on the Unit Interval
+## 예: 단위구간 위의 균등분포
 
-Let $X \sim \text{Uniform}(0, 1)$, so $f(x) = 1$ for $0 \le x \le 1$ and
-$f(x) = 0$ otherwise. Integrating:
+$X \sim \text{Uniform}(0, 1)$ 이라 하자. 그러면 $0 \le x \le 1$ 에서 $f(x) = 1$ 이고
+그 밖에서는 $f(x) = 0$ 이다. 적분하면 다음을 얻는다.
 
 $$
 F(x) = \begin{cases} 0 & x < 0 \\ x & 0 \le x \le 1 \\ 1 & x > 1 \end{cases}
 $$
 
-For instance, $P(0.2 \le X \le 0.7) = F(0.7) - F(0.2) = 0.7 - 0.2 = 0.5$.
+이를테면 $P(0.2 \le X \le 0.7) = F(0.7) - F(0.2) = 0.7 - 0.2 = 0.5$ 이다.
 
-## Example: Quadratic PDF
+## 예: 이차식 밀도함수
 
-Let $f(x) = 3x^2$ for $0 \le x \le 1$ and $f(x) = 0$ otherwise. Then
+$0 \le x \le 1$ 에서 $f(x) = 3x^2$ 이고 그 밖에서는 $f(x) = 0$ 이라 하자. 그러면 다음과 같다.
 
 $$
 F(x) = \int_0^x 3s^2 \, ds = x^3, \quad 0 \le x \le 1
 $$
 
-with $F(x) = 0$ for $x < 0$ and $F(x) = 1$ for $x > 1$. Verification:
-$F'(x) = 3x^2 = f(x)$ on $(0, 1)$.
+또한 $x < 0$ 에서 $F(x) = 0$, $x > 1$ 에서 $F(x) = 1$ 이다. 확인해 보면
+$(0, 1)$ 위에서 $F'(x) = 3x^2 = f(x)$ 이다.
 
-We can compute $P(X > 0.5) = 1 - F(0.5) = 1 - 0.125 = 0.875$.
-=======
-## Formula
+$P(X > 0.5) = 1 - F(0.5) = 1 - 0.125 = 0.875$ 를 계산할 수 있다.
 
-For a continuous random variable $X$ with PDF $f(x)$, the CDF is:
+## 연습문제
 
-$$F(x) = P(X \le x) = \int_{-\infty}^{x} f(s) \, ds$$
+**연습문제 1.** 연속확률변수 $X$ 의 누적분포함수가 다음과 같다.
 
-## Shape of Continuous CDFs
+$$
+F(x) = \begin{cases} 0 & x < 0 \\ 1 - e^{-2x} & x \geq 0 \end{cases}
+$$
 
-The CDF of a continuous random variable is a **continuous, non-decreasing function** (no jumps), which implies:
+**(a)** 확률밀도함수 $f(x)$ 를 구하여라.
 
-$$P(X = a) = F(a) - F(a^-) = 0$$
+**(b)** $P(1 \leq X \leq 3)$ 을 계산하여라.
 
-for every $a$. That is, no single point carries positive probability.
+**(c)** $P(X \leq m) = 0.5$ 를 만족하는 값 $m$ (중앙값)을 구하여라.
 
-## Relationship to the PDF
+??? success "연습문제 1 풀이"
+    **(a)** $x > 0$ 에서 미분하면 다음을 얻는다.
 
-By the Fundamental Theorem of Calculus, wherever $f$ is continuous:
+    $$
+    f(x) = F'(x) = 2 e^{-2x}, \quad x \geq 0
+    $$
 
-$$f(x) = F'(x) = \frac{d}{dx} F(x)$$
+    (그리고 $x < 0$ 에서 $f(x) = 0$ 이다.) 이는 비율이 $\lambda = 2$ 인 지수분포이다.
 
-The PDF is the derivative of the CDF.
+    **(b)**
 
-## Computing Probabilities
+    $$
+    P(1 \leq X \leq 3) = F(3) - F(1) = (1 - e^{-6}) - (1 - e^{-2}) = e^{-2} - e^{-6} \approx 0.1329
+    $$
 
-$$P(a \le X \le b) = P(a < X < b) = F(b) - F(a) = \int_a^b f(x) \, dx$$
+    **(c)** $1 - e^{-2m} = 0.5$ 를 풀면 다음을 얻는다.
 
-For continuous random variables, strict and non-strict inequalities give the same probability since $P(X = a) = 0$.
-
-## Example: Uniform on $[0, 1]$
-
-For $X \sim \text{Uniform}(0,1)$, $f(x) = 1$ on $[0,1]$, so:
-
-$$F(x) = \begin{cases} 0 & x < 0 \\ x & 0 \le x \le 1 \\ 1 & x > 1 \end{cases}$$
->>>>>>> Stashed changes
+    $$
+    e^{-2m} = 0.5 \implies m = \frac{\ln 2}{2} \approx 0.3466
+    $$

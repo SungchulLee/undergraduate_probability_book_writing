@@ -1,56 +1,65 @@
-# Discrete vs Continuous Random Variables
+# 이산확률변수와 연속확률변수
 
-## Discrete Random Variables
+## 이산확률변수
 
-A random variable $X$ is **discrete** if it takes values in a countable set $\{x_1, x_2, x_3, \ldots\}$. Its distribution is fully described by the probability mass function (PMF):
+확률변수 $X$ 가 가산집합 $\{x_1, x_2, x_3, \ldots\}$ 의 값을 가지면 $X$ 를 **이산**확률변수라 한다. 그 분포는 확률질량함수(PMF)로 온전히 기술된다.
 
 $$
 P(X = x_i) = p(x_i)
 $$
 
-Each value $x_i$ carries a positive "brick" of probability mass, and these masses sum to 1:
+각 값 $x_i$ 는 양의 확률질량이라는 "벽돌"을 하나씩 얹고 있으며, 그 무게를 모두 더하면 1이다.
 
 $$
 \sum_{i} p(x_i) = 1
 $$
 
-!!! example "Examples of Discrete Random Variables"
-    - Number of heads in $n$ coin flips (Binomial)
-    - Number of flips until first head (Geometric)
-    - Number of defective items in a sample (Hypergeometric)
-    - Number of typos on a page (Poisson)
+!!! example "이산확률변수의 예"
 
-## Continuous Random Variables
+    - 동전을 $n$ 번 던졌을 때 앞면의 수 (이항분포)
+    - 첫 앞면이 나올 때까지 던진 횟수 (기하분포)
+    - 표본 안에 들어 있는 불량품의 수 (초기하분포)
+    - 한 쪽에 있는 오탈자의 수 (푸아송분포)
 
-A random variable $X$ is **continuous** if its CDF $F(x) = P(X \le x)$ is a continuous function. Equivalently, $P(X = a) = 0$ for every individual value $a$. The distribution is described by a probability density function (PDF) $f(x)$ satisfying
+## 연속확률변수
+
+확률변수 $X$ 의 누적분포함수 $F(x) = P(X \le x)$ 가 연속함수이면 $X$ 를 **연속**확률변수라 한다. 이는 모든 값 $a$ 에 대해 $P(X = a) = 0$ 인 것과 같은 말이다. 이때 분포는 다음을 만족하는 확률밀도함수(PDF) $f(x)$ 로 기술된다.
 
 $$
 P(X \in A) = \int_A f(x) \, dx
 $$
 
-for every measurable set $A \subseteq \mathbb{R}$. In particular, the CDF and PDF are related by
+여기서 $A \subseteq \mathbb{R}$ 는 임의의 가측집합이다. 특히 누적분포함수와 확률밀도함수는 다음 관계로 이어져 있다.
 
 $$
-F(x) = \int_{-\infty}^{x} f(t) \, dt, \qquad f(x) = F'(x) \text{ wherever } F \text{ is differentiable}
+F(x) = \int_{-\infty}^{x} f(t) \, dt, \qquad f(x) = F'(x) \quad (F \text{ 가 미분가능한 곳에서})
 $$
 
-For continuous random variables, probability is spread smoothly---no single point carries positive mass.
+연속확률변수에서는 확률이 매끄럽게 퍼져 있어서 어느 한 점도 양의 질량을 갖지 않는다.
 
-!!! example "Examples of Continuous Random Variables"
-    - Uniform on $[0,1]$
-    - Standard normal $N(0,1)$
-    - Exponential waiting time $\text{Exp}(\lambda)$
-    - Gamma distribution $\text{Gamma}(\alpha, \beta)$
+!!! example "연속확률변수의 예"
 
-## Key Distinction
+    - $[0,1]$ 위의 균등분포
+    - 표준정규분포 $N(0,1)$
+    - 지수분포를 따르는 대기시간 $\text{Exp}(\lambda)$
+    - 감마분포 $\text{Gamma}(\alpha, \beta)$
 
-| Property | Discrete | Continuous |
+## 결정적인 차이
+
+| 성질 | 이산 | 연속 |
 |----------|----------|------------|
-| Values | Countable set | Uncountable (interval) |
-| Point probability | $P(X = a) > 0$ possible | $P(X = a) = 0$ always |
-| Described by | PMF $p(x_i)$ | PDF $f(x)$ |
-| Summation vs integration | $\sum$ | $\int$ |
-| CDF behavior | Step function | Continuous function |
+| 값 | 가산집합 | 비가산(구간) |
+| 한 점의 확률 | $P(X = a) > 0$ 일 수 있음 | 항상 $P(X = a) = 0$ |
+| 무엇으로 기술하나 | 확률질량함수 $p(x_i)$ | 확률밀도함수 $f(x)$ |
+| 합이냐 적분이냐 | $\sum$ | $\int$ |
+| 누적분포함수의 모습 | 계단함수 | 연속함수 |
 
-!!! warning "Density Is Not Probability"
-    For a continuous random variable, $f(x)$ is a **density**, not a probability. It is possible for $f(x) > 1$ at some points. Only the integral of $f$ over an interval gives a probability.
+!!! warning "밀도는 확률이 아니다"
+    연속확률변수에서 $f(x)$ 는 **밀도**이지 확률이 아니다. 어떤 점에서는 $f(x) > 1$ 일 수도 있다. 구간 위에서 $f$ 를 적분한 값만이 확률이 된다.
+
+## 연습문제
+
+**연습문제 1.** $X$ 가 연속확률변수일 때, $X$ 가 반드시 어떤 값을 갖는데도 모든 값 $a$ 에 대해 $P(X = a) = 0$ 인 까닭을 자기 말로 설명하여라.
+
+??? success "연습문제 1 풀이"
+    연속확률변수는 비가산집합인 구간 안의 값을 갖는다. 만약 모든 점이 양의 확률을 갖는다면, 이를테면 $P(X = a) = \varepsilon > 0$ 이라면, 그런 점을 가산무한개만 모아 더해도 이미 1을 넘어서고, 비가산개를 더한다는 것은 뜻이 없거나 무한대가 된다. 연속분포에서 확률은 매끄럽게 퍼져 있다. 곧 $\Delta \to 0$ 일 때 $P(X \in [a, a + \Delta]) \approx f(a) \Delta \to 0$ 이다. 그래서 낱낱의 점은 확률 0을 갖지만, 길이가 있는 구간 전체의 확률은 양수이고 $X$ 는 언제나 받침 *어딘가에* 떨어진다. 측도가 0인 사건들을 가산개 모으면 확률이 1이 될 수도 있다는 사실이 바로 연속 측도론의 특징이다.

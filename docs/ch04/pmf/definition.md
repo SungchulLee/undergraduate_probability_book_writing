@@ -1,117 +1,130 @@
-# PMF Definition and Properties
-<<<<<<< Updated upstream
+# 확률질량함수의 정의와 성질
 
-## Motivation
+## 왜 필요한가
 
-For a discrete random variable $X$, the most natural way to describe its
-distribution is to list every possible value together with its probability.
-This list is called the **probability mass function (PMF)**. In the brick
-analogy from Section 4.1, the PMF records the weight of each brick after it has
-been placed on the real line.
+이산확률변수 $X$ 의 분포를 기술하는 가장 자연스러운 방법은 가능한 값을 모두 적고
+그 값이 나올 확률을 나란히 적어 두는 것이다.
+이 목록을 **확률질량함수(PMF)**라 한다. 4.1절의 벽돌 비유로 말하면, 확률질량함수는
+벽돌을 실수 위에 다 옮겨 놓은 뒤 각 벽돌의 무게를 적어 둔 장부이다.
 
-## Definition
+## 정의
 
-!!! info "Definition — Probability Mass Function"
-    Let $X$ be a discrete random variable taking values in a countable set
-    $\{x_1, x_2, x_3, \ldots\}$. The **probability mass function (PMF)** of $X$
-    is the function
+!!! info "정의 — 확률질량함수"
+    $X$ 를 가산집합 $\{x_1, x_2, x_3, \ldots\}$ 의 값을 갖는 이산확률변수라 하자.
+    $X$ 의 **확률질량함수(PMF)**란 함수
 
     $$
     p_X(x_i) = P(X = x_i)
     $$
 
-    that assigns a probability to each possible value $x_i$.
+    로서, 가능한 각 값 $x_i$ 에 그 확률을 대응시키는 것이다.
 
-The subscript $X$ in $p_X$ emphasizes which random variable the PMF belongs to.
-When the random variable is clear from context, we sometimes write $p(x_i)$ or
-$p_{x_i}$.
-=======
+$p_X$ 의 아래첨자 $X$ 는 이 확률질량함수가 어느 확률변수의 것인지를 밝혀 준다.
+어떤 확률변수인지가 문맥에서 분명할 때는 $p(x_i)$ 나 $p_{x_i}$ 로 줄여 쓰기도 한다.
 
-## Definition
+## 성질
 
-The **probability mass function (PMF)** of a discrete random variable $X$ assigns a probability to each possible value:
+올바른 확률질량함수는 다음 두 조건을 만족해야 한다.
 
-$$p_{x_i} = P(X = x_i) = \text{Weight of the brick attached to } x_i$$
+!!! info "확률질량함수의 성질"
 
-## Properties
+    1. **음이 아님:** 모든 $i$ 에 대해 $p_X(x_i) \ge 0$
+    2. **정규화:** $\displaystyle\sum_{i} p_X(x_i) = 1$
 
-A valid PMF must satisfy:
+가산집합 위에서 이 두 성질을 만족하는 함수는 모두 올바른 이산분포를 정의한다.
+거꾸로 모든 이산분포는 두 성질을 만족하는 확률질량함수를 낳는다.
 
-1. **Non-negativity:** $p_{x_i} \ge 0$ for all $i$.
-2. **Normalization:** $\displaystyle\sum_i p_{x_i} = 1$.
->>>>>>> Stashed changes
+## 확률질량함수로 확률 구하기
 
-## Properties
-
-<<<<<<< Updated upstream
-A valid PMF must satisfy two conditions:
-
-!!! info "PMF Properties"
-    1. **Non-negativity:** $p_X(x_i) \ge 0$ for all $i$
-    2. **Normalization:** $\displaystyle\sum_{i} p_X(x_i) = 1$
-=======
-## Computing Probabilities from the PMF
->>>>>>> Stashed changes
-
-Any function on a countable set satisfying these two properties defines a valid
-discrete distribution. Conversely, every discrete distribution gives rise to a
-PMF satisfying both properties.
-
-## Computing Probabilities from the PMF
-
-For any set $A \subseteq \mathbb{R}$, the probability that $X$ falls in $A$ is
-obtained by summing the PMF over all values in $A$:
+임의의 집합 $A \subseteq \mathbb{R}$ 에 대해 $X$ 가 $A$ 안에 떨어질 확률은
+$A$ 안의 모든 값에 걸쳐 확률질량함수를 더해서 얻는다.
 
 $$P(X \in A) = \sum_{x_i \in A} p_{x_i}$$
 
-<<<<<<< Updated upstream
-This is the discrete counterpart of integration for continuous distributions.
+이것이 연속분포에서의 적분에 해당하는 이산판이다.
 
-## Visualization
+## 그림으로 보기
 
-The PMF is typically displayed as a **spike plot** (or bar chart), where a
-vertical bar at each $x_i$ has height equal to $P(X = x_i)$. The heights must
-sum to 1.
+확률질량함수는 보통 **막대 그림**(막대그래프)으로 그린다. 각 $x_i$ 위에 세운 수직 막대의
+높이가 $P(X = x_i)$ 이다. 이 높이들을 모두 더하면 1이어야 한다.
 
-## Examples
+## 예제
 
-**Example 1 (Fair Die).** Let $X$ be the result of rolling a fair six-sided die. The PMF is
+**예 1 (공정한 주사위).** 공정한 육면체 주사위를 굴려 나온 눈을 $X$ 라 하자. 확률질량함수는 다음과 같다.
 
 $$
 p_X(k) = P(X = k) = \frac{1}{6}, \quad k = 1, 2, 3, 4, 5, 6
 $$
 
-Verification: $\sum_{k=1}^{6} \frac{1}{6} = 1$.
+확인: $\sum_{k=1}^{6} \frac{1}{6} = 1$.
 
-**Example 2 (Loaded Coin).** Flip a coin with $P(\text{Heads}) = 0.7$. Let $X = 1$ if heads, $X = 0$ if tails. Then
+**예 2 (치우친 동전).** $P(\text{앞면}) = 0.7$ 인 동전을 던진다. 앞면이면 $X = 1$, 뒷면이면 $X = 0$ 이라 하자. 그러면 다음과 같다.
 
 $$
 p_X(0) = 0.3, \qquad p_X(1) = 0.7
 $$
 
-This is a Bernoulli PMF with parameter $p = 0.7$. Note that $0.3 + 0.7 = 1$.
+이것이 모수가 $p = 0.7$ 인 베르누이분포의 확률질량함수이다. $0.3 + 0.7 = 1$ 임에 유의하자.
 
-**Example 3 (Number of Heads).** Flip a fair coin twice and let $X$ count the
-number of heads. The possible values are $\{0, 1, 2\}$ with
+**예 3 (앞면의 수).** 공정한 동전을 두 번 던지고 $X$ 를 앞면의 수라 하자.
+가능한 값은 $\{0, 1, 2\}$ 이고 확률은 다음과 같다.
 
 | $x$ | 0 | 1 | 2 |
 |:---:|:---:|:---:|:---:|
 | $p_X(x)$ | $1/4$ | $1/2$ | $1/4$ |
 
-From this PMF we can compute $P(X \geq 1) = p_X(1) + p_X(2) = \frac{1}{2} + \frac{1}{4} = \frac{3}{4}$.
+이 확률질량함수에서 $P(X \geq 1) = p_X(1) + p_X(2) = \frac{1}{2} + \frac{1}{4} = \frac{3}{4}$ 를 계산할 수 있다.
 
-!!! tip "PMF vs PDF"
-    The PMF applies only to **discrete** random variables. For continuous random variables, the analogous object is the probability density function (PDF), introduced in Section 4.4. A key difference: $p_X(x_i)$ is a genuine probability, while the PDF value $f_X(x)$ is a density that can exceed 1.
-=======
-## Visualization
+!!! tip "확률질량함수와 확률밀도함수"
+    확률질량함수는 **이산**확률변수에만 쓴다. 연속확률변수에서 이에 해당하는 것은 4.4절에서 소개할 확률밀도함수이다. 결정적인 차이는 이렇다. $p_X(x_i)$ 는 진짜 확률이지만, 확률밀도함수의 값 $f_X(x)$ 는 밀도여서 1을 넘을 수도 있다.
 
-The PMF is typically displayed as a bar chart or spike plot, where the height of each bar at $x_i$ equals $P(X = x_i)$.
+## 연습문제
 
-## Example
+**연습문제 1.** 확률변수 $X$ 의 확률질량함수가 $k = 1, 2, 3, 4, 5$ 에 대해 $P(X = k) = c \cdot k$ 라 하자. 상수 $c$ 를 구하고 $P(X \geq 3)$ 을 계산하여라.
 
-**Fair die.** Let $X$ be the result of rolling a fair six-sided die. The PMF is:
+??? success "연습문제 1 풀이"
+    정규화 조건을 쓰면 다음과 같다.
 
-$$p_k = P(X = k) = \frac{1}{6}, \quad k = 1, 2, 3, 4, 5, 6$$
+    $$
+    \sum_{k=1}^{5} c k = c(1 + 2 + 3 + 4 + 5) = 15 c = 1 \implies c = \frac{1}{15}
+    $$
 
-**Verification:** $\sum_{k=1}^{6} \frac{1}{6} = 1$ ✓
->>>>>>> Stashed changes
+    따라서 다음을 얻는다.
+
+    $$
+    P(X \geq 3) = \frac{3 + 4 + 5}{15} = \frac{12}{15} = \frac{4}{5}
+    $$
+
+---
+
+**연습문제 2.** 확률변수 $X$ 의 확률질량함수가 $k = 1, 2, 3, \ldots$ 에 대해 $P(X = k) = c \cdot 2^{-k}$ 라 하자. 상수 $c$ 를 구하고 $P(X \leq 3)$ 을 계산하여라.
+
+??? success "연습문제 2 풀이"
+    등비급수를 더하면 다음과 같다.
+
+    $$
+    \sum_{k=1}^{\infty} c \cdot 2^{-k} = c \cdot \frac{1/2}{1 - 1/2} = c = 1
+    $$
+
+    그러므로 $c = 1$ 이고 확률질량함수는 $P(X = k) = 2^{-k}$ 이다. 따라서 다음을 얻는다.
+
+    $$
+    P(X \leq 3) = \frac{1}{2} + \frac{1}{4} + \frac{1}{8} = \frac{7}{8}
+    $$
+
+---
+
+**연습문제 3.** 모든 $x$ 에 대해 $p_X(x) \geq 0$ 이고 $\sum_x p_X(x) = 1$ 이면, 모든 집합 $A \subseteq \mathbb{R}$ 에 대해 $0 \leq P(X \in A) \leq 1$ 임을 증명하여라.
+
+??? success "연습문제 3 풀이"
+    $P(X \in A) = \sum_{x \in A} p_X(x)$ 로 정의한다.
+
+    **하계.** 각 항이 음이 아니므로 $P(X \in A) = \sum_{x \in A} p_X(x) \geq 0$ 이다.
+
+    **상계.** 각 항이 음이 아니므로 합의 범위를 모든 $x$ 로 넓히면 음이 아닌 값만 더해질 뿐이다.
+
+    $$
+    P(X \in A) = \sum_{x \in A} p_X(x) \leq \sum_{x \in \mathbb{R}} p_X(x) = 1
+    $$
+
+    두 부등식을 합치면 $0 \leq P(X \in A) \leq 1$ 이다. $\square$

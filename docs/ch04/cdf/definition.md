@@ -1,44 +1,86 @@
-# CDF Definition and Properties
+# 누적분포함수의 정의와 성질
 
-## Definition
+## 정의
 
-The **cumulative distribution function (CDF)** of a random variable $X$ is:
+확률변수 $X$ 의 **누적분포함수(CDF)**는 다음과 같이 정의된다.
 
 $$F(x) = P(X \le x)$$
 
-Using the brick analogy:
+벽돌 비유로 말하면 다음과 같다.
 
-$$F(x) = \text{Weight of the bricks cumulatively stacked from } -\infty \text{ up to } x$$
+$$F(x) = -\infty \text{ 부터 } x \text{ 까지 쌓아 올린 벽돌들의 무게}$$
 
-## Properties of the CDF
+## 누적분포함수의 성질
 
-Every CDF satisfies:
+모든 누적분포함수는 다음을 만족한다.
 
-1. **Non-decreasing:** If $a < b$, then $F(a) \le F(b)$.
-2. **Right-continuous:** $\displaystyle\lim_{x \to a^+} F(x) = F(a)$ for all $a$.
-3. **Limits at infinity:**
+1. **감소하지 않음:** $a < b$ 이면 $F(a) \le F(b)$ 이다.
+2. **오른쪽 연속:** 모든 $a$ 에 대해 $\displaystyle\lim_{x \to a^+} F(x) = F(a)$ 이다.
+3. **무한대에서의 극한:**
     - $\displaystyle\lim_{x \to -\infty} F(x) = 0$
     - $\displaystyle\lim_{x \to +\infty} F(x) = 1$
 
-## Computing Probabilities from the CDF
+## 누적분포함수로 확률 구하기
 
 $$P(a < X \le b) = F(b) - F(a)$$
 
 $$P(X > a) = 1 - F(a)$$
 
-$$P(X = a) = F(a) - F(a^-) = \text{size of jump at } a$$
+$$P(X = a) = F(a) - F(a^-) = a \text{ 에서 뛴 폭}$$
 
-where $F(a^-) = \lim_{x \to a^-} F(x)$ is the left-hand limit.
+여기서 $F(a^-) = \lim_{x \to a^-} F(x)$ 는 왼쪽 극한이다.
 
-## Example: Reading a CDF
+## 예: 누적분포함수 읽기
 
-Consider a discrete CDF with jumps at $x = 5, 7, 10, 20, 25, 30$.
+$x = 5, 7, 10, 20, 25, 30$ 에서 뛰는 이산 누적분포함수를 생각하자.
 
-From the graph:
+그래프에서 다음을 읽을 수 있다.
 
 $$P(X = 5) = F(5) - F(5^-) = 0.2 - 0 = 0.2$$
 
 $$P(X < 20) = F(20^-) = 0.6 \implies P(X \ge 20) = 1 - P(X < 20) = 0.4$$
 
-!!! tip "Key Insight"
-    For discrete random variables, $P(X = a)$ equals the **jump size** of the CDF at $a$. If there is no jump at $a$, then $P(X = a) = 0$.
+!!! tip "핵심 정리"
+    이산확률변수에서 $P(X = a)$ 는 누적분포함수가 $a$ 에서 **뛴 폭**과 같다. $a$ 에서 뛰지 않으면 $P(X = a) = 0$ 이다.
+
+## 연습문제
+
+**연습문제 1.** 어떤 확률변수의 누적분포함수가 다음과 같다.
+
+$$
+F(x) = \begin{cases} 0 & x < 0 \\ x/2 & 0 \leq x < 1 \\ 1/2 & 1 \leq x < 2 \\ 1 & x \geq 2 \end{cases}
+$$
+
+$X$ 는 이산인가, 연속인가, 아니면 섞인 것인가? $P(X = 1)$, $P(X = 2)$, $P(0.5 < X \leq 2)$ 를 구하여라.
+
+??? success "연습문제 1 풀이"
+    $F$ 는 $[0, 1)$ 에서 연속이고(기울기 $1/2$), $[1, 2)$ 에서 평평하며, $x = 2$ 에서 뛴다. $x = 2$ 에서 폭 $1/2$ 만큼 뛰는 한편 $[0, 1]$ 에서는 연속인 부분을 가지므로, $X$ 는 **섞인** 확률변수이다(일부는 연속, 일부는 이산).
+
+    - $P(X = 1) = F(1) - F(1^-) = 1/2 - 1/2 = 0$ (1에서 뛰지 않는다).
+    - $P(X = 2) = F(2) - F(2^-) = 1 - 1/2 = 1/2$ (폭 $1/2$ 만큼 뛴다).
+    - $P(0.5 < X \leq 2) = F(2) - F(0.5) = 1 - 0.25 = 0.75$.
+
+---
+
+**연습문제 2.** 임의의 누적분포함수 $F$ 에 대해 $P(a < X \leq b) = F(b) - F(a)$ 임이 확률의 공리와 정의 $F(x) = P(X \leq x)$ 에서 곧바로 따라 나옴을 보여라.
+
+??? success "연습문제 2 풀이"
+    $a < b$ 일 때 사건 $\{X \leq b\}$ 는 서로소인 두 사건 $\{X \leq a\}$ 와 $\{a < X \leq b\}$ 로 쪼개진다.
+
+    $$
+    \{X \leq b\} = \{X \leq a\} \cup \{a < X \leq b\}
+    $$
+
+    유한가법성에 따라 다음이 성립한다.
+
+    $$
+    P(X \leq b) = P(X \leq a) + P(a < X \leq b)
+    $$
+
+    가운데 확률에 대해 풀고 누적분포함수의 정의를 쓰면 다음을 얻는다.
+
+    $$
+    P(a < X \leq b) = P(X \leq b) - P(X \leq a) = F(b) - F(a)
+    $$
+
+    $\square$

@@ -1,119 +1,157 @@
-# Relationship Between PDF and CDF
+# 밀도함수와 분포함수의 관계
 
-<<<<<<< Updated upstream
-## Motivation
+## 왜 필요한가
 
-The CDF and PDF are two descriptions of the same continuous distribution.
-The CDF accumulates probability from $-\infty$ up to $x$, while the PDF
-describes the rate at which probability is accumulating at each point. The
-Fundamental Theorem of Calculus connects the two: integration turns a PDF into
-a CDF, and differentiation turns a CDF back into a PDF.
+누적분포함수와 확률밀도함수는 같은 연속분포를 두 가지 방식으로 기술한 것이다.
+누적분포함수는 $-\infty$ 부터 $x$ 까지 확률을 쌓아 올린 것이고, 확률밀도함수는
+각 점에서 확률이 쌓이는 속도를 말해 준다. 미적분학의 기본정리가 이 둘을 이어 준다.
+적분하면 확률밀도함수가 누적분포함수가 되고, 미분하면 누적분포함수가 다시
+확률밀도함수가 된다.
 
-## From PDF to CDF
+## 확률밀도함수에서 누적분포함수로
 
-!!! info "Integration: PDF to CDF"
-    Given the PDF $f_X(x)$, the CDF is obtained by integration:
+!!! info "적분: 확률밀도함수에서 누적분포함수로"
+    확률밀도함수 $f_X(x)$ 가 주어지면 누적분포함수는 적분해서 얻는다.
 
     $$
     F_X(x) = \int_{-\infty}^{x} f_X(s) \, ds
     $$
 
-Geometrically, $F_X(x)$ equals the area under the PDF curve to the left of $x$.
-As $x$ increases, this area grows from 0 to 1.
+기하학적으로 $F_X(x)$ 는 확률밀도함수 곡선 아래에서 $x$ 왼쪽에 있는 넓이와 같다.
+$x$ 가 커지면 이 넓이가 0에서 1까지 자라난다.
 
-## From CDF to PDF
+## 누적분포함수에서 확률밀도함수로
 
-!!! info "Differentiation: CDF to PDF"
-    Given the CDF $F_X(x)$, the PDF is recovered by differentiation (wherever
-    $F_X$ is differentiable):
+!!! info "미분: 누적분포함수에서 확률밀도함수로"
+    누적분포함수 $F_X(x)$ 가 주어지면 ($F_X$ 가 미분가능한 곳에서) 미분하여
+    확률밀도함수를 되찾는다.
 
     $$
     f_X(x) = \frac{d}{dx} F_X(x) = F_X'(x)
     $$
 
-Where the CDF is steep, probability is densely packed (high PDF). Where the CDF
-is nearly flat, probability is sparse (low PDF).
+누적분포함수가 가파른 곳에서는 확률이 빽빽하게 몰려 있고(확률밀도함수가 크다),
+거의 평평한 곳에서는 확률이 성기다(확률밀도함수가 작다).
 
-## Unified View: Discrete and Continuous
+## 이산과 연속을 한자리에 놓고 보기
 
-The table below summarizes the parallel structure between the discrete and
-continuous cases.
+아래 표는 이산인 경우와 연속인 경우가 어떻게 나란히 대응하는지를 정리한 것이다.
 
-| | Discrete | Continuous |
+| | 이산 | 연속 |
 |---|---|---|
-| Distribution function | PMF: $p_X(x_i)$ | PDF: $f_X(x)$ |
-| CDF formula | $F(x) = \displaystyle\sum_{x_i \le x} p_X(x_i)$ | $F(x) = \displaystyle\int_{-\infty}^{x} f_X(s) \, ds$ |
-| Recover distribution | $p_X(x_i) = F(x_i) - F(x_i^-)$ | $f_X(x) = F'(x)$ |
+| 분포를 정하는 함수 | 확률질량함수: $p_X(x_i)$ | 확률밀도함수: $f_X(x)$ |
+| 누적분포함수 공식 | $F(x) = \displaystyle\sum_{x_i \le x} p_X(x_i)$ | $F(x) = \displaystyle\int_{-\infty}^{x} f_X(s) \, ds$ |
+| 분포 되찾기 | $p_X(x_i) = F(x_i) - F(x_i^-)$ | $f_X(x) = F'(x)$ |
 | $P(X \in A)$ | $\displaystyle\sum_{x_i \in A} p_X(x_i)$ | $\displaystyle\int_A f_X(x) \, dx$ |
-| Operation | Summation $\sum$ | Integration $\int$ |
+| 연산 | 합 $\sum$ | 적분 $\int$ |
 
-In both cases, the CDF is the "running total" of probability mass, and the
-distribution function (PMF or PDF) captures the local rate at which mass is
-added.
+두 경우 모두 누적분포함수는 확률질량의 "누적 합계"이고, 분포를 정하는 함수
+(확률질량함수 또는 확률밀도함수)는 질량이 더해지는 국소적인 속도를 담고 있다.
 
-## Example 1: Triangular Density
+## 예 1: 삼각형 모양의 밀도
 
-Let $f_X(x) = 2x$ for $0 \le x \le 1$ and $f_X(x) = 0$ otherwise. Then
+$0 \le x \le 1$ 에서 $f_X(x) = 2x$ 이고 그 밖에서는 $f_X(x) = 0$ 이라 하자. 그러면 다음과 같다.
 
 $$
 F_X(x) = \int_0^x 2s \, ds = x^2, \quad 0 \le x \le 1
 $$
 
-with $F_X(x) = 0$ for $x < 0$ and $F_X(x) = 1$ for $x > 1$.
+또한 $x < 0$ 에서 $F_X(x) = 0$, $x > 1$ 에서 $F_X(x) = 1$ 이다.
 
-Verification: $F_X'(x) = 2x = f_X(x)$ on $(0, 1)$.
+확인: $(0, 1)$ 위에서 $F_X'(x) = 2x = f_X(x)$ 이다.
 
-## Example 2: Exponential Distribution
+## 예 2: 지수분포
 
-Let $f_X(x) = \lambda e^{-\lambda x}$ for $x \ge 0$ (with $\lambda > 0$) and
-$f_X(x) = 0$ for $x < 0$. Then
+$\lambda > 0$ 일 때 $x \ge 0$ 에서 $f_X(x) = \lambda e^{-\lambda x}$ 이고
+$x < 0$ 에서 $f_X(x) = 0$ 이라 하자. 그러면 다음과 같다.
 
 $$
 F_X(x) = \int_0^x \lambda e^{-\lambda s} \, ds = 1 - e^{-\lambda x}, \quad x \ge 0
 $$
 
-Verification: $F_X'(x) = \lambda e^{-\lambda x} = f_X(x)$ for $x > 0$.
+확인: $x > 0$ 에서 $F_X'(x) = \lambda e^{-\lambda x} = f_X(x)$ 이다.
 
-Using the CDF, we can quickly compute tail probabilities:
+누적분포함수를 쓰면 꼬리확률을 금방 계산할 수 있다.
 
 $$
 P(X > t) = 1 - F_X(t) = e^{-\lambda t}
 $$
 
-!!! tip "Which Direction to Use?"
-    **PDF to CDF** (integration) is the natural direction when you are given a
-    density and need cumulative probabilities. **CDF to PDF** (differentiation)
-    is useful when the CDF has a simple closed form and you want the density for
-    visualization or further computation.
-=======
-## From PDF to CDF
+!!! tip "어느 쪽으로 갈 것인가"
+    밀도가 주어져 있고 누적확률이 필요할 때는 **확률밀도함수에서 누적분포함수로**
+    가는 적분이 자연스럽다. 반대로 누적분포함수가 간단한 닫힌 꼴이고 그림을
+    그리거나 계산을 이어 가기 위해 밀도가 필요할 때는 **누적분포함수에서
+    확률밀도함수로** 가는 미분이 쓸모 있다.
 
-Given the PDF $f(x)$, the CDF is obtained by integration:
+## 연습문제
 
-$$F(x) = \int_{-\infty}^{x} f(s) \, ds$$
+**연습문제 1.** $0 \leq x \leq 1$ 에서 $f_X(x) = 3x^2$ 이고 그 밖에서는 $f_X(x) = 0$ 이라 하자. 누적분포함수 $F_X(x)$ 를 구하고 $P(0.5 \leq X \leq 0.8)$ 을 계산하여라.
 
-## From CDF to PDF
+??? success "연습문제 1 풀이"
+    $$
+    F_X(x) = \int_0^x 3s^2\,ds = x^3, \quad 0 \leq x \leq 1
+    $$
 
-Given the CDF $F(x)$, the PDF is obtained by differentiation (wherever $F$ is differentiable):
+    이고 $x < 0$ 에서 $F_X(x) = 0$, $x > 1$ 에서 $F_X(x) = 1$ 이다.
 
-$$f(x) = \frac{d}{dx} F(x) = F'(x)$$
+    $$
+    P(0.5 \leq X \leq 0.8) = F_X(0.8) - F_X(0.5) = 0.512 - 0.125 = 0.387
+    $$
 
-## Unified View: Discrete and Continuous
+---
 
-| | Discrete | Continuous |
-|---|---|---|
-| Distribution function | PMF: $p_{x_i}$ | PDF: $f(x)$ |
-| CDF formula | $F(x) = \displaystyle\sum_{x_i \le x} p_{x_i}$ | $F(x) = \displaystyle\int_{-\infty}^{x} f(s) \, ds$ |
-| Recover distribution | $p_{x_i} = F(x_i) - F(x_i^-)$ | $f(x) = F'(x)$ |
-| $P(X \in A)$ | $\displaystyle\sum_{x_i \in A} p_{x_i}$ | $\displaystyle\int_A f(x) \, dx$ |
+**연습문제 2.** 연속확률변수의 누적분포함수가 $x \geq 0$ 에서 $F_X(x) = 1 - (1+x)e^{-x}$ 이고 $x < 0$ 에서 $F_X(x) = 0$ 이다. 확률밀도함수를 구하여라.
 
-## Example
+??? success "연습문제 2 풀이"
+    미분하면 다음과 같다.
 
-Let $f(x) = 2x$ for $0 \le x \le 1$ and $f(x) = 0$ otherwise. Then:
+    $$
+    f_X(x) = F_X'(x) = -(-e^{-x}) - (1+x)(-e^{-x}) = e^{-x} - e^{-x} + xe^{-x} \cdot \frac{d}{dx}\text{(연쇄법칙)}
+    $$
 
-$$F(x) = \int_0^x 2s \, ds = x^2, \quad 0 \le x \le 1$$
+    더 꼼꼼히 하면 다음과 같다.
 
-and $F(x) = 0$ for $x < 0$, $F(x) = 1$ for $x > 1$.
+    $$
+    f_X(x) = \frac{d}{dx}\left[1 - (1+x)e^{-x}\right] = -\left[e^{-x} + (1+x)(-e^{-x})\right] = -e^{-x} + (1+x)e^{-x} = xe^{-x}
+    $$
 
-We can verify: $F'(x) = 2x = f(x)$ on $(0,1)$.
->>>>>>> Stashed changes
+    이는 $x \geq 0$ 에서 성립하고, $x < 0$ 에서는 $f_X(x) = 0$ 이다. 이것이 Gamma(2, 1) 밀도이다.
+
+---
+
+**연습문제 3.** $x \in \mathbb{R}$ 에서 $f_X(x) = \frac{1}{\pi(1+x^2)}$ 이 올바른 확률밀도함수임을 확인하고 $P(-1 \leq X \leq 1)$ 을 구하여라.
+
+??? success "연습문제 3 풀이"
+    음이 아님은 분명하다. 전체 적분은 다음과 같다.
+
+    $$
+    \int_{-\infty}^{\infty} \frac{1}{\pi(1+x^2)}\,dx = \frac{1}{\pi}\left[\arctan(x)\right]_{-\infty}^{\infty} = \frac{1}{\pi}\left(\frac{\pi}{2} - \left(-\frac{\pi}{2}\right)\right) = 1 \checkmark
+    $$
+
+    $$
+    P(-1 \leq X \leq 1) = \frac{1}{\pi}\left[\arctan(1) - \arctan(-1)\right] = \frac{1}{\pi}\left(\frac{\pi}{4} + \frac{\pi}{4}\right) = \frac{1}{2}
+    $$
+
+---
+
+**연습문제 4.** $X$ 의 확률밀도함수가 $x \in \mathbb{R}$ 에서 $f_X(x) = ce^{-|x|}$ 라 하자.
+
+**(a)** $c$ 를 구하여라.
+
+**(b)** 누적분포함수 $F_X(x)$ 를 구하여라.
+
+??? success "연습문제 4 풀이"
+    **(a)** $\int_{-\infty}^{\infty} ce^{-|x|}\,dx = 2c\int_0^{\infty} e^{-x}\,dx = 2c$ 이다. 이것이 1이 되려면 $c = 1/2$ 이어야 한다.
+
+    **(b)** $x < 0$ 일 때: $F_X(x) = \int_{-\infty}^{x} \frac{1}{2}e^{s}\,ds = \frac{1}{2}e^{x}$.
+
+    $x \geq 0$ 일 때: $F_X(x) = \frac{1}{2} + \int_0^x \frac{1}{2}e^{-s}\,ds = \frac{1}{2} + \frac{1}{2}(1 - e^{-x}) = 1 - \frac{1}{2}e^{-x}$.
+
+---
+
+**연습문제 5.** $X = a$ 가 일어날 수 있는 결과인데도 연속확률변수가 모든 $a \in \mathbb{R}$ 에 대해 $P(X = a) = 0$ 을 만족하는 까닭을 설명하여라. 이것은 그 사건이 불가능하다는 뜻인가?
+
+??? success "연습문제 5 풀이"
+    연속확률변수에서는 $P(X = a) = P(a \leq X \leq a) = \int_a^a f_X(x)\,dx = 0$ 이다. 측도가 0인 집합 위에서의 적분은 $f_X(a)$ 의 값이 무엇이든 0이다.
+
+    그러나 이것은 그 사건이 불가능하다는 뜻이 **아니다**. 표본공간은 비가산이고, 확률은 낱낱의 점에 몰려 있는 것이 아니라 구간 위에 연속적으로 퍼져 있다. 낱낱의 결과는 확률이 0이지만 여전히 표본공간의 원소이다. "불가능하다"(사건이 공집합이다)는 것과 "확률이 0이다"(사건이 공집합은 아니지만 질량이 없다)는 것은 서로 다르다. 기하학의 한 점이 수직선 위에 분명히 있으면서도 길이가 0인 것과 마찬가지이다.
