@@ -1,57 +1,53 @@
-# Probability: An Undergraduate Textbook
+# 파이썬으로 배우는 확률론
 
-<<<<<<< Updated upstream
-An introduction to probability theory for undergraduates, covering combinatorics, random variables, distributions, limit theorems, and simulation.
+학부생을 위한 확률론 입문서로, 경우의 수 세기부터 확률변수와 분포, 극한정리, 모의실험까지 다룬다.
 
-## What This Book Covers
+## 이 책이 다루는 내용
 
-This textbook develops probability from the ground up, starting with counting and ending with the Law of Large Numbers. Each chapter builds on previous material, with worked examples, Python simulations, and exercises throughout.
+이 교재는 확률론을 바닥에서부터 쌓아 올린다. 경우의 수 세기에서 출발하여 큰수의 법칙으로 마무리한다. 각 장은 앞서 다룬 내용 위에 세워지며, 곳곳에 풀이 예제와 파이썬 모의실험, 연습문제를 두었다.
 
-## Chapter Overview
+## 장별 안내
 
-**Foundations**
+**기초**
 
-- **Chapter 1 -- Counting.** Permutations, combinations, the binomial theorem, and classic problems (derangements, lattice paths, pigeonhole principle).
-- **Chapter 2 -- Probability.** Sample spaces, events, the Kolmogorov axioms, and classical probability.
-- **Chapter 3 -- Conditional Probability.** Bayes' theorem, independence, the gambler's ruin, and Simpson's paradox.
+- **1장 — 경우의 수 세기.** 순열, 조합, 이항정리, 그리고 고전적인 문제들(완전순열, 격자경로, 비둘기집 원리).
+- **2장 — 확률.** 표본공간, 사건, 콜모고로프 공리, 고전적 확률.
+- **3장 — 조건부확률.** 베이즈 정리, 독립, 도박꾼의 파산, 심프슨의 역설.
 
-**Random Variables**
+**확률변수**
 
-- **Chapter 4 -- Random Variables and Their Distributions.** PMF, CDF, PDF, and functions of random variables.
-- **Chapter 5 -- Joint Distributions.** Joint PMFs, joint PDFs, and independence of random variables.
-- **Chapter 6 -- Joint, Marginal, and Conditional Distributions.** Marginal and conditional distributions, and their relationships.
+- **4장 — 확률변수와 그 분포.** 확률질량함수, 누적분포함수, 확률밀도함수, 확률변수의 함수.
+- **5장 — 확률변수와 결합분포.** 결합확률질량함수, 결합확률밀도함수, 확률변수의 독립.
+- **6장 — 결합분포, 주변분포, 조건부분포.** 주변분포와 조건부분포, 그리고 그 사이의 관계.
 
-**Expectation and Variance**
+**기댓값과 분산**
 
-- **Chapter 7 -- Expectation and Variance.** Linearity, LOTUS, indicator variables, Markov and Chebyshev inequalities, and the newsboy problem.
-- **Chapter 8 -- Conditional Expectation and Conditional Variance.** Tower property, law of total variance.
-- **Chapter 9 -- Expectation and Variance of Sums.** Covariance, correlation, and the variance-covariance matrix.
+- **7장 — 기댓값과 분산.** 선형성, 무의식적 통계학자의 법칙(LOTUS), 지시확률변수, 마르코프 부등식과 체비쇼프 부등식, 신문팔이 문제.
+- **8장 — 조건부기댓값과 조건부분산.** 탑 성질, 전분산 법칙.
+- **9장 — 확률변수 합의 기댓값과 분산.** 공분산, 상관계수, 분산–공분산 행렬.
 
-**Named Distributions**
+**이름 있는 분포**
 
-- **Chapter 10 -- Discrete Distributions.** Bernoulli, binomial, geometric, negative binomial, hypergeometric, and discrete uniform.
-- **Chapter 11 -- Moment Generating Functions.** MGFs, PGFs, characteristic functions, and their applications.
-- **Chapter 12 -- Poisson Approximation.** The Poisson distribution and the Poisson limit theorem.
-- **Chapter 13 -- Poisson Point Process.** Definition, properties, merging and splitting, and conditional arrivals.
-- **Chapter 14 -- Distributions Related to the Poisson Process.** Exponential, gamma, and Erlang distributions.
-- **Chapter 15 -- Continuous Distributions.** Uniform, normal, beta, log-normal, order statistics, and transformations.
+- **10장 — 이산분포.** 베르누이분포, 이항분포, 기하분포, 음이항분포, 초기하분포, 이산균등분포.
+- **11장 — 적률생성함수와 특성함수.** 적률생성함수, 확률생성함수, 특성함수와 그 응용.
+- **12장 — 푸아송 근사.** 푸아송분포와 푸아송 극한정리.
+- **13장 — 푸아송 점과정.** 정의와 성질, 합침과 쪼갬, 조건부 도착.
+- **14장 — 푸아송 과정과 관련된 분포.** 지수분포, 감마분포, 얼랑분포.
+- **15장 — 연속분포.** 균등분포, 정규분포, 베타분포, 로그정규분포, 순서통계량, 변환.
 
-**Sums and Limits**
+**합과 극한**
 
-- **Chapter 16 -- Convolutions and Distributions of Sums.** Discrete and continuous convolution, with examples and simulations.
-- **Chapter 17 -- Central Limit Theorem.** Convergence in distribution, the CLT statement and proof, and applications.
-- **Chapter 18 -- Multivariate Normal Distribution.** Bivariate and multivariate normal distributions.
-- **Chapter 19 -- Distributions Related to the Normal.** Chi-squared, Student's t, and F distributions.
-- **Chapter 20 -- Law of Large Numbers.** Tail bounds, convergence modes, WLLN, SLLN, and applications.
-- **Chapter 21 -- Simulation.** Random sampling, random walks, longest runs, and arcsine laws.
+- **16장 — 합성곱과 합의 분포.** 이산 합성곱과 연속 합성곱, 예제와 모의실험.
+- **17장 — 중심극한정리.** 분포수렴, 중심극한정리의 서술과 증명, 응용.
+- **18장 — 다변량정규분포.** 이변량정규분포와 다변량정규분포.
+- **19장 — 정규분포와 관련된 분포.** 카이제곱분포, 스튜던트 t분포, F분포.
+- **20장 — 큰수의 법칙.** 꼬리 경계, 수렴의 여러 방식, 약법칙과 강법칙, 응용.
+- **21장 — 모의실험.** 무작위 표집, 확률보행, 최장 연속, 아크사인 법칙.
 
-## Prerequisites
+## 미리 알아야 할 것
 
-Calculus (single and multivariable) and basic linear algebra. No prior knowledge of probability or statistics is assumed.
+미적분학(일변수와 다변수)과 기초 선형대수. 확률론이나 통계학에 대한 사전 지식은 필요하지 않다.
 
-## How to Use This Book
+## 이 책을 읽는 법
 
-Each chapter contains expository pages with definitions, theorems, and proofs, followed by Python simulation scripts and exercises. The navigation panel on the left provides access to all sections. Python code can be run independently to explore the concepts.
-=======
-Welcome to the Probability textbook.
->>>>>>> Stashed changes
+각 장은 정의, 정리, 증명을 담은 본문 쪽들로 이루어져 있고, 그 뒤에 파이썬 모의실험 스크립트와 연습문제가 따라온다. 왼쪽 탐색창에서 모든 절로 갈 수 있다. 파이썬 코드는 따로 실행해 보면서 개념을 살펴볼 수 있다.
