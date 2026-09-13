@@ -1,22 +1,22 @@
-# Marginal PMF from Joint PMF
+# 결합질량함수에서 주변질량함수 구하기
 
-## Definition
+## 정의
 
-Given the joint PMF $p(x, y) = P(X = x, Y = y)$, the **marginal PMF** of $X$ is obtained by summing over all values of $Y$:
+결합확률질량함수 $p(x, y) = P(X = x, Y = y)$ 가 주어졌을 때, $X$ 의 **주변확률질량함수**는 $Y$ 의 모든 값에 걸쳐 더해서 얻는다.
 
 $$p_X(x) = P(X = x) = \sum_y p(x, y)$$
 
-Similarly, the marginal PMF of $Y$ is:
+마찬가지로 $Y$ 의 주변확률질량함수는 다음과 같다.
 
 $$p_Y(y) = P(Y = y) = \sum_x p(x, y)$$
 
-## Interpretation
+## 뜻풀이
 
-Marginalization "collapses" the joint distribution onto one variable by integrating out (summing over) the other. In the joint PMF table, the marginal of $X$ is obtained by computing **column sums**, and the marginal of $Y$ by computing **row sums**.
+주변화란 한쪽 변수를 더해 없앰으로써(적분해 없앰으로써) 결합분포를 나머지 한 변수 위로 "눌러 내리는" 일이다. 결합확률질량함수 표에서 $X$ 의 주변분포는 **열의 합**으로, $Y$ 의 주변분포는 **행의 합**으로 얻는다.
 
-## Worked Example
+## 풀이 예제
 
-The joint PMF of $X$ and $Y$ is:
+$X$ 와 $Y$ 의 결합확률질량함수가 다음과 같다고 하자.
 
 | | $x=0$ | $x=1$ | $x=2$ |
 |---|---|---|---|
@@ -25,7 +25,7 @@ The joint PMF of $X$ and $Y$ is:
 | $y=1$ | $0$ | $2/10$ | $1/10$ |
 | $y=0$ | $1/10$ | $0$ | $1/10$ |
 
-**Marginal PMF of $X$ (column sums):**
+**$X$ 의 주변확률질량함수 (열의 합):**
 
 $$P(X = 0) = \frac{1}{10} + \frac{1}{10} + 0 + \frac{1}{10} = \frac{3}{10}$$
 
@@ -33,7 +33,7 @@ $$P(X = 1) = \frac{1}{10} + 0 + \frac{2}{10} + 0 = \frac{3}{10}$$
 
 $$P(X = 2) = \frac{1}{10} + \frac{1}{10} + \frac{1}{10} + \frac{1}{10} = \frac{4}{10}$$
 
-**Marginal PMF of $Y$ (row sums):**
+**$Y$ 의 주변확률질량함수 (행의 합):**
 
 $$P(Y = 0) = \frac{1}{10} + 0 + \frac{1}{10} = \frac{2}{10}$$
 
@@ -43,7 +43,7 @@ $$P(Y = 2) = \frac{1}{10} + 0 + \frac{1}{10} = \frac{2}{10}$$
 
 $$P(Y = 3) = \frac{1}{10} + \frac{1}{10} + \frac{1}{10} = \frac{3}{10}$$
 
-## Augmented Joint PMF Table
+## 주변분포를 덧붙인 결합확률질량함수 표
 
 | | $x=0$ | $x=1$ | $x=2$ | $P(Y=y_j)$ |
 |---|---|---|---|---|
@@ -53,10 +53,35 @@ $$P(Y = 3) = \frac{1}{10} + \frac{1}{10} + \frac{1}{10} = \frac{3}{10}$$
 | $y=0$ | $1/10$ | $0$ | $1/10$ | $2/10$ |
 | $P(X=x_i)$ | $3/10$ | $3/10$ | $4/10$ | $1$ |
 
-The bottom row contains the marginal of $X$, and the right column contains the marginal of $Y$. These are sometimes called the "margins" of the table, which is where the name "marginal distribution" comes from.
+맨 아래 행에 $X$ 의 주변분포가, 맨 오른쪽 열에 $Y$ 의 주변분포가 들어 있다. 이들을 표의 "가장자리(margin)"라 부르기도 하는데, "주변분포(marginal distribution)"라는 이름이 여기에서 왔다.
 
-## Coin Flip Example
+## 동전 던지기 예
 
-For $X$ = number of heads in first two flips and $Y$ = total heads in three fair coin flips:
+공정한 동전을 세 번 던질 때 $X$ 를 처음 두 번에서 나온 앞면의 수, $Y$ 를 전체 앞면의 수라 하자.
 
-**From joint to marginal of $X$:** Summing over $Y$ values in each column of the joint PMF table, we obtain $P(X = 0) = 2/8 = 1/4$, $P(X = 1) = 4/8 = 1/2$, $P(X = 2) = 2/8 = 1/4$, which is the $\text{B}(2, 1/2)$ distribution as expected.
+**결합분포에서 $X$ 의 주변분포로:** 결합확률질량함수 표의 각 열에서 $Y$ 의 값에 걸쳐 더하면 $P(X = 0) = 2/8 = 1/4$, $P(X = 1) = 4/8 = 1/2$, $P(X = 2) = 2/8 = 1/4$ 를 얻는다. 예상대로 $\text{B}(2, 1/2)$ 분포이다.
+
+## 연습문제
+
+**연습문제 1.** $X$ 와 $Y$ 의 결합확률질량함수가 다음과 같다.
+
+| | $x=0$ | $x=1$ | $x=2$ |
+|---|---|---|---|
+| $y=2$ | $0.10$ | $0.15$ | $0.05$ |
+| $y=1$ | $0.20$ | $0.10$ | $0.15$ |
+| $y=0$ | $0.05$ | $0.10$ | $0.10$ |
+
+$X$ 와 $Y$ 의 주변확률질량함수를 구하여라.
+
+??? success "연습문제 1 풀이"
+    $P(X = x)$ 는 각 열을, $P(Y = y)$ 는 각 행을 더해서 얻는다.
+
+    | $x$ | 0 | 1 | 2 |
+    |---|---|---|---|
+    | $P(X = x)$ | $0.35$ | $0.35$ | $0.30$ |
+
+    | $y$ | 0 | 1 | 2 |
+    |---|---|---|---|
+    | $P(Y = y)$ | $0.25$ | $0.45$ | $0.30$ |
+
+    두 주변확률질량함수 모두 합이 1이다.

@@ -1,36 +1,36 @@
-# From Joint to Marginal and Conditional
+# 결합분포에서 주변분포와 조건부분포로
 
-## The Three Fundamental Relationships
+## 근본이 되는 세 가지 관계
 
-Given the joint distribution $p(x, y)$, we can derive both the marginal and conditional distributions. Conversely, given a marginal and a conditional, we can recover the joint.
+결합분포 $p(x, y)$ 가 주어지면 주변분포와 조건부분포를 모두 이끌어 낼 수 있다. 거꾸로 주변분포 하나와 조건부분포 하나가 주어지면 결합분포를 되찾을 수 있다.
 
-### Chain Rule (Joint from Marginal and Conditional)
+### 연쇄법칙 (주변분포와 조건부분포에서 결합분포로)
 
 $$p(x, y) = p(x) \cdot p(y \mid x) = p(y) \cdot p(x \mid y)$$
 
-### Marginalization (Marginal from Joint)
+### 주변화 (결합분포에서 주변분포로)
 
-$$p(x) = \sum_y p(x, y) \qquad \text{(discrete)}$$
+$$p(x) = \sum_y p(x, y) \qquad \text{(이산)}$$
 
-$$f_X(x) = \int f(x, y) \, dy \qquad \text{(continuous)}$$
+$$f_X(x) = \int f(x, y) \, dy \qquad \text{(연속)}$$
 
-### Conditioning (Conditional from Joint)
+### 조건 걸기 (결합분포에서 조건부분포로)
 
 $$p(y \mid x) = \frac{p(x, y)}{p(x)} \qquad p(x \mid y) = \frac{p(x, y)}{p(y)}$$
 
-## How to Get Any Two from the Third
+## 둘을 알면 나머지 하나를 얻는다
 
-Given **any two** of the three — joint, marginal, conditional — you can recover the third:
+결합분포, 주변분포, 조건부분포 가운데 **어느 둘**을 알면 나머지 하나를 되찾을 수 있다.
 
-| Known | Want | Formula |
+| 아는 것 | 구하려는 것 | 공식 |
 |---|---|---|
-| Joint $p(x,y)$ | Marginal $p(x)$ | $\sum_y p(x,y)$ |
-| Joint $p(x,y)$ | Conditional $p(y \mid x)$ | $p(x,y) / p(x)$ |
-| Marginal $p(x)$ + Conditional $p(y \mid x)$ | Joint $p(x,y)$ | $p(x) \cdot p(y \mid x)$ |
+| 결합분포 $p(x,y)$ | 주변분포 $p(x)$ | $\sum_y p(x,y)$ |
+| 결합분포 $p(x,y)$ | 조건부분포 $p(y \mid x)$ | $p(x,y) / p(x)$ |
+| 주변분포 $p(x)$ + 조건부분포 $p(y \mid x)$ | 결합분포 $p(x,y)$ | $p(x) \cdot p(y \mid x)$ |
 
-## Complete Worked Example
+## 처음부터 끝까지 풀어 보기
 
-Starting from the joint PMF:
+다음 결합확률질량함수에서 출발하자.
 
 | | $x=0$ | $x=1$ | $x=2$ |
 |---|---|---|---|
@@ -39,20 +39,73 @@ Starting from the joint PMF:
 | $y=1$ | $0$ | $2/10$ | $1/10$ |
 | $y=0$ | $1/10$ | $0$ | $1/10$ |
 
-**Step 1 — Marginals (by summation):**
+**1단계 — 주변분포(더해서 구하기):**
 
 $P(X=0) = 3/10$, $P(X=1) = 3/10$, $P(X=2) = 4/10$
 
 $P(Y=0) = 2/10$, $P(Y=1) = 3/10$, $P(Y=2) = 2/10$, $P(Y=3) = 3/10$
 
-**Step 2 — Conditional of $X$ given $Y=1$ (slice and normalize):**
+**2단계 — $Y=1$ 이 주어졌을 때 $X$ 의 조건부분포(잘라 내고 정규화하기):**
 
 $P(X=0 \mid Y=1) = 0$, $P(X=1 \mid Y=1) = 2/3$, $P(X=2 \mid Y=1) = 1/3$
 
-**Step 3 — Conditional of $Y$ given $X=2$ (slice and normalize):**
+**3단계 — $X=2$ 가 주어졌을 때 $Y$ 의 조건부분포(잘라 내고 정규화하기):**
 
-$P(Y=y \mid X=2) = 1/4$ for $y = 0, 1, 2, 3$ (uniform)
+$y = 0, 1, 2, 3$ 에 대해 $P(Y=y \mid X=2) = 1/4$ (균등분포)
 
-**Step 4 — Verify the chain rule:**
+**4단계 — 연쇄법칙 확인:**
 
 $p(1, 1) = P(X=1) \cdot P(Y=1 \mid X=1) = \frac{3}{10} \cdot \frac{2/10}{3/10} = \frac{3}{10} \cdot \frac{2}{3} = \frac{2}{10}$ ✓
+
+## 연습문제
+
+**연습문제 1.** $(X, Y)$ 의 결합확률질량함수가 다음과 같다.
+
+| | $x=1$ | $x=2$ | $x=3$ |
+|---|---|---|---|
+| $y=1$ | $1/12$ | $1/6$ | $1/12$ |
+| $y=2$ | $1/6$ | $1/6$ | $1/6$ |
+| $y=3$ | $1/12$ | $0$ | $1/12$ |
+
+**(a)** 모든 주변분포와 조건부분포를 구하여라.
+
+**(b)** $X$ 와 $Y$ 가 독립인지 판정하여라.
+
+**(c)** $(x, y) = (2, 1)$ 에서 연쇄법칙 $p(x, y) = p(x) \cdot p(y \mid x)$ 를 확인하여라.
+
+??? success "연습문제 1 풀이"
+    **(a)** $X$ 의 주변분포(열의 합):
+
+    $$
+    P(X = 1) = \tfrac{1}{12} + \tfrac{1}{6} + \tfrac{1}{12} = \tfrac{4}{12} = \tfrac{1}{3}
+    $$
+
+    $$
+    P(X = 2) = \tfrac{1}{6} + \tfrac{1}{6} + 0 = \tfrac{1}{3}, \quad P(X = 3) = \tfrac{1}{12} + \tfrac{1}{6} + \tfrac{1}{12} = \tfrac{1}{3}
+    $$
+
+    $Y$ 의 주변분포(행의 합):
+
+    $$
+    P(Y = 1) = \tfrac{1}{3}, \quad P(Y = 2) = \tfrac{1}{2}, \quad P(Y = 3) = \tfrac{1}{6}
+    $$
+
+    조건부분포 $P(Y \mid X = x)$ 는 $x$ 열을 $P(X = x) = 1/3$ 로 나누어 얻는다.
+
+    | $y$ | $X=1$ | $X=2$ | $X=3$ |
+    |---|---|---|---|
+    | 1 | $1/4$ | $1/2$ | $1/4$ |
+    | 2 | $1/2$ | $1/2$ | $1/2$ |
+    | 3 | $1/4$ | $0$ | $1/4$ |
+
+    조건부분포 $P(X \mid Y)$ 는 $y$ 행을 $P(Y = y)$ 로 나누어 얻는다.
+
+    | $x$ | $Y=1$ | $Y=2$ | $Y=3$ |
+    |---|---|---|---|
+    | 1 | $1/4$ | $1/3$ | $1/2$ |
+    | 2 | $1/2$ | $1/3$ | $0$ |
+    | 3 | $1/4$ | $1/3$ | $1/2$ |
+
+    **(b)** 독립이려면 모든 칸에서 $p(x, y) = P(X = x) P(Y = y) = \tfrac{1}{3} \cdot P(Y = y)$ 이어야 한다. 그런데 $P(X = 2, Y = 3) = 0$ 인 반면 $P(X = 2) P(Y = 3) = \tfrac{1}{3} \cdot \tfrac{1}{6} = \tfrac{1}{18} > 0$ 이다. 따라서 **독립이 아니다**.
+
+    **(c)** $P(X = 2) \cdot P(Y = 1 \mid X = 2) = \tfrac{1}{3} \cdot \tfrac{1}{2} = \tfrac{1}{6} = p(2, 1)$. $\checkmark$

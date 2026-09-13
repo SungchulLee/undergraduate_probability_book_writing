@@ -1,27 +1,27 @@
-# Conditional PMF
+# 조건부확률질량함수
 
-## Definition
+## 정의
 
-The **conditional PMF** of $X$ given $Y = y$ is:
+$Y = y$ 가 주어졌을 때 $X$ 의 **조건부확률질량함수**는 다음과 같다.
 
 $$p(x \mid y) = P(X = x \mid Y = y) = \frac{p(x, y)}{p_Y(y)}$$
 
-provided $P(Y = y) > 0$. Similarly:
+단 $P(Y = y) > 0$ 이어야 한다. 마찬가지로 다음이 성립한다.
 
 $$p(y \mid x) = P(Y = y \mid X = x) = \frac{p(x, y)}{p_X(x)}$$
 
-## Interpretation: Slice and Normalize
+## 뜻풀이: 잘라 내고 정규화하기
 
-The conditional PMF is obtained by a two-step procedure:
+조건부확률질량함수는 두 단계로 얻는다.
 
-1. **Slice:** Restrict attention to the row (or column) of the joint PMF table corresponding to the given value.
-2. **Normalize:** Divide all entries in that slice by their sum so that the conditional probabilities add to 1.
+1. **잘라 내기:** 주어진 값에 해당하는 결합확률질량함수 표의 행(또는 열)만 남기고 나머지는 잊는다.
+2. **정규화:** 그 조각의 값들을 모두 그 합으로 나누어 조건부확률의 합이 1이 되게 한다.
 
-This is equivalent to "removing all masses except those on the line $Y = y$, then rescaling so the remaining masses sum to 1."
+이는 "직선 $Y = y$ 위에 있는 질량만 남기고 모두 치운 다음, 남은 질량의 합이 1이 되도록 눈금을 다시 매기는" 일과 같다.
 
-## Worked Example
+## 풀이 예제
 
-From the joint PMF:
+다음 결합확률질량함수에서 출발하자.
 
 | | $x=0$ | $x=1$ | $x=2$ |
 |---|---|---|---|
@@ -30,9 +30,9 @@ From the joint PMF:
 | $y=1$ | $0$ | $2/10$ | $1/10$ |
 | $y=0$ | $1/10$ | $0$ | $1/10$ |
 
-### Conditional PMF of $X$ given $Y = 1$
+### Y = 1이 주어졌을 때 X의 조건부확률질량함수
 
-The $y=1$ row has entries: $0, \, 2/10, \, 1/10$. The row sum is $P(Y=1) = 3/10$.
+$y=1$ 인 행의 값은 $0, \, 2/10, \, 1/10$ 이고, 행의 합은 $P(Y=1) = 3/10$ 이다.
 
 $$P(X = 0 \mid Y = 1) = \frac{0}{3/10} = 0$$
 
@@ -40,11 +40,11 @@ $$P(X = 1 \mid Y = 1) = \frac{2/10}{3/10} = \frac{2}{3}$$
 
 $$P(X = 2 \mid Y = 1) = \frac{1/10}{3/10} = \frac{1}{3}$$
 
-**Verification:** $0 + 2/3 + 1/3 = 1$ ✓
+**확인:** $0 + 2/3 + 1/3 = 1$ ✓
 
-### Conditional PMF of $Y$ given $X = 2$
+### X = 2가 주어졌을 때 Y의 조건부확률질량함수
 
-The $x=2$ column has entries: $1/10, \, 1/10, \, 1/10, \, 1/10$. The column sum is $P(X=2) = 4/10$.
+$x=2$ 인 열의 값은 $1/10, \, 1/10, \, 1/10, \, 1/10$ 이고, 열의 합은 $P(X=2) = 4/10$ 이다.
 
 $$P(Y = 0 \mid X = 2) = \frac{1/10}{4/10} = \frac{1}{4}$$
 
@@ -54,8 +54,60 @@ $$P(Y = 2 \mid X = 2) = \frac{1/10}{4/10} = \frac{1}{4}$$
 
 $$P(Y = 3 \mid X = 2) = \frac{1/10}{4/10} = \frac{1}{4}$$
 
-Given $X = 2$, the variable $Y$ is uniformly distributed over $\{0, 1, 2, 3\}$.
+$X = 2$ 가 주어지면 $Y$ 는 $\{0, 1, 2, 3\}$ 위에서 균등분포를 따른다.
 
-## Connection to Independence
+## 독립과의 관계
 
-If $X$ and $Y$ are independent, then $p(x \mid y) = p_X(x)$ — the conditional PMF equals the marginal PMF, meaning knowing $Y$ provides no information about $X$.
+$X$ 와 $Y$ 가 독립이면 $p(x \mid y) = p_X(x)$ 이다. 곧 조건부확률질량함수가 주변확률질량함수와 같아지는데, 이는 $Y$ 를 알아도 $X$ 에 대해 얻는 정보가 없다는 뜻이다.
+
+## 연습문제
+
+**연습문제 1.** 다음 결합확률질량함수를 쓴다.
+
+| | $x=0$ | $x=1$ | $x=2$ |
+|---|---|---|---|
+| $y=2$ | $0.10$ | $0.15$ | $0.05$ |
+| $y=1$ | $0.20$ | $0.10$ | $0.15$ |
+| $y=0$ | $0.05$ | $0.10$ | $0.10$ |
+
+다음을 구하여라.
+
+**(a)** $X = 1$ 이 주어졌을 때 $Y$ 의 조건부확률질량함수.
+
+**(b)** $Y = 2$ 가 주어졌을 때 $X$ 의 조건부확률질량함수.
+
+**(c)** $P(Y \geq 1 \mid X = 0)$.
+
+??? success "연습문제 1 풀이"
+    주변분포: $P(X = 0) = 0.35$, $P(X = 1) = 0.35$, $P(X = 2) = 0.30$, $P(Y = 0) = 0.25$, $P(Y = 1) = 0.45$, $P(Y = 2) = 0.30$.
+
+    **(a)** $P(Y = y \mid X = 1) = P(X = 1, Y = y) / P(X = 1)$ 이다. $P(X = 1) = 0.35$ 를 쓰면 다음과 같다.
+
+    | $y$ | 0 | 1 | 2 |
+    |---|---|---|---|
+    | $P(Y = y \mid X = 1)$ | $10/35 = 2/7$ | $10/35 = 2/7$ | $15/35 = 3/7$ |
+
+    **(b)** $P(X = x \mid Y = 2) = P(X = x, Y = 2) / P(Y = 2)$ 이다. $P(Y = 2) = 0.30$ 을 쓰면 다음과 같다.
+
+    | $x$ | 0 | 1 | 2 |
+    |---|---|---|---|
+    | $P(X = x \mid Y = 2)$ | $10/30 = 1/3$ | $15/30 = 1/2$ | $5/30 = 1/6$ |
+
+    **(c)** $P(Y \geq 1 \mid X = 0) = (0.20 + 0.10)/0.35 = 0.30/0.35 = 6/7$.
+
+---
+
+**연습문제 2.** 상자에 빨간 공 5개와 파란 공 3개가 들어 있다. 되돌려 넣지 않고 공 두 개를 꺼낸다. $X_1$ 을 첫 번째 뽑기에서 나온 빨간 공의 수, $X_2$ 를 두 번째 뽑기에서 나온 빨간 공의 수라 하자. 연쇄법칙을 써서 $P(X_1 = 1, X_2 = 1)$ 을 구하여라.
+
+??? success "연습문제 2 풀이"
+    $X_1$ 과 $X_2$ 는 $\{0, 1\}$ 의 값을 갖는다. 연쇄법칙에 따라 다음이 성립한다.
+
+    $$
+    P(X_1 = 1, X_2 = 1) = P(X_1 = 1) \cdot P(X_2 = 1 \mid X_1 = 1)
+    $$
+
+    $P(X_1 = 1) = 5/8$ 이다. $X_1 = 1$ 이 주어지면 통 안에는 빨간 공 4개와 파란 공 3개가 남으므로 $P(X_2 = 1 \mid X_1 = 1) = 4/7$ 이다. 따라서 다음을 얻는다.
+
+    $$
+    P(X_1 = 1, X_2 = 1) = \frac{5}{8} \cdot \frac{4}{7} = \frac{20}{56} = \frac{5}{14}
+    $$

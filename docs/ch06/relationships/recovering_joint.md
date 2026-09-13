@@ -1,40 +1,40 @@
-# Recovering Joint from Conditional and Marginal
+# 조건부분포와 주변분포에서 결합분포 되찾기
 
-## The Chain Rule for Distributions
+## 분포에 대한 연쇄법칙
 
-The **chain rule** (also called the **multiplication rule**) allows us to construct the joint distribution from a marginal and a conditional:
+**연쇄법칙**(**곱셈 법칙**이라고도 한다)을 쓰면 주변분포 하나와 조건부분포 하나로부터 결합분포를 만들어 낼 수 있다.
 
 $$p(x, y) = p(x) \cdot p(y \mid x)$$
 
-or equivalently:
+같은 말로 다음과 같이 쓸 수도 있다.
 
 $$p(x, y) = p(y) \cdot p(x \mid y)$$
 
-In the continuous case:
+연속인 경우에는 다음과 같다.
 
 $$f(x, y) = f_X(x) \cdot f_{Y|X}(y \mid x) = f_Y(y) \cdot f_{X|Y}(x \mid y)$$
 
-## Why This Matters
+## 왜 중요한가
 
-In many real-world problems, the joint distribution is not directly available, but we can naturally specify a marginal and a conditional. The chain rule lets us reconstruct the joint.
+현실의 여러 문제에서는 결합분포를 곧바로 얻을 수 없지만, 주변분포 하나와 조건부분포 하나는 자연스럽게 적어 낼 수 있는 경우가 많다. 연쇄법칙은 이로부터 결합분포를 다시 세우게 해 준다.
 
-## Example: Sampling Without Replacement
+## 예: 되돌려 넣지 않고 뽑기
 
-There are 3 red balls and 1 blue ball. We draw two balls without replacement.
+빨간 공 3개와 파란 공 1개가 있다. 되돌려 넣지 않고 공 두 개를 꺼낸다.
 
-Let $X_1 = 1$ if the first ball is blue (0 otherwise), and $X_2 = 1$ if the second ball is blue.
+첫 번째 공이 파란색이면 $X_1 = 1$ (아니면 0), 두 번째 공이 파란색이면 $X_2 = 1$ 이라 하자.
 
-**Marginal of $X_1$:**
+**$X_1$ 의 주변분포:**
 
 $$P(X_1 = 0) = \frac{3}{4}, \quad P(X_1 = 1) = \frac{1}{4}$$
 
-**Conditional of $X_2$ given $X_1$:**
+**$X_1$ 이 주어졌을 때 $X_2$ 의 조건부분포:**
 
 $$P(X_2 = 1 \mid X_1 = 0) = \frac{1}{3}, \quad P(X_2 = 0 \mid X_1 = 0) = \frac{2}{3}$$
 
 $$P(X_2 = 1 \mid X_1 = 1) = 0, \quad P(X_2 = 0 \mid X_1 = 1) = 1$$
 
-**Recovering the joint via chain rule:**
+**연쇄법칙으로 결합분포 되찾기:**
 
 $$P(X_1 = 0, X_2 = 1) = P(X_1 = 0) \cdot P(X_2 = 1 \mid X_1 = 0) = \frac{3}{4} \times \frac{1}{3} = \frac{1}{4}$$
 
@@ -44,20 +44,73 @@ $$P(X_1 = 1, X_2 = 0) = \frac{1}{4} \times 1 = \frac{1}{4}$$
 
 $$P(X_1 = 1, X_2 = 1) = \frac{1}{4} \times 0 = 0$$
 
-## Extension to Multiple Variables
+## 여러 변수로 넓히기
 
-The chain rule extends to $n$ variables:
+연쇄법칙은 $n$ 개의 변수로 넓어진다.
 
 $$p(x_1, x_2, \ldots, x_n) = p(x_1) \cdot p(x_2 \mid x_1) \cdot p(x_3 \mid x_1, x_2) \cdots p(x_n \mid x_1, \ldots, x_{n-1})$$
 
-This is the foundation of sequential modeling and Bayesian networks.
+이것이 순차적 모형과 베이즈 네트워크의 바탕이 된다.
 
-## Connection to Bayes' Theorem
+## 베이즈 정리와의 관계
 
-Combining both forms of the chain rule:
+연쇄법칙의 두 꼴을 합치면 다음을 얻는다.
 
 $$p(x) \cdot p(y \mid x) = p(x, y) = p(y) \cdot p(x \mid y)$$
 
-Rearranging gives **Bayes' theorem**:
+이를 정리하면 **베이즈 정리**가 나온다.
 
 $$p(x \mid y) = \frac{p(y \mid x) \cdot p(x)}{p(y)}$$
+
+## 연습문제
+
+**연습문제 1.** $x \in \{0, 1, 2\}$ 에 대해 $P(X = x) = 1/3$ 이고, $X = x$ 가 주어졌을 때 $Y$ 의 조건부분포가 $\text{Binomial}(x, 0.5)$ 라 하자. $(X, Y)$ 의 결합확률질량함수를 다시 세워라.
+
+??? success "연습문제 1 풀이"
+    $0 \leq y \leq x$ 에서 $P(Y = y \mid X = x) = \binom{x}{y} (1/2)^x$ 임을 써서 $p(x, y) = P(X = x) \cdot P(Y = y \mid X = x)$ 를 계산한다.
+
+    - $X = 0$: 조건부확률 1로 $Y = 0$ 이다. 결합확률: $p(0, 0) = 1/3$.
+    - $X = 1$: $Y \sim \text{Bernoulli}(0.5)$ 이다. 결합확률: $p(1, 0) = p(1, 1) = 1/3 \cdot 1/2 = 1/6$.
+    - $X = 2$: $Y \sim \text{Binomial}(2, 0.5)$ 로 값 $0, 1, 2$ 에 무게 $1/4, 1/2, 1/4$ 가 실린다. 결합확률: $p(2, 0) = 1/12$, $p(2, 1) = 1/6$, $p(2, 2) = 1/12$.
+
+    결합확률질량함수의 표는 다음과 같다.
+
+    | | $y = 0$ | $y = 1$ | $y = 2$ |
+    |---|---|---|---|
+    | $x = 0$ | $1/3$ | $0$ | $0$ |
+    | $x = 1$ | $1/6$ | $1/6$ | $0$ |
+    | $x = 2$ | $1/12$ | $1/6$ | $1/12$ |
+
+    합: $1/3 + 1/6 + 1/6 + 1/12 + 1/6 + 1/12 = 1$. $\checkmark$
+
+---
+
+**연습문제 2.** 서로 다른 두 결합분포가 같은 한 쌍의 주변분포를 가질 수 있는가? 가능하다면 예를 들고, 불가능하다면 그 까닭을 설명하여라.
+
+??? success "연습문제 2 풀이"
+    **가능하다.** $X$ 와 $Y$ 가 각각 Bernoulli(1/2)를 따른다고 하자. 다음 두 결합분포는 이 주변분포를 함께 갖는다.
+
+    *결합분포 A (독립):*
+
+    | | $y = 0$ | $y = 1$ |
+    |---|---|---|
+    | $x = 0$ | $1/4$ | $1/4$ |
+    | $x = 1$ | $1/4$ | $1/4$ |
+
+    *결합분포 B (완전히 상관된 경우):*
+
+    | | $y = 0$ | $y = 1$ |
+    |---|---|---|
+    | $x = 0$ | $1/2$ | $0$ |
+    | $x = 1$ | $0$ | $1/2$ |
+
+    둘 다 $P(X = 0) = P(X = 1) = 1/2$ 이고 $P(Y = 0) = P(Y = 1) = 1/2$ 이지만, 결합분포(그리고 종속의 짜임새)는 아주 다르다.
+
+---
+
+**연습문제 3.** 독립을 가정하지 않는 한, 두 주변분포만 알아서는 결합분포를 정할 수 없는 까닭을 설명하여라.
+
+??? success "연습문제 3 풀이"
+    $m \times n$ 격자 위의 결합확률질량함수에는 (정규화 조건을 뺀 뒤) 자유로운 모수가 $mn - 1$ 개 있다. 두 주변분포가 주는 제약은 $(m - 1) + (n - 1)$ 개뿐이다. $m, n \geq 2$ 이면 자유로운 모수의 수가 제약의 수보다 많으므로, 같은 가장자리를 갖는 결합분포가 한 무리를 이룬 채 남는다(연습문제 2가 그 예이다).
+
+    여기에 **독립**을 더 가정하면 $mn$ 개의 인수분해 등식 $p(x, y) = p_X(x) p_Y(y)$ 가 붙고, 그러면 주변분포만으로 결합분포가 하나로 정해진다. 이 가정이 없으면 (상관계수, 코퓰러, 조건부분포 전체 따위로 담아내는) 종속의 짜임새가 정해지지 않은 채 남는다.

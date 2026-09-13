@@ -1,43 +1,62 @@
-# Marginal PDF from Joint PDF
+# 결합밀도함수에서 주변밀도함수 구하기
 
-## Definition
+## 정의
 
-Given the joint PDF $f(x, y)$ of continuous random variables $(X, Y)$, the **marginal PDF** of $X$ is:
+연속확률변수 $(X, Y)$ 의 결합확률밀도함수 $f(x, y)$ 가 주어졌을 때, $X$ 의 **주변확률밀도함수**는 다음과 같다.
 
 $$f_X(x) = \int_{-\infty}^{\infty} f(x, y) \, dy$$
 
-Similarly, the marginal PDF of $Y$ is:
+마찬가지로 $Y$ 의 주변확률밀도함수는 다음과 같다.
 
 $$f_Y(y) = \int_{-\infty}^{\infty} f(x, y) \, dx$$
 
-## Interpretation
+## 뜻풀이
 
-Marginalization integrates out the unwanted variable. Geometrically, the marginal density $f_X(x)$ at a point $x$ is the total "mass" along the vertical line at $x$, obtained by integrating the joint density along that line.
+주변화란 필요 없는 변수를 적분해 없애는 일이다. 기하학적으로 보면 점 $x$ 에서의 주변밀도 $f_X(x)$ 는 $x$ 를 지나는 수직선을 따라 놓인 "질량"의 총합이며, 결합밀도를 그 선을 따라 적분해서 얻는다.
 
-## Example: Uniform on the Triangle
+## 예: 삼각형 위의 균등분포
 
-Let $(X, Y)$ be uniform on the triangle $\{(x,y) : 0 \le x \le 1, \, 0 \le y \le x\}$.
+$(X, Y)$ 가 삼각형 $\{(x,y) : 0 \le x \le 1, \, 0 \le y \le x\}$ 위에서 균등분포를 따른다고 하자.
 
-The area of this triangle is $1/2$, so the joint PDF is:
+이 삼각형의 넓이가 $1/2$ 이므로 결합확률밀도함수는 다음과 같다.
 
 $$f(x, y) = 2, \quad 0 \le y \le x \le 1$$
 
-The marginal PDF of $X$ is:
+$X$ 의 주변확률밀도함수는 다음과 같다.
 
 $$f_X(x) = \int_0^x 2 \, dy = 2x, \quad 0 \le x \le 1$$
 
-The marginal PDF of $Y$ is:
+$Y$ 의 주변확률밀도함수는 다음과 같다.
 
 $$f_Y(y) = \int_y^1 2 \, dx = 2(1 - y), \quad 0 \le y \le 1$$
 
-## Continuous Analogue of the Table
+## 표에 대응하는 연속판
 
-The discrete "sum rows / sum columns" procedure corresponds to integration in the continuous case:
+이산인 경우의 "행을 더한다 / 열을 더한다"는 절차가 연속인 경우에는 적분에 해당한다.
 
-| Operation | Discrete | Continuous |
+| 연산 | 이산 | 연속 |
 |---|---|---|
-| Marginal of $X$ | $p_X(x) = \sum_y p(x,y)$ | $f_X(x) = \int f(x,y) \, dy$ |
-| Marginal of $Y$ | $p_Y(y) = \sum_x p(x,y)$ | $f_Y(y) = \int f(x,y) \, dx$ |
+| $X$ 의 주변분포 | $p_X(x) = \sum_y p(x,y)$ | $f_X(x) = \int f(x,y) \, dy$ |
+| $Y$ 의 주변분포 | $p_Y(y) = \sum_x p(x,y)$ | $f_Y(y) = \int f(x,y) \, dx$ |
 
-!!! tip "Key Point"
-    When computing marginal PDFs, the limits of integration must respect the support of the joint PDF. These limits often depend on the variable being kept.
+!!! tip "핵심"
+    주변확률밀도함수를 계산할 때 적분의 위끝과 아래끝은 결합확률밀도함수의 받침을 그대로 따라야 한다. 이 끝값들은 남겨 둔 변수에 의존하는 경우가 많다.
+
+## 연습문제
+
+**연습문제 1.** $(X, Y)$ 의 결합확률밀도함수가 $0 \leq x \leq y \leq 1$ 에서 $f(x, y) = 6(1 - y)$ 라 하자. $X$ 와 $Y$ 의 주변확률밀도함수를 구하여라.
+
+??? success "연습문제 1 풀이"
+    **$X$ 의 주변분포.** $x \in [0, 1]$ 을 고정하고 $y \in [x, 1]$ 에 걸쳐 적분한다.
+
+    $$
+    f_X(x) = \int_x^1 6(1 - y) \, dy = \left[ -3(1 - y)^2 \right]_x^1 = 3(1 - x)^2, \quad 0 \leq x \leq 1
+    $$
+
+    **$Y$ 의 주변분포.** $y \in [0, 1]$ 을 고정하고 $x \in [0, y]$ 에 걸쳐 적분한다.
+
+    $$
+    f_Y(y) = \int_0^y 6(1 - y) \, dx = 6 y (1 - y), \quad 0 \leq y \leq 1
+    $$
+
+    $Y$ 의 주변분포는 Beta(2, 2) 밀도이다.
