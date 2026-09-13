@@ -1,37 +1,36 @@
-# Definition and Axioms
-<<<<<<< Updated upstream
+# 정의와 공리
 
-## The Counting Process
+## 세기 과정
 
-A **counting process** $\{N(t) : t \geq 0\}$ records the total number of events that have occurred by time $t$. It satisfies $N(0) = 0$, takes non-negative integer values, and is non-decreasing: if $s < t$, then $N(s) \leq N(t)$.
+**세기 과정** $\{N(t) : t \geq 0\}$ 은 시각 $t$ 까지 일어난 사건의 전체 개수를 적어 두는 과정이다. 이 과정은 $N(0) = 0$ 을 만족하고, 음이 아닌 정수 값을 가지며, 줄어들지 않는다. 곧 $s < t$ 이면 $N(s) \leq N(t)$ 이다.
 
-We write $N(s, t) = N(t) - N(s)$ for the number of events in the interval $(s, t]$.
+구간 $(s, t]$ 안의 사건 개수를 $N(s, t) = N(t) - N(s)$ 로 적는다.
 
 ---
 
-## Formal Definition
+## 형식을 갖춘 정의
 
-!!! info "Poisson Process"
-    A counting process $\{N(t) : t \geq 0\}$ is a **Poisson process with rate** $\lambda > 0$ if:
+!!! info "푸아송 과정"
+    세기 과정 $\{N(t) : t \geq 0\}$ 이 다음을 만족하면 **비율이 $\lambda > 0$ 인 푸아송 과정**이라 한다.
 
-    1. **Initialization**: $N(0) = 0$
-    2. **Independent increments**: For any $0 \leq t_1 < t_2 < \cdots < t_n$, the increments $N(t_1, t_2), N(t_2, t_3), \ldots, N(t_{n-1}, t_n)$ are mutually independent
-    3. **Stationary Poisson increments**: For any $s \geq 0$ and $t > 0$, the increment $N(s, s+t)$ follows a Poisson distribution with parameter $\lambda t$:
+    1. **출발점**: $N(0) = 0$
+    2. **독립증분**: 임의의 $0 \leq t_1 < t_2 < \cdots < t_n$ 에 대하여 증분 $N(t_1, t_2), N(t_2, t_3), \ldots, N(t_{n-1}, t_n)$ 이 상호독립이다
+    3. **정상 푸아송 증분**: 임의의 $s \geq 0$ 과 $t > 0$ 에 대하여 증분 $N(s, s+t)$ 가 모수 $\lambda t$ 인 푸아송분포를 따른다
 
     $$
     P(N(s, s+t) = k) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}, \quad k = 0, 1, 2, \ldots
     $$
 
-**Axiom 1** says the count starts at zero. **Axiom 2** says that knowing the number of events in one time window tells us nothing about events in a non-overlapping window. **Axiom 3** says that the distribution of the count depends only on the length $t$ of the interval, not on the starting time $s$.
+**공리 1**은 세기가 0에서 시작한다는 말이다. **공리 2**는 어떤 시간 창 안의 사건 개수를 알아도 겹치지 않는 다른 창의 사건에 대해서는 아무것도 알 수 없다는 말이다. **공리 3**은 개수의 분포가 구간의 길이 $t$ 에만 기대고 시작 시각 $s$ 에는 기대지 않는다는 말이다.
 
 ---
 
-## Infinitesimal Characterization
+## 한없이 작은 구간으로 하는 특징지음
 
-An equivalent way to define the Poisson process uses conditions on tiny time intervals. This formulation is often more intuitive and is the basis for many derivations.
+푸아송 과정을 정의하는 같은 뜻의 다른 방법은 아주 작은 시간 구간에 대한 조건을 쓰는 것이다. 이 표현이 더 직관적일 때가 많고 여러 유도의 바탕이 된다.
 
-!!! info "Infinitesimal Definition"
-    A counting process $\{N(t) : t \geq 0\}$ with $N(0) = 0$ and independent, stationary increments is a Poisson process with rate $\lambda$ if, for an infinitesimal interval of length $h$:
+!!! info "한없이 작은 구간으로 하는 정의"
+    $N(0) = 0$ 이고 독립증분과 정상증분을 갖는 세기 과정 $\{N(t) : t \geq 0\}$ 이, 길이가 $h$ 인 한없이 작은 구간에 대해 다음을 만족하면 비율이 $\lambda$ 인 푸아송 과정이다.
 
     $$
     P(N(h) = 1) = \lambda h + o(h)
@@ -41,49 +40,78 @@ An equivalent way to define the Poisson process uses conditions on tiny time int
     P(N(h) \geq 2) = o(h)
     $$
 
-Here $o(h)$ denotes any function satisfying $o(h)/h \to 0$ as $h \to 0$. In words:
+여기서 $o(h)$ 는 $h \to 0$ 일 때 $o(h)/h \to 0$ 을 만족하는 임의의 함수를 나타낸다. 말로 옮기면 다음과 같다.
 
-- The probability of exactly one event in a tiny interval is proportional to the interval length
-- The probability of two or more events in the same tiny interval is negligible compared to $h$
+- 아주 작은 구간에서 사건이 정확히 하나 일어날 확률은 구간의 길이에 비례한다
+- 같은 아주 작은 구간에서 사건이 둘 이상 일어날 확률은 $h$ 에 견주어 무시할 만하다
 
 ---
 
-## Equivalence of the Two Definitions
+## 두 정의가 같음
 
-The infinitesimal conditions, combined with independent and stationary increments, imply that $N(s, s+t) \sim \text{Po}(\lambda t)$. To see why, let $P_k(t) = P(N(t) = k)$. The infinitesimal conditions give:
+한없이 작은 구간에 대한 조건에 독립증분과 정상증분을 더하면 $N(s, s+t) \sim \text{Po}(\lambda t)$ 가 따라 나온다. 그 까닭을 보기 위해 $P_k(t) = P(N(t) = k)$ 라 하자. 한없이 작은 구간에 대한 조건에서 다음을 얻는다.
 
 $$
 P_0(t + h) = P_0(t)(1 - \lambda h) + o(h)
 $$
 
-Rearranging and taking $h \to 0$ yields the differential equation $P_0'(t) = -\lambda P_0(t)$ with $P_0(0) = 1$, so $P_0(t) = e^{-\lambda t}$. Similarly, for $k \geq 1$:
+이를 옮겨 적고 $h \to 0$ 으로 보내면 $P_0(0) = 1$ 인 미분방정식 $P_0'(t) = -\lambda P_0(t)$ 가 나오고, 따라서 $P_0(t) = e^{-\lambda t}$ 이다. 마찬가지로 $k \geq 1$ 에 대해서는 다음과 같다.
 
 $$
 P_k(t + h) = P_k(t)(1 - \lambda h) + P_{k-1}(t) \cdot \lambda h + o(h)
 $$
 
-This gives $P_k'(t) = -\lambda P_k(t) + \lambda P_{k-1}(t)$, which can be solved recursively to obtain the Poisson PMF $P_k(t) = e^{-\lambda t}(\lambda t)^k / k!$.
+여기에서 $P_k'(t) = -\lambda P_k(t) + \lambda P_{k-1}(t)$ 가 나오고, 이를 되풀이하여 풀면 푸아송분포의 확률질량함수 $P_k(t) = e^{-\lambda t}(\lambda t)^k / k!$ 를 얻는다.
 
 ---
 
-## Notation Conventions
+## 기호 약속
 
-Throughout this chapter, we use the following notation:
+이 장에서는 다음 기호를 쓴다.
 
-| Symbol | Meaning |
+| 기호 | 뜻 |
 |:---|:---|
-| $N(t)$ | Total number of events in $[0, t]$ |
-| $N(s, t)$ | Number of events in $(s, t]$, equal to $N(t) - N(s)$ |
-| $\lambda$ | Rate parameter (events per unit time) |
-| $S_n$ | Arrival time of the $n$-th event |
-| $T_n = S_n - S_{n-1}$ | Interarrival time between events $n-1$ and $n$ |
+| $N(t)$ | $[0, t]$ 안의 전체 사건 개수 |
+| $N(s, t)$ | $(s, t]$ 안의 사건 개수, 곧 $N(t) - N(s)$ |
+| $\lambda$ | 비율 모수(단위시간당 사건 수) |
+| $S_n$ | $n$ 번째 사건의 도착시각 |
+| $T_n = S_n - S_{n-1}$ | $n-1$ 번째 사건과 $n$ 번째 사건 사이의 도착간격 |
 
 ---
 
-## Connection to the Subdivision Argument
+## 잘게 쪼개어 보는 논의와의 이어짐
 
-The formal axioms capture precisely the three properties we identified in the subdivision argument from the previous section. Dividing $[0, t]$ into $n$ subintervals with independent Bernoulli trials naturally produces independent increments and stationary increments. The Poisson limit theorem then delivers the Poisson distribution for counts in any interval.
+형식을 갖춘 공리들은 앞 절에서 잘게 쪼개어 보며 찾아낸 세 가지 성질을 그대로 담고 있다. $[0, t]$ 를 $n$ 개의 작은 구간으로 나누고 그 안에서 독립인 베르누이 시행을 하면 자연스럽게 독립증분과 정상증분이 생긴다. 그런 다음 푸아송 극한정리가 어떤 구간에서든 개수의 분포로 푸아송분포를 내어 준다.
 
-The infinitesimal characterization makes this connection even more transparent: each tiny subinterval of length $h$ is like a single Bernoulli trial with success probability $\lambda h$, and we are performing infinitely many such trials.
-=======
->>>>>>> Stashed changes
+한없이 작은 구간으로 하는 특징지음은 이 이어짐을 더욱 또렷하게 보여 준다. 길이가 $h$ 인 각각의 아주 작은 구간은 성공확률이 $\lambda h$ 인 베르누이 시행 하나와 같고, 우리는 그런 시행을 한없이 많이 하고 있는 셈이다.
+
+## 연습문제
+
+**연습문제 1.**
+$\{N(t)\}$ 가 $N(0) = 0$ 이고 독립증분과 정상증분을 갖는 세기 과정이라 하자. $P(N(h) = 1) = \lambda h + o(h)$ 이고 $P(N(h) \geq 2) = o(h)$ 라 하자.
+
+**(a)** 미분방정식을 세워 풀어서 $P_0(t) = P(N(t) = 0) = e^{-\lambda t}$ 임을 보여라.
+
+**(b)** 점화식 $P_1'(t) = -\lambda P_1(t) + \lambda P_0(t)$ 를 써서 $P_1(t) = P(N(t) = 1) = \lambda t e^{-\lambda t}$ 임을 보여라.
+
+**(c)** 푸아송분포의 확률질량함수에 대해 $P_0(t) + P_1(t) + P_2(t) + \cdots = 1$ 임을 확인하여라.
+
+??? success "연습문제 1 풀이"
+
+    **(a)** $P_0(t+h) = P_0(t) \cdot P(N(h) = 0) = P_0(t)(1 - \lambda h + o(h))$ 에서 다음을 얻는다.
+
+    $$
+    \frac{P_0(t+h) - P_0(t)}{h} = -\lambda P_0(t) + \frac{o(h)}{h}
+    $$
+
+    $h \to 0$ 으로 보내면 $P_0'(t) = -\lambda P_0(t)$ 이다. $P_0(0) = 1$ 이므로 해는 $P_0(t) = e^{-\lambda t}$ 이다.
+
+    **(b)** 상미분방정식은 $P_1(0) = 0$ 인 $P_1'(t) = -\lambda P_1(t) + \lambda e^{-\lambda t}$ 이다. 적분인자 $e^{\lambda t}$ 를 쓰면 다음과 같다.
+
+    $$
+    \frac{d}{dt}\bigl[e^{\lambda t} P_1(t)\bigr] = \lambda
+    $$
+
+    적분하면 $e^{\lambda t} P_1(t) = \lambda t + C$ 이다. $P_1(0) = 0$ 이므로 $C = 0$ 이고, 따라서 $P_1(t) = \lambda t e^{-\lambda t}$ 이다.
+
+    **(c)** $e^{\lambda t}$ 의 테일러급수를 쓰면 $\sum_{k=0}^{\infty} P_k(t) = \sum_{k=0}^{\infty} \frac{e^{-\lambda t}(\lambda t)^k}{k!} = e^{-\lambda t} \cdot e^{\lambda t} = 1$ 이다.

@@ -1,104 +1,103 @@
-# Number of Events in an Interval
-<<<<<<< Updated upstream
+# 구간 안에서 일어난 사건의 개수
 
-## The Fundamental Property
+## 근본이 되는 성질
 
-The defining property of a Poisson process with rate $\lambda$ is that the number of events in any interval of length $t$ follows a Poisson distribution.
+비율이 $\lambda$ 인 푸아송 과정을 정의하는 성질은, 길이가 $t$ 인 어떤 구간에서든 사건의 개수가 푸아송분포를 따른다는 것이다.
 
-!!! info "Events in an Interval"
-    If $\{N(t)\}$ is a Poisson process with rate $\lambda$, then for any $s \geq 0$ and $t > 0$:
+!!! info "구간 안의 사건"
+    $\{N(t)\}$ 가 비율 $\lambda$ 인 푸아송 과정이면, 임의의 $s \geq 0$ 과 $t > 0$ 에 대하여 다음이 성립한다.
 
     $$
     N(s, s+t) \sim \text{Po}(\lambda t)
     $$
 
-    with PMF
+    확률질량함수는 다음과 같다.
 
     $$
     P(N(s, s+t) = k) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}, \quad k = 0, 1, 2, \ldots
     $$
 
-Note that the distribution depends only on the **length** $t$ of the interval, not on the starting time $s$. This is the stationarity property at work.
+이 분포가 구간의 **길이** $t$ 에만 기대고 시작 시각 $s$ 에는 기대지 않는다는 점을 눈여겨보자. 정상성이 작동하고 있는 것이다.
 
 ---
 
-## Derivation from the Infinitesimal Conditions
+## 한없이 작은 구간의 조건에서 유도하기
 
-Starting from the infinitesimal characterization, let $P_k(t) = P(N(t) = k)$. Consider what happens in the interval $(t, t+h]$:
+한없이 작은 구간으로 하는 특징지음에서 출발하여 $P_k(t) = P(N(t) = k)$ 라 하자. 구간 $(t, t+h]$ 에서 무슨 일이 일어나는지 살펴보자.
 
-**Case $k = 0$:** No events in $[0, t+h]$ requires no events in $[0, t]$ and none in $(t, t+h]$:
+**$k = 0$ 인 경우:** $[0, t+h]$ 안에 사건이 없으려면 $[0, t]$ 안에도 없고 $(t, t+h]$ 안에도 없어야 한다.
 
 $$
 P_0(t+h) = P_0(t)\bigl[1 - \lambda h + o(h)\bigr]
 $$
 
-Rearranging: $\frac{P_0(t+h) - P_0(t)}{h} = -\lambda P_0(t) + o(1)$. Taking $h \to 0$:
+이를 옮겨 적으면 $\frac{P_0(t+h) - P_0(t)}{h} = -\lambda P_0(t) + o(1)$ 이고, $h \to 0$ 으로 보내면 다음을 얻는다.
 
 $$
 P_0'(t) = -\lambda P_0(t), \quad P_0(0) = 1
 $$
 
-The solution is $P_0(t) = e^{-\lambda t}$.
+해는 $P_0(t) = e^{-\lambda t}$ 이다.
 
-**Case $k \geq 1$:** Exactly $k$ events in $[0, t+h]$ can happen as $k$ events in $[0, t]$ and none in $(t, t+h]$, or $k-1$ events in $[0, t]$ and one in $(t, t+h]$:
+**$k \geq 1$ 인 경우:** $[0, t+h]$ 안에 사건이 정확히 $k$ 개 있는 것은, $[0, t]$ 안에 $k$ 개가 있고 $(t, t+h]$ 안에 없거나, $[0, t]$ 안에 $k-1$ 개가 있고 $(t, t+h]$ 안에 하나 있는 경우이다.
 
 $$
 P_k(t+h) = P_k(t)(1 - \lambda h) + P_{k-1}(t) \cdot \lambda h + o(h)
 $$
 
-Taking $h \to 0$:
+$h \to 0$ 으로 보내면 다음을 얻는다.
 
 $$
 P_k'(t) = -\lambda P_k(t) + \lambda P_{k-1}(t), \quad P_k(0) = 0
 $$
 
-Solving recursively (e.g., using the integrating factor $e^{\lambda t}$) yields:
+이를 (적분인자 $e^{\lambda t}$ 등을 써서) 되풀이하여 풀면 다음을 얻는다.
 
 $$
 P_k(t) = \frac{e^{-\lambda t}(\lambda t)^k}{k!}
 $$
 
-This confirms $N(t) \sim \text{Po}(\lambda t)$.
+이로써 $N(t) \sim \text{Po}(\lambda t)$ 임이 확인된다.
 
 ---
 
-## Mean and Variance
+## 평균과 분산
 
-Since $N(s, s+t) \sim \text{Po}(\lambda t)$:
+$N(s, s+t) \sim \text{Po}(\lambda t)$ 이므로 다음이 성립한다.
 
 $$
 E[N(s, s+t)] = \lambda t, \qquad \text{Var}(N(s, s+t)) = \lambda t
 $$
 
-The expected count is proportional to the interval length, and the variance equals the mean — the hallmark of the Poisson distribution.
+기대되는 개수는 구간의 길이에 비례하고, 분산은 평균과 같다. 푸아송분포의 표지이다.
 
 ---
 
-## Worked Examples
+## 풀이 예제
 
-??? example "Phone Calls in One Hour"
-    A switchboard receives calls at a rate of $\lambda = 5$ calls per hour.
+??? example "한 시간 동안의 전화"
+    어떤 교환대에 시간당 $\lambda = 5$ 통의 비율로 전화가 걸려 온다.
 
-    **How many calls are expected in 1 hour?**
+    **한 시간 동안 기대되는 전화는 몇 통인가?**
 
-    $E[N(1)] = 5 \times 1 = 5$ calls.
+    $E[N(1)] = 5 \times 1 = 5$ 통이다.
 
-    **What is the probability of receiving exactly 3 calls?**
+    **정확히 3통이 걸려 올 확률은 얼마인가?**
 
     $$
     P(N(1) = 3) = \frac{e^{-5} \cdot 5^3}{3!} = \frac{e^{-5} \cdot 125}{6} \approx 0.1404
     $$
 
-    **What is the probability of receiving 8 or more calls?**
+    **8통 이상이 걸려 올 확률은 얼마인가?**
 
     $$
     P(N(1) \geq 8) = 1 - \sum_{k=0}^{7} \frac{e^{-5} \cdot 5^k}{k!} \approx 1 - 0.8666 = 0.1334
     $$
 
-??? example "Events in a 30-Minute Window"
-    With the same rate $\lambda = 5$ calls per hour, the number of calls in a 30-minute window is $N(0.5) \sim \text{Po}(5 \times 0.5) = \text{Po}(2.5)$.
+??? example "30분 동안의 사건"
+    비율이 마찬가지로 시간당 $\lambda = 5$ 통일 때, 30분 동안의 전화 건수는 $N(0.5) \sim \text{Po}(5 \times 0.5) = \text{Po}(2.5)$ 이다.
 
-    The probability of no calls in 30 minutes is:
+    30분 동안 전화가 한 통도 걸려 오지 않을 확률은 다음과 같다.
 
     $$
     P(N(0.5) = 0) = e^{-2.5} \approx 0.0821
@@ -106,23 +105,56 @@ The expected count is proportional to the interval length, and the variance equa
 
 ---
 
-## Counts in Multiple Disjoint Intervals
+## 서로소인 여러 구간에서의 개수
 
-By independent increments, the counts in non-overlapping intervals are independent Poisson random variables. For disjoint intervals $(a_1, b_1], (a_2, b_2], \ldots, (a_m, b_m]$:
+독립증분에 따라 겹치지 않는 구간들의 개수는 독립인 푸아송확률변수이다. 서로소인 구간 $(a_1, b_1], (a_2, b_2], \ldots, (a_m, b_m]$ 에 대하여 다음이 성립한다.
 
 $$
-N(a_i, b_i) \sim \text{Po}(\lambda(b_i - a_i)) \quad \text{independently for } i = 1, 2, \ldots, m
+N(a_i, b_i) \sim \text{Po}(\lambda(b_i - a_i)) \quad i = 1, 2, \ldots, m \text{ 에 대해 서로 독립으로}
 $$
 
-This makes it straightforward to compute joint probabilities by multiplying the individual Poisson PMFs.
+그러므로 각 푸아송분포의 확률질량함수를 곱하는 것만으로 결합확률을 손쉽게 계산할 수 있다.
 
-??? example "Two Disjoint Intervals"
-    With $\lambda = 5$ per hour, find $P(N(0,1) = 3 \text{ and } N(2,4) = 7)$.
+??? example "서로소인 두 구간"
+    시간당 $\lambda = 5$ 일 때 $P(N(0,1) = 3 \text{ 이고 } N(2,4) = 7)$ 을 구해 보자.
 
-    By independence: $N(0,1) \sim \text{Po}(5)$ and $N(2,4) \sim \text{Po}(10)$ are independent, so
+    독립성에 따라 $N(0,1) \sim \text{Po}(5)$ 와 $N(2,4) \sim \text{Po}(10)$ 이 독립이므로 다음과 같다.
 
     $$
     P(N(0,1) = 3,\; N(2,4) = 7) = \frac{e^{-5} \cdot 5^3}{3!} \cdot \frac{e^{-10} \cdot 10^7}{7!} \approx 0.1404 \times 0.0901 \approx 0.0126
     $$
-=======
->>>>>>> Stashed changes
+
+## 연습문제
+
+**연습문제 1.**
+어떤 편지함에 시간당 $\lambda = 12$ 의 비율로 전자우편이 푸아송 과정을 이루며 들어온다.
+
+**(a)** 30분 동안 기대되는 전자우편은 몇 통인가?
+
+**(b)** $P(30\text{분 동안 정확히 4통})$ 을 계산하여라.
+
+**(c)** $P(10\text{분 동안 적어도 1통})$ 을 계산하여라.
+
+**(d)** $P(15\text{분 동안 한 통도 없음})$ 을 계산하여라.
+
+??? success "연습문제 1 풀이"
+
+    **(a)** 30분($t = 0.5$ 시간) 동안에는 $E[N(0.5)] = 12 \times 0.5 = 6$ 이다.
+
+    **(b)** $N(0.5) \sim \text{Po}(6)$ 이므로 다음과 같다.
+
+    $$
+    P(N(0.5) = 4) = \frac{e^{-6} \cdot 6^4}{4!} = \frac{e^{-6} \cdot 1296}{24} \approx 0.1339
+    $$
+
+    **(c)** 10분($t = 1/6$ 시간) 동안에는 $N(1/6) \sim \text{Po}(2)$ 이다.
+
+    $$
+    P(N(1/6) \geq 1) = 1 - P(N(1/6) = 0) = 1 - e^{-2} \approx 0.8647
+    $$
+
+    **(d)** 15분($t = 0.25$ 시간) 동안에는 $N(0.25) \sim \text{Po}(3)$ 이다.
+
+    $$
+    P(N(0.25) = 0) = e^{-3} \approx 0.0498
+    $$

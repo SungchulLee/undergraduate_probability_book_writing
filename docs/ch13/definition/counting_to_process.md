@@ -1,73 +1,72 @@
-# From Counting to the Poisson Process
-<<<<<<< Updated upstream
+# 세기에서 푸아송 과정으로
 
-## Counting Rare Events in Continuous Time
+## 연속인 시간에서 드문 사건 세기
 
-In Chapter 12, we saw that the Poisson distribution arises naturally when we count the number of successes in a large number of independent Bernoulli trials, each with a small success probability. The **Poisson process** extends this idea from a fixed number of trials to events occurring continuously in time.
+12장에서 우리는 성공확률이 작은 독립인 베르누이 시행을 많이 해서 성공 횟수를 셀 때 푸아송분포가 자연스럽게 나타남을 보았다. **푸아송 과정**은 이 생각을 정해진 시행 횟수에서 시간 속에서 끊임없이 일어나는 사건으로 넓힌 것이다.
 
-Consider events that happen "randomly" along the time axis — phone calls arriving at a call center, radioactive atoms decaying, or customers entering a store. We want a mathematical model that captures the essential features of such processes.
+시간축을 따라 "무작위로" 일어나는 사건들을 떠올려 보자. 콜센터에 걸려 오는 전화, 붕괴하는 방사성 원자, 가게에 들어오는 손님 같은 것들이다. 이런 과정의 본질적인 모습을 담아내는 수학적 모형을 세우고자 한다.
 
 ---
 
-## The Subdivision Argument
+## 잘게 쪼개어 보기
 
-Fix a time interval $[0, t]$ and suppose events occur at an average rate of $\lambda$ per unit time. To build a model, we subdivide $[0, t]$ into $n$ tiny subintervals, each of length $\Delta = t/n$.
+시간 구간 $[0, t]$ 를 고정하고 사건이 단위시간당 평균 $\lambda$ 의 비율로 일어난다고 하자. 모형을 세우기 위해 $[0, t]$ 를 길이가 각각 $\Delta = t/n$ 인 $n$ 개의 아주 작은 구간으로 쪼갠다.
 
-**Key assumptions for each subinterval:**
+**작은 구간마다 두는 핵심 가정:**
 
-1. The probability of exactly one event in a subinterval is approximately $\lambda \Delta = \lambda t / n$
-2. The probability of two or more events in a single subinterval is negligible
-3. Events in different subintervals occur independently
+1. 한 작은 구간에서 사건이 정확히 하나 일어날 확률은 대략 $\lambda \Delta = \lambda t / n$ 이다
+2. 한 작은 구간에서 사건이 둘 이상 일어날 확률은 무시할 만하다
+3. 서로 다른 작은 구간에서 일어나는 사건들은 독립이다
 
-Under these assumptions, the number of events in $[0, t]$ is approximately
+이 가정 아래에서 $[0, t]$ 안의 사건 개수는 대략 다음과 같다.
 
 $$
 N(t) \approx \sum_{i=1}^{n} X_i
 $$
 
-where $X_1, X_2, \ldots, X_n$ are independent Bernoulli random variables with success probability $p = \lambda t / n$. Therefore $N(t) \approx B(n, \lambda t / n)$.
+여기서 $X_1, X_2, \ldots, X_n$ 은 성공확률이 $p = \lambda t / n$ 인 독립인 베르누이확률변수이다. 그러므로 $N(t) \approx B(n, \lambda t / n)$ 이다.
 
 ---
 
-## Taking the Limit
+## 극한으로 보내기
 
-As $n \to \infty$, the subintervals become infinitesimally small, and the approximation becomes exact. By the **Poisson limit theorem** (Chapter 12), with $n$ trials each having probability $p_n = \lambda t / n$ and $np_n = \lambda t$ fixed:
+$n \to \infty$ 로 보내면 작은 구간의 길이가 한없이 작아지고 근사는 정확해진다. 시행이 $n$ 번이고 각 시행의 확률이 $p_n = \lambda t / n$ 이며 $np_n = \lambda t$ 가 고정되어 있으므로, **푸아송 극한정리**(12장)에 따라 다음을 얻는다.
 
 $$
 P(N(t) = k) = \lim_{n \to \infty} \binom{n}{k} \left(\frac{\lambda t}{n}\right)^k \left(1 - \frac{\lambda t}{n}\right)^{n-k} = \frac{e^{-\lambda t} (\lambda t)^k}{k!}
 $$
 
-!!! info "From Binomial to Poisson"
-    As the number of subintervals $n \to \infty$:
+!!! info "이항분포에서 푸아송분포로"
+    쪼갠 구간의 개수 $n \to \infty$ 일 때 다음이 성립한다.
 
     $$
     B\!\left(n, \frac{\lambda t}{n}\right) \xrightarrow{d} \text{Po}(\lambda t)
     $$
 
-    The count of events in a time interval of length $t$ follows a Poisson distribution with parameter $\lambda t$.
+    길이가 $t$ 인 시간 구간 안의 사건 개수는 모수가 $\lambda t$ 인 푸아송분포를 따른다.
 
 ---
 
-## What Makes This a "Process"
+## 무엇이 이것을 "과정"으로 만드는가
 
-The argument above tells us the distribution of $N(t)$ for a single interval. A **Poisson process** goes further by specifying how counts in *different* intervals relate to each other.
+위의 논의는 구간 하나에 대한 $N(t)$ 의 분포를 알려 줄 뿐이다. **푸아송 과정**은 여기에서 한 걸음 더 나아가 *서로 다른* 구간의 개수들이 어떻게 이어져 있는지까지 정한다.
 
-The three properties inherited from the subdivision argument are:
+잘게 쪼개어 보는 논의에서 물려받은 세 가지 성질은 다음과 같다.
 
-1. **Independent increments** — events in non-overlapping intervals are independent (because the Bernoulli trials in different subintervals were independent)
-2. **Stationary increments** — the distribution of the number of events in an interval depends only on the length of the interval, not on where it starts (because we used the same rate $\lambda$ everywhere)
-3. **No simultaneous events** — the probability of two or more events in an infinitesimal interval is negligible
+1. **독립증분** — 겹치지 않는 구간에서 일어나는 사건들은 독립이다(서로 다른 작은 구간의 베르누이 시행이 독립이었기 때문이다)
+2. **정상증분** — 한 구간 안의 사건 개수의 분포는 구간의 길이에만 기대고 구간이 어디에서 시작하는지에는 기대지 않는다(어디에서나 같은 비율 $\lambda$ 를 썼기 때문이다)
+3. **사건이 동시에 일어나지 않음** — 한없이 작은 구간에서 사건이 둘 이상 일어날 확률은 무시할 만하다
 
-These properties, formalized in the next section, define the Poisson process precisely.
+다음 절에서 형식을 갖추어 적을 이 성질들이 푸아송 과정을 정확하게 정의한다.
 
 ---
 
-## A Concrete Example
+## 구체적인 예
 
-??? example "Phone Calls at a Help Desk"
-    A help desk receives calls at an average rate of $\lambda = 3$ calls per hour. What is the probability of receiving exactly 5 calls in a 2-hour period?
+??? example "고객지원 창구에 걸려 오는 전화"
+    어떤 고객지원 창구에 시간당 평균 $\lambda = 3$ 통의 전화가 걸려 온다. 2시간 동안 정확히 5통이 걸려 올 확률은 얼마인가?
 
-    The number of calls in 2 hours is $N(2) \sim \text{Po}(3 \times 2) = \text{Po}(6)$:
+    2시간 동안의 전화 건수는 $N(2) \sim \text{Po}(3 \times 2) = \text{Po}(6)$ 이다.
 
     $$
     P(N(2) = 5) = \frac{e^{-6} \cdot 6^5}{5!} = \frac{e^{-6} \cdot 7776}{120} \approx 0.1606
@@ -75,15 +74,62 @@ These properties, formalized in the next section, define the Poisson process pre
 
 ---
 
-## Summary
+## 정리하며
 
-| Discrete Model | Continuous Model |
+| 이산 모형 | 연속 모형 |
 |:---|:---|
-| $n$ independent Bernoulli trials | Events in continuous time $[0, t]$ |
-| Success probability $p = \lambda t / n$ | Rate $\lambda$ per unit time |
-| Count $\sim B(n, \lambda t/n)$ | Count $\sim \text{Po}(\lambda t)$ as $n \to \infty$ |
-| Fixed number of trials | Infinitely many infinitesimal "trials" |
+| 독립인 베르누이 시행 $n$ 번 | 연속인 시간 $[0, t]$ 안의 사건 |
+| 성공확률 $p = \lambda t / n$ | 단위시간당 비율 $\lambda$ |
+| 개수 $\sim B(n, \lambda t/n)$ | $n \to \infty$ 일 때 개수 $\sim \text{Po}(\lambda t)$ |
+| 정해진 시행 횟수 | 한없이 많은, 한없이 작은 "시행" |
 
-The Poisson process is the natural continuous-time extension of Bernoulli counting. The Poisson limit theorem provides the mathematical bridge between these two frameworks.
-=======
->>>>>>> Stashed changes
+푸아송 과정은 베르누이 세기를 연속인 시간으로 자연스럽게 넓힌 것이다. 푸아송 극한정리가 이 두 틀 사이를 잇는 수학적인 다리가 되어 준다.
+
+## 연습문제
+
+**연습문제 1.** 어떤 은행에 손님이 시간당 $\lambda = 5$ 의 비율로 들어온다. 30분 동안 정확히 3명이 들어올 확률은 얼마인가?
+
+??? success "연습문제 1 풀이"
+    30분($t = 0.5$ 시간) 동안에는 $N(0.5) \sim \text{Po}(5 \times 0.5) = \text{Po}(2.5)$ 이다.
+
+    $$
+    P(N(0.5) = 3) = \frac{e^{-2.5}(2.5)^3}{3!} = \frac{e^{-2.5} \times 15.625}{6} \approx 0.2138
+    $$
+
+---
+
+**연습문제 2.** 어떤 지역에서 규모 5.0 이상의 지진이 한 달에 약 2번의 비율로 일어난다. 3개월 동안 그런 지진이 한 번도 일어나지 않을 확률은 얼마인가?
+
+??? success "연습문제 2 풀이"
+    $N(3) \sim \text{Po}(2 \times 3) = \text{Po}(6)$ 이다.
+
+    $$
+    P(N(3) = 0) = e^{-6} \approx 0.00248
+    $$
+
+---
+
+**연습문제 3.** 잘게 쪼개어 보는 논의에서 비율이 $\lambda = 3$ 인 $[0, 2]$ 안의 사건을 모형으로 삼기 위해 $n = 1000$ 개의 작은 구간을 쓴다고 하자. $p = \lambda t / n$ 은 얼마이며, 이항분포 모형에서 $E[N(2)]$ 는 얼마인가? 푸아송분포의 결과와 견주어 보아라.
+
+??? success "연습문제 3 풀이"
+    $p = \lambda t / n = 3 \times 2 / 1000 = 0.006$ 이다. 이항분포 모형에서는 다음과 같다.
+
+    $E[N(2)] = np = 1000 \times 0.006 = 6$
+
+    푸아송 모형에서는 $E[N(2)] = \lambda t = 6$ 이다. 정확히 일치한다. 평균은 어떤 $n$ 에서나 같다.
+
+---
+
+**연습문제 4.** 이항분포 근사 $B(n, \lambda t/n)$ 의 분산이 $n \to \infty$ 일 때 $\lambda t$ 로 수렴함을 증명하여라.
+
+??? success "연습문제 4 풀이"
+    $\text{Var}(N) = np(1-p) = n \cdot \frac{\lambda t}{n} \cdot \left(1 - \frac{\lambda t}{n}\right) = \lambda t \left(1 - \frac{\lambda t}{n}\right)$ 이다.
+
+    $n \to \infty$ 일 때 $\text{Var}(N) \to \lambda t \cdot 1 = \lambda t$ 이다. 이는 $\text{Var}(\text{Po}(\lambda t)) = \lambda t$ 와 같다. $\square$
+
+---
+
+**연습문제 5.** "같은 작은 구간 안에 사건이 둘 있지 않다"는 가정이 $n \to \infty$ 인 극한에서는 정확해지지만 유한한 $n$ 에서는 근사에 그치는 까닭을 직관적으로 설명하여라.
+
+??? success "연습문제 5 풀이"
+    $n$ 이 유한하면 각 작은 구간의 길이는 $\Delta = t/n$ 이다. 이 구간 안에서 사건이 실제로 둘 일어날 수도 있다(예를 들어 몇 초 사이에 전화가 두 통 걸려 오는 경우). 한 작은 구간에서 사건이 둘 이상 일어날 확률은 $O(\Delta^2) = O(1/n^2)$ 으로 작지만 $0$ 은 아니다. $n$ 개의 작은 구간 전체에 대해 더하면, 어디에선가 겹쳐 일어날 전체 확률은 $O(n \cdot 1/n^2) = O(1/n)$ 이고 이는 $n \to \infty$ 일 때 사라진다. 극한에서는 한없이 작은 각 구간에 사건이 많아야 하나만 있게 되어 베르누이 근사가 정확해진다.

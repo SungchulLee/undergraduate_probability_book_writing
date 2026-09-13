@@ -1,20 +1,19 @@
-# Independent Increments
-<<<<<<< Updated upstream
+# 독립증분
 
-## Definition
+## 정의
 
-The **independent increments** property is one of the three defining axioms of the Poisson process. It states that the numbers of events in non-overlapping time intervals are independent random variables.
+**독립증분** 성질은 푸아송 과정을 정의하는 세 공리 가운데 하나이다. 겹치지 않는 시간 구간들의 사건 개수가 서로 독립인 확률변수라는 것이다.
 
-!!! info "Independent Increments"
-    A counting process $\{N(t)\}$ has **independent increments** if, for any choice of times $0 \leq t_1 < t_2 < \cdots < t_n$, the random variables
+!!! info "독립증분"
+    세기 과정 $\{N(t)\}$ 가, 임의로 고른 시각 $0 \leq t_1 < t_2 < \cdots < t_n$ 에 대하여 확률변수
 
     $$
     N(t_1),\; N(t_1, t_2),\; N(t_2, t_3),\; \ldots,\; N(t_{n-1}, t_n)
     $$
 
-    are mutually independent.
+    이 상호독립이면 **독립증분**을 갖는다고 한다.
 
-In particular, for any two non-overlapping intervals $(a, b]$ and $(c, d]$ with $b \leq c$:
+특히 $b \leq c$ 인 겹치지 않는 두 구간 $(a, b]$ 와 $(c, d]$ 에 대하여 다음이 성립한다.
 
 $$
 P(N(a,b) = j,\; N(c,d) = k) = P(N(a,b) = j) \cdot P(N(c,d) = k)
@@ -22,72 +21,101 @@ $$
 
 ---
 
-## Intuition: No Memory Between Intervals
+## 직관: 구간 사이에 기억이 없다
 
-Independent increments mean that the process has **no memory across disjoint intervals**. Knowing that 10 calls arrived between 9:00 and 10:00 gives no information about how many will arrive between 10:00 and 11:00.
+독립증분은 이 과정이 **서로소인 구간들 사이에 기억을 갖지 않는다**는 뜻이다. 9시와 10시 사이에 전화가 10통 왔다는 사실은 10시와 11시 사이에 몇 통이 올지에 대해 아무것도 알려 주지 않는다.
 
-This reflects a deep property of the underlying random mechanism: events at different times are generated independently. In the subdivision argument, this came from the independence of the Bernoulli trials in different subintervals.
+이는 바탕에 깔린 무작위 장치의 깊은 성질을 비추어 준다. 서로 다른 시각의 사건은 서로 독립하게 만들어진다. 잘게 쪼개어 보는 논의에서는 이것이 서로 다른 작은 구간의 베르누이 시행이 독립이라는 데에서 나왔다.
 
 ---
 
-## Consequences
+## 따름 결과
 
-**Joint distributions factor.** For a Poisson process with rate $\lambda$ and disjoint intervals $(a_1, b_1], \ldots, (a_m, b_m]$:
+**결합분포가 곱으로 쪼개진다.** 비율이 $\lambda$ 인 푸아송 과정과 서로소인 구간 $(a_1, b_1], \ldots, (a_m, b_m]$ 에 대하여 다음이 성립한다.
 
 $$
 P\bigl(N(a_1, b_1) = k_1, \ldots, N(a_m, b_m) = k_m\bigr) = \prod_{i=1}^{m} \frac{e^{-\lambda(b_i - a_i)} [\lambda(b_i - a_i)]^{k_i}}{k_i!}
 $$
 
-**Covariance is zero for disjoint intervals.** If $(a, b]$ and $(c, d]$ do not overlap, then
+**서로소인 구간의 공분산은 0이다.** $(a, b]$ 와 $(c, d]$ 가 겹치지 않으면 다음이 성립한다.
 
 $$
 \text{Cov}(N(a,b),\; N(c,d)) = 0
 $$
 
-**Covariance for overlapping intervals.** For $s < t$:
+**겹치는 구간의 공분산.** $s < t$ 에 대하여 다음이 성립한다.
 
 $$
 \text{Cov}(N(s), N(t)) = \text{Var}(N(s)) = \lambda s
 $$
 
-since $N(t) = N(s) + N(s, t)$ and $N(s)$ is independent of $N(s, t)$.
+$N(t) = N(s) + N(s, t)$ 이고 $N(s)$ 가 $N(s, t)$ 와 독립이기 때문이다.
 
 ---
 
-## What Independent Increments Excludes
+## 독립증분이 배제하는 것
 
-Not all counting processes have independent increments. Consider these contrasting examples:
+모든 세기 과정이 독립증분을 갖는 것은 아니다. 대조가 되는 예를 보자.
 
-- **Clustering**: If one earthquake makes aftershocks more likely, the counts in adjacent intervals are positively correlated. This violates independent increments.
-- **Inhibition**: If a cell that just fired enters a refractory period (unable to fire again for some time), nearby intervals have negatively correlated counts.
-- **Scheduling**: Buses that run on a fixed schedule have highly dependent counts in adjacent intervals.
+- **뭉침**: 지진 하나가 여진을 일으키기 쉽게 만든다면, 이웃한 구간의 개수는 양의 상관을 갖는다. 이는 독립증분을 어긴다.
+- **억제**: 방금 발화한 세포가 얼마 동안 다시 발화하지 못하는 불응기에 들어간다면, 가까운 구간의 개수는 음의 상관을 갖는다.
+- **정해진 시간표**: 정해진 시간표대로 다니는 버스는 이웃한 구간의 개수가 서로 매우 크게 기대고 있다.
 
-The Poisson process models **completely random** event occurrences, with no clustering, inhibition, or regularity beyond what chance alone produces.
+푸아송 과정은 **온전히 무작위한** 사건의 일어남을 모형으로 삼는다. 우연만으로 생기는 것 말고는 뭉침도, 억제도, 규칙성도 없다.
 
 ---
 
-## Independent Increments vs Independence of N(s) and N(t)
+## 독립증분과 N(s), N(t)의 독립은 다르다
 
-!!! warning "A Common Confusion"
-    Independent increments does **not** mean that $N(s)$ and $N(t)$ are independent for $s < t$. In fact, they are positively correlated:
+!!! warning "흔한 헷갈림"
+    독립증분은 $s < t$ 일 때 $N(s)$ 와 $N(t)$ 가 독립이라는 뜻이 **아니다**. 오히려 이 둘은 양의 상관을 갖는다.
 
     $$
     \text{Cov}(N(s), N(t)) = \lambda \min(s, t) > 0
     $$
 
-    The reason is that $N(t) = N(s) + N(s,t)$, so $N(t)$ includes all events counted by $N(s)$. Independence applies to the **increments** $N(s)$ and $N(s,t)$, not to the cumulative counts $N(s)$ and $N(t)$.
+    까닭은 $N(t) = N(s) + N(s,t)$ 이어서 $N(t)$ 가 $N(s)$ 로 센 사건을 모두 품고 있기 때문이다. 독립성은 **증분** $N(s)$ 와 $N(s,t)$ 에 대해 성립하는 것이지, 누적된 개수 $N(s)$ 와 $N(t)$ 에 대해 성립하는 것이 아니다.
 
-??? example "Example: Morning and Afternoon Calls"
-    A call center has Poisson arrivals with rate $\lambda = 4$ per hour. Let $A = N(0, 3)$ be the morning count (9am--noon) and $B = N(3, 6)$ be the afternoon count (noon--3pm).
+??? example "예: 오전과 오후의 전화"
+    어떤 콜센터에 시간당 $\lambda = 4$ 의 비율로 푸아송 도착이 일어난다. $A = N(0, 3)$ 을 오전(오전 9시부터 정오까지)의 건수, $B = N(3, 6)$ 을 오후(정오부터 오후 3시까지)의 건수라 하자.
 
-    By independent increments, $A$ and $B$ are independent with $A \sim \text{Po}(12)$ and $B \sim \text{Po}(12)$.
+    독립증분에 따라 $A$ 와 $B$ 는 독립이고 $A \sim \text{Po}(12)$, $B \sim \text{Po}(12)$ 이다.
 
-    The probability of a quiet morning and busy afternoon:
+    오전은 한가하고 오후는 바쁠 확률은 다음과 같다.
 
     $$
     P(A \leq 8,\; B \geq 16) = P(A \leq 8) \cdot P(B \geq 16)
     $$
 
-    Each factor can be computed from the Poisson CDF.
-=======
->>>>>>> Stashed changes
+    각 인수는 푸아송분포의 누적분포함수로 계산할 수 있다.
+
+## 연습문제
+
+**연습문제 1.**
+어떤 커피숍에 시간당 $\lambda = 8$ 의 비율로 손님이 푸아송 과정을 이루며 들어온다. $A = N(0, 1)$ 을 오전 8시부터 9시까지의 손님 수, $B = N(2, 3)$ 을 오전 10시부터 11시까지의 손님 수라 하자.
+
+**(a)** $A$ 와 $B$ 는 독립인가? $A$ 와 $B$ 의 분포를 적어라.
+
+**(b)** $P(A = 5, B = 10)$ 을 계산하여라.
+
+**(c)** $P(A + B = 15)$ 를 계산하여라.
+
+**(d)** $C = N(0, 2)$ 라 하자. $A$ 와 $C$ 는 독립인가? 설명하여라.
+
+??? success "연습문제 1 풀이"
+
+    **(a)** 독립이다. $(0, 1]$ 과 $(2, 3]$ 이 서로소이기 때문이다. 둘 다 $\text{Po}(8)$ 을 따른다.
+
+    **(b)** 독립성에 따라 다음과 같다.
+
+    $$
+    P(A = 5, B = 10) = \frac{e^{-8} \cdot 8^5}{5!} \cdot \frac{e^{-8} \cdot 8^{10}}{10!} \approx 0.0916 \times 0.0993 \approx 0.0091
+    $$
+
+    **(c)** $A$ 와 $B$ 가 독립인 푸아송확률변수이므로 $A + B \sim \text{Po}(16)$ 이다.
+
+    $$
+    P(A + B = 15) = \frac{e^{-16} \cdot 16^{15}}{15!} \approx 0.0992
+    $$
+
+    **(d)** 독립이 아니다. $C = N(0, 2) = N(0, 1) + N(1, 2) = A + N(1, 2)$ 이므로 $C$ 가 $A$ 를 품고 있기 때문이다. 실제로 $\text{Cov}(A, C) = \text{Var}(A) = 8 > 0$ 이다.

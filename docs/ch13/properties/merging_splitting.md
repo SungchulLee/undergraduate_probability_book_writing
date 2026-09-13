@@ -1,47 +1,46 @@
-# Merging and Splitting of Poisson Processes
-<<<<<<< Updated upstream
+# 푸아송 과정의 합침과 쪼갬
 
-## Merging (Superposition)
+## 합침(중첩)
 
-When two independent Poisson processes are combined, the result is again a Poisson process.
+독립인 두 푸아송 과정을 합치면 그 결과도 다시 푸아송 과정이 된다.
 
-!!! info "Merging Theorem"
-    Let $\{N_1(t)\}$ and $\{N_2(t)\}$ be independent Poisson processes with rates $\lambda_1$ and $\lambda_2$. Then the **merged process** $\{N(t)\} = \{N_1(t) + N_2(t)\}$ is a Poisson process with rate $\lambda_1 + \lambda_2$.
+!!! info "합침 정리"
+    $\{N_1(t)\}$ 와 $\{N_2(t)\}$ 를 비율이 각각 $\lambda_1$ 과 $\lambda_2$ 인 독립인 푸아송 과정이라 하자. 그러면 **합쳐진 과정** $\{N(t)\} = \{N_1(t) + N_2(t)\}$ 는 비율이 $\lambda_1 + \lambda_2$ 인 푸아송 과정이다.
 
-**Proof.** We verify the three axioms for $N(t) = N_1(t) + N_2(t)$:
+**증명.** $N(t) = N_1(t) + N_2(t)$ 에 대해 세 공리를 확인한다.
 
-1. $N(0) = N_1(0) + N_2(0) = 0$
+1. $N(0) = N_1(0) + N_2(0) = 0$ 이다.
 
-2. **Independent increments**: For disjoint intervals, $N_1$ and $N_2$ each have independent increments, and the two processes are independent of each other. Therefore the increments of the sum are also independent.
+2. **독립증분**: 서로소인 구간에 대해 $N_1$ 과 $N_2$ 는 각각 독립증분을 갖고, 두 과정도 서로 독립이다. 그러므로 합의 증분도 독립이다.
 
-3. **Poisson distribution**: For any interval of length $t$, the increment $N(s, s+t) = N_1(s, s+t) + N_2(s, s+t)$ is the sum of independent Poisson random variables:
+3. **푸아송분포**: 길이가 $t$ 인 어떤 구간에서든 증분 $N(s, s+t) = N_1(s, s+t) + N_2(s, s+t)$ 는 독립인 푸아송확률변수의 합이다.
 
 $$
 N_1(s, s+t) \sim \text{Po}(\lambda_1 t), \quad N_2(s, s+t) \sim \text{Po}(\lambda_2 t)
 $$
 
-By the additivity of independent Poisson random variables (Chapter 12):
+독립인 푸아송확률변수의 가법성(12장)에 따라 다음을 얻는다.
 
 $$
-N(s, s+t) \sim \text{Po}(\lambda_1 t + \lambda_2 t) = \text{Po}((\lambda_1 + \lambda_2) t) \qquad \blacksquare
+N(s, s+t) \sim \text{Po}(\lambda_1 t + \lambda_2 t) = \text{Po}((\lambda_1 + \lambda_2) t) \qquad \square
 $$
 
-**Generalization.** If $N_1, N_2, \ldots, N_m$ are independent Poisson processes with rates $\lambda_1, \ldots, \lambda_m$, then their superposition is a Poisson process with rate $\lambda_1 + \cdots + \lambda_m$.
+**일반화.** $N_1, N_2, \ldots, N_m$ 이 비율이 $\lambda_1, \ldots, \lambda_m$ 인 독립인 푸아송 과정이면, 이들을 중첩한 과정은 비율이 $\lambda_1 + \cdots + \lambda_m$ 인 푸아송 과정이다.
 
 ---
 
-## Splitting (Thinning)
+## 쪼갬(솎아내기)
 
-The reverse operation is **splitting** (also called **thinning**): each event in a Poisson process is independently classified into one of several types.
+거꾸로 하는 연산이 **쪼갬**(**솎아내기**라고도 한다)이다. 푸아송 과정의 각 사건을 서로 독립하게 여러 종류 가운데 하나로 갈라 놓는 것이다.
 
-!!! info "Splitting Theorem"
-    Let $\{N(t)\}$ be a Poisson process with rate $\lambda$. Suppose each event is independently classified as Type 1 with probability $p$ and Type 2 with probability $q = 1 - p$. Let $N_1(t)$ and $N_2(t)$ count the Type 1 and Type 2 events respectively. Then:
+!!! info "쪼갬 정리"
+    $\{N(t)\}$ 를 비율이 $\lambda$ 인 푸아송 과정이라 하자. 각 사건이 서로 독립하게 확률 $p$ 로 1종, 확률 $q = 1 - p$ 로 2종으로 갈린다고 하자. $N_1(t)$ 와 $N_2(t)$ 를 각각 1종과 2종 사건의 개수라 하면 다음이 성립한다.
 
-    1. $\{N_1(t)\}$ is a Poisson process with rate $p\lambda$
-    2. $\{N_2(t)\}$ is a Poisson process with rate $q\lambda$
-    3. $\{N_1(t)\}$ and $\{N_2(t)\}$ are **independent**
+    1. $\{N_1(t)\}$ 는 비율이 $p\lambda$ 인 푸아송 과정이다
+    2. $\{N_2(t)\}$ 는 비율이 $q\lambda$ 인 푸아송 과정이다
+    3. $\{N_1(t)\}$ 와 $\{N_2(t)\}$ 는 **독립**이다
 
-**Proof sketch.** Consider any interval of length $t$. Conditional on $N(t) = n$, each of the $n$ events is independently Type 1 with probability $p$, so $N_1(t) \mid N(t) = n \sim B(n, p)$. Then:
+**증명의 얼개.** 길이가 $t$ 인 아무 구간이나 살펴보자. $N(t) = n$ 이 주어지면 $n$ 개의 사건은 저마다 독립하게 확률 $p$ 로 1종이므로 $N_1(t) \mid N(t) = n \sim B(n, p)$ 이다. 그러면 다음과 같다.
 
 $$
 P(N_1(t) = k) = \sum_{n=k}^{\infty} \binom{n}{k} p^k q^{n-k} \cdot \frac{e^{-\lambda t}(\lambda t)^n}{n!}
@@ -53,50 +52,152 @@ $$
 = \frac{e^{-p\lambda t}(p\lambda t)^k}{k!}
 $$
 
-So $N_1(t) \sim \text{Po}(p\lambda t)$. Similarly, $N_2(t) \sim \text{Po}(q\lambda t)$. Independence of $N_1$ and $N_2$ follows from a similar joint calculation. $\blacksquare$
+그러므로 $N_1(t) \sim \text{Po}(p\lambda t)$ 이다. 마찬가지로 $N_2(t) \sim \text{Po}(q\lambda t)$ 이다. $N_1$ 과 $N_2$ 의 독립성도 비슷하게 결합분포를 계산하여 얻는다. $\square$
 
 ---
 
-## Generalization: Multi-Way Splitting
+## 일반화: 여러 갈래로 쪼개기
 
-Each event can be classified into $m$ types with probabilities $p_1, p_2, \ldots, p_m$ (where $\sum p_i = 1$). The resulting processes $N_1, N_2, \ldots, N_m$ are:
+각 사건을 확률 $p_1, p_2, \ldots, p_m$ ($\sum p_i = 1$)으로 $m$ 가지 종류로 갈라 놓을 수 있다. 그렇게 얻어지는 과정 $N_1, N_2, \ldots, N_m$ 은 다음과 같다.
 
-- Independent Poisson processes
-- With rates $p_1 \lambda, p_2 \lambda, \ldots, p_m \lambda$
+- 서로 독립인 푸아송 과정이다
+- 비율은 각각 $p_1 \lambda, p_2 \lambda, \ldots, p_m \lambda$ 이다
 
-This follows by applying the two-way splitting theorem repeatedly, or by a direct multinomial argument.
+이는 두 갈래 쪼갬 정리를 되풀이하여 적용하거나 다항분포를 써서 곧바로 보일 수 있다.
 
 ---
 
-## Examples
+## 예제
 
-??? example "Hospital Emergency Room"
-    Patients arrive at an ER as a Poisson process with rate $\lambda = 10$ per hour. Each patient is independently classified as:
+??? example "병원 응급실"
+    어떤 응급실에 시간당 $\lambda = 10$ 의 비율로 환자가 푸아송 과정을 이루며 들어온다. 각 환자는 서로 독립하게 다음과 같이 갈린다.
 
-    - Critical (probability 0.1): rate $= 0.1 \times 10 = 1$ per hour
-    - Urgent (probability 0.3): rate $= 0.3 \times 10 = 3$ per hour
-    - Non-urgent (probability 0.6): rate $= 0.6 \times 10 = 6$ per hour
+    - 중증(확률 0.1): 비율 $= 0.1 \times 10 = 1$/시간
+    - 응급(확률 0.3): 비율 $= 0.3 \times 10 = 3$/시간
+    - 비응급(확률 0.6): 비율 $= 0.6 \times 10 = 6$/시간
 
-    The three streams are independent Poisson processes. The probability of no critical patients in a 2-hour shift is:
+    이 세 흐름은 서로 독립인 푸아송 과정이다. 2시간 근무 동안 중증 환자가 한 명도 없을 확률은 다음과 같다.
 
     $$
-    P(N_{\text{crit}}(2) = 0) = e^{-1 \times 2} = e^{-2} \approx 0.1353
+    P(N_{\text{중증}}(2) = 0) = e^{-1 \times 2} = e^{-2} \approx 0.1353
     $$
 
-??? example "Network Traffic"
-    Two independent servers generate requests at rates $\lambda_1 = 20$ and $\lambda_2 = 30$ per second. By merging, the total traffic to a load balancer is a Poisson process with rate $50$ per second.
+??? example "네트워크 트래픽"
+    독립인 두 서버가 초당 $\lambda_1 = 20$ 과 $\lambda_2 = 30$ 의 비율로 요청을 만들어 낸다. 합침에 따라 부하 분산기로 들어오는 전체 트래픽은 초당 비율이 $50$ 인 푸아송 과정이다.
 
-    The probability of more than 60 requests in 1 second is $P(N(1) > 60)$ where $N(1) \sim \text{Po}(50)$.
+    1초 동안 요청이 60건보다 많을 확률은 $N(1) \sim \text{Po}(50)$ 일 때의 $P(N(1) > 60)$ 이다.
 
 ---
 
-## Summary
+## 정리하며
 
-| Operation | Input | Output |
+| 연산 | 들어가는 것 | 나오는 것 |
 |:---|:---|:---|
-| Merging | Independent $\text{PP}(\lambda_1)$ and $\text{PP}(\lambda_2)$ | $\text{PP}(\lambda_1 + \lambda_2)$ |
-| Splitting (prob $p$) | $\text{PP}(\lambda)$ | Independent $\text{PP}(p\lambda)$ and $\text{PP}((1-p)\lambda)$ |
+| 합침 | 독립인 $\text{PP}(\lambda_1)$ 과 $\text{PP}(\lambda_2)$ | $\text{PP}(\lambda_1 + \lambda_2)$ |
+| 쪼갬(확률 $p$) | $\text{PP}(\lambda)$ | 독립인 $\text{PP}(p\lambda)$ 와 $\text{PP}((1-p)\lambda)$ |
 
-Merging and splitting are inverses of each other, and both preserve the Poisson process structure. These operations make the Poisson process a natural building block for modeling complex systems composed of multiple independent streams.
-=======
->>>>>>> Stashed changes
+합침과 쪼갬은 서로를 되돌리는 연산이며, 둘 다 푸아송 과정의 짜임새를 그대로 지킨다. 이 두 연산 덕분에 푸아송 과정은 여러 독립된 흐름으로 이루어진 복잡한 체계를 모형으로 삼을 때 자연스러운 벽돌이 된다.
+
+## 연습문제
+
+**연습문제 1.**
+어떤 기술지원 센터가 서로 독립인 세 가지 경로로 요청을 받는다.
+
+- 전화: 시간당 $\text{PP}(10)$
+- 전자우편: 시간당 $\text{PP}(15)$
+- 실시간 대화: 시간당 $\text{PP}(20)$
+
+**(a)** 시간당 전체 요청 수의 분포는 무엇인가?
+
+**(b)** 한 시간 동안 전체 요청이 40건 미만일 확률을 계산하여라.
+
+**(c)** 2시간 동안 이 센터가 전체 100건보다 많은 요청을 받을 확률은 얼마인가?
+
+??? success "연습문제 1 풀이"
+
+    **(a)** 합침에 따라 전체는 $\text{PP}(10 + 15 + 20) = \text{PP}(45)$ 이다. 시간당 건수는 $\text{Po}(45)$ 이다.
+
+    **(b)**
+
+    ```python
+    from scipy.stats import poisson
+    print(f"P(N < 40) = {poisson.cdf(39, 45):.6f}")
+    ```
+
+    $P(N(1) < 40) = P(N(1) \leq 39) \approx 0.2088$ 이다.
+
+    **(c)** 2시간 동안에는 $N(2) \sim \text{Po}(90)$ 이다.
+
+    ```python
+    print(f"P(N > 100) = {1 - poisson.cdf(100, 90):.6f}")
+    ```
+
+    $P(N(2) > 100) \approx 0.1303$ 이다.
+
+---
+
+**연습문제 2.**
+어떤 요금소를 차량이 시간당 $\lambda = 60$ 의 비율로 푸아송 과정을 이루며 지나간다. 각 차량은 서로 독립하게 승용차(확률 0.7), 화물차(확률 0.2), 버스(확률 0.1)이다.
+
+**(a)** 승용차, 화물차, 버스가 도착하는 과정의 비율은 각각 얼마인가?
+
+**(b)** 이 세 과정은 서로 독립인가?
+
+**(c)** 30분 동안 버스가 정확히 2대일 확률을 계산하여라.
+
+**(d)** 10분 동안 화물차가 적어도 1대, 버스가 적어도 1대 도착할 확률을 계산하여라.
+
+??? success "연습문제 2 풀이"
+
+    **(a)** 쪼갬에 따라 승용차는 시간당 $0.7 \times 60 = 42$ 대, 화물차는 $0.2 \times 60 = 12$ 대, 버스는 $0.1 \times 60 = 6$ 대이다.
+
+    **(b)** 독립이다. 쪼갬 정리에 따라 얻어진 세 과정은 서로 독립인 푸아송 과정이다.
+
+    **(c)** 30분 동안의 버스는 $\text{Po}(6 \times 0.5) = \text{Po}(3)$ 이다.
+
+    $$
+    P(\text{버스} = 2) = \frac{e^{-3} \cdot 9}{2} \approx 0.2240
+    $$
+
+    **(d)** 10분($= 1/6$ 시간) 동안 화물차는 $\sim \text{Po}(2)$, 버스는 $\sim \text{Po}(1)$ 이고 서로 독립이다.
+
+    $$
+    P(\text{화물차} \geq 1, \text{버스} \geq 1) = (1 - e^{-2})(1 - e^{-1}) \approx 0.8647 \times 0.6321 \approx 0.5467
+    $$
+
+---
+
+**연습문제 3.**
+어떤 고속도로에서 하루에 $\lambda = 2$ 의 비율로 사고가 푸아송 과정을 이루며 일어난다. 각 사고는 서로 독립하게 가벼운 사고(확률 0.8)이거나 큰 사고(확률 0.2)이다.
+
+**(a)** 30일인 한 달 동안 기대되는 큰 사고는 몇 건인가?
+
+**(b)** 일주일(7일) 동안 큰 사고가 한 건도 없을 확률을 계산하여라.
+
+**(c)** 어느 하루에 사고가 정확히 3건 일어났다고 할 때, 셋 다 가벼운 사고일 확률은 얼마인가?
+
+**(d)** 어느 하루에 사고가 정확히 3건 일어났다고 할 때, 첫 사고가 일어난 시각의 기댓값은 (자정 이후 몇 시간인가로) 얼마인가?
+
+??? success "연습문제 3 풀이"
+
+    **(a)** 큰 사고는 하루에 $\text{PP}(0.2 \times 2) = \text{PP}(0.4)$ 를 이룬다. 30일 동안에는 $E = 0.4 \times 30 = 12$ 이다.
+
+    **(b)** 7일 동안의 큰 사고는 $\text{Po}(0.4 \times 7) = \text{Po}(2.8)$ 이다.
+
+    $$
+    P(7 \text{일 동안 큰 사고 없음}) = e^{-2.8} \approx 0.0608
+    $$
+
+    **(c)** 전체 사고가 $N(1) = 3$ 건이라 하면 각각은 서로 독립하게 확률 0.8로 가벼운 사고이다.
+
+    $$
+    P(3 \text{건 모두 가벼움} \mid N(1) = 3) = 0.8^3 = 0.512
+    $$
+
+    **(d)** (날을 단위로 재어) $N(1) = 3$ 이 주어지면 도착시각은 i.i.d. $\text{Uniform}(0, 1)$ 3개의 순서통계량이다. 첫 도착의 기댓값은 다음과 같다.
+
+    $$
+    E[S_1 \mid N(1) = 3] = \frac{1}{4} \text{ 일} = 6 \text{ 시간}
+    $$
+
+    그러므로 첫 사고가 일어나는 시각의 기댓값은 오전 6시이다.

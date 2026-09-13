@@ -1,78 +1,98 @@
-# Stationary Increments
-<<<<<<< Updated upstream
+# 정상증분
 
-## Definition
+## 정의
 
-The **stationary increments** property means that the distribution of the number of events in any interval depends only on the length of the interval, not on when it starts.
+**정상증분** 성질은 어떤 구간 안의 사건 개수의 분포가 구간의 길이에만 기대고 구간이 언제 시작하는지에는 기대지 않는다는 뜻이다.
 
-!!! info "Stationary Increments"
-    A counting process $\{N(t)\}$ has **stationary increments** if, for every $s \geq 0$ and $t > 0$:
+!!! info "정상증분"
+    세기 과정 $\{N(t)\}$ 가 모든 $s \geq 0$ 과 $t > 0$ 에 대하여 다음을 만족하면 **정상증분**을 갖는다고 한다.
 
     $$
     N(s, s+t) \stackrel{d}{=} N(0, t)
     $$
 
-    That is, $N(s, s+t)$ and $N(0, t)$ have the same distribution.
+    곧 $N(s, s+t)$ 와 $N(0, t)$ 가 같은 분포를 갖는다는 말이다.
 
-For the Poisson process, both $N(s, s+t)$ and $N(0, t)$ follow $\text{Po}(\lambda t)$, confirming stationarity.
-
----
-
-## Intuition: Time-Shift Invariance
-
-Stationarity means the process "looks the same" regardless of when you start observing it. Imagine watching events arrive on a timeline:
-
-- The probability of seeing exactly 3 events in a 1-hour window is the same whether you watch from 2pm to 3pm or from 8pm to 9pm
-- The expected number of events per hour is always $\lambda$, regardless of the hour
-
-In everyday language: **the process has no memory of when you started watching**.
+푸아송 과정에서는 $N(s, s+t)$ 와 $N(0, t)$ 가 모두 $\text{Po}(\lambda t)$ 를 따르므로 정상성이 확인된다.
 
 ---
 
-## Formal Consequence
+## 직관: 시간을 옮겨도 달라지지 않는다
 
-Combined with independent increments, stationarity gives the full joint distribution of the process. For any partition $0 = t_0 < t_1 < \cdots < t_n$:
+정상성은 언제부터 지켜보기 시작하든 과정이 "똑같아 보인다"는 뜻이다. 시간축 위로 사건이 도착하는 모습을 지켜본다고 떠올려 보자.
+
+- 한 시간 창 안에서 사건이 정확히 3개 보일 확률은 오후 2시부터 3시까지 보든 저녁 8시부터 9시까지 보든 같다
+- 시간당 기대되는 사건의 개수는 몇 시이든 언제나 $\lambda$ 이다
+
+일상의 말로 하면 **이 과정은 당신이 언제부터 지켜보기 시작했는지를 기억하지 못한다**.
+
+---
+
+## 형식을 갖춘 따름 결과
+
+독립증분과 함께 쓰면 정상성은 과정의 결합분포 전체를 내어 준다. 임의의 분할 $0 = t_0 < t_1 < \cdots < t_n$ 에 대하여 다음이 성립한다.
 
 $$
 P\bigl(N(t_0, t_1) = k_1, \ldots, N(t_{n-1}, t_n) = k_n\bigr) = \prod_{i=1}^{n} \frac{e^{-\lambda(t_i - t_{i-1})} [\lambda(t_i - t_{i-1})]^{k_i}}{k_i!}
 $$
 
-Each factor depends only on the interval length $t_i - t_{i-1}$, not on the absolute times.
+각 인수는 절대적인 시각이 아니라 구간의 길이 $t_i - t_{i-1}$ 에만 기댄다.
 
 ---
 
-## When Stationarity Fails
+## 정상성이 깨지는 때
 
-Many real-world counting processes are **not** stationary. Recognizing this is important for choosing the right model.
+현실의 세기 과정 가운데에는 정상이 **아닌** 것이 많다. 올바른 모형을 고르려면 이를 알아보는 것이 중요하다.
 
-| Scenario | Why stationarity fails |
+| 상황 | 정상성이 깨지는 까닭 |
 |:---|:---|
-| Customer arrivals at a restaurant | Lunch and dinner rushes create time-varying rates |
-| Website traffic | Peaks during business hours, low at night |
-| Emergency room visits | Higher rates on weekends and holidays |
-| Earthquake aftershocks | Rate decays after the main shock (Omori's law) |
+| 식당에 들어오는 손님 | 점심때와 저녁때의 몰림 때문에 비율이 시간에 따라 달라진다 |
+| 웹사이트 접속 | 업무 시간에 몰리고 밤에는 뜸하다 |
+| 응급실 내원 | 주말과 공휴일에 비율이 높아진다 |
+| 지진의 여진 | 본진 뒤로 비율이 잦아든다(오모리 법칙) |
 
-In these situations, the **non-homogeneous Poisson process** with a time-varying rate $\lambda(t)$ is more appropriate. The count in $(s, s+t]$ is then $\text{Po}\!\left(\int_s^{s+t} \lambda(u)\,du\right)$, which generally depends on $s$.
-
----
-
-## Stationarity Does Not Imply Independent Increments
-
-!!! warning "The Two Properties Are Distinct"
-    A process can have stationary increments without having independent increments, and vice versa.
-
-    - A **renewal process** with non-exponential interarrival times has stationary increments (asymptotically) but generally does not have independent increments
-    - A process where each interval's count is drawn from a Poisson distribution but the draws are correlated would have stationary increments without independence
-
-    The Poisson process is special precisely because it satisfies **both** properties simultaneously.
-
-??? example "Testing Stationarity"
-    A hospital records patient arrivals and counts events in each hour of the day over many weeks. If the average count per hour is roughly constant (say $\lambda \approx 4.2$ regardless of the hour), stationarity is plausible. If the count is systematically higher during certain hours, stationarity fails and a non-homogeneous model is needed.
+이런 상황에서는 시간에 따라 달라지는 비율 $\lambda(t)$ 를 갖는 **비동차 푸아송 과정**이 더 알맞다. 이때 $(s, s+t]$ 안의 개수는 $\text{Po}\!\left(\int_s^{s+t} \lambda(u)\,du\right)$ 이며, 이는 일반적으로 $s$ 에 기댄다.
 
 ---
 
-## Summary
+## 정상성이 독립증분을 낳지는 않는다
 
-Stationarity is the property that makes the Poisson process "clock-invariant": shifting the observation window in time does not change the statistical behavior. Together with independent increments and the initialization $N(0) = 0$, it completely determines the Poisson process. When stationarity is violated, we move to the non-homogeneous Poisson process, which retains independent increments but allows a time-varying rate.
-=======
->>>>>>> Stashed changes
+!!! warning "두 성질은 서로 다르다"
+    어떤 과정은 독립증분 없이도 정상증분을 가질 수 있고, 그 반대도 마찬가지이다.
+
+    - 도착간격이 지수분포가 아닌 **재생 과정**은 (점근적으로) 정상증분을 갖지만 일반적으로 독립증분을 갖지 않는다
+    - 각 구간의 개수가 푸아송분포에서 뽑히되 그 뽑기들이 서로 상관되어 있다면, 독립성 없이 정상증분만 갖게 된다
+
+    푸아송 과정이 특별한 것은 바로 이 **두** 성질을 한꺼번에 만족하기 때문이다.
+
+??? example "정상성 살펴보기"
+    어떤 병원이 여러 주에 걸쳐 하루의 시간대마다 환자 내원 건수를 기록한다고 하자. 시간당 평균 건수가 대체로 일정하다면(이를테면 몇 시이든 $\lambda \approx 4.2$), 정상성을 받아들일 만하다. 특정 시간대에 건수가 꾸준히 더 높다면 정상성이 깨진 것이므로 비동차 모형이 필요하다.
+
+---
+
+## 정리하며
+
+정상성은 푸아송 과정을 "시계에 무심한" 과정으로 만들어 주는 성질이다. 관찰하는 창을 시간축 위에서 옮겨도 통계적인 모습이 달라지지 않는다. 독립증분과 출발점 $N(0) = 0$ 을 함께 두면 정상성은 푸아송 과정을 완전히 결정한다. 정상성이 깨질 때는 비동차 푸아송 과정으로 넘어가는데, 이 과정은 독립증분은 그대로 지니면서 시간에 따라 달라지는 비율을 허락한다.
+
+## 연습문제
+
+**연습문제 1.**
+어떤 방사성 물질이 초당 $\lambda = 100$ 의 비율로 푸아송 과정을 이루며 입자를 내보낸다.
+
+**(a)** $t = 5$ 초와 $t = 8$ 초 사이에 나온 입자 개수의 분포는 무엇인가?
+
+**(b)** 이 분포는 $t = 0$ 과 $t = 3$ 사이에 나온 개수의 분포와 다른가? 정상성을 써서 설명하여라.
+
+**(c)** 3초 동안 입자가 320개보다 많이 나올 확률을 계산하여라. 정규근사를 쓰라.
+
+??? success "연습문제 1 풀이"
+
+    **(a)** $N(5, 8) \sim \text{Po}(100 \times 3) = \text{Po}(300)$ 이다.
+
+    **(b)** 다르지 않다. 정상증분에 따라 $N(5, 8)$ 과 $N(0, 3)$ 은 같은 분포 $\text{Po}(300)$ 을 갖는다. 분포는 구간의 길이(3초)에만 기대고 시작 시각에는 기대지 않는다.
+
+    **(c)** $\mu = 300$ 이고 $\sigma = \sqrt{300} \approx 17.32$ 이므로 다음과 같다.
+
+    $$
+    P(N > 320) \approx P\!\left(Z > \frac{320 - 300}{\sqrt{300}}\right) = P(Z > 1.155) \approx 0.124
+    $$

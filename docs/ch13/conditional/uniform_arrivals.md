@@ -1,58 +1,57 @@
-# Uniform Distribution of Arrivals (Given N(t) = n)
-<<<<<<< Updated upstream
+# 도착시각의 균등분포 (N(t) = n이 주어졌을 때)
 
-## The Main Result
+## 주요 결과
 
-One of the most remarkable properties of the Poisson process is that, given the total count in an interval, the arrival times are uniformly distributed.
+푸아송 과정의 가장 놀라운 성질 가운데 하나는, 한 구간의 전체 개수가 주어지면 도착시각들이 고르게 퍼져 있다는 것이다.
 
-!!! info "Conditional Uniformity"
-    Let $\{N(t)\}$ be a Poisson process with rate $\lambda$. Given that $N(t) = n$, the $n$ arrival times $S_1, S_2, \ldots, S_n$ have the same joint distribution as the **order statistics** of $n$ independent $\text{Uniform}(0, t)$ random variables.
+!!! info "조건을 걸었을 때의 균등성"
+    $\{N(t)\}$ 를 비율이 $\lambda$ 인 푸아송 과정이라 하자. $N(t) = n$ 이 주어지면, $n$ 개의 도착시각 $S_1, S_2, \ldots, S_n$ 은 독립인 $\text{Uniform}(0, t)$ 확률변수 $n$ 개의 **순서통계량**과 같은 결합분포를 갖는다.
 
-In other words, if we know that exactly $n$ events occurred in $[0, t]$, then those events are scattered uniformly and independently across the interval (up to ordering).
+다시 말해 $[0, t]$ 안에서 사건이 정확히 $n$ 개 일어났음을 안다면, 그 사건들은 (순서를 빼고 보면) 구간 위에 고르게, 서로 독립하게 흩뿌려져 있다.
 
 ---
 
-## Proof via Subdivision
+## 잘게 쪼개어 보는 증명
 
-Divide $[0, t]$ into $m$ equal subintervals, each of length $t/m$. Given $N(t) = n$, what is the probability that specific subintervals $i_1, i_2, \ldots, i_n$ each contain exactly one event?
+$[0, t]$ 를 길이가 각각 $t/m$ 인 똑같은 작은 구간 $m$ 개로 나눈다. $N(t) = n$ 이 주어졌을 때, 정해진 작은 구간 $i_1, i_2, \ldots, i_n$ 이 저마다 사건을 정확히 하나씩 품을 확률은 얼마인가?
 
-By independent increments, the count in each subinterval is $\text{Po}(\lambda t/m)$, independently. The conditional probability that the $n$ events fall in $n$ specified subintervals (one each) is:
+독립증분에 따라 각 작은 구간의 개수는 서로 독립인 $\text{Po}(\lambda t/m)$ 이다. $n$ 개의 사건이 정해진 $n$ 개의 작은 구간에 하나씩 떨어질 조건부확률은 다음과 같다.
 
 $$
-P\bigl(\text{one event in each of subintervals } i_1, \ldots, i_n \mid N(t) = n\bigr)
+P\bigl(\text{작은 구간 } i_1, \ldots, i_n \text{ 에 사건이 하나씩} \mid N(t) = n\bigr)
 $$
 
-Using the multinomial structure of independent Poisson counts conditional on their sum (which gives a multinomial distribution with equal probabilities):
+독립인 푸아송 개수들에 그 합으로 조건을 걸면 확률이 모두 같은 다항분포가 되는데, 이 짜임새를 쓰면 다음을 얻는다.
 
 $$
 = \frac{n!}{m^n} \cdot \frac{1}{n!} = \frac{1}{m^n}
 $$
 
-This is exactly the probability that $n$ independent uniform draws on $\{1, 2, \ldots, m\}$ land in those $n$ subintervals. As $m \to \infty$, this converges to the statement that the arrival times are iid $\text{Uniform}(0, t)$, up to ordering.
+이것은 $\{1, 2, \ldots, m\}$ 위에서 고르게 독립으로 $n$ 번 뽑았을 때 그 $n$ 개의 작은 구간에 떨어질 확률과 정확히 같다. $m \to \infty$ 로 보내면, 순서를 빼고 볼 때 도착시각들이 i.i.d. $\text{Uniform}(0, t)$ 라는 말로 수렴한다.
 
 ---
 
-## Conditional Joint Density
+## 조건부 결합밀도
 
-The conditional joint density of the ordered arrival times $S_1 < S_2 < \cdots < S_n$, given $N(t) = n$, is:
+$N(t) = n$ 이 주어졌을 때 순서대로 놓인 도착시각 $S_1 < S_2 < \cdots < S_n$ 의 조건부 결합밀도는 다음과 같다.
 
 $$
 f_{S_1, \ldots, S_n \mid N(t) = n}(s_1, \ldots, s_n) = \frac{n!}{t^n}, \quad 0 < s_1 < s_2 < \cdots < s_n < t
 $$
 
-This is the joint density of the order statistics of $n$ iid $\text{Uniform}(0, t)$ random variables. Each unordered arrival time has marginal density $1/t$ on $[0, t]$, and the factor $n!$ accounts for the ordering.
+이것은 i.i.d. $\text{Uniform}(0, t)$ 확률변수 $n$ 개의 순서통계량이 갖는 결합밀도이다. 순서를 매기지 않은 각 도착시각은 $[0, t]$ 위에서 주변밀도 $1/t$ 를 갖고, $n!$ 이라는 인수가 순서를 매기는 몫을 맡는다.
 
 ---
 
-## Conditional Distribution of a Single Arrival
+## 도착시각 하나의 조건부분포
 
-Given $N(t) = 1$, the single arrival time $S_1$ is uniformly distributed:
+$N(t) = 1$ 이 주어지면 하나뿐인 도착시각 $S_1$ 은 고르게 퍼져 있다.
 
 $$
 S_1 \mid N(t) = 1 \sim \text{Uniform}(0, t)
 $$
 
-More generally, given $N(t) = n$, each individual arrival time $S_k$ has a marginal distribution that is the $k$-th order statistic of $n$ iid $\text{Uniform}(0, t)$ random variables (see Chapter 15 on order statistics):
+더 일반적으로 $N(t) = n$ 이 주어지면, 낱낱의 도착시각 $S_k$ 는 i.i.d. $\text{Uniform}(0, t)$ 확률변수 $n$ 개의 $k$ 번째 순서통계량이라는 주변분포를 갖는다(순서통계량을 다룬 15장을 보라).
 
 $$
 E[S_k \mid N(t) = n] = \frac{k \cdot t}{n+1}
@@ -60,35 +59,35 @@ $$
 
 ---
 
-## Why This Matters
+## 왜 중요한가
 
-The conditional uniformity property has both conceptual and practical significance:
+조건을 걸었을 때의 균등성은 생각의 면에서도 실용의 면에서도 뜻깊다.
 
-- **Conceptual**: It captures the idea of "complete randomness." Given the count, there is no preferred time for events to cluster — they are as random as possible.
-- **Simulation**: To simulate a Poisson process on $[0, t]$, one can first draw $n \sim \text{Po}(\lambda t)$ and then generate $n$ iid $\text{Uniform}(0, t)$ values and sort them. This is often more efficient than generating exponential interarrival times sequentially.
-- **Inference**: In statistical applications, the uniformity property simplifies likelihood calculations for Poisson process models.
+- **생각의 면**: "온전한 무작위성"이라는 개념을 그대로 담아낸다. 개수가 주어지면 사건이 특별히 몰릴 만한 시각이 따로 없다. 사건들은 있을 수 있는 가장 무작위한 모습을 띤다.
+- **모의실험**: $[0, t]$ 위의 푸아송 과정을 모의실험하려면 먼저 $n \sim \text{Po}(\lambda t)$ 를 뽑고, 그다음 i.i.d. $\text{Uniform}(0, t)$ 값을 $n$ 개 만들어 정렬하면 된다. 지수분포 도착간격을 차례차례 만들어 내는 것보다 대체로 더 빠르다.
+- **추론**: 통계적인 응용에서 이 균등성은 푸아송 과정 모형의 가능도 계산을 간단하게 해 준다.
 
 ---
 
-## Example
+## 예
 
-??? example "Bus Arrivals in One Hour"
-    Buses arrive at a stop as a Poisson process with rate $\lambda = 6$ per hour. Given that exactly 4 buses arrived between 8:00 and 9:00, what is the expected time of the second bus?
+??? example "한 시간 동안의 버스 도착"
+    어떤 정류장에 시간당 $\lambda = 6$ 의 비율로 버스가 푸아송 과정을 이루며 들어온다. 8시와 9시 사이에 버스가 정확히 4대 들어왔다고 할 때, 두 번째 버스가 들어온 시각의 기댓값은 얼마인가?
 
-    Given $N(1) = 4$, the four arrival times behave as order statistics of 4 iid $\text{Uniform}(0, 1)$ random variables (measuring time in hours from 8:00).
+    $N(1) = 4$ 가 주어지면 네 도착시각은 (8시부터 시간 단위로 재어) i.i.d. $\text{Uniform}(0, 1)$ 확률변수 4개의 순서통계량처럼 행동한다.
 
-    The expected value of the $k$-th order statistic out of $n$ is $k/(n+1)$:
+    $n$ 개 가운데 $k$ 번째 순서통계량의 기댓값은 $k/(n+1)$ 이므로 다음과 같다.
 
     $$
-    E[S_2 \mid N(1) = 4] = \frac{2}{5} = 0.4 \text{ hours} = 24 \text{ minutes}
+    E[S_2 \mid N(1) = 4] = \frac{2}{5} = 0.4 \text{ 시간} = 24 \text{ 분}
     $$
 
-    So the expected time of the second bus is 8:24.
+    그러므로 두 번째 버스가 들어오는 시각의 기댓값은 8시 24분이다.
 
-??? example "Conditional Probability of Early Arrival"
-    With $\lambda = 6$ per hour, given $N(1) = 1$ (exactly one bus in the hour), what is the probability it arrived in the first 10 minutes?
+??? example "일찍 도착할 조건부확률"
+    시간당 $\lambda = 6$ 이고 $N(1) = 1$ (한 시간에 버스가 딱 한 대)이 주어졌을 때, 그 버스가 처음 10분 안에 들어왔을 확률은 얼마인가?
 
-    Given $N(1) = 1$, the arrival time is $\text{Uniform}(0, 1)$ (in hours). The probability of arriving in the first 10 minutes ($= 1/6$ hour) is:
+    $N(1) = 1$ 이 주어지면 도착시각은 (시간 단위로) $\text{Uniform}(0, 1)$ 이다. 처음 10분($= 1/6$ 시간) 안에 들어올 확률은 다음과 같다.
 
     $$
     P\!\left(S_1 < \frac{1}{6} \;\middle|\; N(1) = 1\right) = \frac{1/6}{1} = \frac{1}{6}
@@ -96,8 +95,35 @@ The conditional uniformity property has both conceptual and practical significan
 
 ---
 
-## Connection to Splitting
+## 쪼갬과의 관계
 
-The conditional uniformity theorem is closely related to the splitting property. Asking "given $N(t) = n$, did the $k$-th event fall in a subinterval $A$?" is equivalent to thinning each event with probability $|A|/t$ (the fraction of the interval occupied by $A$). This perspective unifies the conditional and splitting results.
-=======
->>>>>>> Stashed changes
+조건을 걸었을 때의 균등성 정리는 쪼갬 성질과 가깝게 이어져 있다. "$N(t) = n$ 이 주어졌을 때 $k$ 번째 사건이 부분구간 $A$ 에 떨어졌는가?"를 묻는 것은 각 사건을 확률 $|A|/t$ ($A$ 가 차지하는 구간의 비율)로 솎아내는 것과 같다. 이 눈으로 보면 조건부 결과와 쪼갬 결과가 하나로 이어진다.
+
+## 연습문제
+
+**연습문제 1.**
+어떤 은행에 시간당 $\lambda = 10$ 의 비율로 손님이 푸아송 과정을 이루며 들어온다. 9시와 10시 사이에 손님이 정확히 5명 들어왔다고 할 때 다음에 답하여라.
+
+**(a)** 각 손님이 들어온 시각의 조건부분포는 무엇인가?
+
+**(b)** 세 번째 손님이 들어온 시각의 기댓값은 얼마인가?
+
+**(c)** 다섯 명이 모두 처음 40분 안에 들어왔을 확률은 얼마인가?
+
+??? success "연습문제 1 풀이"
+
+    **(a)** 조건을 걸었을 때의 균등성 정리에 따라, $N(1) = 5$ 가 주어지면 다섯 도착시각은 (9시부터 시간 단위로 재어) i.i.d. $\text{Uniform}(0, 1)$ 5개의 순서통계량처럼 행동한다.
+
+    **(b)** i.i.d. $\text{Uniform}(0, 1)$ $n$ 개 가운데 $k$ 번째 순서통계량의 기댓값은 $k/(n+1)$ 이다.
+
+    $$
+    E[S_3 \mid N(1) = 5] = \frac{3}{6} = 0.5 \text{ 시간}
+    $$
+
+    그러므로 기대되는 시각은 9시 30분이다.
+
+    **(c)** $N(1) = 5$ 가 주어지면 각 도착은 서로 독립하게 $\text{Uniform}(0, 1)$ 이다. 도착 하나가 $[0, 2/3]$ (처음 40분)에 떨어질 확률은 $2/3$ 이다. 그러므로 다음과 같다.
+
+    $$
+    P(5 \text{명 모두 처음 40분 안} \mid N(1) = 5) = \left(\frac{2}{3}\right)^5 = \frac{32}{243} \approx 0.1317
+    $$
