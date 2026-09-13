@@ -1,16 +1,16 @@
-# Verifying Independence via Factorization
+# 인수분해로 독립 확인하기
 
-## The Factorization Test
+## 인수분해 검사
 
-To verify whether $X$ and $Y$ are independent, check whether the joint PMF (or PDF) factors into the product of the marginals for **every** pair of values:
+$X$ 와 $Y$ 가 독립인지 확인하려면, 결합확률질량함수(또는 결합확률밀도함수)가 **모든** 값의 짝에서 주변분포들의 곱으로 인수분해되는지 살펴본다.
 
-$$p(x, y) = p_X(x) \cdot p_Y(y) \quad \text{for all } x, y$$
+$$p(x, y) = p_X(x) \cdot p_Y(y) \quad \text{모든 } x, y \text{ 에 대해}$$
 
-If even **one** pair $(x, y)$ violates this equation, then $X$ and $Y$ are dependent.
+단 **한** 쌍 $(x, y)$ 만 이 식을 어겨도 $X$ 와 $Y$ 는 종속이다.
 
-## Example: Two Independent Random Variables
+## 예: 독립인 두 확률변수
 
-The marginal PMFs of $X$ and $Y$ are:
+$X$ 와 $Y$ 의 주변확률질량함수가 다음과 같다고 하자.
 
 | $P(X = x_i)$ | $x=0$ | $x=1$ | $x=2$ |
 |---|---|---|---|
@@ -20,7 +20,7 @@ The marginal PMFs of $X$ and $Y$ are:
 |---|---|---|---|---|
 | | $2/10$ | $3/10$ | $2/10$ | $3/10$ |
 
-If $X$ and $Y$ are independent, the joint PMF is determined by multiplying marginals:
+$X$ 와 $Y$ 가 독립이면 결합확률질량함수는 주변분포를 곱해서 정해진다.
 
 | | $x=0$ | $x=1$ | $x=2$ |
 |---|---|---|---|
@@ -29,11 +29,11 @@ If $X$ and $Y$ are independent, the joint PMF is determined by multiplying margi
 | $y=1$ | $\frac{2}{10} \times \frac{3}{10} = \frac{6}{100}$ | $\frac{3}{10} \times \frac{3}{10} = \frac{9}{100}$ | $\frac{5}{10} \times \frac{3}{10} = \frac{15}{100}$ |
 | $y=0$ | $\frac{2}{10} \times \frac{2}{10} = \frac{4}{100}$ | $\frac{3}{10} \times \frac{2}{10} = \frac{6}{100}$ | $\frac{5}{10} \times \frac{2}{10} = \frac{10}{100}$ |
 
-When $X$ and $Y$ are independent, the joint PMF is **fully determined** by the two marginals.
+$X$ 와 $Y$ 가 독립이면 결합확률질량함수는 두 주변분포만으로 **완전히 결정된다**.
 
-## Example: Two Dependent Random Variables
+## 예: 종속인 두 확률변수
 
-The joint PMF of $X$ and $Y$ is:
+$X$ 와 $Y$ 의 결합확률질량함수가 다음과 같다고 하자.
 
 | | $x=0$ | $x=1$ | $x=2$ |
 |---|---|---|---|
@@ -42,22 +42,105 @@ The joint PMF of $X$ and $Y$ is:
 | $y=1$ | $1/6$ | $0$ | $0$ |
 | $y=0$ | $0$ | $0$ | $0$ |
 
-**Method 1: Check conditional distributions.**
+**방법 1: 조건부분포를 살펴본다.**
 
-- Conditional PMF of $X$ given $Y = 1$: $P(X=0 \mid Y=1) = 1$
-- Conditional PMF of $X$ given $Y = 2$: $P(X=0 \mid Y=2) = 1/2$, $P(X=1 \mid Y=2) = 1/2$
-- Conditional PMF of $X$ given $Y = 3$: $P(X=0 \mid Y=3) = 1/3$, $P(X=1 \mid Y=3) = 1/3$, $P(X=2 \mid Y=3) = 1/3$
+- $Y = 1$ 이 주어졌을 때 $X$ 의 조건부확률질량함수: $P(X=0 \mid Y=1) = 1$
+- $Y = 2$ 가 주어졌을 때 $X$ 의 조건부확률질량함수: $P(X=0 \mid Y=2) = 1/2$, $P(X=1 \mid Y=2) = 1/2$
+- $Y = 3$ 이 주어졌을 때 $X$ 의 조건부확률질량함수: $P(X=0 \mid Y=3) = 1/3$, $P(X=1 \mid Y=3) = 1/3$, $P(X=2 \mid Y=3) = 1/3$
 
-Since the conditional distribution of $X$ given $Y = y_j$ **depends on** $y_j$, the variables are **dependent**.
+$Y = y_j$ 가 주어졌을 때 $X$ 의 조건부분포가 $y_j$ 에 **의존하므로** 두 변수는 **종속**이다.
 
-**Method 2: Check conditional distributions in the other direction.**
+**방법 2: 반대 방향으로 조건부분포를 살펴본다.**
 
-- Conditional PMF of $Y$ given $X = 0$: $P(Y=1 \mid X=0) = 1/3$, $P(Y=2 \mid X=0) = 1/3$, $P(Y=3 \mid X=0) = 1/3$
-- Conditional PMF of $Y$ given $X = 1$: $P(Y=2 \mid X=1) = 1/2$, $P(Y=3 \mid X=1) = 1/2$
-- Conditional PMF of $Y$ given $X = 2$: $P(Y=3 \mid X=2) = 1$
+- $X = 0$ 이 주어졌을 때 $Y$ 의 조건부확률질량함수: $P(Y=1 \mid X=0) = 1/3$, $P(Y=2 \mid X=0) = 1/3$, $P(Y=3 \mid X=0) = 1/3$
+- $X = 1$ 이 주어졌을 때 $Y$ 의 조건부확률질량함수: $P(Y=2 \mid X=1) = 1/2$, $P(Y=3 \mid X=1) = 1/2$
+- $X = 2$ 가 주어졌을 때 $Y$ 의 조건부확률질량함수: $P(Y=3 \mid X=2) = 1$
 
-The conditional distribution of $Y$ given $X = x_i$ depends on $x_i$, confirming dependence.
+$X = x_i$ 가 주어졌을 때 $Y$ 의 조건부분포가 $x_i$ 에 의존하므로 종속임이 다시 확인된다.
 
-## Quick Independence Check
+## 독립을 빠르게 가려내는 요령
 
-A practical shortcut: if **any zero** appears in the interior of the joint PMF table (while the corresponding marginals are non-zero), then $X$ and $Y$ cannot be independent.
+쓸모 있는 지름길이 하나 있다. 결합확률질량함수 표의 안쪽에 **0이 하나라도** 나타나면(그 자리에 대응하는 주변확률이 0이 아닌 한) $X$ 와 $Y$ 는 독립일 수 없다.
+
+## 연습문제
+
+**연습문제 1.** 결합확률질량함수의 표가 다음과 같다.
+
+| | $x=0$ | $x=1$ |
+|---|---|---|
+| $y=0$ | $0.12$ | $0.28$ |
+| $y=1$ | $0.18$ | $0.42$ |
+
+모든 칸에서 인수분해 조건을 확인하여 $X$ 와 $Y$ 가 독립인지 판정하여라.
+
+??? success "연습문제 1 풀이"
+    주변분포: $P(X = 0) = 0.30$, $P(X = 1) = 0.70$, $P(Y = 0) = 0.40$, $P(Y = 1) = 0.60$.
+
+    각 칸을 $P(X = x) P(Y = y)$ 와 견주어 보자.
+
+    | 칸 | 결합확률 | 곱 | 일치하는가? |
+    |---|---|---|---|
+    | $(0, 0)$ | 0.12 | $0.30 \cdot 0.40 = 0.12$ | $\checkmark$ |
+    | $(1, 0)$ | 0.28 | $0.70 \cdot 0.40 = 0.28$ | $\checkmark$ |
+    | $(0, 1)$ | 0.18 | $0.30 \cdot 0.60 = 0.18$ | $\checkmark$ |
+    | $(1, 1)$ | 0.42 | $0.70 \cdot 0.60 = 0.42$ | $\checkmark$ |
+
+    네 칸이 모두 인수분해된다. 따라서 $X$ 와 $Y$ 는 **독립**이다.
+
+---
+
+**연습문제 2.** 통 안에 빨간 공 3개와 파란 공 1개가 들어 있다. 되돌려 넣지 않고 공 두 개를 꺼낸다. 첫 번째와 두 번째 공이 파란색인지를 나타내는 지시확률변수를 각각 $X_1$, $X_2$ 라 하자. $X_1$ 과 $X_2$ 는 독립인가? 결합확률질량함수를 구하고 인수분해 조건을 확인하여 답을 밝혀라.
+
+??? success "연습문제 2 풀이"
+    결합확률은 다음과 같다(4개 가운데 2개를 되돌려 넣지 않고 꺼낸다).
+
+    - $P(X_1 = 1, X_2 = 1) = 0$ (파란 공은 하나뿐이다).
+    - $P(X_1 = 1, X_2 = 0) = (1/4)(3/3) = 1/4$.
+    - $P(X_1 = 0, X_2 = 1) = (3/4)(1/3) = 1/4$.
+    - $P(X_1 = 0, X_2 = 0) = (3/4)(2/3) = 1/2$.
+
+    주변분포: $P(X_1 = 1) = 1/4$ 이고 대칭성에 의해 $P(X_2 = 1) = 1/4$ 이다.
+
+    확인해 보면 $P(X_1 = 1) P(X_2 = 1) = 1/16 \neq 0 = P(X_1 = 1, X_2 = 1)$ 이다.
+
+    따라서 $X_1$ 과 $X_2$ 는 **독립이 아니다**. 직관적으로 보아도 파란 공이 처음에 나와 버리면 남은 파란 공이 없다.
+
+---
+
+**연습문제 3.** $(X, Y)$ 의 결합확률밀도함수가 $0 \leq x \leq 1$, $0 \leq y \leq 1$ 에서 $f(x, y) = 4xy$ 이고 그 밖에서는 $0$ 이라 하자. 결합확률밀도함수가 주변확률밀도함수들의 곱으로 인수분해됨을 확인하여 $X$ 와 $Y$ 가 독립임을 보여라.
+
+??? success "연습문제 3 풀이"
+    $X$ 의 주변분포를 구하면 다음과 같다.
+
+    $$
+    f_X(x) = \int_0^1 4 x y \, dy = 4x \cdot \tfrac{1}{2} = 2x, \quad 0 \leq x \leq 1
+    $$
+
+    대칭성에 의해 $[0, 1]$ 위에서 $f_Y(y) = 2y$ 이다. 그 곱은 단위정사각형 위에서 다음과 같다.
+
+    $$
+    f_X(x) f_Y(y) = 2x \cdot 2y = 4 x y = f(x, y)
+    $$
+
+    결합밀도가 주변밀도들의 곱으로 인수분해되므로 $X$ 와 $Y$ 는 **독립**이다. $\square$
+
+---
+
+**연습문제 4.** $Y$ 가 주어졌을 때의 조건부독립이 조건 없는 독립을 뜻하지 않는 까닭을 설명하여라. 결합확률질량함수 표를 곁들인 구체적인 예를 들어라.
+
+??? success "연습문제 4 풀이"
+    조건부독립은 $Y = y$ 로 잘라 낸 *각 조각 안에서만* 성립한다. 조건 없는 독립은 결합분포 전체가 인수분해될 것을 요구한다. 짜임새가 서로 다른 조건부분포들을 섞으면 대개 이 인수분해가 깨진다.
+
+    **예.** $Y \in \{0, 1\}$ 이고 $P(Y = 0) = P(Y = 1) = 1/2$ 라 하자. $Y = 0$ 이 주어지면 $X_1, X_2$ 가 i.i.d. Bernoulli(0.1)이고, $Y = 1$ 이 주어지면 i.i.d. Bernoulli(0.9)라 하자. 그러면 만든 방식 그대로 $X_1, X_2$ 는 $Y$ 가 주어졌을 때 조건부독립이다.
+
+    주변분포는 다음과 같다.
+
+    $$
+    P(X_1 = 1) = \tfrac{1}{2}(0.1) + \tfrac{1}{2}(0.9) = 0.5 = P(X_2 = 1)
+    $$
+
+    $$
+    P(X_1 = 1, X_2 = 1) = \tfrac{1}{2}(0.01) + \tfrac{1}{2}(0.81) = 0.41
+    $$
+
+    그런데 $P(X_1 = 1) P(X_2 = 1) = 0.25 \neq 0.41$ 이므로 $X_1, X_2$ 는 **조건 없이는 독립이 아니다**. $X_1 = 1$ 을 보면 $Y = 1$ 일 가능성이 커지고, 그것이 다시 $P(X_2 = 1)$ 을 끌어올리기 때문이다.

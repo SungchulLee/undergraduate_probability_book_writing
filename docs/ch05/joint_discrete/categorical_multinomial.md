@@ -1,46 +1,78 @@
-# Categorical and Multinomial Distributions
+# 범주분포와 다항분포
 
-## Distributions Related to Dice Rolling
+## 주사위 굴리기에서 나오는 분포
 
-Just as the Bernoulli and Binomial distributions arise from coin flipping, the **Categorical** and **Multinomial** distributions arise from dice rolling — experiments with more than two outcomes.
+베르누이분포와 이항분포가 동전 던지기에서 나오듯이, **범주분포**와 **다항분포**는 주사위 굴리기, 곧 결과가 셋 이상인 실험에서 나온다.
 
-## Parameters
+## 모수
 
-The parameter is a probability vector $\mathbf{p} = (p_1, \ldots, p_K)$ where:
+모수는 다음을 만족하는 확률벡터 $\mathbf{p} = (p_1, \ldots, p_K)$ 이다.
 
 $$p_j \ge 0, \qquad \sum_{j=1}^K p_j = 1$$
 
-This represents a $K$-sided die where face $j$ appears with probability $p_j$.
+이는 $j$ 번째 면이 확률 $p_j$ 로 나오는 $K$ 면체 주사위를 나타낸다.
 
-## Categorical Distribution $\text{Cat}(\mathbf{p})$
+## 범주분포 Cat(p)
 
-Roll a $\mathbf{p}$-die once and record the result. The outcome is represented by a vector $(X_1, \ldots, X_K)$ where exactly one component equals 1 and the rest equal 0:
+$\mathbf{p}$-주사위를 한 번 굴려 그 결과를 적는다. 결과는 성분 가운데 꼭 하나만 1이고 나머지는 0인 벡터 $(X_1, \ldots, X_K)$ 로 나타낸다.
 
 $$P(X_1 = 0, \ldots, X_j = 1, \ldots, X_K = 0) = p_j$$
 
-The Categorical distribution generalizes the Bernoulli distribution from 2 outcomes to $K$ outcomes.
+범주분포는 베르누이분포를 결과가 2가지인 경우에서 $K$ 가지인 경우로 넓힌 것이다.
 
-## Multinomial Distribution $\text{Mul}(n, \mathbf{p})$
+## 다항분포 Mul(n, p)
 
-Roll a $\mathbf{p}$-die $n$ times independently and count the number of each outcome. If $X_j$ denotes the number of times face $j$ appears:
+$\mathbf{p}$-주사위를 독립적으로 $n$ 번 굴려 각 결과가 몇 번 나왔는지 센다. $j$ 번째 면이 나온 횟수를 $X_j$ 라 하면 다음이 성립한다.
 
 $$P(X_1 = n_1, \ldots, X_K = n_K) = \binom{n}{n_1 \cdots n_K} p_1^{n_1} \cdots p_K^{n_K}$$
 
-where $\binom{n}{n_1 \cdots n_K} = \frac{n!}{n_1! \cdots n_K!}$ is the **multinomial coefficient**, and $n_1 + \cdots + n_K = n$.
+여기서 $\binom{n}{n_1 \cdots n_K} = \frac{n!}{n_1! \cdots n_K!}$ 는 **다항계수**이고 $n_1 + \cdots + n_K = n$ 이다.
 
-The Multinomial distribution generalizes the Binomial distribution from 2 outcomes to $K$ outcomes.
+다항분포는 이항분포를 결과가 2가지인 경우에서 $K$ 가지인 경우로 넓힌 것이다.
 
-## Relationship Summary
+## 관계 요약
 
-| Coin (2 outcomes) | Dice ($K$ outcomes) |
+| 동전 (결과 2가지) | 주사위 (결과 $K$ 가지) |
 |---|---|
-| Bernoulli $\text{B}(p)$ | Categorical $\text{Cat}(\mathbf{p})$ |
-| Binomial $\text{B}(n, p)$ | Multinomial $\text{Mul}(n, \mathbf{p})$ |
+| 베르누이분포 $\text{B}(p)$ | 범주분포 $\text{Cat}(\mathbf{p})$ |
+| 이항분포 $\text{B}(n, p)$ | 다항분포 $\text{Mul}(n, \mathbf{p})$ |
 
-## Marginals of the Multinomial
+## 다항분포의 주변분포
 
-Each individual component of a Multinomial is Binomial:
+다항분포의 각 성분은 저마다 이항분포를 따른다.
 
 $$X_j \sim \text{B}(n, p_j)$$
 
-However, the components are **not independent** since they must sum to $n$.
+그러나 성분들의 합이 $n$ 이어야 하므로 이들은 **독립이 아니다**.
+
+## 연습문제
+
+**연습문제 1.** 공정한 육면체 주사위를 12번 굴린다. $X_1$ 을 1이 나온 횟수, $X_6$ 을 6이 나온 횟수라 하자. 다항분포를 써서 $P(X_1 = 2, X_6 = 3)$ 을 구하여라.
+
+??? success "연습문제 1 풀이"
+    다항분포 $\text{Mul}(12, (1/6, \ldots, 1/6))$ 에서 나머지 네 면을 한 덩어리로 묶는다. 구하려는 확률은 다음과 같다.
+
+    $$
+    P(X_1 = 2, X_6 = 3) = \binom{12}{2, 3, 7} \left(\tfrac{1}{6}\right)^2 \left(\tfrac{1}{6}\right)^3 \left(\tfrac{4}{6}\right)^7
+    $$
+
+    여기서 $\binom{12}{2, 3, 7} = \dfrac{12!}{2! \, 3! \, 7!} = 7920$ 이다. 따라서 다음을 얻는다.
+
+    $$
+    P = 7920 \cdot \frac{1}{6^5} \cdot \frac{4^7}{6^7} = 7920 \cdot \frac{16384}{6^{12}} \approx 0.0596
+    $$
+
+---
+
+**연습문제 2.** 범주가 $K$ 개인 다항분포 $\text{Mul}(n, \mathbf{p})$ 에서 각 주변분포 $X_j$ 가 $\text{Binomial}(n, p_j)$ 를 따름을 보여라. $X_1$ 과 $X_2$ 는 독립인가? 그 까닭은 무엇인가?
+
+??? success "연습문제 2 풀이"
+    $n$ 번의 시행 각각이 확률 $p_j$ 로 범주 $j$ 에, 확률 $1 - p_j$ 로 "$j$ 가 아님"에 독립적으로 떨어진다고 보자. 그러면 범주 $j$ 에 떨어진 시행의 수는 독립인 Bernoulli$(p_j)$ 지시확률변수 $n$ 개의 합이므로 Binomial$(n, p_j)$ 를 따른다. 형식을 갖추어 쓰면 다음과 같다.
+
+    $$
+    P(X_j = k) = \sum_{\substack{x_1 + \cdots + x_K = n \\ x_j = k}} \frac{n!}{x_1! \cdots x_K!} \prod_{i=1}^{K} p_i^{x_i}
+    $$
+
+    여기서 "$j$ 가 아님"에 해당하는 결과들을 묶으면 이 합이 $\binom{n}{k} p_j^k (1 - p_j)^{n - k}$ 로 줄어든다.
+
+    **$X_1$ 과 $X_2$ 의 독립성.** 독립이 아니다. 다항분포의 성분들은 $X_1 + X_2 + \cdots + X_K = n$ 을 만족해야 한다. 특히 $X_1 + X_2 \leq n$ 이므로 $X_1 = n$ 임을 알면 $X_2 = 0$ 이 강제된다. 구체적으로 $P(X_1 = n, X_2 = n) = 0$ 이지만 $P(X_1 = n) P(X_2 = n) > 0$ 이므로 인수분해 조건이 성립하지 않는다.

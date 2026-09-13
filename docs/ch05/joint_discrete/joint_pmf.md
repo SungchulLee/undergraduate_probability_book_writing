@@ -1,48 +1,48 @@
-# Joint PMF
+# 결합확률질량함수
 
-## Random Vectors
+## 확률벡터
 
-A **random vector** is a function that maps outcomes from a sample space to $\mathbb{R}^d$:
+**확률벡터**란 표본공간의 근원사건을 $\mathbb{R}^d$ 로 보내는 함수이다.
 
 $$\mathbf{X} : \Omega \longrightarrow \mathbb{R}^d$$
 
-For a pair of discrete random variables $(X, Y)$, the random vector maps each outcome $\omega$ to the point $(X(\omega), Y(\omega))$ in $\mathbb{R}^2$.
+이산확률변수의 짝 $(X, Y)$ 에서 확률벡터는 각 근원사건 $\omega$ 를 $\mathbb{R}^2$ 의 점 $(X(\omega), Y(\omega))$ 로 보낸다.
 
-## Joint Distribution via the Brick Analogy
+## 벽돌 비유로 보는 결합분포
 
-The **joint distribution** of $(X, Y)$ is defined by moving bricks from $\Omega$ to $\mathbb{R}^2$:
+$(X, Y)$ 의 **결합분포**는 벽돌을 $\Omega$ 에서 $\mathbb{R}^2$ 로 옮겨서 정의한다.
 
-- Each outcome $\omega$ has a brick with weight $P(\{\omega\})$.
-- The function $\mathbf{X}$ moves each brick from $\omega$ to $\mathbf{X}(\omega)$ in $\mathbb{R}^d$.
-- The total weight of all bricks in $\mathbb{R}^d$ is 1.
-- This weight distribution over $\mathbb{R}^d$ is the **joint distribution** of $\mathbf{X}$.
+- 각 근원사건 $\omega$ 에는 무게가 $P(\{\omega\})$ 인 벽돌이 하나 붙어 있다.
+- 함수 $\mathbf{X}$ 는 각 벽돌을 $\omega$ 에서 $\mathbb{R}^d$ 의 점 $\mathbf{X}(\omega)$ 로 옮긴다.
+- $\mathbb{R}^d$ 위에 놓인 모든 벽돌의 무게의 합은 1이다.
+- 이렇게 $\mathbb{R}^d$ 위에 생긴 무게의 분포가 $\mathbf{X}$ 의 **결합분포**이다.
 
-## Definition of Joint PMF
+## 결합확률질량함수의 정의
 
-For discrete random variables $X$ and $Y$, the **joint PMF** is:
+이산확률변수 $X$ 와 $Y$ 에 대해 **결합확률질량함수**는 다음과 같다.
 
 $$p(x, y) = P(X = x, Y = y)$$
 
-This gives the weight of the brick at each point $(x, y)$ in $\mathbb{R}^2$.
+이는 $\mathbb{R}^2$ 의 각 점 $(x, y)$ 에 놓인 벽돌의 무게를 알려 준다.
 
-## Properties
+## 성질
 
-1. **Non-negativity:** $p(x, y) \ge 0$ for all $(x, y)$.
-2. **Normalization:** $\displaystyle\sum_x \sum_y p(x, y) = 1$.
+1. **음이 아님:** 모든 $(x, y)$ 에 대해 $p(x, y) \ge 0$ 이다.
+2. **정규화:** $\displaystyle\sum_x \sum_y p(x, y) = 1$ 이다.
 
-## Computing Probabilities
+## 확률 구하기
 
-For any set $A \subseteq \mathbb{R}^2$:
+임의의 집합 $A \subseteq \mathbb{R}^2$ 에 대해 다음이 성립한다.
 
 $$P((X, Y) \in A) = \sum_{(x,y) \in A} p(x, y)$$
 
-## Example: Coin Flips
+## 예: 동전 던지기
 
-Consider flipping a fair coin 3 times. Let $X$ = number of heads in the first two flips, and $Y$ = total number of heads.
+공정한 동전을 3번 던진다고 하자. $X$ 를 처음 두 번에서 나온 앞면의 수, $Y$ 를 전체 앞면의 수라 하자.
 
-The sample space and the mapping to $(X, Y)$:
+표본공간과 $(X, Y)$ 로의 대응은 다음과 같다.
 
-| Outcome | $X$ | $Y$ |
+| 근원사건 | $X$ | $Y$ |
 |---------|-----|-----|
 | HHH | 2 | 3 |
 | HHT | 2 | 2 |
@@ -53,7 +53,7 @@ The sample space and the mapping to $(X, Y)$:
 | TTH | 0 | 1 |
 | TTT | 0 | 0 |
 
-The joint PMF table (each outcome has probability $1/8$):
+결합확률질량함수의 표는 다음과 같다(각 근원사건의 확률은 $1/8$ 이다).
 
 | | $X=0$ | $X=1$ | $X=2$ |
 |---|---|---|---|
@@ -62,4 +62,52 @@ The joint PMF table (each outcome has probability $1/8$):
 | $Y=1$ | $1/8$ | $2/8$ | 0 |
 | $Y=0$ | $1/8$ | 0 | 0 |
 
-Note that $Y \ge X$ always holds (the total heads cannot be less than heads in the first two flips), so some entries are necessarily 0.
+언제나 $Y \ge X$ 임에 유의하자(전체 앞면의 수가 처음 두 번의 앞면의 수보다 적을 수는 없다). 그래서 몇몇 칸은 반드시 0이 된다.
+
+## 연습문제
+
+**연습문제 1.** 공정한 주사위 두 개를 굴린다. $X$ 를 첫 번째 주사위의 눈, $Y$ 를 두 눈의 합이라 하자. $(X, Y)$ 의 결합확률질량함수를 표로 적어라.
+
+??? success "연습문제 1 풀이"
+    $1 \leq x \leq 6$ 이고 $x + 1 \leq y \leq x + 6$ 인 각 $(x, y)$ 에 대해 그런 근원사건은 꼭 하나뿐이다(두 번째 주사위가 $y - x$ 를 보여야 한다). 따라서 $P(X = x, Y = y) = 1/36$ 이고 나머지 칸은 모두 0이다. 결합확률질량함수는 0이 아닌 칸 36개가 값 $1/36$ 을 갖는 대각선 띠 모양이다.
+
+    | $X \backslash Y$ | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 |
+    |---|---|---|---|---|---|---|---|---|---|---|---|
+    | 1 | 1/36 | 1/36 | 1/36 | 1/36 | 1/36 | 1/36 | 0 | 0 | 0 | 0 | 0 |
+    | 2 | 0 | 1/36 | 1/36 | 1/36 | 1/36 | 1/36 | 1/36 | 0 | 0 | 0 | 0 |
+    | 3 | 0 | 0 | 1/36 | 1/36 | 1/36 | 1/36 | 1/36 | 1/36 | 0 | 0 | 0 |
+    | 4 | 0 | 0 | 0 | 1/36 | 1/36 | 1/36 | 1/36 | 1/36 | 1/36 | 0 | 0 |
+    | 5 | 0 | 0 | 0 | 0 | 1/36 | 1/36 | 1/36 | 1/36 | 1/36 | 1/36 | 0 |
+    | 6 | 0 | 0 | 0 | 0 | 0 | 1/36 | 1/36 | 1/36 | 1/36 | 1/36 | 1/36 |
+
+---
+
+**연습문제 2.** 공정한 동전 세 개를 던진다. $X$ 를 처음 두 번에서 나온 앞면의 수, $Y$ 를 전체 앞면의 수라 하자. 결합확률질량함수의 표를 만들고 모든 칸의 합이 1임을 확인하여라.
+
+??? success "연습문제 2 풀이"
+    이는 위에서 다룬 예를 표만 바꾸어 적은 것이다. $2^3 = 8$ 가지 근원사건 각각의 확률은 $1/8$ 이다.
+
+    | $X \backslash Y$ | 0 | 1 | 2 | 3 |
+    |---|---|---|---|---|
+    | 0 | 1/8 | 1/8 | 0 | 0 |
+    | 1 | 0 | 2/8 | 2/8 | 0 |
+    | 2 | 0 | 0 | 1/8 | 1/8 |
+
+    합: $1/8 + 1/8 + 2/8 + 2/8 + 1/8 + 1/8 = 8/8 = 1$. $\checkmark$
+
+---
+
+**연습문제 3.** $(X, Y)$ 의 결합확률질량함수가 $i \in \{1, 2\}$, $j \in \{1, 2, 3\}$ 에 대해 $P(X = i, Y = j) = c(i + j)$ 로 주어진다. 상수 $c$ 를 구하고 $P(X + Y \leq 3)$ 을 계산하여라.
+
+??? success "연습문제 3 풀이"
+    여섯 쌍 $(i, j)$ 에 걸쳐 더하면 다음과 같다.
+
+    $$
+    \sum_{i=1}^{2} \sum_{j=1}^{3} c(i + j) = c \left[ (2 + 3 + 4) + (3 + 4 + 5) \right] = c \cdot 21 = 1 \implies c = \frac{1}{21}
+    $$
+
+    사건 $\{X + Y \leq 3\}$ 에는 $(1, 1)$ 과 $(1, 2)$ 가 들어간다($(2, 1)$ 도 $X + Y = 3$ 임에 유의하자).
+
+    $$
+    P(X + Y \leq 3) = \frac{2 + 3 + 3}{21} = \frac{8}{21}
+    $$

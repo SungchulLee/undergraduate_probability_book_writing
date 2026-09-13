@@ -1,42 +1,103 @@
-# Sum of Independent Binomials
+# 독립인 이항분포의 합
 
-## Statement
+## 정리의 서술
 
-If $X \sim \text{B}(n, p)$ and $Y \sim \text{B}(m, p)$ are **independent**, then:
+$X \sim \text{B}(n, p)$ 와 $Y \sim \text{B}(m, p)$ 가 **독립**이면 다음이 성립한다.
 
 $$X + Y \sim \text{B}(n + m, p)$$
 
-!!! warning "Independence Required"
-    Without independence, the result does **not** hold in general. $X \sim \text{B}(n, p)$ and $Y \sim \text{B}(m, p)$ does **not** imply $X + Y \sim \text{B}(n+m, p)$ unless $X$ and $Y$ are independent.
+!!! warning "독립이 반드시 필요하다"
+    독립이 아니면 이 결과는 일반적으로 성립하지 **않는다**. $X$ 와 $Y$ 가 독립이 아니라면 $X \sim \text{B}(n, p)$ 와 $Y \sim \text{B}(m, p)$ 라는 사실만으로 $X + Y \sim \text{B}(n+m, p)$ 를 얻을 수 **없다**.
 
-## Proof by Story
+## 이야기로 하는 증명
 
-Flip a $p$-coin $n$ times and count the number $X$ of heads. Then flip the same coin $m$ additional times and count the number $Y$ of heads in these additional flips. Since the two sets of flips are independent, $X$ and $Y$ are independent. The total $X + Y$ is simply the number of heads in $n + m$ flips, so $X + Y \sim \text{B}(n + m, p)$.
+$p$-동전을 $n$ 번 던져 앞면의 수 $X$ 를 센다. 이어서 같은 동전을 $m$ 번 더 던져 그 안에서 앞면의 수 $Y$ 를 센다. 두 묶음의 던지기가 서로 독립이므로 $X$ 와 $Y$ 는 독립이다. 그 합 $X + Y$ 는 곧 $n + m$ 번 던져 나온 앞면의 수이므로 $X + Y \sim \text{B}(n + m, p)$ 이다.
 
-## Proof by Divide and Conquer
+## 쪼개어 정복하는 증명
 
-**Divide:** Using the law of total probability:
+**쪼개기:** 전확률 법칙을 쓰면 다음과 같다.
 
 $$P(X + Y = k) = \sum_{\substack{0 \le l \le n \\ 0 \le k-l \le m}} P(X = l, Y = k - l)$$
 
-**Conquer:** By independence:
+**정복하기:** 독립이므로 다음이 성립한다.
 
 $$P(X = l, Y = k - l) = P(X = l) \cdot P(Y = k - l) = \binom{n}{l} p^l q^{n-l} \cdot \binom{m}{k-l} p^{k-l} q^{m-(k-l)}$$
 
-Summing and applying **Vandermonde's identity**:
+이를 더하고 **반데르몽드 항등식**을 쓰면 다음을 얻는다.
 
 $$P(X + Y = k) = \left[\sum_l \binom{n}{l} \binom{m}{k-l}\right] p^k q^{n+m-k} = \binom{n+m}{k} p^k q^{n+m-k}$$
 
-This confirms $X + Y \sim \text{B}(n+m, p)$.
+이로써 $X + Y \sim \text{B}(n+m, p)$ 임이 확인된다.
 
-## Example: Number of Couples with Same Birthday
+## 예: 생일이 같은 짝의 수
 
-There are $n$ people in a class. Each chooses a birthday independently and uniformly over 365 days. For each pair $(i, j)$, let $A_{ij}$ be the event that $i$ and $j$ share a birthday, and let $\mathbf{1}_{A_{ij}}$ be its indicator. The number of common-birthday pairs is:
+한 학급에 $n$ 명이 있다. 각자 365일 가운데 하루를 독립적으로 같은 정도로 골라 생일로 삼는다. 각 쌍 $(i, j)$ 에 대해 $i$ 와 $j$ 의 생일이 같은 사건을 $A_{ij}$ 라 하고 그 지시확률변수를 $\mathbf{1}_{A_{ij}}$ 라 하자. 생일이 같은 짝의 수는 다음과 같다.
 
 $$X = \sum_{1 \le i < j \le n} \mathbf{1}_{A_{ij}}$$
 
-Each indicator $\mathbf{1}_{A_{ij}} \sim \text{B}(1/365)$, but **$X$ is not binomial** because the indicators are **not independent**. For example:
+각 지시확률변수는 $\mathbf{1}_{A_{ij}} \sim \text{B}(1/365)$ 이지만, 지시확률변수들이 **독립이 아니므로 $X$ 는 이항분포를 따르지 않는다**. 이를테면 다음과 같다.
 
 $$P(A_{23} \mid A_{12}, A_{13}) = 1 \ne \frac{1}{365} = P(A_{23})$$
 
-If persons 1 and 2 share a birthday, and persons 1 and 3 share a birthday, then persons 2 and 3 must share a birthday. This dependence invalidates the binomial model.
+1번과 2번의 생일이 같고 1번과 3번의 생일도 같다면 2번과 3번의 생일은 반드시 같다. 이런 종속성 때문에 이항분포 모형을 쓸 수 없다.
+
+## 연습문제
+
+**연습문제 1.** $X \sim \text{B}(10, 0.3)$ 과 $Y \sim \text{B}(15, 0.3)$ 이 독립이라 하자. $P(X + Y = 5)$ 를 구하여라.
+
+??? success "연습문제 1 풀이"
+    $X$ 와 $Y$ 가 같은 $p$ 를 갖는 독립인 확률변수이므로 $X + Y \sim \text{B}(25, 0.3)$ 이다.
+
+    $$
+    P(X + Y = 5) = \binom{25}{5}(0.3)^5(0.7)^{20} \approx 0.1030
+    $$
+
+---
+
+**연습문제 2.** 어떤 공장에 조립 라인이 둘 있다. A 라인은 하루에 20개를 만들고 불량률이 0.05이며, B 라인은 하루에 30개를 만들고 불량률이 같은 0.05이다. 불량은 서로 독립이다. 하루에 나오는 전체 불량품 수의 분포는 무엇인가?
+
+??? success "연습문제 2 풀이"
+    $X_A \sim \text{B}(20, 0.05)$ 와 $X_B \sim \text{B}(30, 0.05)$ 를 독립이라 하자. 가법성에 따라 다음이 성립한다.
+
+    $$
+    X_A + X_B \sim \text{B}(50, 0.05)
+    $$
+
+    전체 불량품 수는 Binomial(50, 0.05)를 따르며 그 평균은 $50 \times 0.05 = 2.5$ 이다.
+
+---
+
+**연습문제 3.** 성공확률이 서로 다른 이항분포에는 이 결과가 **넓혀지지 않음**을 증명하여라. 곧 $p_1 \neq p_2$ 이면서 $X \sim \text{B}(n, p_1)$ 과 $Y \sim \text{B}(m, p_2)$ 가 독립이지만 $X + Y$ 가 이항분포를 따르지 않는 예를 들어라.
+
+??? success "연습문제 3 풀이"
+    $X \sim \text{B}(1, 0.3)$ 과 $Y \sim \text{B}(1, 0.7)$ 을 독립이라 하자. 그러면 $X + Y$ 는 $0, 1, 2$ 의 값을 가지며 다음과 같다.
+
+    - $P(X+Y = 0) = 0.7 \times 0.3 = 0.21$
+    - $P(X+Y = 1) = 0.3 \times 0.3 + 0.7 \times 0.7 = 0.58$
+    - $P(X+Y = 2) = 0.3 \times 0.7 = 0.21$
+
+    만약 $X + Y$ 가 $\text{B}(2, p)$ 라면 $P(X+Y=0) = (1-p)^2$ 이고 $P(X+Y=2) = p^2$ 이어야 한다. 둘 다 0.21이므로 $p^2 = (1-p)^2$ 이 되어 $p = 0.5$ 를 얻는다. 그런데 그러면 $P(X+Y=1) = 2(0.5)(0.5) = 0.5 \neq 0.58$ 이므로 모순이다. 따라서 $X+Y$ 는 이항분포를 따르지 않는다.
+
+---
+
+**연습문제 4.** $X_i \sim \text{B}(n_i, p)$ 인 $X_1, X_2, \ldots, X_k$ 가 독립이라 하자. $S = \sum_{i=1}^k X_i$ 의 분포는 무엇인가?
+
+??? success "연습문제 4 풀이"
+    두 개인 경우를 써서 $k$ 에 대해 수학적 귀납법을 쓴다. $X_1 + X_2 \sim \text{B}(n_1 + n_2, p)$ 이고, 이어서 $(X_1 + X_2) + X_3 \sim \text{B}(n_1 + n_2 + n_3, p)$ 이며, 이런 식으로 계속된다. 따라서 다음을 얻는다.
+
+    $$
+    S = \sum_{i=1}^k X_i \sim \text{B}\!\left(\sum_{i=1}^k n_i,\; p\right)
+    $$
+
+---
+
+**연습문제 5.** 어떤 학생이 월요일에 20문항짜리 참/거짓 시험을, 화요일에 같은 종류의 30문항짜리 시험을 본다(각 답을 독립적으로 찍으며 맞을 확률은 0.5이다). 이 학생이 전체에서 적어도 30문항을 맞힐 확률은 얼마인가?
+
+??? success "연습문제 5 풀이"
+    $X \sim \text{B}(20, 0.5)$ (월요일)와 $Y \sim \text{B}(30, 0.5)$ (화요일)를 독립이라 하자. 그러면 $X + Y \sim \text{B}(50, 0.5)$ 이다.
+
+    $$
+    P(X + Y \geq 30) = \sum_{k=30}^{50} \binom{50}{k}\left(\frac{1}{2}\right)^{50} \approx 0.1013
+    $$
+
+    (대칭성에 의해 이는 $P(X + Y \leq 20) \approx 0.1013$ 과도 같다.)

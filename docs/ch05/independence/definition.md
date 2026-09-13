@@ -1,80 +1,146 @@
-# Definition of Independence for Random Variables
+# 확률변수의 독립의 정의
 
-## From Events to Random Variables
+## 사건의 독립에서 확률변수의 독립으로
 
-In Chapter 3, two events $A$ and $B$ are independent when $P(A \cap B) = P(A) \, P(B)$. Independence for random variables extends this idea: knowing the value of one variable provides no information about the other. The formal definition requires the factorization condition to hold for **every** pair of values simultaneously.
+3장에서는 두 사건 $A$ 와 $B$ 가 $P(A \cap B) = P(A) \, P(B)$ 를 만족할 때 독립이라 하였다. 확률변수의 독립은 이 발상을 넓힌 것이다. 한 변수의 값을 알아도 다른 변수에 대해서는 아무런 정보도 얻지 못한다는 뜻이다. 형식을 갖춘 정의에서는 인수분해 조건이 **모든** 값의 짝에 대해 한꺼번에 성립할 것을 요구한다.
 
-## Independence of Two Discrete Random Variables
+## 두 이산확률변수의 독립
 
-!!! info "Definition"
-    Discrete random variables $X$ and $Y$ are **independent** if for all $x$ and $y$:
+!!! info "정의"
+    이산확률변수 $X$ 와 $Y$ 가 모든 $x$ 와 $y$ 에 대해 다음을 만족하면 **독립**이라 한다.
 
     $$p_{X,Y}(x, y) = p_X(x) \cdot p_Y(y)$$
 
-    That is, the joint PMF factors into the product of the marginal PMFs at every point.
+    곧 결합확률질량함수가 모든 점에서 주변확률질량함수들의 곱으로 인수분해된다는 뜻이다.
 
-If even a single pair $(x, y)$ violates this equation, then $X$ and $Y$ are **dependent**.
+단 한 쌍 $(x, y)$ 만 이 식을 어겨도 $X$ 와 $Y$ 는 **종속**이다.
 
-**Example.** Roll two fair dice independently. Let $X$ be the result of the first die and $Y$ the result of the second. Then $p_X(x) = 1/6$ for $x \in \{1,\ldots,6\}$ and $p_Y(y) = 1/6$ for $y \in \{1,\ldots,6\}$. Every entry of the joint PMF equals
+**예.** 공정한 주사위 두 개를 독립적으로 굴린다. $X$ 를 첫 번째 주사위의 눈, $Y$ 를 두 번째 주사위의 눈이라 하자. 그러면 $x \in \{1,\ldots,6\}$ 에 대해 $p_X(x) = 1/6$ 이고 $y \in \{1,\ldots,6\}$ 에 대해 $p_Y(y) = 1/6$ 이다. 결합확률질량함수의 모든 칸이 다음과 같으므로
 
 $$p_{X,Y}(x,y) = \frac{1}{36} = \frac{1}{6} \cdot \frac{1}{6} = p_X(x) \cdot p_Y(y)$$
 
-so $X$ and $Y$ are independent.
+$X$ 와 $Y$ 는 독립이다.
 
-## Independence of Two Continuous Random Variables
+## 두 연속확률변수의 독립
 
-!!! info "Definition"
-    Continuous random variables $X$ and $Y$ are **independent** if for all $x$ and $y$:
+!!! info "정의"
+    연속확률변수 $X$ 와 $Y$ 가 모든 $x$ 와 $y$ 에 대해 다음을 만족하면 **독립**이라 한다.
 
     $$f_{X,Y}(x, y) = f_X(x) \cdot f_Y(y)$$
 
-    That is, the joint PDF factors into the product of the marginal PDFs everywhere.
+    곧 결합확률밀도함수가 어디에서나 주변확률밀도함수들의 곱으로 인수분해된다는 뜻이다.
 
-## General Definition via CDFs
+## 누적분포함수를 쓴 일반적인 정의
 
-The most general definition covers both discrete, continuous, and mixed cases.
+가장 일반적인 정의는 이산인 경우와 연속인 경우, 그리고 둘이 섞인 경우까지 모두 아우른다.
 
-!!! info "Definition"
-    Random variables $X$ and $Y$ are **independent** if for all $x$ and $y$:
+!!! info "정의"
+    확률변수 $X$ 와 $Y$ 가 모든 $x$ 와 $y$ 에 대해 다음을 만족하면 **독립**이라 한다.
 
     $$F_{X,Y}(x, y) = F_X(x) \cdot F_Y(y)$$
 
-    Equivalently, $P(X \le x, \, Y \le y) = P(X \le x) \, P(Y \le y)$ for all $x, y \in \mathbb{R}$.
+    같은 말로, 모든 $x, y \in \mathbb{R}$ 에 대해 $P(X \le x, \, Y \le y) = P(X \le x) \, P(Y \le y)$ 이다.
 
-## Independence of Multiple Random Variables
+## 여러 확률변수의 독립
 
-Random variables $X_1, X_2, \ldots, X_n$ are **(mutually) independent** if the joint distribution factors into the product of all marginals. In the discrete case, this means for all $x_1, x_2, \ldots, x_n$:
+확률변수 $X_1, X_2, \ldots, X_n$ 의 결합분포가 모든 주변분포의 곱으로 인수분해되면 이들을 **(상호)독립**이라 한다. 이산인 경우 이는 모든 $x_1, x_2, \ldots, x_n$ 에 대해 다음이 성립한다는 뜻이다.
 
 $$p_{X_1, \ldots, X_n}(x_1, \ldots, x_n) = p_{X_1}(x_1) \cdot p_{X_2}(x_2) \cdots p_{X_n}(x_n)$$
 
-Mutual independence is a strong requirement: it demands that **every** sub-collection of the variables is also independent, not just each pair.
+상호독립은 꽤 센 요구이다. 각 쌍만이 아니라 변수들의 **모든** 부분모임이 독립이어야 하기 때문이다.
 
-## Pairwise vs Mutual Independence
+## 쌍마다 독립과 상호독립
 
-$X_1, X_2, \ldots, X_n$ are **pairwise independent** if every pair $X_i, X_j$ (with $i \ne j$) is independent.
+$X_1, X_2, \ldots, X_n$ 에서 ($i \ne j$ 인) 모든 쌍 $X_i, X_j$ 가 독립이면 이들을 **쌍마다 독립**이라 한다.
 
-!!! warning "Pairwise does not imply mutual"
-    Pairwise independence is strictly weaker than mutual independence.
+!!! warning "쌍마다 독립이라고 상호독립인 것은 아니다"
+    쌍마다 독립은 상호독립보다 엄밀히 약한 조건이다.
 
-**Counterexample.** Let $X_1$ and $X_2$ be independent fair coin flips taking values $0$ or $1$, and define $X_3 = X_1 \oplus X_2$ (addition mod 2). Then:
+**반례.** $X_1$ 과 $X_2$ 를 값 $0$ 또는 $1$ 을 갖는 독립인 공정한 동전 던지기라 하고, $X_3 = X_1 \oplus X_2$ (2를 법으로 하는 덧셈)로 두자. 그러면 다음이 성립한다.
 
-- Each $X_i$ is $\text{Bernoulli}(1/2)$.
-- Any pair $(X_i, X_j)$ is independent: for instance, $P(X_1 = a, X_3 = b) = 1/4$ for all $a, b \in \{0,1\}$.
-- But the three variables are **not** mutually independent because $X_3$ is completely determined by $X_1$ and $X_2$.
+- 각 $X_i$ 는 $\text{Bernoulli}(1/2)$ 이다.
+- 임의의 쌍 $(X_i, X_j)$ 는 독립이다. 이를테면 모든 $a, b \in \{0,1\}$ 에 대해 $P(X_1 = a, X_3 = b) = 1/4$ 이다.
+- 그러나 세 변수는 상호독립이 **아니다**. $X_3$ 이 $X_1$ 과 $X_2$ 로 완전히 결정되기 때문이다.
 
-## Checking Independence via Conditional Distributions
+## 조건부분포로 독립 확인하기
 
-An equivalent characterization: $X$ and $Y$ are independent if and only if the conditional distribution of $X$ given $Y = y$ does not depend on $y$. In the discrete case:
+이와 같은 뜻을 갖는 다른 표현이 있다. $X$ 와 $Y$ 가 독립일 필요충분조건은 $Y = y$ 가 주어졌을 때 $X$ 의 조건부분포가 $y$ 에 의존하지 않는 것이다. 이산인 경우 다음과 같다.
 
-$$p_{X \mid Y}(x \mid y) = p_X(x) \quad \text{for all } x, y$$
+$$p_{X \mid Y}(x \mid y) = p_X(x) \quad \text{모든 } x, y \text{ 에 대해}$$
 
-Intuitively, learning the value of $Y$ tells us nothing new about $X$.
+직관적으로 말하면, $Y$ 의 값을 알게 되어도 $X$ 에 대해 새로 알게 되는 것이 없다는 뜻이다.
 
-## Conditional Independence
+## 조건부독립
 
-$X_1, \ldots, X_n$ are **conditionally independent given** $Y$ if, for all $x_1, \ldots, x_n$ and $y$:
+모든 $x_1, \ldots, x_n$ 과 $y$ 에 대해 다음이 성립하면 $X_1, \ldots, X_n$ 이 **$Y$ 가 주어졌을 때 조건부독립**이라 한다.
 
 $$p_{X_1, \ldots, X_n \mid Y}(x_1, \ldots, x_n \mid y) = p_{X_1 \mid Y}(x_1 \mid y) \cdot p_{X_2 \mid Y}(x_2 \mid y) \cdots p_{X_n \mid Y}(x_n \mid y)$$
 
-!!! note "Independence and conditional independence are separate properties"
-    Conditional independence given $Y$ does **not** imply unconditional independence, and unconditional independence does **not** imply conditional independence given $Y$. The two concepts must be checked separately.
+!!! note "독립과 조건부독립은 서로 다른 성질이다"
+    $Y$ 가 주어졌을 때의 조건부독립은 조건 없는 독립을 **뜻하지 않고**, 조건 없는 독립도 $Y$ 가 주어졌을 때의 조건부독립을 **뜻하지 않는다**. 두 개념은 따로따로 확인해야 한다.
+
+## 연습문제
+
+**연습문제 1.** $X \sim \text{Binomial}(3, 0.5)$ 와 $Y \sim \text{Geometric}(0.5)$ 가 독립이라 하자. $P(X = 2, Y = 1)$ 을 계산하여라.
+
+??? success "연습문제 1 풀이"
+    독립이므로 $P(X = 2, Y = 1) = P(X = 2) P(Y = 1)$ 이다.
+
+    $$
+    P(X = 2) = \binom{3}{2}(0.5)^2(0.5)^1 = 3 \cdot 0.125 = 0.375
+    $$
+
+    $$
+    P(Y = 1) = (0.5)^{1 - 1} \cdot 0.5 = 0.5
+    $$
+
+    따라서 $P(X = 2, Y = 1) = 0.375 \cdot 0.5 = 0.1875$ 이다.
+
+---
+
+**연습문제 2.** $X$ 와 $Y$ 가 독립이고 각각 $\{1, 2, 3, 4, 5, 6\}$ 위의 균등분포를 따른다고 하자. $Z = \min(X, Y)$ 의 확률질량함수를 구하여라.
+
+??? success "연습문제 2 풀이"
+    $k \in \{1, \ldots, 6\}$ 에 대해 다음이 성립한다.
+
+    $$
+    P(Z \geq k) = P(X \geq k) P(Y \geq k) = \left(\frac{7 - k}{6}\right)^2
+    $$
+
+    따라서 $P(Z = k) = P(Z \geq k) - P(Z \geq k + 1) = \dfrac{(7-k)^2 - (6-k)^2}{36} = \dfrac{13 - 2k}{36}$ 이다.
+
+    | $k$ | 1 | 2 | 3 | 4 | 5 | 6 |
+    |---|---|---|---|---|---|---|
+    | $P(Z = k)$ | $11/36$ | $9/36$ | $7/36$ | $5/36$ | $3/36$ | $1/36$ |
+
+    합: $36/36 = 1$. $\checkmark$
+
+---
+
+**연습문제 3.** 쌍마다 독립이지만 상호독립은 아닌 확률변수 세 개의 예를 들어라. 두 주장을 모두 분명히 확인하여라.
+
+??? success "연습문제 3 풀이"
+    공정한 동전 두 개를 던진다. 첫 번째가 앞면이면 $X_1 = 1$, 두 번째가 앞면이면 $X_2 = 1$, 두 결과가 같으면 $X_3 = 1$ (아니면 0)이라 하자. 셋 모두 Bernoulli(1/2)를 따른다.
+
+    각 쌍은 네 가지 $(0/1, 0/1)$ 조합을 확률이 $1/4$ 인 근원사건 하나씩에서 가지므로 $P(X_i = a, X_j = b) = 1/4 = P(X_i = a) P(X_j = b)$ 이다. 곧 쌍마다 독립이다.
+
+    그러나 $X_3$ 은 $(X_1, X_2)$ 로 결정된다. $P(X_1 = X_2 = X_3 = 1) = P(\text{HH}) = 1/4$ 인 반면 $P(X_1 = 1) P(X_2 = 1) P(X_3 = 1) = 1/8$ 이다. 그러므로 세 변수는 **상호독립이 아니다**.
+
+---
+
+**연습문제 4.** $X$ 와 $Y$ 가 독립인 이산확률변수이면 임의의 함수 $g$ 와 $h$ 에 대해 $g(X)$ 와 $h(Y)$ 도 독립임을 증명하여라.
+
+??? success "연습문제 4 풀이"
+    $g(X)$ 와 $h(Y)$ 의 임의의 값 $a$ 와 $b$ 에 대해 다음이 성립한다.
+
+    $$
+    P(g(X) = a, h(Y) = b) = \sum_{x : g(x) = a} \sum_{y : h(y) = b} P(X = x, Y = y)
+    $$
+
+    $X$ 와 $Y$ 가 독립이므로 $P(X = x, Y = y) = P(X = x) P(Y = y)$ 이고, 이중합이 다음과 같이 인수분해된다.
+
+    $$
+    = \left(\sum_{x : g(x) = a} P(X = x)\right) \left(\sum_{y : h(y) = b} P(Y = y)\right) = P(g(X) = a) P(h(Y) = b)
+    $$
+
+    따라서 $g(X)$ 와 $h(Y)$ 는 인수분해 조건을 만족하므로 독립이다. $\square$

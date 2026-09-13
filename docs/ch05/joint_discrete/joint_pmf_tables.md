@@ -1,17 +1,17 @@
-# Joint PMF Tables and Visualization
+# 결합질량함수의 표와 그림
 
-## Joint PMF Table Format
+## 결합확률질량함수 표의 꼴
 
-A joint PMF for discrete random variables $(X, Y)$ is conveniently displayed as a table where:
+이산확률변수 $(X, Y)$ 의 결합확률질량함수는 다음과 같은 표로 나타내면 보기 좋다.
 
-- Columns correspond to values of $X$.
-- Rows correspond to values of $Y$.
-- Each cell contains $P(X = x_i, Y = y_j)$.
-- All entries are non-negative and sum to 1.
+- 열은 $X$ 의 값에 대응한다.
+- 행은 $Y$ 의 값에 대응한다.
+- 각 칸에는 $P(X = x_i, Y = y_j)$ 가 들어간다.
+- 모든 칸의 값은 음이 아니고 그 합은 1이다.
 
-## Worked Example
+## 풀이 예제
 
-The joint PMF of $X$ and $Y$ is given by:
+$X$ 와 $Y$ 의 결합확률질량함수가 다음과 같다고 하자.
 
 | | $x=0$ | $x=1$ | $x=2$ |
 |---|---|---|---|
@@ -20,11 +20,11 @@ The joint PMF of $X$ and $Y$ is given by:
 | $y=1$ | $0$ | $2/10$ | $1/10$ |
 | $y=0$ | $1/10$ | $0$ | $1/10$ |
 
-**Verification:** All 10 entries sum to $10/10 = 1$. ✓
+**확인:** 10개의 칸을 모두 더하면 $10/10 = 1$ 이다. ✓
 
-## Adding Marginals to the Table
+## 표에 주변분포 더하기
 
-By summing rows and columns, we can augment the table with **marginal distributions** (covered in detail in Chapter 6):
+행과 열을 각각 더하면 표에 **주변분포**를 덧붙일 수 있다(자세한 내용은 6장에서 다룬다).
 
 | | $x=0$ | $x=1$ | $x=2$ | $P(Y=y_j)$ |
 |---|---|---|---|---|
@@ -34,24 +34,94 @@ By summing rows and columns, we can augment the table with **marginal distributi
 | $y=0$ | $1/10$ | $0$ | $1/10$ | $2/10$ |
 | $P(X=x_i)$ | $3/10$ | $3/10$ | $4/10$ | $1$ |
 
-The row sums give the marginal PMF of $Y$, and the column sums give the marginal PMF of $X$.
+행의 합이 $Y$ 의 주변확률질량함수를, 열의 합이 $X$ 의 주변확률질량함수를 준다.
 
-## Visualization
+## 그림으로 보기
 
-Joint PMFs can be visualized as:
+결합확률질량함수는 다음과 같이 그릴 수 있다.
 
-- **3D bar charts:** Height of bar at $(x_i, y_j)$ equals $p(x_i, y_j)$.
-- **Heat maps:** Color intensity at $(x_i, y_j)$ represents $p(x_i, y_j)$.
-- **Bubble plots:** Bubble size at $(x_i, y_j)$ is proportional to probability.
+- **3차원 막대그래프:** $(x_i, y_j)$ 위에 세운 막대의 높이가 $p(x_i, y_j)$ 이다.
+- **열지도:** $(x_i, y_j)$ 에서 색의 진하기가 $p(x_i, y_j)$ 를 나타낸다.
+- **거품 그림:** $(x_i, y_j)$ 에서 거품의 크기가 확률에 비례한다.
 
-## Example: 3 Red Balls and 1 Blue Ball
+## 예: 빨간 공 3개와 파란 공 1개
 
-There are 3 red balls and 1 blue ball in a bin. We draw two balls without replacement. Let:
+통 안에 빨간 공 3개와 파란 공 1개가 들어 있다. 공을 되돌려 넣지 않고 두 개를 꺼낸다. 다음과 같이 두자.
 
-$$X_i = \begin{cases} 1 & \text{if } i\text{-th ball is blue} \\ 0 & \text{otherwise} \end{cases}$$
+$$X_i = \begin{cases} 1 & i \text{ 번째 공이 파란색이면} \\ 0 & \text{그 밖의 경우} \end{cases}$$
 
-Using the chain rule for joint probabilities:
+결합확률에 대한 연쇄법칙을 쓰면 다음을 얻는다.
 
 $$P(X_1 = 0, X_2 = 1) = P(X_1 = 0) \cdot P(X_2 = 1 \mid X_1 = 0) = \frac{3}{4} \times \frac{1}{3} = \frac{1}{4}$$
 
-This illustrates that the joint PMF can be computed from marginal and conditional probabilities using the **chain rule**: $p(x, y) = p(x) \cdot p(y|x)$.
+이는 **연쇄법칙** $p(x, y) = p(x) \cdot p(y|x)$ 을 써서 주변확률과 조건부확률로부터 결합확률질량함수를 계산할 수 있음을 보여 준다.
+
+## 연습문제
+
+**연습문제 1.** $(X, Y)$ 의 결합확률질량함수가 다음과 같다.
+
+| | $x=1$ | $x=2$ | $x=3$ |
+|---|---|---|---|
+| $y=1$ | $0.10$ | $0.05$ | $0.05$ |
+| $y=2$ | $0.15$ | $0.20$ | $0.10$ |
+| $y=3$ | $0.05$ | $0.15$ | $0.15$ |
+
+$X$ 와 $Y$ 의 주변확률질량함수를 구하여라.
+
+??? success "연습문제 1 풀이"
+    열의 합($X$ 의 주변분포): $P(X=1) = 0.30$, $P(X=2) = 0.40$, $P(X=3) = 0.30$.
+
+    행의 합($Y$ 의 주변분포): $P(Y=1) = 0.20$, $P(Y=2) = 0.45$, $P(Y=3) = 0.35$.
+
+---
+
+**연습문제 2.** 연습문제 1의 결합확률질량함수를 써서 $P(X \leq 2, Y \geq 2)$ 를 구하여라.
+
+??? success "연습문제 2 풀이"
+    $x \leq 2$ 이고 $y \geq 2$ 인 칸을 모두 더한다.
+
+    $$
+    P(X \leq 2, Y \geq 2) = 0.15 + 0.20 + 0.05 + 0.15 = 0.55
+    $$
+
+---
+
+**연습문제 3.** 연습문제 1의 결합확률질량함수를 써서 $X$ 와 $Y$ 가 독립인지 판정하여라.
+
+??? success "연습문제 3 풀이"
+    독립이려면 모든 $(x,y)$ 에 대해 $P(X=x, Y=y) = P(X=x)\,P(Y=y)$ 이어야 한다.
+
+    $(1,1)$ 을 확인해 보면 $P(X=1)\,P(Y=1) = 0.30 \times 0.20 = 0.06 \neq 0.10 = P(X=1, Y=1)$ 이다.
+
+    인수분해가 성립하지 않으므로 $X$ 와 $Y$ 는 독립이 **아니다**.
+
+---
+
+**연습문제 4.** $X \in \{0, 1\}$ 과 $Y \in \{0, 1\}$ 이 독립이고 $P(X=1) = 0.4$, $P(Y=1) = 0.3$ 이 되도록 두 확률변수의 결합확률질량함수 표를 만들어라.
+
+??? success "연습문제 4 풀이"
+    독립이므로 $P(X=x, Y=y) = P(X=x)\,P(Y=y)$ 이다.
+
+    | | $x=0$ | $x=1$ |
+    |---|---|---|
+    | $y=0$ | $0.6 \times 0.7 = 0.42$ | $0.4 \times 0.7 = 0.28$ |
+    | $y=1$ | $0.6 \times 0.3 = 0.18$ | $0.4 \times 0.3 = 0.12$ |
+
+    확인: 모든 칸의 값이 음이 아니고 그 합은 $0.42 + 0.28 + 0.18 + 0.12 = 1$ 이다. $\checkmark$
+
+---
+
+**연습문제 5.** 통 안에 빨간 공 2개와 파란 공 2개가 들어 있다. 되돌려 넣지 않고 공 두 개를 꺼낸다. 첫 번째 공이 빨간색이면 $X_1 = 1$ (아니면 0), 두 번째 공이 빨간색이면 $X_2 = 1$ (아니면 0)이라 하자. 결합확률질량함수의 표를 만들어라.
+
+??? success "연습문제 5 풀이"
+    연쇄법칙 $P(X_1, X_2) = P(X_1)\,P(X_2 \mid X_1)$ 을 쓰면 다음과 같다.
+
+    - $P(X_1=1, X_2=1) = \frac{2}{4} \times \frac{1}{3} = \frac{1}{6}$
+    - $P(X_1=1, X_2=0) = \frac{2}{4} \times \frac{2}{3} = \frac{2}{6} = \frac{1}{3}$
+    - $P(X_1=0, X_2=1) = \frac{2}{4} \times \frac{2}{3} = \frac{1}{3}$
+    - $P(X_1=0, X_2=0) = \frac{2}{4} \times \frac{1}{3} = \frac{1}{6}$
+
+    | | $x_1=0$ | $x_1=1$ |
+    |---|---|---|
+    | $x_2=0$ | $1/6$ | $1/3$ |
+    | $x_2=1$ | $1/3$ | $1/6$ |
