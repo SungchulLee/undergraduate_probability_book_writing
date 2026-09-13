@@ -1,61 +1,61 @@
-# Contours and Geometric Interpretation
+# 등고선과 기하적 해석
 
-## Overview
+## 개요
 
-The contour plots of the bivariate normal distribution reveal how the **mean vector** controls the center and the **covariance matrix** controls the shape, orientation, and spread of the distribution. Understanding contours provides geometric intuition for correlation and dependence.
+이변량정규분포의 등고선 그림을 보면 **평균벡터**가 중심을 정하고 **공분산행렬**이 분포의 모양과 기울기와 퍼짐을 정한다는 것을 알 수 있다. 등고선을 이해하면 상관과 의존 관계를 기하적으로 바라보는 눈이 생긴다.
 
 ---
 
-## Constant-Density Contours
+## 밀도가 일정한 등고선
 
-The contours of the bivariate normal PDF are curves of constant density. Setting $f(x, y) = c$ for some constant $c > 0$ is equivalent to:
+이변량정규분포 밀도함수의 등고선은 밀도가 일정한 곡선이다. 어떤 상수 $c > 0$ 에 대하여 $f(x, y) = c$ 로 두는 것은 다음과 같다.
 
 $$
 (\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu}) = k
 $$
 
-for some constant $k > 0$. This is the equation of an **ellipse** centered at $\boldsymbol{\mu}$.
+여기에서 $k > 0$ 은 상수이다. 이것은 $\boldsymbol{\mu}$ 를 중심으로 하는 **타원**의 방정식이다.
 
 ---
 
-## Geometric Role of Parameters
+## 모수의 기하적 구실
 
-### Mean Vector $\boldsymbol{\mu}$
+### 평균벡터 μ
 
-The mean vector $\boldsymbol{\mu} = (\mu_X, \mu_Y)^T$ determines the **center** of the elliptical contours. Changing $\boldsymbol{\mu}$ translates the entire distribution without affecting its shape.
+평균벡터 $\boldsymbol{\mu} = (\mu_X, \mu_Y)^T$ 는 타원 등고선의 **중심**을 정한다. $\boldsymbol{\mu}$ 를 바꾸면 모양은 그대로인 채 분포 전체가 평행이동한다.
 
-### Variances $\sigma_X^2$ and $\sigma_Y^2$
+### 분산 σX² 과 σY²
 
-The marginal variances control the **spread** along each axis. Larger $\sigma_X^2$ stretches the ellipses horizontally; larger $\sigma_Y^2$ stretches them vertically.
+주변분산은 각 축 방향의 **퍼짐**을 정한다. $\sigma_X^2$ 이 클수록 타원이 가로로 늘어나고, $\sigma_Y^2$ 이 클수록 세로로 늘어난다.
 
-### Correlation $\rho$
+### 상관계수 ρ
 
-The correlation coefficient $\rho$ controls the **orientation** (tilt) and **eccentricity** of the ellipses:
+상관계수 $\rho$ 는 타원의 **기울기**와 **찌그러진 정도**를 정한다.
 
-| $\rho$ | Shape | Orientation |
+| $\rho$ | 모양 | 기울기 |
 |:---:|:---|:---|
-| $\rho = 0$ | Axes aligned with coordinate axes | No tilt |
-| $\rho > 0$ | Tilted toward $y = x$ direction | Positive slope |
-| $\rho < 0$ | Tilted toward $y = -x$ direction | Negative slope |
-| $\rho \to \pm 1$ | Ellipses collapse to a line | Perfect linear relationship |
+| $\rho = 0$ | 축이 좌표축과 나란함 | 기울지 않음 |
+| $\rho > 0$ | $y = x$ 방향으로 기욺 | 양의 기울기 |
+| $\rho < 0$ | $y = -x$ 방향으로 기욺 | 음의 기울기 |
+| $\rho \to \pm 1$ | 타원이 직선으로 찌부러짐 | 완전한 일차 관계 |
 
 ---
 
-## Eigenvalue Interpretation
+## 고윳값으로 본 해석
 
-The axes of the contour ellipses correspond to the **eigenvectors** of $\boldsymbol{\Sigma}$, and their lengths are proportional to the square roots of the **eigenvalues**. Specifically, for the standard bivariate normal ($\sigma_X = \sigma_Y = 1$):
+등고선 타원의 축은 $\boldsymbol{\Sigma}$ 의 **고유벡터** 방향과 일치하고, 그 길이는 **고윳값**의 제곱근에 비례한다. 특히 표준이변량정규분포($\sigma_X = \sigma_Y = 1$)의 경우
 
 $$
 \boldsymbol{\Sigma} = \begin{pmatrix} 1 & \rho \\ \rho & 1 \end{pmatrix}
 $$
 
-The eigenvalues are $\lambda_1 = 1 + \rho$ and $\lambda_2 = 1 - \rho$, with eigenvectors along the $45°$ and $135°$ directions. As $|\rho| \to 1$, one eigenvalue approaches zero and the ellipse degenerates.
+이고, 고윳값은 $\lambda_1 = 1 + \rho$ 와 $\lambda_2 = 1 - \rho$ 이며 고유벡터는 각각 $45°$ 와 $135°$ 방향이다. $|\rho| \to 1$ 이면 한 고윳값이 $0$ 으로 가면서 타원이 퇴화한다.
 
 ---
 
-## Python: Contour Gallery
+## 파이썬: 등고선 모음
 
-The following code reproduces a grid of contour plots showing how the mean and covariance matrix affect the bivariate normal distribution. This mirrors the systematic exploration across 7 correlation values and 4 mean vectors.
+다음 코드는 평균과 공분산행렬이 이변량정규분포에 어떤 영향을 주는지 보여 주는 등고선 그림들을 격자로 그린다. 상관계수 7가지와 평균벡터 4가지를 짜임새 있게 훑어보는 것이다.
 
 ```python
 import numpy as np
@@ -105,23 +105,41 @@ plt.show()
 
 ---
 
-## Mahalanobis Distance
+## 마할라노비스 거리
 
-The quadratic form $(\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu})$ defines the squared **Mahalanobis distance** from $\mathbf{x}$ to $\boldsymbol{\mu}$. Points on the same contour ellipse have the same Mahalanobis distance from the mean.
+이차형식 $(\mathbf{x} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{x} - \boldsymbol{\mu})$ 은 $\mathbf{x}$ 에서 $\boldsymbol{\mu}$ 까지의 **마할라노비스 거리**의 제곱이다. 같은 등고선 타원 위의 점들은 평균으로부터 마할라노비스 거리가 같다.
 
-For the bivariate case, this squared distance follows a $\chi^2(2)$ distribution:
+이변량인 경우 이 거리의 제곱은 $\chi^2(2)$ 분포를 따른다.
 
 $$
 (\mathbf{X} - \boldsymbol{\mu})^T \boldsymbol{\Sigma}^{-1} (\mathbf{X} - \boldsymbol{\mu}) \sim \chi^2(2)
 $$
 
-This means the probability contained within the ellipse at Mahalanobis distance $\sqrt{k}$ is $P(\chi^2(2) \leq k) = 1 - e^{-k/2}$.
+따라서 마할라노비스 거리가 $\sqrt{k}$ 인 타원 안에 들어 있는 확률은 $P(\chi^2(2) \leq k) = 1 - e^{-k/2}$ 이다.
 
 ---
 
-## Key Takeaways
+## 핵심 정리
 
-- Contours of the bivariate normal are **ellipses** centered at $\boldsymbol{\mu}$.
-- $\boldsymbol{\mu}$ controls position; $\sigma_X, \sigma_Y$ control spread; $\rho$ controls tilt and eccentricity.
-- The ellipse axes align with the eigenvectors of $\boldsymbol{\Sigma}$, with lengths proportional to the square roots of the eigenvalues.
-- The Mahalanobis distance provides a scale-invariant measure of distance from the center.
+- 이변량정규분포의 등고선은 $\boldsymbol{\mu}$ 를 중심으로 하는 **타원**이다.
+- $\boldsymbol{\mu}$ 는 위치를, $\sigma_X, \sigma_Y$ 는 퍼짐을, $\rho$ 는 기울기와 찌그러진 정도를 정한다.
+- 타원의 축은 $\boldsymbol{\Sigma}$ 의 고유벡터 방향과 나란하고 길이는 고윳값의 제곱근에 비례한다.
+- 마할라노비스 거리는 척도에 영향받지 않는, 중심으로부터의 거리 재는 잣대를 준다.
+
+## 연습문제
+
+**연습문제 1.**
+$\mu_X = \mu_Y = 0$, $\sigma_X = \sigma_Y = 1$ 이고 상관계수가 $\rho$ 인 표준이변량정규분포에 대하여 다음에 답하여라.
+
+**(a)** 등고선 타원의 반축이 $(1, 1)^T / \sqrt{2}$ 와 $(1, -1)^T / \sqrt{2}$ 방향임을 보여라.
+
+**(b)** $\boldsymbol{\Sigma}$ 의 고윳값을 $\rho$ 로 나타내어라.
+
+**(c)** 등고선이 원이 되는 $\rho$ 의 값을 구하여라.
+
+??? success "연습문제 1 풀이"
+    **(a)** 공분산행렬은 $\boldsymbol{\Sigma} = \begin{pmatrix} 1 & \rho \\ \rho & 1 \end{pmatrix}$ 이다. 고유벡터는 $(1, 1)^T/\sqrt{2}$ 와 $(1, -1)^T/\sqrt{2}$ 이다(직접 계산하여 확인할 수 있다).
+
+    **(b)** $\lambda_1 = 1 + \rho$, $\lambda_2 = 1 - \rho$.
+
+    **(c)** 등고선이 원이 되는 것은 $\lambda_1 = \lambda_2$ 일 때, 곧 $\rho = 0$ 일 때이다.

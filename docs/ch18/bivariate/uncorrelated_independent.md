@@ -1,60 +1,60 @@
-# Uncorrelated Implies Independent (Normal Case)
+# 무상관이면 독립이다(정규분포의 경우)
 
-## Overview
+## 개요
 
-In general, zero correlation does **not** imply independence. However, for the bivariate normal distribution, zero correlation **does** imply independence. This is a special and important property. Understanding when this implication holds — and when it fails — is essential for applied statistics.
-
----
-
-## The General Picture
-
-$$
-\text{Independence} \implies \text{Cov}(X, Y) = 0 \qquad \text{(always true)}
-$$
-
-$$
-\text{Cov}(X, Y) = 0 \;\not\!\!\!\implies \text{Independence} \qquad \text{(in general)}
-$$
-
-$$
-(X, Y)^T \text{ bivariate normal},\; \text{Cov}(X, Y) = 0 \implies \text{Independence} \qquad \text{(special case!)}
-$$
+일반적으로 상관계수가 $0$ 이라고 해서 독립인 것은 **아니다**. 그러나 이변량정규분포에서는 상관계수가 $0$ 이면 **정말로** 독립이다. 이는 특별하고도 중요한 성질이다. 이 함의가 언제 성립하고 언제 무너지는지를 아는 것은 통계를 쓰는 데 꼭 필요하다.
 
 ---
 
-## Why It Works for the Bivariate Normal
+## 전체 그림
 
-When $\rho = 0$, the bivariate normal PDF factors:
+$$
+\text{독립} \implies \text{Cov}(X, Y) = 0 \qquad \text{(언제나 참)}
+$$
+
+$$
+\text{Cov}(X, Y) = 0 \;\not\!\!\!\implies \text{독립} \qquad \text{(일반적으로)}
+$$
+
+$$
+(X, Y)^T \text{ 가 이변량정규분포},\; \text{Cov}(X, Y) = 0 \implies \text{독립} \qquad \text{(특별한 경우!)}
+$$
+
+---
+
+## 이변량정규분포에서는 왜 성립하는가
+
+$\rho = 0$ 이면 이변량정규분포의 밀도함수가 다음과 같이 인수분해된다.
 
 $$
 f(x, y) = \frac{1}{2\pi\sigma_X\sigma_Y} \exp\left(-\frac{\tilde{x}^2 + \tilde{y}^2}{2}\right) = f_X(x) \cdot f_Y(y)
 $$
 
-Factorization of the joint PDF into marginals is the **definition** of independence. The key is that the exponent contains no cross term $\tilde{x}\tilde{y}$ when $\rho = 0$.
+결합밀도함수가 주변밀도함수의 곱으로 쪼개지는 것이 바로 독립의 **정의**이다. 핵심은 $\rho = 0$ 일 때 지수부에 교차항 $\tilde{x}\tilde{y}$ 가 없다는 데 있다.
 
 ---
 
-## Common Misconception
+## 흔한 오해
 
-A statement that is **wrong**:
+다음은 **틀린** 서술이다.
 
-> "$X$ and $Y$ are normal and $\text{Cov}(X, Y) = 0$, therefore $X$ and $Y$ are independent."
+> "$X$ 와 $Y$ 가 정규분포를 따르고 $\text{Cov}(X, Y) = 0$ 이므로 $X$ 와 $Y$ 는 독립이다."
 
-This is incorrect because $X$ and $Y$ being individually normal does not mean $(X, Y)^T$ is bivariate normal. The correct statement requires that $X$ and $Y$ are **jointly** bivariate normal.
+$X$ 와 $Y$ 가 각각 정규분포를 따른다는 것이 $(X, Y)^T$ 가 이변량정규분포라는 뜻은 아니기에 이 말은 옳지 않다. 올바른 서술이 되려면 $X$ 와 $Y$ 가 **함께** 이변량정규분포를 따라야 한다.
 
 ---
 
-## Counterexample: Marginally Normal but Not Jointly Normal
+## 반례: 주변분포는 정규분포이지만 결합분포는 아닌 경우
 
-This classic counterexample demonstrates that two marginally normal, uncorrelated random variables can still be dependent.
+다음은 주변분포가 정규분포이고 무상관인 두 확률변수가 그럼에도 종속일 수 있음을 보여 주는 고전적인 반례이다.
 
-**Construction.** Let $X \sim N(0, 1)$. Independently of $X$, flip a fair coin and record the outcome $S$ as $+1$ (heads) or $-1$ (tails). Define:
+**만드는 법.** $X \sim N(0, 1)$ 이라고 하자. $X$ 와 상관없이 공정한 동전을 던져 앞면이면 $S = +1$, 뒷면이면 $S = -1$ 이라고 하자. 그리고 다음과 같이 정의한다.
 
 $$
 Y = S \cdot X
 $$
 
-**Claim 1: $Y$ is standard normal.**
+**주장 1: $Y$ 는 표준정규분포를 따른다.**
 
 $$
 P(Y \leq y) = P(S = 1)P(X \leq y) + P(S = -1)P(X \geq -y)
@@ -64,15 +64,15 @@ $$
 = \frac{1}{2}\int_{-\infty}^y \frac{1}{\sqrt{2\pi}} e^{-s^2/2}\,ds + \frac{1}{2}\int_{-y}^{\infty} \frac{1}{\sqrt{2\pi}} e^{-s^2/2}\,ds
 $$
 
-By symmetry of the standard normal, $P(X \geq -y) = P(X \leq y)$, so:
+표준정규분포의 대칭성에 따라 $P(X \geq -y) = P(X \leq y)$ 이므로 다음을 얻는다.
 
 $$
 P(Y \leq y) = P(X \leq y)
 $$
 
-Therefore $Y \sim N(0, 1)$.
+따라서 $Y \sim N(0, 1)$ 이다.
 
-**Claim 2: $\text{Cov}(X, Y) = 0$.**
+**주장 2: $\text{Cov}(X, Y) = 0$ 이다.**
 
 $$
 E[XY] = P(S = 1) \cdot E[XY \mid S = 1] + P(S = -1) \cdot E[XY \mid S = -1]
@@ -82,27 +82,29 @@ $$
 = \frac{1}{2}E[X^2] + \frac{1}{2}E[-X^2] = \frac{1}{2}(1) - \frac{1}{2}(1) = 0
 $$
 
-Since $E[X] = E[Y] = 0$:
+$E[X] = E[Y] = 0$ 이므로
 
 $$
 \text{Cov}(X, Y) = E[XY] - E[X]E[Y] = 0 - 0 = 0
 $$
 
-**Claim 3: $X$ and $Y$ are NOT independent.**
+이다.
 
-By construction, if $X = 2$, then $Y$ is either $2$ or $-2$. In particular:
+**주장 3: $X$ 와 $Y$ 는 독립이 아니다.**
+
+만드는 방식에서 알 수 있듯이 $X = 2$ 이면 $Y$ 는 $2$ 이거나 $-2$ 이다. 특히 다음이 성립한다.
 
 $$
 P(|Y| = |X|) = 1
 $$
 
-If $X$ and $Y$ were independent, $P(|Y| = |X|) = 0$ (since both are continuous). Therefore $X$ and $Y$ are dependent.
+$X$ 와 $Y$ 가 독립이라면 둘 다 연속확률변수이므로 $P(|Y| = |X|) = 0$ 이어야 한다. 따라서 $X$ 와 $Y$ 는 종속이다.
 
-**Why this doesn't contradict the theorem.** Although $X$ and $Y$ are each marginally $N(0, 1)$, the vector $(X, Y)^T$ is **not** bivariate normal. The joint distribution places all mass on the two lines $y = x$ and $y = -x$ (each with probability $1/2$), which is not a bivariate normal distribution.
+**이것이 정리와 어긋나지 않는 까닭.** $X$ 와 $Y$ 는 각각 $N(0, 1)$ 을 따르지만 벡터 $(X, Y)^T$ 는 이변량정규분포가 **아니다**. 결합분포는 두 직선 $y = x$ 와 $y = -x$ 위에 확률을 모두(각각 $1/2$ 씩) 얹어 놓은 것이며, 이는 이변량정규분포가 아니다.
 
 ---
 
-## Python: Demonstrating the Counterexample
+## 파이썬: 반례 확인하기
 
 ```python
 import numpy as np
@@ -111,18 +113,18 @@ import matplotlib.pyplot as plt
 np.random.seed(42)
 n = 10_000
 
-# Generate the counterexample
+# 반례를 만든다
 X = np.random.randn(n)
 S = np.random.choice([-1, 1], size=n)
 Y = S * X
 
-# Verify properties
+# 성질을 확인한다
 print(f"Correlation(X, Y) = {np.corrcoef(X, Y)[0, 1]:.6f}")
 print(f"E[X] = {X.mean():.4f}, E[Y] = {Y.mean():.4f}")
 print(f"Var(X) = {X.var():.4f}, Var(Y) = {Y.var():.4f}")
 print(f"P(|Y| = |X|) = {np.mean(np.abs(Y - np.abs(X)) < 1e-10):.4f}")
 
-# Independence test: P(X > 0, Y > 0) vs P(X > 0) * P(Y > 0)
+# 독립성 검사: P(X > 0, Y > 0) 과 P(X > 0) * P(Y > 0) 견주기
 p_joint = np.mean((X > 0) & (Y > 0))
 p_x = np.mean(X > 0)
 p_y = np.mean(Y > 0)
@@ -130,17 +132,17 @@ print(f"\nP(X>0, Y>0) = {p_joint:.4f}")
 print(f"P(X>0) * P(Y>0) = {p_x * p_y:.4f}")
 print(f"If independent these should be equal — they're not!")
 
-# Visualization
+# 그림으로 보기
 fig, axes = plt.subplots(1, 3, figsize=(15, 4))
 
-# Scatter plot
+# 산점도
 axes[0].scatter(X[:2000], Y[:2000], s=2, alpha=0.3)
 axes[0].set_xlabel('X')
 axes[0].set_ylabel('Y')
 axes[0].set_title(f'X vs Y (ρ = {np.corrcoef(X, Y)[0, 1]:.3f})')
 axes[0].set_aspect('equal')
 
-# Marginal of X
+# X 의 주변분포
 axes[1].hist(X, bins=60, density=True, alpha=0.6, label='X')
 axes[1].hist(Y, bins=60, density=True, alpha=0.6, label='Y')
 x_grid = np.linspace(-4, 4, 200)
@@ -149,7 +151,7 @@ axes[1].plot(x_grid, 1/np.sqrt(2*np.pi) * np.exp(-x_grid**2/2),
 axes[1].set_title('Marginals: Both N(0,1)')
 axes[1].legend()
 
-# Evidence of dependence: |Y| vs |X|
+# 종속임을 보여 주는 증거: |Y| 와 |X|
 axes[2].scatter(np.abs(X[:2000]), np.abs(Y[:2000]), s=2, alpha=0.3)
 axes[2].plot([0, 4], [0, 4], 'r--', linewidth=2, label='|Y| = |X|')
 axes[2].set_xlabel('|X|')
@@ -163,20 +165,38 @@ plt.show()
 
 ---
 
-## Summary Table
+## 요약 표
 
-| Condition | Independence? |
+| 조건 | 독립인가? |
 |:---|:---:|
-| $X \perp Y$ | Always $\implies \text{Cov}(X, Y) = 0$ |
-| $\text{Cov}(X, Y) = 0$ | Not sufficient in general |
-| $X, Y$ both normal, $\text{Cov}(X, Y) = 0$ | **Not sufficient** |
-| $(X, Y)^T$ bivariate normal, $\text{Cov}(X, Y) = 0$ | **Sufficient** ✓ |
+| $X \perp Y$ | 언제나 $\implies \text{Cov}(X, Y) = 0$ |
+| $\text{Cov}(X, Y) = 0$ | 일반적으로는 충분하지 않음 |
+| $X, Y$ 가 각각 정규분포, $\text{Cov}(X, Y) = 0$ | **충분하지 않음** |
+| $(X, Y)^T$ 가 이변량정규분포, $\text{Cov}(X, Y) = 0$ | **충분함** ✓ |
 
 ---
 
-## Key Takeaways
+## 핵심 정리
 
-- For the bivariate normal, uncorrelated $\iff$ independent. This is a special property not shared by most distributions.
-- The critical requirement is that $(X, Y)^T$ is **jointly** bivariate normal, not merely that $X$ and $Y$ are each marginally normal.
-- The classic counterexample ($Y = SX$ with random sign $S$) shows that two standard normal variables can be uncorrelated yet completely dependent.
-- In practice, always verify joint normality before concluding that zero correlation implies independence.
+- 이변량정규분포에서는 무상관과 독립이 $\iff$ 관계이다. 이는 대부분의 분포에서는 성립하지 않는 특별한 성질이다.
+- 결정적인 조건은 $X$ 와 $Y$ 가 각각 정규분포를 따르는 것이 아니라 $(X, Y)^T$ 가 **함께** 이변량정규분포를 따르는 것이다.
+- 고전적인 반례($S$ 가 무작위 부호일 때 $Y = SX$)는 두 표준정규확률변수가 무상관이면서도 완전히 종속일 수 있음을 보여 준다.
+- 실제로는 상관계수가 $0$ 이므로 독립이라고 결론짓기 전에 결합정규성을 반드시 확인해야 한다.
+
+## 연습문제
+
+**연습문제 1.**
+$X \sim N(0, 1)$ 이고 $Y = X^2$ 이라고 하자.
+
+**(a)** $\text{Cov}(X, Y) = 0$ 임을 보여라.
+
+**(b)** $X$ 와 $Y$ 가 독립이 아님을 보여라.
+
+**(c)** $(X, Y)^T$ 는 이변량정규분포를 따르는가? 그 까닭을 말하여라.
+
+??? success "연습문제 1 풀이"
+    **(a)** 표준정규분포의 대칭성에 따라 $E[XY] = E[X^3] = 0$ 이다. $E[X] = 0$ 이므로 $\text{Cov}(X, Y) = E[XY] - E[X]E[Y] = 0$ 이다.
+
+    **(b)** $P(Y \leq 0.01 \mid X = 5) = 0$ 이지만 $P(Y \leq 0.01) > 0$ 이므로 $X$ 와 $Y$ 는 종속이다.
+
+    **(c)** 아니다. 이변량정규분포에서는 모든 조건부분포가 정규분포이어야 하지만, $Y \mid X = x$ 는 $x^2$ 에 몰린 퇴화분포이며 정규분포가 아니다.
