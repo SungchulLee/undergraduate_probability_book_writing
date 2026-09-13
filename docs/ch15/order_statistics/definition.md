@@ -1,62 +1,61 @@
-# Definition and Notation
-<<<<<<< Updated upstream
+# 정의와 기호
 
-## Order Statistics
+## 순서통계량
 
-!!! info "Order Statistics"
-    Let $X_1, X_2, \ldots, X_n$ be a random sample (iid) from a continuous distribution with CDF $F$ and PDF $f$. The **order statistics** are the sample values arranged in increasing order:
+!!! info "순서통계량"
+    $X_1, X_2, \ldots, X_n$ 이 누적분포함수가 $F$ 이고 확률밀도함수가 $f$ 인 연속분포에서 뽑은 확률표본(i.i.d.)이라 하자. **순서통계량**은 표본값을 작은 것부터 크기순으로 늘어놓은 것이다.
 
     $$X_{(1)} \leq X_{(2)} \leq \cdots \leq X_{(n)}$$
 
-    where $X_{(k)}$ denotes the $k$-th smallest value.
+    여기서 $X_{(k)}$ 는 $k$ 번째로 작은 값을 나타낸다.
 
-The parentheses in the subscript distinguish order statistics from the original sample: $X_3$ is the third observation drawn, while $X_{(3)}$ is the third smallest observation.
+아래 첨자의 괄호는 순서통계량을 원래 표본과 갈라 준다. $X_3$ 은 세 번째로 뽑은 관측값이고, $X_{(3)}$ 은 세 번째로 작은 관측값이다.
 
-## Key Terminology
+## 주요 용어
 
-| Symbol | Name | Definition |
+| 기호 | 이름 | 정의 |
 |:---:|:---|:---|
-| $X_{(1)}$ | Minimum | Smallest observation |
-| $X_{(n)}$ | Maximum | Largest observation |
-| $X_{(k)}$ | $k$-th order statistic | $k$-th smallest value |
-| $R = X_{(n)} - X_{(1)}$ | Range | Spread of the sample |
-| $X_{(\lceil n/2 \rceil)}$ | Sample median | Middle value (odd $n$) |
+| $X_{(1)}$ | 최솟값 | 가장 작은 관측값 |
+| $X_{(n)}$ | 최댓값 | 가장 큰 관측값 |
+| $X_{(k)}$ | $k$ 번째 순서통계량 | $k$ 번째로 작은 값 |
+| $R = X_{(n)} - X_{(1)}$ | 범위 | 표본이 퍼진 정도 |
+| $X_{(\lceil n/2 \rceil)}$ | 표본중앙값 | 한가운데 값($n$ 이 홀수일 때) |
 
-For even $n$, the sample median is typically defined as $\frac{1}{2}\bigl(X_{(n/2)} + X_{(n/2+1)}\bigr)$.
+$n$ 이 짝수이면 표본중앙값은 보통 $\frac{1}{2}\bigl(X_{(n/2)} + X_{(n/2+1)}\bigr)$ 로 정의한다.
 
-## Intuition
+## 직관
 
-Sorting a sample destroys the information about **which** observation took which value, but preserves information about the **distribution** of values. Order statistics capture the shape of the sample: where the smallest values lie, where the largest lie, and how spread out the data are.
+표본을 크기순으로 늘어놓으면 **어느** 관측값이 어떤 값이었는지에 대한 정보는 사라지지만, 값들의 **분포**에 대한 정보는 그대로 남는다. 순서통계량은 표본의 모양을 붙잡는다. 가장 작은 값이 어디에 있는지, 가장 큰 값이 어디에 있는지, 자료가 얼마나 퍼져 있는지를 보여 준다.
 
-## Simple Example
+## 간단한 예
 
-??? example "Example: Sorting Five Observations"
-    Suppose $n = 5$ observations drawn from $U(0, 1)$ yield:
+??? example "예: 관측값 다섯 개를 크기순으로 늘어놓기"
+    $U(0, 1)$ 에서 뽑은 $n = 5$ 개의 관측값이 다음과 같다고 하자.
 
     $$X_1 = 0.73, \; X_2 = 0.15, \; X_3 = 0.91, \; X_4 = 0.42, \; X_5 = 0.58$$
 
-    The order statistics are:
+    순서통계량은 다음과 같다.
 
     $$X_{(1)} = 0.15, \; X_{(2)} = 0.42, \; X_{(3)} = 0.58, \; X_{(4)} = 0.73, \; X_{(5)} = 0.91$$
 
-    - Minimum: $X_{(1)} = 0.15$
-    - Maximum: $X_{(5)} = 0.91$
-    - Median: $X_{(3)} = 0.58$
-    - Range: $R = 0.91 - 0.15 = 0.76$
+    - 최솟값: $X_{(1)} = 0.15$
+    - 최댓값: $X_{(5)} = 0.91$
+    - 중앙값: $X_{(3)} = 0.58$
+    - 범위: $R = 0.91 - 0.15 = 0.76$
 
-## Continuity Assumption
+## 연속성 가정
 
-We assume the underlying distribution is **continuous**, which guarantees $P(X_i = X_j) = 0$ for $i \neq j$. This means ties occur with probability zero, and the strict inequalities $X_{(1)} < X_{(2)} < \cdots < X_{(n)}$ hold almost surely.
+바탕이 되는 분포가 **연속**이라고 가정한다. 그러면 $i \neq j$ 에 대하여 $P(X_i = X_j) = 0$ 이 보장된다. 곧 같은 값이 겹칠 확률이 0이므로 엄격한 부등호 $X_{(1)} < X_{(2)} < \cdots < X_{(n)}$ 이 거의 확실하게 성립한다.
 
-## Relationship to Quantiles
+## 분위수와의 관계
 
-The $k$-th order statistic from a sample of size $n$ estimates the $\frac{k}{n+1}$-quantile of the underlying distribution. As $n \to \infty$, the order statistics trace out the CDF:
+크기가 $n$ 인 표본의 $k$ 번째 순서통계량은 바탕 분포의 $\frac{k}{n+1}$-분위수를 추정한다. $n \to \infty$ 이면 순서통계량들이 누적분포함수를 그려 낸다.
 
 $$X_{(k)} \approx F^{-1}\!\left(\frac{k}{n+1}\right)$$
 
-This connection motivates **Q-Q plots**, which compare sample order statistics against theoretical quantiles to assess goodness of fit.
+이 연결이 **Q-Q 그림**의 바탕이 된다. Q-Q 그림은 표본의 순서통계량을 이론적인 분위수와 견주어 분포가 잘 들어맞는지 살펴보는 도구이다.
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 import numpy as np
@@ -74,7 +73,7 @@ print(f"  Median  X_(3) = {order_stats[2]:.4f}")
 print(f"  Range         = {order_stats[-1] - order_stats[0]:.4f}")
 ```
 
-**Output:**
+**실행 결과:**
 ```
 Original sample: [0.3745 0.9507 0.7320 0.5987 0.1560]
 Order statistics: [0.1560 0.3745 0.5987 0.7320 0.9507]
@@ -83,5 +82,21 @@ Order statistics: [0.1560 0.3745 0.5987 0.7320 0.9507]
   Median  X_(3) = 0.5987
   Range         = 0.7947
 ```
-=======
->>>>>>> Stashed changes
+
+## 연습문제
+
+**연습문제 1.**
+$X_1, \ldots, X_6 \overset{\text{iid}}{\sim} U(0, 1)$ 이라 하자.
+
+(a) $E[X_{(2)}]$ 와 $\text{Var}(X_{(2)})$ 를 구하여라.
+
+(b) $P(X_{(6)} < 0.9)$ 를 구하여라.
+
+(c) $E[X_{(6)} - X_{(1)}]$ 를 구하여라.
+
+??? success "연습문제 1 풀이"
+    (a) $U_{(2)} \sim \text{Beta}(2, 5)$ 이므로 $E[U_{(2)}] = \frac{2}{7} \approx 0.286$ 이고 $\text{Var}(U_{(2)}) = \frac{10}{49 \cdot 8} = \frac{10}{392} \approx 0.0255$ 이다.
+
+    (b) $P(X_{(6)} < 0.9) = [F(0.9)]^6 = 0.9^6 \approx 0.5314$
+
+    (c) $E[X_{(6)} - X_{(1)}] = \frac{6}{7} - \frac{1}{7} = \frac{5}{7} \approx 0.7143$

@@ -1,90 +1,90 @@
-# Probability Integral Transform
+# 확률적분변환
 
-## The Probability Integral Transform
+## 확률적분변환이란
 
-!!! info "Probability Integral Transform"
-    If $X$ is a continuous random variable with CDF $F$, then:
+!!! info "확률적분변환"
+    $X$ 가 누적분포함수 $F$ 를 갖는 연속확률변수이면 다음이 성립한다.
 
     $$F(X) \sim U(0, 1)$$
 
-    That is, applying the CDF of a random variable to itself always produces a standard Uniform.
+    곧 확률변수에 자기 자신의 누적분포함수를 씌우면 언제나 표준균등분포가 나온다.
 
-### Proof
+### 증명
 
-Let $U = F(X)$. Since $F$ is continuous and non-decreasing:
+$U = F(X)$ 라 하자. $F$ 가 연속이고 감소하지 않으므로 $0 < u < 1$ 에 대하여 다음이 성립한다.
 
 $$P(U \leq u) = P(F(X) \leq u) = P(X \leq F^{-1}(u)) = F(F^{-1}(u)) = u$$
 
-for $0 < u < 1$. This is the CDF of $U(0,1)$.
+이것은 $U(0,1)$ 의 누적분포함수이다.
 
-## The Inverse Transform Method
+## 역변환 방법
 
-The converse is equally important and provides a universal simulation technique.
+거꾸로 가는 방향도 그에 못지않게 중요하며, 보편적인 모의실험 기법을 준다.
 
-!!! info "Inverse Transform Method (Simulation)"
-    To simulate a random variable $X$ with CDF $F$ using a uniform random number:
+!!! info "역변환 방법(모의실험)"
+    균등난수를 써서 누적분포함수가 $F$ 인 확률변수 $X$ 를 만들려면 다음과 같이 한다.
 
-    **Step 1.** Generate $U \sim U(0, 1)$.
+    **1단계.** $U \sim U(0, 1)$ 을 만든다.
 
-    **Step 2.** Set $X = F^{-1}(U)$.
+    **2단계.** $X = F^{-1}(U)$ 로 놓는다.
 
-    If $F$ is not bijective (e.g., for discrete distributions), use the **generalized inverse**:
+    $F$ 가 일대일 대응이 아니면(예를 들어 이산분포의 경우) **일반화된 역함수**를 쓴다.
 
     $$X = \sup\{x \in \mathbb{R} : F(x) < U\}$$
 
-### Proof
+### 증명
 
 $$P(X \leq x) = P(F^{-1}(U) \leq x) = P(U \leq F(x)) = F(x)$$
 
-So $X$ has the desired CDF $F$.
+따라서 $X$ 는 바라던 누적분포함수 $F$ 를 갖는다.
 
-### Geometric Interpretation
+### 기하학적 뜻풀이
 
-The method works by:
+이 방법이 하는 일은 다음과 같다.
 
-1. Drawing a horizontal line at height $U$ (a random value between 0 and 1)
-2. Finding where it intersects the CDF curve $F$
-3. Reading off the corresponding $x$-value
+1. 높이 $U$(0과 1 사이의 무작위 값)에 가로선을 긋는다
+2. 그 선이 누적분포함수 곡선 $F$ 와 만나는 곳을 찾는다
+3. 그에 해당하는 $x$ 값을 읽는다
 
-Regions where the CDF is steep (high density) correspond to many $U$-values mapping to a narrow range of $x$-values, naturally producing more samples there.
+누적분포함수가 가파른 곳(밀도가 높은 곳)에서는 많은 $U$ 값이 좁은 범위의 $x$ 값으로 옮겨 가므로, 그곳에서 표본이 자연스럽게 더 많이 나온다.
 
-## Worked Example: Simulating Exp(0.5)
+## 풀이 예제: Exp(0.5) 만들기
 
-??? example "Example: Generating Exponential from Uniform"
-    Suppose you have $U \sim U(0, 1)$. Generate $X \sim \text{Exp}(0.5)$.
+??? example "예: 균등분포에서 지수분포 만들기"
+    $U \sim U(0, 1)$ 이 주어졌다고 하자. $X \sim \text{Exp}(0.5)$ 를 만들어 보자.
 
-    **Step 1:** Find the CDF and its inverse.
+    **1단계:** 누적분포함수와 그 역함수를 구한다.
 
     $$\bar{F}(x) = e^{-0.5x} \implies F(x) = 1 - e^{-0.5x}, \quad x \geq 0$$
 
-    Setting $u = 1 - e^{-0.5x}$ and solving for $x$:
+    $u = 1 - e^{-0.5x}$ 로 놓고 $x$ 에 대하여 풀면 다음을 얻는다.
 
     $$X = F^{-1}(U) = -2\log(1 - U) \sim \text{Exp}(0.5)$$
 
-    **Step 2:** Simplify using symmetry.
+    **2단계:** 대칭성을 써서 간단히 한다.
 
-    Since $U \sim U(0,1)$ implies $1 - U \sim U(0,1)$:
+    $U \sim U(0,1)$ 이면 $1 - U \sim U(0,1)$ 이므로 다음이 성립한다.
 
     $$X = -2\log(U) \sim \text{Exp}(0.5)$$
 
-## General Exponential Simulation
+## 일반적인 지수분포의 모의실험
 
-For any $X \sim \text{Exp}(\lambda)$:
+어떤 $X \sim \text{Exp}(\lambda)$ 에 대해서도 다음이 성립한다.
 
 $$X = -\frac{1}{\lambda}\log(U) \sim \text{Exp}(\lambda)$$
 
-This is one of the most commonly used simulation formulas.
+이것은 가장 널리 쓰이는 모의실험 공식 가운데 하나이다.
 
-## When the Inverse CDF Has No Closed Form
+## 역누적분포함수가 닫힌 꼴이 아닐 때
 
-For distributions where $F^{-1}$ cannot be written in closed form (e.g., Normal, Gamma with non-integer shape), alternative methods are used:
+$F^{-1}$ 을 닫힌 꼴로 적을 수 없는 분포(예를 들어 정규분포나 모양모수가 정수가 아닌 감마분포)에 대해서는 다른 방법을 쓴다.
 
-- **Numerical inversion:** Use root-finding to solve $F(x) = u$
-- **Accept-reject method:** Generate candidates and filter
-- **Box-Muller transform:** Specialized for Normal distribution
-- **Composition methods:** Decompose into simpler distributions
+- **수치적 역변환:** 근 찾기로 $F(x) = u$ 를 푼다
+- **기각 표집:** 후보를 만들어 걸러 낸다
+- **박스–뮐러 변환:** 정규분포에 특화된 방법이다
+- **합성 방법:** 더 간단한 분포들로 쪼갠다
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 import numpy as np
@@ -96,10 +96,10 @@ n_sim = 10000
 
 fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 
-# Demonstrate the inverse transform method for Exp(0.5)
+# Exp(0.5) 에 대한 역변환 방법 보이기
 lam = 0.5
 U = np.random.uniform(0, 1, n_sim)
-X_sim = -np.log(U) / lam  # Inverse CDF method
+X_sim = -np.log(U) / lam  # 역누적분포함수 방법
 
 x_vals = np.linspace(0, 10, 200)
 pdf_theory = lam * np.exp(-lam * x_vals)
@@ -112,11 +112,11 @@ axes[0].set_xlabel('x')
 axes[0].legend()
 axes[0].grid(True, alpha=0.3)
 
-# Visualize the geometric interpretation
+# 기하학적 뜻풀이 그리기
 cdf_vals = 1 - np.exp(-lam * x_vals)
 axes[1].plot(x_vals, cdf_vals, 'b-', lw=2, label='CDF F(x)')
 
-# Show a few sample mappings
+# 몇 개의 표본이 어떻게 옮겨 가는지 보인다
 for u_val in [0.1, 0.3, 0.5, 0.7, 0.9]:
     x_val = -np.log(1 - u_val) / lam
     axes[1].plot([0, x_val], [u_val, u_val], 'r--', alpha=0.5)
@@ -129,7 +129,7 @@ axes[1].set_ylabel('F(x) / U')
 axes[1].legend()
 axes[1].grid(True, alpha=0.3)
 
-# Probability integral transform: F(X) ~ U(0,1)
+# 확률적분변환: F(X) ~ U(0,1)
 X_exp = np.random.exponential(1/lam, n_sim)
 U_transform = 1 - np.exp(-lam * X_exp)  # F(X)
 
@@ -147,9 +147,21 @@ plt.tight_layout()
 plt.savefig('probability_integral_transform.png', dpi=150, bbox_inches='tight')
 plt.show()
 
-# Verify: compare inverse CDF simulation with scipy
+# 확인: 역누적분포함수 방법과 scipy 를 견준다
 X_scipy = np.random.exponential(1/lam, n_sim)
 print(f"Inverse CDF method: mean={np.mean(X_sim):.4f}, var={np.var(X_sim):.4f}")
 print(f"Direct sampling:    mean={np.mean(X_scipy):.4f}, var={np.var(X_scipy):.4f}")
 print(f"Theory:             mean={1/lam:.4f}, var={1/lam**2:.4f}")
 ```
+
+## 연습문제
+
+**연습문제 1.**
+$X$ 의 누적분포함수가 $x > 0$ 에 대하여 $F(x) = 1 - e^{-x^2}$ 이라 하자. $F(X) \sim U(0, 1)$ 임을 보여라.
+
+??? success "연습문제 1 풀이"
+    $0 < u < 1$ 에 대하여 다음이 성립한다.
+
+    $$P(F(X) \leq u) = P(X \leq F^{-1}(u))= F(F^{-1}(u)) = u$$
+
+    이것은 $U(0, 1)$ 의 누적분포함수이다. 이 결과는 연속인 어떤 누적분포함수 $F$ 에 대해서도 성립한다.

@@ -1,78 +1,78 @@
-# Bayesian Applications of the Beta Distribution
+# 베이즈 통계에서의 응용
 
-## Beta as a Distribution on Probabilities
+## 확률 위의 분포로서의 베타분포
 
-The Beta distribution is defined on $(0, 1)$, making it a natural model for **probabilities**, **proportions**, and **rates**. In Bayesian inference, we treat an unknown probability $p$ as a random variable and assign it a Beta prior.
+베타분포는 $(0, 1)$ 위에서 정의되므로 **확률**, **비율**, **발생률**을 나타내는 모형으로 딱 알맞다. 베이즈 추론에서는 알려지지 않은 확률 $p$ 를 확률변수로 보고 여기에 베타분포를 사전분포로 준다.
 
-## Example: Quality Control
+## 예: 품질 관리
 
-A factory produces items that are either defective or non-defective. The true defect rate $p$ is unknown.
+어떤 공장이 만드는 제품은 불량이거나 불량이 아니다. 참 불량률 $p$ 는 알려져 있지 않다.
 
-**Setup:**
+**문제 설정:**
 
-- **Prior belief:** Before observing any data, we believe $p$ is around 5% but are not very certain. We choose $p \sim \text{Beta}(2, 38)$, which has mean $\frac{2}{40} = 0.05$ and is moderately concentrated.
-- **Data:** We inspect $n = 100$ items and find $k = 8$ defectives.
-- **Posterior:** $p \mid X = 8 \sim \text{Beta}(2 + 8, 38 + 92) = \text{Beta}(10, 130)$
+- **사전믿음:** 자료를 보기 전에 $p$ 가 5% 언저리라고 믿지만 그리 확신하지는 못한다. 그래서 $p \sim \text{Beta}(2, 38)$ 을 고르는데, 이 분포의 평균은 $\frac{2}{40} = 0.05$ 이고 어느 정도 모여 있다.
+- **자료:** 제품 $n = 100$ 개를 검사하여 불량품 $k = 8$ 개를 찾았다.
+- **사후분포:** $p \mid X = 8 \sim \text{Beta}(2 + 8, 38 + 92) = \text{Beta}(10, 130)$
 
-The posterior mean is $\frac{10}{140} \approx 0.071$, which lies between the prior mean (0.05) and the MLE ($\frac{8}{100} = 0.08$).
+사후평균은 $\frac{10}{140} \approx 0.071$ 이며, 사전평균(0.05)과 최대가능도추정값($\frac{8}{100} = 0.08$) 사이에 놓인다.
 
-## Example: A/B Testing
+## 예: A/B 검정
 
-An online platform tests two versions of a webpage. For version A:
+어떤 온라인 서비스가 웹페이지 두 판을 견주어 본다. A판에 대해서는 다음과 같다.
 
-- **Prior:** $p_A \sim \text{Beta}(1, 1) = \text{Uniform}(0, 1)$ (non-informative)
-- **Data:** 50 out of 200 visitors convert
-- **Posterior:** $p_A \mid \text{data} \sim \text{Beta}(51, 151)$
+- **사전분포:** $p_A \sim \text{Beta}(1, 1) = \text{Uniform}(0, 1)$ (정보를 담지 않은 사전분포)
+- **자료:** 방문자 200명 가운데 50명이 전환했다
+- **사후분포:** $p_A \mid \text{자료} \sim \text{Beta}(51, 151)$
 
-For version B:
+B판에 대해서는 다음과 같다.
 
-- **Prior:** $p_B \sim \text{Beta}(1, 1)$
-- **Data:** 65 out of 200 visitors convert
-- **Posterior:** $p_B \mid \text{data} \sim \text{Beta}(66, 136)$
+- **사전분포:** $p_B \sim \text{Beta}(1, 1)$
+- **자료:** 방문자 200명 가운데 65명이 전환했다
+- **사후분포:** $p_B \mid \text{자료} \sim \text{Beta}(66, 136)$
 
-The probability that B is better than A can be estimated by simulation:
+B가 A보다 나을 확률은 모의실험으로 어림할 수 있다.
 
-$$P(p_B > p_A \mid \text{data}) \approx \frac{1}{N}\sum_{i=1}^{N} \mathbf{1}(p_B^{(i)} > p_A^{(i)})$$
+$$P(p_B > p_A \mid \text{자료}) \approx \frac{1}{N}\sum_{i=1}^{N} \mathbf{1}(p_B^{(i)} > p_A^{(i)})$$
 
-where $p_A^{(i)}$ and $p_B^{(i)}$ are independent draws from the respective posteriors.
+여기서 $p_A^{(i)}$ 와 $p_B^{(i)}$ 는 각각의 사후분포에서 독립적으로 뽑은 값이다.
 
-## Credible Intervals
+## 신용구간
 
-A **credible interval** is the Bayesian analogue of a confidence interval. The **highest posterior density (HPD)** interval is the shortest interval containing a given probability mass.
+**신용구간**은 신뢰구간에 대응하는 베이즈판이다. **최고사후밀도(HPD)** 구간은 주어진 확률을 담는 가장 짧은 구간이다.
 
-For the Beta distribution, the **equal-tailed credible interval** at level $1 - \alpha$ is:
+베타분포에 대하여 수준 $1 - \alpha$ 의 **양쪽 꼬리가 같은 신용구간**은 다음과 같다.
 
 $$\left[F^{-1}\!\left(\frac{\alpha}{2}\right),\; F^{-1}\!\left(1 - \frac{\alpha}{2}\right)\right]$$
 
-where $F^{-1}$ is the Beta quantile function.
+여기서 $F^{-1}$ 은 베타분포의 분위수함수이다.
 
-## Sequential Updating
+## 차례대로 갱신하기
 
-A key advantage of the Beta-Binomial conjugate model is that data can be incorporated **sequentially**. Processing observations one at a time or in batches yields the same posterior.
+베타-이항 켤레 모형의 큰 장점은 자료를 **차례대로** 받아들일 수 있다는 것이다. 관측값을 하나씩 처리하든 묶음으로 처리하든 같은 사후분포가 나온다.
 
-!!! info "Sequential Updating"
-    Starting from $\text{Beta}(\alpha_0, \beta_0)$:
+!!! info "차례대로 갱신하기"
+    $\text{Beta}(\alpha_0, \beta_0)$ 에서 시작하면 다음과 같다.
 
-    - After observing a success: $\text{Beta}(\alpha_0 + 1, \beta_0)$
-    - After observing a failure: $\text{Beta}(\alpha_0, \beta_0 + 1)$
+    - 성공을 하나 관찰한 뒤: $\text{Beta}(\alpha_0 + 1, \beta_0)$
+    - 실패를 하나 관찰한 뒤: $\text{Beta}(\alpha_0, \beta_0 + 1)$
 
-    After $k$ successes and $n - k$ failures (in any order):
+    성공 $k$ 번과 실패 $n - k$ 번을 (어떤 순서로든) 관찰한 뒤에는 다음과 같다.
 
     $$\text{Beta}(\alpha_0 + k,\; \beta_0 + n - k)$$
 
-The order of observations does not matter — only the total counts.
+관측의 순서는 상관이 없고 오직 횟수의 합만이 중요하다.
 
-## Predictive Distribution
+## 예측분포
 
-After observing $k$ successes in $n$ trials with prior $\text{Beta}(\alpha, \beta)$, the **posterior predictive probability** of success on the next trial is:
+사전분포가 $\text{Beta}(\alpha, \beta)$ 일 때 $n$ 번의 시행에서 성공 $k$ 번을 관찰했다면, 다음 시행에서 성공할 **사후예측확률**은 다음과 같다.
 
-$$P(X_{n+1} = 1 \mid \text{data}) = E[p \mid \text{data}] = \frac{\alpha + k}{\alpha + \beta + n}$$
+$$P(X_{n+1} = 1 \mid \text{자료}) = E[p \mid \text{자료}] = \frac{\alpha + k}{\alpha + \beta + n}$$
 
-When $\alpha = \beta = 1$ (uniform prior), this gives **Laplace's rule of succession**:
+$\alpha = \beta = 1$ (균등한 사전분포)이면 이것은 **라플라스의 이어짐 규칙**이 된다.
 
-$$P(X_{n+1} = 1 \mid k \text{ successes in } n) = \frac{k + 1}{n + 2}$$
+$$P(X_{n+1} = 1 \mid n \text{ 번 가운데 성공 } k \text{ 번}) = \frac{k + 1}{n + 2}$$
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 import numpy as np
@@ -81,7 +81,7 @@ from scipy import stats
 
 fig, axes = plt.subplots(1, 3, figsize=(18, 5))
 
-# --- Panel 1: Sequential Bayesian updating ---
+# --- 패널 1: 차례대로 하는 베이즈 갱신 ---
 x = np.linspace(0, 1, 500)
 alpha0, beta0 = 1, 1
 np.random.seed(42)
@@ -104,7 +104,7 @@ axes[0].set_ylabel('Density')
 axes[0].legend(fontsize=8)
 axes[0].grid(True, alpha=0.3)
 
-# --- Panel 2: A/B Testing ---
+# --- 패널 2: A/B 검정 ---
 n_sim = 100000
 pA = np.random.beta(51, 151, n_sim)
 pB = np.random.beta(66, 136, n_sim)
@@ -117,7 +117,7 @@ axes[1].set_xlabel('Conversion rate p')
 axes[1].legend()
 axes[1].grid(True, alpha=0.3)
 
-# --- Panel 3: Credible interval shrinkage ---
+# --- 패널 3: 신용구간이 좁아지는 모습 ---
 sample_sizes = np.arange(1, 201)
 ci_widths = []
 alpha_p, beta_p = 1, 1
@@ -140,3 +140,17 @@ plt.tight_layout()
 plt.savefig('beta_bayesian_applications.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
+
+## 연습문제
+
+**연습문제 1.**
+어떤 동전의 앞면이 나올 확률 $p$ 가 알려져 있지 않다. 사전분포는 $p \sim \text{Beta}(2, 2)$ 이다. 동전을 10번 던져 앞면을 7번 얻었다. 사후분포와 사후평균을 구하여라.
+
+??? success "연습문제 1 풀이"
+    베타-이항 켤레성에 따라 사후분포는 다음과 같다.
+
+    $$p \mid X = 7 \sim \text{Beta}(2 + 7, 2 + 3) = \text{Beta}(9, 5)$$
+
+    사후평균은 $\frac{9}{14} \approx 0.643$ 이다.
+
+    이 값은 사전평균 $\frac{2}{4} = 0.5$ 와 최대가능도추정값 $\frac{7}{10} = 0.7$ 사이에 있으며, $n = 10$ 이 사전의 가상 관측수 $\alpha + \beta = 4$ 보다 크므로 자료 쪽에 더 가깝다.

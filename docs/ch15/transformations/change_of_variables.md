@@ -1,79 +1,80 @@
-# Change of Variables (Single Variable)
+# 변수변환(한 변수)
 
-## Two Methods for Finding PDFs
+## 확률밀도함수를 구하는 두 가지 방법
 
-Given a random variable $X$ with known PDF $f_X(x)$ and a transformation $Y = g(X)$, there are two systematic methods to find the PDF of $Y$.
+확률밀도함수 $f_X(x)$ 를 아는 확률변수 $X$ 와 변환 $Y = g(X)$ 가 주어졌을 때, $Y$ 의 확률밀도함수를 구하는 체계적인 방법이 두 가지 있다.
 
-## Method 1: CDF Method
+## 방법 1: 누적분포함수 방법
 
-!!! info "CDF Method"
-    1. Find $F_Y(y) = P(Y \leq y) = P(g(X) \leq y)$
-    2. Express in terms of $P(X \leq \cdot)$ or $P(X \geq \cdot)$
-    3. Differentiate: $f_Y(y) = F_Y'(y)$
+!!! info "누적분포함수 방법"
 
-This method is fully general and works for any transformation, including non-monotone ones.
+    1. $F_Y(y) = P(Y \leq y) = P(g(X) \leq y)$ 를 구한다
+    2. 이를 $P(X \leq \cdot)$ 이나 $P(X \geq \cdot)$ 의 꼴로 나타낸다
+    3. 미분한다: $f_Y(y) = F_Y'(y)$
 
-## Method 2: Jacobian Method
+이 방법은 완전히 일반적이어서 단조가 아닌 변환을 포함한 어떤 변환에도 통한다.
 
-!!! info "Jacobian Method (Single Variable)"
-    If $Y = g(X)$ where $g$ is a **monotone, differentiable** function with inverse $x = g^{-1}(y)$, then:
+## 방법 2: 야코비 방법
+
+!!! info "야코비 방법(한 변수)"
+    $Y = g(X)$ 에서 $g$ 가 **단조이고 미분가능한** 함수이며 역함수가 $x = g^{-1}(y)$ 이면 다음이 성립한다.
 
     $$f_Y(y) = f_X(x) \left|\frac{dx}{dy}\right|$$
 
-    where $x = g^{-1}(y)$.
+    여기서 $x = g^{-1}(y)$ 이다.
 
-The absolute value ensures the PDF is non-negative regardless of whether $g$ is increasing or decreasing. The factor $|dx/dy|$ accounts for how the transformation stretches or compresses the density.
+절댓값은 $g$ 가 증가하든 감소하든 확률밀도함수가 음이 되지 않도록 해 준다. 인수 $|dx/dy|$ 는 변환이 밀도를 얼마나 늘이거나 누르는지를 셈해 준다.
 
-### Intuitive Justification
+### 직관적인 근거
 
-If $g$ is increasing, then $P(Y \leq y) = P(X \leq x)$, so:
+$g$ 가 증가함수이면 $P(Y \leq y) = P(X \leq x)$ 이므로 다음이 성립한다.
 
 $$f_Y(y) = f_X(x) \frac{dx}{dy}$$
 
-If $g$ is decreasing, then $P(Y \leq y) = P(X \geq x)$, giving a negative sign that is absorbed by the absolute value.
+$g$ 가 감소함수이면 $P(Y \leq y) = P(X \geq x)$ 이므로 음의 부호가 붙는데, 이는 절댓값이 흡수한다.
 
-### Connection Between the Methods
+### 두 방법 사이의 관계
 
-The Jacobian method is a shortcut derived from the CDF method. Using the chain rule:
+야코비 방법은 누적분포함수 방법에서 나온 지름길이다. 연쇄법칙을 쓰면 다음과 같다.
 
 $$F_Y(y) = P(X \leq g^{-1}(y)) \implies f_Y(y) = f_X(g^{-1}(y)) \cdot \frac{d}{dy}g^{-1}(y) = f_X(x)\left|\frac{dx}{dy}\right|$$
 
-### Reciprocal Property
+### 역수 성질
 
-The Jacobian can be computed either way:
+야코비안은 어느 쪽으로든 계산할 수 있다.
 
 $$\left|\frac{dx}{dy}\right| = \frac{1}{\left|\dfrac{dy}{dx}\right|}$$
 
-This is often easier when $dy/dx$ is simpler to compute than $dx/dy$ directly.
+$dx/dy$ 를 바로 구하는 것보다 $dy/dx$ 를 구하는 편이 쉬울 때 흔히 이 꼴을 쓴다.
 
-## Worked Example: $Y = X^3$ where $X \sim U(0, 1)$
+## 풀이 예제: X ~ U(0, 1) 일 때 Y = X³
 
-??? example "Example: Cube of a Uniform"
-    Let $X \sim U(0,1)$ and $Y = X^3$. Find $f_Y(y)$ for $0 < y < 1$.
+??? example "예: 균등확률변수의 세제곱"
+    $X \sim U(0,1)$ 이고 $Y = X^3$ 이라 하자. $0 < y < 1$ 에서 $f_Y(y)$ 를 구하여라.
 
-    **Method 1: CDF**
+    **방법 1: 누적분포함수**
 
     $$P(Y \leq y) = P(X^3 \leq y) = P(X \leq y^{1/3}) = y^{1/3}$$
 
-    Differentiating:
+    미분하면 다음을 얻는다.
 
     $$f_Y(y) = \frac{1}{3} y^{-2/3}, \quad 0 < y < 1$$
 
-    **Method 2: Jacobian**
+    **방법 2: 야코비안**
 
-    With $y = x^3$, we have $x = y^{1/3}$:
+    $y = x^3$ 이므로 $x = y^{1/3}$ 이다.
 
     $$\frac{dy}{dx} = 3x^2 = 3(x^3)^{2/3} = 3y^{2/3}$$
 
     $$\left|\frac{dx}{dy}\right| = \frac{1}{3y^{2/3}} = \frac{1}{3}y^{-2/3}$$
 
-    Therefore:
+    따라서 다음을 얻는다.
 
     $$f_Y(y) = f_X(x) \left|\frac{dx}{dy}\right| = 1 \cdot \frac{1}{3}y^{-2/3} = \frac{1}{3}y^{-2/3}, \quad 0 < y < 1$$
 
-    Both methods agree. The density is concentrated near $y = 0$ because the cube function compresses values near $0$ and stretches values near $1$.
+    두 방법의 답이 일치한다. 세제곱 함수가 $0$ 근처의 값을 누르고 $1$ 근처의 값을 늘이므로 밀도가 $y = 0$ 근처에 모인다.
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 import numpy as np
@@ -85,7 +86,7 @@ n_sim = 100000
 
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
 
-# Y = X^3 where X ~ U(0,1)
+# X ~ U(0,1) 일 때 Y = X^3
 X = np.random.uniform(0, 1, n_sim)
 Y = X ** 3
 
@@ -103,7 +104,7 @@ axes[0].set_ylim(0, 5)
 axes[0].legend()
 axes[0].grid(True, alpha=0.3)
 
-# CDF comparison
+# 누적분포함수 비교
 y_grid = np.linspace(0, 1, 200)
 cdf_empirical = np.array([np.mean(Y <= y) for y in y_grid])
 cdf_theory = y_grid ** (1/3)
@@ -122,3 +123,16 @@ plt.tight_layout()
 plt.savefig('change_of_variables.png', dpi=150, bbox_inches='tight')
 plt.show()
 ```
+
+
+## 연습문제
+
+**연습문제 1.**
+$X \sim \text{Exp}(1)$ 이고 $Y = \sqrt{X}$ 라 하자. $Y$ 의 확률밀도함수를 구하여라.
+
+??? success "연습문제 1 풀이"
+    **누적분포함수 방법:** $y > 0$ 에 대하여 $F_Y(y) = P(\sqrt{X} \leq y) = P(X \leq y^2) = 1 - e^{-y^2}$ 이다.
+
+    따라서 $y > 0$ 에 대하여 $f_Y(y) = 2y\, e^{-y^2}$ 이다.
+
+    이것은 **레일리분포**이다(같은 말로 모양모수가 2인 와이블분포이다).
