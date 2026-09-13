@@ -76,3 +76,68 @@ $$
 
 **연습문제 1.**
 $X$ 의 평균이 $\mu$ 이고 분산이 $\sigma^2$ 이라고 하자. 한쪽 체비쇼프 부등식의 증명에서 $E[(X - \mu + b)^2] \geq (\varepsilon + b)^2 P(X - \mu \geq \varepsilon)$ 의 $b$ 를 가장 알맞게 고르면 $b = \sigma^2 / \varepsilon$ 임을 보여라.
+
+??? success "연습문제 1 풀이"
+    **1단계: 무엇을 최소로 만들 것인가.** 증명에서 임의의 $b > 0$ 에 대하여 다음 경계를 얻었다.
+
+    $$
+    P(X - \mu \geq \varepsilon) \leq \frac{\mathbb{E}(X - \mu + b)^2}{(\varepsilon + b)^2} = \frac{\sigma^2 + b^2}{(\varepsilon + b)^2}
+    $$
+
+    여기에서 $\mathbb{E}(X - \mu + b)^2 = \mathbb{E}(X-\mu)^2 + 2b\,\mathbb{E}(X - \mu) + b^2 = \sigma^2 + b^2$ 을 썼다(가운데 항은 $\mathbb{E}(X - \mu) = 0$ 이므로 사라진다).
+
+    이 경계는 **모든** $b > 0$ 에 대하여 참이므로, 가장 좋은 경계는 오른쪽 값을 가장 작게 만드는 $b$ 에서 나온다. 그러므로 다음 함수를 최소로 만들면 된다.
+
+    $$
+    f(b) = \frac{\sigma^2 + b^2}{(\varepsilon + b)^2}, \qquad b > 0
+    $$
+
+    **2단계: 미분한다.** 몫의 미분법을 쓴다.
+
+    $$
+    f'(b) = \frac{2b(\varepsilon + b)^2 - (\sigma^2 + b^2)\cdot 2(\varepsilon + b)}{(\varepsilon + b)^4}
+    $$
+
+    분자와 분모에서 공통인자 $(\varepsilon + b)$ 를 약분하면 다음과 같이 깔끔해진다.
+
+    $$
+    f'(b) = \frac{2\big[b(\varepsilon + b) - (\sigma^2 + b^2)\big]}{(\varepsilon + b)^3} = \frac{2\big[b\varepsilon + b^2 - \sigma^2 - b^2\big]}{(\varepsilon + b)^3} = \frac{2(b\varepsilon - \sigma^2)}{(\varepsilon + b)^3}
+    $$
+
+    **3단계: 임계점을 찾는다.** $b > 0$ 이고 $\varepsilon > 0$ 이므로 분모 $(\varepsilon + b)^3 > 0$ 이다. 따라서 $f'(b)$ 의 부호는 오직 분자 $b\varepsilon - \sigma^2$ 이 정한다.
+
+    $$
+    f'(b) = 0 \iff b\varepsilon = \sigma^2 \iff b^* = \frac{\sigma^2}{\varepsilon}
+    $$
+
+    **4단계: 참으로 최솟값임을 확인한다.** 분자가 $b$ 에 대하여 증가하는 일차식이므로 부호가 한 번만 바뀐다.
+
+    $$
+    f'(b) < 0 \quad (0 < b < b^*), \qquad f'(b) > 0 \quad (b > b^*)
+    $$
+
+    곧 $f$ 는 $b^*$ 앞에서 줄어들다가 뒤에서 늘어나므로 $b^* = \sigma^2/\varepsilon$ 에서 **전역 최솟값**을 가진다. 또한 $\sigma^2 > 0$ 이면 $b^* > 0$ 이므로 이 값은 우리가 허용한 범위 안에 있다.
+
+    **5단계: 넣어서 정리한다.** $b^* = \sigma^2/\varepsilon$ 을 $f$ 에 넣는다. 분자와 분모를 각각 정리하면 다음과 같다.
+
+    $$
+    \sigma^2 + (b^*)^2 = \sigma^2 + \frac{\sigma^4}{\varepsilon^2} = \frac{\sigma^2(\varepsilon^2 + \sigma^2)}{\varepsilon^2}
+    $$
+
+    $$
+    (\varepsilon + b^*)^2 = \left(\varepsilon + \frac{\sigma^2}{\varepsilon}\right)^2 = \left(\frac{\varepsilon^2 + \sigma^2}{\varepsilon}\right)^2 = \frac{(\varepsilon^2 + \sigma^2)^2}{\varepsilon^2}
+    $$
+
+    나누면 $\varepsilon^2$ 과 $(\varepsilon^2 + \sigma^2)$ 이 한 번씩 약분된다.
+
+    $$
+    f(b^*) = \frac{\sigma^2(\varepsilon^2 + \sigma^2)/\varepsilon^2}{(\varepsilon^2 + \sigma^2)^2/\varepsilon^2} = \frac{\sigma^2}{\varepsilon^2 + \sigma^2}
+    $$
+
+    이로써 한쪽 체비쇼프 부등식을 얻는다.
+
+    $$
+    P(X - \mu \geq \varepsilon) \leq \frac{\sigma^2}{\varepsilon^2 + \sigma^2}
+    $$
+
+    **뜻풀이.** 최적의 옮김량 $b^* = \sigma^2/\varepsilon$ 은 두 힘이 맞서는 자리이다. $b$ 를 키우면 분모 $(\varepsilon + b)^2$ 이 커져서 좋지만 분자의 $b^2$ 도 함께 커진다. $b$ 가 작을 때에는 분모가 $\varepsilon^2$ 에서 출발해 상대적으로 빨리 커지므로 이득이 크고, $b$ 가 커지면 분자와 분모가 모두 $b^2$ 에 끌려가 이득이 사라진다. 그 사이의 균형점이 $\sigma^2/\varepsilon$ 이며, 이탈 $\varepsilon$ 이 클수록 옮김량은 작아진다. $\square$

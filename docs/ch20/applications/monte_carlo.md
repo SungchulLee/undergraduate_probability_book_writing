@@ -108,3 +108,115 @@ plt.show()
 
 **연습문제 1.**
 $\theta = \int_0^1 e^{-x^2} \, dx$ 를 어림하는 몬테카를로 모의실험을 설계하여라. $U \sim U(0,1)$ 에 대하여 $\theta = E[g(U)]$ 로 적고, $g(U_1), \ldots, g(U_n)$ 의 표본평균을 셈한 뒤, 중심극한정리를 써서 $n = 10{,}000$ 일 때 $\theta$ 의 95% 신뢰구간을 만들어라.
+
+??? success "연습문제 1 풀이"
+    **1단계: 적분을 기댓값으로 바꾼다.** $U \sim U(0,1)$ 의 확률밀도함수는 $[0,1]$ 위에서 $f(u) = 1$ 이다. 그러므로 무의식적 통계학자의 법칙(LOTUS)에서 임의의 함수 $g$ 에 대하여 다음이 성립한다.
+
+    $$
+    \mathbb{E}[g(U)] = \int_0^1 g(u) \cdot 1 \, du = \int_0^1 g(u)\, du
+    $$
+
+    따라서 $g(u) = e^{-u^2}$ 으로 두면 우리가 원하는 적분이 그대로 기댓값이 된다.
+
+    $$
+    \theta = \int_0^1 e^{-x^2}\, dx = \mathbb{E}\!\left[e^{-U^2}\right] = \mathbb{E}[g(U)]
+    $$
+
+    **2단계: 추정량을 세운다.** $U_1, \ldots, U_n$ 을 i.i.d. $U(0,1)$ 로 뽑고 다음과 같이 둔다.
+
+    $$
+    \hat{\theta}_n = \frac{1}{n}\sum_{i=1}^n g(U_i) = \frac{1}{n}\sum_{i=1}^n e^{-U_i^2}
+    $$
+
+    $Y_i = g(U_i)$ 는 i.i.d. 이고 $0 < e^{-1} \leq Y_i \leq 1$ 로 **유계**이므로 모든 적률이 유한하다. 큰수의 강법칙에서 다음이 성립한다.
+
+    $$
+    \hat{\theta}_n \xrightarrow{a.s.} \theta
+    $$
+
+    또한 $\mathbb{E}[\hat{\theta}_n] = \theta$ 이므로 이 추정량은 **불편추정량**이다.
+
+    **3단계: 분산을 셈한다.** 신뢰구간의 폭을 정하는 것은 $\sigma^2 = \text{Var}(g(U))$ 이다.
+
+    $$
+    \sigma^2 = \mathbb{E}[g(U)^2] - \theta^2 = \int_0^1 e^{-2x^2}\, dx - \left(\int_0^1 e^{-x^2}\, dx\right)^{\!2}
+    $$
+
+    두 적분은 오차함수로 정확히 적힌다.
+
+    $$
+    \int_0^1 e^{-x^2}dx = \frac{\sqrt{\pi}}{2}\,\text{erf}(1) = 0.7468, \qquad \int_0^1 e^{-2x^2}dx = \frac{\sqrt{\pi}}{2\sqrt{2}}\,\text{erf}(\sqrt{2}) = 0.5981
+    $$
+
+    그러므로 다음과 같다.
+
+    $$
+    \sigma^2 = 0.5981 - (0.7468)^2 = 0.0404, \qquad \sigma = 0.2010
+    $$
+
+    **4단계: 중심극한정리로 신뢰구간을 만든다.** $Y_i$ 가 i.i.d. 이고 분산이 유한하므로 중심극한정리를 쓸 수 있다.
+
+    $$
+    \frac{\hat{\theta}_n - \theta}{\sigma/\sqrt{n}} \xrightarrow{d} N(0,1)
+    $$
+
+    표준정규분포의 $97.5$ 백분위수가 $z_{0.025} = 1.96$ 이므로 $95\%$ 신뢰구간은 다음과 같다.
+
+    $$
+    \hat{\theta}_n \pm 1.96 \frac{\sigma}{\sqrt{n}}
+    $$
+
+    $n = 10{,}000$ 을 넣으면 표준오차와 반폭이 다음과 같이 나온다.
+
+    $$
+    \frac{\sigma}{\sqrt{n}} = \frac{0.2010}{100} = 0.0020, \qquad 1.96 \times 0.0020 = 0.0039
+    $$
+
+    곧 $n = 10{,}000$ 이면 소수 둘째 자리까지는 믿을 수 있고 셋째 자리는 아슬아슬하다.
+
+    **5단계: 실제로 돌려 본다.** 실제 상황에서는 $\sigma$ 를 모르므로 표본표준편차 $S$ 로 바꾸어 쓴다. 큰수의 법칙이 $S \xrightarrow{a.s.} \sigma$ 를 보장하므로 이 바꿔치기가 정당하다.
+
+    $$
+    \hat{\theta}_n \pm 1.96 \frac{S}{\sqrt{n}}, \qquad S^2 = \frac{1}{n-1}\sum_{i=1}^n \left(g(U_i) - \hat{\theta}_n\right)^2
+    $$
+
+    ```python
+    import numpy as np
+    from scipy import integrate
+
+    theta, _ = integrate.quad(lambda x: np.exp(-x**2), 0, 1)
+    m2, _ = integrate.quad(lambda x: np.exp(-2 * x**2), 0, 1)
+    var = m2 - theta**2
+
+    rng = np.random.default_rng(42)
+    n = 10000
+    g = np.exp(-rng.random(n)**2)
+    est, s = g.mean(), g.std(ddof=1)
+    half = 1.96 * s / np.sqrt(n)
+
+    print(f"theta (exact)   = {theta:.4f}")
+    print(f"Var(g(U))       = {var:.4f}   sd = {np.sqrt(var):.4f}")
+    print(f"MC estimate     = {est:.4f}   sample sd = {s:.4f}")
+    print(f"95% CI          = ({est - half:.4f}, {est + half:.4f})")
+    ```
+
+    실행 결과는 다음과 같다.
+
+    ```
+    theta (exact)   = 0.7468
+    Var(g(U))       = 0.0404   sd = 0.2010
+    MC estimate     = 0.7489   sample sd = 0.2005
+    95% CI          = (0.7450, 0.7529)
+    ```
+
+    표본표준편차 $0.2005$ 가 참값 $0.2010$ 과 거의 같고, 얻은 신뢰구간 $(0.7450,\, 0.7529)$ 는 참값 $\theta = 0.7468$ 을 제대로 품고 있다.
+
+    **6단계: 얼마나 더 뽑아야 하는가.** 반폭이 $1.96\sigma/\sqrt{n}$ 이므로 정밀도는 $1/\sqrt{n}$ 으로만 좋아진다. 자릿수를 하나 더 얻으려면 표본을 **100배** 늘려야 한다는 뜻이다.
+
+    | $n$ | 반폭 $1.96\sigma/\sqrt{n}$ |
+    |---|---|
+    | $100$ | $0.0394$ |
+    | $10{,}000$ | $0.0039$ |
+    | $1{,}000{,}000$ | $0.0004$ |
+
+    이것이 몬테카를로의 근본적인 한계이며, 동시에 차원이 높아져도 이 속도가 그대로라는 점이 몬테카를로의 힘이기도 하다. 일차원 적분이라면 사다리꼴 공식이 훨씬 빠르지만, 차원이 수십으로 올라가면 격자를 쓰는 방법은 무너지고 $1/\sqrt{n}$ 만 남는다. $\square$
