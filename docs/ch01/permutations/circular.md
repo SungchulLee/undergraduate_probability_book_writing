@@ -1,62 +1,133 @@
-# Circular Permutations
+# 원순열
 
-## Overview
+## 개요
 
-A **circular permutation** arranges objects around a circle, where rotations of the same arrangement are considered identical. This is another application of the many-to-one principle.
+**원순열**은 대상을 원 위에 늘어놓는 것으로, 돌려서 겹치는 배열은 같은 것으로 본다. 이것도 여럿 대 하나 원리가 쓰이는 자리이다.
 
-## Derivation
+## 유도
 
-To arrange $n$ distinct objects in a circle:
+서로 다른 $n$ 개의 대상을 원 위에 늘어놓아 보자.
 
-**Step 1:** Arrange all $n$ objects in a line. There are $n!$ such arrangements.
+**1단계:** $n$ 개를 한 줄로 늘어놓는다. 이런 배열은 $n!$ 가지이다.
 
-**Step 2:** Recognize that for each circular arrangement, there are exactly $n$ linear arrangements that correspond to it (obtained by rotating the circle — choosing which element appears "first" in the line).
+**2단계:** 원형 배열 하나마다 그에 대응하는 일렬 배열이 정확히 $n$ 개씩 있음을 알아차린다(원을 돌려 가며 어느 원소를 줄의 "맨 앞"에 둘지 고르면 된다).
 
-**Step 3:** This is an $n$-to-1 mapping. By the many-to-one principle:
+**3단계:** 이는 $n$ 대 $1$ 대응이므로 여럿 대 하나 원리에 따라 다음을 얻는다.
 
-$$\text{Number of circular permutations} = \frac{n!}{n} = (n-1)!$$
+$$\text{원순열의 수} = \frac{n!}{n} = (n-1)!$$
 
-## Formula
+## 공식
 
-The number of ways to arrange $n$ distinct objects in a circle is:
+서로 다른 $n$ 개의 대상을 원 위에 늘어놓는 방법의 수는 다음과 같다.
 
 $$(n-1)!$$
 
-## Intuitive Explanation
+## 직관적인 설명
 
-In a circular arrangement, there is no distinguished "first position." We can fix one object's position (breaking the rotational symmetry) and arrange the remaining $n-1$ objects in $(n-1)!$ ways.
+원형 배열에는 특별히 구별되는 "첫 자리"가 없다. 그러므로 대상 하나의 자리를 고정해(회전 대칭성을 깨고) 나머지 $n-1$ 개를 늘어놓으면 되고, 그 방법은 $(n-1)!$ 가지이다.
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 from math import factorial
 
 def circular_permutations(n):
     """
-    Number of ways to arrange n distinct objects in a circle.
+    서로 다른 n개의 대상을 원 위에 늘어놓는 방법의 수.
     
-    Parameters
+    매개변수
     ----------
     n : int
-        Number of distinct objects.
+        서로 다른 대상의 개수.
     
-    Returns
+    반환값
     -------
     int
-        Number of circular permutations.
+        원순열의 개수.
     """
     return factorial(n - 1)
 
-# Example: Seat 5 people around a circular table
+# 예: 원탁에 5명 앉히기
 n = 5
 print(f"Circular permutations of {n} people: {circular_permutations(n)}")
 # Output: Circular permutations of 5 people: 24
 
-# Compare with linear permutations
+# 일렬 순열과 견주어 보기
 print(f"Linear permutations: {factorial(n)}")
 print(f"Ratio (should be {n}): {factorial(n) // circular_permutations(n)}")
 ```
 
-## Key Takeaway
+## 핵심 정리
 
-Circular permutations illustrate the many-to-one principle: each circular arrangement corresponds to $n$ linear arrangements (one for each rotation), so we divide $n!$ by $n$ to get $(n-1)!$.
+원순열은 여럿 대 하나 원리를 잘 보여 준다. 원형 배열 하나에 일렬 배열이 $n$ 개(회전한 개수만큼) 대응되므로, $n!$ 을 $n$ 으로 나누어 $(n-1)!$ 을 얻는다.
+
+## 연습문제
+
+**연습문제 1.** 원탁에 8명을 앉히는 방법은 몇 가지인가?
+
+??? success "연습문제 1 풀이"
+    $$
+    (8 - 1)! = 7! = 5040
+    $$
+
+---
+
+**연습문제 2.** 열쇠고리에 열쇠 6개를 끼운다. 열쇠고리를 뒤집을 수 있다면(즉 회전뿐 아니라 뒤집기로 겹치는 것도 같다고 본다면) 서로 다른 배열은 몇 가지인가?
+
+??? success "연습문제 2 풀이"
+    뒤집기를 고려하지 않으면 원순열은 $(6 - 1)! = 120$ 가지이다. 열쇠고리를 뒤집을 수 있으므로 각 배열이 두 번씩(양면마다 한 번씩) 세어진다. 따라서 다음을 얻는다.
+
+    $$
+    \frac{(6-1)!}{2} = \frac{120}{2} = 60
+    $$
+
+---
+
+**연습문제 3.** 부부 네 쌍이 원탁에 앉는다. 어느 남편도 자기 아내와 이웃하지 않게 앉히는 방법은 몇 가지인가?
+
+??? success "연습문제 3 풀이"
+    8명의 원순열은 모두 $7! = 5040$ 가지이다. 포함배제를 쓰자. $A_i$ 를 $i$ 번째 부부가 이웃하게 앉는 배열의 집합이라 하자.
+
+    $i$ 번째 부부를 한 덩어리로 본다. 그러면 원 위에 덩어리가 7개이므로 $(7-1)! = 720$ 가지 배열이 나오고, 덩어리 안에서 부부가 자리를 바꿀 수 있으니 $2$ 가지를 곱한다. 따라서 $|A_i| = 720 \cdot 2 = 1440$ 이다.
+
+    두 쌍을 덩어리로 보면 원 위에 덩어리가 6개이므로 $5! \cdot 2^2 = 120 \cdot 4 = 480$ 이다. 세 쌍이면 $4! \cdot 2^3 = 192$, 네 쌍이면 $3! \cdot 2^4 = 96$ 이다.
+
+    포함배제에 따라 다음을 얻는다.
+
+    $$
+    \left|\bigcup A_i\right| = \binom{4}{1}(1440) - \binom{4}{2}(480) + \binom{4}{3}(192) - \binom{4}{4}(96)
+    $$
+
+    $$
+    = 5760 - 2880 + 768 - 96 = 3552
+    $$
+
+    어느 부부도 이웃하지 않는 배열은 $5040 - 3552 = 1488$ 가지이다.
+
+---
+
+**연습문제 4.** $n$ 명을 원탁에 앉힐 때 $A$ 와 $B$ 가 이웃하는 배열의 수가 $2 \cdot (n-2)!$ 임을 증명하여라.
+
+??? success "연습문제 4 풀이"
+    $A$ 와 $B$ 를 한 덩어리로 본다. 그러면 원 위에 늘어놓을 덩어리가 $n - 1$ 개이므로 원순열은 $(n - 2)!$ 가지이다. 덩어리 안에서 $A$ 와 $B$ 의 순서는 2가지이다. 곱셈 법칙에 따라 다음을 얻는다.
+
+    $$
+    2 \cdot (n-2)!
+    $$
+
+    $\square$
+
+---
+
+**연습문제 5.** 다섯 사람이 원탁에 앉는다. 모든 자리 배치 가운데 $P_1$ 과 $P_2$ 가 이웃하지 **않는** 것의 비율은 얼마인가?
+
+??? success "연습문제 5 풀이"
+    전체 배열: $(5-1)! = 24$.
+
+    $P_1$ 과 $P_2$ 가 이웃하는 배열: $2 \cdot (5-2)! = 2 \cdot 6 = 12$.
+
+    $P_1$ 과 $P_2$ 가 이웃하지 않는 배열: $24 - 12 = 12$.
+
+    $$
+    \text{비율} = \frac{12}{24} = \frac{1}{2}
+    $$

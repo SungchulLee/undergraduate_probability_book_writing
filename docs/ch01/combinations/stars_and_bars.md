@@ -1,62 +1,62 @@
-# Combinations with Repetition (Stars and Bars)
+# 중복조합(막대와 별)
 
-## Overview
+## 개요
 
-**Combinations with repetition** count the number of ways to choose $k$ items from $n$ types when repetition is allowed and order does not matter. The classic technique for solving these problems is the **stars and bars** method.
+**중복조합**은 $n$ 가지 종류에서 중복을 허락하고 순서를 따지지 않으면서 $k$ 개를 고르는 방법의 수를 센다. 이런 문제를 푸는 고전적인 기법이 **막대와 별** 방법이다.
 
-## Problem Statement
+## 문제
 
-How many ways can we choose $k$ items from $n$ types, where each type can be chosen multiple times?
+$n$ 가지 종류에서 같은 종류를 여러 번 골라도 된다고 할 때, $k$ 개를 고르는 방법은 몇 가지인가?
 
-Equivalently: how many non-negative integer solutions are there to:
+이는 다음 식의 음이 아닌 정수해가 몇 개인지 묻는 것과 같다.
 
 $$x_1 + x_2 + \cdots + x_n = k, \qquad x_i \geq 0$$
 
-## Stars and Bars Formula
+## 막대와 별 공식
 
-Represent the $k$ items as $k$ stars ($\star$) and separate the $n$ types using $n - 1$ bars ($|$). Any arrangement of $k$ stars and $n - 1$ bars gives a valid selection.
+$k$ 개의 물건을 별 $k$ 개($\star$)로 나타내고, $n$ 가지 종류를 막대 $n - 1$ 개($|$)로 나눈다. 별 $k$ 개와 막대 $n - 1$ 개를 늘어놓은 모든 배열이 하나의 뽑기에 대응된다.
 
-The total number of symbols is $k + n - 1$, and we choose positions for the $n - 1$ bars (or equivalently, for the $k$ stars):
+기호는 모두 $k + n - 1$ 개이고, 이 가운데 막대 $n - 1$ 개가 놓일 자리(또는 별 $k$ 개가 놓일 자리)를 고르면 되므로 다음을 얻는다.
 
 $$\binom{k + n - 1}{n - 1} = \binom{k + n - 1}{k}$$
 
-## Example
+## 예
 
-Choose 3 items from 4 types ($n = 4$, $k = 3$):
+4가지 종류에서 3개를 고르는 경우($n = 4$, $k = 3$)는 다음과 같다.
 
 $$\binom{3 + 4 - 1}{4 - 1} = \binom{6}{3} = 20$$
 
-One arrangement: $\star \star \, | \, \star \, | \, | \,$ means 2 of type 1, 1 of type 2, 0 of type 3, 0 of type 4.
+배열 하나를 보자. $\star \star \, | \, \star \, | \, | \,$ 는 1종류 2개, 2종류 1개, 3종류 0개, 4종류 0개를 뜻한다.
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 from math import comb
 
 def combinations_with_repetition(n, k):
     """
-    Number of ways to choose k items from n types with repetition.
+    n가지 종류에서 중복을 허락하여 k개를 고르는 방법의 수.
     
-    Parameters
+    매개변수
     ----------
     n : int
-        Number of types.
+        종류의 개수.
     k : int
-        Number of items to choose.
+        고를 물건의 개수.
     
-    Returns
+    반환값
     -------
     int
-        Number of multisets of size k from n types.
+        n가지 종류로 이루어진 크기 k인 중복집합의 개수.
     """
     return comb(k + n - 1, n - 1)
 
-# Example: Choose 3 items from 4 types
+# 예: 4가지 종류에서 3개 고르기
 n, k = 4, 3
 print(f"Combinations with repetition: C({k+n-1}, {n-1}) = {combinations_with_repetition(n, k)}")
 # Output: 20
 
-# Verification by enumeration
+# 모두 늘어놓아 확인하기
 count = 0
 solutions = []
 for x1 in range(k + 1):
@@ -68,6 +68,17 @@ for x1 in range(k + 1):
 print(f"Verification by enumeration: {count}")
 ```
 
-## Key Takeaway
+## 핵심 정리
 
-The stars and bars technique transforms a selection-with-repetition problem into a problem of placing dividers among identical objects, reducing it to a standard combination $\binom{k+n-1}{n-1}$.
+막대와 별 기법은 중복을 허락한 뽑기 문제를, 똑같은 물건들 사이에 칸막이를 놓는 문제로 바꾸어 준다. 그 결과 보통의 조합 $\binom{k+n-1}{n-1}$ 로 환원된다.
+
+## 연습문제
+
+**연습문제 1.** 똑같은 과자 10개를 네 아이에게 나누어 주되 모든 아이가 적어도 하나는 받아야 한다. 몇 가지 방법이 있는가?
+
+??? success "연습문제 1 풀이"
+    먼저 아이마다 과자를 하나씩 준다. 남은 과자 $10 - 4 = 6$ 개를 네 아이에게 나누어 주면 되고, 이때는 하나도 못 받아도 된다.
+
+    $$
+    \binom{6 + 4 - 1}{4 - 1} = \binom{9}{3} = 84
+    $$

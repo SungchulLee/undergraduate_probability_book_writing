@@ -1,112 +1,112 @@
-# Matching Problem and Derangements
+# 짝맞추기 문제와 완전순열
 
-## Overview
+## 개요
 
-The **matching problem** (also called the **hat-check problem** or **problème des rencontres**) asks: how many bijective functions on $\{1, 2, \ldots, n\}$ have **no fixed points**? Such a permutation is called a **derangement**.
+**짝맞추기 문제**(**모자 찾기 문제** 또는 **problème des rencontres**라고도 한다)는 다음을 묻는다. $\{1, 2, \ldots, n\}$ 위의 일대일대응 가운데 **고정점이 하나도 없는** 것은 몇 개인가? 이런 순열을 **완전순열**이라 한다.
 
-## Setup
+## 문제 설정
 
-Let $f$ be a bijective function (permutation) on $\{1, 2, \ldots, n\}$.
+$f$ 를 $\{1, 2, \ldots, n\}$ 위의 일대일대응(순열)이라 하자.
 
-A point $x$ is called a **fixed point** of $f$ if $f(x) = x$.
+$f(x) = x$ 를 만족하는 점 $x$ 를 $f$ 의 **고정점**이라 한다.
 
-**Goal:** Count the number of permutations with **no** fixed points (derangements).
+**목표:** 고정점이 **하나도 없는** 순열(완전순열)의 개수를 센다.
 
-### Define the Sets
+### 집합 정하기
 
-- $\Omega$ — the set of all bijective functions $f$ on $\{1, 2, \ldots, n\}$, so $|\Omega| = n!$
-- $A_i$ — the set of bijective functions $f$ that fix $i$ (i.e., $f(i) = i$)
-- $\bigcup_{i=1}^{n} A_i$ — the set of bijective functions that fix **some** $i$
-- $B = \Omega \setminus \bigcup_{i=1}^{n} A_i$ — the set of bijective functions with **no** fixed points (derangements)
+- $\Omega$ — $\{1, 2, \ldots, n\}$ 위의 모든 일대일대응 $f$ 의 집합. 따라서 $|\Omega| = n!$
+- $A_i$ — $i$ 를 고정하는(즉 $f(i) = i$ 인) 일대일대응 $f$ 의 집합
+- $\bigcup_{i=1}^{n} A_i$ — **어떤** $i$ 를 고정하는 일대일대응의 집합
+- $B = \Omega \setminus \bigcup_{i=1}^{n} A_i$ — 고정점이 **하나도 없는** 일대일대응(완전순열)의 집합
 
-## Applying Inclusion-Exclusion
+## 포함배제 적용하기
 
-We need $|B| = |\Omega| - |\bigcup_{i=1}^{n} A_i|$, so we first compute $|\bigcup_{i=1}^{n} A_i|$.
+$|B| = |\Omega| - |\bigcup_{i=1}^{n} A_i|$ 가 필요하므로 먼저 $|\bigcup_{i=1}^{n} A_i|$ 를 계산한다.
 
-### Computing Intersection Sizes
+### 교집합의 크기 구하기
 
-**Single sets:** $|A_i|$ counts permutations fixing $i$. The remaining $n - 1$ elements can be permuted freely:
+**낱개 집합:** $|A_i|$ 는 $i$ 를 고정하는 순열의 개수이다. 남은 $n - 1$ 개의 원소는 자유롭게 늘어놓을 수 있다.
 
 $$|A_i| = (n-1)!$$
 
-There are $\binom{n}{1}$ such sets, so $\sum |A_i| = \binom{n}{1}(n-1)!$.
+이런 집합이 $\binom{n}{1}$ 개 있으므로 $\sum |A_i| = \binom{n}{1}(n-1)!$ 이다.
 
-**Pairwise intersections:** $|A_i \cap A_j|$ counts permutations fixing both $i$ and $j$:
+**두 집합의 교집합:** $|A_i \cap A_j|$ 는 $i$ 와 $j$ 를 모두 고정하는 순열의 개수이다.
 
 $$|A_i \cap A_j| = (n-2)!$$
 
-There are $\binom{n}{2}$ such pairs, so $\sum |A_i \cap A_j| = \binom{n}{2}(n-2)!$.
+이런 쌍이 $\binom{n}{2}$ 개 있으므로 $\sum |A_i \cap A_j| = \binom{n}{2}(n-2)!$ 이다.
 
-**General pattern:** $|A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}|$ counts permutations fixing $k$ specified points:
+**일반적인 꼴:** $|A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}|$ 는 정해진 $k$ 개의 점을 고정하는 순열의 개수이다.
 
 $$|A_{i_1} \cap \cdots \cap A_{i_k}| = (n-k)!$$
 
-There are $\binom{n}{k}$ such $k$-element subsets.
+이런 $k$ 개짜리 부분집합은 $\binom{n}{k}$ 개 있다.
 
-### Applying the Formula
+### 공식 적용하기
 
-By the inclusion-exclusion principle:
+포함배제 원리에 따라 다음을 얻는다.
 
 $$\left|\bigcup_{i=1}^{n} A_i\right| = \sum_{k=1}^{n} (-1)^{k+1} \binom{n}{k} (n-k)!$$
 
-Expanding $\binom{n}{k}(n-k)! = \frac{n!}{k!}$:
+$\binom{n}{k}(n-k)! = \frac{n!}{k!}$ 임을 써서 풀어 쓰면 다음과 같다.
 
 $$\left|\bigcup_{i=1}^{n} A_i\right| = n! \left(\frac{1}{1!} - \frac{1}{2!} + \frac{1}{3!} - \cdots + (-1)^{n+1}\frac{1}{n!}\right)$$
 
-### The Derangement Count
+### 완전순열의 개수
 
 $$|B| = |\Omega| - \left|\bigcup_{i=1}^{n} A_i\right| = n! - n!\left(\frac{1}{1!} - \frac{1}{2!} + \cdots + (-1)^{n+1}\frac{1}{n!}\right)$$
 
 $$\boxed{D_n = n!\left(1 - \frac{1}{1!} + \frac{1}{2!} - \frac{1}{3!} + \cdots + (-1)^n \frac{1}{n!}\right) = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!}}$$
 
-## Connection to $e^{-1}$
+## e⁻¹ 과의 연결
 
-As $n \to \infty$, the sum $\sum_{k=0}^{n} \frac{(-1)^k}{k!}$ converges to $e^{-1}$. Therefore:
+$n \to \infty$ 일 때 합 $\sum_{k=0}^{n} \frac{(-1)^k}{k!}$ 은 $e^{-1}$ 로 수렴한다. 따라서 다음이 성립한다.
 
 $$D_n \approx \frac{n!}{e}$$
 
-More precisely, $D_n$ is the nearest integer to $n!/e$ for all $n \geq 1$.
+더 정확히 말하면, 모든 $n \geq 1$ 에 대하여 $D_n$ 은 $n!/e$ 에 가장 가까운 정수이다.
 
-The probability that a random permutation is a derangement is:
+무작위로 고른 순열이 완전순열일 확률은 다음과 같다.
 
 $$\frac{D_n}{n!} = \sum_{k=0}^{n} \frac{(-1)^k}{k!} \xrightarrow{n \to \infty} e^{-1} \approx 0.3679$$
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 from math import factorial, e, comb
 
 def derangement_count(n):
     """
-    Count the number of derangements of {1, 2, ..., n}
-    using the inclusion-exclusion formula.
+    포함배제 공식을 이용하여 {1, 2, ..., n} 의
+    완전순열의 개수를 센다.
     
-    Parameters
+    매개변수
     ----------
     n : int
-        Size of the set.
+        집합의 크기.
     
-    Returns
+    반환값
     -------
     int
-        Number of derangements D_n.
+        완전순열의 개수 D_n.
     """
     return sum((-1)**k * factorial(n) // factorial(k) for k in range(n + 1))
 
 def derangement_count_via_ie(n):
     """
-    Count derangements step by step using inclusion-exclusion.
-    Shows: |Omega| - |union of A_i|.
+    포함배제를 단계별로 적용하여 완전순열을 센다.
+    |Omega| - |union of A_i| 를 보여 준다.
     """
     omega = factorial(n)
-    # |union A_i| via inclusion-exclusion
+    # 포함배제로 구한 |union A_i|
     union_size = sum(
         (-1)**(k+1) * comb(n, k) * factorial(n - k) 
         for k in range(1, n + 1)
     )
     return omega - union_size
 
-# Compute derangements for small n
+# 작은 n에 대하여 완전순열의 개수 구하기
 print("n | D_n | n! | D_n/n! | 1/e")
 print("-" * 45)
 for n in range(1, 11):
@@ -115,16 +115,16 @@ for n in range(1, 11):
     ratio = d_n / n_fact
     print(f"{n:2d} | {d_n:7d} | {n_fact:7d} | {ratio:.6f} | {1/e:.6f}")
 
-# Verify both methods agree
+# 두 방법이 일치하는지 확인하기
 for n in range(1, 15):
     assert derangement_count(n) == derangement_count_via_ie(n)
 print("\nBoth methods agree for n=1..14")
 
-# Enumerate derangements for small n
+# 작은 n에 대하여 완전순열을 모두 늘어놓기
 from itertools import permutations
 
 def enumerate_derangements(n):
-    """Enumerate all derangements by brute force."""
+    """모든 완전순열을 하나하나 훑어 센다."""
     identity = list(range(1, n + 1))
     count = 0
     for perm in permutations(identity):
@@ -139,6 +139,23 @@ for n in range(1, 9):
     print(f"  n={n}: formula={d_formula}, enumeration={d_enum}, match={d_formula==d_enum}")
 ```
 
-## Key Takeaway
+## 핵심 정리
 
-The matching problem is the canonical application of inclusion-exclusion combined with complement counting. The derangement formula $D_n = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!}$ emerges from systematically subtracting and adding permutations that fix specific subsets of points. The remarkable result $D_n/n! \to 1/e$ connects discrete combinatorics to the exponential function.
+짝맞추기 문제는 포함배제와 여집합 세기를 함께 쓰는 대표적인 보기이다. 정해진 점들을 고정하는 순열을 체계적으로 빼고 더하면 완전순열 공식 $D_n = n! \sum_{k=0}^{n} \frac{(-1)^k}{k!}$ 이 나온다. $D_n/n! \to 1/e$ 라는 놀라운 결과는 이산조합론을 지수함수와 이어 준다.
+
+## 연습문제
+
+**연습문제 1.**
+
+**(a)** $\{1, 2, 3, 4, 5\}$ 의 완전순열의 개수 $D_5$ 를 구하여라.
+
+**(b)** $\{1, 2, 3, 4, 5\}$ 의 순열을 무작위로 하나 고를 때 그것이 완전순열일 확률은 얼마인가?
+
+??? success "연습문제 1 풀이"
+    **(a)**
+
+    $$
+    D_5 = 5!\left(1 - 1 + \frac{1}{2} - \frac{1}{6} + \frac{1}{24} - \frac{1}{120}\right) = 120 \times \frac{11}{30} = 44
+    $$
+
+    **(b)** $P = \dfrac{D_5}{5!} = \dfrac{44}{120} = \dfrac{11}{30} \approx 0.3667$

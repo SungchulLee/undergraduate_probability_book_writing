@@ -1,105 +1,166 @@
-# Addition Rule
+# 덧셈 법칙
 
-## Overview
+## 개요
 
-The **addition rule** (also called the **rule of sum** or **divide and conquer**) states that if we can partition the outcomes of an experiment into disjoint (mutually exclusive) categories, then the total count is the sum of the counts in each category.
+**덧셈 법칙**(**합의 법칙** 또는 **분할 정복**이라고도 한다)은 어떤 실험의 결과를 서로소인(배반인) 부류들로 나눌 수 있다면, 전체 가짓수는 각 부류의 가짓수를 모두 더한 값이라는 것이다.
 
-## Statement
+## 정리의 서술
 
-If the sample space $\Omega$ can be divided into disjoint categories $A_1, A_2, \ldots, A_m$ such that:
+표본공간 $\Omega$ 를 서로소인 부류 $A_1, A_2, \ldots, A_m$ 으로 나눌 수 있어서
 
 $$\Omega = A_1 \cup A_2 \cup \cdots \cup A_m, \qquad A_i \cap A_j = \emptyset \text{ for } i \neq j$$
 
-then:
+가 성립한다면, 다음이 성립한다.
 
 $$|\Omega| = \sum_{i=1}^{m} |A_i|$$
 
-## The Divide and Conquer Strategy
+## 분할 정복 전략
 
-The addition rule naturally leads to a systematic counting strategy:
+덧셈 법칙은 자연스럽게 다음과 같은 체계적인 세기 전략으로 이어진다.
 
-**[Step 1]** Divide all the cases into several disjoint categories $A_i$.
+**[1단계]** 모든 경우를 서로소인 여러 부류 $A_i$ 로 나눈다.
 
-**[Step 2]** Count all the cases in each category $A_i$.
+**[2단계]** 각 부류 $A_i$ 에 속하는 경우의 수를 센다.
 
-**[Step 3]** $|\Omega| = \sum_i |A_i|$.
+**[3단계]** $|\Omega| = \sum_i |A_i|$ 로 합친다.
 
-This "divide and conquer" approach is one of the most powerful techniques in combinatorics. When a problem seems intractable as a whole, partitioning it into manageable pieces often reveals the answer.
+이 "분할 정복" 방식은 조합론에서 가장 강력한 기법 가운데 하나이다. 문제를 통째로 보면 손댈 수 없어 보일 때도, 다룰 만한 조각으로 쪼개면 답이 드러나는 경우가 많다.
 
-## Counting by Complement
+## 여집합으로 세기
 
-A special case of the addition rule uses the partition $\{A, A^c\}$:
+덧셈 법칙의 특별한 경우로 $\{A, A^c\}$ 라는 분할을 쓸 수 있다.
 
 $$|\Omega| = |A| + |A^c|$$
 
-Rearranging:
+이를 옮겨 쓰면 다음과 같다.
 
 $$|A| = |\Omega| - |A^c|$$
 
-This is the **complement counting** technique. It is especially useful when counting elements **not** in a set is easier than counting elements in the set directly.
+이것이 **여집합 세기** 기법이다. 집합에 속하는 원소를 직접 세는 것보다 **속하지 않는** 원소를 세는 편이 쉬울 때 특히 쓸모가 있다.
 
-## Enumeration
+## 낱낱이 늘어놓기
 
-The most basic counting method is **enumeration**: list all the cases in $\Omega$ and count them. While simple in principle, enumeration is often impractical for large sets. The addition rule, multiplication rule, and other techniques provide more efficient alternatives.
+가장 기본이 되는 세기 방법은 **낱낱이 늘어놓기**이다. $\Omega$ 의 경우를 모두 적어 놓고 개수를 세는 것이다. 원리는 단순하지만 집합이 커지면 실제로 쓰기 어렵다. 덧셈 법칙과 곱셈 법칙을 비롯한 여러 기법은 이보다 훨씬 효율적인 대안을 준다.
 
-## Summary of Counting Methods
+## 세기 방법 요약
 
-The PDF introduces the following hierarchy of counting methods:
+PDF에서는 세기 방법을 다음과 같이 단계적으로 소개한다.
 
-| Method | Description |
+| 방법 | 설명 |
 |:---|:---|
-| **Enumeration** | List all cases in $\Omega$ and count them |
-| **Divide and conquer** | Partition into disjoint categories, count each, sum |
-| **Tree diagram** | Use tree structure to partition and apply multiplication rule |
-| **Many-to-one** | Establish a $k$-to-1 mapping to simplify counting |
-| **Inclusion-exclusion** | Handle overlapping (non-disjoint) categories |
-| **Complement** | Count $|A| = |\Omega| - |A^c|$ |
+| **낱낱이 늘어놓기** | $\Omega$ 의 경우를 모두 적고 개수를 센다 |
+| **분할 정복** | 서로소인 부류로 나누고, 각각 세어 더한다 |
+| **나무 그림** | 나무 구조로 나눈 뒤 곱셈 법칙을 적용한다 |
+| **여럿 대 하나 대응** | $k$ 대 $1$ 대응을 만들어 세기를 간단히 한다 |
+| **포함배제** | 겹치는(서로소가 아닌) 부류를 다룬다 |
+| **여집합** | $|A| = |\Omega| - |A^c|$ 로 센다 |
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 def count_by_addition_rule(category_counts):
     """
-    Apply the addition rule (sum of disjoint categories).
+    덧셈 법칙(서로소인 부류들의 합)을 적용한다.
     
-    Parameters
+    매개변수
     ----------
     category_counts : list of int
-        Count of elements in each disjoint category.
+        서로소인 각 부류에 속하는 원소의 개수.
     
-    Returns
+    반환값
     -------
     int
-        Total count.
+        전체 가짓수.
     """
     return sum(category_counts)
 
 def count_by_complement(total, complement_count):
     """
-    Count by complement: |A| = |Omega| - |A^c|.
+    여집합으로 센다: |A| = |Omega| - |A^c|.
     
-    Parameters
+    매개변수
     ----------
     total : int
-        Size of the universal set |Omega|.
+        전체집합의 크기 |Omega|.
     complement_count : int
-        Size of the complement |A^c|.
+        여집합의 크기 |A^c|.
     
-    Returns
+    반환값
     -------
     int
-        Size of set A.
+        집합 A의 크기.
     """
     return total - complement_count
 
-# Example: Count even numbers from 1 to 100
-# Divide into categories: multiples of 2
+# 예: 1부터 100까지의 짝수 세기
+# 부류로 나누기: 2의 배수
 total = 100
-even_count = count_by_complement(total, 50)  # 50 odd numbers
+even_count = count_by_complement(total, 50)  # 홀수는 50개
 print(f"Even numbers from 1 to 100: {even_count}")
 # Output: Even numbers from 1 to 100: 50
 ```
 
-## Key Takeaway
+## 핵심 정리
 
-The addition rule is the complement to the multiplication rule. Where the multiplication rule handles sequential stages, the addition rule handles disjoint alternatives. Together, they form the foundation of all counting arguments.
+덧셈 법칙은 곱셈 법칙과 짝을 이룬다. 곱셈 법칙이 차례로 이어지는 단계를 다룬다면, 덧셈 법칙은 서로 배타적인 갈래를 다룬다. 이 둘이 모든 세기 논증의 바탕이 된다.
+
+## 연습문제
+
+**연습문제 1.** 어떤 학생회에 4학년 8명과 3학년 6명이 있다. 위원회는 4학년 3명으로만 이루어지거나 3학년 2명으로만 이루어져야 한다(섞을 수 없다). 가능한 위원회는 몇 가지인가?
+
+??? success "연습문제 1 풀이"
+    두 종류의 위원회는 서로소이므로 덧셈 법칙에 따라 다음을 얻는다.
+
+    $$
+    \binom{8}{3} + \binom{6}{2} = 56 + 15 = 71
+    $$
+
+---
+
+**연습문제 2.** 1부터 1000까지의 정수 가운데 3 또는 5로 나누어떨어지지만 둘 다로 나누어떨어지지는 않는 수는 몇 개인가?
+
+??? success "연습문제 2 풀이"
+    3으로 나누어떨어지는 수: $\lfloor 1000/3 \rfloor = 333$. 5로 나누어떨어지는 수: $\lfloor 1000/5 \rfloor = 200$. 둘 다로(즉 15로) 나누어떨어지는 수: $\lfloor 1000/15 \rfloor = 66$.
+
+    3 또는 5로 나누어떨어지는 수: $333 + 200 - 66 = 467$.
+
+    둘 다로 나누어떨어지는 수: $66$.
+
+    3 또는 5로 나누어떨어지지만 둘 다는 아닌 수: $467 - 66 = 401$.
+
+---
+
+**연습문제 3.** 여집합 세기를 이용하여, $\{A, B, C, D, E\}$ 의 글자로 만든 길이 4인 문자열(중복 허용) 가운데 $A$ 를 적어도 하나 포함하는 것의 개수를 구하여라.
+
+??? success "연습문제 3 풀이"
+    길이 4인 문자열 전체: $5^4 = 625$.
+
+    $A$ 가 하나도 없는 문자열: $4^4 = 256$.
+
+    여집합 세기에 따라 다음을 얻는다.
+
+    $$
+    625 - 256 = 369
+    $$
+
+---
+
+**연습문제 4.** 집합 $S$ 의 원소가 $n$ 개라 하자. $S$ 의 부분집합 가운데 원소의 개수가 홀수인 것의 개수와 짝수인 것의 개수가 같고, 각각 $2^{n-1}$ 임을 증명하여라.
+
+??? success "연습문제 4 풀이"
+    $S$ 의 부분집합 $2^n$ 개를 원소의 개수가 짝수인 것과 홀수인 것, 두 개의 서로소인 부류로 나눈다. 원소 $a \in S$ 를 하나 고정하자. 짝수 크기 부분집합과 홀수 크기 부분집합 사이의 일대일대응 $f$ 를 이렇게 정의한다. 임의의 부분집합 $T$ 에 대하여 $f(T) = T \triangle \{a\}$ (대칭차집합)로 둔다. $|T|$ 가 짝수이면 $|f(T)|$ 는 홀수이고, 그 반대도 성립한다. $f$ 는 자기 자신이 역함수이므로 일대일대응이다. 따라서 두 부류의 크기는 같고, 그 값은 $2^n / 2 = 2^{n-1}$ 이다. $\square$
+
+---
+
+**연습문제 5.** 비밀번호는 6글자이고 각 글자는 숫자(0--9) 또는 소문자 알파벳(a--z)이다. 분할 정복 전략을 써서 숫자가 정확히 두 개이고 알파벳이 네 개인 비밀번호의 개수를 구하여라. 그리고 이를 아무 제한이 없는 비밀번호의 전체 개수와 비교하여라.
+
+??? success "연습문제 5 풀이"
+    6개 자리 가운데 숫자가 놓일 2개 자리를 고른다: $\binom{6}{2} = 15$. 그 2개 자리를 숫자로 채운다: $10^2 = 100$. 남은 4개 자리를 알파벳으로 채운다: $26^4 = 456{,}976$.
+
+    $$
+    15 \times 100 \times 456{,}976 = 685{,}464{,}000
+    $$
+
+    제한이 없는 비밀번호의 전체 개수: $36^6 = 2{,}176{,}782{,}336$.
+
+    숫자가 정확히 두 개인 비율은 $685{,}464{,}000 / 2{,}176{,}782{,}336 \approx 0.315$ 이다.

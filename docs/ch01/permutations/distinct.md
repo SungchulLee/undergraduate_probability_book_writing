@@ -1,79 +1,79 @@
-# Permutations of Distinct Objects
+# 서로 다른 대상의 순열
 
-## Overview
+## 개요
 
-A **permutation** is an ordered arrangement of objects. When all objects are distinct, counting permutations reduces to a direct application of the multiplication rule.
+**순열**은 대상을 순서를 매겨 늘어놓은 것이다. 대상이 모두 서로 다를 때 순열의 개수를 세는 일은 곱셈 법칙을 그대로 적용하는 것으로 끝난다.
 
-## Definition
+## 정의
 
-The number of ways to arrange $k$ objects chosen from $n$ distinct objects, where **order matters**, is denoted $P(n, k)$ or $nPk$:
+서로 다른 $n$ 개의 대상 가운데 $k$ 개를 골라 **순서를 따져** 늘어놓는 방법의 수를 $P(n, k)$ 또는 $nPk$ 로 적는다.
 
 $$P(n, k) = n \times (n-1) \times (n-2) \times \cdots \times (n - k + 1) = \frac{n!}{(n-k)!}$$
 
-### Special Case: Arranging All $n$ Objects
+### 특별한 경우: n개를 모두 늘어놓기
 
-When $k = n$, we arrange all objects:
+$k = n$ 이면 대상을 모두 늘어놓는 것이 된다.
 
 $$P(n, n) = n!$$
 
-## Derivation via Tree Diagram
+## 나무 그림을 이용한 유도
 
-Consider choosing $k$ people from $n$ to fill ordered positions (e.g., president, vice-president, ..., secretary):
+$n$ 명 가운데 $k$ 명을 뽑아 순서가 정해진 자리(예컨대 회장, 부회장, …, 총무)를 채우는 경우를 생각해 보자.
 
-- **Position 1 (president):** $n$ choices
-- **Position 2 (vice-president):** $n - 1$ choices
-- **Position 3:** $n - 2$ choices
+- **1번 자리(회장):** $n$ 가지
+- **2번 자리(부회장):** $n - 1$ 가지
+- **3번 자리:** $n - 2$ 가지
 - $\vdots$
-- **Position $k$ (secretary):** $n - (k-1)$ choices
+- **$k$ 번 자리(총무):** $n - (k-1)$ 가지
 
-By the multiplication rule (via tree diagram):
+곱셈 법칙에 따라(나무 그림으로 보면) 다음을 얻는다.
 
 $$P(n, k) = n \times (n-1) \times (n-2) \times \cdots \times (n - k + 1)$$
 
-## From Permutation to Combination
+## 순열에서 조합으로
 
-The key insight connecting permutations and combinations is the **many-to-one** principle. When we choose $k$ people for a committee (without distinct roles), every committee of $k$ people corresponds to $k!$ different ordered arrangements (permutations of those same $k$ people).
+순열과 조합을 이어 주는 핵심 생각은 **여럿 대 하나** 원리이다. 서로 구별되는 역할 없이 위원회에 들어갈 $k$ 명을 고른다고 하면, $k$ 명으로 이루어진 각 위원회는 그 $k$ 명을 늘어놓는 $k!$ 가지 서로 다른 순서와 대응된다.
 
-This is a $k!$-to-1 mapping from ordered selections to unordered selections:
+즉 순서를 따진 뽑기에서 순서를 따지지 않는 뽑기로 가는 $k!$ 대 $1$ 대응이 있으므로 다음을 얻는다.
 
 $$\binom{n}{k} = \frac{P(n,k)}{k!} = \frac{n!}{k!(n-k)!}$$
 
-## Python Implementation
+## 파이썬 구현
 
 ```python
 from math import factorial, perm
 
 def permutation(n, k):
     """
-    Compute P(n, k) = n! / (n-k)!
+    P(n, k) = n! / (n-k)! 를 계산한다.
     
-    Parameters
+    매개변수
     ----------
     n : int
-        Total number of objects.
+        전체 대상의 개수.
     k : int
-        Number of objects to arrange.
+        늘어놓을 대상의 개수.
     
-    Returns
+    반환값
     -------
     int
-        Number of permutations.
+        순열의 개수.
     """
     return factorial(n) // factorial(n - k)
 
-# Example: Choose president, VP, secretary from 10 people
+# 예: 10명 가운데 회장, 부회장, 총무 뽑기
 n = 10
 k = 3
 print(f"P({n}, {k}) = {permutation(n, k)}")
 print(f"Verification (math.perm): {perm(n, k)}")
 # Output: P(10, 3) = 720
 
-# Example: Arrange all 5 distinct books on a shelf
+# 예: 서로 다른 책 5권을 책꽂이에 모두 늘어놓기
 n = 5
 print(f"P({n}, {n}) = {n}! = {factorial(n)}")
 # Output: P(5, 5) = 5! = 120
 
-# Enumeration verification
+# 모두 늘어놓아 확인하기
 import itertools
 books = ['A', 'B', 'C', 'D', 'E']
 arrangements = list(itertools.permutations(books))
@@ -81,6 +81,61 @@ print(f"Verification by enumeration: {len(arrangements)}")
 # Output: Verification by enumeration: 120
 ```
 
-## Key Takeaway
+## 핵심 정리
 
-Permutations count ordered selections. The formula $P(n,k) = n!/(n-k)!$ follows directly from the multiplication rule applied to sequential choices. The connection to combinations comes through the many-to-one principle: dividing by $k!$ removes the ordering.
+순열은 순서를 따진 뽑기의 개수를 센다. 공식 $P(n,k) = n!/(n-k)!$ 는 차례로 이어지는 선택에 곱셈 법칙을 적용하면 바로 나온다. 조합과의 연결 고리는 여럿 대 하나 원리이다. $k!$ 로 나누면 순서가 지워진다.
+
+## 연습문제
+
+**연습문제 1.** 회원이 15명인 동아리에서 회장, 부회장, 재무를 뽑는다(모두 다른 사람이다). 몇 가지 방법이 있는가?
+
+??? success "연습문제 1 풀이"
+    $$
+    P(15, 3) = 15 \times 14 \times 13 = 2730
+    $$
+
+---
+
+**연습문제 2.** 숫자 $\{1, 2, 3, 4, 5, 6, 7\}$ 로 만들 수 있는 네 자리 수(숫자를 거듭 쓰지 않는다)는 몇 개인가?
+
+??? success "연습문제 2 풀이"
+    $$
+    P(7, 4) = \frac{7!}{3!} = 7 \times 6 \times 5 \times 4 = 840
+    $$
+
+---
+
+**연습문제 3.** 단어 COMPUTE의 글자로 만들 수 있는 세 글자짜리 "낱말"(같은 글자를 거듭 쓰지 않는다)은 몇 개인가? 그 가운데 모음으로 시작하는 것은 몇 개인가?
+
+??? success "연습문제 3 풀이"
+    COMPUTE는 서로 다른 글자 7개로 이루어져 있다. 세 글자 순열의 개수는 $P(7,3) = 7 \times 6 \times 5 = 210$ 이다.
+
+    COMPUTE의 모음은 O, U, E의 3개이다. 첫 글자가 모음이면 1번 자리를 고르는 방법이 3가지이고, 남은 두 자리를 채우는 방법이 $P(6, 2) = 30$ 가지이다.
+
+    $$
+    3 \times 30 = 90
+    $$
+
+---
+
+**연습문제 4.** $1 \leq k \leq n$ 에 대하여 $P(n, k) = n \cdot P(n-1, k-1)$ 임을 증명하여라. 대수적 증명과 조합적 증명을 모두 제시하여라.
+
+??? success "연습문제 4 풀이"
+    **대수적 증명:**
+
+    $$
+    n \cdot P(n-1, k-1) = n \cdot \frac{(n-1)!}{(n-k)!} = \frac{n!}{(n-k)!} = P(n,k)
+    $$
+
+    **조합적 증명:** $n$ 개의 대상에서 $k$-순열을 만들려면, 먼저 1번 자리에 놓을 대상을 고르고($n$ 가지), 남은 $n-1$ 개로 나머지 $k-1$ 개 자리를 채운다($P(n-1, k-1)$ 가지). 곱셈 법칙에 따라 전체는 $n \cdot P(n-1, k-1)$ 이다. $\square$
+
+---
+
+**연습문제 5.** 사진사가 어른 5명과 아이 3명을 한 줄로 세워 사진을 찍는다. 아이 둘이 서로 이웃하지 않도록 세우는 방법은 몇 가지인가?
+
+??? success "연습문제 5 풀이"
+    먼저 어른 5명을 늘어놓는다: $5! = 120$ 가지. 이렇게 하면 양 끝을 포함하여 빈자리 6군데가 생긴다: _ A _ A _ A _ A _ A _. 이 6군데 가운데 3군데를 골라 아이를 넣는다: $P(6, 3) = 120$ 가지.
+
+    $$
+    5! \times P(6, 3) = 120 \times 120 = 14400
+    $$
